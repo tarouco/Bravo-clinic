@@ -203,13 +203,13 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests assert `financeQuerySchema` rejects `to < from` and a 732-day range, accepts 731 days
-- [ ] Tests assert `extraServiceInputSchema` rejects `saleMode: 'online'` with null price on path `referencePriceCents`
-- [ ] Tests assert `quoteRequestInputSchema` bounds (name 2..120, description 10..2000, desiredOn ≤ today + 365 with injected today) and that `website` is accepted as an optional string
-- [ ] Tests assert `toPhotoUrl('rooms/r1/u1', 'small') === '/media/rooms/r1/u1-small.webp'`
-- [ ] Tests assert every staff toggle key of `notifications.events` maps to one `staff.*` catalog entry and `settingDefaults()['usage.limits'].emailsPerMonth === 3000`
-- [ ] Gate check passes: `npm test -w packages/core`
-- [ ] Test count: ≥ 14 tests pass
+- [x] Tests assert `financeQuerySchema` rejects `to < from` and a 732-day range, accepts 731 days
+- [x] Tests assert `extraServiceInputSchema` rejects `saleMode: 'online'` with null price on path `referencePriceCents`
+- [x] Tests assert `quoteRequestInputSchema` bounds (name 2..120, description 10..2000, desiredOn ≤ today + 365 with injected today) and that `website` is accepted as an optional string
+- [x] Tests assert `toPhotoUrl('rooms/r1/u1', 'small') === '/media/rooms/r1/u1-small.webp'`
+- [x] Tests assert every staff toggle key of `notifications.events` maps to one `staff.*` catalog entry and `settingDefaults()['usage.limits'].emailsPerMonth === 3000`
+- [x] Gate check passes: `npm test -w packages/core`
+- [x] Test count: ≥ 14 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -233,15 +233,15 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Every row of design §Core: finance engine worked examples is a test asserting exact cents per month in both regimes
-- [ ] Tests assert `spreadOverDays(616000, '2026-11-02', '2026-12-02')` has 30 entries, the first 10 equal 20534, the rest 20533, sum 616000
-- [ ] Tests assert chargeback and refund go to line 3 with the original category; credit charges add to gross and line 2
-- [ ] Tests assert ISO-week buckets start on Monday and edge buckets are clipped; quarters start Jan/Apr/Jul/Oct
-- [ ] Tests assert `compare` returns `deltaPercent: null` when previous is 0 and rounds to one decimal
-- [ ] Tests assert `buildDre` row order/labels of GES-31, "Outras receitas" only when non-zero, line 5 = 1+2+3+4 and line 7 = 5+6 per column
-- [ ] Tests assert `nextOccurrences` clamps Jan 31 monthly to Feb 28/29 and returns nothing when recurrence is `none`
-- [ ] Gate check passes: `npm test -w packages/core`
-- [ ] Test count: ≥ 30 tests pass
+- [x] Every row of design §Core: finance engine worked examples is a test asserting exact cents per month in both regimes
+- [x] Tests assert `spreadOverDays(616000, '2026-11-02', '2026-12-02')` has 30 entries, the first 10 equal 20534, the rest 20533, sum 616000
+- [x] Tests assert chargeback and refund go to line 3 with the original category; credit charges add to gross and line 2
+- [x] Tests assert ISO-week buckets start on Monday and edge buckets are clipped; quarters start Jan/Apr/Jul/Oct
+- [x] Tests assert `compare` returns `deltaPercent: null` when previous is 0 and rounds to one decimal
+- [x] Tests assert `buildDre` row order/labels of GES-31, "Outras receitas" only when non-zero, line 5 = 1+2+3+4 and line 7 = 5+6 per column
+- [x] Tests assert `nextOccurrences` clamps Jan 31 monthly to Feb 28/29 and returns nothing when recurrence is `none`
+- [x] Gate check passes: `npm test -w packages/core`
+- [x] Test count: ≥ 30 tests pass
 
 **Tests**: unit
 **Gate**: quick

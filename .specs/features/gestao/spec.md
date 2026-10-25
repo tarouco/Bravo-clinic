@@ -498,16 +498,16 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 
 | Requirement ID | Story | Phase | Task(s) | Status |
 | --- | --- | --- | --- | --- |
-| GES-01 | P1: Revenue recognition engine | Tasks | T2 | In Tasks |
-| GES-02 | P1: Revenue recognition engine | Tasks | T2 | In Tasks |
-| GES-03 | P1: Revenue recognition engine | Tasks | T2 | In Tasks |
-| GES-04 | P1: Revenue recognition engine | Tasks | T2 | In Tasks |
-| GES-05 | P1: Revenue recognition engine | Tasks | T2 | In Tasks |
-| GES-06 | P1: Revenue recognition engine | Tasks | T2 | In Tasks |
-| GES-07 | P1: Revenue recognition engine | Tasks | T2 | In Tasks |
-| GES-08 | P1: Revenue recognition engine | Tasks | T2 | In Tasks |
-| GES-09 | P1: Revenue recognition engine | Tasks | T2 | In Tasks |
-| GES-10 | P1: Revenue recognition engine | Tasks | T2 | In Tasks |
+| GES-01 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
+| GES-02 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
+| GES-03 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
+| GES-04 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
+| GES-05 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
+| GES-06 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
+| GES-07 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
+| GES-08 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
+| GES-09 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
+| GES-10 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
 | GES-11 | P1: Expenses and manual receipts | Tasks | T15 | In Tasks |
 | GES-12 | P1: Expenses and manual receipts | Tasks | T15 | In Tasks |
 | GES-13 | P1: Expenses and manual receipts | Tasks | T15 | In Tasks |
@@ -519,17 +519,17 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-19 | P1: Expenses and manual receipts | Tasks | T15 | In Tasks |
 | GES-20 | P1: Expenses and manual receipts | Tasks | T17 | In Tasks |
 | GES-21 | P1: Expenses and manual receipts | Tasks | T17 | In Tasks |
-| GES-22 | P1: Financeiro overview | Tasks | T2, T18 | In Tasks |
-| GES-23 | P1: Financeiro overview | Tasks | T2 | In Tasks |
-| GES-24 | P1: Financeiro overview | Tasks | T2, T18 | In Tasks |
-| GES-25 | P1: Financeiro overview | Tasks | T1, T18 | In Tasks |
+| GES-22 | P1: Financeiro overview | Tasks | T2, T18 | Implementing |
+| GES-23 | P1: Financeiro overview | Tasks | T2 | Implementing |
+| GES-24 | P1: Financeiro overview | Tasks | T2, T18 | Implementing |
+| GES-25 | P1: Financeiro overview | Tasks | T1, T18 | Implementing |
 | GES-26 | P1: Financeiro overview | Tasks | T29 | In Tasks |
 | GES-27 | P1: Financeiro overview | Tasks | T28, T29 | In Tasks |
 | GES-28 | P1: Financeiro overview | Tasks | T29 | In Tasks |
 | GES-29 | P1: DRE export | Tasks | T19 | In Tasks |
-| GES-30 | P1: DRE export | Tasks | T2, T19 | In Tasks |
-| GES-31 | P1: DRE export | Tasks | T2, T19 | In Tasks |
-| GES-32 | P1: DRE export | Tasks | T2, T19 | In Tasks |
+| GES-30 | P1: DRE export | Tasks | T2, T19 | Implementing |
+| GES-31 | P1: DRE export | Tasks | T2, T19 | Implementing |
+| GES-32 | P1: DRE export | Tasks | T2, T19 | Implementing |
 | GES-33 | P1: DRE export | Tasks | T19 | In Tasks |
 | GES-34 | P1: DRE export | Tasks | T19 | In Tasks |
 | GES-35 | P1: Payment gateway configuration | Tasks | T11 | In Tasks |
@@ -582,7 +582,7 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-82 | P1: Web push | Tasks | T40 | In Tasks |
 | GES-83 | P1: Web push | Tasks | T40 | In Tasks |
 | GES-84 | P1: Extra services catalog and online add-on | Tasks | T20 | In Tasks |
-| GES-85 | P1: Extra services catalog and online add-on | Tasks | T1, T20 | In Tasks |
+| GES-85 | P1: Extra services catalog and online add-on | Tasks | T1, T20 | Implementing |
 | GES-86 | P1: Extra services catalog and online add-on | Tasks | T20 | In Tasks |
 | GES-87 | P1: Extra services catalog and online add-on | Tasks | T38 | In Tasks |
 | GES-88 | P1: Extra services catalog and online add-on | Tasks | T20, T39 | In Tasks |
@@ -605,7 +605,7 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-105 | P1: Salas admin | Tasks | T22 | In Tasks |
 | GES-106 | P1: Salas admin | Tasks | T4, T22 | In Tasks |
 | GES-107 | P1: Salas admin | Tasks | T22 | In Tasks |
-| GES-108 | P1: Salas admin | Tasks | T1, T22, T36 | In Tasks |
+| GES-108 | P1: Salas admin | Tasks | T1, T22, T36 | Implementing |
 | GES-109 | P1: Salas admin | Tasks | T36 | In Tasks |
 | GES-110 | P1: Usuários and audit log | Tasks | T24 | In Tasks |
 | GES-111 | P1: Usuários and audit log | Tasks | T24 | In Tasks |
@@ -634,7 +634,7 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-134 | P1: Analytics funnel | Tasks | T42 | In Tasks |
 | GES-135 | P1: Analytics funnel | Tasks | T42 | In Tasks |
 | GES-136 | P1: Analytics funnel | Tasks | T42 | In Tasks |
-| GES-137 | P2: Free-tier usage panel | Tasks | T27, T33 | In Tasks |
+| GES-137 | P2: Free-tier usage panel | Tasks | T27, T33 | Implementing |
 | GES-138 | P2: Free-tier usage panel | Tasks | T27, T33 | In Tasks |
 | GES-139 | P2: Free-tier usage panel | Tasks | T27 | In Tasks |
 | GES-140 | P1: MVP hardening and production release | Tasks | T45 | In Tasks |

@@ -28,3 +28,8 @@ export * from './packages/conversion';
 export * from './packages/compensation';
 export * from './packages/period';
 export * from './packages/allocation';
+export * from './notifications/catalog';
+export * from './validation/gestao-schemas';
+export * from './media/room-photo-url';
+export * from './finance/recognition';
+export * from './finance/report';

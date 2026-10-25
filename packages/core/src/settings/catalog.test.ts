@@ -7,7 +7,8 @@ import {
   settingsCatalog,
 } from './catalog';
 
-// docs/architecture.md section 4, written out literally (key -> factory default).
+// docs/architecture.md section 4 plus gestao design `usage.limits`, written out literally
+// (key -> factory default).
 const expectedDefaults: Record<string, unknown> = {
   'calendar.slot_minutes': 30,
   'calendar.default_booking_minutes': 60,
@@ -54,6 +55,12 @@ const expectedDefaults: Record<string, unknown> = {
   },
   'mcp.enabled': false,
   'mcp.rate_limit_per_minute': 60,
+  'usage.limits': {
+    dbBytes: 536870912,
+    storageBytes: 1073741824,
+    emailsPerMonth: 3000,
+    emailsPerDay: 100,
+  },
 };
 
 describe('settings catalog (FND-18)', () => {
@@ -71,6 +78,20 @@ describe('settings catalog (FND-18)', () => {
     expect(defaults['payment.balance_reminder_hours_before']).toEqual([48, 36, 26]);
     expect(defaults['calendar.cleanup_minutes']).toBe(30);
     expect(defaults['policy.reschedule_window_days']).toBe(60);
+  });
+
+  it('defaults usage.limits to the free-tier figures and rejects a zero limit (GES-137)', () => {
+    const limits = settingDefaults()['usage.limits'];
+    expect(limits.emailsPerMonth).toBe(3000);
+    expect(limits).toEqual({
+      dbBytes: 512 * 1024 * 1024,
+      storageBytes: 1024 * 1024 * 1024,
+      emailsPerMonth: 3000,
+      emailsPerDay: 100,
+    });
+    expect(() => parseSetting('usage.limits', { ...limits, emailsPerDay: 0 })).toThrow(
+      SettingValidationError,
+    );
   });
 
   it('every default passes its own schema', () => {
