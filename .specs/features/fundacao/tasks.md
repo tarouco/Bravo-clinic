@@ -751,9 +751,9 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] `drizzle/meta/_journal.json` lists `0000_base` then `0001_base_constraints`
-- [ ] Running `drizzle-kit generate` again reports no schema changes
-- [ ] Gate check passes: `npm run typecheck && npm run lint`
+- [x] `drizzle/meta/_journal.json` lists `0000_base` then `0001_base_constraints`
+- [x] Running `drizzle-kit generate` again reports no schema changes
+- [x] Gate check passes: `npm run typecheck && npm run lint`
 
 **Tests**: none
 **Gate**: build
