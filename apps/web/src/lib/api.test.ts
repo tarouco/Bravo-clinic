@@ -85,6 +85,19 @@ describe('api client', () => {
     expect(init.body).toBeUndefined();
   });
 
+  it('exposes the Retry-After header of a 429 response as retryAfterSeconds', async () => {
+    const response = new Response(
+      JSON.stringify({ error: { code: 'TOO_MANY_ATTEMPTS', message: 'Muitas tentativas' } }),
+      { status: 429, headers: { 'Retry-After': '720' } },
+    );
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response));
+
+    const error = (await api.post('/x', {}).catch((e: unknown) => e)) as ApiError;
+
+    expect(error.status).toBe(429);
+    expect(error.retryAfterSeconds).toBe(720);
+  });
+
   it('maps a non-envelope error body to ApiError with code INTERNAL and the HTTP status', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response('boom', { status: 502 })));
 

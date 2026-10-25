@@ -1972,12 +1972,12 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert a 401 response shows "E-mail ou senha incorretos"; a 429 shows "Muitas tentativas. Tente novamente em <n> minutos."
-- [ ] Tests assert success navigates to `/app` for tenant, `/admin` for staff, and to `/app/agenda` with `?next=/app/agenda`; with `?next=//evil.com` it navigates to `/app`
-- [ ] Test asserts `mfaRequired: true` navigates to `/login/2fa`
-- [ ] Tests assert the Google button is absent with `googleEnabled: false` and links to `/api/public/auth/google/start` when true
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests assert a 401 response shows "E-mail ou senha incorretos"; a 429 shows "Muitas tentativas. Tente novamente em <n> minutos."
+- [x] Tests assert success navigates to `/app` for tenant, `/admin` for staff, and to `/app/agenda` with `?next=/app/agenda`; with `?next=//evil.com` it navigates to `/app`
+- [x] Test asserts `mfaRequired: true` navigates to `/login/2fa`
+- [x] Tests assert the Google button is absent with `googleEnabled: false` and links to `/api/public/auth/google/start` when true
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick
