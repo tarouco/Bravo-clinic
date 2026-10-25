@@ -2256,10 +2256,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test (in `apps/api`, importing `../../neon.ts` with `vi.stubEnv`) asserts `functions.api.source === 'apps/api/src/index.ts'`, env has `SESSION_SECRET`, `ENCRYPTION_KEY`, `APP_BASE_URL`, `EMAIL_FROM`, and has no `RESEND_API_KEY`/`GOOGLE_CLIENT_ID` keys when those are unset, and has them when set
-- [ ] `npx neonctl@latest config plan` (run by the worker, branch `dev`) shows function `api` (no apply)
+- [x] Test (in `apps/api`, importing `../../neon.ts` with `vi.stubEnv`) asserts `functions.api.source === 'apps/api/src/index.ts'`, env has `SESSION_SECRET`, `ENCRYPTION_KEY`, `APP_BASE_URL`, `EMAIL_FROM`, and has no `RESEND_API_KEY`/`GOOGLE_CLIENT_ID` keys when those are unset, and has them when set
+- [x] `npx neonctl@latest config plan` (run by the worker, branch `dev`) shows function `api` (no apply)
 - [ ] Gate check passes: `npm test -w apps/api`
-- [ ] Test count: ≥ 2 tests pass
+- [x] Test count: ≥ 2 tests pass
 
 **Tests**: unit
 **Gate**: quick

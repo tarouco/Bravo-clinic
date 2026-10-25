@@ -1,0 +1,6 @@
+{
+  // Root-level TypeScript config files (neon.ts). Workspaces have their own tsconfig.
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": { "types": ["node"] },
+  "include": ["neon.ts"]
+}
