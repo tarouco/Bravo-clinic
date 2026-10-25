@@ -420,11 +420,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] A test asserts the catalog key set equals the §4 key list (literal array in the test) and each default equals the §4 value (e.g. `payment.deposit_percent` 50, `payment.balance_reminder_hours_before` [48, 36, 26], `calendar.cleanup_minutes` 30, `policy.reschedule_window_days` 60)
-- [ ] A test asserts every default passes its own schema
-- [ ] Tests assert `parseSetting('payment.deposit_percent', 150)` throws `SettingValidationError` whose message contains `payment.deposit_percent`; `parseSetting('calendar.slot_minutes', 25)` throws
-- [ ] Gate check passes: `npm test -w packages/core`
-- [ ] Test count: ≥ 6 tests pass
+- [x] A test asserts the catalog key set equals the §4 key list (literal array in the test) and each default equals the §4 value (e.g. `payment.deposit_percent` 50, `payment.balance_reminder_hours_before` [48, 36, 26], `calendar.cleanup_minutes` 30, `policy.reschedule_window_days` 60)
+- [x] A test asserts every default passes its own schema
+- [x] Tests assert `parseSetting('payment.deposit_percent', 150)` throws `SettingValidationError` whose message contains `payment.deposit_percent`; `parseSetting('calendar.slot_minutes', 25)` throws
+- [x] Gate check passes: `npm test -w packages/core`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick
