@@ -1247,9 +1247,9 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] `npm run build -w apps/web` produces `apps/web/dist/index.html`
+- [x] `npm run build -w apps/web` produces `apps/web/dist/index.html`
 - [ ] `npm run dev -w apps/web` serves the app on 5173 and `/api/health` reaches the local API (manual check with T17 running)
-- [ ] Gate check passes: `npm run typecheck && npm run lint && npm test && npm run build -w apps/web`
+- [x] Gate check passes: `npm run typecheck && npm run lint && npm test && npm run build -w apps/web`
 
 **Tests**: none
 **Gate**: build
