@@ -2113,11 +2113,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert five nav items in order Reservar, Minhas reservas, Agenda, Compras, Perfil with their paths, the bottom bar having class `lg:hidden` and the sidebar `hidden lg:flex`
-- [ ] Test asserts "Sair" calls logout and navigates to `/`
-- [ ] Test asserts an unverified session shows "Confirme seu e-mail para reservar." with a resend button
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 3 tests pass
+- [x] Tests assert five nav items in order Reservar, Minhas reservas, Agenda, Compras, Perfil with their paths, the bottom bar having class `lg:hidden` and the sidebar `hidden lg:flex`
+- [x] Test asserts "Sair" calls logout and navigates to `/`
+- [x] Test asserts an unverified session shows "Confirme seu e-mail para reservar." with a resend button
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 3 tests pass
 
 **Tests**: unit
 **Gate**: quick
