@@ -506,11 +506,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert `parseEnv` without `SESSION_SECRET` throws `EnvError` whose `variables` include `SESSION_SECRET` and whose message does not contain any provided value
-- [ ] Tests assert a 31-char `SESSION_SECRET`, an `ENCRYPTION_KEY` that is not 32 bytes base64, a non-URL `APP_BASE_URL`, an invalid `EMAIL_FROM` each fail with that variable named
-- [ ] Tests assert a valid env parses and optional `RESEND_API_KEY`/`GOOGLE_*` stay `undefined` when absent
-- [ ] Gate check passes: `npm test -w apps/api`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests assert `parseEnv` without `SESSION_SECRET` throws `EnvError` whose `variables` include `SESSION_SECRET` and whose message does not contain any provided value
+- [x] Tests assert a 31-char `SESSION_SECRET`, an `ENCRYPTION_KEY` that is not 32 bytes base64, a non-URL `APP_BASE_URL`, an invalid `EMAIL_FROM` each fail with that variable named
+- [x] Tests assert a valid env parses and optional `RESEND_API_KEY`/`GOOGLE_*` stay `undefined` when absent
+- [x] Gate check passes: `npm test -w apps/api`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -534,11 +534,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests (minimal Hono app + `app.request`) assert response header `X-Request-Id` exists, inbound valid id is echoed, invalid inbound id (`"x y"`) is replaced
-- [ ] Tests spy on stdout and assert exactly one JSON line with `requestId`, `method`, `path`, `status`, `durationMs`
-- [ ] Tests assert `redact({ password: 'a', nested: { token: 'b', Authorization: 'c' }, code: '1', ok: 1 })` replaces the four sensitive values with `"[redacted]"` and keeps `ok`
-- [ ] Gate check passes: `npm test -w apps/api`
-- [ ] Test count: ≥ 5 tests pass
+- [x] Tests (minimal Hono app + `app.request`) assert response header `X-Request-Id` exists, inbound valid id is echoed, invalid inbound id (`"x y"`) is replaced
+- [x] Tests spy on stdout and assert exactly one JSON line with `requestId`, `method`, `path`, `status`, `durationMs`
+- [x] Tests assert `redact({ password: 'a', nested: { token: 'b', Authorization: 'c' }, code: '1', ok: 1 })` replaces the four sensitive values with `"[redacted]"` and keeps `ok`
+- [x] Gate check passes: `npm test -w apps/api`
+- [x] Test count: ≥ 5 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -562,13 +562,13 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Integration tests via `createApp().request()` with test-only routes assert: 422 body `{ error: { code: 'VALIDATION_FAILED', message: 'Dados inválidos', details: [{ path: 'name', message: <schema message> }], requestId } }`
-- [ ] Unknown path → 404 `error.code === 'NOT_FOUND'`
-- [ ] Throwing route → 500 `{ code: 'INTERNAL', message: 'Erro interno', requestId }` and body contains no `"stack"` and no `at ` frames
-- [ ] POST with `text/plain` → 415 `UNSUPPORTED_MEDIA_TYPE`; POST to `/webhooks/x` with `text/plain` is not rejected by the guard
-- [ ] Simulated pg error code `23P01` → 409 `SLOT_TAKEN`
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Integration tests via `createApp().request()` with test-only routes assert: 422 body `{ error: { code: 'VALIDATION_FAILED', message: 'Dados inválidos', details: [{ path: 'name', message: <schema message> }], requestId } }`
+- [x] Unknown path → 404 `error.code === 'NOT_FOUND'`
+- [x] Throwing route → 500 `{ code: 'INTERNAL', message: 'Erro interno', requestId }` and body contains no `"stack"` and no `at ` frames
+- [x] POST with `text/plain` → 415 `UNSUPPORTED_MEDIA_TYPE`; POST to `/webhooks/x` with `text/plain` is not rejected by the guard
+- [x] Simulated pg error code `23P01` → 409 `SLOT_TAKEN`
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -592,11 +592,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Integration test (against `DATABASE_URL_TEST`) creates a temp table, inserts inside `withTransaction` then throws, and asserts the row count is 0 afterwards
-- [ ] Integration test asserts a successful callback commits and returns its value
-- [ ] Test setup fails with "DATABASE_URL_TEST is required for integration tests" when the variable is missing (no silent skip)
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 3 tests pass
+- [x] Integration test (against `DATABASE_URL_TEST`) creates a temp table, inserts inside `withTransaction` then throws, and asserts the row count is 0 afterwards
+- [x] Integration test asserts a successful callback commits and returns its value
+- [x] Test setup fails with "DATABASE_URL_TEST is required for integration tests" when the variable is missing (no silent skip)
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 3 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -620,10 +620,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Integration test asserts 200 and body `{ status: 'ok', db: 'ok', branch: null }` with the test DB (and `branch: 'dev'` when `NEON_BRANCH=dev` is injected)
-- [ ] Integration test with an injected db whose `execute` rejects asserts 503 `{ status: 'degraded', db: 'error' }`
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 2 tests pass
+- [x] Integration test asserts 200 and body `{ status: 'ok', db: 'ok', branch: null }` with the test DB (and `branch: 'dev'` when `NEON_BRANCH=dev` is injected)
+- [x] Integration test with an injected db whose `execute` rejects asserts 503 `{ status: 'degraded', db: 'error' }`
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 2 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -647,9 +647,9 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] `npm run bundle -w apps/api` exits 0 and produces `apps/api/dist/index.mjs` that includes `@bravo/core` code (proves workspace TS bundles)
-- [ ] `npm run dev -w apps/api` serves `GET http://localhost:8787/health` → 200 (manual check)
-- [ ] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
+- [x] `npm run bundle -w apps/api` exits 0 and produces `apps/api/dist/index.mjs` that includes `@bravo/core` code (proves workspace TS bundles)
+- [x] `npm run dev -w apps/api` serves `GET http://localhost:8787/health` → 200 (manual check)
+- [x] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
 
 **Tests**: none
 **Gate**: build
