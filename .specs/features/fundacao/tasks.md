@@ -1916,10 +1916,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert `safeNextPath('/app/agenda') === '/app/agenda'` and `null` for `'//evil.com'`, `'https://evil.com'`, `'javascript:alert(1)'`, `'app'`, `null`
-- [ ] Tests assert `useLogin` posts to `/api/public/auth/login` and sets `['session']`; `useLogout` posts to `/api/app/auth/logout` and sets `['session']` to null
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 4 tests pass
+- [x] Tests assert `safeNextPath('/app/agenda') === '/app/agenda'` and `null` for `'//evil.com'`, `'https://evil.com'`, `'javascript:alert(1)'`, `'app'`, `null`
+- [x] Tests assert `useLogin` posts to `/api/public/auth/login` and sets `['session']`; `useLogout` posts to `/api/app/auth/logout` and sets `['session']` to null
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 4 tests pass
 
 **Tests**: unit
 **Gate**: quick
