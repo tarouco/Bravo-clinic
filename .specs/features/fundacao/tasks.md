@@ -2001,12 +2001,12 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test types document "529.982.247-24", submits, and asserts "CPF ou CNPJ inválido" under the field and no API call
-- [ ] Test asserts submit is disabled until both checkboxes are checked and the two links point to `/termos` and `/privacidade`
-- [ ] Test asserts 201 navigates to `/app` and the banner "Enviamos um link de confirmação para o seu e-mail." is shown
-- [ ] Tests assert 409 `EMAIL_TAKEN` shows "Este e-mail já está cadastrado." under e-mail and `DOCUMENT_TAKEN` shows "Este CPF/CNPJ já está cadastrado." under document
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 5 tests pass
+- [x] Test types document "529.982.247-24", submits, and asserts "CPF ou CNPJ inválido" under the field and no API call
+- [x] Test asserts submit is disabled until both checkboxes are checked and the two links point to `/termos` and `/privacidade`
+- [x] Test asserts 201 navigates to `/app` and the banner "Enviamos um link de confirmação para o seu e-mail." is shown
+- [x] Tests assert 409 `EMAIL_TAKEN` shows "Este e-mail já está cadastrado." under e-mail and `DOCUMENT_TAKEN` shows "Este CPF/CNPJ já está cadastrado." under document
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 5 tests pass
 
 **Tests**: unit
 **Gate**: quick

@@ -8,6 +8,7 @@ import {
   RequireSection,
   RequireStaff,
 } from './features/auth/guards';
+import { AppHomePage } from './pages/app/AppHomePage';
 import { LoginPage } from './pages/auth/LoginPage';
 import { ForgotPasswordPage } from './pages/auth/password/ForgotPasswordPage';
 import { ResetPasswordPage } from './pages/auth/password/ResetPasswordPage';
@@ -98,7 +99,7 @@ export const appRoutes: RouteObject[] = [
     path: 'app',
     element: <RequireAuth />,
     children: [
-      { index: true, element: <ComingSoon title="Próximas reservas" /> },
+      { index: true, element: <AppHomePage /> },
       ...appPlaceholders.map(placeholder),
       { path: '*', element: <NotFoundPage /> },
     ],
