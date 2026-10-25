@@ -506,11 +506,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert `parseEnv` without `SESSION_SECRET` throws `EnvError` whose `variables` include `SESSION_SECRET` and whose message does not contain any provided value
-- [ ] Tests assert a 31-char `SESSION_SECRET`, an `ENCRYPTION_KEY` that is not 32 bytes base64, a non-URL `APP_BASE_URL`, an invalid `EMAIL_FROM` each fail with that variable named
-- [ ] Tests assert a valid env parses and optional `RESEND_API_KEY`/`GOOGLE_*` stay `undefined` when absent
-- [ ] Gate check passes: `npm test -w apps/api`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests assert `parseEnv` without `SESSION_SECRET` throws `EnvError` whose `variables` include `SESSION_SECRET` and whose message does not contain any provided value
+- [x] Tests assert a 31-char `SESSION_SECRET`, an `ENCRYPTION_KEY` that is not 32 bytes base64, a non-URL `APP_BASE_URL`, an invalid `EMAIL_FROM` each fail with that variable named
+- [x] Tests assert a valid env parses and optional `RESEND_API_KEY`/`GOOGLE_*` stay `undefined` when absent
+- [x] Gate check passes: `npm test -w apps/api`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick
