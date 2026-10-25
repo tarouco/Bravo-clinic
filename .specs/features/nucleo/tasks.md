@@ -1318,9 +1318,9 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: dragging from 10:00 to 11:30 over free cells calls `onRangeSelect` with 600–720; an event 17:30–20:00 spans 5 half-hour rows; `showCleanup` adds a shaded 20:00–20:30 band and `showCleanup={false}` omits it; block shows its tag; navigation emits the new range
-- [ ] Gate check passes: `npm test -w apps/web` (phase end: Build-B gate)
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests: dragging from 10:00 to 11:30 over free cells calls `onRangeSelect` with 600–720; an event 17:30–20:00 spans 5 half-hour rows; `showCleanup` adds a shaded 20:00–20:30 band and `showCleanup={false}` omits it; block shows its tag; navigation emits the new range
+- [x] Gate check passes: `npm test -w apps/web` (phase end: Build-B gate)
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: build
