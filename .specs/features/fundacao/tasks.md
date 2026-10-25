@@ -1443,10 +1443,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert Card raised classes `bg-surface-raised border border-hairline rounded-card`; walnut `bg-walnut`
-- [ ] Test asserts Badge classes `bg-champagne-soft text-on-champagne uppercase text-caption tracking-[0.08em]`
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 3 tests pass
+- [x] Tests assert Card raised classes `bg-surface-raised border border-hairline rounded-card`; walnut `bg-walnut`
+- [x] Test asserts Badge classes `bg-champagne-soft text-on-champagne uppercase text-caption tracking-[0.08em]`
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 3 tests pass
 
 **Tests**: unit
 **Gate**: quick
