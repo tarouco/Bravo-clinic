@@ -143,7 +143,7 @@ export function AppShell() {
                 to={item.path}
                 className={({ isActive }) =>
                   cx(
-                    'flex h-16 flex-col items-center justify-center gap-space-xs px-1 text-center font-caption text-caption leading-tight transition-colors',
+                    'flex h-16 flex-col items-center justify-start gap-space-xs px-1 pt-space-sm text-center font-caption text-caption leading-tight transition-colors',
                     focusRing,
                     isActive ? 'text-bronze' : 'text-ink-muted hover:text-bronze',
                   )
