@@ -331,10 +331,10 @@ T48 → T50
 
 **Done when**:
 
-- [ ] `convertPackageBalance({ remainingMinutes:360, from:{160000,1200}, to:{225000,1800} }) === 384`; 0 remaining → 0; half-up rounding case asserted
-- [ ] Compensation: (1200,30)=40, (2400,60)=40, (1800,90)=20; `fixedScheduleCompensationCents(616000,30) === 20533`; `periodDaysOf('bimonthly') === 60`
-- [ ] Gate check passes: `npm test -w packages/core`
-- [ ] Test count: ≥ 8 tests pass
+- [x] `convertPackageBalance({ remainingMinutes:360, from:{160000,1200}, to:{225000,1800} }) === 384`; 0 remaining → 0; half-up rounding case asserted
+- [x] Compensation: (1200,30)=40, (2400,60)=40, (1800,90)=20; `fixedScheduleCompensationCents(616000,30) === 20533`; `periodDaysOf('bimonthly') === 60`
+- [x] Gate check passes: `npm test -w packages/core`
+- [x] Test count: ≥ 8 tests pass
 
 **Tests**: unit
 **Gate**: quick

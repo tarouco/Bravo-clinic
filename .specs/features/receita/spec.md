@@ -579,7 +579,7 @@
 | REC-68 | P1: Extra hours | Tasks | T13 | In Tasks |
 | REC-69 | P1: Extra hours | Tasks | T40 | In Tasks |
 | REC-70 | P1: Extra hours | Tasks | T29 | In Tasks |
-| REC-71 | P1: Change and cancel | Tasks | T6 | In Tasks |
+| REC-71 | P1: Change and cancel | Tasks | T6 | Implementing |
 | REC-72 | P1: Change and cancel | Tasks | T22, T25 | In Tasks |
 | REC-73 | P1: Change and cancel | Tasks | T22 | In Tasks |
 | REC-74 | P1: Change and cancel | Tasks | T22 | In Tasks |
@@ -604,7 +604,7 @@
 | REC-93 | P1: Fixed-schedule lifecycle | Tasks | T20, T27 | In Tasks |
 | REC-94 | P1: Fixed-schedule lifecycle | Tasks | T16 | In Tasks |
 | REC-95 | P1: Fixed-schedule lifecycle | Tasks | T16 | In Tasks |
-| REC-96 | P1: Closed-day compensation | Tasks | T6 | In Tasks |
+| REC-96 | P1: Closed-day compensation | Tasks | T6 | Implementing |
 | REC-97 | P1: Closed-day compensation | Tasks | T15 | In Tasks |
 | REC-98 | P1: Closed-day compensation | Tasks | T15 | In Tasks |
 | REC-99 | P1: Closed-day compensation | Tasks | T15 | In Tasks |
