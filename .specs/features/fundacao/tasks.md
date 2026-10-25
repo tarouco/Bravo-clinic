@@ -562,13 +562,13 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Integration tests via `createApp().request()` with test-only routes assert: 422 body `{ error: { code: 'VALIDATION_FAILED', message: 'Dados inválidos', details: [{ path: 'name', message: <schema message> }], requestId } }`
-- [ ] Unknown path → 404 `error.code === 'NOT_FOUND'`
-- [ ] Throwing route → 500 `{ code: 'INTERNAL', message: 'Erro interno', requestId }` and body contains no `"stack"` and no `at ` frames
-- [ ] POST with `text/plain` → 415 `UNSUPPORTED_MEDIA_TYPE`; POST to `/webhooks/x` with `text/plain` is not rejected by the guard
-- [ ] Simulated pg error code `23P01` → 409 `SLOT_TAKEN`
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Integration tests via `createApp().request()` with test-only routes assert: 422 body `{ error: { code: 'VALIDATION_FAILED', message: 'Dados inválidos', details: [{ path: 'name', message: <schema message> }], requestId } }`
+- [x] Unknown path → 404 `error.code === 'NOT_FOUND'`
+- [x] Throwing route → 500 `{ code: 'INTERNAL', message: 'Erro interno', requestId }` and body contains no `"stack"` and no `at ` frames
+- [x] POST with `text/plain` → 415 `UNSUPPORTED_MEDIA_TYPE`; POST to `/webhooks/x` with `text/plain` is not rejected by the guard
+- [x] Simulated pg error code `23P01` → 409 `SLOT_TAKEN`
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: integration
 **Gate**: full
