@@ -1357,10 +1357,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert `<Icon as={MapPin} />` renders an svg with `stroke-width="1.5"` and `aria-hidden="true"`; with `label="Local"` it has `role="img"` and `aria-label="Local"`
-- [ ] Tests assert BrandLockup renders "BRAVÔ CLINIC" and "SALAS INTELIGENTES"; EyebrowLockup renders the text between two `hr`/decorative rules with `aria-hidden`
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 4 tests pass
+- [x] Tests assert `<Icon as={MapPin} />` renders an svg with `stroke-width="1.5"` and `aria-hidden="true"`; with `label="Local"` it has `role="img"` and `aria-label="Local"`
+- [x] Tests assert BrandLockup renders "BRAVÔ CLINIC" and "SALAS INTELIGENTES"; EyebrowLockup renders the text between two `hr`/decorative rules with `aria-hidden`
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 4 tests pass
 
 **Tests**: unit
 **Gate**: quick
