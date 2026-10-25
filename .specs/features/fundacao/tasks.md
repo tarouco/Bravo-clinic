@@ -1582,11 +1582,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests (fetch stubbed) assert `api.post('/x', body)` sends JSON with `credentials: 'same-origin'` and `Content-Type: application/json`; a 422 envelope throws `ApiError` with `status 422`, `code 'VALIDATION_FAILED'`, `details`; a rejected fetch throws `code 'NETWORK'`
-- [ ] Tests assert `useSession` returns `null` on 401 and the user on 200
-- [ ] Test asserts `useClinicConfig` returns the fallback `{ googleEnabled: false, whatsappE164: '' }` while loading and on error
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests (fetch stubbed) assert `api.post('/x', body)` sends JSON with `credentials: 'same-origin'` and `Content-Type: application/json`; a 422 envelope throws `ApiError` with `status 422`, `code 'VALIDATION_FAILED'`, `details`; a rejected fetch throws `code 'NETWORK'`
+- [x] Tests assert `useSession` returns `null` on 401 and the user on 200
+- [x] Test asserts `useClinicConfig` returns the fallback `{ googleEnabled: false, whatsappE164: '' }` while loading and on error
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1610,11 +1610,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert nav links Salas `/salas`, Estrutura `/#estrutura`, Preços & Planos `/precos`, Serviços Extras `/servicos-extras`, Contato `/contato`, and text "Praia Brava - Itajaí"
-- [ ] Tests assert "Login" links to `/login` without session and "Minha conta" links to `/app` with a session
-- [ ] Test asserts the menu button toggles `aria-expanded` false→true and reveals the links
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 4 tests pass
+- [x] Tests assert nav links Salas `/salas`, Estrutura `/#estrutura`, Preços & Planos `/precos`, Serviços Extras `/servicos-extras`, Contato `/contato`, and text "Praia Brava - Itajaí"
+- [x] Tests assert "Login" links to `/login` without session and "Minha conta" links to `/app` with a session
+- [x] Test asserts the menu button toggles `aria-expanded` false→true and reveals the links
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 4 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1638,10 +1638,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert headings Navegação, Diretrizes, Atendimento; text "Praia Brava, Itajaí – SC" and "Seg a sex 07:00–00:00 · Sáb, dom e feriados 09:00–00:00"; no "São Paulo"/"Jardins"
-- [ ] Test asserts the copyright text "© 2026 Bravô Clinic • Salas Inteligentes. Todos os direitos reservados. Saúde • Beleza • Bem-estar."
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 3 tests pass
+- [x] Tests assert headings Navegação, Diretrizes, Atendimento; text "Praia Brava, Itajaí – SC" and "Seg a sex 07:00–00:00 · Sáb, dom e feriados 09:00–00:00"; no "São Paulo"/"Jardins"
+- [x] Test asserts the copyright text "© 2026 Bravô Clinic • Salas Inteligentes. Todos os direitos reservados. Saúde • Beleza • Bem-estar."
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 3 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1665,10 +1665,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert href `https://wa.me/5547999990000` for config `+5547999990000` and `https://wa.me/` for `''`; `target="_blank"`, `rel="noopener noreferrer"`
-- [ ] Test asserts classes `fixed bottom-6 right-6` and the label element has `hidden sm:inline-block`
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 3 tests pass
+- [x] Tests assert href `https://wa.me/5547999990000` for config `+5547999990000` and `https://wa.me/` for `''`; `target="_blank"`, `rel="noopener noreferrer"`
+- [x] Test asserts classes `fixed bottom-6 right-6` and the label element has `hidden sm:inline-block`
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 3 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1692,10 +1692,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test renders a memory router with the layout and an unknown path and asserts header, footer, WhatsApp link and "Página não encontrada" with a link to `/`
-- [ ] Test asserts the WhatsApp link is present on two different child routes
-- [ ] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
-- [ ] Test count: ≥ 2 tests pass
+- [x] Test renders a memory router with the layout and an unknown path and asserts header, footer, WhatsApp link and "Página não encontrada" with a link to `/`
+- [x] Test asserts the WhatsApp link is present on two different child routes
+- [x] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
+- [x] Test count: ≥ 2 tests pass
 
 **Tests**: unit
 **Gate**: build
