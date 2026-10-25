@@ -2030,10 +2030,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test asserts exactly one verify request with the token and the text "E-mail confirmado"
-- [ ] Test asserts a 400 shows "Link inválido ou expirado" and, with a session, a "Reenviar e-mail" button that calls resend
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 3 tests pass
+- [x] Test asserts exactly one verify request with the token and the text "E-mail confirmado"
+- [x] Test asserts a 400 shows "Link inválido ou expirado" and, with a session, a "Reenviar e-mail" button that calls resend
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 3 tests pass
 
 **Tests**: unit
 **Gate**: quick
