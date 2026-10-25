@@ -1498,10 +1498,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert roles `tablist`, `tab` (with `aria-selected`, `aria-controls`), `tabpanel` (with `aria-labelledby`)
-- [ ] Tests assert ArrowRight selects the next tab and shows its panel, ArrowLeft from the first wraps to the last, Home/End jump
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 4 tests pass
+- [x] Tests assert roles `tablist`, `tab` (with `aria-selected`, `aria-controls`), `tabpanel` (with `aria-labelledby`)
+- [x] Tests assert ArrowRight selects the next tab and shows its panel, ArrowLeft from the first wraps to the last, Home/End jump
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 4 tests pass
 
 **Tests**: unit
 **Gate**: quick
