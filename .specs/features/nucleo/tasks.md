@@ -225,11 +225,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] One test per W-CL row (CL-1..CL-10) and W-CC row (CC-1..CC-4) with the exact expected reasons, cells and `maxEndMinute`
-- [ ] Tests for every reject reason and its pt-BR message (NUC-17), window null cases (closed day clinic/room, closed holiday, closed weekday) and holiday hours
-- [ ] Test asserts the conflict predicate equals `[S, E+c) && [o.start, o.occupiedUntil)` over a randomized table of 200 intervals
-- [ ] Gate check passes: `npm test -w packages/core`
-- [ ] Test count: ≥ 35 tests pass
+- [x] One test per W-CL row (CL-1..CL-10) and W-CC row (CC-1..CC-4) with the exact expected reasons, cells and `maxEndMinute`
+- [x] Tests for every reject reason and its pt-BR message (NUC-17), window null cases (closed day clinic/room, closed holiday, closed weekday) and holiday hours
+- [x] Test asserts the conflict predicate equals `[S, E+c) && [o.start, o.occupiedUntil)` over a randomized table of 200 intervals
+- [x] Gate check passes: `npm test -w packages/core`
+- [x] Test count: ≥ 35 tests pass
 
 **Tests**: unit
 **Gate**: quick

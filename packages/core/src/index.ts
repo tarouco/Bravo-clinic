@@ -11,3 +11,5 @@ export * from './contracts/common';
 export * from './contracts/public';
 export * from './contracts/app';
 export * from './contracts/admin';
+export * from './calendar/day-type';
+export * from './slots/grid';
