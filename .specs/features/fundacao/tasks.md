@@ -1665,10 +1665,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert href `https://wa.me/5547999990000` for config `+5547999990000` and `https://wa.me/` for `''`; `target="_blank"`, `rel="noopener noreferrer"`
-- [ ] Test asserts classes `fixed bottom-6 right-6` and the label element has `hidden sm:inline-block`
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 3 tests pass
+- [x] Tests assert href `https://wa.me/5547999990000` for config `+5547999990000` and `https://wa.me/` for `''`; `target="_blank"`, `rel="noopener noreferrer"`
+- [x] Test asserts classes `fixed bottom-6 right-6` and the label element has `hidden sm:inline-block`
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 3 tests pass
 
 **Tests**: unit
 **Gate**: quick
