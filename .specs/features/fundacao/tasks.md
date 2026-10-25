@@ -1216,12 +1216,12 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test without Google env asserts `/public/auth/google/start` → 404 `FEATURE_DISABLED`
-- [ ] Test with env asserts 302 `Location` on `accounts.google.com` containing `state`, `code_challenge_method=S256`, `scope=openid%20email%20profile`, and a state cookie with `HttpOnly` and `Max-Age=600`
-- [ ] Tests with stubbed token endpoint and a locally generated JWKS assert: new Google user → tenant with `email_verified_at`, `google_sub`, no document, redirect `/app/perfil?completar=1`; existing user with same verified e-mail → linked, redirect `/app`
-- [ ] Test asserts mismatched state → 400 `INVALID_STATE` and no `Set-Cookie: bravo_session`
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 5 tests pass
+- [x] Test without Google env asserts `/public/auth/google/start` → 404 `FEATURE_DISABLED`
+- [x] Test with env asserts 302 `Location` on `accounts.google.com` containing `state`, `code_challenge_method=S256`, `scope=openid%20email%20profile`, and a state cookie with `HttpOnly` and `Max-Age=600`
+- [x] Tests with stubbed token endpoint and a locally generated JWKS assert: new Google user → tenant with `email_verified_at`, `google_sub`, no document, redirect `/app/perfil?completar=1`; existing user with same verified e-mail → linked, redirect `/app`
+- [x] Test asserts mismatched state → 400 `INVALID_STATE` and no `Set-Cookie: bravo_session`
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 5 tests pass
 
 **Tests**: integration
 **Gate**: full

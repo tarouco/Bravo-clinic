@@ -19,6 +19,7 @@ export function createApp(overrides: Partial<AppDeps> = {}): Hono<AppEnv> {
     fetch: overrides.fetch ?? globalThis.fetch,
     env: overrides.env ?? getEnv(),
     db: overrides.db ?? getDb(),
+    ...(overrides.googleJwks !== undefined && { googleJwks: overrides.googleJwks }),
   };
 
   const app = new Hono<AppEnv>();
