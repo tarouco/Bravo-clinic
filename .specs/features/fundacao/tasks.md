@@ -620,10 +620,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Integration test asserts 200 and body `{ status: 'ok', db: 'ok', branch: null }` with the test DB (and `branch: 'dev'` when `NEON_BRANCH=dev` is injected)
-- [ ] Integration test with an injected db whose `execute` rejects asserts 503 `{ status: 'degraded', db: 'error' }`
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 2 tests pass
+- [x] Integration test asserts 200 and body `{ status: 'ok', db: 'ok', branch: null }` with the test DB (and `branch: 'dev'` when `NEON_BRANCH=dev` is injected)
+- [x] Integration test with an injected db whose `execute` rejects asserts 503 `{ status: 'degraded', db: 'error' }`
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 2 tests pass
 
 **Tests**: integration
 **Gate**: full
