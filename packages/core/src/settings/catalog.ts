@@ -105,6 +105,17 @@ export const settingsCatalog = {
   ),
   'mcp.enabled': setting(z.boolean(), false, 'staff'),
   'mcp.rate_limit_per_minute': setting(int(1, 600), 60, 'staff'),
+  // Free-tier figures shown by the usage panel (GES-137); editable because providers change them.
+  'usage.limits': setting(
+    z.object({
+      dbBytes: int(1, Number.MAX_SAFE_INTEGER),
+      storageBytes: int(1, Number.MAX_SAFE_INTEGER),
+      emailsPerMonth: int(1, Number.MAX_SAFE_INTEGER),
+      emailsPerDay: int(1, Number.MAX_SAFE_INTEGER),
+    }),
+    { dbBytes: 536870912, storageBytes: 1073741824, emailsPerMonth: 3000, emailsPerDay: 100 },
+    'staff',
+  ),
 } as const satisfies Record<string, SettingDefinition>;
 
 export type SettingKey = keyof typeof settingsCatalog;

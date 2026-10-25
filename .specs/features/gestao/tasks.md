@@ -203,13 +203,13 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests assert `financeQuerySchema` rejects `to < from` and a 732-day range, accepts 731 days
-- [ ] Tests assert `extraServiceInputSchema` rejects `saleMode: 'online'` with null price on path `referencePriceCents`
-- [ ] Tests assert `quoteRequestInputSchema` bounds (name 2..120, description 10..2000, desiredOn ≤ today + 365 with injected today) and that `website` is accepted as an optional string
-- [ ] Tests assert `toPhotoUrl('rooms/r1/u1', 'small') === '/media/rooms/r1/u1-small.webp'`
-- [ ] Tests assert every staff toggle key of `notifications.events` maps to one `staff.*` catalog entry and `settingDefaults()['usage.limits'].emailsPerMonth === 3000`
-- [ ] Gate check passes: `npm test -w packages/core`
-- [ ] Test count: ≥ 14 tests pass
+- [x] Tests assert `financeQuerySchema` rejects `to < from` and a 732-day range, accepts 731 days
+- [x] Tests assert `extraServiceInputSchema` rejects `saleMode: 'online'` with null price on path `referencePriceCents`
+- [x] Tests assert `quoteRequestInputSchema` bounds (name 2..120, description 10..2000, desiredOn ≤ today + 365 with injected today) and that `website` is accepted as an optional string
+- [x] Tests assert `toPhotoUrl('rooms/r1/u1', 'small') === '/media/rooms/r1/u1-small.webp'`
+- [x] Tests assert every staff toggle key of `notifications.events` maps to one `staff.*` catalog entry and `settingDefaults()['usage.limits'].emailsPerMonth === 3000`
+- [x] Gate check passes: `npm test -w packages/core`
+- [x] Test count: ≥ 14 tests pass
 
 **Tests**: unit
 **Gate**: quick
