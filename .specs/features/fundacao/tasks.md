@@ -1386,11 +1386,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert primary has classes `bg-bronze`, `text-on-bronze`, `h-12`, `rounded-control`; secondary `bg-surface-raised`, `border`, `border-border`, `text-ink`; ghost `bg-transparent`
-- [ ] Test asserts `loading` → `disabled` and `aria-busy="true"` and click handler not called
-- [ ] Test asserts focus-visible classes `focus-visible:ring-2 focus-visible:ring-bronze focus-visible:ring-offset-2`
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 4 tests pass
+- [x] Tests assert primary has classes `bg-bronze`, `text-on-bronze`, `h-12`, `rounded-control`; secondary `bg-surface-raised`, `border`, `border-border`, `text-ink`; ghost `bg-transparent`
+- [x] Test asserts `loading` → `disabled` and `aria-busy="true"` and click handler not called
+- [x] Test asserts focus-visible classes `focus-visible:ring-2 focus-visible:ring-bronze focus-visible:ring-offset-2`
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 4 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1414,12 +1414,12 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert `getByLabelText('E-mail')` finds the input (label bound by id); with `error="Obrigatório"` the input has `aria-invalid="true"` and `aria-describedby` equal to the error element id
-- [ ] Tests assert DocumentInput typing "52998224725" shows "529.982.247-25" and 14 digits show the CNPJ mask; PhoneInput shows "(47) 99999-0000"
-- [ ] Test asserts PasswordInput toggle switches `type` password↔text with an accessible label "Mostrar senha"
-- [ ] Test asserts focus-visible ring classes on Input
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests assert `getByLabelText('E-mail')` finds the input (label bound by id); with `error="Obrigatório"` the input has `aria-invalid="true"` and `aria-describedby` equal to the error element id
+- [x] Tests assert DocumentInput typing "52998224725" shows "529.982.247-25" and 14 digits show the CNPJ mask; PhoneInput shows "(47) 99999-0000"
+- [x] Test asserts PasswordInput toggle switches `type` password↔text with an accessible label "Mostrar senha"
+- [x] Test asserts focus-visible ring classes on Input
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1443,10 +1443,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert Card raised classes `bg-surface-raised border border-hairline rounded-card`; walnut `bg-walnut`
-- [ ] Test asserts Badge classes `bg-champagne-soft text-on-champagne uppercase text-caption tracking-[0.08em]`
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 3 tests pass
+- [x] Tests assert Card raised classes `bg-surface-raised border border-hairline rounded-card`; walnut `bg-walnut`
+- [x] Test asserts Badge classes `bg-champagne-soft text-on-champagne uppercase text-caption tracking-[0.08em]`
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 3 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1470,11 +1470,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert open modal has `role="dialog"`, `aria-modal="true"`, `aria-labelledby` → title, and focus is inside it
-- [ ] Test asserts Tab from the last focusable element moves focus to the first (and Shift+Tab reverse)
-- [ ] Test asserts Escape calls `onClose` and, after close, focus returns to the trigger button
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 4 tests pass
+- [x] Tests assert open modal has `role="dialog"`, `aria-modal="true"`, `aria-labelledby` → title, and focus is inside it
+- [x] Test asserts Tab from the last focusable element moves focus to the first (and Shift+Tab reverse)
+- [x] Test asserts Escape calls `onClose` and, after close, focus returns to the trigger button
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 4 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1498,10 +1498,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert roles `tablist`, `tab` (with `aria-selected`, `aria-controls`), `tabpanel` (with `aria-labelledby`)
-- [ ] Tests assert ArrowRight selects the next tab and shows its panel, ArrowLeft from the first wraps to the last, Home/End jump
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 4 tests pass
+- [x] Tests assert roles `tablist`, `tab` (with `aria-selected`, `aria-controls`), `tabpanel` (with `aria-labelledby`)
+- [x] Tests assert ArrowRight selects the next tab and shows its panel, ArrowLeft from the first wraps to the last, Home/End jump
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 4 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1525,10 +1525,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests (fake timers) assert a toast has `role="status"` and `aria-live="polite"`, disappears after 6000 ms, and a toast with an action stays after 6000 ms and runs the action on click
-- [ ] Tests assert Alert error has `role="alert"`; ComingSoon renders its title and "Em construção"
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 4 tests pass
+- [x] Tests (fake timers) assert a toast has `role="status"` and `aria-live="polite"`, disappears after 6000 ms, and a toast with an action stays after 6000 ms and runs the action on click
+- [x] Tests assert Alert error has `role="alert"`; ComingSoon renders its title and "Em construção"
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 4 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1552,11 +1552,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert name heading, chips, tags, description, one list item per equipment entry, text "A partir de" and "R$ 80,00" with "/h" for `fromPriceCents = 8000`
-- [ ] Test asserts the img `src` is `/room-placeholder.webp` when `imageUrl` is undefined and alt text is non-empty
-- [ ] Test asserts clicking "Reservar Sala" calls `onReserve` once
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 3 tests pass
+- [x] Tests assert name heading, chips, tags, description, one list item per equipment entry, text "A partir de" and "R$ 80,00" with "/h" for `fromPriceCents = 8000`
+- [x] Test asserts the img `src` is `/room-placeholder.webp` when `imageUrl` is undefined and alt text is non-empty
+- [x] Test asserts clicking "Reservar Sala" calls `onReserve` once
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 3 tests pass
 
 **Tests**: unit
 **Gate**: quick
