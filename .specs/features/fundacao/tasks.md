@@ -2141,10 +2141,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test asserts admin sees the 10 labels in PRD order; reception sees only "Gestão de Reservas" and "Clientes"
-- [ ] Test navigates to "Cupons" and asserts heading "Cupons" and text "Em construção"
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 3 tests pass
+- [x] Test asserts admin sees the 10 labels in PRD order; reception sees only "Gestão de Reservas" and "Clientes"
+- [x] Test navigates to "Cupons" and asserts heading "Cupons" and text "Em construção"
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 3 tests pass
 
 **Tests**: unit
 **Gate**: quick
