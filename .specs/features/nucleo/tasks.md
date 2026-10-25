@@ -1374,9 +1374,9 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: renders gallery placeholder, equipment list and "R$ 97,00/h" category; clicking 2026-10-27 then 17:30 and 2h30 produces link `/reservar?sala=principal&data=2026-10-27&inicio=1050&fim=1200`; holiday marker visible; unknown slug (MSW 404) shows the 404 page
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 4 tests pass
+- [x] Tests: renders gallery placeholder, equipment list and "R$ 97,00/h" category; clicking 2026-10-27 then 17:30 and 2h30 produces link `/reservar?sala=principal&data=2026-10-27&inicio=1050&fim=1200`; holiday marker visible; unknown slug (MSW 404) shows the 404 page
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 4 tests pass
 
 **Tests**: unit
 **Gate**: quick
