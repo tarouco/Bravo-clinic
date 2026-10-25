@@ -26,3 +26,5 @@ export * from './pricing/discounts';
 export * from './packages/debit';
 export * from './packages/conversion';
 export * from './packages/compensation';
+export * from './packages/period';
+export * from './packages/allocation';

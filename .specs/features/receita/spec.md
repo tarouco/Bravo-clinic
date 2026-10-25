@@ -518,7 +518,7 @@
 | REC-07 | P1: Package categories | Tasks | T18, T19 | In Tasks |
 | REC-08 | P1: Package categories | Tasks | T18, T19 | In Tasks |
 | REC-09 | P1: Package categories | Tasks | T27 | In Tasks |
-| REC-10 | P1: Buy an hour package | Tasks | T7, T18 | In Tasks |
+| REC-10 | P1: Buy an hour package | Tasks | T7, T18 | Implementing |
 | REC-11 | P1: Buy an hour package | Tasks | T2, T18 | Implementing |
 | REC-12 | P1: Buy an hour package | Tasks | T8, T19 | In Tasks |
 | REC-13 | P1: Buy an hour package | Tasks | T19 | In Tasks |
@@ -533,8 +533,8 @@
 | REC-22 | P1: Pay a booking with package hours | Tasks | T5 | Implementing |
 | REC-23 | P1: Pay a booking with package hours | Tasks | T13, T16 | In Tasks |
 | REC-24 | P1: Pay a booking with package hours | Tasks | T34 | In Tasks |
-| REC-25 | P1: Pay a booking with package hours | Tasks | T7, T13 | In Tasks |
-| REC-26 | P1: Pay a booking with package hours | Tasks | T7, T13 | In Tasks |
+| REC-25 | P1: Pay a booking with package hours | Tasks | T7, T13 | Implementing |
+| REC-26 | P1: Pay a booking with package hours | Tasks | T7, T13 | Implementing |
 | REC-27 | P1: Pay a booking with package hours | Tasks | T13, T16 | In Tasks |
 | REC-28 | P1: Pay a booking with package hours | Tasks | T34 | In Tasks |
 | REC-29 | P1: Pay a booking with package hours | Tasks | T13, T16 | In Tasks |
@@ -554,7 +554,7 @@
 | REC-43 | P1: Balance ledger and extrato | Tasks | T10, T26 | In Tasks |
 | REC-44 | P1: Balance ledger and extrato | Tasks | T10, T26 | In Tasks |
 | REC-45 | P1: Balance ledger and extrato | Tasks | T26 | In Tasks |
-| REC-46 | P1: Renewal, suspension and closure | Tasks | T7 | In Tasks |
+| REC-46 | P1: Renewal, suspension and closure | Tasks | T7 | Implementing |
 | REC-47 | P1: Renewal, suspension and closure | Tasks | T27 | In Tasks |
 | REC-48 | P1: Renewal, suspension and closure | Tasks | T27 | In Tasks |
 | REC-49 | P1: Renewal, suspension and closure | Tasks | T21 | In Tasks |
@@ -615,9 +615,9 @@
 | REC-104 | P1: Closed-day compensation | Tasks | T8, T15 | In Tasks |
 | REC-105 | P1: Customer credits | Tasks | T9 | In Tasks |
 | REC-106 | P1: Customer credits | Tasks | T9 | In Tasks |
-| REC-107 | P1: Customer credits | Tasks | T7, T9 | In Tasks |
+| REC-107 | P1: Customer credits | Tasks | T7, T9 | Implementing |
 | REC-108 | P1: Customer credits | Tasks | T9 | In Tasks |
-| REC-109 | P1: Customer credits | Tasks | T7, T9, T16 | In Tasks |
+| REC-109 | P1: Customer credits | Tasks | T7, T9, T16 | Implementing |
 | REC-110 | P1: Customer credits | Tasks | T16 | In Tasks |
 | REC-111 | P1: Customer credits | Tasks | T16 | In Tasks |
 | REC-112 | P1: Customer credits | Tasks | T9 | In Tasks |

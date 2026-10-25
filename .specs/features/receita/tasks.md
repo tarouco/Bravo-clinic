@@ -358,11 +358,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] `periodBounds('2026-11-02', 30)` → endsOn `2026-12-02`; `chargeDueAt('2026-12-02', 2)` → `2026-11-30T03:00:00.000Z`; `graceEndsOn('2026-12-02', 7)` → `2026-12-09`; notices for endsOn 2026-12-02 → `2026-11-25`, `2026-12-01`
-- [ ] `allocateMinutes`: package first, then lots by expiry; skips lots expiring before booking start or before now; `usePackage:false` uses lots only; insufficient returns `sufficient:false` with `available`
-- [ ] `allocateCredits` FIFO by expiry then creation, never exceeds a lot; `allocateRefund({cash:8000, credit:8000, refund:8000})` → credit 0 / cash 8000 for retained 8000; `({cash:0, credit:16000, refund:8000})` → credit 8000
-- [ ] Gate check passes: `npm test -w packages/core`
-- [ ] Test count: ≥ 16 tests pass
+- [x] `periodBounds('2026-11-02', 30)` → endsOn `2026-12-02`; `chargeDueAt('2026-12-02', 2)` → `2026-11-30T03:00:00.000Z`; `graceEndsOn('2026-12-02', 7)` → `2026-12-09`; notices for endsOn 2026-12-02 → `2026-11-25`, `2026-12-01`
+- [x] `allocateMinutes`: package first, then lots by expiry; skips lots expiring before booking start or before now; `usePackage:false` uses lots only; insufficient returns `sufficient:false` with `available`
+- [x] `allocateCredits` FIFO by expiry then creation, never exceeds a lot; `allocateRefund({cash:8000, credit:8000, refund:8000})` → credit 0 / cash 8000 for retained 8000; `({cash:0, credit:16000, refund:8000})` → credit 8000
+- [x] Gate check passes: `npm test -w packages/core`
+- [x] Test count: ≥ 16 tests pass
 
 **Tests**: unit
 **Gate**: quick
