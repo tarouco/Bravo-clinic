@@ -448,11 +448,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert 28 rows: 20 `national`, 2 `state`, 6 `municipal`
-- [ ] Tests assert the SC/Itajaí rows (2026-06-04, 2026-06-15, 2026-08-16, 2026-12-08, 2027-05-27, 2027-06-15, 2027-08-15, 2027-12-08) and that only 2027-08-15 has `needsReview: true`
-- [ ] Tests assert `weekdayOf('2026-08-16') === 7` and `weekdayOf('2027-08-15') === 7` (Data Magna on Sunday) and no duplicate (date, name)
-- [ ] Gate check passes: `npm test -w packages/core`
-- [ ] Test count: ≥ 4 tests pass
+- [x] Tests assert 28 rows: 20 `national`, 2 `state`, 6 `municipal`
+- [x] Tests assert the SC/Itajaí rows (2026-06-04, 2026-06-15, 2026-08-16, 2026-12-08, 2027-05-27, 2027-06-15, 2027-08-15, 2027-12-08) and that only 2027-08-15 has `needsReview: true`
+- [x] Tests assert `weekdayOf('2026-08-16') === 7` and `weekdayOf('2027-08-15') === 7` (Data Magna on Sunday) and no duplicate (date, name)
+- [x] Gate check passes: `npm test -w packages/core`
+- [x] Test count: ≥ 4 tests pass
 
 **Tests**: unit
 **Gate**: quick
