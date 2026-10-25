@@ -10,16 +10,14 @@ import { safeNextPath, useLogin } from '../../features/auth/hooks';
 import { useClinicConfig } from '../../features/config/useClinicConfig';
 import { ApiError } from '../../lib/api';
 import { AuthCard } from './AuthCard';
+import { tooManyAttemptsMessage } from './error-messages';
 
 const GOOGLE_START_URL = '/api/public/auth/google/start';
 
 function loginErrorMessage(error: unknown): string {
   if (error instanceof ApiError) {
     if (error.status === 401) return 'E-mail ou senha incorretos';
-    if (error.status === 429) {
-      const minutes = Math.max(1, Math.ceil((error.retryAfterSeconds ?? 60) / 60));
-      return `Muitas tentativas. Tente novamente em ${String(minutes)} minutos.`;
-    }
+    if (error.status === 429) return tooManyAttemptsMessage(error);
     return error.message;
   }
   return 'Não foi possível entrar. Tente novamente.';

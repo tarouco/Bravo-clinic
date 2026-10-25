@@ -2084,10 +2084,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test asserts a valid code navigates to `/admin`; 401 shows "Código inválido"
-- [ ] Test asserts the enrollment page renders an img with the QR alt, then after confirming shows 10 recovery codes and the button "Já guardei os códigos" navigating to `/admin`
-- [ ] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
-- [ ] Test count: ≥ 3 tests pass
+- [x] Test asserts a valid code navigates to `/admin`; 401 shows "Código inválido"
+- [x] Test asserts the enrollment page renders an img with the QR alt, then after confirming shows 10 recovery codes and the button "Já guardei os códigos" navigating to `/admin`
+- [x] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
+- [x] Test count: ≥ 3 tests pass
 
 **Tests**: unit
 **Gate**: build
