@@ -1290,10 +1290,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: CL-4 fixture → clicking 11:30 offers durations 1h, 1h30, 2h (end ≤ 13:30) only; unavailable cells are `aria-disabled`; a cell with `discountPercent: 10` shows "−10%"
-- [ ] Tests: MonthCalendar disables `past`/`out_of_range`, shows "Feriado: Finados" title on 2026-11-02, arrow-key navigation moves focus by day/week
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 8 tests pass
+- [x] Tests: CL-4 fixture → clicking 11:30 offers durations 1h, 1h30, 2h (end ≤ 13:30) only; unavailable cells are `aria-disabled`; a cell with `discountPercent: 10` shows "−10%"
+- [x] Tests: MonthCalendar disables `past`/`out_of_range`, shows "Feriado: Finados" title on 2026-11-02, arrow-key navigation moves focus by day/week
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 8 tests pass
 
 **Tests**: unit
 **Gate**: quick
