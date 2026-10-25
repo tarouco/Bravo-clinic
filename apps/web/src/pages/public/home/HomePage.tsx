@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import type { RoomSlug } from '../../../features/home/room-slug';
+import { isRoomSlug, type RoomSlug } from '../../../features/home/room-slug';
 import { ArchitectureSection } from './ArchitectureSection';
 import { ExtrasSection } from './ExtrasSection';
 import { HeroSection } from './HeroSection';
@@ -30,7 +30,7 @@ export function HomePage() {
       <ArchitectureSection />
       <RoomsSection
         onReserve={(slug) => {
-          setSelectedRoom(slug);
+          if (isRoomSlug(slug)) setSelectedRoom(slug);
           scrollToSimulator();
         }}
       />

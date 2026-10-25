@@ -19,12 +19,12 @@ import { TwoFactorEnrollPage, TwoFactorVerifyPage } from './pages/auth/TwoFactor
 import { VerifyEmailPage } from './pages/auth/VerifyEmailPage';
 import { HomePage } from './pages/public/home/HomePage';
 import { NotFoundPage } from './pages/public/NotFoundPage';
+import { RoomsPage } from './pages/public/rooms/RoomsPage';
 
 type PlaceholderRoute = readonly [path: string, title: string];
 
 /** Public pages that ship with later features (docs/architecture.md section 9.1). */
 const publicPlaceholders: PlaceholderRoute[] = [
-  ['salas', 'Salas'],
   ['salas/:slug', 'Sala'],
   ['precos', 'Preços e pacotes'],
   ['servicos-extras', 'Serviços extras'],
@@ -81,6 +81,7 @@ export const appRoutes: RouteObject[] = [
     element: <PublicLayout />,
     children: [
       { index: true, element: <HomePage /> },
+      { path: 'salas', element: <RoomsPage /> },
       ...publicPlaceholders.map(placeholder),
       { path: 'login', element: <LoginPage /> },
       { path: 'cadastro', element: <SignupPage /> },

@@ -1,10 +1,18 @@
-import { formatBRL, mulDivRoundHalfUp, percentOfCents, type Cents } from '@bravo/core';
+import {
+  formatBRL,
+  percentOfCents,
+  priceHourlyBooking,
+  type Cents,
+  type HourlyCategory,
+  type LocalDate,
+} from '@bravo/core';
+import { FACTORY_HOURLY_CATEGORIES } from './factory-categories';
 
 /** "util" = weekday business hours; "especial" = night, weekend and holiday. */
 export type SimulatorPeriod = 'util' | 'especial';
 
 export interface Simulation {
-  /** Hourly rate applied to every hour, in cents. */
+  /** Hourly rate applied to the first segment, in cents. */
   rateCents: Cents;
   totalCents: Cents;
   /** 50% paid at checkout. */
@@ -15,37 +23,57 @@ export interface Simulation {
   formula: string;
 }
 
-/** Factory-default tariff (docs/prd.md section 5.3). `nucleo` replaces this with `@bravo/core` pricing. */
-const TARIFF: Record<
-  SimulatorPeriod,
-  { singleHourCents: Cents; discountCents: Cents; label: string }
-> = {
-  util: { singleHourCents: 9700, discountCents: 8000, label: 'Tarifa Desconto' },
-  especial: { singleHourCents: 12000, discountCents: 9900, label: 'Tarifa Noite/Fim de semana' },
+/**
+ * Reference days and start for the two periods: a Tuesday and a Saturday at 10:00, which sit in the
+ * daytime window of the factory categories (weekday rates and weekend/holiday rates).
+ */
+const REFERENCE: Record<SimulatorPeriod, { date: LocalDate; label: string }> = {
+  util: { date: '2026-10-27', label: 'Tarifa Desconto' },
+  especial: { date: '2026-10-31', label: 'Tarifa Noite/Fim de semana' },
 };
+const START_MINUTE = 600;
 
-/** From this many hours on, the discounted rate applies to every hour. */
+/** From this many hours on, the discounted tariff applies to every hour. */
 const DISCOUNT_FROM_HOURS = 2;
 
 /**
- * Price of a booking of `hours` (multiples of 0.5) in the given period: under 2h the single-hour
- * rate, from 2h the discounted rate on all hours; sinal and saldo are 50% each.
+ * Price of a booking of `hours` (multiples of 0.5) in the given period, computed by the core
+ * pricing engine over `categories` (the live catalog): the category rates apply as they would at
+ * checkout; sinal and saldo are 50% each. Null when the categories cannot price the interval.
  */
-export function simulate(period: SimulatorPeriod, hours: number): Simulation {
-  const tariff = TARIFF[period];
-  const discounted = hours >= DISCOUNT_FROM_HOURS;
-  const rateCents = discounted ? tariff.discountCents : tariff.singleHourCents;
-  const totalCents = mulDivRoundHalfUp(rateCents, Math.round(hours * 2), 2);
-  const sinalCents = percentOfCents(totalCents, 50);
-  const suffix = discounted ? ` (${tariff.label})` : '';
+export function simulateWith(
+  categories: HourlyCategory[],
+  period: SimulatorPeriod,
+  hours: number,
+): Simulation | null {
+  const { date, label } = REFERENCE[period];
+  const priced = priceHourlyBooking({
+    date,
+    startMinute: START_MINUTE,
+    endMinute: START_MINUTE + Math.round(hours * 60),
+    isHoliday: false,
+    categories,
+  });
+  const first = priced.ok ? priced.segments[0] : undefined;
+  if (!priced.ok || !first) return null;
 
+  const totalCents = priced.grossCents;
+  const sinalCents = percentOfCents(totalCents, 50);
+  const suffix = hours >= DISCOUNT_FROM_HOURS ? ` (${label})` : '';
   return {
-    rateCents,
+    rateCents: first.rateCentsPerHour,
     totalCents,
     sinalCents,
     saldoCents: totalCents - sinalCents,
-    formula: `${hours.toFixed(1)}h × ${formatBRL(rateCents)}/h${suffix}`,
+    formula: `${hours.toFixed(1)}h × ${formatBRL(first.rateCentsPerHour)}/h${suffix}`,
   };
+}
+
+/** The simulation with the factory categories (PRD 5.3), which always price a 1-6 hour session. */
+export function simulate(period: SimulatorPeriod, hours: number): Simulation {
+  const result = simulateWith(FACTORY_HOURLY_CATEGORIES, period, hours);
+  if (!result) throw new Error('Factory categories must price every simulator session');
+  return result;
 }
 
 /** Slider caption: "1 Hora", "2 Horas", "1,5 Horas". */

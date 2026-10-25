@@ -1347,10 +1347,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: `/salas` shows 3 cards with "A partir de R$ 80,00/h" and placeholder image when `cover` is null
-- [ ] Tests: simulator keeps FND-100 values with factory fixture, and shows R$ 180,00 for 2 h weekday when the fixture rate is 9000
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 5 tests pass
+- [x] Tests: `/salas` shows 3 cards with "A partir de R$ 80,00/h" and placeholder image when `cover` is null
+- [x] Tests: simulator keeps FND-100 values with factory fixture, and shows R$ 180,00 for 2 h weekday when the fixture rate is 9000
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 5 tests pass
 
 **Tests**: unit
 **Gate**: quick

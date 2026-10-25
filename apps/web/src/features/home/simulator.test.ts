@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { hoursLabel, simulate } from './simulator';
+import { FACTORY_HOURLY_CATEGORIES } from './factory-categories';
+import { hoursLabel, simulate, simulateWith } from './simulator';
 
 describe('simulate', () => {
   it('util 2h: R$ 80/h on every hour, sinal and saldo 50% each', () => {
@@ -46,5 +47,25 @@ describe('hoursLabel', () => {
     expect(hoursLabel(2)).toBe('2 Horas');
     expect(hoursLabel(1.5)).toBe('1,5 Horas');
     expect(hoursLabel(6)).toBe('6 Horas');
+  });
+});
+
+describe('simulateWith', () => {
+  it('prices 2 weekday hours from the given categories (rate 9000 -> R$ 180,00)', () => {
+    const categories = FACTORY_HOURLY_CATEGORIES.map((c) =>
+      c.name === '2 horas ou mais' ? { ...c, weekdayRateCents: 9000 } : c,
+    );
+
+    const result = simulateWith(categories, 'util', 2);
+
+    expect(result?.totalCents).toBe(18000);
+    expect(result?.sinalCents).toBe(9000);
+    expect(result?.rateCents).toBe(9000);
+  });
+
+  it('returns null when no category covers the session', () => {
+    const nightOnly = FACTORY_HOURLY_CATEGORIES.filter((c) => c.startMinute >= 1140);
+
+    expect(simulateWith(nightOnly, 'util', 2)).toBeNull();
   });
 });
