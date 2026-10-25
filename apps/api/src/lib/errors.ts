@@ -57,15 +57,28 @@ export function validationFailed(issues: ReadonlyArray<{ path: PropertyKey[]; me
   );
 }
 
-/** SQLSTATE of a driver error, looking through `cause` (drizzle wraps pg errors). */
-function sqlState(err: unknown): string | undefined {
+/** The driver error inside `err`, looking through `cause` (drizzle wraps pg errors). */
+function driverError(err: unknown): (Error & { code: string; constraint?: unknown }) | undefined {
   let current: unknown = err;
   for (let depth = 0; depth < 5 && current instanceof Error; depth++) {
     const code = (current as { code?: unknown }).code;
-    if (typeof code === 'string' && /^[0-9A-Z]{5}$/.test(code)) return code;
+    if (typeof code === 'string' && /^[0-9A-Z]{5}$/.test(code)) {
+      return current as Error & { code: string; constraint?: unknown };
+    }
     current = current.cause;
   }
   return undefined;
+}
+
+function sqlState(err: unknown): string | undefined {
+  return driverError(err)?.code;
+}
+
+/** Name of the unique index/constraint a failed insert violated (SQLSTATE 23505), if any. */
+export function uniqueViolationConstraint(err: unknown): string | undefined {
+  const driver = driverError(err);
+  if (driver?.code !== '23505') return undefined;
+  return typeof driver.constraint === 'string' ? driver.constraint : undefined;
 }
 
 function envelope(

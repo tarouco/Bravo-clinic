@@ -1041,12 +1041,12 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test asserts 201 body has `user.email`, `user.role === 'tenant'`, no `passwordHash`; DB row has hash prefix `scrypt$`; `Set-Cookie` contains `bravo_session=`; two `consents` rows (terms, privacy) with version and IP; one `auth_tokens` row `email_verify` whose `token_hash` is 64 hex chars; one `email_outbox` row template `auth.verify_email` whose html contains `/verificar-email?token=` with a token that hashes to the stored hash
-- [ ] Test asserts invalid document → 422 with detail `{ path: 'document', message: 'CPF ou CNPJ inválido' }`
-- [ ] Tests assert duplicate e-mail with different case → 409 `EMAIL_TAKEN`; duplicate document → 409 `DOCUMENT_TAKEN`; `acceptTerms: false` → 422 and zero users
-- [ ] Test fires two concurrent signups with the same e-mail and asserts one 201 and one 409
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 7 tests pass
+- [x] Test asserts 201 body has `user.email`, `user.role === 'tenant'`, no `passwordHash`; DB row has hash prefix `scrypt$`; `Set-Cookie` contains `bravo_session=`; two `consents` rows (terms, privacy) with version and IP; one `auth_tokens` row `email_verify` whose `token_hash` is 64 hex chars; one `email_outbox` row template `auth.verify_email` whose html contains `/verificar-email?token=` with a token that hashes to the stored hash
+- [x] Test asserts invalid document → 422 with detail `{ path: 'document', message: 'CPF ou CNPJ inválido' }`
+- [x] Tests assert duplicate e-mail with different case → 409 `EMAIL_TAKEN`; duplicate document → 409 `DOCUMENT_TAKEN`; `acceptTerms: false` → 422 and zero users
+- [x] Test fires two concurrent signups with the same e-mail and asserts one 201 and one 409
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: integration
 **Gate**: full
