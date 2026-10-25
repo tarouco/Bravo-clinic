@@ -476,11 +476,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert `adminSectionsFor('admin')` equals `['calendario','reservas','financeiro','integracoes','cupons','servicos-extras','clientes','salas','usuarios','auditoria']` and `adminSectionsFor('reception')` equals `['reservas','clientes']`, `adminSectionsFor('tenant')` equals `[]`
-- [ ] Tests assert labels Calendário, Gestão de Reservas, Financeiro, Integrações, Cupons, Serviços Extras, Clientes, Salas, Usuários, Log de auditoria
-- [ ] Tests assert `appNav` labels in order Reservar, Minhas reservas, Agenda, Compras, Perfil
-- [ ] Gate check passes: `npm test -w packages/core`
-- [ ] Test count: ≥ 5 tests pass
+- [x] Tests assert `adminSectionsFor('admin')` equals `['calendario','reservas','financeiro','integracoes','cupons','servicos-extras','clientes','salas','usuarios','auditoria']` and `adminSectionsFor('reception')` equals `['reservas','clientes']`, `adminSectionsFor('tenant')` equals `[]`
+- [x] Tests assert labels Calendário, Gestão de Reservas, Financeiro, Integrações, Cupons, Serviços Extras, Clientes, Salas, Usuários, Log de auditoria
+- [x] Tests assert `appNav` labels in order Reservar, Minhas reservas, Agenda, Compras, Perfil
+- [x] Gate check passes: `npm test -w packages/core`
+- [x] Test count: ≥ 5 tests pass
 
 **Tests**: unit
 **Gate**: quick
