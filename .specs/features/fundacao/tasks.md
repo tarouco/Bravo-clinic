@@ -647,9 +647,9 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] `npm run bundle -w apps/api` exits 0 and produces `apps/api/dist/index.mjs` that includes `@bravo/core` code (proves workspace TS bundles)
-- [ ] `npm run dev -w apps/api` serves `GET http://localhost:8787/health` → 200 (manual check)
-- [ ] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
+- [x] `npm run bundle -w apps/api` exits 0 and produces `apps/api/dist/index.mjs` that includes `@bravo/core` code (proves workspace TS bundles)
+- [x] `npm run dev -w apps/api` serves `GET http://localhost:8787/health` → 200 (manual check)
+- [x] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
 
 **Tests**: none
 **Gate**: build
