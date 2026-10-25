@@ -701,8 +701,8 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Every column/check/index Drizzle can express is declared; the exclusion constraint, period shape check, gist index and `closed_days_uq` are left to T21's custom migration (comment points there)
-- [ ] Gate check passes: `npm run typecheck && npm run lint`
+- [x] Every column/check/index Drizzle can express is declared; the exclusion constraint, period shape check, gist index and `closed_days_uq` are left to T21's custom migration (comment points there)
+- [x] Gate check passes: `npm run typecheck && npm run lint`
 
 **Tests**: none
 **Gate**: build
