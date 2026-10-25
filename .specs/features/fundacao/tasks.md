@@ -897,13 +897,13 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test asserts `queueEmail` inside a transaction writes a `pending` row with to/template/subject/html/text, and a rolled-back transaction writes none
-- [ ] Test with `RESEND_API_KEY` and stubbed `fetch` returning `{ id: 'em_1' }` asserts status `sent`, `provider_message_id = 'em_1'`, and the request had `Authorization: Bearer <key>` and the outbox subject
-- [ ] Test without the key asserts status `not_sent` and `fetch` not called
-- [ ] Tests with `fetch` rejecting and with a 500 response assert status `failed`, `attempts = 1`, non-empty `last_error`, and that `dispatchEmails` resolves (does not throw)
-- [ ] Test asserts the verify template subject "Confirme seu e-mail na Bravô Clinic" and that html contains the link
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Test asserts `queueEmail` inside a transaction writes a `pending` row with to/template/subject/html/text, and a rolled-back transaction writes none
+- [x] Test with `RESEND_API_KEY` and stubbed `fetch` returning `{ id: 'em_1' }` asserts status `sent`, `provider_message_id = 'em_1'`, and the request had `Authorization: Bearer <key>` and the outbox subject
+- [x] Test without the key asserts status `not_sent` and `fetch` not called
+- [x] Tests with `fetch` rejecting and with a 500 response assert status `failed`, `attempts = 1`, non-empty `last_error`, and that `dispatchEmails` resolves (does not throw)
+- [x] Test asserts the verify template subject "Confirme seu e-mail na Bravô Clinic" and that html contains the link
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: integration
 **Gate**: full
