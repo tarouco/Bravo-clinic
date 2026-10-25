@@ -1692,10 +1692,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test renders a memory router with the layout and an unknown path and asserts header, footer, WhatsApp link and "Página não encontrada" with a link to `/`
-- [ ] Test asserts the WhatsApp link is present on two different child routes
-- [ ] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
-- [ ] Test count: ≥ 2 tests pass
+- [x] Test renders a memory router with the layout and an unknown path and asserts header, footer, WhatsApp link and "Página não encontrada" with a link to `/`
+- [x] Test asserts the WhatsApp link is present on two different child routes
+- [x] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
+- [x] Test count: ≥ 2 tests pass
 
 **Tests**: unit
 **Gate**: build
