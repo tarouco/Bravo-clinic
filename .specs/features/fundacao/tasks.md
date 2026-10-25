@@ -983,10 +983,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert POST `/app/x` with `Origin: https://evil.example` → 403 `CSRF_REJECTED`; with the app origin → passes to the next handler; without Origin but with matching Referer → passes; with neither → 403
-- [ ] Tests assert GET `/app/x` with a foreign Origin is not blocked and POST `/public/x` is not checked
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests assert POST `/app/x` with `Origin: https://evil.example` → 403 `CSRF_REJECTED`; with the app origin → passes to the next handler; without Origin but with matching Referer → passes; with neither → 403
+- [x] Tests assert GET `/app/x` with a foreign Origin is not blocked and POST `/public/x` is not checked
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: integration
 **Gate**: full

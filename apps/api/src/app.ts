@@ -3,6 +3,7 @@ import { getDb } from './db/client';
 import { getEnv } from './env';
 import { notFoundHandler, onError } from './lib/errors';
 import { requireAuth, requireStaff } from './middleware/auth';
+import { csrf } from './middleware/csrf';
 import { requestContext } from './middleware/request-context';
 import { requireJson } from './middleware/require-json';
 import { healthRoutes } from './routes/health';
@@ -24,8 +25,8 @@ export function createApp(overrides: Partial<AppDeps> = {}): Hono<AppEnv> {
     await next();
   });
   app.use('*', requireJson());
-  app.use('/app/*', requireAuth());
-  app.use('/admin/*', requireAuth(), requireStaff());
+  app.use('/app/*', csrf(deps.env.APP_BASE_URL), requireAuth());
+  app.use('/admin/*', csrf(deps.env.APP_BASE_URL), requireAuth(), requireStaff());
   app.route('/health', healthRoutes());
   app.onError(onError);
   app.notFound(notFoundHandler);
