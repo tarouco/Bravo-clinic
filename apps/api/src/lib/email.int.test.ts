@@ -65,23 +65,23 @@ describe('queueEmail (FND-77)', () => {
 describe('dispatchEmails', () => {
   it('sends through Resend and records sent + provider id (FND-78)', async () => {
     const id = await queueOne();
-    const fetchStub = vi.fn(async () => Response.json({ id: 'em_1' }));
+    const fetchStub = vi.fn<typeof fetch>(() => Promise.resolve(Response.json({ id: 'em_1' })));
 
     await dispatchEmails(db, [id], {
       env: envWithKey,
-      fetch: fetchStub as unknown as typeof fetch,
+      fetch: fetchStub,
     });
 
     expect(fetchStub).toHaveBeenCalledTimes(1);
-    const [url, init] = fetchStub.mock.calls[0] as unknown as [string, RequestInit];
+    const [url, init] = fetchStub.mock.calls[0] ?? [];
     expect(url).toBe('https://api.resend.com/emails');
-    expect((init.headers as Record<string, string>).Authorization).toBe('Bearer re_test_key');
-    expect(JSON.parse(init.body as string)).toMatchObject({
+    expect((init?.headers as Record<string, string>).Authorization).toBe('Bearer re_test_key');
+    expect(JSON.parse(init?.body as string)).toMatchObject({
       from: envWithKey.EMAIL_FROM,
       to: ['ana@bravoclinic.test'],
       subject: 'Confirme seu e-mail na Bravô Clinic',
     });
-    expect(init.signal).toBeInstanceOf(AbortSignal);
+    expect(init?.signal).toBeInstanceOf(AbortSignal);
     const row = await rowOf(id);
     expect(row.status).toBe('sent');
     expect(row.providerMessageId).toBe('em_1');
@@ -90,11 +90,11 @@ describe('dispatchEmails', () => {
 
   it('marks not_sent and never calls fetch when RESEND_API_KEY is absent (FND-79)', async () => {
     const id = await queueOne();
-    const fetchStub = vi.fn();
+    const fetchStub = vi.fn<typeof fetch>();
 
     await dispatchEmails(db, [id], {
       env: envWithoutKey,
-      fetch: fetchStub as unknown as typeof fetch,
+      fetch: fetchStub,
     });
 
     expect(fetchStub).not.toHaveBeenCalled();
@@ -103,12 +103,10 @@ describe('dispatchEmails', () => {
 
   it('marks failed with attempts 1 and a last_error when fetch rejects, without throwing (FND-80)', async () => {
     const id = await queueOne();
-    const fetchStub = vi.fn(async () => {
-      throw new Error('network down');
-    });
+    const fetchStub = vi.fn<typeof fetch>(() => Promise.reject(new Error('network down')));
 
     await expect(
-      dispatchEmails(db, [id], { env: envWithKey, fetch: fetchStub as unknown as typeof fetch }),
+      dispatchEmails(db, [id], { env: envWithKey, fetch: fetchStub }),
     ).resolves.toBeUndefined();
 
     const row = await rowOf(id);
@@ -119,10 +117,12 @@ describe('dispatchEmails', () => {
 
   it('marks failed when the provider answers 500, without throwing (FND-80)', async () => {
     const id = await queueOne();
-    const fetchStub = vi.fn(async () => new Response('upstream broke', { status: 500 }));
+    const fetchStub = vi.fn<typeof fetch>(() =>
+      Promise.resolve(new Response('upstream broke', { status: 500 })),
+    );
 
     await expect(
-      dispatchEmails(db, [id], { env: envWithKey, fetch: fetchStub as unknown as typeof fetch }),
+      dispatchEmails(db, [id], { env: envWithKey, fetch: fetchStub }),
     ).resolves.toBeUndefined();
 
     const row = await rowOf(id);
