@@ -1189,10 +1189,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert verified admin → sections in the 10-item order; verified reception → `['reservas','clientes']`
-- [ ] Tests assert `/public/config` → `googleEnabled: false` without Google env and `true` with both vars; `environment: 'production'` when `NEON_BRANCH=production`, else `'development'`; `whatsappE164` equals the seeded setting value
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 5 tests pass
+- [x] Tests assert verified admin → sections in the 10-item order; verified reception → `['reservas','clientes']`
+- [x] Tests assert `/public/config` → `googleEnabled: false` without Google env and `true` with both vars; `environment: 'production'` when `NEON_BRANCH=production`, else `'development'`; `whatsappE164` equals the seeded setting value
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 5 tests pass
 
 **Tests**: integration
 **Gate**: full

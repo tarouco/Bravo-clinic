@@ -6,6 +6,7 @@ import { requireAuth, requireStaff } from './middleware/auth';
 import { csrf } from './middleware/csrf';
 import { requestContext } from './middleware/request-context';
 import { requireJson } from './middleware/require-json';
+import { adminRoutes } from './routes/admin';
 import { appRoutes } from './routes/app';
 import { healthRoutes } from './routes/health';
 import { publicRoutes } from './routes/public';
@@ -32,6 +33,7 @@ export function createApp(overrides: Partial<AppDeps> = {}): Hono<AppEnv> {
   app.route('/health', healthRoutes());
   app.route('/public', publicRoutes());
   app.route('/app', appRoutes());
+  app.route('/admin', adminRoutes());
   app.onError(onError);
   app.notFound(notFoundHandler);
   return app;
