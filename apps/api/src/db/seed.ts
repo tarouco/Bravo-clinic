@@ -1,4 +1,3 @@
-import { randomBytes, scrypt } from 'node:crypto';
 import { pathToFileURL } from 'node:url';
 import {
   emailSchema,
@@ -8,6 +7,7 @@ import {
   settingKeys,
 } from '@bravo/core';
 import { eq } from 'drizzle-orm';
+import { hashPassword } from '../lib/crypto';
 import { createDb, withTransaction, type Db } from './client';
 import { auditLog, businessHours, holidays, rooms, settings, users } from './schema';
 
@@ -79,18 +79,6 @@ const ROOMS = [
     ],
   },
 ].map((room, index) => ({ ...room, status: 'active', displayOrder: index + 1 }));
-
-// scrypt N=16384, r=8, p=1, 16-byte salt, 64-byte key; format scrypt$N$r$p$salt$hash (architecture.md 5.2).
-// lib/crypto.ts (T24) takes over this implementation.
-function hashPassword(password: string): Promise<string> {
-  const salt = randomBytes(16);
-  return new Promise((resolve, reject) => {
-    scrypt(password, salt, 64, { N: 16384, r: 8, p: 1 }, (error, key) => {
-      if (error) reject(error);
-      else resolve(`scrypt$16384$8$1$${salt.toString('base64')}$${key.toString('base64')}`);
-    });
-  });
-}
 
 /** Prepares the first admin: null when none is needed, throws before any write when the password is weak. */
 async function prepareAdmin(db: Db, bootstrap: AdminBootstrap | undefined) {

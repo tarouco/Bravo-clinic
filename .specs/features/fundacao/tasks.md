@@ -840,12 +840,12 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert `verifyPassword(pw, await hashPassword(pw))` is true, false for another password, and the hash starts with `scrypt$16384$8$1$`
-- [ ] Tests assert two hashes of the same password differ (salt)
-- [ ] Tests assert `decryptSecret(encryptSecret('JBSWY3DPEHPK3PXP', key), key)` round-trips, ciphertext ≠ plaintext, and a tampered ciphertext throws
-- [ ] Tests assert `sha256Hex('abc') === 'ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad'` and `randomToken()` is 43 base64url chars
-- [ ] Gate check passes: `npm test -w apps/api`
-- [ ] Test count: ≥ 7 tests pass
+- [x] Tests assert `verifyPassword(pw, await hashPassword(pw))` is true, false for another password, and the hash starts with `scrypt$16384$8$1$`
+- [x] Tests assert two hashes of the same password differ (salt)
+- [x] Tests assert `decryptSecret(encryptSecret('JBSWY3DPEHPK3PXP', key), key)` round-trips, ciphertext ≠ plaintext, and a tampered ciphertext throws
+- [x] Tests assert `sha256Hex('abc') === 'ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad'` and `randomToken()` is 43 base64url chars
+- [x] Gate check passes: `npm test -w apps/api`
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -869,11 +869,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test asserts a committed transaction leaves one row with every field equal to the input (actor id, role, origin, action, entity type/id, justification, before, after, ip, request id)
-- [ ] Test asserts a rolled-back transaction leaves zero rows
-- [ ] Test asserts `before: { password_hash: 'x' }` is stored redacted
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 3 tests pass
+- [x] Test asserts a committed transaction leaves one row with every field equal to the input (actor id, role, origin, action, entity type/id, justification, before, after, ip, request id)
+- [x] Test asserts a rolled-back transaction leaves zero rows
+- [x] Test asserts `before: { password_hash: 'x' }` is stored redacted
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 3 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -897,13 +897,13 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test asserts `queueEmail` inside a transaction writes a `pending` row with to/template/subject/html/text, and a rolled-back transaction writes none
-- [ ] Test with `RESEND_API_KEY` and stubbed `fetch` returning `{ id: 'em_1' }` asserts status `sent`, `provider_message_id = 'em_1'`, and the request had `Authorization: Bearer <key>` and the outbox subject
-- [ ] Test without the key asserts status `not_sent` and `fetch` not called
-- [ ] Tests with `fetch` rejecting and with a 500 response assert status `failed`, `attempts = 1`, non-empty `last_error`, and that `dispatchEmails` resolves (does not throw)
-- [ ] Test asserts the verify template subject "Confirme seu e-mail na Bravô Clinic" and that html contains the link
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Test asserts `queueEmail` inside a transaction writes a `pending` row with to/template/subject/html/text, and a rolled-back transaction writes none
+- [x] Test with `RESEND_API_KEY` and stubbed `fetch` returning `{ id: 'em_1' }` asserts status `sent`, `provider_message_id = 'em_1'`, and the request had `Authorization: Bearer <key>` and the outbox subject
+- [x] Test without the key asserts status `not_sent` and `fetch` not called
+- [x] Tests with `fetch` rejecting and with a 500 response assert status `failed`, `attempts = 1`, non-empty `last_error`, and that `dispatchEmails` resolves (does not throw)
+- [x] Test asserts the verify template subject "Confirme seu e-mail na Bravô Clinic" and that html contains the link
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -927,11 +927,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test asserts a tenant session cookie string contains `HttpOnly`, `Secure`, `SameSite=Lax`, `Path=/`, `Max-Age=2592000`; staff → `Max-Age=43200` and `expires_at` ≈ now + 12h
-- [ ] Tests assert `resolveSession` returns null for a token signed with another secret, an expired `exp`, a revoked session row, and a session row past `expires_at`
-- [ ] Test asserts `revokeAllSessions` revokes every active session of the user only
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Test asserts a tenant session cookie string contains `HttpOnly`, `Secure`, `SameSite=Lax`, `Path=/`, `Max-Age=2592000`; staff → `Max-Age=43200` and `expires_at` ≈ now + 12h
+- [x] Tests assert `resolveSession` returns null for a token signed with another secret, an expired `exp`, a revoked session row, and a session row past `expires_at`
+- [x] Test asserts `revokeAllSessions` revokes every active session of the user only
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -955,11 +955,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests (test-only routes `/app/ping`, `/admin/ping`, `/admin/admin-only` registered in a test app) assert: no cookie → 401; tenant on `/admin/ping` → 403 `FORBIDDEN`; staff without TOTP → 403 `MFA_ENROLLMENT_REQUIRED`; staff with TOTP but unverified session → 403 `MFA_REQUIRED`; verified reception on `/admin/admin-only` → 403 `FORBIDDEN`; verified admin → 200
-- [ ] Test demotes a logged-in admin to tenant in the DB and asserts the next `/admin/ping` → 403
-- [ ] Test asserts a revoked session → 401 `UNAUTHENTICATED`
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 8 tests pass
+- [x] Tests (test-only routes `/app/ping`, `/admin/ping`, `/admin/admin-only` registered in a test app) assert: no cookie → 401; tenant on `/admin/ping` → 403 `FORBIDDEN`; staff without TOTP → 403 `MFA_ENROLLMENT_REQUIRED`; staff with TOTP but unverified session → 403 `MFA_REQUIRED`; verified reception on `/admin/admin-only` → 403 `FORBIDDEN`; verified admin → 200
+- [x] Test demotes a logged-in admin to tenant in the DB and asserts the next `/admin/ping` → 403
+- [x] Test asserts a revoked session → 401 `UNAUTHENTICATED`
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 8 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -983,10 +983,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert POST `/app/x` with `Origin: https://evil.example` → 403 `CSRF_REJECTED`; with the app origin → passes to the next handler; without Origin but with matching Referer → passes; with neither → 403
-- [ ] Tests assert GET `/app/x` with a foreign Origin is not blocked and POST `/public/x` is not checked
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests assert POST `/app/x` with `Origin: https://evil.example` → 403 `CSRF_REJECTED`; with the app origin → passes to the next handler; without Origin but with matching Referer → passes; with neither → 403
+- [x] Tests assert GET `/app/x` with a foreign Origin is not blocked and POST `/public/x` is not checked
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -1010,12 +1010,12 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test asserts limit 5 / 900 s: calls 1–5 `allowed: true`, call 6 `allowed: false` with `0 < retryAfterSeconds ≤ 900`
-- [ ] Test asserts a new window (injected `now` + 900 s) allows again, and different keys are independent
-- [ ] Test runs 10 concurrent `consumeRateLimit` calls with limit 5 and asserts exactly 5 allowed
-- [ ] Test asserts stored keys contain no raw e-mail
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 4 tests pass
+- [x] Test asserts limit 5 / 900 s: calls 1–5 `allowed: true`, call 6 `allowed: false` with `0 < retryAfterSeconds ≤ 900`
+- [x] Test asserts a new window (injected `now` + 900 s) allows again, and different keys are independent
+- [x] Test runs 10 concurrent `consumeRateLimit` calls with limit 5 and asserts exactly 5 allowed
+- [x] Test asserts stored keys contain no raw e-mail
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 4 tests pass
 
 **Tests**: integration
 **Gate**: full

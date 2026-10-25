@@ -1,3 +1,4 @@
+import type { AuthContext } from './auth/session';
 import type { Db } from './db/client';
 import type { Env } from './env';
 
@@ -16,5 +17,7 @@ export type AppEnv = {
     deps: AppDeps;
     /** Set by the auth middleware once the caller is known; included in the request log line. */
     userId?: string;
+    /** Set by `requireAuth`; always present behind it. */
+    auth: AuthContext;
   };
 };
