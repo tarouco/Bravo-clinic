@@ -6,7 +6,10 @@ import { requireAuth, requireStaff } from './middleware/auth';
 import { csrf } from './middleware/csrf';
 import { requestContext } from './middleware/request-context';
 import { requireJson } from './middleware/require-json';
+import { adminRoutes } from './routes/admin';
+import { appRoutes } from './routes/app';
 import { healthRoutes } from './routes/health';
+import { publicRoutes } from './routes/public';
 import type { AppDeps, AppEnv } from './types';
 
 /** Builds the API. Dependencies are injectable so tests can replace db, time, fetch and env. */
@@ -16,6 +19,7 @@ export function createApp(overrides: Partial<AppDeps> = {}): Hono<AppEnv> {
     fetch: overrides.fetch ?? globalThis.fetch,
     env: overrides.env ?? getEnv(),
     db: overrides.db ?? getDb(),
+    ...(overrides.googleJwks !== undefined && { googleJwks: overrides.googleJwks }),
   };
 
   const app = new Hono<AppEnv>();
@@ -28,6 +32,9 @@ export function createApp(overrides: Partial<AppDeps> = {}): Hono<AppEnv> {
   app.use('/app/*', csrf(deps.env.APP_BASE_URL), requireAuth());
   app.use('/admin/*', csrf(deps.env.APP_BASE_URL), requireAuth(), requireStaff());
   app.route('/health', healthRoutes());
+  app.route('/public', publicRoutes());
+  app.route('/app', appRoutes());
+  app.route('/admin', adminRoutes());
   app.onError(onError);
   app.notFound(notFoundHandler);
   return app;

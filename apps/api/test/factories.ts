@@ -1,5 +1,6 @@
 import { randomBytes, randomUUID } from 'node:crypto';
 import { sql } from 'drizzle-orm';
+import * as OTPAuth from 'otpauth';
 import { SESSION_COOKIE, issueSession } from '../src/auth/session';
 import { withTransaction, type Db } from '../src/db/client';
 import { userTotp, users } from '../src/db/schema';
@@ -66,7 +67,19 @@ export async function loginAs(
   return `${SESSION_COOKIE}=${token}`;
 }
 
-/** Filled by the TOTP task (T35): needs the totp library. */
-export function currentTotp(): never {
-  throw new Error('currentTotp is not available until the TOTP library exists (T35)');
+/** The 6-digit code an authenticator app shows for the base32 `secret` at `now`. */
+export function currentTotp(secret: string, now: Date = new Date()): string {
+  return new OTPAuth.TOTP({
+    secret: OTPAuth.Secret.fromBase32(secret),
+    algorithm: 'SHA1',
+    digits: 6,
+    period: 30,
+  }).generate({ timestamp: now.getTime() });
+}
+
+/** Parses an `otpauth://` enrollment URI the way an authenticator app does. */
+export function totpFromUri(uri: string): OTPAuth.TOTP {
+  const parsed = OTPAuth.URI.parse(uri);
+  if (!(parsed instanceof OTPAuth.TOTP)) throw new Error('not a TOTP URI');
+  return parsed;
 }

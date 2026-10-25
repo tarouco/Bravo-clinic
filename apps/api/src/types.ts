@@ -1,3 +1,4 @@
+import type { JWTVerifyGetKey } from 'jose';
 import type { AuthContext } from './auth/session';
 import type { Db } from './db/client';
 import type { Env } from './env';
@@ -8,6 +9,8 @@ export interface AppDeps {
   now: () => Date;
   fetch: typeof fetch;
   env: Env;
+  /** Google's signing keys; tests inject a local key set. Defaults to Google's remote JWKS. */
+  googleJwks?: JWTVerifyGetKey;
 }
 
 /** Hono environment shared by every middleware and route of the API. */

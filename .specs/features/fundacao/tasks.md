@@ -1041,12 +1041,12 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test asserts 201 body has `user.email`, `user.role === 'tenant'`, no `passwordHash`; DB row has hash prefix `scrypt$`; `Set-Cookie` contains `bravo_session=`; two `consents` rows (terms, privacy) with version and IP; one `auth_tokens` row `email_verify` whose `token_hash` is 64 hex chars; one `email_outbox` row template `auth.verify_email` whose html contains `/verificar-email?token=` with a token that hashes to the stored hash
-- [ ] Test asserts invalid document → 422 with detail `{ path: 'document', message: 'CPF ou CNPJ inválido' }`
-- [ ] Tests assert duplicate e-mail with different case → 409 `EMAIL_TAKEN`; duplicate document → 409 `DOCUMENT_TAKEN`; `acceptTerms: false` → 422 and zero users
-- [ ] Test fires two concurrent signups with the same e-mail and asserts one 201 and one 409
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 7 tests pass
+- [x] Test asserts 201 body has `user.email`, `user.role === 'tenant'`, no `passwordHash`; DB row has hash prefix `scrypt$`; `Set-Cookie` contains `bravo_session=`; two `consents` rows (terms, privacy) with version and IP; one `auth_tokens` row `email_verify` whose `token_hash` is 64 hex chars; one `email_outbox` row template `auth.verify_email` whose html contains `/verificar-email?token=` with a token that hashes to the stored hash
+- [x] Test asserts invalid document → 422 with detail `{ path: 'document', message: 'CPF ou CNPJ inválido' }`
+- [x] Tests assert duplicate e-mail with different case → 409 `EMAIL_TAKEN`; duplicate document → 409 `DOCUMENT_TAKEN`; `acceptTerms: false` → 422 and zero users
+- [x] Test fires two concurrent signups with the same e-mail and asserts one 201 and one 409
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -1070,14 +1070,14 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test asserts tenant login → 200 `{ user, mfaRequired: false }`, a `sessions` row, cookie with `Max-Age=2592000`
-- [ ] Tests assert wrong password and unknown e-mail both → 401 `INVALID_CREDENTIALS` with message "E-mail ou senha incorretos"
-- [ ] Test asserts 5 wrong passwords then the correct one → 429 `TOO_MANY_ATTEMPTS` with a numeric `Retry-After`
-- [ ] Test asserts logout → 204, cookie `Max-Age=0`, session `revoked_at` set, and reusing the old cookie on `/app/me` → 401
-- [ ] Test asserts `/app/me` body keys exactly `id, name, email, role, emailVerified, docType, mfa` and `mfa` = `{ enrolled: false, verified: false }` for a tenant
-- [ ] Test asserts staff with confirmed TOTP → 200 `{ mfaRequired: true }` and an audit row `auth.login_staff`
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 7 tests pass
+- [x] Test asserts tenant login → 200 `{ user, mfaRequired: false }`, a `sessions` row, cookie with `Max-Age=2592000`
+- [x] Tests assert wrong password and unknown e-mail both → 401 `INVALID_CREDENTIALS` with message "E-mail ou senha incorretos"
+- [x] Test asserts 5 wrong passwords then the correct one → 429 `TOO_MANY_ATTEMPTS` with a numeric `Retry-After`
+- [x] Test asserts logout → 204, cookie `Max-Age=0`, session `revoked_at` set, and reusing the old cookie on `/app/me` → 401
+- [x] Test asserts `/app/me` body keys exactly `id, name, email, role, emailVerified, docType, mfa` and `mfa` = `{ enrolled: false, verified: false }` for a tenant
+- [x] Test asserts staff with confirmed TOTP → 200 `{ mfaRequired: true }` and an audit row `auth.login_staff`
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -1101,11 +1101,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test asserts a valid token → 200 `{ verified: true }`, `email_verified_at` set, token `used_at` set
-- [ ] Tests assert the same token again → 400 `INVALID_TOKEN`; unknown token → 400; token created 24h + 1 min ago (injected `now`) → 400
-- [ ] Test asserts resend → 202 and a new outbox row; the 4th resend within an hour → 429
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 5 tests pass
+- [x] Test asserts a valid token → 200 `{ verified: true }`, `email_verified_at` set, token `used_at` set
+- [x] Tests assert the same token again → 400 `INVALID_TOKEN`; unknown token → 400; token created 24h + 1 min ago (injected `now`) → 400
+- [x] Test asserts resend → 202 and a new outbox row; the 4th resend within an hour → 429
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 5 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -1129,12 +1129,12 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert request for an unknown e-mail → 202 and no outbox row; for a known e-mail → 202 and one `auth.password_reset` row
-- [ ] Test asserts confirm with a valid token → 200; login with the new password works; an older session cookie → 401; audit row `auth.password_reset`
-- [ ] Tests assert reused token, unknown token and token older than 60 min → 400 `INVALID_TOKEN` and the hash unchanged
-- [ ] Test asserts confirm with password "abc" → 422
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests assert request for an unknown e-mail → 202 and no outbox row; for a known e-mail → 202 and one `auth.password_reset` row
+- [x] Test asserts confirm with a valid token → 200; login with the new password works; an older session cookie → 401; audit row `auth.password_reset`
+- [x] Tests assert reused token, unknown token and token older than 60 min → 400 `INVALID_TOKEN` and the hash unchanged
+- [x] Test asserts confirm with password "abc" → 422
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -1158,14 +1158,14 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test asserts enroll → 200 `otpauthUri` starting `otpauth://totp/Bravô%20Clinic:` (or the encoded issuer) with `issuer=` param; DB stores ciphertext that is not the base32 secret
-- [ ] Test asserts confirm with the current code (computed by `otpauth` from the URI) → 200 with 10 unique recovery codes; `confirmed_at` set; session MFA-verified (`/admin/session` reachable); audit row `auth.totp_enabled`; DB stores 10 hashes, not the codes
-- [ ] Test asserts login → `mfaRequired: true`, `/admin/session` → 403 `MFA_REQUIRED`, verify with valid code → 200, then `/admin/session` → 200
-- [ ] Tests assert reusing the same code on a new session → 401 `INVALID_CODE`; a recovery code works once and fails the second time; "123 456"-style spacing is accepted
-- [ ] Test asserts 5 wrong codes then a valid one → 429
-- [ ] Test asserts a tenant calling enroll → 403 `FORBIDDEN`
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 9 tests pass
+- [x] Test asserts enroll → 200 `otpauthUri` starting `otpauth://totp/Bravô%20Clinic:` (or the encoded issuer) with `issuer=` param; DB stores ciphertext that is not the base32 secret
+- [x] Test asserts confirm with the current code (computed by `otpauth` from the URI) → 200 with 10 unique recovery codes; `confirmed_at` set; session MFA-verified (`/admin/session` reachable); audit row `auth.totp_enabled`; DB stores 10 hashes, not the codes
+- [x] Test asserts login → `mfaRequired: true`, `/admin/session` → 403 `MFA_REQUIRED`, verify with valid code → 200, then `/admin/session` → 200
+- [x] Tests assert reusing the same code on a new session → 401 `INVALID_CODE`; a recovery code works once and fails the second time; "123 456"-style spacing is accepted
+- [x] Test asserts 5 wrong codes then a valid one → 429
+- [x] Test asserts a tenant calling enroll → 403 `FORBIDDEN`
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 9 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -1189,10 +1189,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert verified admin → sections in the 10-item order; verified reception → `['reservas','clientes']`
-- [ ] Tests assert `/public/config` → `googleEnabled: false` without Google env and `true` with both vars; `environment: 'production'` when `NEON_BRANCH=production`, else `'development'`; `whatsappE164` equals the seeded setting value
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 5 tests pass
+- [x] Tests assert verified admin → sections in the 10-item order; verified reception → `['reservas','clientes']`
+- [x] Tests assert `/public/config` → `googleEnabled: false` without Google env and `true` with both vars; `environment: 'production'` when `NEON_BRANCH=production`, else `'development'`; `whatsappE164` equals the seeded setting value
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 5 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -1216,12 +1216,12 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test without Google env asserts `/public/auth/google/start` → 404 `FEATURE_DISABLED`
-- [ ] Test with env asserts 302 `Location` on `accounts.google.com` containing `state`, `code_challenge_method=S256`, `scope=openid%20email%20profile`, and a state cookie with `HttpOnly` and `Max-Age=600`
-- [ ] Tests with stubbed token endpoint and a locally generated JWKS assert: new Google user → tenant with `email_verified_at`, `google_sub`, no document, redirect `/app/perfil?completar=1`; existing user with same verified e-mail → linked, redirect `/app`
-- [ ] Test asserts mismatched state → 400 `INVALID_STATE` and no `Set-Cookie: bravo_session`
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 5 tests pass
+- [x] Test without Google env asserts `/public/auth/google/start` → 404 `FEATURE_DISABLED`
+- [x] Test with env asserts 302 `Location` on `accounts.google.com` containing `state`, `code_challenge_method=S256`, `scope=openid%20email%20profile`, and a state cookie with `HttpOnly` and `Max-Age=600`
+- [x] Tests with stubbed token endpoint and a locally generated JWKS assert: new Google user → tenant with `email_verified_at`, `google_sub`, no document, redirect `/app/perfil?completar=1`; existing user with same verified e-mail → linked, redirect `/app`
+- [x] Test asserts mismatched state → 400 `INVALID_STATE` and no `Set-Cookie: bravo_session`
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 5 tests pass
 
 **Tests**: integration
 **Gate**: full
