@@ -200,9 +200,9 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] `npm install` at the root exits 0 (workspace folders may be empty stubs with their own `package.json` created in later tasks; create `apps/web/package.json`, `apps/api/package.json`, `packages/core/package.json` minimal stubs here so install resolves)
-- [ ] `.env.example` contains only names with empty values; `git check-ignore .env` prints `.env`
-- [ ] Gate check passes: `npm install`
+- [x] `npm install` at the root exits 0 (workspace folders may be empty stubs with their own `package.json` created in later tasks; create `apps/web/package.json`, `apps/api/package.json`, `packages/core/package.json` minimal stubs here so install resolves)
+- [x] `.env.example` contains only names with empty values; `git check-ignore .env` prints `.env`
+- [x] Gate check passes: `npm install`
 
 **Tests**: none
 **Gate**: build (partial: `npm install`)
