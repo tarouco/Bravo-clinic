@@ -1858,11 +1858,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert headings "Estrutura completa para você focar no atendimento.", "Políticas de Reserva, Sinal e Cancelamento", "Pronto para elevar o padrão dos seus atendimentos?"
-- [ ] Test asserts the policies text contains "não é reembolsável" and does not contain "é reembolsável em casos de desistência"
-- [ ] Test asserts the CTA WhatsApp link uses the config number (fallback `https://wa.me/`)
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 3 tests pass
+- [x] Tests assert headings "Estrutura completa para você focar no atendimento.", "Políticas de Reserva, Sinal e Cancelamento", "Pronto para elevar o padrão dos seus atendimentos?"
+- [x] Test asserts the policies text contains "não é reembolsável" and does not contain "é reembolsável em casos de desistência"
+- [x] Test asserts the CTA WhatsApp link uses the config number (fallback `https://wa.me/`)
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 3 tests pass
 
 **Tests**: unit
 **Gate**: quick
