@@ -1525,10 +1525,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests (fake timers) assert a toast has `role="status"` and `aria-live="polite"`, disappears after 6000 ms, and a toast with an action stays after 6000 ms and runs the action on click
-- [ ] Tests assert Alert error has `role="alert"`; ComingSoon renders its title and "Em construção"
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 4 tests pass
+- [x] Tests (fake timers) assert a toast has `role="status"` and `aria-live="polite"`, disappears after 6000 ms, and a toast with an action stays after 6000 ms and runs the action on click
+- [x] Tests assert Alert error has `role="alert"`; ComingSoon renders its title and "Em construção"
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 4 tests pass
 
 **Tests**: unit
 **Gate**: quick
