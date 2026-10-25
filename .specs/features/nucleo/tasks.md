@@ -1235,9 +1235,9 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: HoverCard opens on hover and on keyboard focus, closes on Esc and pointer leave; Drawer traps focus and returns it; Stepper renders 4 labelled steps with `aria-current="step"` on the active one
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 8 tests pass
+- [x] Tests: HoverCard opens on hover and on keyboard focus, closes on Esc and pointer leave; Drawer traps focus and returns it; Stepper renders 4 labelled steps with `aria-current="step"` on the active one
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 8 tests pass
 
 **Tests**: unit
 **Gate**: quick
