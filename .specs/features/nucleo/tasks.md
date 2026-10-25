@@ -196,11 +196,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Test enumerates all 121 (from, to) pairs and asserts `canTransition` true exactly for architecture §3.1 plus `expired→confirmed`, `expired→paid`, `paid→confirmed`
-- [ ] Test asserts every status label of NUC-02 and every `paymentStatusOf` branch of NUC-03
-- [ ] Each contract schema has one passing fixture and one failing fixture (missing/invalid key) test
-- [ ] Gate check passes: `npm test -w packages/core`
-- [ ] Test count: ≥ 30 tests pass
+- [x] Test enumerates all 121 (from, to) pairs and asserts `canTransition` true exactly for architecture §3.1 plus `expired→confirmed`, `expired→paid`, `paid→confirmed`
+- [x] Test asserts every status label of NUC-02 and every `paymentStatusOf` branch of NUC-03
+- [x] Each contract schema has one passing fixture and one failing fixture (missing/invalid key) test
+- [x] Gate check passes: `npm test -w packages/core`
+- [x] Test count: ≥ 30 tests pass
 
 **Tests**: unit
 **Gate**: quick

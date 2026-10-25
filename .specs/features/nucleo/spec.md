@@ -717,9 +717,9 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 
 | Requirement ID | Story | Phase | Task(s) | Status |
 | --- | --- | --- | --- | --- |
-| NUC-01 | P1: Booking vocabulary and contracts | Tasks | T1 | In Tasks |
-| NUC-02 | P1: Booking vocabulary and contracts | Tasks | T1 | In Tasks |
-| NUC-03 | P1: Booking vocabulary and contracts | Tasks | T1 | In Tasks |
+| NUC-01 | P1: Booking vocabulary and contracts | Tasks | T1 | Implementing |
+| NUC-02 | P1: Booking vocabulary and contracts | Tasks | T1 | Implementing |
+| NUC-03 | P1: Booking vocabulary and contracts | Tasks | T1 | Implementing |
 | NUC-04 | P1: Booking vocabulary and contracts | Tasks | T1, T5 | In Tasks |
 | NUC-05 | P1: Booking vocabulary and contracts | Tasks | T5, T20, T23 | In Tasks |
 | NUC-06 | P1: Booking vocabulary and contracts | Tasks | T23, T26 | In Tasks |
