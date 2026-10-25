@@ -1301,10 +1301,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test parses `tokens.css` and asserts, for every key in the §9.3 table, the Day block value and the Night block value (e.g. `--c-surface: 245 238 230` day / `29 20 14` night; `--c-bronze: 122 70 29` / `220 170 130`; `--c-champagne-soft: 239 220 205` / `74 53 38`)
-- [ ] Test asserts every color key referenced by `tailwind.config.ts` has a variable in both blocks (constants may repeat)
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 3 tests pass
+- [x] Test parses `tokens.css` and asserts, for every key in the §9.3 table, the Day block value and the Night block value (e.g. `--c-surface: 245 238 230` day / `29 20 14` night; `--c-bronze: 122 70 29` / `220 170 130`; `--c-champagne-soft: 239 220 205` / `74 53 38`)
+- [x] Test asserts every color key referenced by `tailwind.config.ts` has a variable in both blocks (constants may repeat)
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 3 tests pass
 
 **Tests**: unit
 **Gate**: quick
