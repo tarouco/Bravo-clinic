@@ -1916,10 +1916,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert `safeNextPath('/app/agenda') === '/app/agenda'` and `null` for `'//evil.com'`, `'https://evil.com'`, `'javascript:alert(1)'`, `'app'`, `null`
-- [ ] Tests assert `useLogin` posts to `/api/public/auth/login` and sets `['session']`; `useLogout` posts to `/api/app/auth/logout` and sets `['session']` to null
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 4 tests pass
+- [x] Tests assert `safeNextPath('/app/agenda') === '/app/agenda'` and `null` for `'//evil.com'`, `'https://evil.com'`, `'javascript:alert(1)'`, `'app'`, `null`
+- [x] Tests assert `useLogin` posts to `/api/public/auth/login` and sets `['session']`; `useLogout` posts to `/api/app/auth/logout` and sets `['session']` to null
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 4 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1943,12 +1943,12 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests (memory router, mocked session) assert: anonymous `/app/agenda` → location `/login?next=%2Fapp%2Fagenda`; anonymous `/admin/cupons` → `/login?next=%2Fadmin%2Fcupons`
-- [ ] Test asserts tenant `/admin/financeiro` renders "Acesso restrito" with a link to `/app`
-- [ ] Tests assert staff with `mfa.enrolled && !mfa.verified` → `/login/2fa`; `!mfa.enrolled` → `/login/2fa/configurar`
-- [ ] Test asserts reception on `/admin/financeiro` renders "Acesso restrito" and `/admin` redirects reception to `/admin/reservas`
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests (memory router, mocked session) assert: anonymous `/app/agenda` → location `/login?next=%2Fapp%2Fagenda`; anonymous `/admin/cupons` → `/login?next=%2Fadmin%2Fcupons`
+- [x] Test asserts tenant `/admin/financeiro` renders "Acesso restrito" with a link to `/app`
+- [x] Tests assert staff with `mfa.enrolled && !mfa.verified` → `/login/2fa`; `!mfa.enrolled` → `/login/2fa/configurar`
+- [x] Test asserts reception on `/admin/financeiro` renders "Acesso restrito" and `/admin` redirects reception to `/admin/reservas`
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1972,12 +1972,12 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert a 401 response shows "E-mail ou senha incorretos"; a 429 shows "Muitas tentativas. Tente novamente em <n> minutos."
-- [ ] Tests assert success navigates to `/app` for tenant, `/admin` for staff, and to `/app/agenda` with `?next=/app/agenda`; with `?next=//evil.com` it navigates to `/app`
-- [ ] Test asserts `mfaRequired: true` navigates to `/login/2fa`
-- [ ] Tests assert the Google button is absent with `googleEnabled: false` and links to `/api/public/auth/google/start` when true
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests assert a 401 response shows "E-mail ou senha incorretos"; a 429 shows "Muitas tentativas. Tente novamente em <n> minutos."
+- [x] Tests assert success navigates to `/app` for tenant, `/admin` for staff, and to `/app/agenda` with `?next=/app/agenda`; with `?next=//evil.com` it navigates to `/app`
+- [x] Test asserts `mfaRequired: true` navigates to `/login/2fa`
+- [x] Tests assert the Google button is absent with `googleEnabled: false` and links to `/api/public/auth/google/start` when true
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -2001,12 +2001,12 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test types document "529.982.247-24", submits, and asserts "CPF ou CNPJ inválido" under the field and no API call
-- [ ] Test asserts submit is disabled until both checkboxes are checked and the two links point to `/termos` and `/privacidade`
-- [ ] Test asserts 201 navigates to `/app` and the banner "Enviamos um link de confirmação para o seu e-mail." is shown
-- [ ] Tests assert 409 `EMAIL_TAKEN` shows "Este e-mail já está cadastrado." under e-mail and `DOCUMENT_TAKEN` shows "Este CPF/CNPJ já está cadastrado." under document
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 5 tests pass
+- [x] Test types document "529.982.247-24", submits, and asserts "CPF ou CNPJ inválido" under the field and no API call
+- [x] Test asserts submit is disabled until both checkboxes are checked and the two links point to `/termos` and `/privacidade`
+- [x] Test asserts 201 navigates to `/app` and the banner "Enviamos um link de confirmação para o seu e-mail." is shown
+- [x] Tests assert 409 `EMAIL_TAKEN` shows "Este e-mail já está cadastrado." under e-mail and `DOCUMENT_TAKEN` shows "Este CPF/CNPJ já está cadastrado." under document
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 5 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -2030,10 +2030,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test asserts exactly one verify request with the token and the text "E-mail confirmado"
-- [ ] Test asserts a 400 shows "Link inválido ou expirado" and, with a session, a "Reenviar e-mail" button that calls resend
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 3 tests pass
+- [x] Test asserts exactly one verify request with the token and the text "E-mail confirmado"
+- [x] Test asserts a 400 shows "Link inválido ou expirado" and, with a session, a "Reenviar e-mail" button that calls resend
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 3 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -2057,10 +2057,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test asserts after submit the text "Se o e-mail estiver cadastrado, você receberá um link em instantes." for both 202 responses
-- [ ] Tests assert mismatched confirmation shows "As senhas não conferem" without an API call; valid submit shows "Senha alterada" and a link to `/login`; 400 shows "Link inválido ou expirado"
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 4 tests pass
+- [x] Test asserts after submit the text "Se o e-mail estiver cadastrado, você receberá um link em instantes." for both 202 responses
+- [x] Tests assert mismatched confirmation shows "As senhas não conferem" without an API call; valid submit shows "Senha alterada" and a link to `/login`; 400 shows "Link inválido ou expirado"
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 4 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -2084,10 +2084,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test asserts a valid code navigates to `/admin`; 401 shows "Código inválido"
-- [ ] Test asserts the enrollment page renders an img with the QR alt, then after confirming shows 10 recovery codes and the button "Já guardei os códigos" navigating to `/admin`
-- [ ] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
-- [ ] Test count: ≥ 3 tests pass
+- [x] Test asserts a valid code navigates to `/admin`; 401 shows "Código inválido"
+- [x] Test asserts the enrollment page renders an img with the QR alt, then after confirming shows 10 recovery codes and the button "Já guardei os códigos" navigating to `/admin`
+- [x] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
+- [x] Test count: ≥ 3 tests pass
 
 **Tests**: unit
 **Gate**: build

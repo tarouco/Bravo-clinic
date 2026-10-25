@@ -12,6 +12,7 @@ interface ApiErrorInit {
   message: string;
   details?: ApiErrorDetail[];
   requestId?: string;
+  retryAfterSeconds?: number;
 }
 
 export class ApiError extends Error {
@@ -19,14 +20,17 @@ export class ApiError extends Error {
   readonly code: string;
   readonly details: ApiErrorDetail[];
   readonly requestId: string | undefined;
+  /** Seconds from the `Retry-After` header of a 429 response. */
+  readonly retryAfterSeconds: number | undefined;
 
-  constructor({ status, code, message, details = [], requestId }: ApiErrorInit) {
+  constructor({ status, code, message, details = [], requestId, retryAfterSeconds }: ApiErrorInit) {
     super(message);
     this.name = 'ApiError';
     this.status = status;
     this.code = code;
     this.details = details;
     this.requestId = requestId;
+    this.retryAfterSeconds = retryAfterSeconds;
   }
 }
 
@@ -49,12 +53,14 @@ async function toApiError(response: Response): Promise<ApiError> {
     // Not JSON (for example a gateway error page): fall back to a generic error.
   }
   const body = envelope.error;
+  const retryAfter = Number(response.headers.get('Retry-After'));
   return new ApiError({
     status: response.status,
     code: body?.code ?? 'INTERNAL',
     message: body?.message ?? 'Erro inesperado. Tente novamente.',
     ...(body?.details ? { details: body.details } : {}),
     ...(body?.requestId ? { requestId: body.requestId } : {}),
+    ...(retryAfter > 0 ? { retryAfterSeconds: retryAfter } : {}),
   });
 }
 

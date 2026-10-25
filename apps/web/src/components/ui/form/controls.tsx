@@ -96,8 +96,8 @@ export interface CheckboxProps extends Omit<
 > {
   /** Text (or text with links) shown next to the box. */
   label: ReactNode;
-  help?: string;
-  error?: string;
+  help?: string | undefined;
+  error?: string | undefined;
 }
 
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox(
