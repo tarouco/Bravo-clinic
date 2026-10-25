@@ -2283,7 +2283,7 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Workflow YAML validates (`npx --yes @action-validator/cli .github/workflows/ci.yml` or equivalent) and lists the five steps in order
+- [x] Workflow YAML validates (`npx --yes @action-validator/cli .github/workflows/ci.yml` or equivalent) and lists the five steps in order
 - [ ] Running the same steps locally with a disposable postgres 17 (or `DATABASE_URL_TEST`) passes
 - [ ] The workflow runs green on GitHub after the user pushes (the user pushes; agents do not push)
 - [ ] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
