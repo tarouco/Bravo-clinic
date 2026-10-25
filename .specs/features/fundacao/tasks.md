@@ -592,11 +592,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Integration test (against `DATABASE_URL_TEST`) creates a temp table, inserts inside `withTransaction` then throws, and asserts the row count is 0 afterwards
-- [ ] Integration test asserts a successful callback commits and returns its value
-- [ ] Test setup fails with "DATABASE_URL_TEST is required for integration tests" when the variable is missing (no silent skip)
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 3 tests pass
+- [x] Integration test (against `DATABASE_URL_TEST`) creates a temp table, inserts inside `withTransaction` then throws, and asserts the row count is 0 afterwards
+- [x] Integration test asserts a successful callback commits and returns its value
+- [x] Test setup fails with "DATABASE_URL_TEST is required for integration tests" when the variable is missing (no silent skip)
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 3 tests pass
 
 **Tests**: integration
 **Gate**: full

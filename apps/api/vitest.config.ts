@@ -12,6 +12,7 @@ export default defineConfig({
   test: {
     environment: 'node',
     include: ['src/**/*.test.ts'],
+    globalSetup: ['./test/global-setup.ts'],
     fileParallelism: false,
     pool: 'forks',
     poolOptions: { forks: { singleFork: true } },
