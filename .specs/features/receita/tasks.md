@@ -186,11 +186,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Tests enumerate every allowed subscription transition of REC-60 and every allowed period transition of REC-61 as true, and a sample of forbidden ones (`ended → active`, `expired → active`, `closed → active`, `cancelled → paid`) as false
-- [ ] `assertSubscriptionTransition('ended','active')` throws `InvalidTransitionError`
-- [ ] Tests assert labels "Aguardando pgto", "Ativa", "Suspensa", "Encerrada", "Cancelada", "Trocada", "Expirada", and `ledgerEntryLabel('period_grant', 1) === 'Compra'`, `(…, 2) === 'Renovação'`
-- [ ] Gate check passes: `npm test -w packages/core`
-- [ ] Test count: ≥ 14 tests pass
+- [x] Tests enumerate every allowed subscription transition of REC-60 and every allowed period transition of REC-61 as true, and a sample of forbidden ones (`ended → active`, `expired → active`, `closed → active`, `cancelled → paid`) as false
+- [x] `assertSubscriptionTransition('ended','active')` throws `InvalidTransitionError`
+- [x] Tests assert labels "Aguardando pgto", "Ativa", "Suspensa", "Encerrada", "Cancelada", "Trocada", "Expirada", and `ledgerEntryLabel('period_grant', 1) === 'Compra'`, `(…, 2) === 'Renovação'`
+- [x] Gate check passes: `npm test -w packages/core`
+- [x] Test count: ≥ 14 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -214,11 +214,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Each request schema has an accepted sample and one rejected sample per bound (e.g. included hours 0 and 201 rejected, 20 accepted → `includedMinutes` 1200; coupon code "bravo10" normalized to "BRAVO10"; "AB" rejected; percent 0 and 101 rejected; justification of 4 chars rejected)
-- [ ] `subscriptionPurchaseInput` rejects `acceptTerms: false`
-- [ ] Every response schema parses the matching example object from design.md "API Contracts" (fixtures inside the test)
-- [ ] Gate check passes: `npm test -w packages/core`
-- [ ] Test count: ≥ 30 tests pass
+- [x] Each request schema has an accepted sample and one rejected sample per bound (e.g. included hours 0 and 201 rejected, 20 accepted → `includedMinutes` 1200; coupon code "bravo10" normalized to "BRAVO10"; "AB" rejected; percent 0 and 101 rejected; justification of 4 chars rejected)
+- [x] `subscriptionPurchaseInput` rejects `acceptTerms: false`
+- [x] Every response schema parses the matching example object from design.md "API Contracts" (fixtures inside the test)
+- [x] Gate check passes: `npm test -w packages/core`
+- [x] Test count: ≥ 30 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -242,12 +242,12 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Meio turno mensal base 2026-11-02, 30 days → 22 occurrences, first `2026-11-02T10:00:00.000Z`–`12:30Z`; `fixedPeriodPriceCents(28000, 22) === 616000`
-- [ ] `estimateFixedPeriod({ weekdays:[1,2,3,4,5], periodDays:30, pricePerOccurrenceCents:28000 })` → `{ minCount:20, maxCount:22, minCents:560000, maxCents:616000 }`
-- [ ] Holiday date keeps its occurrence; `notBefore` drops earlier ones; window ending 1440 ends at next-day 00:00
-- [ ] Conflicts: closed day, overlap booking, cleanup (`[S, E+c)` rule), block, outside hours each reported with label ("Dia fechado", "Já reservado", "Conflito com limpeza", "Bloqueado", "Fora do horário de funcionamento")
-- [ ] Gate check passes: `npm test -w packages/core`
-- [ ] Test count: ≥ 12 tests pass
+- [x] Meio turno mensal base 2026-11-02, 30 days → 22 occurrences, first `2026-11-02T10:00:00.000Z`–`12:30Z`; `fixedPeriodPriceCents(28000, 22) === 616000`
+- [x] `estimateFixedPeriod({ weekdays:[1,2,3,4,5], periodDays:30, pricePerOccurrenceCents:28000 })` → `{ minCount:20, maxCount:22, minCents:560000, maxCents:616000 }`
+- [x] Holiday date keeps its occurrence; `notBefore` drops earlier ones; window ending 1440 ends at next-day 00:00
+- [x] Conflicts: closed day, overlap booking, cleanup (`[S, E+c)` rule), block, outside hours each reported with label ("Dia fechado", "Já reservado", "Conflito com limpeza", "Bloqueado", "Fora do horário de funcionamento")
+- [x] Gate check passes: `npm test -w packages/core`
+- [x] Test count: ≥ 12 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -273,13 +273,13 @@ T48 → T50
 
 **Done when**:
 
-- [ ] `couponDiscountCents(21900, {kind:'percent', value:1000}) === 2190`; fixed 2000 on 16000 → 2000; fixed 50000 on 16000 → 16000
-- [ ] `slotDiscountCents` Tue 14:00–16:00 at 8000/h, 10% over all minutes → 1600; partial overlap and two discounts summed per segment
-- [ ] `chooseDiscount({gross:16000, slot:1600, coupon:2000})` → coupon, net 14000; tie → `slot_discount`; both zero → `none`
-- [ ] `validateCoupon` returns each of the 8 reasons in its triggering case and `ok` otherwise; messages match REC-117 verbatim
-- [ ] `discountNote` returns "Aplicamos o maior desconto: cupom R$ 20,00 (o desconto do horário era R$ 16,00)." for the example
-- [ ] Gate check passes: `npm test -w packages/core`
-- [ ] Test count: ≥ 20 tests pass
+- [x] `couponDiscountCents(21900, {kind:'percent', value:1000}) === 2190`; fixed 2000 on 16000 → 2000; fixed 50000 on 16000 → 16000
+- [x] `slotDiscountCents` Tue 14:00–16:00 at 8000/h, 10% over all minutes → 1600; partial overlap and two discounts summed per segment
+- [x] `chooseDiscount({gross:16000, slot:1600, coupon:2000})` → coupon, net 14000; tie → `slot_discount`; both zero → `none`
+- [x] `validateCoupon` returns each of the 8 reasons in its triggering case and `ok` otherwise; messages match REC-117 verbatim
+- [x] `discountNote` returns "Aplicamos o maior desconto: cupom R$ 20,00 (o desconto do horário era R$ 16,00)." for the example
+- [x] Gate check passes: `npm test -w packages/core`
+- [x] Test count: ≥ 20 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -303,11 +303,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Five examples return 120, 78, 185, 84, 152 exactly; `extraMinutesExact` for Wed is `{ num: 69n, den: 4n }` or an equivalent reduced fraction equal to 17.25
-- [ ] V_slot ≤ V_ref yields debit = duration; `vPacCents({priceCents:160000, includedMinutes:1200}) === 8000`, half-up case `vPacCents({priceCents:100000, includedMinutes:1800}) === 3333`
-- [ ] `formatDebitDetail` → "60 min + 18 min de excedente = 78 min" (Wed) and "120 min" (Tue)
-- [ ] Gate check passes: `npm test -w packages/core`
-- [ ] Test count: ≥ 10 tests pass
+- [x] Five examples return 120, 78, 185, 84, 152 exactly; `extraMinutesExact` for Wed is `{ num: 69n, den: 4n }` or an equivalent reduced fraction equal to 17.25
+- [x] V_slot ≤ V_ref yields debit = duration; `vPacCents({priceCents:160000, includedMinutes:1200}) === 8000`, half-up case `vPacCents({priceCents:100000, includedMinutes:1800}) === 3333`
+- [x] `formatDebitDetail` → "60 min + 18 min de excedente = 78 min" (Wed) and "120 min" (Tue)
+- [x] Gate check passes: `npm test -w packages/core`
+- [x] Test count: ≥ 10 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -331,10 +331,10 @@ T48 → T50
 
 **Done when**:
 
-- [ ] `convertPackageBalance({ remainingMinutes:360, from:{160000,1200}, to:{225000,1800} }) === 384`; 0 remaining → 0; half-up rounding case asserted
-- [ ] Compensation: (1200,30)=40, (2400,60)=40, (1800,90)=20; `fixedScheduleCompensationCents(616000,30) === 20533`; `periodDaysOf('bimonthly') === 60`
-- [ ] Gate check passes: `npm test -w packages/core`
-- [ ] Test count: ≥ 8 tests pass
+- [x] `convertPackageBalance({ remainingMinutes:360, from:{160000,1200}, to:{225000,1800} }) === 384`; 0 remaining → 0; half-up rounding case asserted
+- [x] Compensation: (1200,30)=40, (2400,60)=40, (1800,90)=20; `fixedScheduleCompensationCents(616000,30) === 20533`; `periodDaysOf('bimonthly') === 60`
+- [x] Gate check passes: `npm test -w packages/core`
+- [x] Test count: ≥ 8 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -358,11 +358,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] `periodBounds('2026-11-02', 30)` → endsOn `2026-12-02`; `chargeDueAt('2026-12-02', 2)` → `2026-11-30T03:00:00.000Z`; `graceEndsOn('2026-12-02', 7)` → `2026-12-09`; notices for endsOn 2026-12-02 → `2026-11-25`, `2026-12-01`
-- [ ] `allocateMinutes`: package first, then lots by expiry; skips lots expiring before booking start or before now; `usePackage:false` uses lots only; insufficient returns `sufficient:false` with `available`
-- [ ] `allocateCredits` FIFO by expiry then creation, never exceeds a lot; `allocateRefund({cash:8000, credit:8000, refund:8000})` → credit 0 / cash 8000 for retained 8000; `({cash:0, credit:16000, refund:8000})` → credit 8000
-- [ ] Gate check passes: `npm test -w packages/core`
-- [ ] Test count: ≥ 16 tests pass
+- [x] `periodBounds('2026-11-02', 30)` → endsOn `2026-12-02`; `chargeDueAt('2026-12-02', 2)` → `2026-11-30T03:00:00.000Z`; `graceEndsOn('2026-12-02', 7)` → `2026-12-09`; notices for endsOn 2026-12-02 → `2026-11-25`, `2026-12-01`
+- [x] `allocateMinutes`: package first, then lots by expiry; skips lots expiring before booking start or before now; `usePackage:false` uses lots only; insufficient returns `sufficient:false` with `available`
+- [x] `allocateCredits` FIFO by expiry then creation, never exceeds a lot; `allocateRefund({cash:8000, credit:8000, refund:8000})` → credit 0 / cash 8000 for retained 8000; `({cash:0, credit:16000, refund:8000})` → credit 8000
+- [x] Gate check passes: `npm test -w packages/core`
+- [x] Test count: ≥ 16 tests pass
 
 **Tests**: unit
 **Gate**: quick

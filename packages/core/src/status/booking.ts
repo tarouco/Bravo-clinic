@@ -75,12 +75,13 @@ export function canTransition(from: BookingStatus, to: BookingStatus): boolean {
   return TRANSITIONS[from].includes(to);
 }
 
-export class InvalidTransitionError extends Error {
-  readonly from: BookingStatus;
-  readonly to: BookingStatus;
+/** Raised by every status machine; `machine` names it in the message (booking by default). */
+export class InvalidTransitionError<S extends string = BookingStatus> extends Error {
+  readonly from: S;
+  readonly to: S;
 
-  constructor(from: BookingStatus, to: BookingStatus) {
-    super(`Invalid booking transition ${from} -> ${to}`);
+  constructor(from: S, to: S, machine = 'booking') {
+    super(`Invalid ${machine} transition ${from} -> ${to}`);
     this.name = 'InvalidTransitionError';
     this.from = from;
     this.to = to;

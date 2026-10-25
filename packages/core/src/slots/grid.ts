@@ -68,17 +68,9 @@ function dayContext(args: {
     }
     return ms;
   };
-  const spans = args.occupied
-    .map((o) => ({
-      start: o.start.getTime(),
-      end: o.end.getTime(),
-      until: o.occupiedUntil.getTime(),
-      kind: o.kind,
-    }))
-    .sort((a, b) => a.start - b.start);
   return {
     window: args.window,
-    spans,
+    spans: toSpans(args.occupied),
     settings,
     earliestStartMs: now.getTime() + settings.minAdvanceMinutes * MS_PER_MINUTE,
     tooFar: diffDays(utcToLocal(now).date, date) > settings.maxAdvanceDays,
@@ -104,6 +96,35 @@ function occupancyReason(
     if (e + cleanupMs > o.start && e <= o.start) return 'no_cleanup_before_next';
   }
   return null;
+}
+
+function toSpans(occupied: Occupied[]): Span[] {
+  return occupied
+    .map((o) => ({
+      start: o.start.getTime(),
+      end: o.end.getTime(),
+      until: o.occupiedUntil.getTime(),
+      kind: o.kind,
+    }))
+    .sort((a, b) => a.start - b.start);
+}
+
+/**
+ * Occupancy reason of the candidate `[start, end)` with `cleanupMinutes` after it (rule 4 alone:
+ * no window, grid or advance checks). Used by fixed-schedule occurrences.
+ */
+export function occupancyConflict(
+  occupied: Occupied[],
+  start: Date,
+  end: Date,
+  cleanupMinutes: number,
+): RejectReason | null {
+  return occupancyReason(
+    toSpans(occupied),
+    start.getTime(),
+    end.getTime(),
+    cleanupMinutes * MS_PER_MINUTE,
+  );
 }
 
 function check(ctx: DayContext, startMinute: number, endMinute: number): RejectReason | null {
