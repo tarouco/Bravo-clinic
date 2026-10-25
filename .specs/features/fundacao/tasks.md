@@ -1582,11 +1582,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests (fetch stubbed) assert `api.post('/x', body)` sends JSON with `credentials: 'same-origin'` and `Content-Type: application/json`; a 422 envelope throws `ApiError` with `status 422`, `code 'VALIDATION_FAILED'`, `details`; a rejected fetch throws `code 'NETWORK'`
-- [ ] Tests assert `useSession` returns `null` on 401 and the user on 200
-- [ ] Test asserts `useClinicConfig` returns the fallback `{ googleEnabled: false, whatsappE164: '' }` while loading and on error
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests (fetch stubbed) assert `api.post('/x', body)` sends JSON with `credentials: 'same-origin'` and `Content-Type: application/json`; a 422 envelope throws `ApiError` with `status 422`, `code 'VALIDATION_FAILED'`, `details`; a rejected fetch throws `code 'NETWORK'`
+- [x] Tests assert `useSession` returns `null` on 401 and the user on 200
+- [x] Test asserts `useClinicConfig` returns the fallback `{ googleEnabled: false, whatsappE164: '' }` while loading and on error
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick
