@@ -1158,14 +1158,14 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test asserts enroll → 200 `otpauthUri` starting `otpauth://totp/Bravô%20Clinic:` (or the encoded issuer) with `issuer=` param; DB stores ciphertext that is not the base32 secret
-- [ ] Test asserts confirm with the current code (computed by `otpauth` from the URI) → 200 with 10 unique recovery codes; `confirmed_at` set; session MFA-verified (`/admin/session` reachable); audit row `auth.totp_enabled`; DB stores 10 hashes, not the codes
-- [ ] Test asserts login → `mfaRequired: true`, `/admin/session` → 403 `MFA_REQUIRED`, verify with valid code → 200, then `/admin/session` → 200
-- [ ] Tests assert reusing the same code on a new session → 401 `INVALID_CODE`; a recovery code works once and fails the second time; "123 456"-style spacing is accepted
-- [ ] Test asserts 5 wrong codes then a valid one → 429
-- [ ] Test asserts a tenant calling enroll → 403 `FORBIDDEN`
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 9 tests pass
+- [x] Test asserts enroll → 200 `otpauthUri` starting `otpauth://totp/Bravô%20Clinic:` (or the encoded issuer) with `issuer=` param; DB stores ciphertext that is not the base32 secret
+- [x] Test asserts confirm with the current code (computed by `otpauth` from the URI) → 200 with 10 unique recovery codes; `confirmed_at` set; session MFA-verified (`/admin/session` reachable); audit row `auth.totp_enabled`; DB stores 10 hashes, not the codes
+- [x] Test asserts login → `mfaRequired: true`, `/admin/session` → 403 `MFA_REQUIRED`, verify with valid code → 200, then `/admin/session` → 200
+- [x] Tests assert reusing the same code on a new session → 401 `INVALID_CODE`; a recovery code works once and fails the second time; "123 456"-style spacing is accepted
+- [x] Test asserts 5 wrong codes then a valid one → 429
+- [x] Test asserts a tenant calling enroll → 403 `FORBIDDEN`
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 9 tests pass
 
 **Tests**: integration
 **Gate**: full
