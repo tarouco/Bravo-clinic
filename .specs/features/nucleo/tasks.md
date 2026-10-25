@@ -1262,10 +1262,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: BookingSummary renders PR-3 fixture lines exactly "17:30–19:00 · 2 horas ou mais · 1h30 × R$ 80,00 = R$ 120,00" and "19:00–20:00 · 2 horas ou mais — noite · 1h × R$ 99,00 = R$ 99,00", total R$ 219,00, sinal and saldo with dates
-- [ ] Tests: StatusBadge label per status; PolicyAcceptance calls `onChange(true)` only when checked; Table sorts by column and triggers download with given filename
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 8 tests pass
+- [x] Tests: BookingSummary renders PR-3 fixture lines exactly "17:30–19:00 · 2 horas ou mais · 1h30 × R$ 80,00 = R$ 120,00" and "19:00–20:00 · 2 horas ou mais — noite · 1h × R$ 99,00 = R$ 99,00", total R$ 219,00, sinal and saldo with dates
+- [x] Tests: StatusBadge label per status; PolicyAcceptance calls `onChange(true)` only when checked; Table sorts by column and triggers download with given filename
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 8 tests pass
 
 **Tests**: unit
 **Gate**: quick

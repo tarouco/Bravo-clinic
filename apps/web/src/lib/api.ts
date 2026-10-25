@@ -98,7 +98,28 @@ async function request<T>(
   return (await response.json()) as T;
 }
 
+/** GET that returns the raw body (CSV export); non-2xx responses still become an `ApiError`. */
+async function getBlob(path: string, options: RequestOptions = {}): Promise<Blob> {
+  let response: Response;
+  try {
+    response = await fetch(path, {
+      method: 'GET',
+      credentials: 'same-origin',
+      ...(options.signal ? { signal: options.signal } : {}),
+    });
+  } catch {
+    throw new ApiError({
+      status: 0,
+      code: 'NETWORK',
+      message: 'Sem conexão com o servidor. Verifique sua internet e tente novamente.',
+    });
+  }
+  if (!response.ok) throw await toApiError(response);
+  return response.blob();
+}
+
 export const api = {
+  blob: getBlob,
   get: <T>(path: string, options?: RequestOptions) => request<T>('GET', path, undefined, options),
   post: <T>(path: string, body?: unknown, options?: RequestOptions) =>
     request<T>('POST', path, body, options),
