@@ -1,5 +1,7 @@
 import { adminSectionMeta, type AdminSection } from '@bravo/core';
 import { createBrowserRouter, type RouteObject } from 'react-router-dom';
+import { AdminShell } from './components/layout/AdminShell';
+import { AppShell } from './components/layout/AppShell';
 import { PublicLayout } from './components/layout/PublicLayout';
 import { ComingSoon } from './components/ui/Feedback';
 import {
@@ -99,9 +101,14 @@ export const appRoutes: RouteObject[] = [
     path: 'app',
     element: <RequireAuth />,
     children: [
-      { index: true, element: <AppHomePage /> },
-      ...appPlaceholders.map(placeholder),
-      { path: '*', element: <NotFoundPage /> },
+      {
+        element: <AppShell />,
+        children: [
+          { index: true, element: <AppHomePage /> },
+          ...appPlaceholders.map(placeholder),
+          { path: '*', element: <NotFoundPage /> },
+        ],
+      },
     ],
   },
   {
@@ -111,9 +118,14 @@ export const appRoutes: RouteObject[] = [
       {
         element: <RequireStaff />,
         children: [
-          { index: true, element: <AdminIndexRedirect /> },
-          ...adminSections.map(adminSectionRoute),
-          { path: '*', element: <NotFoundPage /> },
+          {
+            element: <AdminShell />,
+            children: [
+              { index: true, element: <AdminIndexRedirect /> },
+              ...adminSections.map(adminSectionRoute),
+              { path: '*', element: <NotFoundPage /> },
+            ],
+          },
         ],
       },
     ],

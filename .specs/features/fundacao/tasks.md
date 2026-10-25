@@ -2113,11 +2113,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert five nav items in order Reservar, Minhas reservas, Agenda, Compras, Perfil with their paths, the bottom bar having class `lg:hidden` and the sidebar `hidden lg:flex`
-- [ ] Test asserts "Sair" calls logout and navigates to `/`
-- [ ] Test asserts an unverified session shows "Confirme seu e-mail para reservar." with a resend button
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 3 tests pass
+- [x] Tests assert five nav items in order Reservar, Minhas reservas, Agenda, Compras, Perfil with their paths, the bottom bar having class `lg:hidden` and the sidebar `hidden lg:flex`
+- [x] Test asserts "Sair" calls logout and navigates to `/`
+- [x] Test asserts an unverified session shows "Confirme seu e-mail para reservar." with a resend button
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 3 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -2141,10 +2141,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test asserts admin sees the 10 labels in PRD order; reception sees only "Gestão de Reservas" and "Clientes"
-- [ ] Test navigates to "Cupons" and asserts heading "Cupons" and text "Em construção"
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 3 tests pass
+- [x] Test asserts admin sees the 10 labels in PRD order; reception sees only "Gestão de Reservas" and "Clientes"
+- [x] Test navigates to "Cupons" and asserts heading "Cupons" and text "Em construção"
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 3 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -2168,11 +2168,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test imports the exported `pwaOptions` and asserts every manifest field of FND-119 and the three icon entries (sizes, `purpose: 'maskable'` on the third)
-- [ ] Test asserts `runtimeCaching` contains a NetworkOnly handler whose `urlPattern` matches `/api/health` and the denylist matches `/api/x`
-- [ ] Test with `useRegisterSW` mocked (`needRefresh: true`) asserts the toast text and that "Atualizar" calls `updateServiceWorker(true)`
-- [ ] `npm run build -w apps/web` (with `API_PROXY_ORIGIN` set) emits `dist/sw.js` and `dist/manifest.webmanifest`
-- [ ] Gate check passes: `npm test -w apps/web`
+- [x] Test imports the exported `pwaOptions` and asserts every manifest field of FND-119 and the three icon entries (sizes, `purpose: 'maskable'` on the third)
+- [x] Test asserts `runtimeCaching` contains a NetworkOnly handler whose `urlPattern` matches `/api/health` and the denylist matches `/api/x`
+- [x] Test with `useRegisterSW` mocked (`needRefresh: true`) asserts the toast text and that "Atualizar" calls `updateServiceWorker(true)`
+- [x] `npm run build -w apps/web` (with `API_PROXY_ORIGIN` set) emits `dist/sw.js` and `dist/manifest.webmanifest`
+- [x] Gate check passes: `npm test -w apps/web`
 - [ ] Test count: ≥ 3 tests pass
 
 **Tests**: unit
@@ -2197,12 +2197,12 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test reads `index.html` and asserts `lang="pt-BR"`, one `application/ld+json` script whose JSON has `@type: 'LocalBusiness'`, the name, `address.addressLocality 'Itajaí'`, `addressRegion 'SC'`, `addressCountry 'BR'`, `streetAddress 'Praia Brava'`, two `openingHoursSpecification` entries (Mo–Fr 07:00–23:59, Sa–Su 09:00–23:59)
-- [ ] Test asserts `og:type`, `og:title`, `og:description` = "Saúde · Beleza · Bem-estar em um só lugar", `og:image`, `og:locale` = `pt_BR`
-- [ ] Test asserts the fonts link contains `Josefin+Sans` and `Jost` and `display=swap`, and the file contains neither `cdn.tailwindcss.com` nor `Material+Symbols`
-- [ ] Tests assert robots disallows `/app` and `/admin` and the sitemap lists `/`, `/salas`, `/precos`, `/servicos-extras`, `/politicas`, `/contato`, `/termos`, `/privacidade`
-- [ ] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
-- [ ] Test count: ≥ 4 tests pass
+- [x] Test reads `index.html` and asserts `lang="pt-BR"`, one `application/ld+json` script whose JSON has `@type: 'LocalBusiness'`, the name, `address.addressLocality 'Itajaí'`, `addressRegion 'SC'`, `addressCountry 'BR'`, `streetAddress 'Praia Brava'`, two `openingHoursSpecification` entries (Mo–Fr 07:00–23:59, Sa–Su 09:00–23:59)
+- [x] Test asserts `og:type`, `og:title`, `og:description` = "Saúde · Beleza · Bem-estar em um só lugar", `og:image`, `og:locale` = `pt_BR`
+- [x] Test asserts the fonts link contains `Josefin+Sans` and `Jost` and `display=swap`, and the file contains neither `cdn.tailwindcss.com` nor `Material+Symbols`
+- [x] Tests assert robots disallows `/app` and `/admin` and the sitemap lists `/`, `/salas`, `/precos`, `/servicos-extras`, `/politicas`, `/contato`, `/termos`, `/privacidade`
+- [x] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
+- [x] Test count: ≥ 4 tests pass
 
 **Tests**: unit
 **Gate**: build

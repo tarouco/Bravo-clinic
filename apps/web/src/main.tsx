@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
 import { ToastProvider } from './components/ui/Toast';
 import { queryClient } from './lib/query-client';
+import { PwaUpdatePrompt } from './pwa/PwaUpdatePrompt';
 import { createAppRouter } from './router';
 import './styles/index.css';
 import { ThemeProvider } from './theme/ThemeProvider';
@@ -17,6 +18,7 @@ createRoot(container).render(
       <QueryClientProvider client={queryClient}>
         <ToastProvider>
           <RouterProvider router={createAppRouter()} />
+          <PwaUpdatePrompt />
         </ToastProvider>
       </QueryClientProvider>
     </ThemeProvider>
