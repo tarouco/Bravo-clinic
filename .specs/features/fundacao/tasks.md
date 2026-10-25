@@ -955,11 +955,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests (test-only routes `/app/ping`, `/admin/ping`, `/admin/admin-only` registered in a test app) assert: no cookie → 401; tenant on `/admin/ping` → 403 `FORBIDDEN`; staff without TOTP → 403 `MFA_ENROLLMENT_REQUIRED`; staff with TOTP but unverified session → 403 `MFA_REQUIRED`; verified reception on `/admin/admin-only` → 403 `FORBIDDEN`; verified admin → 200
-- [ ] Test demotes a logged-in admin to tenant in the DB and asserts the next `/admin/ping` → 403
-- [ ] Test asserts a revoked session → 401 `UNAUTHENTICATED`
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 8 tests pass
+- [x] Tests (test-only routes `/app/ping`, `/admin/ping`, `/admin/admin-only` registered in a test app) assert: no cookie → 401; tenant on `/admin/ping` → 403 `FORBIDDEN`; staff without TOTP → 403 `MFA_ENROLLMENT_REQUIRED`; staff with TOTP but unverified session → 403 `MFA_REQUIRED`; verified reception on `/admin/admin-only` → 403 `FORBIDDEN`; verified admin → 200
+- [x] Test demotes a logged-in admin to tenant in the DB and asserts the next `/admin/ping` → 403
+- [x] Test asserts a revoked session → 401 `UNAUTHENTICATED`
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 8 tests pass
 
 **Tests**: integration
 **Gate**: full
