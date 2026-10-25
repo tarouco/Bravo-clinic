@@ -675,9 +675,9 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Every column, check and index of the six tables in §5.2 is declared
-- [ ] Money/instant/date conventions hold (no `timestamp without time zone`)
-- [ ] Gate check passes: `npm run typecheck && npm run lint`
+- [x] Every column, check and index of the six tables in §5.2 is declared
+- [x] Money/instant/date conventions hold (no `timestamp without time zone`)
+- [x] Gate check passes: `npm run typecheck && npm run lint`
 
 **Tests**: none
 **Gate**: build
