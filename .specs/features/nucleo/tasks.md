@@ -254,11 +254,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] One test per W-PR row (PR-1..PR-8) and W-AV row (AV-1..AV-4) with exact segments and cents
-- [ ] Tests for tie-break by display order, inactive categories ignored, rounding 9701 × 90 min = 14552, block applies/doesn't apply on weekday and holiday
-- [ ] Tests for `coverageBands` with factory categories (no uncovered) and with "1 hora — noite" inactive (19:00–00:00 uncovered on Tuesday); `fromPriceCents` = 8000
-- [ ] Gate check passes: `npm test -w packages/core`
-- [ ] Test count: ≥ 20 tests pass
+- [x] One test per W-PR row (PR-1..PR-8) and W-AV row (AV-1..AV-4) with exact segments and cents
+- [x] Tests for tie-break by display order, inactive categories ignored, rounding 9701 × 90 min = 14552, block applies/doesn't apply on weekday and holiday
+- [x] Tests for `coverageBands` with factory categories (no uncovered) and with "1 hora — noite" inactive (19:00–00:00 uncovered on Tuesday); `fromPriceCents` = 8000
+- [x] Gate check passes: `npm test -w packages/core`
+- [x] Test count: ≥ 20 tests pass
 
 **Tests**: unit
 **Gate**: quick

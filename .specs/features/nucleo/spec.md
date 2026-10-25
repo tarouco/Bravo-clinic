@@ -734,13 +734,13 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-15 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
 | NUC-16 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
 | NUC-17 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
-| NUC-18 | P1: Pricing engine | Tasks | T3 | In Tasks |
-| NUC-19 | P1: Pricing engine | Tasks | T3 | In Tasks |
-| NUC-20 | P1: Pricing engine | Tasks | T3 | In Tasks |
-| NUC-21 | P1: Pricing engine | Tasks | T3 | In Tasks |
-| NUC-22 | P1: Pricing engine | Tasks | T3 | In Tasks |
-| NUC-23 | P1: Pricing engine | Tasks | T3 | In Tasks |
-| NUC-24 | P1: Pricing engine | Tasks | T3 | In Tasks |
+| NUC-18 | P1: Pricing engine | Tasks | T3 | Implementing |
+| NUC-19 | P1: Pricing engine | Tasks | T3 | Implementing |
+| NUC-20 | P1: Pricing engine | Tasks | T3 | Implementing |
+| NUC-21 | P1: Pricing engine | Tasks | T3 | Implementing |
+| NUC-22 | P1: Pricing engine | Tasks | T3 | Implementing |
+| NUC-23 | P1: Pricing engine | Tasks | T3 | Implementing |
+| NUC-24 | P1: Pricing engine | Tasks | T3 | Implementing |
 | NUC-25 | P1: Payment split and booking policies | Tasks | T4 | In Tasks |
 | NUC-26 | P1: Payment split and booking policies | Tasks | T4 | In Tasks |
 | NUC-27 | P1: Payment split and booking policies | Tasks | T4 | In Tasks |

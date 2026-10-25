@@ -13,3 +13,5 @@ export * from './contracts/app';
 export * from './contracts/admin';
 export * from './calendar/day-type';
 export * from './slots/grid';
+export * from './pricing/categories';
+export * from './pricing/price';
