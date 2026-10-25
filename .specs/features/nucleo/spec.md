@@ -717,37 +717,37 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 
 | Requirement ID | Story | Phase | Task(s) | Status |
 | --- | --- | --- | --- | --- |
-| NUC-01 | P1: Booking vocabulary and contracts | Tasks | T1 | In Tasks |
-| NUC-02 | P1: Booking vocabulary and contracts | Tasks | T1 | In Tasks |
-| NUC-03 | P1: Booking vocabulary and contracts | Tasks | T1 | In Tasks |
+| NUC-01 | P1: Booking vocabulary and contracts | Tasks | T1 | Implementing |
+| NUC-02 | P1: Booking vocabulary and contracts | Tasks | T1 | Implementing |
+| NUC-03 | P1: Booking vocabulary and contracts | Tasks | T1 | Implementing |
 | NUC-04 | P1: Booking vocabulary and contracts | Tasks | T1, T5 | In Tasks |
 | NUC-05 | P1: Booking vocabulary and contracts | Tasks | T5, T20, T23 | In Tasks |
 | NUC-06 | P1: Booking vocabulary and contracts | Tasks | T23, T26 | In Tasks |
-| NUC-07 | P1: Slot grid with cleanup | Tasks | T2 | In Tasks |
-| NUC-08 | P1: Slot grid with cleanup | Tasks | T2 | In Tasks |
-| NUC-09 | P1: Slot grid with cleanup | Tasks | T2 | In Tasks |
-| NUC-10 | P1: Slot grid with cleanup | Tasks | T2 | In Tasks |
-| NUC-11 | P1: Slot grid with cleanup | Tasks | T2 | In Tasks |
-| NUC-12 | P1: Slot grid with cleanup | Tasks | T2 | In Tasks |
+| NUC-07 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
+| NUC-08 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
+| NUC-09 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
+| NUC-10 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
+| NUC-11 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
+| NUC-12 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
 | NUC-13 | P1: Slot grid with cleanup | Tasks | T2, T20 | In Tasks |
-| NUC-14 | P1: Slot grid with cleanup | Tasks | T2 | In Tasks |
-| NUC-15 | P1: Slot grid with cleanup | Tasks | T2 | In Tasks |
-| NUC-16 | P1: Slot grid with cleanup | Tasks | T2 | In Tasks |
-| NUC-17 | P1: Slot grid with cleanup | Tasks | T2 | In Tasks |
-| NUC-18 | P1: Pricing engine | Tasks | T3 | In Tasks |
-| NUC-19 | P1: Pricing engine | Tasks | T3 | In Tasks |
-| NUC-20 | P1: Pricing engine | Tasks | T3 | In Tasks |
-| NUC-21 | P1: Pricing engine | Tasks | T3 | In Tasks |
-| NUC-22 | P1: Pricing engine | Tasks | T3 | In Tasks |
-| NUC-23 | P1: Pricing engine | Tasks | T3 | In Tasks |
-| NUC-24 | P1: Pricing engine | Tasks | T3 | In Tasks |
-| NUC-25 | P1: Payment split and booking policies | Tasks | T4 | In Tasks |
-| NUC-26 | P1: Payment split and booking policies | Tasks | T4 | In Tasks |
-| NUC-27 | P1: Payment split and booking policies | Tasks | T4 | In Tasks |
-| NUC-28 | P1: Payment split and booking policies | Tasks | T4 | In Tasks |
-| NUC-29 | P1: Payment split and booking policies | Tasks | T4 | In Tasks |
-| NUC-30 | P1: Payment split and booking policies | Tasks | T4 | In Tasks |
-| NUC-31 | P1: Payment split and booking policies | Tasks | T4 | In Tasks |
+| NUC-14 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
+| NUC-15 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
+| NUC-16 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
+| NUC-17 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
+| NUC-18 | P1: Pricing engine | Tasks | T3 | Implementing |
+| NUC-19 | P1: Pricing engine | Tasks | T3 | Implementing |
+| NUC-20 | P1: Pricing engine | Tasks | T3 | Implementing |
+| NUC-21 | P1: Pricing engine | Tasks | T3 | Implementing |
+| NUC-22 | P1: Pricing engine | Tasks | T3 | Implementing |
+| NUC-23 | P1: Pricing engine | Tasks | T3 | Implementing |
+| NUC-24 | P1: Pricing engine | Tasks | T3 | Implementing |
+| NUC-25 | P1: Payment split and booking policies | Tasks | T4 | Implementing |
+| NUC-26 | P1: Payment split and booking policies | Tasks | T4 | Implementing |
+| NUC-27 | P1: Payment split and booking policies | Tasks | T4 | Implementing |
+| NUC-28 | P1: Payment split and booking policies | Tasks | T4 | Implementing |
+| NUC-29 | P1: Payment split and booking policies | Tasks | T4 | Implementing |
+| NUC-30 | P1: Payment split and booking policies | Tasks | T4 | Implementing |
+| NUC-31 | P1: Payment split and booking policies | Tasks | T4 | Implementing |
 | NUC-32 | P1: Business hours and calendar parameters | Tasks | T10 | In Tasks |
 | NUC-33 | P1: Business hours and calendar parameters | Tasks | T10 | In Tasks |
 | NUC-34 | P1: Business hours and calendar parameters | Tasks | T10 | In Tasks |
