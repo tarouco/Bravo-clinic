@@ -4,6 +4,8 @@ import { api } from '../../lib/api';
 export interface ClinicConfig {
   googleEnabled: boolean;
   whatsappE164: string;
+  /** Public contact e-mail; shown in the footer only when the API provides one. */
+  contactEmail?: string;
 }
 
 /** Used while loading and when the request fails, so public pages never block on the API. */

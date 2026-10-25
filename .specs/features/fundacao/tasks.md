@@ -1638,10 +1638,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert headings Navegação, Diretrizes, Atendimento; text "Praia Brava, Itajaí – SC" and "Seg a sex 07:00–00:00 · Sáb, dom e feriados 09:00–00:00"; no "São Paulo"/"Jardins"
-- [ ] Test asserts the copyright text "© 2026 Bravô Clinic • Salas Inteligentes. Todos os direitos reservados. Saúde • Beleza • Bem-estar."
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 3 tests pass
+- [x] Tests assert headings Navegação, Diretrizes, Atendimento; text "Praia Brava, Itajaí – SC" and "Seg a sex 07:00–00:00 · Sáb, dom e feriados 09:00–00:00"; no "São Paulo"/"Jardins"
+- [x] Test asserts the copyright text "© 2026 Bravô Clinic • Salas Inteligentes. Todos os direitos reservados. Saúde • Beleza • Bem-estar."
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 3 tests pass
 
 **Tests**: unit
 **Gate**: quick
