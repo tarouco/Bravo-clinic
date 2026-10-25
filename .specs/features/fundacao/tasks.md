@@ -2057,10 +2057,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test asserts after submit the text "Se o e-mail estiver cadastrado, você receberá um link em instantes." for both 202 responses
-- [ ] Tests assert mismatched confirmation shows "As senhas não conferem" without an API call; valid submit shows "Senha alterada" and a link to `/login`; 400 shows "Link inválido ou expirado"
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 4 tests pass
+- [x] Test asserts after submit the text "Se o e-mail estiver cadastrado, você receberá um link em instantes." for both 202 responses
+- [x] Tests assert mismatched confirmation shows "As senhas não conferem" without an API call; valid submit shows "Senha alterada" and a link to `/login`; 400 shows "Link inválido ou expirado"
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 4 tests pass
 
 **Tests**: unit
 **Gate**: quick
