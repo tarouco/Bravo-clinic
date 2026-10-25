@@ -2228,11 +2228,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert `buildRedirects('https://br-x-api.compute.neon.tech/')` returns first line `/api/*  https://br-x-api.compute.neon.tech/:splat  200` and last line `/*  /index.html  200`
-- [ ] Tests assert `buildRedirects(undefined)` and `buildRedirects('http://x')` throw "API_PROXY_ORIGIN must be an https URL"
-- [ ] `npm run build -w apps/web` without `API_PROXY_ORIGIN` exits non-zero; with it, `dist/_redirects` exists
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 4 tests pass
+- [x] Tests assert `buildRedirects('https://br-x-api.compute.neon.tech/')` returns first line `/api/*  https://br-x-api.compute.neon.tech/:splat  200` and last line `/*  /index.html  200`
+- [x] Tests assert `buildRedirects(undefined)` and `buildRedirects('http://x')` throw "API_PROXY_ORIGIN must be an https URL"
+- [x] `npm run build -w apps/web` without `API_PROXY_ORIGIN` exits non-zero; with it, `dist/_redirects` exists
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 4 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -2256,10 +2256,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test (in `apps/api`, importing `../../neon.ts` with `vi.stubEnv`) asserts `functions.api.source === 'apps/api/src/index.ts'`, env has `SESSION_SECRET`, `ENCRYPTION_KEY`, `APP_BASE_URL`, `EMAIL_FROM`, and has no `RESEND_API_KEY`/`GOOGLE_CLIENT_ID` keys when those are unset, and has them when set
-- [ ] `npx neonctl@latest config plan` (run by the worker, branch `dev`) shows function `api` (no apply)
+- [x] Test (in `apps/api`, importing `../../neon.ts` with `vi.stubEnv`) asserts `functions.api.source === 'apps/api/src/index.ts'`, env has `SESSION_SECRET`, `ENCRYPTION_KEY`, `APP_BASE_URL`, `EMAIL_FROM`, and has no `RESEND_API_KEY`/`GOOGLE_CLIENT_ID` keys when those are unset, and has them when set
+- [x] `npx neonctl@latest config plan` (run by the worker, branch `dev`) shows function `api` (no apply)
 - [ ] Gate check passes: `npm test -w apps/api`
-- [ ] Test count: ≥ 2 tests pass
+- [x] Test count: ≥ 2 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -2283,7 +2283,7 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Workflow YAML validates (`npx --yes @action-validator/cli .github/workflows/ci.yml` or equivalent) and lists the five steps in order
+- [x] Workflow YAML validates (`npx --yes @action-validator/cli .github/workflows/ci.yml` or equivalent) and lists the five steps in order
 - [ ] Running the same steps locally with a disposable postgres 17 (or `DATABASE_URL_TEST`) passes
 - [ ] The workflow runs green on GitHub after the user pushes (the user pushes; agents do not push)
 - [ ] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
