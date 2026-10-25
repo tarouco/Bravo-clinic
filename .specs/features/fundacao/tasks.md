@@ -1721,10 +1721,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert the h1 text, the lead containing "Praia Brava", the option "Turno Completo (5h)", buttons "Simular e Reservar" (href `#simulador`) and "Conhecer as Salas" (href `#salas`)
-- [ ] Test asserts changing the room select calls `onRoomChange('secundaria')` and clicking "Verificar Horários" calls `onCheck`
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 3 tests pass
+- [x] Tests assert the h1 text, the lead containing "Praia Brava", the option "Turno Completo (5h)", buttons "Simular e Reservar" (href `#simulador`) and "Conhecer as Salas" (href `#salas`)
+- [x] Test asserts changing the room select calls `onRoomChange('secundaria')` and clicking "Verificar Horários" calls `onCheck`
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 3 tests pass
 
 **Tests**: unit
 **Gate**: quick
