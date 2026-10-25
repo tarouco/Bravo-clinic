@@ -364,11 +364,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert `parseDocument('529.982.247-25')` → `{ type: 'cpf', digits: '52998224725' }` and `parseDocument('11.222.333/0001-81')` → `{ type: 'cnpj', digits: '11222333000181' }`
-- [ ] Tests assert `null` for `'111.111.111-11'`, `'529.982.247-24'`, `'11.222.333/0001-80'`, `'1234567890'`, `''`
-- [ ] Tests assert `formatDocument` round-trips both samples
-- [ ] Gate check passes: `npm test -w packages/core`
-- [ ] Test count: ≥ 8 tests pass
+- [x] Tests assert `parseDocument('529.982.247-25')` → `{ type: 'cpf', digits: '52998224725' }` and `parseDocument('11.222.333/0001-81')` → `{ type: 'cnpj', digits: '11222333000181' }`
+- [x] Tests assert `null` for `'111.111.111-11'`, `'529.982.247-24'`, `'11.222.333/0001-80'`, `'1234567890'`, `''`
+- [x] Tests assert `formatDocument` round-trips both samples
+- [x] Gate check passes: `npm test -w packages/core`
+- [x] Test count: ≥ 8 tests pass
 
 **Tests**: unit
 **Gate**: quick
