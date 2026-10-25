@@ -273,13 +273,13 @@ T48 → T50
 
 **Done when**:
 
-- [ ] `couponDiscountCents(21900, {kind:'percent', value:1000}) === 2190`; fixed 2000 on 16000 → 2000; fixed 50000 on 16000 → 16000
-- [ ] `slotDiscountCents` Tue 14:00–16:00 at 8000/h, 10% over all minutes → 1600; partial overlap and two discounts summed per segment
-- [ ] `chooseDiscount({gross:16000, slot:1600, coupon:2000})` → coupon, net 14000; tie → `slot_discount`; both zero → `none`
-- [ ] `validateCoupon` returns each of the 8 reasons in its triggering case and `ok` otherwise; messages match REC-117 verbatim
-- [ ] `discountNote` returns "Aplicamos o maior desconto: cupom R$ 20,00 (o desconto do horário era R$ 16,00)." for the example
-- [ ] Gate check passes: `npm test -w packages/core`
-- [ ] Test count: ≥ 20 tests pass
+- [x] `couponDiscountCents(21900, {kind:'percent', value:1000}) === 2190`; fixed 2000 on 16000 → 2000; fixed 50000 on 16000 → 16000
+- [x] `slotDiscountCents` Tue 14:00–16:00 at 8000/h, 10% over all minutes → 1600; partial overlap and two discounts summed per segment
+- [x] `chooseDiscount({gross:16000, slot:1600, coupon:2000})` → coupon, net 14000; tie → `slot_discount`; both zero → `none`
+- [x] `validateCoupon` returns each of the 8 reasons in its triggering case and `ok` otherwise; messages match REC-117 verbatim
+- [x] `discountNote` returns "Aplicamos o maior desconto: cupom R$ 20,00 (o desconto do horário era R$ 16,00)." for the example
+- [x] Gate check passes: `npm test -w packages/core`
+- [x] Test count: ≥ 20 tests pass
 
 **Tests**: unit
 **Gate**: quick

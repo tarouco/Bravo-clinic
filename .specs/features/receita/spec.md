@@ -624,11 +624,11 @@
 | REC-113 | P1: Customer credits | Tasks | T9, T28 | In Tasks |
 | REC-114 | P1: Customer credits | Tasks | T41 | In Tasks |
 | REC-115 | P1: Customer credits | Tasks | T16, T19, T24, T27 | In Tasks |
-| REC-116 | P1: Coupons in checkout | Tasks | T4 | In Tasks |
-| REC-117 | P1: Coupons in checkout | Tasks | T4, T33 | In Tasks |
-| REC-118 | P1: Coupons in checkout | Tasks | T4, T11 | In Tasks |
-| REC-119 | P1: Coupons in checkout | Tasks | T4, T11 | In Tasks |
-| REC-120 | P1: Coupons in checkout | Tasks | T4, T16 | In Tasks |
+| REC-116 | P1: Coupons in checkout | Tasks | T4 | Implementing |
+| REC-117 | P1: Coupons in checkout | Tasks | T4, T33 | Implementing |
+| REC-118 | P1: Coupons in checkout | Tasks | T4, T11 | Implementing |
+| REC-119 | P1: Coupons in checkout | Tasks | T4, T11 | Implementing |
+| REC-120 | P1: Coupons in checkout | Tasks | T4, T16 | Implementing |
 | REC-121 | P1: Coupons in checkout | Tasks | T33 | In Tasks |
 | REC-122 | P1: Coupons in checkout | Tasks | T16 | In Tasks |
 | REC-123 | P1: Coupons in checkout | Tasks | T11 | In Tasks |
@@ -650,7 +650,7 @@
 | REC-139 | P1: Slot discounts | Tasks | T12 | In Tasks |
 | REC-140 | P1: Slot discounts | Tasks | T12 | In Tasks |
 | REC-141 | P1: Slot discounts | Tasks | T12 | In Tasks |
-| REC-142 | P1: Slot discounts | Tasks | T4 | In Tasks |
+| REC-142 | P1: Slot discounts | Tasks | T4 | Implementing |
 | REC-143 | P1: Perfil → Compras | Tasks | T31, T38 | In Tasks |
 | REC-144 | P1: Perfil → Compras | Tasks | T38 | In Tasks |
 | REC-145 | P1: Perfil → Compras | Tasks | T24, T41 | In Tasks |

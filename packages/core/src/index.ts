@@ -22,3 +22,4 @@ export * from './policy/reschedule';
 export * from './policy/policy-text';
 export * from './validation/revenue-schemas';
 export * from './fixed/occurrences';
+export * from './pricing/discounts';
