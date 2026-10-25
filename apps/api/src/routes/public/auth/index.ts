@@ -1,6 +1,7 @@
 import { Hono } from 'hono';
 import type { AppEnv } from '../../../types';
 import { loginRoutes } from './login';
+import { passwordResetRoutes } from './password-reset';
 import { signupRoutes } from './signup';
 import { verifyEmailRoutes } from './verify-email';
 
@@ -10,5 +11,6 @@ export function publicAuthRoutes(): Hono<AppEnv> {
   app.route('/', signupRoutes());
   app.route('/', loginRoutes());
   app.route('/', verifyEmailRoutes());
+  app.route('/', passwordResetRoutes());
   return app;
 }

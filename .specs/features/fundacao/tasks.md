@@ -1129,12 +1129,12 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert request for an unknown e-mail → 202 and no outbox row; for a known e-mail → 202 and one `auth.password_reset` row
-- [ ] Test asserts confirm with a valid token → 200; login with the new password works; an older session cookie → 401; audit row `auth.password_reset`
-- [ ] Tests assert reused token, unknown token and token older than 60 min → 400 `INVALID_TOKEN` and the hash unchanged
-- [ ] Test asserts confirm with password "abc" → 422
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests assert request for an unknown e-mail → 202 and no outbox row; for a known e-mail → 202 and one `auth.password_reset` row
+- [x] Test asserts confirm with a valid token → 200; login with the new password works; an older session cookie → 401; audit row `auth.password_reset`
+- [x] Tests assert reused token, unknown token and token older than 60 min → 400 `INVALID_TOKEN` and the hash unchanged
+- [x] Test asserts confirm with password "abc" → 422
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: integration
 **Gate**: full
