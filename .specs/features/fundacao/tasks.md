@@ -1070,14 +1070,14 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test asserts tenant login → 200 `{ user, mfaRequired: false }`, a `sessions` row, cookie with `Max-Age=2592000`
-- [ ] Tests assert wrong password and unknown e-mail both → 401 `INVALID_CREDENTIALS` with message "E-mail ou senha incorretos"
-- [ ] Test asserts 5 wrong passwords then the correct one → 429 `TOO_MANY_ATTEMPTS` with a numeric `Retry-After`
-- [ ] Test asserts logout → 204, cookie `Max-Age=0`, session `revoked_at` set, and reusing the old cookie on `/app/me` → 401
-- [ ] Test asserts `/app/me` body keys exactly `id, name, email, role, emailVerified, docType, mfa` and `mfa` = `{ enrolled: false, verified: false }` for a tenant
-- [ ] Test asserts staff with confirmed TOTP → 200 `{ mfaRequired: true }` and an audit row `auth.login_staff`
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 7 tests pass
+- [x] Test asserts tenant login → 200 `{ user, mfaRequired: false }`, a `sessions` row, cookie with `Max-Age=2592000`
+- [x] Tests assert wrong password and unknown e-mail both → 401 `INVALID_CREDENTIALS` with message "E-mail ou senha incorretos"
+- [x] Test asserts 5 wrong passwords then the correct one → 429 `TOO_MANY_ATTEMPTS` with a numeric `Retry-After`
+- [x] Test asserts logout → 204, cookie `Max-Age=0`, session `revoked_at` set, and reusing the old cookie on `/app/me` → 401
+- [x] Test asserts `/app/me` body keys exactly `id, name, email, role, emailVerified, docType, mfa` and `mfa` = `{ enrolled: false, verified: false }` for a tenant
+- [x] Test asserts staff with confirmed TOTP → 200 `{ mfaRequired: true }` and an audit row `auth.login_staff`
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: integration
 **Gate**: full
