@@ -392,11 +392,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert passwords "abc12" (short), "abcdefgh" (no digit), "12345678" (no letter), 129 chars → rejected with exactly "A senha precisa ter de 8 a 128 caracteres, com letras e números"; "senha123" accepted
-- [ ] Tests assert signup with document "529.982.247-24" fails at path `document` with "CPF ou CNPJ inválido"; `acceptTerms: false` fails
-- [ ] Tests assert `emailSchema.parse('  Ana@Ex.com ') === 'ana@ex.com'`, phone "(47) 99999-0000" → "+5547999990000", `totpCodeSchema` accepts "123 456" → "123456"
-- [ ] Gate check passes: `npm test -w packages/core`
-- [ ] Test count: ≥ 12 tests pass
+- [x] Tests assert passwords "abc12" (short), "abcdefgh" (no digit), "12345678" (no letter), 129 chars → rejected with exactly "A senha precisa ter de 8 a 128 caracteres, com letras e números"; "senha123" accepted
+- [x] Tests assert signup with document "529.982.247-24" fails at path `document` with "CPF ou CNPJ inválido"; `acceptTerms: false` fails
+- [x] Tests assert `emailSchema.parse('  Ana@Ex.com ') === 'ana@ex.com'`, phone "(47) 99999-0000" → "+5547999990000", `totpCodeSchema` accepts "123 456" → "123456"
+- [x] Gate check passes: `npm test -w packages/core`
+- [x] Test count: ≥ 12 tests pass
 
 **Tests**: unit
 **Gate**: quick
