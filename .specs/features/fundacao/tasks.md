@@ -1386,11 +1386,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert primary has classes `bg-bronze`, `text-on-bronze`, `h-12`, `rounded-control`; secondary `bg-surface-raised`, `border`, `border-border`, `text-ink`; ghost `bg-transparent`
-- [ ] Test asserts `loading` → `disabled` and `aria-busy="true"` and click handler not called
-- [ ] Test asserts focus-visible classes `focus-visible:ring-2 focus-visible:ring-bronze focus-visible:ring-offset-2`
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 4 tests pass
+- [x] Tests assert primary has classes `bg-bronze`, `text-on-bronze`, `h-12`, `rounded-control`; secondary `bg-surface-raised`, `border`, `border-border`, `text-ink`; ghost `bg-transparent`
+- [x] Test asserts `loading` → `disabled` and `aria-busy="true"` and click handler not called
+- [x] Test asserts focus-visible classes `focus-visible:ring-2 focus-visible:ring-bronze focus-visible:ring-offset-2`
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 4 tests pass
 
 **Tests**: unit
 **Gate**: quick
