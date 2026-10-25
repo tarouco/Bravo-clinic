@@ -15,3 +15,7 @@ export * from './calendar/day-type';
 export * from './slots/grid';
 export * from './pricing/categories';
 export * from './pricing/price';
+export * from './payments/split';
+export * from './policy/cancellation';
+export * from './policy/reschedule';
+export * from './policy/policy-text';

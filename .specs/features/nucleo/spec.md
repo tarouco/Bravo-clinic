@@ -741,13 +741,13 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-22 | P1: Pricing engine | Tasks | T3 | Implementing |
 | NUC-23 | P1: Pricing engine | Tasks | T3 | Implementing |
 | NUC-24 | P1: Pricing engine | Tasks | T3 | Implementing |
-| NUC-25 | P1: Payment split and booking policies | Tasks | T4 | In Tasks |
-| NUC-26 | P1: Payment split and booking policies | Tasks | T4 | In Tasks |
-| NUC-27 | P1: Payment split and booking policies | Tasks | T4 | In Tasks |
-| NUC-28 | P1: Payment split and booking policies | Tasks | T4 | In Tasks |
-| NUC-29 | P1: Payment split and booking policies | Tasks | T4 | In Tasks |
-| NUC-30 | P1: Payment split and booking policies | Tasks | T4 | In Tasks |
-| NUC-31 | P1: Payment split and booking policies | Tasks | T4 | In Tasks |
+| NUC-25 | P1: Payment split and booking policies | Tasks | T4 | Implementing |
+| NUC-26 | P1: Payment split and booking policies | Tasks | T4 | Implementing |
+| NUC-27 | P1: Payment split and booking policies | Tasks | T4 | Implementing |
+| NUC-28 | P1: Payment split and booking policies | Tasks | T4 | Implementing |
+| NUC-29 | P1: Payment split and booking policies | Tasks | T4 | Implementing |
+| NUC-30 | P1: Payment split and booking policies | Tasks | T4 | Implementing |
+| NUC-31 | P1: Payment split and booking policies | Tasks | T4 | Implementing |
 | NUC-32 | P1: Business hours and calendar parameters | Tasks | T10 | In Tasks |
 | NUC-33 | P1: Business hours and calendar parameters | Tasks | T10 | In Tasks |
 | NUC-34 | P1: Business hours and calendar parameters | Tasks | T10 | In Tasks |

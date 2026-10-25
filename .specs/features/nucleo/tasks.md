@@ -267,6 +267,188 @@ T49 → T50
 
 ---
 
+### Phase 2: Booking data model and read paths (lane A)
+
+```
+T5 → T6 → T7 → T9
+T6 → T8
+```
+
+### Phase 3: Calendar administration API (lane A)
+
+```
+T10 → T11
+T12 [P]
+T13 [P]
+```
+
+### Phase 4: Payments (lane A)
+
+```
+T15 → T16
+T15 → T17 → T18 → T19
+T14 → T18
+```
+
+### Phase 5: Booking lifecycle (lane A)
+
+```
+T20 → T21 → T22
+T21 → T23
+T21 → T25
+T20 → T24
+```
+
+### Phase 6: Scheduled jobs (lane A)
+
+```
+T26 → T27
+T26 → T28
+```
+
+### Phase 7: Web foundations (lane B)
+
+```
+T29 [P]
+T30 [P]
+T31 [P]
+T32 → T33
+```
+
+### Phase 8: Public site (lane B)
+
+```
+T34 → T35
+T36 [P]
+```
+
+### Phase 9: Booking and checkout flow (lane B)
+
+```
+T37 → T38 → T39
+```
+
+### Phase 10: Tenant app (lane B)
+
+```
+T40 → T41
+T42 [P]
+```
+
+### Phase 11: Admin Calendário (lane B)
+
+```
+T43 [P]
+T44 [P]
+T45 [P]
+```
+
+### Phase 12: Admin Gestão de Reservas (lane B)
+
+```
+T46 → T47
+T48 [P]
+```
+
+### Phase 13: Integration
+
+```
+T49 → T50
+```
+
+---
+
+## Task Breakdown
+
+### Phase 1: Core domain (shared)
+
+#### T1: Define booking vocabulary and API contracts
+
+**What**: Booking status machine (`canTransition`, `assertTransition`, status groups incl. AD-032 transitions), pt-BR labels, `paymentStatusOf`, and zod request/response schemas for every row of design.md §API contract (`public.ts`, `app.ts`, `admin.ts`, `common.ts` under `contracts/`), re-exported from `src/index.ts`.
+**Where**: `packages/core/src/contracts/app.ts`
+**Also**: `packages/core/src/contracts/{public,admin,common}.ts`, `packages/core/src/status/booking.ts`, `packages/core/src/labels.ts`
+**Depends on**: None (fundação complete)
+**Reuses**: settings catalog types, `LocalDate`
+**Requirement**: NUC-01, NUC-02, NUC-03, NUC-04
+
+**Tools**:
+
+- MCP: NONE
+- Skill: NONE
+
+**Done when**:
+
+- [x] Test enumerates all 121 (from, to) pairs and asserts `canTransition` true exactly for architecture §3.1 plus `expired→confirmed`, `expired→paid`, `paid→confirmed`
+- [x] Test asserts every status label of NUC-02 and every `paymentStatusOf` branch of NUC-03
+- [x] Each contract schema has one passing fixture and one failing fixture (missing/invalid key) test
+- [x] Gate check passes: `npm test -w packages/core`
+- [x] Test count: ≥ 30 tests pass
+
+**Tests**: unit
+**Gate**: quick
+
+**Commit**: `feat(core): add booking status machine, labels and api contracts`
+
+---
+
+#### T2: Implement business window and slot grid with cleanup [P]
+
+**What**: `resolveDayType`, `businessWindow` (architecture §7.3), `validateInterval`, `generateSlotGrid`, `rejectMessage` (§7.4), `findCleanupConflicts`, `occupiedFromBooking`, `occupiedFromBlock`.
+**Where**: `packages/core/src/slots/grid.ts`
+**Also**: `packages/core/src/calendar/day-type.ts`
+**Depends on**: None
+**Reuses**: `localToUtc`, `utcToLocal`, `addDays`, `weekdayOf` (fundação time.ts)
+**Requirement**: NUC-07, NUC-08, NUC-09, NUC-10, NUC-11, NUC-12, NUC-13, NUC-14, NUC-15, NUC-16, NUC-17
+
+**Tools**:
+
+- MCP: NONE
+- Skill: NONE
+
+**Done when**:
+
+- [x] One test per W-CL row (CL-1..CL-10) and W-CC row (CC-1..CC-4) with the exact expected reasons, cells and `maxEndMinute`
+- [x] Tests for every reject reason and its pt-BR message (NUC-17), window null cases (closed day clinic/room, closed holiday, closed weekday) and holiday hours
+- [x] Test asserts the conflict predicate equals `[S, E+c) && [o.start, o.occupiedUntil)` over a randomized table of 200 intervals
+- [x] Gate check passes: `npm test -w packages/core`
+- [x] Test count: ≥ 35 tests pass
+
+**Tests**: unit
+**Gate**: quick
+
+**Commit**: `feat(core): add business window and slot grid with cleanup rules`
+
+---
+
+#### T3: Implement pricing engine
+
+**What**: `selectHourlyCategory`, `priceHourlyBooking`, `priceBlockBooking`, `averageHourlyCents`, `categoryAverageHourlyCents`, `vSlotForInterval`, `coverageBands`, `fromPriceCents` per architecture §7.5 and design.md.
+**Where**: `packages/core/src/pricing/price.ts`
+**Also**: `packages/core/src/pricing/categories.ts`
+**Depends on**: T2
+**Reuses**: `resolveDayType` (T2), `mulDivRoundHalfUp` (fundação)
+**Requirement**: NUC-18, NUC-19, NUC-20, NUC-21, NUC-22, NUC-23, NUC-24
+
+**Tools**:
+
+- MCP: NONE
+- Skill: NONE
+
+**Done when**:
+
+- [x] One test per W-PR row (PR-1..PR-8) and W-AV row (AV-1..AV-4) with exact segments and cents
+- [x] Tests for tie-break by display order, inactive categories ignored, rounding 9701 × 90 min = 14552, block applies/doesn't apply on weekday and holiday
+- [x] Tests for `coverageBands` with factory categories (no uncovered) and with "1 hora — noite" inactive (19:00–00:00 uncovered on Tuesday); `fromPriceCents` = 8000
+- [x] Gate check passes: `npm test -w packages/core`
+- [x] Test count: ≥ 20 tests pass
+
+**Tests**: unit
+**Gate**: quick
+
+**Commit**: `feat(core): add category pricing engine with segments and averages`
+
+---
+
 #### T4: Implement payment split and booking policies
 
 **What**: `splitPayment` (§7.6), `evaluateCancellation`, `evaluateReschedule`, `rescheduleDifference` (§7.12), `settleReschedule`, `policySnapshot`, `renderPolicyText`.
