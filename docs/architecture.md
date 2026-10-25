@@ -15,7 +15,7 @@ Workers MUST run `npm view <pkg>@<line> version` before installing and pin the n
 | Runtime | Node.js | 24 (Neon Functions runtime; `.nvmrc` = `24`) |
 | Language | `typescript` | `~5.9` |
 | Lint/format | `eslint` `^9`, `typescript-eslint` `^8`, `eslint-plugin-react-hooks` `^5`, `prettier` `^3` | |
-| Tests | `vitest` `^3.2`, `@vitest/coverage-v8` `^3.2`, `@testing-library/react` `^16`, `@testing-library/user-event` `^14`, `jsdom` `^26`, `@playwright/test` `^1` (nucleo smoke) | |
+| Tests | `vitest` `^3.2`, `@vitest/coverage-v8` `^3.2`, `@testing-library/react` `^16`, `@testing-library/user-event` `^14`, `jsdom` `^26`, `msw` `^2.15` (web API mocks, nucleo), `@playwright/test` `^1` (nucleo smoke) | |
 | Validation | `zod` | `^4` |
 | API | `hono` `^4`, `@hono/node-server` `^1` (local dev only), `@hono/zod-validator` `^0.9` | |
 | DB | `drizzle-orm` `^0.45`, `drizzle-kit` `^0.31`, `pg` `^8` | |

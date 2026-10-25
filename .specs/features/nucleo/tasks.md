@@ -1206,11 +1206,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Test: every slot name of NUC-203 renders nothing by default and renders a registered component
-- [ ] Test: a hook (`useDayAvailability`) returns the MSW fixture; a fixture violating its schema throws at import (test with a deliberately broken copy)
-- [ ] Tests: `track()` is a no-op without `VITE_GA4_ID`; with it, pushes the event to `window.dataLayer` and injects one gtag script
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Test: every slot name of NUC-203 renders nothing by default and renders a registered component
+- [x] Test: a hook (`useDayAvailability`) returns the MSW fixture; a fixture violating its schema throws at import (test with a deliberately broken copy)
+- [x] Tests: `track()` is a no-op without `VITE_GA4_ID`; with it, pushes the event to `window.dataLayer` and injects one gtag script
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick
