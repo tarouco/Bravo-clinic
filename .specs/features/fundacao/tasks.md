@@ -1801,11 +1801,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Unit tests on `simulate`: ('util', 2) → total 16000, sinal 8000, saldo 8000; ('util', 1) → 9700; ('util', 1.5) → 14550 / 7275 / 7275; ('especial', 2) → 19800; ('especial', 1) → 12000
-- [ ] Component tests assert default display "R$ 160,00", "R$ 80,00", "R$ 80,00" (whitespace-normalized); after selecting "Noite / Fim de Semana" → "R$ 198,00"; after moving the range to 1 → "R$ 120,00"
-- [ ] Test asserts the table header "Dia Útil — Comercial (07:00 às 19:00)" and row "Turno completo comercial (5h)"
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 8 tests pass
+- [x] Unit tests on `simulate`: ('util', 2) → total 16000, sinal 8000, saldo 8000; ('util', 1) → 9700; ('util', 1.5) → 14550 / 7275 / 7275; ('especial', 2) → 19800; ('especial', 1) → 12000
+- [x] Component tests assert default display "R$ 160,00", "R$ 80,00", "R$ 80,00" (whitespace-normalized); after selecting "Noite / Fim de Semana" → "R$ 198,00"; after moving the range to 1 → "R$ 120,00"
+- [x] Test asserts the table header "Dia Útil — Comercial (07:00 às 19:00)" and row "Turno completo comercial (5h)"
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 8 tests pass
 
 **Tests**: unit
 **Gate**: quick
