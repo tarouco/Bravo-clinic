@@ -1010,12 +1010,12 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test asserts limit 5 / 900 s: calls 1–5 `allowed: true`, call 6 `allowed: false` with `0 < retryAfterSeconds ≤ 900`
-- [ ] Test asserts a new window (injected `now` + 900 s) allows again, and different keys are independent
-- [ ] Test runs 10 concurrent `consumeRateLimit` calls with limit 5 and asserts exactly 5 allowed
-- [ ] Test asserts stored keys contain no raw e-mail
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 4 tests pass
+- [x] Test asserts limit 5 / 900 s: calls 1–5 `allowed: true`, call 6 `allowed: false` with `0 < retryAfterSeconds ≤ 900`
+- [x] Test asserts a new window (injected `now` + 900 s) allows again, and different keys are independent
+- [x] Test runs 10 concurrent `consumeRateLimit` calls with limit 5 and asserts exactly 5 allowed
+- [x] Test asserts stored keys contain no raw e-mail
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 4 tests pass
 
 **Tests**: integration
 **Gate**: full
