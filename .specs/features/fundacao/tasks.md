@@ -1829,12 +1829,12 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert three service titles and the chip "Disponível em qualquer sala"; no "Jardins"
-- [ ] Test clicks "Solicitar Orçamento" on Videomaker and asserts a dialog titled "Videomaker Dedicado"
-- [ ] Test fills name and WhatsApp, submits, and asserts `window.open` called once with a URL starting `https://wa.me/` whose decoded `text` contains "Videomaker Dedicado" and the name, and that the dialog closed
-- [ ] Test asserts submit with empty name shows a required error and does not call `window.open`
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 4 tests pass
+- [x] Tests assert three service titles and the chip "Disponível em qualquer sala"; no "Jardins"
+- [x] Test clicks "Solicitar Orçamento" on Videomaker and asserts a dialog titled "Videomaker Dedicado"
+- [x] Test fills name and WhatsApp, submits, and asserts `window.open` called once with a URL starting `https://wa.me/` whose decoded `text` contains "Videomaker Dedicado" and the name, and that the dialog closed
+- [x] Test asserts submit with empty name shows a required error and does not call `window.open`
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 4 tests pass
 
 **Tests**: unit
 **Gate**: quick
