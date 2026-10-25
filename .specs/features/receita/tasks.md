@@ -242,12 +242,12 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Meio turno mensal base 2026-11-02, 30 days → 22 occurrences, first `2026-11-02T10:00:00.000Z`–`12:30Z`; `fixedPeriodPriceCents(28000, 22) === 616000`
-- [ ] `estimateFixedPeriod({ weekdays:[1,2,3,4,5], periodDays:30, pricePerOccurrenceCents:28000 })` → `{ minCount:20, maxCount:22, minCents:560000, maxCents:616000 }`
-- [ ] Holiday date keeps its occurrence; `notBefore` drops earlier ones; window ending 1440 ends at next-day 00:00
-- [ ] Conflicts: closed day, overlap booking, cleanup (`[S, E+c)` rule), block, outside hours each reported with label ("Dia fechado", "Já reservado", "Conflito com limpeza", "Bloqueado", "Fora do horário de funcionamento")
-- [ ] Gate check passes: `npm test -w packages/core`
-- [ ] Test count: ≥ 12 tests pass
+- [x] Meio turno mensal base 2026-11-02, 30 days → 22 occurrences, first `2026-11-02T10:00:00.000Z`–`12:30Z`; `fixedPeriodPriceCents(28000, 22) === 616000`
+- [x] `estimateFixedPeriod({ weekdays:[1,2,3,4,5], periodDays:30, pricePerOccurrenceCents:28000 })` → `{ minCount:20, maxCount:22, minCents:560000, maxCents:616000 }`
+- [x] Holiday date keeps its occurrence; `notBefore` drops earlier ones; window ending 1440 ends at next-day 00:00
+- [x] Conflicts: closed day, overlap booking, cleanup (`[S, E+c)` rule), block, outside hours each reported with label ("Dia fechado", "Já reservado", "Conflito com limpeza", "Bloqueado", "Fora do horário de funcionamento")
+- [x] Gate check passes: `npm test -w packages/core`
+- [x] Test count: ≥ 12 tests pass
 
 **Tests**: unit
 **Gate**: quick

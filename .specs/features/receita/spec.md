@@ -512,7 +512,7 @@
 | REC-01 | P1: Package categories | Tasks | T2, T17 | Implementing |
 | REC-02 | P1: Package categories | Tasks | T2, T17 | Implementing |
 | REC-03 | P1: Package categories | Tasks | T44 | In Tasks |
-| REC-04 | P1: Package categories | Tasks | T3, T44 | In Tasks |
+| REC-04 | P1: Package categories | Tasks | T3, T44 | Implementing |
 | REC-05 | P1: Package categories | Tasks | T17 | In Tasks |
 | REC-06 | P1: Package categories | Tasks | T17, T14 | In Tasks |
 | REC-07 | P1: Package categories | Tasks | T18, T19 | In Tasks |
@@ -591,14 +591,14 @@
 | REC-80 | P1: Change and cancel | Tasks | T23 | In Tasks |
 | REC-81 | P1: Change and cancel | Tasks | T23 | In Tasks |
 | REC-82 | P1: Change and cancel | Tasks | T26 | In Tasks |
-| REC-83 | P1: Buy a fixed-schedule package | Tasks | T3 | In Tasks |
+| REC-83 | P1: Buy a fixed-schedule package | Tasks | T3 | Implementing |
 | REC-84 | P1: Buy a fixed-schedule package | Tasks | T18, T36 | In Tasks |
 | REC-85 | P1: Buy a fixed-schedule package | Tasks | T19 | In Tasks |
 | REC-86 | P1: Buy a fixed-schedule package | Tasks | T19 | In Tasks |
 | REC-87 | P1: Buy a fixed-schedule package | Tasks | T19 | In Tasks |
 | REC-88 | P1: Buy a fixed-schedule package | Tasks | T21, T14 | In Tasks |
-| REC-89 | P1: Buy a fixed-schedule package | Tasks | T3, T18 | In Tasks |
-| REC-90 | P1: Buy a fixed-schedule package | Tasks | T3 | In Tasks |
+| REC-89 | P1: Buy a fixed-schedule package | Tasks | T3, T18 | Implementing |
+| REC-90 | P1: Buy a fixed-schedule package | Tasks | T3 | Implementing |
 | REC-91 | P1: Buy a fixed-schedule package | Tasks | T37 | In Tasks |
 | REC-92 | P1: Fixed-schedule lifecycle | Tasks | T20 | In Tasks |
 | REC-93 | P1: Fixed-schedule lifecycle | Tasks | T20, T27 | In Tasks |
