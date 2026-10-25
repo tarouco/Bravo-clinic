@@ -68,6 +68,47 @@ The claude.ai chat link in the request is private and not readable by agents. De
 ### AD-014 · Hosting names
 Netlify site `bravo-clinic`; Neon project `Bravo-clinic`; GitHub `tarouco/Bravo-clinic` (branch `main`).
 
+### AD-015 · Native API paths without `/api`
+The Hono app serves `/health`, `/public/*`, `/app/*`, `/admin/*`, `/webhooks/*`, `/jobs/*`, `/mcp`. Netlify rewrites `/api/*` → `<function-url>/:splat`; the Vite dev proxy strips `/api` the same way. Docs, browser and gateway webhooks use the public `/api/...` form; triggers and MCP clients use native paths on the function URL.
+- **Why:** keeps AD-003 (single origin, first-party cookies) and AD-007 (`/jobs/<name>`) consistent with one route table.
+
+### AD-016 · `_redirects` generated at build from `API_PROXY_ORIGIN`
+`apps/web/scripts/write-redirects.mjs` writes `dist/_redirects` (`/api/*` proxy first, SPA fallback last). `API_PROXY_ORIGIN` is a Netlify env var per deploy context: production → production function URL; deploy-preview/branch-deploy → `dev` function URL. Missing or non-https fails the build.
+- **Why:** `_redirects` cannot read env vars, and the function URL differs per Neon branch.
+
+### AD-017 · Enumerations as `text` + `CHECK`, English codes, pt-BR labels in core
+Status and type columns store English snake_case codes (`awaiting_payment`, `pre_reserved`, `confirmed`, ...). pt-BR labels ("Aguardando pgto", "Pré-reserva", "Confirmada", ...) live in `packages/core/src/labels.ts`.
+- **Why:** adding a value is a cheap `CHECK` swap (no `ALTER TYPE`), and UI copy can change without migrations.
+
+### AD-018 · Test databases
+Local API integration tests use the Neon `dev` branch through `DATABASE_URL_TEST`; CI uses a `postgres:17` service container. API test files run serially and truncate all `public` tables before each test; the harness refuses to run against the production branch or `DATABASE_URL`.
+- **Why:** isolated, free CI with `btree_gist` available; no cross-run interference.
+
+### AD-019 · Settings as a typed key/value catalog
+All configurable parameters of PRD §5.2/§5.4/§5.5 (and clinic/notification/MCP toggles) are rows of `settings(key, value jsonb)`. Keys, zod schemas and factory defaults live in `packages/core/src/settings/catalog.ts` (`docs/architecture.md` §4). Seeds insert defaults and never overwrite. Booking-time values are frozen in `bookings.policy_snapshot`.
+- **Why:** PRD "nada é fixo no código" without a migration per parameter; one typed source for web and API.
+
+### AD-020 · Design-token mapping
+Colors are CSS variables with RGB channels (`--c-<token>`) switched by `data-theme="day|night"`; Tailwind colors are `rgb(var(--c-x) / <alpha-value>)`. Material tokens get the Night values in `docs/architecture.md` §9.3; `-night` and `*-fixed*` tokens are constants. Tailwind `borderRadius` copies the home-reference export (DEFAULT .125rem, lg .25rem, xl .5rem, full .75rem) plus semantic aliases `rounded-control` 2px, `rounded-card` 8px, `rounded-feature` 20px, `rounded-pill` 9999px. Material Symbols map to lucide (§9.4).
+- **Why:** ported reference markup renders identically; DESIGN.md front matter has no Night values for Material tokens and a radius scale that conflicts with the export.
+
+### AD-021 · Revocable sessions and lifetimes
+The session JWT carries `sid`; `requireAuth` checks the `sessions` row (revoked/expired → 401). Lifetimes: tenant 30 days, admin/reception 12 hours. MFA state is per session (`mfa_verified_at`). Login lockout: 5 failures per e-mail per 15 min (counted in `rate_limit_buckets` by e-mail hash).
+- **Why:** logout and password reset must revoke at once; staff sessions are privileged.
+
+### AD-022 · Library version lines
+React 18.3, React Router 6.30, TanStack Query 5, Tailwind 3.4, Vite 7, @vitejs/plugin-react 5, vite-plugin-pwa 1, Vitest 3.2, TypeScript 5.9, ESLint 9 + typescript-eslint 8, zod 4, Hono 4, drizzle-orm 0.45 / drizzle-kit 0.31, pg 8, jose 6, otpauth 9, @neon/functions 0.11, @neon/config 1. Workers run `npm view <pkg>@<line> version` and pin the newest patch; no major jumps without a new AD.
+- **Why:** newer majors exist (React 19, Tailwind 4, Vite 8, TS 7) but AD-002 fixed the frontend lines and the ecosystem pairs above are known to work together.
+
+### AD-023 · Fixed-schedule occurrences are bookings
+Each occurrence of a fixed-schedule subscription is a `bookings` row (`kind = 'fixed_occurrence'`, `subscription_period_id`). Next-period occurrences held for the subscriber use status `held_for_renewal` ("Pré-reservada (renovação)") and become `confirmed` on renewal or `expired` when it fails. `room_occupancy.kind` is therefore only `booking` or `block`.
+- **Why:** one exclusion constraint, one check-in/no-show/reschedule path, one ICS feed for every occupied slot.
+
+### AD-024 · Shared zod schemas in `@bravo/core`
+Form and request schemas (auth, later booking/purchase inputs) are defined once in `packages/core` with pt-BR messages and used by `react-hook-form` (zodResolver) and the API validator. `zod` is the only runtime dependency of core.
+- **Why:** identical validation and messages in browser and server.
+
 ## Handoff
 
 - 2026-10-25: Repo cloned, Neon project + branches created, Neon Function spike verified. Next: plan `fundacao` (spec/design/tasks), then the other three features in parallel.
+- 2026-10-25: Planned `fundacao` (spec 134 reqs, design, tasks 78 in 14 phases) and wrote the global blueprint `docs/architecture.md` (full data model, API conventions, core signatures, deploy, frontend). Added AD-015..AD-024. Next: approve fundacao tasks and execute; plan nucleo/receita/gestao against `docs/architecture.md`.
