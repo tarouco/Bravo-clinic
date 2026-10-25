@@ -869,11 +869,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test asserts a committed transaction leaves one row with every field equal to the input (actor id, role, origin, action, entity type/id, justification, before, after, ip, request id)
-- [ ] Test asserts a rolled-back transaction leaves zero rows
-- [ ] Test asserts `before: { password_hash: 'x' }` is stored redacted
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 3 tests pass
+- [x] Test asserts a committed transaction leaves one row with every field equal to the input (actor id, role, origin, action, entity type/id, justification, before, after, ip, request id)
+- [x] Test asserts a rolled-back transaction leaves zero rows
+- [x] Test asserts `before: { password_hash: 'x' }` is stored redacted
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 3 tests pass
 
 **Tests**: integration
 **Gate**: full
