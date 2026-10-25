@@ -2168,11 +2168,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test imports the exported `pwaOptions` and asserts every manifest field of FND-119 and the three icon entries (sizes, `purpose: 'maskable'` on the third)
-- [ ] Test asserts `runtimeCaching` contains a NetworkOnly handler whose `urlPattern` matches `/api/health` and the denylist matches `/api/x`
-- [ ] Test with `useRegisterSW` mocked (`needRefresh: true`) asserts the toast text and that "Atualizar" calls `updateServiceWorker(true)`
-- [ ] `npm run build -w apps/web` (with `API_PROXY_ORIGIN` set) emits `dist/sw.js` and `dist/manifest.webmanifest`
-- [ ] Gate check passes: `npm test -w apps/web`
+- [x] Test imports the exported `pwaOptions` and asserts every manifest field of FND-119 and the three icon entries (sizes, `purpose: 'maskable'` on the third)
+- [x] Test asserts `runtimeCaching` contains a NetworkOnly handler whose `urlPattern` matches `/api/health` and the denylist matches `/api/x`
+- [x] Test with `useRegisterSW` mocked (`needRefresh: true`) asserts the toast text and that "Atualizar" calls `updateServiceWorker(true)`
+- [x] `npm run build -w apps/web` (with `API_PROXY_ORIGIN` set) emits `dist/sw.js` and `dist/manifest.webmanifest`
+- [x] Gate check passes: `npm test -w apps/web`
 - [ ] Test count: ≥ 3 tests pass
 
 **Tests**: unit
