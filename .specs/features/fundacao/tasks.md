@@ -927,11 +927,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test asserts a tenant session cookie string contains `HttpOnly`, `Secure`, `SameSite=Lax`, `Path=/`, `Max-Age=2592000`; staff → `Max-Age=43200` and `expires_at` ≈ now + 12h
-- [ ] Tests assert `resolveSession` returns null for a token signed with another secret, an expired `exp`, a revoked session row, and a session row past `expires_at`
-- [ ] Test asserts `revokeAllSessions` revokes every active session of the user only
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Test asserts a tenant session cookie string contains `HttpOnly`, `Secure`, `SameSite=Lax`, `Path=/`, `Max-Age=2592000`; staff → `Max-Age=43200` and `expires_at` ≈ now + 12h
+- [x] Tests assert `resolveSession` returns null for a token signed with another secret, an expired `exp`, a revoked session row, and a session row past `expires_at`
+- [x] Test asserts `revokeAllSessions` revokes every active session of the user only
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: integration
 **Gate**: full
