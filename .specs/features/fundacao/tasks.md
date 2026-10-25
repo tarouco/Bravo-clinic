@@ -726,8 +726,8 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Columns, checks and indexes of the three tables declared; `schema/index.ts` exports identity, calendar and platform
-- [ ] Gate check passes: `npm run typecheck && npm run lint`
+- [x] Columns, checks and indexes of the three tables declared; `schema/index.ts` exports identity, calendar and platform
+- [x] Gate check passes: `npm run typecheck && npm run lint`
 
 **Tests**: none
 **Gate**: build
