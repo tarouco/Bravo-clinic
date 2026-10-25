@@ -1886,11 +1886,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test asserts section order by ids/headings: hero → `#estrutura` → `#salas` → `#simulador` → extras → comodidade → políticas → CTA
-- [ ] Test asserts the rendered page text contains no "São Paulo", "Sao Paulo" or "Jardins"
-- [ ] Test (scrollIntoView mocked) asserts clicking "Reservar Sala" on Sala Terceira sets the hero select to `terceira` and calls `scrollIntoView({ behavior: 'smooth' })` on `#simulador`
-- [ ] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
-- [ ] Test count: ≥ 3 tests pass
+- [x] Test asserts section order by ids/headings: hero → `#estrutura` → `#salas` → `#simulador` → extras → comodidade → políticas → CTA
+- [x] Test asserts the rendered page text contains no "São Paulo", "Sao Paulo" or "Jardins"
+- [x] Test (scrollIntoView mocked) asserts clicking "Reservar Sala" on Sala Terceira sets the hero select to `terceira` and calls `scrollIntoView({ behavior: 'smooth' })` on `#simulador`
+- [x] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
+- [x] Test count: ≥ 3 tests pass
 
 **Tests**: unit
 **Gate**: build
