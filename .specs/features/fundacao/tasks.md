@@ -840,12 +840,12 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert `verifyPassword(pw, await hashPassword(pw))` is true, false for another password, and the hash starts with `scrypt$16384$8$1$`
-- [ ] Tests assert two hashes of the same password differ (salt)
-- [ ] Tests assert `decryptSecret(encryptSecret('JBSWY3DPEHPK3PXP', key), key)` round-trips, ciphertext ≠ plaintext, and a tampered ciphertext throws
-- [ ] Tests assert `sha256Hex('abc') === 'ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad'` and `randomToken()` is 43 base64url chars
-- [ ] Gate check passes: `npm test -w apps/api`
-- [ ] Test count: ≥ 7 tests pass
+- [x] Tests assert `verifyPassword(pw, await hashPassword(pw))` is true, false for another password, and the hash starts with `scrypt$16384$8$1$`
+- [x] Tests assert two hashes of the same password differ (salt)
+- [x] Tests assert `decryptSecret(encryptSecret('JBSWY3DPEHPK3PXP', key), key)` round-trips, ciphertext ≠ plaintext, and a tampered ciphertext throws
+- [x] Tests assert `sha256Hex('abc') === 'ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad'` and `randomToken()` is 43 base64url chars
+- [x] Gate check passes: `npm test -w apps/api`
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: unit
 **Gate**: quick
