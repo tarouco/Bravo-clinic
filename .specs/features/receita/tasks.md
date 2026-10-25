@@ -303,11 +303,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Five examples return 120, 78, 185, 84, 152 exactly; `extraMinutesExact` for Wed is `{ num: 69n, den: 4n }` or an equivalent reduced fraction equal to 17.25
-- [ ] V_slot ≤ V_ref yields debit = duration; `vPacCents({priceCents:160000, includedMinutes:1200}) === 8000`, half-up case `vPacCents({priceCents:100000, includedMinutes:1800}) === 3333`
-- [ ] `formatDebitDetail` → "60 min + 18 min de excedente = 78 min" (Wed) and "120 min" (Tue)
-- [ ] Gate check passes: `npm test -w packages/core`
-- [ ] Test count: ≥ 10 tests pass
+- [x] Five examples return 120, 78, 185, 84, 152 exactly; `extraMinutesExact` for Wed is `{ num: 69n, den: 4n }` or an equivalent reduced fraction equal to 17.25
+- [x] V_slot ≤ V_ref yields debit = duration; `vPacCents({priceCents:160000, includedMinutes:1200}) === 8000`, half-up case `vPacCents({priceCents:100000, includedMinutes:1800}) === 3333`
+- [x] `formatDebitDetail` → "60 min + 18 min de excedente = 78 min" (Wed) and "120 min" (Tue)
+- [x] Gate check passes: `npm test -w packages/core`
+- [x] Test count: ≥ 10 tests pass
 
 **Tests**: unit
 **Gate**: quick
