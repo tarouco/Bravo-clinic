@@ -1,0 +1,824 @@
+<!DOCTYPE html><html lang="pt-BR" style=""><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_standard" name="shell-type"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600&amp;family=Jost:wght@300;400;500;600&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "secondary-fixed-dim": "#eabea1", "secondary-fixed": "#ffdcc6", "surface-tint": "#885127", "surface-dim": "#e0d9d1", "tertiary-container": "#75482a", "on-tertiary-fixed": "#311300", "inverse-surface": "#33302b", "ink-muted-night": "#c2ad9b", "on-error": "#ffffff", "on-tertiary-container": "#f8b993", "surface-raised": "#fbf7f2", "inverse-on-surface": "#f7f0e8", "surface-night": "#1d140e", "walnut": "#63391c", "on-background": "#1e1b17", "primary-container": "#7a461d", "ink": "#2e1a0c", "error-container": "#ffdad6", "inverse-primary": "#ffb784", "on-bronze-night": "#1d140e", "on-bronze": "#fbf7f2", "tertiary-fixed": "#ffdbc7", "primary-fixed": "#ffdcc6", "on-surface-variant": "#52443b", "surface-raised-night": "#281c14", "ink-muted": "#6b5445", "champagne-soft-night": "#4a3526", "on-champagne": "#2e1a0c", "champagne-night": "#e5bca1", "walnut-night": "#8a5530", "surface-container-high": "#eee7df", "border-night": "#8a6e5a", "on-secondary": "#ffffff", "on-primary-fixed": "#301400", "outline": "#84746a", "on-tertiary-fixed-variant": "#673c1f", "surface-stone-night": "#34261c", "primary-fixed-dim": "#ffb784", "surface-variant": "#e8e1da", "ink-night": "#f3e8dc", "error": "#ba1a1a", "border": "#8f6f58", "surface-container-lowest": "#ffffff", "surface-container-low": "#faf2ea", "bronze": "#7a461d", "tertiary-fixed-dim": "#f7b993", "hairline-night": "#4d3a2c", "tertiary": "#5a3215", "on-primary-container": "#ffb785", "on-error-container": "#93000a", "primary": "#5e3007", "on-secondary-container": "#7a5840", "on-surface": "#1e1b17", "on-secondary-fixed": "#2d1604", "secondary-container": "#ffd1b3", "on-primary-fixed-variant": "#6b3a12", "champagne-soft": "#efdccd", "secondary": "#795740", "hairline": "#cdb8a5", "surface-stone": "#e7dace", "on-tertiary": "#ffffff", "bronze-night": "#dcaa82", "on-primary": "#ffffff", "outline-variant": "#d7c3b7", "surface-container-highest": "#e8e1da", "champagne": "#daaf93", "surface-container": "#f4ede5", "on-secondary-fixed-variant": "#5f402a", "surface": "#f5eee6", "background": "#fff8f1", "surface-bright": "#fff8f1" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "space-3xl": "4rem", "space-2xl": "3rem", "space-sm": "0.5rem", "gutter": "1.5rem", "space-hero": "6rem", "space-lg": "1.5rem", "space-xl": "2rem", "space-xs": "0.25rem", "space-md": "1rem", "margin": "1.5rem" }, "fontFamily": { "display-l": [ "Josefin Sans" ], "body": [ "Jost" ], "small": [ "Jost" ], "display-xl": [ "Josefin Sans" ], "heading-mobile": [ "Josefin Sans" ], "display-xl-mobile": [ "Josefin Sans" ], "heading": [ "Josefin Sans" ], "caption": [ "Jost" ], "eyebrow": [ "Josefin Sans" ], "lead": [ "Jost" ], "display-l-mobile": [ "Josefin Sans" ] }, "fontSize": { "display-l": [ "44px", { "lineHeight": "52px", "letterSpacing": "0.08em", "fontWeight": "300" } ], "body": [ "16px", { "lineHeight": "26px", "letterSpacing": "0em", "fontWeight": "400" } ], "small": [ "14px", { "lineHeight": "22px", "letterSpacing": "0em", "fontWeight": "400" } ], "display-xl": [ "64px", { "lineHeight": "68px", "letterSpacing": "0.12em", "fontWeight": "300" } ], "heading-mobile": [ "22px", { "lineHeight": "28px", "letterSpacing": "0.03em", "fontWeight": "400" } ], "display-xl-mobile": [ "36px", { "lineHeight": "42px", "letterSpacing": "0.1em", "fontWeight": "300" } ], "heading": [ "28px", { "lineHeight": "36px", "letterSpacing": "0.04em", "fontWeight": "400" } ], "caption": [ "12px", { "lineHeight": "18px", "letterSpacing": "0.04em", "fontWeight": "500" } ], "eyebrow": [ "13px", { "lineHeight": "18px", "letterSpacing": "0.32em", "fontWeight": "400" } ], "lead": [ "19px", { "lineHeight": "30px", "letterSpacing": "0em", "fontWeight": "300" } ], "display-l-mobile": [ "28px", { "lineHeight": "34px", "letterSpacing": "0.06em", "fontWeight": "300" } ] } } } };</script></head><body class="bg-surface font-body text-body text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(46,26,12,0.04)]"><div class="max-w-7xl mx-auto px-gutter"><div class="flex items-center justify-between h-20"><div class="flex items-center gap-space-lg"><a class="flex flex-col text-left" data-path="inicio" href="#"><span class="font-eyebrow text-eyebrow uppercase tracking-[0.32em] text-ink font-semibold">BRAVÔ CLINIC</span><span class="font-caption text-caption uppercase tracking-[0.2em] text-ink-muted">SALAS INTELIGENTES</span></a><div class="hidden xl:flex items-center gap-space-xs text-ink-muted pl-space-md border-l border-hairline/40"><span class="material-symbols-outlined text-base text-bronze">location_on</span><span class="font-small text-small text-ink-muted">Praia Brava - Itajaí</span></div></div><nav class="hidden lg:flex items-center gap-space-md" data-active-classes="bg-primary-container text-on-primary-container font-medium rounded-lg px-space-md py-space-xs"><a class="font-small text-small text-on-surface-variant hover:text-bronze hover:bg-champagne/15 active:scale-95 active:bg-champagne/30 active:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bronze transition-all duration-200 ease-out py-space-xs px-space-sm rounded cursor-pointer" data-path="salas" href="#salas">Salas</a><a class="font-small text-small text-on-surface-variant hover:text-bronze hover:bg-champagne/15 active:scale-95 active:bg-champagne/30 active:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bronze transition-all duration-200 ease-out py-space-xs px-space-sm rounded cursor-pointer" data-path="estrutura" href="#salas">Estrutura</a><a class="font-small text-small text-on-surface-variant hover:text-bronze hover:bg-champagne/15 active:scale-95 active:bg-champagne/30 active:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bronze transition-all duration-200 ease-out py-space-xs px-space-sm rounded cursor-pointer" data-path="precos-e-planos" href="#simulador">Preços &amp; Planos</a><a class="font-small text-small text-on-surface-variant hover:text-bronze hover:bg-champagne/15 active:scale-95 active:bg-champagne/30 active:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bronze transition-all duration-200 ease-out py-space-xs px-space-sm rounded cursor-pointer" data-path="servicos-extras" href="#simulador">Serviços Extras</a><a class="font-small text-small text-on-surface-variant hover:text-bronze hover:bg-champagne/15 active:scale-95 active:bg-champagne/30 active:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bronze transition-all duration-200 ease-out py-space-xs px-space-sm rounded cursor-pointer" data-path="contato" href="https://wa.me/" target="_blank" rel="noopener noreferrer">Contato</a></nav><div class="flex items-center gap-space-md"><a class="inline-flex items-center justify-center gap-space-xs font-small text-small uppercase tracking-[0.08em] bg-bronze text-on-bronze px-space-lg py-space-sm rounded shadow-[0_2px_10px_rgba(122,70,29,0.2)] hover:bg-walnut hover:shadow-md hover:brightness-110 active:scale-95 active:brightness-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bronze transition-all duration-200 ease-out cursor-pointer" data-path="login" href="#"><span class="material-symbols-outlined text-base">person</span><span class="">Login</span></a></div></div></div></header><main class="w-full pt-20 bg-surface"><div class="flex flex-col w-full">
+<!-- HERO SECTION ARQUITETÔNICA COM RESERVA INTEGRADA -->
+<section class="relative w-full overflow-hidden bg-surface pb-space-3xl">
+<div class="absolute inset-0 bg-gradient-to-b from-champagne-soft/25 via-transparent to-surface pointer-events-none"></div>
+<div class="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-champagne/15 blur-3xl pointer-events-none"></div>
+<div class="max-w-7xl mx-auto px-gutter relative z-10 pt-space-xl">
+<!-- Top Badging / Eyebrow -->
+<div class="flex flex-col items-center text-center space-y-space-sm mb-space-lg">
+<div class="inline-flex items-center gap-space-sm px-space-md py-space-xs rounded-full bg-surface-raised shadow-sm text-ink-muted">
+<span class="w-1.5 h-1.5 rounded-full bg-bronze"></span>
+<span class="font-eyebrow text-eyebrow uppercase tracking-[0.32em] text-bronze font-medium">SALAS INTELIGENTES SOB DEMANDA</span>
+<span class="w-1.5 h-1.5 rounded-full bg-bronze"></span>
+</div>
+<h1 class="font-display-xl text-display-xl text-ink max-w-4xl tracking-tight mt-space-sm">
+          Saúde, beleza e bem-estar em um só lugar.
+        </h1>
+<p class="font-lead text-lead text-ink-muted max-w-2xl mx-auto">
+          Consultórios inteligentes e estúdios clínicos nos Jardins, prontos para atender por hora, meio turno ou turno. Sem taxa de adesão, condomínio ou burocracia fixa.
+        </p>
+<div class="flex flex-wrap items-center justify-center gap-space-md pt-space-xs">
+<a class="inline-flex items-center gap-space-xs bg-bronze hover:bg-walnut text-on-bronze font-small text-small uppercase tracking-[0.08em] px-space-xl py-space-md rounded shadow-md transition-all duration-300" href="#simulador">
+<span class="">Simular e Reservar</span>
+<span class="material-symbols-outlined text-base">arrow_forward</span>
+</a>
+<a class="inline-flex items-center gap-space-xs bg-surface-raised hover:bg-surface-stone text-ink font-small text-small uppercase tracking-[0.08em] px-space-xl py-space-md rounded shadow-sm transition-all duration-300" href="#salas">
+<span class="">Conhecer as Salas</span>
+</a>
+</div>
+</div>
+<!-- Quick Search Booking Widget Anchor Card -->
+<div class="w-full bg-surface-raised rounded-xl shadow-xl p-space-lg md:p-space-xl mt-space-lg">
+<div class="flex flex-col lg:flex-row items-stretch lg:items-end gap-space-md">
+<!-- Room Selector -->
+<div class="flex-1 min-w-0">
+<label class="block font-eyebrow text-caption uppercase text-ink-muted mb-space-xs tracking-[0.16em]">
+              1. Selecionar Consultório
+            </label>
+<div class="relative bg-surface rounded px-space-md py-space-sm">
+<select class="w-full bg-transparent text-ink font-body text-body focus:outline-none cursor-pointer" id="heroRoomSelect">
+<option value="principal">Sala Principal (Estética, Médico &amp; Gravação)</option>
+<option value="secundaria">Sala Secundária (Médico, Estética &amp; Vídeos)</option>
+<option value="terceira">Sala Terceira (Massagem, Terapias &amp; Spa)</option>
+</select>
+</div>
+</div>
+<!-- Date Picker -->
+<div class="flex-1 min-w-0">
+<label class="block font-eyebrow text-caption uppercase text-ink-muted mb-space-xs tracking-[0.16em]">
+              2. Data do Atendimento
+            </label>
+<div class="relative bg-surface rounded px-space-md py-space-sm flex items-center">
+<span class="material-symbols-outlined text-bronze mr-space-xs text-lg">calendar_today</span>
+<input class="w-full bg-transparent text-ink font-body text-body focus:outline-none cursor-pointer" id="heroDateInput" type="date" value="2026-10-05">
+</div>
+</div>
+<!-- Duration/Modalidade -->
+<div class="flex-1 min-w-0">
+<label class="block font-eyebrow text-caption uppercase text-ink-muted mb-space-xs tracking-[0.16em]">
+              3. Modalidade / Formato
+            </label>
+<div class="relative bg-surface rounded px-space-md py-space-sm">
+<select class="w-full bg-transparent text-ink font-body text-body focus:outline-none cursor-pointer" id="heroModalidadeSelect">
+<option value="avulsa">Por Hora (mín. 1h)</option>
+<option value="meio-turno">Meio Turno (Bloco fixo 2h30)</option>
+<option value="turno">Turno Completo (5h30)</option>
+<option value="noite">Período Noturno (19h às 00h)</option>
+</select>
+</div>
+</div>
+<!-- CTA Check Availability -->
+<div class="flex-none">
+<button class="w-full lg:w-auto h-[48px] px-space-xl bg-bronze hover:bg-walnut text-on-bronze font-small text-small uppercase tracking-[0.08em] rounded inline-flex items-center justify-center gap-space-xs shadow-md transition-all" onclick="document.getElementById('simulador').scrollIntoView({behavior: 'smooth'})">
+<span class="material-symbols-outlined text-lg">search_check</span>
+<span class="">Verificar Horários</span>
+</button>
+</div>
+</div>
+<!-- Micro Information Badges below widget -->
+<div class="pt-space-md mt-space-md flex flex-wrap items-center justify-between gap-space-md text-ink-muted font-caption text-caption">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-bronze text-base">verified</span>
+<span class="">Sem fidelidade: pague apenas pelo tempo de uso reservado</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-bronze text-base">sanitizer</span>
+<span class="">Bloqueio de limpeza de 30 min automático e sem custo após cada sessão</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-bronze text-base">lock</span>
+<span class="">Sinal de 50% seguro via Mercado Pago (Pix ou Cartão)</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- FACHADA & FILOSOFIA AMBIENTAL -->
+<section class="w-full py-space-2xl bg-surface-container-low">
+<div class="max-w-7xl mx-auto px-gutter">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-center">
+<div class="lg:col-span-5 space-y-space-md">
+<span class="font-eyebrow text-caption uppercase tracking-[0.28em] text-bronze block">ARQUITETURA HOSPITALAR SENSORIAL</span>
+<h2 class="font-display-l text-display-l text-ink">
+            A extensão natural da sua autoridade clínica.
+          </h2>
+<p class="font-body text-body text-ink-muted">
+            Projetada sob preceitos de biofilia e iluminação quente de 2700K, a Bravô Clinic neutraliza o estresse clássico de consultórios convencionais. Cada detalhe — do mármore travertino às macas articuladas de linha médica — comunica prestígio inquestionável ao seu paciente antes mesmo do primeiro cumprimento.
+          </p>
+<div class="grid grid-cols-2 gap-space-md pt-space-xs">
+<div class="p-space-md bg-surface rounded shadow-sm">
+<div class="font-display-l text-heading text-bronze font-semibold">100%</div>
+<div class="font-small text-small text-ink-muted mt-1">Conformidade e biossegurança RDC Anvisa</div>
+</div>
+<div class="p-space-md bg-surface rounded shadow-sm">
+<div class="font-display-l text-heading text-bronze font-semibold">07h-00h</div>
+<div class="font-small text-small text-ink-muted mt-1">Amplitude horária de segunda a domingo</div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+<div class="space-y-space-md">
+<div class="relative overflow-hidden rounded-xl shadow-md h-72">
+<img class="w-full h-full object-cover" data-alt="Close-up of the illuminated Bravo Clinic bronze signage with backlit warm champagne glow on textured limestone wall with luxury architectural interior lighting in Jardins Sao Paulo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8N4dSChU2-dpqtZANmh9tPU801wCgKD2nGpKMkEhCM7KpcKZHHaDQZ9fwGJ6lggD5hO84OuFEJ5DtbxvuJ_SwEDaSCZ2r_wiDj_vSYBZbyQfWnn0b-UuWrdEu4w9UBJ1eKt8BFw9H63YTjA0rQwTtv3f5XxaPppH9iwWTUJIhtilC5l0mdGSUE7vmiUyvgQMYejLpXu-jtJGlQbQAQb89k5iiIFrFuEui4q80BRPi1jWH6Xn3IuxD">
+<div class="absolute bottom-3 left-3 bg-surface-night/70 backdrop-blur-md px- space-sm py-1 rounded text-ink-night font-caption text-caption">Recepção Boutique Praia Brava</div>
+</div>
+<div class="p-space-md bg-surface-raised rounded-xl shadow-sm space-y-space-xs">
+<div class="flex items-center gap-space-xs text-bronze">
+<span class="material-symbols-outlined text-lg">spa</span>
+<span class="font-eyebrow text-caption tracking-wider uppercase font-semibold">Hospitalidade Real</span>
+</div>
+<p class="font-small text-small text-ink-muted">Recepcionista bilíngue para acolher seu paciente, servir cafés especiais e realizar check-in cordial.</p>
+</div>
+</div>
+<div class="space-y-space-md sm:mt-space-lg">
+<div class="p-space-md bg-surface-raised rounded-xl shadow-sm space-y-space-xs">
+<div class="flex items-center gap-space-xs text-bronze">
+<span class="material-symbols-outlined text-lg">videocam</span>
+<span class="font-eyebrow text-caption tracking-wider uppercase font-semibold">Acústica de Estúdio</span>
+</div>
+<p class="font-small text-small text-ink-muted">Salas preparadas para captação de áudio nítido e iluminação difusa adequada para gravações e telemedicina.</p>
+</div>
+<div class="relative overflow-hidden rounded-xl shadow-md h-72">
+<img class="w-full h-full object-cover" data-alt="High-end private medical procedure room with motorized leather examination table, brushed brass details, ambient floor lighting, and marble consultation desk in warm earth tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuATjfBbHarWStOrawWdcQOuCBo3SDCM7j_wGetyyrhKRbH5MFjVG9j_8uh9CL62gETJBsaJkLfGGBFWOtNdpfgpi2fWT9IxQg7PAOqaEKh2dis7KXemtULynpmDCmMzjq2Kx6MJhdxBCLYNmd0HbJO49CbAYR853j5HmXaR-cwIcmWvTn2XfGrJUSe3qHGtJI0HzNXDd2xQ86MNS6oPnGaAx8vD82R540BBc7PgVJMD0GYFjDmSjuws">
+<div class="absolute bottom-3 left-3 bg-surface-night/70 backdrop-blur-md px-space-sm py-1 rounded text-ink-night font-caption text-caption">Consultório Privativo</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- APRESENTAÇÃO DAS 3 SALAS INTELIGENTES (US-01) -->
+<section class="w-full py-space-3xl bg-surface" id="salas">
+<div class="max-w-7xl mx-auto px-gutter">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-2xl">
+<div class="space-y-space-xs max-w-2xl">
+<span class="font-eyebrow text-caption uppercase tracking-[0.28em] text-bronze block">ESPAÇOS SOB DEMANDA</span>
+<h2 class="font-display-l text-display-l text-ink">
+            As três salas inteligentes da clínica.
+          </h2>
+<p class="font-body text-body text-ink-muted">
+            Todas as salas compartilham do mesmo padrão estético e contam com tarifa unificada e transparente, variando apenas nas configurações específicas de equipamentos de procedimento ou terapias corporais.
+          </p>
+</div>
+<div class="inline-flex items-center gap-space-xs text-ink-muted font-caption text-caption bg-surface-raised px-space-md py-space-xs rounded-full shadow-sm">
+<span class="material-symbols-outlined text-bronze text-base">tune</span>
+<span class="">Tarifa unificada: mesmo valor base em todas as salas</span>
+</div>
+</div>
+<!-- Grid com 3 Cards de Salas -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-space-xl">
+<!-- SALA PRINCIPAL -->
+<div class="flex flex-col bg-surface-raised rounded-xl overflow-hidden shadow-lg transition-transform hover:-translate-y-1 duration-300">
+<div class="relative h-64 w-full">
+<img class="w-full h-full object-cover" data-alt="Luxurious medical and aesthetics clinic room with motorized treatment bed, daylight balanced circular surgical focus light, walnut wall panels, and high-end video recording setup" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYWxbAfIzXsjqw3HxQU2LX5MTjg-0WdYr0MTiq6uAAgdJA3tb6EvUwlUfC3K1wBNQzAKzpX9oHC0PF4uOwoRK2B_vmTpGy0W1BoKZktdho-ZUpa8lu5rzojdiF4Tbr6oQFbNsBKzVvm32zd8e_62vUDoYU-aXcpJXcnnrJggLZUSK2Js07OK3g4spepmCSXE3Sy0-TD4_tLPaRaaLUvF4rIMhDMo51dfVvE2STePq3vjsQxwt3gTpM">
+<div class="absolute top-3 left-3 bg-bronze text-on-bronze px-space-sm py-1 rounded font-eyebrow text-caption uppercase tracking-wider font-semibold shadow-sm">
+              Sala Principal
+            </div>
+<div class="absolute top-3 right-3 bg-surface-raised/95 backdrop-blur-md text-walnut px-space-sm py-1 rounded font-caption text-caption flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-sm text-bronze">videocam</span>
+<span class="">Filmagem &amp; Estúdio</span>
+</div>
+</div>
+<div class="p-space-lg flex-1 flex flex-col justify-between space-y-space-md">
+<div>
+<div class="flex flex-wrap gap-1.5 mb-space-sm">
+<span class="px-2 py-0.5 rounded bg-champagne-soft text-on-champagne font-caption text-caption">Médico</span>
+<span class="px-2 py-0.5 rounded bg-champagne-soft text-on-champagne font-caption text-caption">Estética Avançada</span>
+<span class="px-2 py-0.5 rounded bg-champagne-soft text-on-champagne font-caption text-caption">Criadores de Conteúdo</span>
+</div>
+<h3 class="font-heading text-heading text-ink mb-space-xs">Sala Principal</h3>
+<p class="font-small text-small text-ink-muted">
+                Espaço flagship equipado com maca de procedimentos dermatológicos/estéticos totalmente motorizada, foco cirúrgico estético de temperatura ajustável e iluminação de cinema para gravação de aulas e mídias.
+              </p>
+<div class="mt-space-md space-y-space-xs font-small text-small text-ink">
+<div class="flex items-center gap-space-xs text-ink-muted">
+<span class="material-symbols-outlined text-bronze text-base">check_circle</span>
+<span class="">Maca motorizada de 4 motores com controle</span>
+</div>
+<div class="flex items-center gap-space-xs text-ink-muted">
+<span class="material-symbols-outlined text-bronze text-base">check_circle</span>
+<span class="">Mesa executiva em pedra e poltronas para consulta</span>
+</div>
+<div class="flex items-center gap-space-xs text-ink-muted">
+<span class="material-symbols-outlined text-bronze text-base">check_circle</span>
+<span class="">Pontos de luz difusa e suporte para smartphones e câmeras</span>
+</div>
+<div class="flex items-center gap-space-xs text-ink-muted">
+<span class="material-symbols-outlined text-bronze text-base">check_circle</span>
+<span class="">Pia de assepsia cirúrgica integrada na marcenaria</span>
+</div>
+</div>
+</div>
+<div class="pt-space-md mt-space-md bg-surface-container-low -mx-space-lg -mb-space-lg p-space-lg flex items-center justify-between">
+<div>
+<span class="font-caption text-caption text-ink-muted block uppercase tracking-wider">A partir de</span>
+<span class="font-display-l text-heading text-bronze font-semibold">R$ 80,00<span class="font-body text-small text-ink-muted font-normal">/h</span></span>
+</div>
+<button class="px-space-md py-space-sm bg-bronze hover:bg-walnut text-on-bronze rounded font-small text-small uppercase tracking-wider transition-all" onclick="selectRoomAndScroll('Sala Principal')">
+                Reservar Sala
+              </button>
+</div>
+</div>
+</div>
+<!-- SALA SECUNDÁRIA -->
+<div class="flex flex-col bg-surface-raised rounded-xl overflow-hidden shadow-lg transition-transform hover:-translate-y-1 duration-300">
+<div class="relative h-64 w-full">
+<img class="w-full h-full object-cover" data-alt="Chic boutique doctor consultation office with beige acoustic wood slats, modern leather patient chair, soft amber diffused light and professional medical cabinet" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCR-fMB9zHIB3tmBG54yXl613MngRSMt6Fg2Tjn_refFEleOwQq7AgaVU0cC4lG30EMrMidOj0zk0itzOen3MJdOv7T_Qaeqf4QOZItfcxPalkJ3s2DsnhfnnkcgwB2-jB9SRHrcIHGPg1H3Pl_rgDzehv3Obqh630nGhIHHNa3rz80NsU3J1Zj-zKiHINGhL7fVIpDmJ9tcjzFaJXZqYYLkfvhhxi_xCkkmtrnKVleNGORafhdkf1-">
+<div class="absolute top-3 left-3 bg-bronze text-on-bronze px-space-sm py-1 rounded font-eyebrow text-caption uppercase tracking-wider font-semibold shadow-sm">
+              Sala Secundária
+            </div>
+<div class="absolute top-3 right-3 bg-surface-raised/95 backdrop-blur-md text-walnut px-space-sm py-1 rounded font-caption text-caption flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-sm text-bronze">videocam</span>
+<span class="">Filmagem &amp; Estúdio</span>
+</div>
+</div>
+<div class="p-space-lg flex-1 flex flex-col justify-between space-y-space-md">
+<div>
+<div class="flex flex-wrap gap-1.5 mb-space-sm">
+<span class="px-2 py-0.5 rounded bg-champagne-soft text-on-champagne font-caption text-caption">Médico Geral</span>
+<span class="px-2 py-0.5 rounded bg-champagne-soft text-on-champagne font-caption text-caption">Nutrição &amp; Estética</span>
+<span class="px-2 py-0.5 rounded bg-champagne-soft text-on-champagne font-caption text-caption">Telemedicina</span>
+</div>
+<h3 class="font-heading text-heading text-ink mb-space-xs">Sala Secundária</h3>
+<p class="font-small text-small text-ink-muted">
+                Ambiente cirúrgico/clínico intimista, desenhado para consultas diagnósticas, procedimentos injetáveis, pequenos tratamentos estéticos e criação de conteúdos verticais para redes sociais.
+              </p>
+<div class="mt-space-md space-y-space-xs font-small text-small text-ink">
+<div class="flex items-center gap-space-xs text-ink-muted">
+<span class="material-symbols-outlined text-bronze text-base">check_circle</span>
+<span class="">Maca reclinável hidráulica ultra-conforto</span>
+</div>
+<div class="flex items-center gap-space-xs text-ink-muted">
+<span class="material-symbols-outlined text-bronze text-base">check_circle</span>
+<span class="">Bancada e armários para insumos e descartáveis</span>
+</div>
+<div class="flex items-center gap-space-xs text-ink-muted">
+<span class="material-symbols-outlined text-bronze text-base">check_circle</span>
+<span class="">Isolamento acústico com painéis de madeira ripada</span>
+</div>
+<div class="flex items-center gap-space-xs text-ink-muted">
+<span class="material-symbols-outlined text-bronze text-base">check_circle</span>
+<span class="">Foco de luz articulado com temperatura neutra</span>
+</div>
+</div>
+</div>
+<div class="pt-space-md mt-space-md bg-surface-container-low -mx-space-lg -mb-space-lg p-space-lg flex items-center justify-between">
+<div>
+<span class="font-caption text-caption text-ink-muted block uppercase tracking-wider">A partir de</span>
+<span class="font-display-l text-heading text-bronze font-semibold">R$ 80,00<span class="font-body text-small text-ink-muted font-normal">/h</span></span>
+</div>
+<button class="px-space-md py-space-sm bg-bronze hover:bg-walnut text-on-bronze rounded font-small text-small uppercase tracking-wider transition-all" onclick="selectRoomAndScroll('Sala Secundária')">
+                Reservar Sala
+              </button>
+</div>
+</div>
+</div>
+<!-- SALA TERCEIRA -->
+<div class="flex flex-col bg-surface-raised rounded-xl overflow-hidden shadow-lg transition-transform hover:-translate-y-1 duration-300">
+<div class="relative h-64 w-full">
+<img class="w-full h-full object-cover" data-alt="Serene holistic spa therapy treatment room with warm indirect floor lighting, natural linen draping, premium wooden massage bed, essential oils diffuser and minimalist stone washbasin" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB90hEG0w5OUxGN25o4Z9iv_4x29Zn49_v6FslE4Yj8rZv_eae1xAtjVGU42i-EcZ8N3VrpiUAlBNTHLLyzRP9RpZQvembGockl8ByQwHM6chsJnylWwutJ2C2m18F9vJd9Q_sRzING1BKEoHNLnwuUTR5UpxDZUe2NLl_z2OzXbj4xGpYxVSzb2NS4v02tu2bvBt-dxvE0Q2hrpGv2GyuIjNHl-psRsl0d0IjC8RMzHI6plolpi7wt">
+<div class="absolute top-3 left-3 bg-bronze text-on-bronze px-space-sm py-1 rounded font-eyebrow text-caption uppercase tracking-wider font-semibold shadow-sm">
+              Sala Terceira
+            </div>
+<div class="absolute top-3 right-3 bg-surface-stone text-ink px-space-sm py-1 rounded font-caption text-caption flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-sm text-bronze">self_improvement</span>
+<span class="">Terapia &amp; Relaxamento</span>
+</div>
+</div>
+<div class="p-space-lg flex-1 flex flex-col justify-between space-y-space-md">
+<div>
+<div class="flex flex-wrap gap-1.5 mb-space-sm">
+<span class="px-2 py-0.5 rounded bg-champagne-soft text-on-champagne font-caption text-caption">Massoterapia</span>
+<span class="px-2 py-0.5 rounded bg-champagne-soft text-on-champagne font-caption text-caption">Fisioterapia</span>
+<span class="px-2 py-0.5 rounded bg-champagne-soft text-on-champagne font-caption text-caption">Terapias Integrativas</span>
+</div>
+<h3 class="font-heading text-heading text-ink mb-space-xs">Sala Terceira</h3>
+<p class="font-small text-small text-ink-muted">
+                Dedicada ao alívio e bem-estar corporal. Configuração com iluminação dimerizável quente, difusor ultrassônico com sinergias olfativas e isolamento de som para imersão total do cliente.
+              </p>
+<div class="mt-space-md space-y-space-xs font-small text-small text-ink">
+<div class="flex items-center gap-space-xs text-ink-muted">
+<span class="material-symbols-outlined text-bronze text-base">check_circle</span>
+<span class="">Maca de massagem ergonômica com aquecimento opcional</span>
+</div>
+<div class="flex items-center gap-space-xs text-ink-muted">
+<span class="material-symbols-outlined text-bronze text-base">check_circle</span>
+<span class="">Sistema de som surround com conectividade Bluetooth</span>
+</div>
+<div class="flex items-center gap-space-xs text-ink-muted">
+<span class="material-symbols-outlined text-bronze text-base">check_circle</span>
+<span class="">Luz indireta regulável (zero ofuscamento ocular)</span>
+</div>
+<div class="flex items-center gap-space-xs text-ink-muted">
+<span class="material-symbols-outlined text-bronze text-base">check_circle</span>
+<span class="">Toalheiro térmico e higienização hospitalar prévia</span>
+</div>
+</div>
+</div>
+<div class="pt-space-md mt-space-md bg-surface-container-low -mx-space-lg -mb-space-lg p-space-lg flex items-center justify-between">
+<div>
+<span class="font-caption text-caption text-ink-muted block uppercase tracking-wider">A partir de</span>
+<span class="font-display-l text-heading text-bronze font-semibold">R$ 80,00<span class="font-body text-small text-ink-muted font-normal">/h</span></span>
+</div>
+<button class="px-space-md py-space-sm bg-bronze hover:bg-walnut text-on-bronze rounded font-small text-small uppercase tracking-wider transition-all" onclick="selectRoomAndScroll('Sala Terceira')">
+                Reservar Sala
+              </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- MOTOR DE PREÇOS TRANSPARENTE E SIMULADOR INTERATIVO (§5.3 DO PRD) -->
+<section class="w-full py-space-3xl bg-surface-container-low" id="simulador">
+<div class="max-w-7xl mx-auto px-gutter">
+<div class="max-w-3xl mb-space-2xl">
+<span class="font-eyebrow text-caption uppercase tracking-[0.28em] text-bronze block">REGRAS DE Reservas</span>
+<h2 class="font-display-l text-display-l text-ink">
+          Você tem liberdade para escolher seus horários.
+        </h2>
+<p class="font-body text-body text-ink-muted">
+          Reserve 1 hora ou mais, seja em horário comercial, noturno ou finais de semana e feriados, estamos sempre abertos para você melhor atender os seus clientes. Reservando 2h ou mais, as tarifas tem desconto.</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-start">
+<!-- TABELA DE REFERÊNCIA OFICIAL DO PRD -->
+<div class="lg:col-span-6 space-y-space-md">
+<div class="bg-surface-raised rounded-xl p-space-lg shadow-sm">
+<h3 class="font-heading text-heading text-ink flex items-center gap-space-xs mb-space-sm">
+<span class="material-symbols-outlined text-bronze">table_chart</span>
+              Tabela de Tarifas Bravô Clinic
+            </h3>
+<!-- Dia Útil Comercial -->
+<div class="mb-space-md">
+<div class="font-eyebrow text-caption uppercase tracking-wider text-bronze font-semibold mb-space-xs">
+                Dia Útil — Comercial (07:00 às 18:30)
+              </div>
+<div class="space-y-space-xs font-small text-small">
+<div class="flex justify-between py-1 bg-surface px-space-sm rounded">
+<span class="text-ink">1 hora avulsa (até 1h59)</span>
+<span class="font-medium text-ink">R$ 97,00/h</span>
+</div>
+<div class="flex justify-between py-1 bg-champagne-soft/40 px-space-sm rounded">
+<span class="text-walnut font-medium">2 horas ou mais (desconto aplicado em todas as horas)</span>
+<span class="font-semibold text-bronze">R$ 80,00/h</span>
+</div>
+<div class="flex justify-between py-1 bg-surface px-space-sm rounded">
+<span class="text-ink">Meio Turno comercial (bloco fixo 2h30)</span>
+<span class="font-medium text-ink">R$ 280,00</span>
+</div>
+<div class="flex justify-between py-1 bg-surface px-space-sm rounded">
+<span class="text-ink">Turno completo comercial (5h30)</span>
+<span class="font-medium text-ink">R$ 500,00</span>
+</div>
+</div>
+</div>
+<!-- Noite -->
+<div class="mb-space-md">
+<div class="font-eyebrow text-caption uppercase tracking-wider text-bronze font-semibold mb-space-xs">
+                Período Noturno (19:00 às 00:00)
+              </div>
+<div class="space-y-space-xs font-small text-small">
+<div class="flex justify-between py-1 bg-surface px-space-sm rounded">
+<span class="text-ink">1 hora noturna</span>
+<span class="font-medium text-ink">R$ 120,00/h</span>
+</div>
+<div class="flex justify-between py-1 bg-surface px-space-sm rounded">
+<span class="text-ink">2 horas ou mais noturnas</span>
+<span class="font-medium text-ink">R$ 99,00/h</span>
+</div>
+<div class="flex justify-between py-1 bg-surface px-space-sm rounded">
+<span class="text-ink">Meio Turno Noturno (19:00 às 00:00 - 5h)</span>
+<span class="font-medium text-ink">R$ 400,00</span>
+</div>
+</div>
+</div>
+<!-- Fim de Semana -->
+<div>
+<div class="font-eyebrow text-caption uppercase tracking-wider text-bronze font-semibold mb-space-xs">
+                Sábados, Domingos &amp; Feriados (09:00 às 18:30)
+              </div>
+<div class="space-y-space-xs font-small text-small">
+<div class="flex justify-between py-1 bg-surface px-space-sm rounded">
+<span class="text-ink">1 hora avulsa</span>
+<span class="font-medium text-ink">R$ 120,00/h</span>
+</div>
+<div class="flex justify-between py-1 bg-surface px-space-sm rounded">
+<span class="text-ink">2 horas ou mais (em todas as horas)</span>
+<span class="font-medium text-ink">R$ 99,00/h</span>
+</div>
+<div class="flex justify-between py-1 bg-surface px-space-sm rounded">
+<span class="text-ink">Meio Turno (09:00–13:45 ou 13:45–18:30)</span>
+<span class="font-medium text-ink">R$ 400,00</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Regra do Bloqueio de Limpeza Obrigatório (§5.2.1) -->
+<div class="p-space-lg bg-surface-raised rounded-xl shadow-sm space-y-space-xs">
+<div class="flex items-center gap-space-xs text-bronze">
+<span class="material-symbols-outlined text-xl">sanitizer</span>
+<h4 class="font-eyebrow text-caption uppercase font-semibold tracking-wider">
+                Garantia de Biossegurança: Bloqueio de Limpeza de 30 min
+              </h4>
+</div>
+<p class="font-small text-small text-ink-muted">
+              Ao concluir cada reserva, automaticamente bloqueamos&nbsp;<strong>30 minutos de higienização rigososa&nbsp;</strong>antes da locação seguinte. Assim garantimos intervalos entre cada locação para assegurar a higiene total do ambiente para seu paciente.
+            </p>
+</div>
+</div>
+<!-- SIMULADOR INTERATIVO COM MEMÓRIA DE CÁLCULO -->
+<div class="lg:col-span-6 bg-surface-raised rounded-xl p-space-xl shadow-xl space-y-space-lg">
+<div class="flex items-center justify-between pb-space-sm border-b border-hairline/40">
+<div>
+<span class="font-eyebrow text-caption uppercase tracking-[0.2em] text-bronze font-semibold">CALCULADORA OFICIAL</span>
+<h3 class="font-heading text-heading text-ink">Simule sua Reserva</h3>
+</div>
+<span class="material-symbols-outlined text-bronze text-3xl">calculate</span>
+</div>
+<div class="space-y-space-md">
+<div>
+<label class="block font-eyebrow text-caption uppercase text-ink-muted mb-space-xs tracking-[0.16em]">
+                Tipo de Dia / Horário
+              </label>
+<div class="grid grid-cols-2 gap-space-xs">
+<button class="py-space-xs px-space-sm text-center rounded font-small text-small uppercase tracking-wider bg-bronze text-on-bronze transition-colors" id="btnDiaUtil" onclick="setPeriodType('util')" type="button">
+                  Dia Útil Comercial
+                </button>
+<button class="py-space-xs px-space-sm text-center rounded font-small text-small uppercase tracking-wider bg-surface text-ink transition-colors" id="btnNoiteFds" onclick="setPeriodType('especial')" type="button">
+                  Noite / Fim de Semana
+                </button>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-center mb-space-xs">
+<label class="font-eyebrow text-caption uppercase text-ink-muted tracking-[0.16em]">
+                  Duração da Sessão
+                </label>
+<span class="font-small text-small font-semibold text-bronze" id="sliderValueText">2 Horas</span>
+</div>
+<input class="w-full accent-bronze cursor-pointer bg-surface h-2 rounded" id="durationRange" max="6" min="1" oninput="updateSimulation()" step="0.5" type="range" value="2">
+<div class="flex justify-between text-caption text-ink-muted mt-1">
+<span class="">1h (Mínimo)</span>
+<span class="">2h (Faixa Desconto)</span>
+<span class="">4h</span>
+<span class="">6h</span>
+</div>
+</div>
+<!-- Resumo e Memória de Cálculo §5.3 -->
+<div class="p-space-md bg-surface rounded-xl space-y-space-sm">
+<div class="flex justify-between items-center text-ink-muted font-small text-small">
+<span class="">Memória de cálculo:</span>
+<span class="font-mono text-ink font-medium" id="calcFormula">2.0h × R$ 80,00/h (Tarifa Desconto)</span>
+</div>
+<div class="flex justify-between items-center text-ink font-body text-body">
+<span class="font-medium">Valor Total da Reserva:</span>
+<span class="font-display-l text-heading text-ink font-semibold" id="calcTotal">R$ 160,00</span>
+</div>
+<div class="pt-space-xs border-t border-hairline/30 space-y-1">
+<div class="flex justify-between items-center text-small text-bronze font-medium">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">payment</span>
+                    Sinal 50% no checkout (Mercado Pago):
+                  </span>
+<span class="font-semibold" id="calcSinal">R$ 80,00</span>
+</div>
+<div class="flex justify-between items-center text-caption text-ink-muted">
+<span class="">Saldo 50% restante (cobrado 48h antes da data):</span>
+<span id="calcSaldo" class="">R$ 80,00</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs text-ink-muted font-caption text-caption pt-space-xs">
+<span class="material-symbols-outlined text-xs text-bronze">check</span>
+<span class="">Inclui +30 min gratuitos de limpeza pós-atendimento</span>
+</div>
+</div>
+<!-- Botão de Ação -->
+<button class="w-full py-space-md bg-bronze hover:bg-walnut text-on-bronze font-small text-small uppercase tracking-[0.08em] rounded shadow-md transition-all flex items-center justify-center gap-space-xs" onclick="handleSimulatedBooking()">
+<span class="">Continuar para Agendamento da Sala</span>
+<span class="material-symbols-outlined text-base">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SERVIÇOS EXTRAS SOB ORÇAMENTO (§5.6 DO PRD) -->
+<section class="w-full py-space-3xl bg-surface">
+<div class="max-w-7xl mx-auto px-gutter">
+<div class="text-center max-w-3xl mx-auto mb-space-2xl space-y-space-xs">
+<span class="font-eyebrow text-caption uppercase tracking-[0.28em] text-bronze block">SERVIÇOS EXTRAS</span>
+<h2 class="font-display-l text-display-l text-ink">
+          Potencialize sua marca e captação de clientes.
+        </h2>
+<p class="font-body text-body text-ink-muted">
+          Além da locação por hora, disponibilizamos equipe especializada para gravar seus procedimentos, editar vídeos para redes sociais e gerenciar suas campanhas de tráfego.
+        </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-xl">
+<!-- Extra 1: Filmagem & Gravação -->
+<div class="bg-surface-raised rounded-xl p-space-xl shadow-md flex flex-col justify-between">
+<div class="space-y-space-md">
+<div class="w-12 h-12 rounded-full bg-champagne-soft text-bronze flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl">video_camera_front</span>
+</div>
+<div>
+<span class="font-caption text-caption uppercase tracking-wider text-bronze font-semibold">Exclusivo Salas 1 &amp; 2</span>
+<h3 class="font-heading text-heading text-ink mt-1">Pacote Filmagem &amp; Gravação</h3>
+</div>
+<p class="font-small text-small text-ink-muted">
+              Cenário ajustado, iluminação profissional estroboscópica e contínua, microfonação lapela sem fio e captação em 4K. Ideal para procedimentos estéticos e podcasts de saúde.
+            </p>
+<div class="p-space-sm bg-surface rounded">
+<span class="font-caption text-caption text-ink-muted block">Valor referencial sugerido</span>
+<span class="font-heading text-heading text-bronze font-semibold">R$ 80,00<span class="font-body text-small text-ink-muted font-normal">/hora</span></span>
+</div>
+</div>
+<button class="mt-space-lg w-full py-space-sm bg-surface hover:bg-surface-stone text-ink font-small text-small uppercase tracking-wider rounded transition-colors text-center" onclick="openExtraModal('Pacote de Filmagem &amp; Gravação')">
+            Solicitar Orçamento
+          </button>
+</div>
+<!-- Extra 2: Videomaker Profissional -->
+<div class="bg-surface-raised rounded-xl p-space-xl shadow-md flex flex-col justify-between">
+<div class="space-y-space-md">
+<div class="w-12 h-12 rounded-full bg-champagne-soft text-bronze flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl">movie_edit</span>
+</div>
+<div>
+<span class="font-caption text-caption uppercase tracking-wider text-bronze font-semibold">Operador Dedicado</span>
+<h3 class="font-heading text-heading text-ink mt-1">Videomaker Dedicado</h3>
+</div>
+<p class="font-small text-small text-ink-muted">
+              Profissional no local operando câmeras, enquadramentos dinâmicos em macro de procedimentos e entrega de arquivos brutos ou cortes prontos no formato Reels e TikTok.
+            </p>
+<div class="p-space-sm bg-surface rounded">
+<span class="font-caption text-caption text-ink-muted block">Orçamento personalizado</span>
+<span class="font-body text-body text-ink font-semibold">Sob consulta de turnos</span>
+</div>
+</div>
+<button class="mt-space-lg w-full py-space-sm bg-surface hover:bg-surface-stone text-ink font-small text-small uppercase tracking-wider rounded transition-colors text-center" onclick="openExtraModal('Videomaker Dedicado')">
+            Solicitar Orçamento
+          </button>
+</div>
+<!-- Extra 3: Marketing Digital -->
+<div class="bg-surface-raised rounded-xl p-space-xl shadow-md flex flex-col justify-between">
+<div class="space-y-space-md">
+<div class="w-12 h-12 rounded-full bg-champagne-soft text-bronze flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl">campaign</span>
+</div>
+<div>
+<span class="font-caption text-caption uppercase tracking-wider text-bronze font-semibold">Captação de Pacientes</span>
+<h3 class="font-heading text-heading text-ink mt-1">Marketing para Saúde</h3>
+</div>
+<p class="font-small text-small text-ink-muted">
+              Estratégias de tráfego pago geolocalizado nos Jardins e Grande São Paulo para médicos, esteticistas e terapeutas com foco em conversão no WhatsApp.
+            </p>
+<div class="p-space-sm bg-surface rounded">
+<span class="font-caption text-caption text-ink-muted block">Gestão completa</span>
+<span class="font-body text-body text-ink font-semibold">Planos de Crescimento</span>
+</div>
+</div>
+<button class="mt-space-lg w-full py-space-sm bg-surface hover:bg-surface-stone text-ink font-small text-small uppercase tracking-wider rounded transition-colors text-center" onclick="openExtraModal('Marketing Digital para Saúde &amp; Estética')">
+            Solicitar Orçamento
+          </button>
+</div>
+</div>
+</div>
+</section>
+<!-- DIFERENCIAIS DA INFRAESTRUTURA INTELIGENTE -->
+<section class="w-full py-space-3xl bg-surface-container-low">
+<div class="max-w-7xl mx-auto px-gutter">
+<div class="max-w-3xl mb-space-2xl">
+<span class="font-eyebrow text-caption uppercase tracking-[0.28em] text-bronze block">COMODIDADE DE OPERAÇÃO</span>
+<h2 class="font-display-l text-display-l text-ink">
+          Estrutura completa para você focar no atendimento.
+        </h2>
+<p class="font-body text-body text-ink-muted">
+          Do momento em que seu paciente entra em nossa recepção até a emissão do convite no Google Calendar, cada etapa foi minuciosamente calculada.
+        </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-lg">
+<div class="p-space-lg bg-surface-raised rounded-xl shadow-sm space-y-space-xs">
+<span class="material-symbols-outlined text-bronze text-3xl">location_city</span>
+<h4 class="font-heading text-body font-semibold text-ink">Endereço Nobre</h4>
+<p class="font-small text-small text-ink-muted">Na Rua XXX, 123 Praia Brava - Itajaí. Local com fácil estacionamento e manobrista credenciado.</p>
+</div>
+<div class="p-space-lg bg-surface-raised rounded-xl shadow-sm space-y-space-xs">
+<span class="material-symbols-outlined text-bronze text-3xl">wifi</span>
+<h4 class="font-heading text-body font-semibold text-ink">Conectividade &amp; Café</h4>
+<p class="font-small text-small text-ink-muted">Link de internet redundante para gravações e telemedicina, com lounge executivo e café.</p>
+</div>
+<div class="p-space-lg bg-surface-raised rounded-xl shadow-sm space-y-space-xs">
+<span class="material-symbols-outlined text-bronze text-3xl">save_as</span>
+<h4 class="font-heading text-body font-semibold text-ink">Sincronização Pessoal</h4>
+<p class="font-small text-small text-ink-muted">Aplicativo da Bravô sincroniza suas reservas com seu Google Calendar e MS Outlook de forma imediata.</p>
+</div>
+<div class="p-space-lg bg-surface-raised rounded-xl shadow-sm space-y-space-xs">
+<span class="material-symbols-outlined text-bronze text-3xl">event_repeat</span>
+<h4 class="font-heading text-body font-semibold text-ink">1 Reagendamento Grátis</h4>
+<p class="font-small text-small text-ink-muted">Imprevistos acontecem: 1 reagendamento cortesia self-service disponível até 24h antes da locação.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- POLÍTICAS DE RESERVA CLARAS (§5.4 E §5.5 DO PRD) -->
+<section class="w-full py-space-3xl bg-surface">
+<div class="max-w-7xl mx-auto px-gutter">
+<div class="bg-surface-raised rounded-2xl p-space-xl md:p-space-2xl shadow-xl border-l-4 border-bronze">
+<div class="max-w-3xl mb-space-xl">
+<span class="font-eyebrow text-caption uppercase tracking-[0.28em] text-bronze block">TRANSPARÊNCIA TOTAL</span>
+<h2 class="font-display-l text-heading text-ink">
+            Políticas de Reserva, Sinal e Cancelamento
+          </h2>
+<p class="font-body text-body text-ink-muted mt-space-xs">
+            Resumo das cláusulas do termo de locação conforme o manual operacional da clínica:
+          </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
+<div class="space-y-space-xs bg-surface p-space-md rounded-lg">
+<div class="flex items-center gap-space-xs text-bronze font-semibold font-eyebrow text-caption uppercase">
+<span class="material-symbols-outlined text-lg">payments</span>
+<span class="">Sinal de 50%</span>
+</div>
+<p class="font-small text-small text-ink-muted">
+              Cobrado no ato da reserva via Mercado Pago para garantir a exclusividade do horário. O sinal <strong>é reembolsável</strong> em casos de desistência por parte do locatário se solicitado 7 dias antes da data reservada.
+            </p>
+</div>
+<div class="space-y-space-xs bg-surface p-space-md rounded-lg">
+<div class="flex items-center gap-space-xs text-bronze font-semibold font-eyebrow text-caption uppercase">
+<span class="material-symbols-outlined text-lg">history_toggle_off</span>
+<span class="">Saldo 48h Antes</span>
+</div>
+<p class="font-small text-small text-ink-muted">
+              Os 50% restantes são cobrados automaticamente no cartão tokenizado ou via Pix 48h antes da sessão. O prazo final para quitação é 24h antes, sob pena de cancelamento da reserva.
+            </p>
+</div>
+<div class="space-y-space-xs bg-surface p-space-md rounded-lg">
+<div class="flex items-center gap-space-xs text-bronze font-semibold font-eyebrow text-caption uppercase">
+<span class="material-symbols-outlined text-lg">published_with_changes</span>
+<span class="">Reagendamento Cortesia</span>
+</div>
+<p class="font-small text-small text-ink-muted">
+              Você tem direito a <strong>1 reagendamento cortesia self-service</strong> com antecedência igual ou superior a 24 horas, transferindo a reserva para qualquer janela disponível.
+            </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA DE PRÉ-LANÇAMENTO & CONTATO -->
+<section class="w-full py-space-3xl bg-surface-container-high relative overflow-hidden">
+<div class="max-w-5xl mx-auto px-gutter text-center space-y-space-lg relative z-10">
+<span class="font-eyebrow text-caption uppercase tracking-[0.32em] text-bronze font-semibold">PRÉ-LANÇAMENTO EXCLUSIVO</span>
+<h2 class="font-display-xl text-heading md:text-display-l text-ink">
+        Pronto para elevar o padrão dos seus atendimentos?
+      </h2>
+<p class="font-lead text-lead text-ink-muted max-w-2xl mx-auto">
+        Junte-se à seleta comunidade de médicos, esteticistas e profissionais de bem-estar que operam sem o peso de custos imobiliários nos Jardins.
+      </p>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-space-md pt-space-md">
+<a class="w-full sm:w-auto inline-flex items-center justify-center gap-space-xs px-space-2xl py-space-md bg-bronze hover:bg-walnut text-on-bronze font-small text-small uppercase tracking-[0.08em] rounded shadow-md transition-all" href="#simulador">
+<span class="material-symbols-outlined text-lg">calendar_month</span>
+<span class="">Reservar Horário Agora</span>
+</a>
+<a class="w-full sm:w-auto inline-flex items-center justify-center gap-space-xs px-space-2xl py-space-md bg-surface-raised hover:bg-surface-stone text-ink font-small text-small uppercase tracking-[0.08em] rounded shadow-sm transition-all" href="https://wa.me/" rel="noopener noreferrer" target="_blank">
+<span class="material-symbols-outlined text-lg text-bronze">chat</span>
+<span class="">Tirar Dúvidas com Recepção</span>
+</a>
+</div>
+</div>
+</section>
+<!-- MODAL DE ORÇAMENTO DE EXTRAS (§5.6) -->
+<div class="fixed inset-0 z-50 hidden bg-surface-night/60 backdrop-blur-sm flex items-center justify-center p-gutter" id="extraModal">
+<div class="bg-surface-raised rounded-xl shadow-2xl max-w-md w-full p-space-xl space-y-space-md">
+<div class="flex items-center justify-between pb-space-xs border-b border-hairline/40">
+<div>
+<span class="font-eyebrow text-caption uppercase tracking-wider text-bronze">PEDIDO DE ORÇAMENTO</span>
+<h3 class="font-heading text-heading text-ink" id="modalExtraTitle">Serviço Extra</h3>
+</div>
+<button class="text-ink-muted hover:text-ink" onclick="closeExtraModal()">
+<span class="material-symbols-outlined text-2xl">close</span>
+</button>
+</div>
+<form class="space-y-space-sm font-small text-small" onsubmit="handleExtraSubmit(event)">
+<div>
+<label class="block font-eyebrow text-caption uppercase text-ink-muted mb-1">Seu Nome Completo</label>
+<input class="w-full bg-surface p-space-sm rounded text-ink focus:outline-none" placeholder="Dra. Mariana Costa" required="" type="text">
+</div>
+<div>
+<label class="block font-eyebrow text-caption uppercase text-ink-muted mb-1">WhatsApp de Contato</label>
+<input class="w-full bg-surface p-space-sm rounded text-ink focus:outline-none" placeholder="(11) 98765-4321" required="" type="tel">
+</div>
+<div>
+<label class="block font-eyebrow text-caption uppercase text-ink-muted mb-1">Detalhes do Atendimento ou Gravação</label>
+<textarea class="w-full bg-surface p-space-sm rounded text-ink focus:outline-none" placeholder="Quantas horas de atendimento, necessidade de iluminação especial ou modelo de captação..." rows="3"></textarea>
+</div>
+<div class="pt-space-xs">
+<button class="w-full py-space-sm bg-bronze hover:bg-walnut text-on-bronze uppercase tracking-wider font-small text-small rounded shadow-md transition-colors" type="submit">
+            Enviar Pedido à Recepção
+          </button>
+</div>
+</form>
+</div>
+</div>
+</div>
+<script>
+  let currentPeriodType = 'util';
+
+  function setPeriodType(type) {
+    currentPeriodType = type;
+    const btnUtil = document.getElementById('btnDiaUtil');
+    const btnEspecial = document.getElementById('btnNoiteFds');
+
+    if (type === 'util') {
+      btnUtil.className = 'py-space-xs px-space-sm text-center rounded font-small text-small uppercase tracking-wider bg-bronze text-on-bronze transition-colors';
+      btnEspecial.className = 'py-space-xs px-space-sm text-center rounded font-small text-small uppercase tracking-wider bg-surface text-ink transition-colors';
+    } else {
+      btnUtil.className = 'py-space-xs px-space-sm text-center rounded font-small text-small uppercase tracking-wider bg-surface text-ink transition-colors';
+      btnEspecial.className = 'py-space-xs px-space-sm text-center rounded font-small text-small uppercase tracking-wider bg-bronze text-on-bronze transition-colors';
+    }
+    updateSimulation();
+  }
+
+  function updateSimulation() {
+    const range = document.getElementById('durationRange');
+    const hours = parseFloat(range.value);
+    
+    // Atualiza texto do slider
+    const hourLabel = hours === 1 ? '1 Hora' : (hours % 1 === 0 ? hours + ' Horas' : hours.toString().replace('.', ',') + ' Horas');
+    document.getElementById('sliderValueText').innerText = hourLabel;
+
+    let rate = 0;
+    let total = 0;
+    let formula = '';
+
+    if (currentPeriodType === 'util') {
+      // Dia útil comercial regra PRD §5.3
+      if (hours < 2) {
+        rate = 97;
+        total = hours * rate;
+        formula = `${hours.toFixed(1)}h × R$ 97,00/h`;
+      } else {
+        rate = 80;
+        total = hours * rate;
+        formula = `${hours.toFixed(1)}h × R$ 80,00/h (Tarifa Desconto)`;
+      }
+    } else {
+      // Noite ou Fim de semana regra PRD §5.3
+      if (hours < 2) {
+        rate = 120;
+        total = hours * rate;
+        formula = `${hours.toFixed(1)}h × R$ 120,00/h`;
+      } else {
+        rate = 99;
+        total = hours * rate;
+        formula = `${hours.toFixed(1)}h × R$ 99,00/h (Tarifa Noite/Fim de semana)`;
+      }
+    }
+
+    const sinal = total * 0.5;
+    const saldo = total * 0.5;
+
+    document.getElementById('calcFormula').innerText = formula;
+    document.getElementById('calcTotal').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+    document.getElementById('calcSinal').innerText = `R$ ${sinal.toFixed(2).replace('.', ',')}`;
+    document.getElementById('calcSaldo').innerText = `R$ ${saldo.toFixed(2).replace('.', ',')}`;
+  }
+
+  function selectRoomAndScroll(roomName) {
+    const heroSelect = document.getElementById('heroRoomSelect');
+    if (roomName.includes('Principal')) heroSelect.value = 'principal';
+    else if (roomName.includes('Secundária')) heroSelect.value = 'secundaria';
+    else heroSelect.value = 'terceira';
+
+    document.getElementById('simulador').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function handleSimulatedBooking() {
+    alert('Simulação selecionada com sucesso! Conforme a regra do PRD §5.4, você será direcionado para pagar o Sinal de 50% via Mercado Pago para garantir seu horário.');
+  }
+
+  function openExtraModal(serviceTitle) {
+    document.getElementById('modalExtraTitle').innerText = serviceTitle;
+    document.getElementById('extraModal').classList.remove('hidden');
+  }
+
+  function closeExtraModal() {
+    document.getElementById('extraModal').classList.add('hidden');
+  }
+
+  function handleExtraSubmit(e) {
+    e.preventDefault();
+    alert('Pedido de orçamento recebido pela equipe da recepção da Bravô Clinic! Entraremos em contato via WhatsApp nas próximas 2 horas úteis.');
+    closeExtraModal();
+  }
+
+  // Executar simulação inicial
+  updateSimulation();
+</script></main><footer class="w-full bg-surface-container-high border-t border-hairline/60 pt-space-3xl pb-space-2xl text-on-surface-variant"><div class="max-w-7xl mx-auto px-gutter"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-space-2xl pb-space-2xl border-b border-hairline/40"><div class="lg:col-span-2 space-y-space-md"><span class="font-eyebrow text-eyebrow uppercase tracking-[0.32em] text-ink font-semibold block">BRAVÔ CLINIC</span><span class="font-caption text-caption uppercase tracking-[0.2em] text-ink-muted block">SALAS INTELIGENTES</span><p class="font-body text-body text-ink-muted max-w-sm pt-space-xs">Infraestrutura médica e estética de alto padrão sob demanda. O equilíbrio perfeito entre arquitetura limpa, conforto sensorial e tecnologia clínica para profissionais exigentes.</p><div class="pt-space-sm flex items-center gap-space-sm text-ink-muted"><span class="material-symbols-outlined text-bronze text-sm">verified_user</span><span class="font-caption text-caption text-ink-muted uppercase tracking-[0.08em]">Conformidade e Biossegurança RDC Anvisa • LGPD Compliant</span></div></div><div class="space-y-space-md"><h3 class="font-eyebrow text-eyebrow uppercase tracking-[0.2em] text-ink font-semibold">Navegação</h3><ul class="space-y-space-sm font-small text-small"><li class="list-none"><a class="text-ink-muted hover:text-bronze transition-colors" data-path="salas" href="#">Salas Clínicas</a></li><li class="list-none"><a class="text-ink-muted hover:text-bronze transition-colors" data-path="estrutura" href="#">Estrutura &amp; Amenidades</a></li><li class="list-none"><a class="text-ink-muted hover:text-bronze transition-colors" data-path="precos-e-planos" href="#">Preços &amp; Assinaturas</a></li><li class="list-none"><a class="text-ink-muted hover:text-bronze transition-colors" data-path="servicos-extras" href="#">Serviços Extras &amp; Apoio</a></li><li class="list-none"><a class="text-ink-muted hover:text-bronze transition-colors" data-path="perguntas-frequentes" href="#">Perguntas Frequentes</a></li></ul></div><div class="space-y-space-md"><h3 class="font-eyebrow text-eyebrow uppercase tracking-[0.2em] text-ink font-semibold">Diretrizes</h3><ul class="space-y-space-sm font-small text-small"><li class="list-none"><a class="text-ink-muted hover:text-bronze transition-colors" data-path="politicas" href="#">Regras de Reserva &amp; Cancelamento</a></li><li class="list-none"><a class="text-ink-muted hover:text-bronze transition-colors" data-path="politica-de-privacidade" href="#">Termos de Uso &amp; LGPD</a></li><li class="list-none"><a class="text-ink-muted hover:text-bronze transition-colors" data-path="login" href="#">Área do Profissional Locatário</a></li><li class="list-none"><a class="text-ink-muted hover:text-bronze transition-colors" data-path="contato" href="#">Ouvidoria &amp; Atendimento</a></li></ul></div><div class="space-y-space-md"><h3 class="font-eyebrow text-eyebrow uppercase tracking-[0.2em] text-ink font-semibold">Atendimento</h3><p class="font-small text-small text-ink-muted flex items-start gap-space-xs"><span class="material-symbols-outlined text-bronze text-base mt-0.5">schedule</span><span class="">Horário de funcionamento:<br><strong class="text-ink font-medium">07:00 às 00:00 (Seg a Dom)</strong></span></p><p class="font-small text-small text-ink-muted flex items-start gap-space-xs"><span class="material-symbols-outlined text-bronze text-base mt-0.5">mail</span><span class="">contato@bravoclinic.com.br</span></p><p class="font-small text-small text-ink-muted flex items-start gap-space-xs"><span class="material-symbols-outlined text-bronze text-base mt-0.5">pin_drop</span><span class="">Alameda Gabriel Monteiro da Silva, 1420 • Jardins, São Paulo - SP</span></p></div></div><div class="pt-space-xl flex flex-col sm:flex-row items-center justify-between gap-space-md font-caption text-caption text-ink-muted"><p class="">© 2026 Bravô Clinic • Salas Inteligentes. Todos os direitos reservados. Saúde • Beleza • Bem-estar.</p><div class="flex items-center gap-space-md"><span class="inline-flex items-center gap-1.5 px-space-sm py-0.5 rounded bg-surface-raised text-on-surface-variant font-caption text-caption border border-hairline/40"><span class="w-1.5 h-1.5 rounded-full bg-bronze"></span>Privacidade Assegurada (LGPD)</span></div></div></div></footer><div class="fixed bottom-6 right-6 z-50"><a class="group flex items-center gap-space-sm px-space-md py-space-sm rounded-full bg-bronze text-on-bronze shadow-[0_8px_24px_rgba(46,26,12,0.18)] hover:bg-walnut hover:shadow-[0_12px_28px_rgba(46,26,12,0.25)] transition-all duration-300" href="https://wa.me/" rel="noopener noreferrer" target="_blank" title="Falar no WhatsApp da Bravô Clinic"><span class="material-symbols-outlined text-xl">chat</span><span class="font-small text-small tracking-wide pr-1 hidden sm:inline-block font-medium">Concierge WhatsApp</span></a></div>
+
+
+
+
+
+</body></html>
