@@ -335,12 +335,12 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert `localToUtc('2026-10-27', 600).toISOString() === '2026-10-27T13:00:00.000Z'` and minute 1440 → `'2026-10-28T03:00:00.000Z'`
-- [ ] Tests assert `utcToLocal(new Date('2026-10-28T02:30:00Z'))` deep-equals `{ date: '2026-10-27', minuteOfDay: 1410, weekday: 2 }`
-- [ ] Tests assert `formatDateTimeBR(new Date('2026-10-27T13:00:00Z')) === '27/10/2026 10:00'`, `minuteToHHMM(1440) === '00:00'`, `weekdayOf('2026-11-02') === 1`, `addDays('2026-12-31', 1) === '2027-01-01'`
-- [ ] A test reads `time.ts` source and asserts it contains no `-03:00` / `-0300` literal (FND-12)
-- [ ] Gate check passes: `npm test -w packages/core`
-- [ ] Test count: ≥ 10 tests pass
+- [x] Tests assert `localToUtc('2026-10-27', 600).toISOString() === '2026-10-27T13:00:00.000Z'` and minute 1440 → `'2026-10-28T03:00:00.000Z'`
+- [x] Tests assert `utcToLocal(new Date('2026-10-28T02:30:00Z'))` deep-equals `{ date: '2026-10-27', minuteOfDay: 1410, weekday: 2 }`
+- [x] Tests assert `formatDateTimeBR(new Date('2026-10-27T13:00:00Z')) === '27/10/2026 10:00'`, `minuteToHHMM(1440) === '00:00'`, `weekdayOf('2026-11-02') === 1`, `addDays('2026-12-31', 1) === '2027-01-01'`
+- [x] A test reads `time.ts` source and asserts it contains no `-03:00` / `-0300` literal (FND-12)
+- [x] Gate check passes: `npm test -w packages/core`
+- [x] Test count: ≥ 10 tests pass
 
 **Tests**: unit
 **Gate**: quick
