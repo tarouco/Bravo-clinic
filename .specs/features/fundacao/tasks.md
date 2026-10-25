@@ -534,11 +534,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests (minimal Hono app + `app.request`) assert response header `X-Request-Id` exists, inbound valid id is echoed, invalid inbound id (`"x y"`) is replaced
-- [ ] Tests spy on stdout and assert exactly one JSON line with `requestId`, `method`, `path`, `status`, `durationMs`
-- [ ] Tests assert `redact({ password: 'a', nested: { token: 'b', Authorization: 'c' }, code: '1', ok: 1 })` replaces the four sensitive values with `"[redacted]"` and keeps `ok`
-- [ ] Gate check passes: `npm test -w apps/api`
-- [ ] Test count: ≥ 5 tests pass
+- [x] Tests (minimal Hono app + `app.request`) assert response header `X-Request-Id` exists, inbound valid id is echoed, invalid inbound id (`"x y"`) is replaced
+- [x] Tests spy on stdout and assert exactly one JSON line with `requestId`, `method`, `path`, `status`, `durationMs`
+- [x] Tests assert `redact({ password: 'a', nested: { token: 'b', Authorization: 'c' }, code: '1', ok: 1 })` replaces the four sensitive values with `"[redacted]"` and keeps `ok`
+- [x] Gate check passes: `npm test -w apps/api`
+- [x] Test count: ≥ 5 tests pass
 
 **Tests**: unit
 **Gate**: quick
