@@ -278,9 +278,9 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] `npm test -w packages/core` runs Vitest (passes with no test files via `passWithNoTests: true`, removed in T5)
-- [ ] A temporarily failing test makes the command exit non-zero (verify, then delete)
-- [ ] Gate check passes: `npm run typecheck && npm run lint && npm test -w packages/core`
+- [x] `npm test -w packages/core` runs Vitest (passes with no test files via `passWithNoTests: true`, removed in T5)
+- [x] A temporarily failing test makes the command exit non-zero (verify, then delete)
+- [x] Gate check passes: `npm run typecheck && npm run lint && npm test -w packages/core`
 
 **Tests**: none
 **Gate**: build
