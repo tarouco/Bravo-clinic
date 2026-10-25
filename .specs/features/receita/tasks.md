@@ -186,11 +186,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Tests enumerate every allowed subscription transition of REC-60 and every allowed period transition of REC-61 as true, and a sample of forbidden ones (`ended → active`, `expired → active`, `closed → active`, `cancelled → paid`) as false
-- [ ] `assertSubscriptionTransition('ended','active')` throws `InvalidTransitionError`
-- [ ] Tests assert labels "Aguardando pgto", "Ativa", "Suspensa", "Encerrada", "Cancelada", "Trocada", "Expirada", and `ledgerEntryLabel('period_grant', 1) === 'Compra'`, `(…, 2) === 'Renovação'`
-- [ ] Gate check passes: `npm test -w packages/core`
-- [ ] Test count: ≥ 14 tests pass
+- [x] Tests enumerate every allowed subscription transition of REC-60 and every allowed period transition of REC-61 as true, and a sample of forbidden ones (`ended → active`, `expired → active`, `closed → active`, `cancelled → paid`) as false
+- [x] `assertSubscriptionTransition('ended','active')` throws `InvalidTransitionError`
+- [x] Tests assert labels "Aguardando pgto", "Ativa", "Suspensa", "Encerrada", "Cancelada", "Trocada", "Expirada", and `ledgerEntryLabel('period_grant', 1) === 'Compra'`, `(…, 2) === 'Renovação'`
+- [x] Gate check passes: `npm test -w packages/core`
+- [x] Test count: ≥ 14 tests pass
 
 **Tests**: unit
 **Gate**: quick

@@ -6,6 +6,7 @@ export * from './settings/catalog';
 export * from './calendar/holidays-seed';
 export * from './access';
 export * from './status/booking';
+export * from './status/subscription';
 export * from './labels';
 export * from './contracts/common';
 export * from './contracts/public';

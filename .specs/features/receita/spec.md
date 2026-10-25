@@ -550,7 +550,7 @@
 | REC-39 | P1: Balance ledger and extrato | Tasks | T8 | In Tasks |
 | REC-40 | P1: Balance ledger and extrato | Tasks | T8, T10 | In Tasks |
 | REC-41 | P1: Balance ledger and extrato | Tasks | T5, T25, T32 | In Tasks |
-| REC-42 | P1: Balance ledger and extrato | Tasks | T1, T32 | In Tasks |
+| REC-42 | P1: Balance ledger and extrato | Tasks | T1, T32 | Implementing |
 | REC-43 | P1: Balance ledger and extrato | Tasks | T10, T26 | In Tasks |
 | REC-44 | P1: Balance ledger and extrato | Tasks | T10, T26 | In Tasks |
 | REC-45 | P1: Balance ledger and extrato | Tasks | T26 | In Tasks |
@@ -568,8 +568,8 @@
 | REC-57 | P1: Renewal, suspension and closure | Tasks | T23, T28 | In Tasks |
 | REC-58 | P1: Renewal, suspension and closure | Tasks | T27 | In Tasks |
 | REC-59 | P1: Renewal, suspension and closure | Tasks | T29 | In Tasks |
-| REC-60 | P1: Renewal, suspension and closure | Tasks | T1, T20 | In Tasks |
-| REC-61 | P1: Renewal, suspension and closure | Tasks | T1, T20 | In Tasks |
+| REC-60 | P1: Renewal, suspension and closure | Tasks | T1, T20 | Implementing |
+| REC-61 | P1: Renewal, suspension and closure | Tasks | T1, T20 | Implementing |
 | REC-62 | P1: Extra hours | Tasks | T24 | In Tasks |
 | REC-63 | P1: Extra hours | Tasks | T5, T24 | In Tasks |
 | REC-64 | P1: Extra hours | Tasks | T2, T24 | In Tasks |
