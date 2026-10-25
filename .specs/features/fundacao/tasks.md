@@ -252,9 +252,9 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] `npm run lint` exits 0 on the tree
-- [ ] Adding `import 'pg'` to `packages/core/src/index.ts` makes `npm run lint` exit non-zero with `no-restricted-imports` (verify, then revert)
-- [ ] Gate check passes: `npm run typecheck && npm run lint`
+- [x] `npm run lint` exits 0 on the tree
+- [x] Adding `import 'pg'` to `packages/core/src/index.ts` makes `npm run lint` exit non-zero with `no-restricted-imports` (verify, then revert)
+- [x] Gate check passes: `npm run typecheck && npm run lint`
 
 **Tests**: none
 **Gate**: build (partial: `npm run typecheck && npm run lint`)
