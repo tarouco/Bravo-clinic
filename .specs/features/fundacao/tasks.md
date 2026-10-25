@@ -1414,12 +1414,12 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert `getByLabelText('E-mail')` finds the input (label bound by id); with `error="Obrigatório"` the input has `aria-invalid="true"` and `aria-describedby` equal to the error element id
-- [ ] Tests assert DocumentInput typing "52998224725" shows "529.982.247-25" and 14 digits show the CNPJ mask; PhoneInput shows "(47) 99999-0000"
-- [ ] Test asserts PasswordInput toggle switches `type` password↔text with an accessible label "Mostrar senha"
-- [ ] Test asserts focus-visible ring classes on Input
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests assert `getByLabelText('E-mail')` finds the input (label bound by id); with `error="Obrigatório"` the input has `aria-invalid="true"` and `aria-describedby` equal to the error element id
+- [x] Tests assert DocumentInput typing "52998224725" shows "529.982.247-25" and 14 digits show the CNPJ mask; PhoneInput shows "(47) 99999-0000"
+- [x] Test asserts PasswordInput toggle switches `type` password↔text with an accessible label "Mostrar senha"
+- [x] Test asserts focus-visible ring classes on Input
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick
