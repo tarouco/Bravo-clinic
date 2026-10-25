@@ -498,16 +498,16 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 
 | Requirement ID | Story | Phase | Task(s) | Status |
 | --- | --- | --- | --- | --- |
-| GES-01 | P1: Revenue recognition engine | Tasks | T2 | In Tasks |
-| GES-02 | P1: Revenue recognition engine | Tasks | T2 | In Tasks |
-| GES-03 | P1: Revenue recognition engine | Tasks | T2 | In Tasks |
-| GES-04 | P1: Revenue recognition engine | Tasks | T2 | In Tasks |
-| GES-05 | P1: Revenue recognition engine | Tasks | T2 | In Tasks |
-| GES-06 | P1: Revenue recognition engine | Tasks | T2 | In Tasks |
-| GES-07 | P1: Revenue recognition engine | Tasks | T2 | In Tasks |
-| GES-08 | P1: Revenue recognition engine | Tasks | T2 | In Tasks |
-| GES-09 | P1: Revenue recognition engine | Tasks | T2 | In Tasks |
-| GES-10 | P1: Revenue recognition engine | Tasks | T2 | In Tasks |
+| GES-01 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
+| GES-02 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
+| GES-03 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
+| GES-04 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
+| GES-05 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
+| GES-06 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
+| GES-07 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
+| GES-08 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
+| GES-09 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
+| GES-10 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
 | GES-11 | P1: Expenses and manual receipts | Tasks | T15 | In Tasks |
 | GES-12 | P1: Expenses and manual receipts | Tasks | T15 | In Tasks |
 | GES-13 | P1: Expenses and manual receipts | Tasks | T15 | In Tasks |
@@ -519,17 +519,17 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-19 | P1: Expenses and manual receipts | Tasks | T15 | In Tasks |
 | GES-20 | P1: Expenses and manual receipts | Tasks | T17 | In Tasks |
 | GES-21 | P1: Expenses and manual receipts | Tasks | T17 | In Tasks |
-| GES-22 | P1: Financeiro overview | Tasks | T2, T18 | In Tasks |
-| GES-23 | P1: Financeiro overview | Tasks | T2 | In Tasks |
-| GES-24 | P1: Financeiro overview | Tasks | T2, T18 | In Tasks |
+| GES-22 | P1: Financeiro overview | Tasks | T2, T18 | Implementing |
+| GES-23 | P1: Financeiro overview | Tasks | T2 | Implementing |
+| GES-24 | P1: Financeiro overview | Tasks | T2, T18 | Implementing |
 | GES-25 | P1: Financeiro overview | Tasks | T1, T18 | Implementing |
 | GES-26 | P1: Financeiro overview | Tasks | T29 | In Tasks |
 | GES-27 | P1: Financeiro overview | Tasks | T28, T29 | In Tasks |
 | GES-28 | P1: Financeiro overview | Tasks | T29 | In Tasks |
 | GES-29 | P1: DRE export | Tasks | T19 | In Tasks |
-| GES-30 | P1: DRE export | Tasks | T2, T19 | In Tasks |
-| GES-31 | P1: DRE export | Tasks | T2, T19 | In Tasks |
-| GES-32 | P1: DRE export | Tasks | T2, T19 | In Tasks |
+| GES-30 | P1: DRE export | Tasks | T2, T19 | Implementing |
+| GES-31 | P1: DRE export | Tasks | T2, T19 | Implementing |
+| GES-32 | P1: DRE export | Tasks | T2, T19 | Implementing |
 | GES-33 | P1: DRE export | Tasks | T19 | In Tasks |
 | GES-34 | P1: DRE export | Tasks | T19 | In Tasks |
 | GES-35 | P1: Payment gateway configuration | Tasks | T11 | In Tasks |
