@@ -1,0 +1,23 @@
+{
+  // Shared strict compiler options. Workspaces extend this file.
+  // Module resolution is "Bundler" for every workspace: web is built by Vite and core is consumed as
+  // TypeScript source. The api is bundled by esbuild (Neon entry) and run by tsx in dev, so it also
+  // resolves extensionless relative imports; it needs no "NodeNext" emit. Keep relative imports
+  // extensionless everywhere.
+  "compilerOptions": {
+    "target": "ES2023",
+    "lib": ["ES2023"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "noEmit": true
+  }
+}

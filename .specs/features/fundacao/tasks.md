@@ -226,9 +226,9 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] `npm run typecheck` exits 0 with an empty `src/index.ts` in each workspace
-- [ ] A deliberate `const a: string[] = []; const b: string = a[0];` fails typecheck (verify, then remove)
-- [ ] Gate check passes: `npm run typecheck`
+- [x] `npm run typecheck` exits 0 with an empty `src/index.ts` in each workspace
+- [x] A deliberate `const a: string[] = []; const b: string = a[0];` fails typecheck (verify, then remove)
+- [x] Gate check passes: `npm run typecheck`
 
 **Tests**: none
 **Gate**: build (partial: `npm run typecheck`)
