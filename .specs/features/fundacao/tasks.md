@@ -1610,11 +1610,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert nav links Salas `/salas`, Estrutura `/#estrutura`, Preços & Planos `/precos`, Serviços Extras `/servicos-extras`, Contato `/contato`, and text "Praia Brava - Itajaí"
-- [ ] Tests assert "Login" links to `/login` without session and "Minha conta" links to `/app` with a session
-- [ ] Test asserts the menu button toggles `aria-expanded` false→true and reveals the links
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 4 tests pass
+- [x] Tests assert nav links Salas `/salas`, Estrutura `/#estrutura`, Preços & Planos `/precos`, Serviços Extras `/servicos-extras`, Contato `/contato`, and text "Praia Brava - Itajaí"
+- [x] Tests assert "Login" links to `/login` without session and "Minha conta" links to `/app` with a session
+- [x] Test asserts the menu button toggles `aria-expanded` false→true and reveals the links
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 4 tests pass
 
 **Tests**: unit
 **Gate**: quick
