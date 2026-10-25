@@ -1774,10 +1774,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert three cards titled Sala Principal, Sala Secundária, Sala Terceira, each with "R$ 80,00" and "Reservar Sala"
-- [ ] Test asserts clicking the second card's button calls `onReserve('secundaria')`
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 2 tests pass
+- [x] Tests assert three cards titled Sala Principal, Sala Secundária, Sala Terceira, each with "R$ 80,00" and "Reservar Sala"
+- [x] Test asserts clicking the second card's button calls `onReserve('secundaria')`
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 2 tests pass
 
 **Tests**: unit
 **Gate**: quick
