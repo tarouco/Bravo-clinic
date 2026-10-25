@@ -1943,12 +1943,12 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests (memory router, mocked session) assert: anonymous `/app/agenda` → location `/login?next=%2Fapp%2Fagenda`; anonymous `/admin/cupons` → `/login?next=%2Fadmin%2Fcupons`
-- [ ] Test asserts tenant `/admin/financeiro` renders "Acesso restrito" with a link to `/app`
-- [ ] Tests assert staff with `mfa.enrolled && !mfa.verified` → `/login/2fa`; `!mfa.enrolled` → `/login/2fa/configurar`
-- [ ] Test asserts reception on `/admin/financeiro` renders "Acesso restrito" and `/admin` redirects reception to `/admin/reservas`
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests (memory router, mocked session) assert: anonymous `/app/agenda` → location `/login?next=%2Fapp%2Fagenda`; anonymous `/admin/cupons` → `/login?next=%2Fadmin%2Fcupons`
+- [x] Test asserts tenant `/admin/financeiro` renders "Acesso restrito" with a link to `/app`
+- [x] Tests assert staff with `mfa.enrolled && !mfa.verified` → `/login/2fa`; `!mfa.enrolled` → `/login/2fa/configurar`
+- [x] Test asserts reception on `/admin/financeiro` renders "Acesso restrito" and `/admin` redirects reception to `/admin/reservas`
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick
