@@ -675,9 +675,9 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Every column, check and index of the six tables in §5.2 is declared
-- [ ] Money/instant/date conventions hold (no `timestamp without time zone`)
-- [ ] Gate check passes: `npm run typecheck && npm run lint`
+- [x] Every column, check and index of the six tables in §5.2 is declared
+- [x] Money/instant/date conventions hold (no `timestamp without time zone`)
+- [x] Gate check passes: `npm run typecheck && npm run lint`
 
 **Tests**: none
 **Gate**: build
@@ -701,8 +701,8 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Every column/check/index Drizzle can express is declared; the exclusion constraint, period shape check, gist index and `closed_days_uq` are left to T21's custom migration (comment points there)
-- [ ] Gate check passes: `npm run typecheck && npm run lint`
+- [x] Every column/check/index Drizzle can express is declared; the exclusion constraint, period shape check, gist index and `closed_days_uq` are left to T21's custom migration (comment points there)
+- [x] Gate check passes: `npm run typecheck && npm run lint`
 
 **Tests**: none
 **Gate**: build
@@ -726,8 +726,8 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Columns, checks and indexes of the three tables declared; `schema/index.ts` exports identity, calendar and platform
-- [ ] Gate check passes: `npm run typecheck && npm run lint`
+- [x] Columns, checks and indexes of the three tables declared; `schema/index.ts` exports identity, calendar and platform
+- [x] Gate check passes: `npm run typecheck && npm run lint`
 
 **Tests**: none
 **Gate**: build
@@ -751,9 +751,9 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] `drizzle/meta/_journal.json` lists `0000_base` then `0001_base_constraints`
-- [ ] Running `drizzle-kit generate` again reports no schema changes
-- [ ] Gate check passes: `npm run typecheck && npm run lint`
+- [x] `drizzle/meta/_journal.json` lists `0000_base` then `0001_base_constraints`
+- [x] Running `drizzle-kit generate` again reports no schema changes
+- [x] Gate check passes: `npm run typecheck && npm run lint`
 
 **Tests**: none
 **Gate**: build
@@ -777,13 +777,13 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test asserts all 18 base tables exist (`information_schema.tables`) and `pg_extension` has `btree_gist`
-- [ ] Test runs `runMigrations` a second time and asserts the drizzle migrations table row count is unchanged
-- [ ] Test inserts two active overlapping occupancy rows for one room and asserts the second fails with `code === '23P01'`
-- [ ] Tests assert `[09:00,11:30)` + `[11:30,12:30)` both insert; an overlap with an `active = false` row inserts; overlapping rows in different rooms insert
-- [ ] Tests assert `UPDATE audit_log ...` and `DELETE FROM consents ...` raise errors containing `append_only_table`
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 8 tests pass
+- [x] Test asserts all 18 base tables exist (`information_schema.tables`) and `pg_extension` has `btree_gist`
+- [x] Test runs `runMigrations` a second time and asserts the drizzle migrations table row count is unchanged
+- [x] Test inserts two active overlapping occupancy rows for one room and asserts the second fails with `code === '23P01'`
+- [x] Tests assert `[09:00,11:30)` + `[11:30,12:30)` both insert; an overlap with an `active = false` row inserts; overlapping rows in different rooms insert
+- [x] Tests assert `UPDATE audit_log ...` and `DELETE FROM consents ...` raise errors containing `append_only_table`
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 8 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -807,14 +807,14 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test asserts `settings` row count equals the catalog key count and `payment.deposit_percent` value is `50`
-- [ ] Test asserts the 3 rooms (slug, name, ideal_for, active, order) and 8 business-hours rows (mon–fri 420–1440, sat/sun/holiday 540–1440)
-- [ ] Test asserts 28 holidays, all `is_closed = false`, only 2027-08-15 `needs_review`
-- [ ] Test edits a setting and a room name, reruns the seed, and asserts no duplicates and the edits survive
-- [ ] Test with bootstrap env and no admin asserts one admin with `email_verified_at` set and an `audit_log` row `user.bootstrap_admin`; rerun with a different bootstrap e-mail creates no second admin
-- [ ] Test with bootstrap password "abc" asserts the error "ADMIN_BOOTSTRAP_PASSWORD does not meet the password policy" and no user
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 7 tests pass
+- [x] Test asserts `settings` row count equals the catalog key count and `payment.deposit_percent` value is `50`
+- [x] Test asserts the 3 rooms (slug, name, ideal_for, active, order) and 8 business-hours rows (mon–fri 420–1440, sat/sun/holiday 540–1440)
+- [x] Test asserts 28 holidays, all `is_closed = false`, only 2027-08-15 `needs_review`
+- [x] Test edits a setting and a room name, reruns the seed, and asserts no duplicates and the edits survive
+- [x] Test with bootstrap env and no admin asserts one admin with `email_verified_at` set and an `audit_log` row `user.bootstrap_admin`; rerun with a different bootstrap e-mail creates no second admin
+- [x] Test with bootstrap password "abc" asserts the error "ADMIN_BOOTSTRAP_PASSWORD does not meet the password policy" and no user
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: integration
 **Gate**: full
