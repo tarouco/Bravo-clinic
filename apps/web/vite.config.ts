@@ -3,17 +3,16 @@ import { loadEnv } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import { defineConfig } from 'vitest/config';
 import { pwaOptions } from './pwa.config';
-
-/** Canonical URL used by `index.html` (Open Graph, JSON-LD) when `VITE_SITE_URL` is not set. */
-const DEFAULT_SITE_URL = 'https://bravo-clinic.netlify.app';
+import { resolveSiteUrl } from './site-url';
 
 // The API runs locally on :8787 and serves routes without the `/api` prefix (AD-015),
 // so the dev proxy strips it. In production Netlify redirects `/api/*` to the function.
 export default defineConfig(({ mode }) => {
-  // Vite replaces `%VITE_SITE_URL%` in index.html from its loaded env; fill the default
-  // (without a trailing slash) when neither the environment nor a .env file provides one.
-  const siteUrl = loadEnv(mode, process.cwd(), 'VITE_')['VITE_SITE_URL'] || DEFAULT_SITE_URL;
-  process.env['VITE_SITE_URL'] = siteUrl.replace(/\/+$/, '');
+  // Vite replaces `%VITE_SITE_URL%` in index.html from its loaded env. Fill in the default
+  // when neither the environment nor a .env file provides one (config is read before env).
+  process.env['VITE_SITE_URL'] = resolveSiteUrl(
+    loadEnv(mode, process.cwd(), 'VITE_')['VITE_SITE_URL'],
+  );
 
   return {
     plugins: [react(), VitePWA(pwaOptions)],

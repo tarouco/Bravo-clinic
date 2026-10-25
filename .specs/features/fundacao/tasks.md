@@ -2197,12 +2197,12 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test reads `index.html` and asserts `lang="pt-BR"`, one `application/ld+json` script whose JSON has `@type: 'LocalBusiness'`, the name, `address.addressLocality 'Itajaí'`, `addressRegion 'SC'`, `addressCountry 'BR'`, `streetAddress 'Praia Brava'`, two `openingHoursSpecification` entries (Mo–Fr 07:00–23:59, Sa–Su 09:00–23:59)
-- [ ] Test asserts `og:type`, `og:title`, `og:description` = "Saúde · Beleza · Bem-estar em um só lugar", `og:image`, `og:locale` = `pt_BR`
-- [ ] Test asserts the fonts link contains `Josefin+Sans` and `Jost` and `display=swap`, and the file contains neither `cdn.tailwindcss.com` nor `Material+Symbols`
-- [ ] Tests assert robots disallows `/app` and `/admin` and the sitemap lists `/`, `/salas`, `/precos`, `/servicos-extras`, `/politicas`, `/contato`, `/termos`, `/privacidade`
-- [ ] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
-- [ ] Test count: ≥ 4 tests pass
+- [x] Test reads `index.html` and asserts `lang="pt-BR"`, one `application/ld+json` script whose JSON has `@type: 'LocalBusiness'`, the name, `address.addressLocality 'Itajaí'`, `addressRegion 'SC'`, `addressCountry 'BR'`, `streetAddress 'Praia Brava'`, two `openingHoursSpecification` entries (Mo–Fr 07:00–23:59, Sa–Su 09:00–23:59)
+- [x] Test asserts `og:type`, `og:title`, `og:description` = "Saúde · Beleza · Bem-estar em um só lugar", `og:image`, `og:locale` = `pt_BR`
+- [x] Test asserts the fonts link contains `Josefin+Sans` and `Jost` and `display=swap`, and the file contains neither `cdn.tailwindcss.com` nor `Material+Symbols`
+- [x] Tests assert robots disallows `/app` and `/admin` and the sitemap lists `/`, `/salas`, `/precos`, `/servicos-extras`, `/politicas`, `/contato`, `/termos`, `/privacidade`
+- [x] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
+- [x] Test count: ≥ 4 tests pass
 
 **Tests**: unit
 **Gate**: build
