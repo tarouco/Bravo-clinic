@@ -4,6 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bravô Clinic</title>
+    <script>
+      (function () {
+        var theme;
+        try {
+          theme = localStorage.getItem('bravo-theme');
+        } catch (e) {}
+        if (theme !== 'day' && theme !== 'night') {
+          theme =
+            window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'night'
+              : 'day';
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

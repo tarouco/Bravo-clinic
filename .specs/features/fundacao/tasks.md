@@ -1328,12 +1328,12 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert clicking the toggle flips `data-theme` day→night→day and writes `localStorage['bravo-theme']`
-- [ ] Tests assert initial theme `night` when no stored value and `matchMedia` dark matches; `day` when it does not; stored value wins over the media query
-- [ ] Test with `localStorage.setItem` throwing asserts the toggle still switches without an error
-- [ ] Test asserts `index.html` contains the inline script reading `bravo-theme` before the module script
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 5 tests pass
+- [x] Tests assert clicking the toggle flips `data-theme` day→night→day and writes `localStorage['bravo-theme']`
+- [x] Tests assert initial theme `night` when no stored value and `matchMedia` dark matches; `day` when it does not; stored value wins over the media query
+- [x] Test with `localStorage.setItem` throwing asserts the toggle still switches without an error
+- [x] Test asserts `index.html` contains the inline script reading `bravo-theme` before the module script
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 5 tests pass
 
 **Tests**: unit
 **Gate**: quick
