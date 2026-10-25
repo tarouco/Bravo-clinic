@@ -73,6 +73,13 @@ export async function send(
   };
 }
 
+/** The raw token inside the `?token=` link of an e-mail body. */
+export function tokenFromEmail(body: string): string {
+  const match = /[?&]token=([A-Za-z0-9_-]+)/.exec(body);
+  if (match?.[1] === undefined) throw new Error('no token link in the e-mail body');
+  return match[1];
+}
+
 /** The `Cookie` request header value for the session cookie a response set, if any. */
 export function sessionCookieFrom(headers: Headers): string | undefined {
   const setCookie = headers.getSetCookie().find((value) => value.startsWith('bravo_session='));

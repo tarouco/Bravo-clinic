@@ -1101,11 +1101,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test asserts a valid token → 200 `{ verified: true }`, `email_verified_at` set, token `used_at` set
-- [ ] Tests assert the same token again → 400 `INVALID_TOKEN`; unknown token → 400; token created 24h + 1 min ago (injected `now`) → 400
-- [ ] Test asserts resend → 202 and a new outbox row; the 4th resend within an hour → 429
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 5 tests pass
+- [x] Test asserts a valid token → 200 `{ verified: true }`, `email_verified_at` set, token `used_at` set
+- [x] Tests assert the same token again → 400 `INVALID_TOKEN`; unknown token → 400; token created 24h + 1 min ago (injected `now`) → 400
+- [x] Test asserts resend → 202 and a new outbox row; the 4th resend within an hour → 429
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 5 tests pass
 
 **Tests**: integration
 **Gate**: full
