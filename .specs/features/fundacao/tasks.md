@@ -807,14 +807,14 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test asserts `settings` row count equals the catalog key count and `payment.deposit_percent` value is `50`
-- [ ] Test asserts the 3 rooms (slug, name, ideal_for, active, order) and 8 business-hours rows (mon–fri 420–1440, sat/sun/holiday 540–1440)
-- [ ] Test asserts 28 holidays, all `is_closed = false`, only 2027-08-15 `needs_review`
-- [ ] Test edits a setting and a room name, reruns the seed, and asserts no duplicates and the edits survive
-- [ ] Test with bootstrap env and no admin asserts one admin with `email_verified_at` set and an `audit_log` row `user.bootstrap_admin`; rerun with a different bootstrap e-mail creates no second admin
-- [ ] Test with bootstrap password "abc" asserts the error "ADMIN_BOOTSTRAP_PASSWORD does not meet the password policy" and no user
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 7 tests pass
+- [x] Test asserts `settings` row count equals the catalog key count and `payment.deposit_percent` value is `50`
+- [x] Test asserts the 3 rooms (slug, name, ideal_for, active, order) and 8 business-hours rows (mon–fri 420–1440, sat/sun/holiday 540–1440)
+- [x] Test asserts 28 holidays, all `is_closed = false`, only 2027-08-15 `needs_review`
+- [x] Test edits a setting and a room name, reruns the seed, and asserts no duplicates and the edits survive
+- [x] Test with bootstrap env and no admin asserts one admin with `email_verified_at` set and an `audit_log` row `user.bootstrap_admin`; rerun with a different bootstrap e-mail creates no second admin
+- [x] Test with bootstrap password "abc" asserts the error "ADMIN_BOOTSTRAP_PASSWORD does not meet the password policy" and no user
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: integration
 **Gate**: full
