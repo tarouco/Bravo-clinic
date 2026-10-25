@@ -1273,11 +1273,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test parses the YAML front matter of `docs/design/DESIGN.md` (simple line parser, no new dependency) and asserts every color key exists in `theme.extend.colors` with value `rgb(var(--c-<key>) / <alpha-value>)`
-- [ ] Test asserts each typography token's `[size, { lineHeight, letterSpacing, fontWeight }]` equals DESIGN.md and font families map Josefin Sans / Jost as specified
-- [ ] Test asserts `borderRadius` DEFAULT `.125rem`, lg `.25rem`, xl `.5rem`, full `.75rem`, `control` 2px, `card` 8px, `feature` 20px, `pill` 9999px
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 4 tests pass
+- [x] Test parses the YAML front matter of `docs/design/DESIGN.md` (simple line parser, no new dependency) and asserts every color key exists in `theme.extend.colors` with value `rgb(var(--c-<key>) / <alpha-value>)`
+- [x] Test asserts each typography token's `[size, { lineHeight, letterSpacing, fontWeight }]` equals DESIGN.md and font families map Josefin Sans / Jost as specified
+- [x] Test asserts `borderRadius` DEFAULT `.125rem`, lg `.25rem`, xl `.5rem`, full `.75rem`, `control` 2px, `card` 8px, `feature` 20px, `pill` 9999px
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 4 tests pass
 
 **Tests**: unit
 **Gate**: quick

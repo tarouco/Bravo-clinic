@@ -19,8 +19,5 @@ export default defineConfig({
     environment: 'jsdom',
     include: ['src/**/*.test.{ts,tsx}', 'scripts/**/*.test.mjs'],
     setupFiles: ['./src/test/setup.ts'],
-    css: false,
-    // T38 ships no tests; T39 removes this flag once the first test file exists.
-    passWithNoTests: true,
-  },
+    css: false,  },
 });
