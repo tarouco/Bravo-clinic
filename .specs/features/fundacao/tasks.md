@@ -306,12 +306,12 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert `formatBRL(160000) === 'R$ 1.600,00'`, `formatBRL(9700) === 'R$ 97,00'`, `formatBRL(0)`
-- [ ] Tests assert `percentOfCents(14550, 50) === 7275`, `percentOfCents(9701, 50) === 4851`, `mulDivRoundHalfUp(28000, 60, 150) === 11200`
-- [ ] Tests assert `parseBRLToCents` for "1.600,00", "R$ 97", "97,5" and `null` for "abc", "", "1,2,3"
-- [ ] `assertCents(1.5)` throws
-- [ ] Gate check passes: `npm test -w packages/core`
-- [ ] Test count: ≥ 12 tests pass
+- [x] Tests assert `formatBRL(160000) === 'R$ 1.600,00'`, `formatBRL(9700) === 'R$ 97,00'`, `formatBRL(0)`
+- [x] Tests assert `percentOfCents(14550, 50) === 7275`, `percentOfCents(9701, 50) === 4851`, `mulDivRoundHalfUp(28000, 60, 150) === 11200`
+- [x] Tests assert `parseBRLToCents` for "1.600,00", "R$ 97", "97,5" and `null` for "abc", "", "1,2,3"
+- [x] `assertCents(1.5)` throws
+- [x] Gate check passes: `npm test -w packages/core`
+- [x] Test count: ≥ 12 tests pass
 
 **Tests**: unit
 **Gate**: quick
