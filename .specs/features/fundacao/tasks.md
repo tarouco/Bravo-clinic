@@ -1552,11 +1552,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert name heading, chips, tags, description, one list item per equipment entry, text "A partir de" and "R$ 80,00" with "/h" for `fromPriceCents = 8000`
-- [ ] Test asserts the img `src` is `/room-placeholder.webp` when `imageUrl` is undefined and alt text is non-empty
-- [ ] Test asserts clicking "Reservar Sala" calls `onReserve` once
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 3 tests pass
+- [x] Tests assert name heading, chips, tags, description, one list item per equipment entry, text "A partir de" and "R$ 80,00" with "/h" for `fromPriceCents = 8000`
+- [x] Test asserts the img `src` is `/room-placeholder.webp` when `imageUrl` is undefined and alt text is non-empty
+- [x] Test asserts clicking "Reservar Sala" calls `onReserve` once
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 3 tests pass
 
 **Tests**: unit
 **Gate**: quick
