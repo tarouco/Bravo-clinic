@@ -1470,11 +1470,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert open modal has `role="dialog"`, `aria-modal="true"`, `aria-labelledby` → title, and focus is inside it
-- [ ] Test asserts Tab from the last focusable element moves focus to the first (and Shift+Tab reverse)
-- [ ] Test asserts Escape calls `onClose` and, after close, focus returns to the trigger button
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 4 tests pass
+- [x] Tests assert open modal has `role="dialog"`, `aria-modal="true"`, `aria-labelledby` → title, and focus is inside it
+- [x] Test asserts Tab from the last focusable element moves focus to the first (and Shift+Tab reverse)
+- [x] Test asserts Escape calls `onClose` and, after close, focus returns to the trigger button
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 4 tests pass
 
 **Tests**: unit
 **Gate**: quick
