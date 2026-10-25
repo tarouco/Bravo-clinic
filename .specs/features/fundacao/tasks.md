@@ -1721,10 +1721,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert the h1 text, the lead containing "Praia Brava", the option "Turno Completo (5h)", buttons "Simular e Reservar" (href `#simulador`) and "Conhecer as Salas" (href `#salas`)
-- [ ] Test asserts changing the room select calls `onRoomChange('secundaria')` and clicking "Verificar Horários" calls `onCheck`
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 3 tests pass
+- [x] Tests assert the h1 text, the lead containing "Praia Brava", the option "Turno Completo (5h)", buttons "Simular e Reservar" (href `#simulador`) and "Conhecer as Salas" (href `#salas`)
+- [x] Test asserts changing the room select calls `onRoomChange('secundaria')` and clicking "Verificar Horários" calls `onCheck`
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 3 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1748,9 +1748,9 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert the section `id="estrutura"`, heading "A extensão natural da sua autoridade clínica.", the corrected stat caption, image alts without "Jardins"/"Sao Paulo"
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 2 tests pass
+- [x] Tests assert the section `id="estrutura"`, heading "A extensão natural da sua autoridade clínica.", the corrected stat caption, image alts without "Jardins"/"Sao Paulo"
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 2 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1774,10 +1774,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert three cards titled Sala Principal, Sala Secundária, Sala Terceira, each with "R$ 80,00" and "Reservar Sala"
-- [ ] Test asserts clicking the second card's button calls `onReserve('secundaria')`
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 2 tests pass
+- [x] Tests assert three cards titled Sala Principal, Sala Secundária, Sala Terceira, each with "R$ 80,00" and "Reservar Sala"
+- [x] Test asserts clicking the second card's button calls `onReserve('secundaria')`
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 2 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1801,11 +1801,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Unit tests on `simulate`: ('util', 2) → total 16000, sinal 8000, saldo 8000; ('util', 1) → 9700; ('util', 1.5) → 14550 / 7275 / 7275; ('especial', 2) → 19800; ('especial', 1) → 12000
-- [ ] Component tests assert default display "R$ 160,00", "R$ 80,00", "R$ 80,00" (whitespace-normalized); after selecting "Noite / Fim de Semana" → "R$ 198,00"; after moving the range to 1 → "R$ 120,00"
-- [ ] Test asserts the table header "Dia Útil — Comercial (07:00 às 19:00)" and row "Turno completo comercial (5h)"
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 8 tests pass
+- [x] Unit tests on `simulate`: ('util', 2) → total 16000, sinal 8000, saldo 8000; ('util', 1) → 9700; ('util', 1.5) → 14550 / 7275 / 7275; ('especial', 2) → 19800; ('especial', 1) → 12000
+- [x] Component tests assert default display "R$ 160,00", "R$ 80,00", "R$ 80,00" (whitespace-normalized); after selecting "Noite / Fim de Semana" → "R$ 198,00"; after moving the range to 1 → "R$ 120,00"
+- [x] Test asserts the table header "Dia Útil — Comercial (07:00 às 19:00)" and row "Turno completo comercial (5h)"
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 8 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1829,12 +1829,12 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert three service titles and the chip "Disponível em qualquer sala"; no "Jardins"
-- [ ] Test clicks "Solicitar Orçamento" on Videomaker and asserts a dialog titled "Videomaker Dedicado"
-- [ ] Test fills name and WhatsApp, submits, and asserts `window.open` called once with a URL starting `https://wa.me/` whose decoded `text` contains "Videomaker Dedicado" and the name, and that the dialog closed
-- [ ] Test asserts submit with empty name shows a required error and does not call `window.open`
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 4 tests pass
+- [x] Tests assert three service titles and the chip "Disponível em qualquer sala"; no "Jardins"
+- [x] Test clicks "Solicitar Orçamento" on Videomaker and asserts a dialog titled "Videomaker Dedicado"
+- [x] Test fills name and WhatsApp, submits, and asserts `window.open` called once with a URL starting `https://wa.me/` whose decoded `text` contains "Videomaker Dedicado" and the name, and that the dialog closed
+- [x] Test asserts submit with empty name shows a required error and does not call `window.open`
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 4 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1858,11 +1858,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert headings "Estrutura completa para você focar no atendimento.", "Políticas de Reserva, Sinal e Cancelamento", "Pronto para elevar o padrão dos seus atendimentos?"
-- [ ] Test asserts the policies text contains "não é reembolsável" and does not contain "é reembolsável em casos de desistência"
-- [ ] Test asserts the CTA WhatsApp link uses the config number (fallback `https://wa.me/`)
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 3 tests pass
+- [x] Tests assert headings "Estrutura completa para você focar no atendimento.", "Políticas de Reserva, Sinal e Cancelamento", "Pronto para elevar o padrão dos seus atendimentos?"
+- [x] Test asserts the policies text contains "não é reembolsável" and does not contain "é reembolsável em casos de desistência"
+- [x] Test asserts the CTA WhatsApp link uses the config number (fallback `https://wa.me/`)
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 3 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1886,11 +1886,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test asserts section order by ids/headings: hero → `#estrutura` → `#salas` → `#simulador` → extras → comodidade → políticas → CTA
-- [ ] Test asserts the rendered page text contains no "São Paulo", "Sao Paulo" or "Jardins"
-- [ ] Test (scrollIntoView mocked) asserts clicking "Reservar Sala" on Sala Terceira sets the hero select to `terceira` and calls `scrollIntoView({ behavior: 'smooth' })` on `#simulador`
-- [ ] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
-- [ ] Test count: ≥ 3 tests pass
+- [x] Test asserts section order by ids/headings: hero → `#estrutura` → `#salas` → `#simulador` → extras → comodidade → políticas → CTA
+- [x] Test asserts the rendered page text contains no "São Paulo", "Sao Paulo" or "Jardins"
+- [x] Test (scrollIntoView mocked) asserts clicking "Reservar Sala" on Sala Terceira sets the hero select to `terceira` and calls `scrollIntoView({ behavior: 'smooth' })` on `#simulador`
+- [x] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
+- [x] Test count: ≥ 3 tests pass
 
 **Tests**: unit
 **Gate**: build
