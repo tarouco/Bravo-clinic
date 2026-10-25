@@ -68,9 +68,7 @@ describe('canTransitionSubscription (REC-60)', () => {
 });
 
 describe('canTransitionPeriod (REC-61)', () => {
-  const pairs = PERIOD_STATUSES.flatMap((from) =>
-    PERIOD_STATUSES.map((to) => [from, to] as const),
-  );
+  const pairs = PERIOD_STATUSES.flatMap((from) => PERIOD_STATUSES.map((to) => [from, to] as const));
 
   it('covers all 49 pairs of the 7 statuses', () => {
     expect(PERIOD_STATUSES).toHaveLength(7);

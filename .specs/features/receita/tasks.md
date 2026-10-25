@@ -214,11 +214,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Each request schema has an accepted sample and one rejected sample per bound (e.g. included hours 0 and 201 rejected, 20 accepted → `includedMinutes` 1200; coupon code "bravo10" normalized to "BRAVO10"; "AB" rejected; percent 0 and 101 rejected; justification of 4 chars rejected)
-- [ ] `subscriptionPurchaseInput` rejects `acceptTerms: false`
-- [ ] Every response schema parses the matching example object from design.md "API Contracts" (fixtures inside the test)
-- [ ] Gate check passes: `npm test -w packages/core`
-- [ ] Test count: ≥ 30 tests pass
+- [x] Each request schema has an accepted sample and one rejected sample per bound (e.g. included hours 0 and 201 rejected, 20 accepted → `includedMinutes` 1200; coupon code "bravo10" normalized to "BRAVO10"; "AB" rejected; percent 0 and 101 rejected; justification of 4 chars rejected)
+- [x] `subscriptionPurchaseInput` rejects `acceptTerms: false`
+- [x] Every response schema parses the matching example object from design.md "API Contracts" (fixtures inside the test)
+- [x] Gate check passes: `npm test -w packages/core`
+- [x] Test count: ≥ 30 tests pass
 
 **Tests**: unit
 **Gate**: quick

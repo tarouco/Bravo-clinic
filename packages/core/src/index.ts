@@ -20,3 +20,4 @@ export * from './payments/split';
 export * from './policy/cancellation';
 export * from './policy/reschedule';
 export * from './policy/policy-text';
+export * from './validation/revenue-schemas';

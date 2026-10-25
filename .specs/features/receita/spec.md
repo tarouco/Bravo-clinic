@@ -509,8 +509,8 @@
 
 | Requirement ID | Story | Phase | Task(s) | Status |
 | --- | --- | --- | --- | --- |
-| REC-01 | P1: Package categories | Tasks | T2, T17 | In Tasks |
-| REC-02 | P1: Package categories | Tasks | T2, T17 | In Tasks |
+| REC-01 | P1: Package categories | Tasks | T2, T17 | Implementing |
+| REC-02 | P1: Package categories | Tasks | T2, T17 | Implementing |
 | REC-03 | P1: Package categories | Tasks | T44 | In Tasks |
 | REC-04 | P1: Package categories | Tasks | T3, T44 | In Tasks |
 | REC-05 | P1: Package categories | Tasks | T17 | In Tasks |
@@ -519,7 +519,7 @@
 | REC-08 | P1: Package categories | Tasks | T18, T19 | In Tasks |
 | REC-09 | P1: Package categories | Tasks | T27 | In Tasks |
 | REC-10 | P1: Buy an hour package | Tasks | T7, T18 | In Tasks |
-| REC-11 | P1: Buy an hour package | Tasks | T2, T18 | In Tasks |
+| REC-11 | P1: Buy an hour package | Tasks | T2, T18 | Implementing |
 | REC-12 | P1: Buy an hour package | Tasks | T8, T19 | In Tasks |
 | REC-13 | P1: Buy an hour package | Tasks | T19 | In Tasks |
 | REC-14 | P1: Buy an hour package | Tasks | T19, T25 | In Tasks |
@@ -572,7 +572,7 @@
 | REC-61 | P1: Renewal, suspension and closure | Tasks | T1, T20 | Implementing |
 | REC-62 | P1: Extra hours | Tasks | T24 | In Tasks |
 | REC-63 | P1: Extra hours | Tasks | T5, T24 | In Tasks |
-| REC-64 | P1: Extra hours | Tasks | T2, T24 | In Tasks |
+| REC-64 | P1: Extra hours | Tasks | T2, T24 | Implementing |
 | REC-65 | P1: Extra hours | Tasks | T24 | In Tasks |
 | REC-66 | P1: Extra hours | Tasks | T24 | In Tasks |
 | REC-67 | P1: Extra hours | Tasks | T10, T28 | In Tasks |
@@ -635,14 +635,14 @@
 | REC-124 | P1: Coupons in checkout | Tasks | T11, T16 | In Tasks |
 | REC-125 | P1: Coupons in checkout | Tasks | T19, T27 | In Tasks |
 | REC-126 | P1: Coupons in checkout | Tasks | T11 | In Tasks |
-| REC-127 | P1: Coupons in checkout | Tasks | T2, T11 | In Tasks |
+| REC-127 | P1: Coupons in checkout | Tasks | T2, T11 | Implementing |
 | REC-128 | P1: Admin coupons screen | Tasks | T42 | In Tasks |
-| REC-129 | P1: Admin coupons screen | Tasks | T2, T11, T43 | In Tasks |
+| REC-129 | P1: Admin coupons screen | Tasks | T2, T11, T43 | Implementing |
 | REC-130 | P1: Admin coupons screen | Tasks | T11 | In Tasks |
 | REC-131 | P1: Admin coupons screen | Tasks | T11, T42 | In Tasks |
 | REC-132 | P1: Admin coupons screen | Tasks | T11 | In Tasks |
 | REC-133 | P1: Slot discounts | Tasks | T12 | In Tasks |
-| REC-134 | P1: Slot discounts | Tasks | T2, T12 | In Tasks |
+| REC-134 | P1: Slot discounts | Tasks | T2, T12 | Implementing |
 | REC-135 | P1: Slot discounts | Tasks | T8, T12 | In Tasks |
 | REC-136 | P1: Slot discounts | Tasks | T16, T45 | In Tasks |
 | REC-137 | P1: Slot discounts | Tasks | T12, T45 | In Tasks |
