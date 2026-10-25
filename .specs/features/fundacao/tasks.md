@@ -2228,11 +2228,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Tests assert `buildRedirects('https://br-x-api.compute.neon.tech/')` returns first line `/api/*  https://br-x-api.compute.neon.tech/:splat  200` and last line `/*  /index.html  200`
-- [ ] Tests assert `buildRedirects(undefined)` and `buildRedirects('http://x')` throw "API_PROXY_ORIGIN must be an https URL"
-- [ ] `npm run build -w apps/web` without `API_PROXY_ORIGIN` exits non-zero; with it, `dist/_redirects` exists
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 4 tests pass
+- [x] Tests assert `buildRedirects('https://br-x-api.compute.neon.tech/')` returns first line `/api/*  https://br-x-api.compute.neon.tech/:splat  200` and last line `/*  /index.html  200`
+- [x] Tests assert `buildRedirects(undefined)` and `buildRedirects('http://x')` throw "API_PROXY_ORIGIN must be an https URL"
+- [x] `npm run build -w apps/web` without `API_PROXY_ORIGIN` exits non-zero; with it, `dist/_redirects` exists
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 4 tests pass
 
 **Tests**: unit
 **Gate**: quick
