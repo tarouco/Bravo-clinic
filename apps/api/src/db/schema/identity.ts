@@ -68,7 +68,11 @@ export const sessions = pgTable(
     createdAt: tstz('created_at').notNull().defaultNow(),
     lastSeenAt: tstz('last_seen_at').notNull().defaultNow(),
   },
-  (t) => [index('sessions_user_active_idx').on(t.userId).where(sql`${t.revokedAt} is null`)],
+  (t) => [
+    index('sessions_user_active_idx')
+      .on(t.userId)
+      .where(sql`${t.revokedAt} is null`),
+  ],
 );
 
 /** E-mail verification and password reset tokens; only the sha256 of the token is stored. */
