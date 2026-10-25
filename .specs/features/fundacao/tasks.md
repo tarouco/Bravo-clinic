@@ -777,13 +777,13 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] Test asserts all 18 base tables exist (`information_schema.tables`) and `pg_extension` has `btree_gist`
-- [ ] Test runs `runMigrations` a second time and asserts the drizzle migrations table row count is unchanged
-- [ ] Test inserts two active overlapping occupancy rows for one room and asserts the second fails with `code === '23P01'`
-- [ ] Tests assert `[09:00,11:30)` + `[11:30,12:30)` both insert; an overlap with an `active = false` row inserts; overlapping rows in different rooms insert
-- [ ] Tests assert `UPDATE audit_log ...` and `DELETE FROM consents ...` raise errors containing `append_only_table`
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 8 tests pass
+- [x] Test asserts all 18 base tables exist (`information_schema.tables`) and `pg_extension` has `btree_gist`
+- [x] Test runs `runMigrations` a second time and asserts the drizzle migrations table row count is unchanged
+- [x] Test inserts two active overlapping occupancy rows for one room and asserts the second fails with `code === '23P01'`
+- [x] Tests assert `[09:00,11:30)` + `[11:30,12:30)` both insert; an overlap with an `active = false` row inserts; overlapping rows in different rooms insert
+- [x] Tests assert `UPDATE audit_log ...` and `DELETE FROM consents ...` raise errors containing `append_only_table`
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 8 tests pass
 
 **Tests**: integration
 **Gate**: full
