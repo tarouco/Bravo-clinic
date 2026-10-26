@@ -1118,11 +1118,11 @@ T49 → T50
 - Skill: NONE
 
 **Done when**:
-- [ ] Tests assert token modal validates name, shows the raw token once and clears it on close
-- [ ] Tests assert tool table renders scope "Leitura"/"Leitura e escrita" and destructive badge "Requer confirmação"
-- [ ] Tests assert usage item ≥ 80 % renders the warning style and text "Perto do limite", storage error message renders
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests assert token modal validates name, shows the raw token once and clears it on close
+- [x] Tests assert tool table renders scope "Leitura"/"Leitura e escrita" and destructive badge "Requer confirmação"
+- [x] Tests assert usage item ≥ 80 % renders the warning style and text "Perto do limite", storage error message renders
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick

@@ -3,9 +3,11 @@ import { Tabs } from '../../../components/ui/Tabs';
 import { usePageTitle } from '../../../lib/usePageTitle';
 import { CalendarTab } from './CalendarTab';
 import { EmailsTab } from './EmailsTab';
+import { McpTab } from './McpTab';
 import { PaymentsTab } from './PaymentsTab';
+import { UsageTab } from './UsageTab';
 
-const TAB_IDS = ['pagamentos', 'calendario', 'emails'] as const;
+const TAB_IDS = ['pagamentos', 'calendario', 'mcp', 'emails', 'consumo'] as const;
 type TabId = (typeof TAB_IDS)[number];
 
 const isTab = (value: string | null): value is TabId => TAB_IDS.some((id) => id === value);
@@ -45,10 +47,16 @@ export function IntegrationsPage() {
             label: 'Calendário',
             content: tab === 'calendario' ? <CalendarTab /> : null,
           },
+          { id: 'mcp', label: 'MCP', content: tab === 'mcp' ? <McpTab /> : null },
           {
             id: 'emails',
             label: 'E-mails',
             content: tab === 'emails' ? <EmailsTab /> : null,
+          },
+          {
+            id: 'consumo',
+            label: 'Consumo',
+            content: tab === 'consumo' ? <UsageTab /> : null,
           },
         ]}
       />

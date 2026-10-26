@@ -6,7 +6,9 @@ import { describe, expect, it } from 'vitest';
 import {
   buildCalendar,
   buildGateway,
+  buildMcp,
   buildNotifications,
+  buildUsage,
   outboxPage,
 } from '../../../features/admin-integrations/fixtures';
 import { server } from '../../../test/msw/server';
@@ -34,6 +36,14 @@ function stubApi() {
       return HttpResponse.json(buildNotifications());
     }),
     http.get('*/api/admin/integrations/outbox', () => HttpResponse.json(outboxPage)),
+    http.get('*/api/admin/integrations/mcp', () => {
+      hits.push('mcp');
+      return HttpResponse.json(buildMcp());
+    }),
+    http.get('*/api/admin/usage', () => {
+      hits.push('usage');
+      return HttpResponse.json(buildUsage());
+    }),
   );
   return hits;
 }
@@ -72,6 +82,22 @@ describe('IntegrationsPage tabs', () => {
     expect(await screen.findByRole('region', { name: 'Destinatários' })).toBeInTheDocument();
     expect(screen.getByTestId('location')).toHaveTextContent('tab=emails');
     expect(hits).toEqual(['gateway', 'calendar', 'notifications']);
+  });
+
+  it('opens the MCP and Consumo tabs, each loading only its own data', async () => {
+    const hits = stubApi();
+    renderPage('/admin/integracoes?tab=mcp');
+
+    expect(
+      await screen.findByRole('table', { name: 'Ferramentas do servidor MCP' }),
+    ).toBeInTheDocument();
+    expect(hits).toEqual(['mcp']);
+
+    await userEvent.click(screen.getByRole('tab', { name: 'Consumo' }));
+
+    expect(await screen.findByRole('region', { name: 'Banco de dados' })).toBeInTheDocument();
+    expect(screen.getByTestId('location')).toHaveTextContent('tab=consumo');
+    expect(hits).toEqual(['mcp', 'usage']);
   });
 
   it('opens straight on the tab named by the URL and returns to Pagamentos without the param', async () => {

@@ -2,11 +2,15 @@ import { parseFixture } from '../../test/fixtures/parse';
 import {
   calendarOverviewSchema,
   gatewayOverviewSchema,
+  mcpOverviewSchema,
   notificationsOverviewSchema,
   outboxPageSchema,
+  usageReportSchema,
   type CalendarOverview,
   type GatewayOverview,
+  type McpOverview,
   type NotificationsOverview,
+  type UsageReport,
 } from './contracts';
 
 // Integrações fixtures for the web tests, validated against the response contracts (AD-035).
@@ -178,3 +182,120 @@ export const outboxPage = parseFixture(
   },
   'outboxPage',
 );
+
+// ---- MCP ----
+
+export const MCP_TOKEN_IDS = {
+  assistant: 'c0000000-0000-4000-8000-000000000001',
+  revoked: 'c0000000-0000-4000-8000-000000000002',
+} as const;
+
+/** The raw token a new `POST .../mcp/tokens` returns (43 base64url characters after the prefix). */
+export const RAW_MCP_TOKEN = 'bmcp_Qk3v9ZtLw2YxR7mNpA5sD8fGhJ1cB4eUiOa0VzXyTnE';
+
+export interface McpFixtureOptions {
+  enabled?: boolean;
+  serverUrlWarning?: string | null;
+}
+
+/** Three tools (read, write, destructive write), one active token and one revoked token. */
+export function buildMcp(options: McpFixtureOptions = {}): McpOverview {
+  return parseFixture(
+    mcpOverviewSchema,
+    {
+      enabled: options.enabled ?? true,
+      serverUrl: 'https://api.bravoclinic.example/mcp',
+      serverUrlWarning: options.serverUrlWarning ?? null,
+      tools: [
+        {
+          name: 'agenda_list',
+          description: 'Lista os eventos da agenda em um período.',
+          scope: 'read',
+          destructive: false,
+        },
+        {
+          name: 'booking_create',
+          description: 'Cria uma reserva para um cliente.',
+          scope: 'write',
+          destructive: false,
+        },
+        {
+          name: 'booking_cancel',
+          description: 'Cancela uma reserva.',
+          scope: 'write',
+          destructive: true,
+        },
+      ],
+      tokens: [
+        {
+          id: MCP_TOKEN_IDS.assistant,
+          name: 'Assistente da Carla',
+          scope: 'read',
+          prefix: 'bmcp_Qk3v',
+          createdAt: '2026-10-01T12:00:00.000Z',
+          lastUsedAt: '2026-10-25T18:00:00.000Z',
+          expiresAt: null,
+          revokedAt: null,
+        },
+        {
+          id: MCP_TOKEN_IDS.revoked,
+          name: 'Teste antigo',
+          scope: 'read_write',
+          prefix: 'bmcp_Zz91',
+          createdAt: '2026-09-01T12:00:00.000Z',
+          lastUsedAt: null,
+          expiresAt: null,
+          revokedAt: '2026-09-02T12:00:00.000Z',
+        },
+      ],
+    },
+    'mcpOverview',
+  );
+}
+
+// ---- Consumo ----
+
+export interface UsageFixtureOptions {
+  /** Database usage as a percentage of the limit; 62.5 by default. */
+  dbPercent?: number;
+  storageError?: boolean;
+}
+
+/** Free-tier report: database at `dbPercent` (warning from 80), storage and e-mails comfortable. */
+export function buildUsage(options: UsageFixtureOptions = {}): UsageReport {
+  const dbPercent = options.dbPercent ?? 62.5;
+  const limitBytes = 536870912;
+  return parseFixture(
+    usageReportSchema,
+    {
+      db: {
+        bytes: Math.round((limitBytes * dbPercent) / 100),
+        limitBytes,
+        percent: dbPercent,
+        warning: dbPercent >= 80,
+      },
+      storage: options.storageError
+        ? {
+            buckets: null,
+            bytes: null,
+            limitBytes: 1073741824,
+            percent: null,
+            warning: false,
+            storageError: 'Não foi possível consultar o armazenamento de arquivos.',
+          }
+        : {
+            buckets: { 'room-photos': 52428800, 'expense-attachments': 10485760 },
+            bytes: 62914560,
+            limitBytes: 1073741824,
+            percent: 5.9,
+            warning: false,
+          },
+      emails: { month: 450, monthLimit: 3000, today: 12, dayLimit: 100, warning: false },
+      largestTables: [
+        { name: 'audit_log', totalBytes: 41943040, estimatedRows: 120000 },
+        { name: 'email_outbox', totalBytes: 20971520, estimatedRows: 8000 },
+      ],
+    },
+    'usageReport',
+  );
+}

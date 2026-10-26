@@ -1,5 +1,5 @@
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import type { GatewayCredentialsInput, NotificationEventsInput } from '@bravo/core';
+import type { GatewayCredentialsInput, McpTokenInput, NotificationEventsInput } from '@bravo/core';
 import { api } from '../../lib/api';
 import { withQuery } from '../../lib/query-string';
 import type {
@@ -9,10 +9,13 @@ import type {
   GatewayAdapter,
   GatewayOverview,
   GatewayTestResult,
+  McpOverview,
+  McpTokenIssued,
   NotificationsOverview,
   OutboxPage,
   OutboxStatus,
   TestEmailResult,
+  UsageReport,
 } from './contracts';
 
 // Gestao Integrações data layer: TanStack Query keys `['admin', 'integrations', ...]`, one hook
@@ -23,6 +26,8 @@ export const integrationKeys = {
   gateway: ['admin', 'integrations', 'gateway'] as const,
   calendar: ['admin', 'integrations', 'calendar'] as const,
   notifications: ['admin', 'integrations', 'notifications'] as const,
+  mcp: ['admin', 'integrations', 'mcp'] as const,
+  usage: ['admin', 'integrations', 'usage'] as const,
   outboxAll: ['admin', 'integrations', 'outbox'] as const,
   outbox: (status: OutboxStatus | '') => ['admin', 'integrations', 'outbox', status] as const,
 };
@@ -167,5 +172,50 @@ export function useOutbox(status: OutboxStatus | '') {
       api.get<OutboxPage>(
         withQuery('/api/admin/integrations/outbox', { status, cursor: pageParam }),
       ),
+  });
+}
+
+// ---- MCP (GES-53, GES-54, GES-63) ----
+
+const MCP = '/api/admin/integrations/mcp';
+
+export function useMcp() {
+  return useQuery<McpOverview>({
+    queryKey: integrationKeys.mcp,
+    queryFn: () => api.get(MCP),
+  });
+}
+
+export function useSetMcpEnabled() {
+  const queryClient = useQueryClient();
+  return useMutation<unknown, Error, boolean>({
+    mutationFn: (enabled) => api.put(MCP, { enabled }),
+    onSuccess: () => void queryClient.invalidateQueries({ queryKey: integrationKeys.mcp }),
+  });
+}
+
+/** `POST .../mcp/tokens`: the raw token is in the response only (GES-53). */
+export function useIssueMcpToken() {
+  const queryClient = useQueryClient();
+  return useMutation<McpTokenIssued, Error, McpTokenInput>({
+    mutationFn: (input) => api.post(`${MCP}/tokens`, input),
+    onSuccess: () => void queryClient.invalidateQueries({ queryKey: integrationKeys.mcp }),
+  });
+}
+
+export function useRevokeMcpToken() {
+  const queryClient = useQueryClient();
+  return useMutation<void, Error, string>({
+    mutationFn: (id) => api.delete(`${MCP}/tokens/${id}`),
+    onSuccess: () => void queryClient.invalidateQueries({ queryKey: integrationKeys.mcp }),
+  });
+}
+
+// ---- Consumo (GES-137..GES-139) ----
+
+export function useUsage() {
+  return useQuery<UsageReport>({
+    queryKey: integrationKeys.usage,
+    queryFn: () => api.get('/api/admin/usage'),
   });
 }

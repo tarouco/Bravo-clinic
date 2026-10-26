@@ -111,3 +111,79 @@ export const outboxPageSchema = z.object({
   nextCursor: z.string().nullable(),
 });
 export type OutboxPage = z.infer<typeof outboxPageSchema>;
+
+// ---- MCP (GES-53, GES-54, GES-63) ----
+
+export const mcpToolSchema = z.object({
+  name: z.string().min(1),
+  description: z.string().min(1),
+  /** `write` tools need a token with the `read_write` scope. */
+  scope: z.enum(['read', 'write']),
+  /** Destructive tools refuse to run without `confirm: true` (GES-59). */
+  destructive: z.boolean(),
+});
+export type McpTool = z.infer<typeof mcpToolSchema>;
+
+/** A token as listed: never the raw secret (GES-54). */
+export const mcpTokenViewSchema = z.object({
+  id: z.string().min(1),
+  name: z.string().min(1),
+  scope: z.enum(['read', 'read_write']),
+  prefix: z.string().min(1),
+  createdAt: z.string().min(1),
+  lastUsedAt: z.string().nullable(),
+  expiresAt: z.string().nullable(),
+  revokedAt: z.string().nullable(),
+});
+export type McpTokenRecord = z.infer<typeof mcpTokenViewSchema>;
+
+export const mcpOverviewSchema = z.object({
+  enabled: z.boolean(),
+  serverUrl: z.string().min(1),
+  /** Set when the URL goes through the Netlify proxy, which cuts long requests (design risks). */
+  serverUrlWarning: z.string().nullable(),
+  tools: z.array(mcpToolSchema),
+  tokens: z.array(mcpTokenViewSchema),
+});
+export type McpOverview = z.infer<typeof mcpOverviewSchema>;
+
+/** `POST .../mcp/tokens` (201): the raw `bmcp_...` token appears only here. */
+export const mcpTokenIssuedSchema = z.object({
+  token: z.string().min(1),
+  record: mcpTokenViewSchema,
+});
+export type McpTokenIssued = z.infer<typeof mcpTokenIssuedSchema>;
+
+// ---- Consumo (GES-137..GES-139) ----
+
+const bytes = z.number().int().min(0);
+
+export const usageReportSchema = z.object({
+  db: z.object({
+    bytes,
+    limitBytes: bytes,
+    /** 0..100, one decimal. */
+    percent: z.number().min(0),
+    warning: z.boolean(),
+  }),
+  storage: z.object({
+    buckets: z.object({ 'room-photos': bytes, 'expense-attachments': bytes }).nullable(),
+    bytes: bytes.nullable(),
+    limitBytes: bytes,
+    percent: z.number().min(0).nullable(),
+    warning: z.boolean(),
+    /** Set when listing the buckets failed; the other figures are still valid (GES-139). */
+    storageError: z.string().optional(),
+  }),
+  emails: z.object({
+    month: bytes,
+    monthLimit: bytes,
+    today: bytes,
+    dayLimit: bytes,
+    warning: z.boolean(),
+  }),
+  largestTables: z.array(
+    z.object({ name: z.string().min(1), totalBytes: bytes, estimatedRows: bytes }),
+  ),
+});
+export type UsageReport = z.infer<typeof usageReportSchema>;
