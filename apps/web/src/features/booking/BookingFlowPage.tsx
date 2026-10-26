@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { Alert } from '../../components/ui/Feedback';
 import { Stepper } from '../../components/ui/Stepper';
 import { usePageTitle } from '../../lib/usePageTitle';
 import { DateStep } from './DateStep';
@@ -12,6 +13,7 @@ import {
   type FlowSelection,
   type FlowStep,
 } from './flow-params';
+import { SummaryStep } from './SummaryStep';
 import { TimeStep } from './TimeStep';
 
 /**
@@ -22,14 +24,19 @@ export function BookingFlowPage() {
   usePageTitle('Reservar');
   const [params] = useSearchParams();
   const navigate = useNavigate();
-  const { pathname } = useLocation();
+  const location = useLocation();
+  const { pathname } = location;
+  const notice = (location.state as { notice?: string } | null)?.notice;
 
   const selection = parseSelection(params);
   const step = resolveStep(params);
 
   const go = useCallback(
-    (next: FlowSelection, nextStep: FlowStep, replace: boolean) => {
-      void navigate({ pathname, search: `?${buildSearch(next, nextStep)}` }, { replace });
+    (next: FlowSelection, nextStep: FlowStep, replace: boolean, message?: string) => {
+      void navigate(
+        { pathname, search: `?${buildSearch(next, nextStep)}` },
+        { replace, ...(message ? { state: { notice: message } } : {}) },
+      );
     },
     [navigate, pathname],
   );
@@ -46,6 +53,8 @@ export function BookingFlowPage() {
           current={FLOW_STEP_INDEX[step]}
         />
       </header>
+
+      {notice ? <Alert tone="error">{notice}</Alert> : null}
 
       {step === 'data' ? (
         <DateStep
@@ -73,7 +82,15 @@ export function BookingFlowPage() {
         />
       ) : null}
       {step === 'resumo' ? (
-        <p className="font-body text-body text-ink-muted">Resumo da reserva em construção.</p>
+        <SummaryStep
+          selection={selection}
+          onBack={() => {
+            go(selection, 'horario', false);
+          }}
+          onChooseAnotherTime={(message) => {
+            go(selection, 'horario', true, message);
+          }}
+        />
       ) : null}
     </div>
   );

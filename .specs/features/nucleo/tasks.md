@@ -1456,10 +1456,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: button disabled until policy checked; anonymous click navigates to `/login?next=<same resumo url>`; `PROFILE_INCOMPLETE` navigates to `/app/perfil?completar=1&next=...`
-- [ ] Tests: 409 `SLOT_TAKEN` shows "Este horário acabou de ser reservado." and returns to Horário; `PRICE_CHANGED` re-renders new total and unchecks acceptance; `pricesReviewed: false` shows the banner and disables the button; success navigates to `/checkout/<id>`
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 7 tests pass
+- [x] Tests: button disabled until policy checked; anonymous click navigates to `/login?next=<same resumo url>`; `PROFILE_INCOMPLETE` navigates to `/app/perfil?completar=1&next=...`
+- [x] Tests: 409 `SLOT_TAKEN` shows "Este horário acabou de ser reservado." and returns to Horário; `PRICE_CHANGED` re-renders new total and unchecks acceptance; `pricesReviewed: false` shows the banner and disables the button; success navigates to `/checkout/<id>`
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: unit
 **Gate**: quick
