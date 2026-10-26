@@ -17,6 +17,7 @@ export default tseslint.config(
       'apps/api/drizzle/**',
       '.netlify/**',
       '.neon/**',
+      '.claude/**',
     ],
   },
   js.configs.recommended,
