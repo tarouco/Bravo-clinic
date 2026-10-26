@@ -1147,11 +1147,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests (injected now = start − 48 h): saved card with consent → `booking_balance` saved_card charge; none → Pix expiring at start − 24 h + `booking.balance_charge`; declined card → Pix + `booking.balance_card_failed`; rerun creates no second charge
-- [ ] Test (now = start − 24 h, unpaid): `cancelled_nonpayment`, `paid_cents` unchanged (sinal retained), occupancy inactive, pending charge cancelled, outbox `booking.cancelled_nonpayment`
-- [ ] Tests: reminders at 48/36/26 h produce 3 rows total over repeated runs; booking reminders 24 h and 2 h once each; cancelled booking gets none
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 9 tests pass
+- [x] Tests (injected now = start − 48 h): saved card with consent → `booking_balance` saved_card charge; none → Pix expiring at start − 24 h + `booking.balance_charge`; declined card → Pix + `booking.balance_card_failed`; rerun creates no second charge
+- [x] Test (now = start − 24 h, unpaid): `cancelled_nonpayment`, `paid_cents` unchanged (sinal retained), occupancy inactive, pending charge cancelled, outbox `booking.cancelled_nonpayment`
+- [x] Tests: reminders at 48/36/26 h produce 3 rows total over repeated runs; booking reminders 24 h and 2 h once each; cancelled booking gets none
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 9 tests pass
 
 **Tests**: integration
 **Gate**: full

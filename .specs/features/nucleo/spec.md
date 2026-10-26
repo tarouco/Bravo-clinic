@@ -846,15 +846,15 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-127 | P1: Gateway-independent payments | Tasks | T19 | Implementing |
 | NUC-128 | P1: Gateway-independent payments | Tasks | T15, T19 | Implementing |
 | NUC-129 | P1: Gateway-independent payments | Tasks | T19 | Implementing |
-| NUC-130 | P1: Balance charge, reminders and deadline | Tasks | T27 | In Tasks |
-| NUC-131 | P1: Balance charge, reminders and deadline | Tasks | T27 | In Tasks |
-| NUC-132 | P1: Balance charge, reminders and deadline | Tasks | T27 | In Tasks |
-| NUC-133 | P1: Balance charge, reminders and deadline | Tasks | T27 | In Tasks |
+| NUC-130 | P1: Balance charge, reminders and deadline | Tasks | T27 | Implementing |
+| NUC-131 | P1: Balance charge, reminders and deadline | Tasks | T27 | Implementing |
+| NUC-132 | P1: Balance charge, reminders and deadline | Tasks | T27 | Implementing |
+| NUC-133 | P1: Balance charge, reminders and deadline | Tasks | T27 | Implementing |
 | NUC-134 | P1: Balance charge, reminders and deadline | Tasks | T17 | Implementing |
 | NUC-135 | P1: Balance charge, reminders and deadline | Tasks | T17 | Implementing |
 | NUC-136 | P1: Confirmation e-mails with .ics | Tasks | T14, T18 | Implementing |
 | NUC-137 | P1: Confirmation e-mails with .ics | Tasks | T14, T22, T23 | Implementing |
-| NUC-138 | P1: Confirmation e-mails with .ics | Tasks | T27 | In Tasks |
+| NUC-138 | P1: Confirmation e-mails with .ics | Tasks | T27 | Implementing |
 | NUC-139 | P1: Confirmation e-mails with .ics | Tasks | T14 | Implementing |
 | NUC-140 | P1: Confirmation e-mails with .ics | Tasks | T21 | Implementing |
 | NUC-141 | P1: Reschedule and cancel | Tasks | T21 | Implementing |
