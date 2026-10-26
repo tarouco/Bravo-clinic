@@ -166,16 +166,16 @@ describe('app and admin shells', () => {
     expect(screen.getByRole('button', { name: 'Sair' })).toBeInTheDocument();
   });
 
-  it('wraps the admin routes: the Financeiro link opens its placeholder page for a verified admin', async () => {
+  it('wraps the admin routes: the Integrações link opens its placeholder page for a verified admin', async () => {
     stubApi(admin({ enrolled: true, verified: true }));
     renderRoute('/admin/calendario');
     const menu = await screen.findByRole('navigation', { name: 'Seções do painel' });
     expect(within(menu).getAllByRole('link')).toHaveLength(10);
 
-    await userEvent.click(within(menu).getByRole('link', { name: 'Financeiro' }));
+    await userEvent.click(within(menu).getByRole('link', { name: 'Integrações' }));
 
-    expect(await screen.findByRole('heading', { name: 'Financeiro' })).toBeInTheDocument();
-    expect(locationOf()).toBe('/admin/financeiro');
+    expect(await screen.findByRole('heading', { name: 'Integrações' })).toBeInTheDocument();
+    expect(locationOf()).toBe('/admin/integracoes');
     expect(screen.getByText('Em construção')).toBeInTheDocument();
   });
 });

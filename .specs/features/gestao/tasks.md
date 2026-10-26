@@ -981,11 +981,11 @@ T49 → T50
 - Skill: `impeccable`
 
 **Done when**:
-- [ ] Tests assert StatTile renders "R$ 1.600,00" and "+12,5%" / "—" for null delta
-- [ ] Tests assert EvolutionChart renders one group per bucket, a legend, and a table with the same numbers accessible by role
-- [ ] Tests assert FileUpload rejects a file over `maxBytes` with "Arquivo maior que 5 MB" before calling `onFile`; CopyField copies and shows "Copiado"; TokenList revoke opens a confirm modal
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 10 tests pass
+- [x] Tests assert StatTile renders "R$ 1.600,00" and "+12,5%" / "—" for null delta
+- [x] Tests assert EvolutionChart renders one group per bucket, a legend, and a table with the same numbers accessible by role
+- [x] Tests assert FileUpload rejects a file over `maxBytes` with "Arquivo maior que 5 MB" before calling `onFile`; CopyField copies and shows "Copiado"; TokenList revoke opens a confirm modal
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 10 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1008,11 +1008,11 @@ T49 → T50
 - Skill: NONE
 
 **Done when**:
-- [ ] Tests assert defaults (Caixa, month, last 6 months) in the request URL
-- [ ] Tests assert switching to Competência/quarter updates URL params, refetches, and the export link carries `regime=accrual`
-- [ ] Tests assert loading skeleton, empty state, and API error alert with retry
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests assert defaults (Caixa, month, last 6 months) in the request URL
+- [x] Tests assert switching to Competência/quarter updates URL params, refetches, and the export link carries `regime=accrual`
+- [x] Tests assert loading skeleton, empty state, and API error alert with retry
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1035,11 +1035,11 @@ T49 → T50
 - Skill: NONE
 
 **Done when**:
-- [ ] Tests assert expense form validation messages from core schema, successful submit calls POST then PUT attachment, server 422 maps onto fields
-- [ ] Tests assert delete receipt requires justification text before enabling confirm
-- [ ] Tests assert category drawer rename/reorder/deactivate calls
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 7 tests pass
+- [x] Tests assert expense form validation messages from core schema, successful submit calls POST then PUT attachment, server 422 maps onto fields
+- [x] Tests assert delete receipt requires justification text before enabling confirm
+- [x] Tests assert category drawer rename/reorder/deactivate calls
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: unit
 **Gate**: quick

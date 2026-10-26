@@ -64,6 +64,9 @@ async function toApiError(response: Response): Promise<ApiError> {
   });
 }
 
+const NETWORK_ERROR_MESSAGE =
+  'Sem conexão com o servidor. Verifique sua internet e tente novamente.';
+
 async function request<T>(
   method: Method,
   path: string,
@@ -86,11 +89,7 @@ async function request<T>(
     response = await fetch(path, init);
   } catch (cause) {
     if (cause instanceof DOMException && cause.name === 'AbortError') throw cause;
-    throw new ApiError({
-      status: 0,
-      code: 'NETWORK',
-      message: 'Sem conexão com o servidor. Verifique sua internet e tente novamente.',
-    });
+    throw new ApiError({ status: 0, code: 'NETWORK', message: NETWORK_ERROR_MESSAGE });
   }
 
   if (!response.ok) throw await toApiError(response);
@@ -108,18 +107,41 @@ async function getBlob(path: string, options: RequestOptions = {}): Promise<Blob
       ...(options.signal ? { signal: options.signal } : {}),
     });
   } catch {
-    throw new ApiError({
-      status: 0,
-      code: 'NETWORK',
-      message: 'Sem conexão com o servidor. Verifique sua internet e tente novamente.',
-    });
+    throw new ApiError({ status: 0, code: 'NETWORK', message: NETWORK_ERROR_MESSAGE });
   }
   if (!response.ok) throw await toApiError(response);
   return response.blob();
 }
 
+/**
+ * PUT of one raw file (expense attachment, room photo variant): the body is the file itself and
+ * the content type its own media type, which the API checks against the magic bytes. The answer
+ * is JSON, or empty for a 204.
+ */
+async function upload<T>(path: string, file: Blob, options: RequestOptions = {}): Promise<T> {
+  let response: Response;
+  try {
+    response = await fetch(path, {
+      method: 'PUT',
+      credentials: 'same-origin',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': file.type || 'application/octet-stream',
+      },
+      body: file,
+      ...(options.signal ? { signal: options.signal } : {}),
+    });
+  } catch {
+    throw new ApiError({ status: 0, code: 'NETWORK', message: NETWORK_ERROR_MESSAGE });
+  }
+  if (!response.ok) throw await toApiError(response);
+  if (response.status === 204) return undefined as T;
+  return (await response.json()) as T;
+}
+
 export const api = {
   blob: getBlob,
+  upload,
   get: <T>(path: string, options?: RequestOptions) => request<T>('GET', path, undefined, options),
   post: <T>(path: string, body?: unknown, options?: RequestOptions) =>
     request<T>('POST', path, body, options),

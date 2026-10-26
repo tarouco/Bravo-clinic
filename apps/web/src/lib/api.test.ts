@@ -108,3 +108,48 @@ describe('api client', () => {
     expect(error.code).toBe('INTERNAL');
   });
 });
+
+describe('api.upload', () => {
+  it('PUTs the file itself with its own media type and same-origin credentials', async () => {
+    const fetchMock = vi.fn().mockResolvedValue(jsonResponse(200, { id: 'e1' }));
+    vi.stubGlobal('fetch', fetchMock);
+    const file = new File(['%PDF-1.4'], 'nota.pdf', { type: 'application/pdf' });
+
+    const result = await api.upload<{ id: string }>('/x/attachment', file);
+
+    expect(result).toEqual({ id: 'e1' });
+    const [url, init] = fetchMock.mock.calls[0] as [string, RequestInit];
+    expect(url).toBe('/x/attachment');
+    expect(init.method).toBe('PUT');
+    expect(init.credentials).toBe('same-origin');
+    expect(init.body).toBe(file);
+    expect(new Headers(init.headers).get('Content-Type')).toBe('application/pdf');
+  });
+
+  it('answers undefined for a 204 and throws the ApiError of a 413', async () => {
+    const file = new File(['x'], 'a.png', { type: 'image/png' });
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValueOnce(new Response(null, { status: 204 })));
+    expect(await api.upload('/x', file)).toBeUndefined();
+
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue(
+        jsonResponse(413, {
+          error: { code: 'PAYLOAD_TOO_LARGE', message: 'Arquivo maior que 5 MB' },
+        }),
+      ),
+    );
+    const error = (await api.upload('/x', file).catch((e: unknown) => e)) as ApiError;
+    expect(error).toBeInstanceOf(ApiError);
+    expect(error.status).toBe(413);
+    expect(error.code).toBe('PAYLOAD_TOO_LARGE');
+  });
+
+  it('maps a rejected fetch to the NETWORK error', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new TypeError('Failed to fetch')));
+
+    const error = (await api.upload('/x', new Blob(['x'])).catch((e: unknown) => e)) as ApiError;
+
+    expect(error.code).toBe('NETWORK');
+  });
+});
