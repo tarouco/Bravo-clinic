@@ -789,11 +789,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Unit tests: sandbox `createCharge` returns `sbx_` id, checkout URL and Pix copy-paste; `parseWebhook` accepts its own signature and rejects a tampered body; `verifyCredentials` ok; `listGatewayAdapters()` lists sandbox and mercadopago with their credential fields
-- [ ] Unit tests: resolver picks the active gateway for new charges and the stored provider for an old charge; mercadopago without credentials throws `GATEWAY_NOT_CONFIGURED`
-- [ ] Test asserts adapters' logged payloads never contain keys `cardNumber`, `cvv`, `securityCode`
-- [ ] Gate check passes: `npm test -w apps/api`
-- [ ] Test count: ≥ 8 tests pass
+- [x] Unit tests: sandbox `createCharge` returns `sbx_` id, checkout URL and Pix copy-paste; `parseWebhook` accepts its own signature and rejects a tampered body; `verifyCredentials` ok; `listGatewayAdapters()` lists sandbox and mercadopago with their credential fields
+- [x] Unit tests: resolver picks the active gateway for new charges and the stored provider for an old charge; mercadopago without credentials throws `GATEWAY_NOT_CONFIGURED`
+- [x] Test asserts adapters' logged payloads never contain keys `cardNumber`, `cvv`, `securityCode`
+- [x] Gate check passes: `npm test -w apps/api`
+- [x] Test count: ≥ 8 tests pass
 
 **Tests**: unit
 **Gate**: quick

@@ -821,8 +821,8 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-102 | P1: Book and pay the sinal | Tasks | T39 | In Tasks |
 | NUC-103 | P1: Book and pay the sinal | Tasks | T39, T49 | In Tasks |
 | NUC-104 | P1: Book and pay the sinal | Tasks | T6, T9 | Implementing |
-| NUC-105 | P1: Gateway-independent payments | Tasks | T15, T16 | In Tasks |
-| NUC-106 | P1: Gateway-independent payments | Tasks | T15 | In Tasks |
+| NUC-105 | P1: Gateway-independent payments | Tasks | T15, T16 | Implementing |
+| NUC-106 | P1: Gateway-independent payments | Tasks | T15 | Implementing |
 | NUC-107 | P1: Gateway-independent payments | Tasks | T17 | In Tasks |
 | NUC-108 | P1: Gateway-independent payments | Tasks | T17 | In Tasks |
 | NUC-109 | P1: Gateway-independent payments | Tasks | T17 | In Tasks |
@@ -841,10 +841,10 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-122 | P1: Gateway-independent payments | Tasks | T16 | In Tasks |
 | NUC-123 | P1: Gateway-independent payments | Tasks | T16 | In Tasks |
 | NUC-124 | P1: Gateway-independent payments | Tasks | T16 | In Tasks |
-| NUC-125 | P1: Gateway-independent payments | Tasks | T15 | In Tasks |
+| NUC-125 | P1: Gateway-independent payments | Tasks | T15 | Implementing |
 | NUC-126 | P1: Gateway-independent payments | Tasks | T19 | In Tasks |
 | NUC-127 | P1: Gateway-independent payments | Tasks | T19 | In Tasks |
-| NUC-128 | P1: Gateway-independent payments | Tasks | T15, T19 | In Tasks |
+| NUC-128 | P1: Gateway-independent payments | Tasks | T15, T19 | Implementing |
 | NUC-129 | P1: Gateway-independent payments | Tasks | T19 | In Tasks |
 | NUC-130 | P1: Balance charge, reminders and deadline | Tasks | T27 | In Tasks |
 | NUC-131 | P1: Balance charge, reminders and deadline | Tasks | T27 | In Tasks |
@@ -924,7 +924,7 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-205 | P1: Extension points | Tasks | T6, T18, T23, T26 | In Tasks |
 | NUC-206 | P2: Booking funnel analytics | Tasks | T29, T38 | In Tasks |
 | NUC-207 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |
-| NUC-208 | P1: Gateway-independent payments | Tasks | T15, T16 | In Tasks |
+| NUC-208 | P1: Gateway-independent payments | Tasks | T15, T16 | Implementing |
 | NUC-209 | P1: Extension points | Tasks | T6, T17, T18 | In Tasks |
 | NUC-210 | P1: Extension points | Tasks | T6, T23 | In Tasks |
 
