@@ -43,6 +43,13 @@ export async function createTenant(
   return { user, cookie };
 }
 
+/** An admin or reception user with confirmed TOTP and an MFA-verified session cookie. */
+export async function createStaff(db: Db, role: 'admin' | 'reception' = 'admin', now?: Date) {
+  const user = await createUser(db, { role, totp: true, name: `Equipe ${role}` });
+  const cookie = await loginAs(db, user, { mfaVerified: true, ...(now !== undefined && { now }) });
+  return { user, cookie };
+}
+
 /** The seeded room with the given slug (default: Sala Principal). */
 export async function seededRoom(db: Db, slug = 'principal') {
   const [room] = await db.select().from(rooms).where(eq(rooms.slug, slug));

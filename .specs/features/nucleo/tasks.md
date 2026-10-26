@@ -997,12 +997,12 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: quote returns settlement for ST-1 and ST-3; RS-2/RS-3/RS-4 → 422 `POLICY_VIOLATION` with reason; target in cleanup → 422 `SLOT_UNAVAILABLE`
-- [ ] Tests: ST-2 move → occupancy moved, `reschedule_count` 1, `ics_sequence` +1, response `creditCents` 2300, `booking_events.data.creditGrant` `{ amountCents: 2300, status: 'deferred' }`, outbox `booking.rescheduled`
-- [ ] Tests: ST-3 → 202 with charge 14300, hold block on the new slot, booking unchanged; approving the charge applies the move (paid 19151, balance 4849); approving after the slot was taken refunds 14300
-- [ ] Tests: admin exception bypasses RS-5 with audit; `waive` writes `booking.difference_waived`; `add_to_balance` on a paid booking → `confirmed` with balance; package mode without handler → 422 `unsupported_payment_mode`
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 14 tests pass
+- [x] Tests: quote returns settlement for ST-1 and ST-3; RS-2/RS-3/RS-4 → 422 `POLICY_VIOLATION` with reason; target in cleanup → 422 `SLOT_UNAVAILABLE`
+- [x] Tests: ST-2 move → occupancy moved, `reschedule_count` 1, `ics_sequence` +1, response `creditCents` 2300, `booking_events.data.creditGrant` `{ amountCents: 2300, status: 'deferred' }`, outbox `booking.rescheduled`
+- [x] Tests: ST-3 → 202 with charge 14300, hold block on the new slot, booking unchanged; approving the charge applies the move (paid 19151, balance 4849); approving after the slot was taken refunds 14300
+- [x] Tests: admin exception bypasses RS-5 with audit; `waive` writes `booking.difference_waived`; `add_to_balance` on a paid booking → `confirmed` with balance; package mode without handler → 422 `unsupported_payment_mode`
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 14 tests pass
 
 **Tests**: integration
 **Gate**: full

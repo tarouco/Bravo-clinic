@@ -1,6 +1,7 @@
 import { Hono } from 'hono';
 import type { AppEnv } from '../../types';
 import { adminBlockRoutes } from './blocks';
+import { adminBookingRescheduleRoutes } from './booking-reschedule';
 import { adminCalendarRoutes } from './calendar';
 import { adminCalendarExceptionRoutes } from './calendar-exceptions';
 import { adminCategoryRoutes } from './categories';
@@ -16,5 +17,6 @@ export function adminRoutes(): Hono<AppEnv> {
   app.route('/', adminSettingsRoutes());
   app.route('/', adminBlockRoutes());
   app.route('/', adminCategoryRoutes());
+  app.route('/', adminBookingRescheduleRoutes());
   return app;
 }

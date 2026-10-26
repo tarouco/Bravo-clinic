@@ -42,6 +42,8 @@ export interface QuoteOptions {
   registry: Pick<Registry, 'checkoutSteps' | 'credits'>;
   /** Staff may price admin-only categories (NUC-161). */
   includeAdminOnly?: boolean;
+  /** A reschedule prices its target as if the booking being moved did not occupy the room. */
+  excludeBookingId?: string;
 }
 
 const fail = (error: AppError): QuoteResult => ({ ok: false, error });
@@ -111,7 +113,13 @@ export async function buildQuote(
   if (room === null) return fail(notFound());
 
   const { date, startMinute, endMinute } = request;
-  const inputs = await loadCalendarInputs(db, { roomId: room.id, from: date, to: date, now });
+  const inputs = await loadCalendarInputs(db, {
+    roomId: room.id,
+    from: date,
+    to: date,
+    now,
+    excludeBookingId: options.excludeBookingId,
+  });
   const window = businessWindow({
     date,
     roomId: room.id,

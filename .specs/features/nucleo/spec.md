@@ -858,14 +858,14 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-139 | P1: Confirmation e-mails with .ics | Tasks | T14 | Implementing |
 | NUC-140 | P1: Confirmation e-mails with .ics | Tasks | T21 | Implementing |
 | NUC-141 | P1: Reschedule and cancel | Tasks | T21 | Implementing |
-| NUC-142 | P1: Reschedule and cancel | Tasks | T22 | In Tasks |
-| NUC-143 | P1: Reschedule and cancel | Tasks | T22 | In Tasks |
-| NUC-144 | P1: Reschedule and cancel | Tasks | T22 | In Tasks |
-| NUC-145 | P1: Reschedule and cancel | Tasks | T6, T22 | In Tasks |
-| NUC-146 | P1: Reschedule and cancel | Tasks | T22 | In Tasks |
-| NUC-147 | P1: Reschedule and cancel | Tasks | T22, T26 | In Tasks |
-| NUC-148 | P1: Reschedule and cancel | Tasks | T22, T23 | In Tasks |
-| NUC-149 | P1: Reschedule and cancel | Tasks | T22 | In Tasks |
+| NUC-142 | P1: Reschedule and cancel | Tasks | T22 | Implementing |
+| NUC-143 | P1: Reschedule and cancel | Tasks | T22 | Implementing |
+| NUC-144 | P1: Reschedule and cancel | Tasks | T22 | Implementing |
+| NUC-145 | P1: Reschedule and cancel | Tasks | T6, T22 | Implementing |
+| NUC-146 | P1: Reschedule and cancel | Tasks | T22 | Implementing |
+| NUC-147 | P1: Reschedule and cancel | Tasks | T22, T26 | Implementing |
+| NUC-148 | P1: Reschedule and cancel | Tasks | T22, T23 | Implementing |
+| NUC-149 | P1: Reschedule and cancel | Tasks | T22 | Implementing |
 | NUC-150 | P1: Reschedule and cancel | Tasks | T23 | In Tasks |
 | NUC-151 | P1: Reschedule and cancel | Tasks | T23 | In Tasks |
 | NUC-152 | P1: Reschedule and cancel | Tasks | T23 | In Tasks |
