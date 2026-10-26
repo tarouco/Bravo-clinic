@@ -30,6 +30,8 @@ export const pwaOptions: Partial<VitePWAOptions> = {
   workbox: {
     globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,woff2}'],
     cleanupOutdatedCaches: true,
+    // Web push handler (GES-82): public/push-sw.js runs inside the generated worker.
+    importScripts: ['push-sw.js'],
     navigateFallback: '/index.html',
     // `/api/*` is served by the function behind the Netlify proxy, never by the SPA shell.
     navigateFallbackDenylist: [/^\/api\//],

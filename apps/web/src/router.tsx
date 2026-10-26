@@ -34,6 +34,7 @@ import { ComprasLayout, ComprasPage } from './pages/app/compras/ComprasPage';
 import { CreditosPage, HistoricoPage } from './pages/app/compras/CreditosHistoricoPages';
 import { HorasExtrasPage } from './pages/app/compras/HorasExtrasPage';
 import { MyBookingsPage } from './pages/app/MyBookingsPage';
+import { NotificationSettingsPage } from './pages/app/NotificationSettingsPage';
 import { ProfilePage } from './pages/app/ProfilePage';
 import { QuotesPage } from './pages/app/QuotesPage';
 import { LoginPage } from './pages/auth/LoginPage';
@@ -63,7 +64,6 @@ const publicPlaceholders: PlaceholderRoute[] = [];
 
 /** Tenant area pages that ship with later features. */
 const appPlaceholders: PlaceholderRoute[] = [
-  ['perfil/notificacoes', 'Notificações'],
   ['perfil/privacidade', 'Privacidade'],
   ['perfil/seguranca', 'Segurança'],
 ];
@@ -161,6 +161,7 @@ export const appRoutes: RouteObject[] = [
           { path: 'orcamentos', element: <QuotesPage /> },
           { path: 'perfil', element: <ProfilePage /> },
           { path: 'perfil/cartoes', element: <CardsPage /> },
+          { path: 'perfil/notificacoes', element: <NotificationSettingsPage /> },
           {
             path: 'compras',
             element: <ComprasLayout />,

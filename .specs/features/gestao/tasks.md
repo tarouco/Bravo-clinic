@@ -1308,11 +1308,11 @@ T49 → T50
 - Skill: NONE
 
 **Done when**:
-- [ ] Tests (mocked `Notification`, `PushManager`) assert enable flow posts the subscription and disable deletes it
-- [ ] Tests assert each of the three explanation texts and no button when `vapidPublicKey` is null
-- [ ] Tests load `push-sw.js` in a fake SW scope and assert `showNotification(title, { body, icon, data.url })` and `clients.openWindow(url)` when no window is open
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 7 tests pass
+- [x] Tests (mocked `Notification`, `PushManager`) assert enable flow posts the subscription and disable deletes it
+- [x] Tests assert each of the three explanation texts and no button when `vapidPublicKey` is null
+- [x] Tests load `push-sw.js` in a fake SW scope and assert `showNotification(title, { body, icon, data.url })` and `clients.openWindow(url)` when no window is open
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: unit
 **Gate**: quick

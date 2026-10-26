@@ -121,4 +121,14 @@ describe('ProfilePage (NUC-193)', () => {
 
     expect(await screen.findByText(DOCUMENT_MESSAGE)).toBeInTheDocument();
   });
+
+  it('links to the notification settings (GES-83)', async () => {
+    server.use(http.get('*/api/app/me', () => HttpResponse.json(me)));
+    renderProfile();
+
+    expect(await screen.findByRole('link', { name: 'Notificações' })).toHaveAttribute(
+      'href',
+      '/app/perfil/notificacoes',
+    );
+  });
 });

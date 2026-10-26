@@ -43,3 +43,9 @@
   for = "/sw.js"
   [headers.values]
     Cache-Control = "no-cache"
+
+# push-sw.js is imported by the service worker (GES-82): a stale copy would delay handler fixes.
+[[headers]]
+  for = "/push-sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
