@@ -1200,12 +1200,12 @@ T49 → T50
 - Skill: NONE
 
 **Done when**:
-- [ ] Tests assert `prepareRoomPhoto` with a fake canvas returns two WebP blobs with longest sides 1600 and 800 for a 4000×3000 input
-- [ ] Tests assert upload calls two PUTs then POST registration, progress shown, alt text required
-- [ ] Test asserts 409 commitments modal lists booking codes
-- [ ] Tests assert `buildRedirects` emits `/media/*  https://x/room-photos/:splat  200` before the SPA fallback when set, omits it when unset, strips trailing slash, rejects `http://`
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 8 tests pass
+- [x] Tests assert `prepareRoomPhoto` with a fake canvas returns two WebP blobs with longest sides 1600 and 800 for a 4000×3000 input
+- [x] Tests assert upload calls two PUTs then POST registration, progress shown, alt text required
+- [x] Test asserts 409 commitments modal lists booking codes
+- [x] Tests assert `buildRedirects` emits `/media/*  https://x/room-photos/:splat  200` before the SPA fallback when set, omits it when unset, strips trailing slash, rejects `http://`
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 8 tests pass
 
 **Tests**: unit
 **Gate**: quick

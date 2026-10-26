@@ -18,6 +18,8 @@ import { CustomersPage } from './pages/admin/customers/CustomersPage';
 import { ExtrasAdminPage } from './pages/admin/extras/ExtrasAdminPage';
 import { FinancePage } from './pages/admin/finance/FinancePage';
 import { IntegrationsPage } from './pages/admin/integrations/IntegrationsPage';
+import { RoomEditPage } from './pages/admin/rooms/RoomEditPage';
+import { RoomsPage as RoomsAdminPage } from './pages/admin/rooms/RoomsPage';
 import { BookingsListPage } from './pages/admin/reservations/BookingsListPage';
 import { PoliciesRoute } from './pages/admin/reservations/PoliciesPanel';
 import { ReservationsCalendar } from './pages/admin/reservations/ReservationsCalendar';
@@ -87,6 +89,10 @@ const adminSectionRoute = (section: AdminSection): RouteObject => {
         { path: ':tabId', element: <ReservationsSlotTab /> },
       ],
     });
+  }
+  if (section === 'salas') {
+    children[0] = { index: true, element: <RoomsAdminPage /> };
+    children.push({ path: ':id', element: <RoomEditPage /> });
   }
   if (section === 'clientes') {
     children[0] = { index: true, element: <CustomersPage /> };

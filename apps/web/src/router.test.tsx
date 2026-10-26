@@ -166,16 +166,16 @@ describe('app and admin shells', () => {
     expect(screen.getByRole('button', { name: 'Sair' })).toBeInTheDocument();
   });
 
-  it('wraps the admin routes: the Salas link opens its placeholder page for a verified admin', async () => {
+  it('wraps the admin routes: the Usuários link opens its placeholder page for a verified admin', async () => {
     stubApi(admin({ enrolled: true, verified: true }));
     renderRoute('/admin/calendario');
     const menu = await screen.findByRole('navigation', { name: 'Seções do painel' });
     expect(within(menu).getAllByRole('link')).toHaveLength(10);
 
-    await userEvent.click(within(menu).getByRole('link', { name: 'Salas' }));
+    await userEvent.click(within(menu).getByRole('link', { name: 'Usuários' }));
 
-    expect(await screen.findByRole('heading', { name: 'Salas' })).toBeInTheDocument();
-    expect(locationOf()).toBe('/admin/salas');
+    expect(await screen.findByRole('heading', { name: 'Usuários' })).toBeInTheDocument();
+    expect(locationOf()).toBe('/admin/usuarios');
     expect(screen.getByText('Em construção')).toBeInTheDocument();
   });
 });

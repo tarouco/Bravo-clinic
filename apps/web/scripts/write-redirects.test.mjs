@@ -46,3 +46,48 @@ describe('write-redirects CLI', () => {
     expect(result.stderr).toContain(MESSAGE);
   });
 });
+
+const STORAGE_MESSAGE = 'STORAGE_PUBLIC_ORIGIN must be an https URL';
+const API = 'https://br-x-api.compute.neon.tech';
+
+describe('buildRedirects /media/* rule (GES-108, AD-026)', () => {
+  it('emits the room-photos proxy after /api/* and before the SPA fallback when the storage origin is set', () => {
+    const rules = lines(buildRedirects(API, 'https://x'));
+    expect(rules).toEqual([
+      `/api/*  ${API}/:splat  200`,
+      '/media/*  https://x/room-photos/:splat  200',
+      '/*  /index.html  200',
+    ]);
+  });
+
+  it('omits the media rule when the storage origin is unset or empty', () => {
+    const without = buildRedirects(API);
+    expect(lines(without)).toHaveLength(2);
+    expect(without).not.toContain('/media/');
+    expect(buildRedirects(API, undefined)).toBe(without);
+    expect(buildRedirects(API, '')).toBe(without);
+  });
+
+  it('strips trailing slashes from the storage origin', () => {
+    const rule = '/media/*  https://x/room-photos/:splat  200';
+    expect(lines(buildRedirects(API, 'https://x/'))[1]).toBe(rule);
+    expect(lines(buildRedirects(API, 'https://x//'))[1]).toBe(rule);
+  });
+
+  it('rejects a storage origin that is not https', () => {
+    expect(() => buildRedirects(API, 'http://x')).toThrow(STORAGE_MESSAGE);
+    expect(() => buildRedirects(API, 'x.example')).toThrow(STORAGE_MESSAGE);
+    expect(() => buildRedirects(API, 'https://')).toThrow(STORAGE_MESSAGE);
+  });
+
+  it('still rejects a bad API origin first, with its own message', () => {
+    expect(() => buildRedirects('http://x', 'https://y')).toThrow(MESSAGE);
+  });
+
+  it('CLI exits non-zero with the storage message when STORAGE_PUBLIC_ORIGIN is not https', () => {
+    const env = { ...process.env, API_PROXY_ORIGIN: API, STORAGE_PUBLIC_ORIGIN: 'http://x' };
+    const result = spawnSync(process.execPath, [scriptPath], { env, encoding: 'utf8' });
+    expect(result.status).not.toBe(0);
+    expect(result.stderr).toContain(STORAGE_MESSAGE);
+  });
+});
