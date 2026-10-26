@@ -1079,10 +1079,10 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Fixture renders "Compra", "Reserva BRV-…", "60 min + 18 min de excedente = 78 min", "−78 min" and the balance column
-- [ ] "Carregar mais" calls `fetchNextPage` when `nextCursor` exists; hidden otherwise
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 5 new tests pass
+- [x] Fixture renders "Compra", "Reserva BRV-…", "60 min + 18 min de excedente = 78 min", "−78 min" and the balance column
+- [x] "Carregar mais" calls `fetchNextPage` when `nextCursor` exists; hidden otherwise
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 5 new tests pass
 
 **Tests**: unit
 **Gate**: quick
