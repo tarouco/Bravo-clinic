@@ -1466,11 +1466,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Rows show customer, category, base date, next charge, status label and "12h 30min" balance; filters update the query key
-- [ ] Adjust dialog requires justification and sends signed minutes; grant credit sends cents from "R$ 50,00"
-- [ ] Reception role fixture shows no Ajustar/Cancelar/Conceder/Vender buttons
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 8 new tests pass
+- [x] Rows show customer, category, base date, next charge, status label and "12h 30min" balance; filters update the query key
+- [x] Adjust dialog requires justification and sends signed minutes; grant credit sends cents from "R$ 50,00"
+- [x] Reception role fixture shows no Ajustar/Cancelar/Conceder/Vender buttons
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 8 new tests pass
 
 **Tests**: unit
 **Gate**: quick

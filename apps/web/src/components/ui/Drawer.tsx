@@ -13,9 +13,17 @@ export interface DrawerProps {
   children: ReactNode;
   /** Edge the panel slides from; defaults to the right. */
   side?: 'left' | 'right';
+  /** Wider panel for tables; defaults to the narrow one. */
+  wide?: boolean;
 }
 
-function DrawerPanel({ onClose, title, children, side = 'right' }: Omit<DrawerProps, 'open'>) {
+function DrawerPanel({
+  onClose,
+  title,
+  children,
+  side = 'right',
+  wide = false,
+}: Omit<DrawerProps, 'open'>) {
   const titleId = useId();
   const { panelRef, trapTab } = useDialog<HTMLDivElement>(onClose);
 
@@ -36,7 +44,10 @@ function DrawerPanel({ onClose, title, children, side = 'right' }: Omit<DrawerPr
         aria-labelledby={titleId}
         tabIndex={-1}
         onKeyDown={trapTab}
-        className="flex h-full w-full max-w-md flex-col overflow-y-auto bg-surface-raised p-space-lg text-ink shadow-raised focus:outline-none"
+        className={cx(
+          'flex h-full w-full flex-col overflow-y-auto bg-surface-raised p-space-lg text-ink shadow-raised focus:outline-none',
+          wide ? 'max-w-3xl' : 'max-w-md',
+        )}
       >
         <div className="mb-space-md flex items-start justify-between gap-space-md">
           <h2 id={titleId} className="font-heading text-heading-mobile text-ink">
