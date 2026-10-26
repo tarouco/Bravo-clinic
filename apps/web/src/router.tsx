@@ -10,6 +10,7 @@ import {
   RequireSection,
   RequireStaff,
 } from './features/auth/guards';
+import { BookingFlowPage } from './features/booking/BookingFlowPage';
 import { AppHomePage } from './pages/app/AppHomePage';
 import { LoginPage } from './pages/auth/LoginPage';
 import { ForgotPasswordPage } from './pages/auth/password/ForgotPasswordPage';
@@ -31,7 +32,6 @@ type PlaceholderRoute = readonly [path: string, title: string];
 /** Public pages that ship with later features (docs/architecture.md section 9.1). */
 const publicPlaceholders: PlaceholderRoute[] = [
   ['servicos-extras', 'Serviços extras'],
-  ['reservar', 'Reservar'],
   ['checkout/:bookingId', 'Pagamento'],
   ['pagamento/sandbox/:chargeId', 'Pagamento de teste'],
   ['pre-reserva/:token', 'Pré-reserva'],
@@ -40,7 +40,6 @@ const publicPlaceholders: PlaceholderRoute[] = [
 
 /** Tenant area pages that ship with later features. */
 const appPlaceholders: PlaceholderRoute[] = [
-  ['reservar', 'Reservar'],
   ['minhas-reservas', 'Minhas reservas'],
   ['minhas-reservas/:id', 'Reserva'],
   ['agenda', 'Agenda'],
@@ -87,6 +86,7 @@ export const appRoutes: RouteObject[] = [
       { path: 'contato', element: <ContactPage /> },
       { path: 'termos', element: <LegalPage kind="termos" /> },
       { path: 'privacidade', element: <LegalPage kind="privacidade" /> },
+      { path: 'reservar', element: <BookingFlowPage /> },
       ...publicPlaceholders.map(placeholder),
       { path: 'login', element: <LoginPage /> },
       { path: 'cadastro', element: <SignupPage /> },
@@ -111,6 +111,7 @@ export const appRoutes: RouteObject[] = [
         element: <AppShell />,
         children: [
           { index: true, element: <AppHomePage /> },
+          { path: 'reservar', element: <BookingFlowPage /> },
           ...appPlaceholders.map(placeholder),
           { path: '*', element: <NotFoundPage /> },
         ],

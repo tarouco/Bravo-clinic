@@ -1430,9 +1430,9 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: stepper shows exactly "Sala e data · Horário · Resumo · Pagamento"; URL params prefill and skip to Horário; choosing a block option sets `bloco=<id>`; back keeps selection
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 5 tests pass
+- [x] Tests: stepper shows exactly "Sala e data · Horário · Resumo · Pagamento"; URL params prefill and skip to Horário; choosing a block option sets `bloco=<id>`; back keeps selection
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 5 tests pass
 
 **Tests**: unit
 **Gate**: quick
