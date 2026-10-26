@@ -3,6 +3,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
 import { ToastProvider } from './components/ui/Toast';
+import { registerGestaoSlots } from './extensions/gestao';
 import { registerRevenueSlots } from './extensions/receita';
 import { queryClient } from './lib/query-client';
 import { PwaUpdatePrompt } from './pwa/PwaUpdatePrompt';
@@ -11,6 +12,7 @@ import './styles/index.css';
 import { ThemeProvider } from './theme/ThemeProvider';
 
 registerRevenueSlots();
+registerGestaoSlots();
 
 const container = document.getElementById('root');
 if (!container) throw new Error('Elemento #root não encontrado.');

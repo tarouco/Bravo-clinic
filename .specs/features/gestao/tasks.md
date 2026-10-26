@@ -1283,9 +1283,9 @@ T49 → T50
 - Skill: NONE
 
 **Done when**:
-- [ ] Tests assert picker hidden when no online service, stepper max = ceil(minutes / 60) for hourly and fixed 1 for project, `onChange` payload shape
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 4 tests pass
+- [x] Tests assert picker hidden when no online service, stepper max = ceil(minutes / 60) for hourly and fixed 1 for project, `onChange` payload shape
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 4 tests pass
 
 **Tests**: unit
 **Gate**: quick
