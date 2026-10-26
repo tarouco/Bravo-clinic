@@ -496,11 +496,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Integration test: migrations apply on an empty DB and a second run applies nothing
-- [ ] Tests: invalid booking status rejected by CHECK; second `is_reference` row rejected; `booking_events` UPDATE/DELETE raise `append_only_table`; duplicate pending reschedule request per booking rejected; duplicate payment-link hash rejected
-- [ ] Test: seed inserts the 8 categories of design.md §Seeds (names, types, windows, rates, `is_reference` only on "1 hora"); rerun after editing a price keeps the edit
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 9 tests pass
+- [x] Integration test: migrations apply on an empty DB and a second run applies nothing
+- [x] Tests: invalid booking status rejected by CHECK; second `is_reference` row rejected; `booking_events` UPDATE/DELETE raise `append_only_table`; duplicate pending reschedule request per booking rejected; duplicate payment-link hash rejected
+- [x] Test: seed inserts the 8 categories of design.md §Seeds (names, types, windows, rates, `is_reference` only on "1 hora"); rerun after editing a price keeps the edit
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 9 tests pass
 
 **Tests**: integration
 **Gate**: full

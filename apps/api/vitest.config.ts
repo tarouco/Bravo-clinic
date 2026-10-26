@@ -11,6 +11,9 @@ const testDatabaseUrl = rootEnv.DATABASE_URL_TEST ?? process.env.DATABASE_URL_TE
 export default defineConfig({
   test: {
     environment: 'node',
+    // Integration tests seed and query a remote Neon branch; round trips take tens of milliseconds.
+    testTimeout: 60_000,
+    hookTimeout: 60_000,
     include: ['src/**/*.test.ts'],
     globalSetup: ['./test/global-setup.ts'],
     setupFiles: ['./test/setup.ts'],

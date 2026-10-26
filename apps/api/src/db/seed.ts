@@ -9,7 +9,15 @@ import {
 import { eq } from 'drizzle-orm';
 import { hashPassword } from '../lib/crypto';
 import { createDb, withTransaction, type Db } from './client';
-import { auditLog, businessHours, holidays, rooms, settings, users } from './schema';
+import {
+  auditLog,
+  bookingCategories,
+  businessHours,
+  holidays,
+  rooms,
+  settings,
+  users,
+} from './schema';
 
 export interface AdminBootstrap {
   email: string;
@@ -80,6 +88,83 @@ const ROOMS = [
   },
 ].map((room, index) => ({ ...room, status: 'active', displayOrder: index + 1 }));
 
+const ALL_DAYS = [1, 2, 3, 4, 5, 6, 7];
+const hourly = (
+  displayOrder: number,
+  name: string,
+  window: [number, number],
+  rates: [number, number],
+  minDurationMinutes: number,
+  isReference = false,
+) => ({
+  displayOrder,
+  name,
+  type: 'hourly',
+  weekdays: ALL_DAYS,
+  appliesOnHolidays: true,
+  startMinute: window[0],
+  endMinute: window[1],
+  weekdayRateCents: rates[0],
+  weekendRateCents: rates[1],
+  minDurationMinutes,
+  period: 'single',
+  isReference,
+});
+
+/** The 8 factory categories (design.md "Seeds"); prices are examples until the admin reviews them. */
+const CATEGORIES = [
+  hourly(1, '1 hora', [0, 1140], [9700, 12000], 60, true),
+  hourly(2, '2 horas ou mais', [0, 1140], [8000, 9900], 120),
+  hourly(3, '1 hora — noite', [1140, 1440], [12000, 12000], 60),
+  hourly(4, '2 horas ou mais — noite', [1140, 1440], [9900, 9900], 120),
+  {
+    displayOrder: 5,
+    name: 'Meio turno mensal',
+    type: 'fixed_schedule',
+    weekdays: [1, 2, 3, 4, 5],
+    appliesOnHolidays: false,
+    startMinute: 420,
+    endMinute: 570,
+    pricePerOccurrenceCents: 28000,
+    period: 'monthly',
+  },
+  {
+    displayOrder: 6,
+    name: 'Turno mensal',
+    type: 'fixed_schedule',
+    weekdays: [1, 2, 3, 4, 5],
+    appliesOnHolidays: false,
+    startMinute: 420,
+    endMinute: 720,
+    pricePerOccurrenceCents: 50000,
+    period: 'monthly',
+  },
+  {
+    displayOrder: 7,
+    name: 'Pacote 20h mensal',
+    type: 'hour_package',
+    weekdays: ALL_DAYS,
+    appliesOnHolidays: true,
+    startMinute: 0,
+    endMinute: 1440,
+    fixedPriceCents: 160000,
+    includedMinutes: 1200,
+    period: 'monthly',
+  },
+  {
+    displayOrder: 8,
+    name: 'Pacote 30h mensal',
+    type: 'hour_package',
+    weekdays: ALL_DAYS,
+    appliesOnHolidays: true,
+    startMinute: 0,
+    endMinute: 1440,
+    fixedPriceCents: 240000,
+    includedMinutes: 1800,
+    period: 'monthly',
+  },
+];
+
 /** Prepares the first admin: null when none is needed, throws before any write when the password is weak. */
 async function prepareAdmin(db: Db, bootstrap: AdminBootstrap | undefined) {
   if (bootstrap === undefined) return null;
@@ -137,6 +222,15 @@ export async function runSeed(
       )
       .onConflictDoNothing()
       .returning({ id: holidays.id });
+
+    // Categories have no unique name: insert by name so reruns keep admin edits and add nothing.
+    const existingNames = new Set(
+      (await tx.select({ name: bookingCategories.name }).from(bookingCategories)).map(
+        (row) => row.name,
+      ),
+    );
+    const missingCategories = CATEGORIES.filter((category) => !existingNames.has(category.name));
+    if (missingCategories.length > 0) await tx.insert(bookingCategories).values(missingCategories);
 
     let adminCreated = false;
     if (admin !== null) {

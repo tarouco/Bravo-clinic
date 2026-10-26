@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { afterAll, describe, expect, it } from 'vitest';
 import { assertNotProduction, requireTestDatabaseUrl } from '../../test/require-test-db';
 import { createUser } from '../../test/factories';
@@ -5,6 +6,9 @@ import { createDb } from './client';
 import { runMigrations } from './migrate';
 import { auditLog, consents } from './schema';
 
+const journal = JSON.parse(
+  readFileSync(new URL('../../drizzle/meta/_journal.json', import.meta.url), 'utf8'),
+) as { entries: unknown[] };
 const testUrl = requireTestDatabaseUrl(process.env);
 const { pool, db } = createDb(testUrl);
 
@@ -85,7 +89,7 @@ describe('base migrations (FND-30, FND-31, FND-36)', () => {
 
     await runMigrations(testUrl);
 
-    expect(before).toBe('2');
+    expect(before).toBe(String(journal.entries.length));
     expect(await count()).toBe(before);
   });
 
