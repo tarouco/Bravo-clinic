@@ -95,6 +95,7 @@ describe('POST /app/bookings: guards (NUC-89..NUC-92)', () => {
 
     expect(res.status).toBe(409);
     expect(res.error?.code).toBe('BOOKING_NOT_OPEN');
+    expect(res.error?.message).toBe('As reservas online abrem em breve.');
     expect(await db.select().from(bookings)).toHaveLength(0);
   });
 
