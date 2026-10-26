@@ -1206,11 +1206,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Test: every slot name of NUC-203 renders nothing by default and renders a registered component
-- [ ] Test: a hook (`useDayAvailability`) returns the MSW fixture; a fixture violating its schema throws at import (test with a deliberately broken copy)
-- [ ] Tests: `track()` is a no-op without `VITE_GA4_ID`; with it, pushes the event to `window.dataLayer` and injects one gtag script
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Test: every slot name of NUC-203 renders nothing by default and renders a registered component
+- [x] Test: a hook (`useDayAvailability`) returns the MSW fixture; a fixture violating its schema throws at import (test with a deliberately broken copy)
+- [x] Tests: `track()` is a no-op without `VITE_GA4_ID`; with it, pushes the event to `window.dataLayer` and injects one gtag script
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1235,9 +1235,9 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: HoverCard opens on hover and on keyboard focus, closes on Esc and pointer leave; Drawer traps focus and returns it; Stepper renders 4 labelled steps with `aria-current="step"` on the active one
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 8 tests pass
+- [x] Tests: HoverCard opens on hover and on keyboard focus, closes on Esc and pointer leave; Drawer traps focus and returns it; Stepper renders 4 labelled steps with `aria-current="step"` on the active one
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 8 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1262,10 +1262,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: BookingSummary renders PR-3 fixture lines exactly "17:30–19:00 · 2 horas ou mais · 1h30 × R$ 80,00 = R$ 120,00" and "19:00–20:00 · 2 horas ou mais — noite · 1h × R$ 99,00 = R$ 99,00", total R$ 219,00, sinal and saldo with dates
-- [ ] Tests: StatusBadge label per status; PolicyAcceptance calls `onChange(true)` only when checked; Table sorts by column and triggers download with given filename
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 8 tests pass
+- [x] Tests: BookingSummary renders PR-3 fixture lines exactly "17:30–19:00 · 2 horas ou mais · 1h30 × R$ 80,00 = R$ 120,00" and "19:00–20:00 · 2 horas ou mais — noite · 1h × R$ 99,00 = R$ 99,00", total R$ 219,00, sinal and saldo with dates
+- [x] Tests: StatusBadge label per status; PolicyAcceptance calls `onChange(true)` only when checked; Table sorts by column and triggers download with given filename
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 8 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1290,10 +1290,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: CL-4 fixture → clicking 11:30 offers durations 1h, 1h30, 2h (end ≤ 13:30) only; unavailable cells are `aria-disabled`; a cell with `discountPercent: 10` shows "−10%"
-- [ ] Tests: MonthCalendar disables `past`/`out_of_range`, shows "Feriado: Finados" title on 2026-11-02, arrow-key navigation moves focus by day/week
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 8 tests pass
+- [x] Tests: CL-4 fixture → clicking 11:30 offers durations 1h, 1h30, 2h (end ≤ 13:30) only; unavailable cells are `aria-disabled`; a cell with `discountPercent: 10` shows "−10%"
+- [x] Tests: MonthCalendar disables `past`/`out_of_range`, shows "Feriado: Finados" title on 2026-11-02, arrow-key navigation moves focus by day/week
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 8 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1318,9 +1318,9 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: dragging from 10:00 to 11:30 over free cells calls `onRangeSelect` with 600–720; an event 17:30–20:00 spans 5 half-hour rows; `showCleanup` adds a shaded 20:00–20:30 band and `showCleanup={false}` omits it; block shows its tag; navigation emits the new range
-- [ ] Gate check passes: `npm test -w apps/web` (phase end: Build-B gate)
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests: dragging from 10:00 to 11:30 over free cells calls `onRangeSelect` with 600–720; an event 17:30–20:00 spans 5 half-hour rows; `showCleanup` adds a shaded 20:00–20:30 band and `showCleanup={false}` omits it; block shows its tag; navigation emits the new range
+- [x] Gate check passes: `npm test -w apps/web` (phase end: Build-B gate)
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: build
@@ -1347,10 +1347,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: `/salas` shows 3 cards with "A partir de R$ 80,00/h" and placeholder image when `cover` is null
-- [ ] Tests: simulator keeps FND-100 values with factory fixture, and shows R$ 180,00 for 2 h weekday when the fixture rate is 9000
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 5 tests pass
+- [x] Tests: `/salas` shows 3 cards with "A partir de R$ 80,00/h" and placeholder image when `cover` is null
+- [x] Tests: simulator keeps FND-100 values with factory fixture, and shows R$ 180,00 for 2 h weekday when the fixture rate is 9000
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 5 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1374,9 +1374,9 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: renders gallery placeholder, equipment list and "R$ 97,00/h" category; clicking 2026-10-27 then 17:30 and 2h30 produces link `/reservar?sala=principal&data=2026-10-27&inicio=1050&fim=1200`; holiday marker visible; unknown slug (MSW 404) shows the 404 page
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 4 tests pass
+- [x] Tests: renders gallery placeholder, equipment list and "R$ 97,00/h" category; clicking 2026-10-27 then 17:30 and 2h30 produces link `/reservar?sala=principal&data=2026-10-27&inicio=1050&fim=1200`; holiday marker visible; unknown slug (MSW 404) shows the 404 page
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 4 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1401,9 +1401,9 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: pricing lists 4 hourly categories with weekday/weekend rates and a registered fake `pricing.packages` slot renders after them; políticas renders the fixture section titles; contato has the exact Maps URL and per-day hours; legal pages show "Versão terms-2026-10" / "Versão privacy-2026-10"
-- [ ] Gate check passes: `npm test -w apps/web` (phase end: Build-B gate)
-- [ ] Test count: ≥ 5 tests pass
+- [x] Tests: pricing lists 4 hourly categories with weekday/weekend rates and a registered fake `pricing.packages` slot renders after them; políticas renders the fixture section titles; contato has the exact Maps URL and per-day hours; legal pages show "Versão terms-2026-10" / "Versão privacy-2026-10"
+- [x] Gate check passes: `npm test -w apps/web` (phase end: Build-B gate)
+- [x] Test count: ≥ 5 tests pass
 
 **Tests**: unit
 **Gate**: build

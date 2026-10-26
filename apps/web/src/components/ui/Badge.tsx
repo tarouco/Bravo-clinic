@@ -1,7 +1,7 @@
 import type { HTMLAttributes } from 'react';
 import { cx } from './cx';
 
-export type BadgeTone = 'champagne' | 'neutral';
+export type BadgeTone = 'champagne' | 'neutral' | 'bronze' | 'error';
 
 export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   tone?: BadgeTone;
@@ -10,6 +10,8 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
 const tones: Record<BadgeTone, string> = {
   champagne: 'bg-champagne-soft text-on-champagne',
   neutral: 'bg-surface-stone text-ink-muted',
+  bronze: 'bg-bronze text-on-bronze',
+  error: 'bg-error-container text-on-error-container',
 };
 
 /** Mini chip: uppercase caption with .08em tracking (DESIGN.md status badges). */

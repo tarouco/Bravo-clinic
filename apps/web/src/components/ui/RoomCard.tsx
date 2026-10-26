@@ -16,8 +16,8 @@ export interface RoomCardProps {
   tags: string[];
   description: string;
   equipment: string[];
-  /** Lowest hourly rate, in integer cents. */
-  fromPriceCents: number;
+  /** Lowest hourly rate, in integer cents; null when no hourly category is active. */
+  fromPriceCents: number | null;
   onReserve: () => void;
 }
 
@@ -71,15 +71,19 @@ export function RoomCard({
           </ul>
         </div>
         <div className="-mx-space-lg -mb-space-lg mt-space-md flex items-center justify-between bg-surface-container-low p-space-lg">
-          <div>
-            <span className="block font-caption text-caption uppercase tracking-wider text-ink-muted">
-              A partir de
-            </span>
-            <span className="font-display text-heading font-semibold text-bronze">
-              {formatBRL(fromPriceCents)}
-              <span className="font-body text-small font-normal text-ink-muted">/h</span>
-            </span>
-          </div>
+          {fromPriceCents === null ? (
+            <span className="font-small text-small text-ink-muted">Consulte os valores</span>
+          ) : (
+            <div>
+              <span className="block font-caption text-caption uppercase tracking-wider text-ink-muted">
+                A partir de
+              </span>
+              <span className="font-display text-heading font-semibold text-bronze">
+                {formatBRL(fromPriceCents)}
+                <span className="font-body text-small font-normal text-ink-muted">/h</span>
+              </span>
+            </div>
+          )}
           <Button size="sm" onClick={onReserve}>
             Reservar Sala
           </Button>

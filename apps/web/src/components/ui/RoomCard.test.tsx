@@ -60,4 +60,10 @@ describe('RoomCard', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Reservar Sala' }));
     expect(onReserve).toHaveBeenCalledTimes(1);
   });
+
+  it('shows "Consulte os valores" instead of a price when fromPriceCents is null', () => {
+    render(<RoomCard {...base} fromPriceCents={null} />);
+    expect(screen.getByText('Consulte os valores')).toBeInTheDocument();
+    expect(screen.queryByText('A partir de')).toBeNull();
+  });
 });

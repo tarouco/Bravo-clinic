@@ -1,16 +1,29 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router-dom';
+import { http, HttpResponse } from 'msw';
 import { describe, expect, it } from 'vitest';
+import { catalog } from '../../../test/fixtures/nucleo';
+import { server } from '../../../test/msw/server';
+import { renderWithProviders } from '../../../test/render-with-providers';
 import { PricingSimulatorSection } from './PricingSimulatorSection';
 
 const normalize = (text: string | null) => (text ?? '').replace(/\s+/g, ' ').trim();
 
 function renderSection() {
-  return render(
-    <MemoryRouter>
-      <PricingSimulatorSection />
-    </MemoryRouter>,
+  return renderWithProviders(<PricingSimulatorSection />);
+}
+
+/** Serves a catalog where "2 horas ou mais" costs `weekdayRateCents` on weekdays. */
+function useCatalogWithTwoHourRate(weekdayRateCents: number) {
+  server.use(
+    http.get('*/api/public/catalog', () =>
+      HttpResponse.json({
+        ...catalog,
+        hourly: catalog.hourly.map((c) =>
+          c.name === '2 horas ou mais' ? { ...c, weekdayRateCents } : c,
+        ),
+      }),
+    ),
   );
 }
 
@@ -119,5 +132,31 @@ describe('PricingSimulatorSection', () => {
     expect(
       screen.getByText('Inclui +30 min gratuitos de limpeza pós-atendimento'),
     ).toBeInTheDocument();
+  });
+
+  it('prices with the live catalog: 2 h on a weekday at R$ 90,00/h shows R$ 180,00 (NUC-181)', async () => {
+    useCatalogWithTwoHourRate(9000);
+    renderSection();
+
+    await waitFor(() => expect(valueOf('Valor Total da Reserva:')).toBe('R$ 180,00'));
+    expect(valueOf(/Sinal 50% no checkout/)).toBe('R$ 90,00');
+    expect(normalize(screen.getByText(/Tarifa Desconto/).textContent)).toBe(
+      '2.0h × R$ 90,00/h (Tarifa Desconto)',
+    );
+  });
+
+  it('explains when the live categories cannot price the session', async () => {
+    server.use(
+      http.get('*/api/public/catalog', () =>
+        HttpResponse.json({
+          ...catalog,
+          hourly: catalog.hourly.filter((c) => c.startMinute >= 1140),
+        }),
+      ),
+    );
+    renderSection();
+
+    expect(await screen.findByText(/Não foi possível simular esta duração/)).toBeInTheDocument();
+    expect(screen.queryByText('Valor Total da Reserva:')).toBeNull();
   });
 });

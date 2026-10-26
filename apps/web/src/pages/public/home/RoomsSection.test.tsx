@@ -1,9 +1,19 @@
-import { render, screen, within } from '@testing-library/react';
+import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it, vi } from 'vitest';
+import { http } from 'msw';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { apiError } from '../../../test/msw/handlers';
+import { server } from '../../../test/msw/server';
+import { renderWithProviders } from '../../../test/render-with-providers';
 import { RoomsSection } from './RoomsSection';
 
-describe('RoomsSection', () => {
+const render = (ui: React.ReactElement) => renderWithProviders(ui);
+
+describe('RoomsSection with the API unavailable (static reference rooms)', () => {
+  beforeEach(() => {
+    server.use(http.get('*/api/public/rooms', () => apiError(404, 'NOT_FOUND', 'Indisponível.')));
+  });
+
   it('is the #salas section with eyebrow, heading and the unified-tariff pill', () => {
     const { container } = render(<RoomsSection onReserve={vi.fn()} />);
 
@@ -52,6 +62,38 @@ describe('RoomsSection', () => {
     await userEvent.click(within(secondCard).getByRole('button', { name: 'Reservar Sala' }));
 
     expect(onReserve).toHaveBeenCalledTimes(1);
+    expect(onReserve).toHaveBeenCalledWith('secundaria');
+  });
+});
+
+describe('RoomsSection with live rooms (NUC-181)', () => {
+  it('renders the rooms of the API: ideal-for tags, equipment, cover and the reference chip', async () => {
+    render(<RoomsSection onReserve={vi.fn()} />);
+
+    expect(await screen.findByText('Nutrição')).toBeInTheDocument();
+    const cards = screen.getAllByRole('article');
+    expect(cards).toHaveLength(3);
+    expect(within(cards[0] as HTMLElement).getByText('Foco cirúrgico')).toBeInTheDocument();
+    expect(within(cards[0] as HTMLElement).getByRole('img')).toHaveAttribute(
+      'src',
+      '/media/principal-large.webp',
+    );
+    expect(within(cards[0] as HTMLElement).getByText('Filmagem & Estúdio')).toBeInTheDocument();
+    expect(within(cards[1] as HTMLElement).getByRole('img')).toHaveAttribute(
+      'src',
+      '/room-placeholder.webp',
+    );
+  });
+
+  it('shows the price from the API ("A partir de" R$ 80,00) and reports the room slug', async () => {
+    const onReserve = vi.fn();
+    render(<RoomsSection onReserve={onReserve} />);
+    await screen.findByText('Nutrição');
+
+    const second = screen.getAllByRole('article')[1] as HTMLElement;
+    expect(within(second).getByText(/R\$\s80,00/)).toBeInTheDocument();
+    await userEvent.click(within(second).getByRole('button', { name: 'Reservar Sala' }));
+
     expect(onReserve).toHaveBeenCalledWith('secundaria');
   });
 });

@@ -1,11 +1,14 @@
 import { formatBRL } from '@bravo/core';
 import { ArrowRight, Calculator, Check, CreditCard, SprayCan, Table2 } from 'lucide-react';
-import { useState, type ReactNode } from 'react';
+import { useMemo, useState, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { Eyebrow } from '../../../components/ui/Brand';
+import { Alert } from '../../../components/ui/Feedback';
 import { focusRing } from '../../../components/ui/cx';
 import { Icon } from '../../../components/ui/Icon';
-import { hoursLabel, simulate, type SimulatorPeriod } from '../../../features/home/simulator';
+import { useCatalog } from '../../../features/catalog/api';
+import { FACTORY_HOURLY_CATEGORIES } from '../../../features/home/factory-categories';
+import { hoursLabel, simulateWith, type SimulatorPeriod } from '../../../features/home/simulator';
 
 interface TariffRow {
   label: string;
@@ -128,7 +131,15 @@ function SummaryRow({ label, children }: { label: ReactNode; children: ReactNode
 function Simulator() {
   const [period, setPeriod] = useState<SimulatorPeriod>('util');
   const [hours, setHours] = useState(2);
-  const result = simulate(period, hours);
+  const { data: catalog } = useCatalog();
+  // The factory catalog prices the simulator until the live one arrives or if the API fails.
+  const categories = useMemo(
+    () =>
+      catalog?.hourly.map((c) => ({ ...c, status: 'active' as const })) ??
+      FACTORY_HOURLY_CATEGORIES,
+    [catalog],
+  );
+  const result = simulateWith(categories, period, hours);
 
   return (
     <div className="lg:col-span-6 bg-surface-raised rounded-xl p-space-xl shadow-xl space-y-space-lg">
@@ -204,55 +215,61 @@ function Simulator() {
             <span>6h</span>
           </div>
         </div>
-        <div className="p-space-md bg-surface rounded-xl space-y-space-sm">
-          <SummaryRow
-            label={
-              <span className="font-small text-small text-ink-muted">Memória de cálculo:</span>
-            }
-          >
-            <span className="font-mono text-small text-ink font-medium text-right">
-              {result.formula}
-            </span>
-          </SummaryRow>
-          <SummaryRow
-            label={
-              <span className="font-body text-body text-ink font-medium">
-                Valor Total da Reserva:
-              </span>
-            }
-          >
-            <span className="font-display-l text-heading text-ink font-semibold">
-              {formatBRL(result.totalCents)}
-            </span>
-          </SummaryRow>
-          <div className="pt-space-xs border-t border-hairline/30 space-y-1">
+        {result ? (
+          <div className="p-space-md bg-surface rounded-xl space-y-space-sm">
             <SummaryRow
               label={
-                <span className="flex items-center gap-1 text-small text-bronze font-medium">
-                  <Icon as={CreditCard} size={14} className="shrink-0" />
-                  Sinal 50% no checkout (Mercado Pago):
-                </span>
+                <span className="font-small text-small text-ink-muted">Memória de cálculo:</span>
               }
             >
-              <span className="text-small text-bronze font-semibold">
-                {formatBRL(result.sinalCents)}
+              <span className="font-mono text-small text-ink font-medium text-right">
+                {result.formula}
               </span>
             </SummaryRow>
             <SummaryRow
               label={
-                <span className="text-caption text-ink-muted">
-                  Saldo 50% restante (cobrado 48h antes da data):
+                <span className="font-body text-body text-ink font-medium">
+                  Valor Total da Reserva:
                 </span>
               }
             >
-              <span className="text-caption text-ink-muted">{formatBRL(result.saldoCents)}</span>
+              <span className="font-display-l text-heading text-ink font-semibold">
+                {formatBRL(result.totalCents)}
+              </span>
             </SummaryRow>
+            <div className="pt-space-xs border-t border-hairline/30 space-y-1">
+              <SummaryRow
+                label={
+                  <span className="flex items-center gap-1 text-small text-bronze font-medium">
+                    <Icon as={CreditCard} size={14} className="shrink-0" />
+                    Sinal 50% no checkout (Mercado Pago):
+                  </span>
+                }
+              >
+                <span className="text-small text-bronze font-semibold">
+                  {formatBRL(result.sinalCents)}
+                </span>
+              </SummaryRow>
+              <SummaryRow
+                label={
+                  <span className="text-caption text-ink-muted">
+                    Saldo 50% restante (cobrado 48h antes da data):
+                  </span>
+                }
+              >
+                <span className="text-caption text-ink-muted">{formatBRL(result.saldoCents)}</span>
+              </SummaryRow>
+            </div>
+            <div className="flex items-center gap-space-xs text-ink-muted font-caption text-caption pt-space-xs">
+              <Icon as={Check} size={12} className="text-bronze shrink-0" />
+              <span>Inclui +30 min gratuitos de limpeza pós-atendimento</span>
+            </div>
           </div>
-          <div className="flex items-center gap-space-xs text-ink-muted font-caption text-caption pt-space-xs">
-            <Icon as={Check} size={12} className="text-bronze shrink-0" />
-            <span>Inclui +30 min gratuitos de limpeza pós-atendimento</span>
-          </div>
-        </div>
+        ) : (
+          <Alert tone="info">
+            Não foi possível simular esta duração com as tarifas atuais. Fale com a recepção.
+          </Alert>
+        )}
         <Link
           to="/reservar"
           className={`w-full py-space-md bg-bronze hover:bg-walnut text-on-bronze font-small text-small uppercase tracking-[0.08em] rounded shadow-md transition-all flex items-center justify-center gap-space-xs ${focusRing}`}
