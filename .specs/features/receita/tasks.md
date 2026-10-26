@@ -1163,10 +1163,10 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Renders headings "Pacotes de horas" and "Horário fixo" with fixture cards; skeleton while loading; empty → section hidden
-- [ ] `PricingPage` test shows the section after the avulsas section
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 4 new tests pass
+- [x] Renders headings "Pacotes de horas" and "Horário fixo" with fixture cards; skeleton while loading; empty → section hidden
+- [x] `PricingPage` test shows the section after the avulsas section
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 4 new tests pass
 
 **Tests**: unit
 **Gate**: quick
