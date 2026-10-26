@@ -20,6 +20,7 @@ import { AgendaPage } from './pages/app/AgendaPage';
 import { AppHomePage } from './pages/app/AppHomePage';
 import { BookingDetailPage } from './pages/app/BookingDetailPage';
 import { CardsPage } from './pages/app/CardsPage';
+import { ComprasLayout, ComprasPage } from './pages/app/compras/ComprasPage';
 import { MyBookingsPage } from './pages/app/MyBookingsPage';
 import { ProfilePage } from './pages/app/ProfilePage';
 import { LoginPage } from './pages/auth/LoginPage';
@@ -48,10 +49,6 @@ const publicPlaceholders: PlaceholderRoute[] = [['servicos-extras', 'Serviços e
 
 /** Tenant area pages that ship with later features. */
 const appPlaceholders: PlaceholderRoute[] = [
-  ['compras', 'Compras'],
-  ['compras/horas-extras', 'Horas extras'],
-  ['compras/creditos', 'Créditos'],
-  ['compras/historico', 'Histórico de compras'],
   ['orcamentos', 'Orçamentos'],
   ['perfil/notificacoes', 'Notificações'],
   ['perfil/privacidade', 'Privacidade'],
@@ -136,6 +133,17 @@ export const appRoutes: RouteObject[] = [
           { path: 'agenda', element: <AgendaPage /> },
           { path: 'perfil', element: <ProfilePage /> },
           { path: 'perfil/cartoes', element: <CardsPage /> },
+          {
+            path: 'compras',
+            element: <ComprasLayout />,
+            children: [
+              { index: true, element: <ComprasPage /> },
+              { path: 'assinaturas/:id/pagar', element: <ComprasPage /> },
+              placeholder(['horas-extras', 'Horas extras']),
+              placeholder(['creditos', 'Créditos']),
+              placeholder(['historico', 'Histórico de compras']),
+            ],
+          },
           ...appPlaceholders.map(placeholder),
           { path: '*', element: <NotFoundPage /> },
         ],

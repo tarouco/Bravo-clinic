@@ -1,0 +1,145 @@
+import { useState } from 'react';
+import { Link, Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Button } from '../../../components/ui/Button';
+import { Alert, Spinner } from '../../../components/ui/Feedback';
+import { Tabs, type TabItem } from '../../../components/ui/Tabs';
+import { useExtraHours, usePackages, useSubscriptions } from '../../../features/purchases/api';
+import { LedgerSection } from '../../../features/purchases/LedgerSection';
+import { PayDialog } from '../../../features/purchases/PayDialog';
+import { SubscriptionCard } from '../../../features/purchases/SubscriptionCard';
+import { usePageTitle } from '../../../lib/usePageTitle';
+
+interface ComprasTab {
+  id: string;
+  label: string;
+  path: string;
+}
+
+const BASE = '/app/compras';
+
+/** The tab a path belongs to: `/app/compras/assinaturas/:id/pagar` is still Assinaturas. */
+function activeTabId(pathname: string): string {
+  if (pathname.startsWith(`${BASE}/horas-extras`)) return 'horas-extras';
+  if (pathname.startsWith(`${BASE}/creditos`)) return 'creditos';
+  if (pathname.startsWith(`${BASE}/historico`)) return 'historico';
+  return 'assinaturas';
+}
+
+/**
+ * `/app/compras/*`: the tabs Assinaturas, Horas extras, Créditos and Histórico (REC-146). Horas
+ * extras shows only while the API says the tenant is eligible (REC-69).
+ */
+export function ComprasLayout() {
+  usePageTitle('Compras');
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const extraHours = useExtraHours();
+
+  const tabs: ComprasTab[] = [
+    { id: 'assinaturas', label: 'Assinaturas', path: BASE },
+    ...(extraHours.data?.eligible
+      ? [{ id: 'horas-extras', label: 'Horas extras', path: `${BASE}/horas-extras` }]
+      : []),
+    { id: 'creditos', label: 'Créditos', path: `${BASE}/creditos` },
+    { id: 'historico', label: 'Histórico', path: `${BASE}/historico` },
+  ];
+  const active = activeTabId(pathname);
+  const items: TabItem[] = tabs.map((tab) => ({
+    id: tab.id,
+    label: tab.label,
+    content: tab.id === active ? <Outlet /> : null,
+  }));
+
+  return (
+    <div className="mx-auto max-w-4xl space-y-space-lg px-gutter py-space-xl md:py-space-3xl">
+      <h1 className="font-display-l-mobile text-display-l-mobile text-ink md:font-display-l md:text-display-l">
+        Compras
+      </h1>
+      <Tabs
+        label="Compras"
+        items={items}
+        {...(tabs.some((tab) => tab.id === active) ? { value: active } : {})}
+        onValueChange={(id) => {
+          const target = tabs.find((tab) => tab.id === id);
+          if (target) void navigate(target.path);
+        }}
+      />
+      {/* A tab the tenant cannot see (Horas extras without a package) still renders its page,
+          which sends the tenant back to Assinaturas. */}
+      {tabs.some((tab) => tab.id === active) ? null : <Outlet />}
+    </div>
+  );
+}
+
+/** Assinaturas tab: a card per subscription with the actions of its status (REC-143, REC-144, REC-147). */
+export function ComprasPage() {
+  const navigate = useNavigate();
+  const { id: payId } = useParams();
+  const subscriptions = useSubscriptions();
+  const packages = usePackages();
+  const [ledgerId, setLedgerId] = useState<string | null>(null);
+
+  if (subscriptions.isPending) {
+    return (
+      <div className="flex justify-center py-space-2xl">
+        <Spinner label="Carregando assinaturas" />
+      </div>
+    );
+  }
+  if (subscriptions.isError) {
+    return <Alert tone="error">Não foi possível carregar suas assinaturas agora.</Alert>;
+  }
+
+  const items = subscriptions.data.items;
+  const offers = packages.data?.items ?? [];
+  const ledgerOf = items.find((subscription) => subscription.id === ledgerId);
+
+  return (
+    <div className="space-y-space-lg">
+      {items.length === 0 ? (
+        <div className="flex flex-col items-start gap-space-md rounded-card border border-hairline bg-surface-raised p-space-lg">
+          <h2 className="font-heading-mobile text-heading-mobile text-ink">
+            Você ainda não tem assinaturas
+          </h2>
+          <p className="font-small text-small text-ink-muted">
+            Pacotes de horas e horários fixos têm preço melhor e renovam sozinhos.
+          </p>
+          <Button asChild>
+            <Link to="/precos">Ver pacotes</Link>
+          </Button>
+        </div>
+      ) : (
+        <div className="grid gap-space-md">
+          {items.map((subscription) => (
+            <SubscriptionCard
+              key={subscription.id}
+              subscription={subscription}
+              offer={offers.find((offer) => offer.id === subscription.category.id)}
+              onLedger={() => {
+                setLedgerId(subscription.id);
+              }}
+            />
+          ))}
+        </div>
+      )}
+
+      {ledgerOf ? (
+        <LedgerSection
+          subscription={ledgerOf}
+          onClose={() => {
+            setLedgerId(null);
+          }}
+        />
+      ) : null}
+
+      {payId ? (
+        <PayDialog
+          subscriptionId={payId}
+          onClose={() => {
+            void navigate(BASE);
+          }}
+        />
+      ) : null}
+    </div>
+  );
+}

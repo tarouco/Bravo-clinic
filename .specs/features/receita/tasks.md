@@ -1245,11 +1245,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Active fixture shows "Trocar", "Cancelar", "Extrato"; suspended shows "Regularizar"; awaiting shows "Pagar"; ended shows none
-- [ ] Next charge reads "30/11/2026 · R$ 1.600,00 · cartão final 4242"; empty state links `/precos`
-- [ ] Horas extras tab hidden for a non-eligible fixture; `/app/compras/assinaturas/<id>/pagar` opens `PayDialog`
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 8 new tests pass
+- [x] Active fixture shows "Trocar", "Cancelar", "Extrato"; suspended shows "Regularizar"; awaiting shows "Pagar"; ended shows none
+- [x] Next charge reads "30/11/2026 · R$ 1.600,00 · cartão final 4242"; empty state links `/precos`
+- [x] Horas extras tab hidden for a non-eligible fixture; `/app/compras/assinaturas/<id>/pagar` opens `PayDialog`
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 8 new tests pass
 
 **Tests**: unit
 **Gate**: quick

@@ -35,9 +35,11 @@ import { parseFixture } from '../../test/fixtures/parse';
 export const RID = {
   pacote: 'aaaaaaaa-aaaa-4aaa-8aaa-111111111111',
   meioTurno: 'aaaaaaaa-aaaa-4aaa-8aaa-222222222222',
+  pacote30h: 'aaaaaaaa-aaaa-4aaa-8aaa-333333333333',
   subActive: 'bbbbbbbb-bbbb-4bbb-8bbb-111111111111',
   subSuspended: 'bbbbbbbb-bbbb-4bbb-8bbb-222222222222',
   subAwaiting: 'bbbbbbbb-bbbb-4bbb-8bbb-333333333333',
+  subEnded: 'bbbbbbbb-bbbb-4bbb-8bbb-444444444444',
   periodActive: 'cccccccc-cccc-4ccc-8ccc-111111111111',
   periodNext: 'cccccccc-cccc-4ccc-8ccc-222222222222',
   periodSuspended: 'cccccccc-cccc-4ccc-8ccc-333333333333',
@@ -88,6 +90,32 @@ export const packageOffers = parseFixture(
 );
 export const pacote20h = packageOffers.items[0]!;
 export const meioTurno = packageOffers.items[1]!;
+
+/** A second hour package, the target of a switch from Pacote 20h (REC-71 example: 160000/1200 to 225000/1800). */
+export const pacote30h = parseFixture(
+  packageOfferListSchema,
+  {
+    items: [
+      {
+        id: RID.pacote30h,
+        name: 'Pacote 30h',
+        type: 'hour_package',
+        period: 'monthly',
+        periodDays: 30,
+        priceCents: 225000,
+        includedMinutes: 1800,
+        avgHourCents: 7500,
+      },
+    ],
+  },
+  'pacote30h',
+).items[0]!;
+
+export const packageOffersForSwitch = parseFixture(
+  packageOfferListSchema,
+  { items: [pacote20h, pacote30h, meioTurno] },
+  'packageOffersForSwitch',
+);
 
 /** Meio turno from 2026-11-02: 22 occurrences, none conflicting; one conflict variant below. */
 export const occurrenceCheck = parseFixture(
@@ -256,6 +284,18 @@ export const subscriptionAwaiting = parseFixture(
   'subscriptionAwaiting',
 );
 
+export const subscriptionEnded = parseFixture(
+  subscriptionSchema,
+  {
+    ...subscriptionSuspended,
+    id: RID.subEnded,
+    status: 'ended',
+    currentPeriod: null,
+    balance: { packageMinutes: 0, includedMinutes: 1200, extraMinutes: 0 },
+  },
+  'subscriptionEnded',
+);
+
 export const subscriptionList = parseFixture(
   subscriptionListSchema,
   { items: [subscriptionActive, subscriptionSuspended, subscriptionAwaiting] },
@@ -333,6 +373,49 @@ export const switchQuote = parseFixture(
   'switchQuote',
 );
 
+/** REC-71: 6h (360 min) left become 6h 24min in Pacote 30h; the new period totals 36h 24min. */
+export const switchQuoteHour = parseFixture(
+  switchQuoteSchema,
+  {
+    remainingMinutes: 360,
+    convertedMinutes: 384,
+    newIncludedMinutes: 1800,
+    newPeriodTotalMinutes: 2184,
+    startsOn: '2026-10-26',
+    endsOn: '2026-11-25',
+    priceCents: 225000,
+    creditAppliedCents: 0,
+    payNowCents: 225000,
+  },
+  'switchQuoteHour',
+);
+
+export const switchQuoteFixed = parseFixture(
+  switchQuoteSchema,
+  {
+    releasedOccurrences: 12,
+    startsOn: '2026-11-02',
+    endsOn: '2026-12-02',
+    priceCents: 616000,
+    creditAppliedCents: 0,
+    payNowCents: 616000,
+  },
+  'switchQuoteFixed',
+);
+
+/** Cancel preview of an hour package: 6h lost, 300 extra minutes kept. */
+export const cancelPreviewHour = parseFixture(
+  cancelPreviewSchema,
+  { minutesLost: 360, extraMinutesKept: 300 },
+  'cancelPreviewHour',
+);
+
+export const cancelPreviewFixed = parseFixture(
+  cancelPreviewSchema,
+  { occurrencesReleased: 12, extraMinutesKept: 0 },
+  'cancelPreviewFixed',
+);
+
 export const cancelPreview = parseFixture(
   cancelPreviewSchema,
   { minutesLost: 750, extraMinutesKept: 90 },
@@ -360,6 +443,42 @@ export const extraHoursSummary = parseFixture(
     totalRemainingMinutes: 90,
   },
   'extraHoursSummary',
+);
+
+/** Active Pacote 20h subscriber: unit price R$ 80,00, 1..20 h, one lot of 300 min (REC-62, REC-63). */
+export const extraHoursPackage20h = parseFixture(
+  extraHoursSummarySchema,
+  {
+    eligible: true,
+    unitPriceCents: 8000,
+    minHours: 1,
+    maxHours: 20,
+    lots: [
+      {
+        id: RID.lot,
+        source: 'purchase',
+        minutesGranted: 300,
+        minutesRemaining: 300,
+        expiresAt: '2027-02-08T15:00:00.000Z',
+      },
+    ],
+    totalRemainingMinutes: 300,
+  },
+  'extraHoursPackage20h',
+);
+
+/** Tenant without an active hour package: the Horas extras tab stays hidden (REC-69). */
+export const extraHoursIneligible = parseFixture(
+  extraHoursSummarySchema,
+  {
+    eligible: false,
+    reason: 'Horas extras são exclusivas para assinantes de um pacote de horas ativo.',
+    minHours: 1,
+    maxHours: 40,
+    lots: [],
+    totalRemainingMinutes: 0,
+  },
+  'extraHoursIneligible',
 );
 
 export const creditsSummary = parseFixture(
