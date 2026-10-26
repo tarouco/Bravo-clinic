@@ -26,7 +26,7 @@ describe('StructurePage', () => {
     expect(screen.getAllByRole('figure')).toHaveLength(8);
   });
 
-  it('opens a video in a modal with controls and without autoplay', async () => {
+  it('opens a video in a modal that plays on its own, in a loop, with controls', async () => {
     renderPage();
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
 
@@ -36,7 +36,8 @@ describe('StructurePage', () => {
     const video = dialog.querySelector('video');
     expect(video).toHaveAttribute('src', '/videos/institucional.mp4');
     expect(video).toHaveAttribute('controls');
-    expect(video).not.toHaveAttribute('autoplay');
+    expect(video?.autoplay).toBe(true);
+    expect(video?.loop).toBe(true);
 
     await userEvent.click(within(dialog).getByRole('button', { name: 'Fechar' }));
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();

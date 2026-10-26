@@ -90,7 +90,7 @@ const GALLERY: { title: string; photos: GalleryPhoto[] }[] = [
   },
 ];
 
-/** Poster card that opens the video; playback always starts from the visitor's own click. */
+/** Poster card that opens the video; the click that opens it also starts playback. */
 function VideoCard({ video, onOpen }: { video: StructureVideo; onOpen: () => void }) {
   return (
     <button
@@ -201,8 +201,9 @@ export function StructurePage() {
             src={playing.src}
             poster={playing.poster}
             controls
+            autoPlay
+            loop
             playsInline
-            preload="metadata"
           >
             Seu navegador não reproduz este vídeo.
           </video>
