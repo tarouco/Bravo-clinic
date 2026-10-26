@@ -129,6 +129,21 @@ describe('CalendarConfigPage parameters (NUC-41)', () => {
   });
 });
 
+describe('CalendarConfigPage category overlay (NUC-72)', () => {
+  it('draws the checked category over each open day and hatches the hours no category covers', async () => {
+    const { container } = renderPage();
+
+    await userEvent.click(await screen.findByRole('checkbox', { name: '1 hora' }));
+
+    const monday = container.querySelector<HTMLElement>('[data-day="mon"]');
+    expect(monday?.querySelector('[data-kind="band"]')).not.toBeNull();
+    const hatch = monday?.querySelector('[data-kind="uncovered"]');
+    expect(hatch).toHaveAttribute('data-start', '1140');
+    expect(hatch).toHaveAttribute('data-end', '1440');
+    expect(container.querySelector('[data-day="sun"] [data-kind]')).toBeNull();
+  });
+});
+
 describe('CalendarConfigPage first-access checklist (NUC-73)', () => {
   it('is hidden once the prices were reviewed', async () => {
     renderPage();

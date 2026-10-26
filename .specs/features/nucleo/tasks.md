@@ -1627,10 +1627,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: typing "1.600,00" with 20 h shows "R$ 1.600,00 → R$ 80,00/h" before saving; package rows read-only with "Gerenciado em Pacotes"; V_ref radio calls the reference endpoint; 422 shows field errors
-- [ ] Tests: overlay with "1 hora — noite" unchecked as inactive fixture hatches 19:00–00:00 with "Horário sem categoria"
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests: typing "1.600,00" with 20 h shows "R$ 1.600,00 → R$ 80,00/h" before saving; package rows read-only with "Gerenciado em Pacotes"; V_ref radio calls the reference endpoint; 422 shows field errors
+- [x] Tests: overlay with "1 hora — noite" unchecked as inactive fixture hatches 19:00–00:00 with "Horário sem categoria"
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick

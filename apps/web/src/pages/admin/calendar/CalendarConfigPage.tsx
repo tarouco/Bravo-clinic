@@ -5,9 +5,20 @@ import { Tabs } from '../../../components/ui/Tabs';
 import { useToast } from '../../../components/ui/Toast';
 import { AffectedBookingsModal } from '../../../features/admin-calendar/AffectedBookingsModal';
 import { CalendarSettingsPanel } from '../../../features/admin-calendar/CalendarSettingsPanel';
+import {
+  CategoryBandOverlay,
+  CategoryOverlayPicker,
+} from '../../../features/admin-calendar/CategoryBandOverlay';
+import { CategoriesTable } from '../../../features/admin-calendar/CategoriesTable';
+import { toHourlyCategories } from '../../../features/admin-calendar/category-utils';
 import { OnboardingChecklist } from '../../../features/admin-calendar/OnboardingChecklist';
-import { WeekHoursEditor, type HoursRow } from '../../../features/admin-calendar/WeekHoursEditor';
+import {
+  DAY_ORDER,
+  WeekHoursEditor,
+  type HoursRow,
+} from '../../../features/admin-calendar/WeekHoursEditor';
 import { useCalendarConfig, useUpdateBusinessHours } from '../../../features/calendar/api';
+import { useCategories } from '../../../features/categories/api';
 import { ApiError } from '../../../lib/api';
 import { affectedBookingsOf, messageOf } from '../../../lib/api-errors';
 import { usePageTitle } from '../../../lib/usePageTitle';
@@ -41,11 +52,13 @@ export function CalendarConfigPage() {
                     <HoursSection
                       businessHours={data.businessHours}
                       slotMinutes={data.settings.slotMinutes}
+                      defaultBookingMinutes={data.settings.defaultBookingMinutes}
                     />
                     <CalendarSettingsPanel settings={data.settings} warnings={data.warnings} />
                   </div>
                 ),
               },
+              { id: 'valores', label: 'Valores', content: <CategoriesTable /> },
             ]}
           />
         </>
@@ -57,12 +70,17 @@ export function CalendarConfigPage() {
 function HoursSection({
   businessHours,
   slotMinutes,
+  defaultBookingMinutes,
 }: {
   businessHours: HoursRow[];
   slotMinutes: number;
+  defaultBookingMinutes: number;
 }) {
   const save = useUpdateBusinessHours();
   const { toast } = useToast();
+  const categories = useCategories();
+  const hourly = toHourlyCategories(categories.data?.items ?? []);
+  const [selected, setSelected] = useState<Set<string>>(new Set());
   const [rows, setRows] = useState<HoursRow[]>(businessHours);
   const [error, setError] = useState<string | null>(null);
   const [conflict, setConflict] = useState<{
@@ -105,7 +123,23 @@ function HoursSection({
         Digite os horários ou arraste o início e o fim de cada dia. Os valores seguem o slot de{' '}
         {slotMinutes} min.
       </p>
-      <WeekHoursEditor rows={rows} slotMinutes={slotMinutes} onChange={setRows} />
+      <CategoryOverlayPicker categories={hourly} selectedIds={selected} onChange={setSelected} />
+      <WeekHoursEditor
+        rows={rows}
+        slotMinutes={slotMinutes}
+        onChange={setRows}
+        renderOverlay={({ row, pxPerMinute }) => (
+          <CategoryBandOverlay
+            categories={hourly}
+            selectedIds={selected}
+            weekday={Math.max(1, DAY_ORDER.indexOf(row.dayType) + 1)}
+            isHoliday={row.dayType === 'holiday'}
+            window={{ openMinute: row.openMinute, closeMinute: row.closeMinute }}
+            durationMinutes={defaultBookingMinutes}
+            pxPerMinute={pxPerMinute}
+          />
+        )}
+      />
       {error ? <Alert tone="error">{error}</Alert> : null}
       <div className="flex flex-wrap gap-space-sm">
         <Button loading={save.isPending} disabled={!dirty} onClick={submit}>
