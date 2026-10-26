@@ -1,6 +1,7 @@
 import { Hono } from 'hono';
 import { getDb } from './db/client';
 import { getEnv } from './env';
+import { buildRegistry } from './extensions';
 import { notFoundHandler, onError } from './lib/errors';
 import { requireAuth, requireStaff } from './middleware/auth';
 import { csrf } from './middleware/csrf';
@@ -19,6 +20,7 @@ export function createApp(overrides: Partial<AppDeps> = {}): Hono<AppEnv> {
     fetch: overrides.fetch ?? globalThis.fetch,
     env: overrides.env ?? getEnv(),
     db: overrides.db ?? getDb(),
+    registry: overrides.registry ?? buildRegistry(),
     ...(overrides.googleJwks !== undefined && { googleJwks: overrides.googleJwks }),
   };
 

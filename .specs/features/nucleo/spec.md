@@ -917,7 +917,7 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-198 | P1: Scheduled jobs | Tasks | T28 | In Tasks |
 | NUC-199 | P1: Scheduled jobs | Tasks | T26, T50 | In Tasks |
 | NUC-200 | P1: Scheduled jobs | Tasks | T26 | In Tasks |
-| NUC-201 | P1: Extension points | Tasks | T6 | In Tasks |
+| NUC-201 | P1: Extension points | Tasks | T6 | Implementing |
 | NUC-202 | P1: Extension points | Tasks | T7, T32 | In Tasks |
 | NUC-203 | P1: Extension points | Tasks | T29 | In Tasks |
 | NUC-204 | P1: Extension points | Tasks | T11 | In Tasks |

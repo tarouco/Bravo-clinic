@@ -525,10 +525,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Unit tests assert every default of NUC-201 and that `createRegistry` sorts checkout steps by `order`
-- [ ] Unit test asserts a throwing notifier is logged with requestId and never rethrown
-- [ ] Gate check passes: `npm test -w apps/api`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Unit tests assert every default of NUC-201 and that `createRegistry` sorts checkout steps by `order`
+- [x] Unit test asserts a throwing notifier is logged with requestId and never rethrown
+- [x] Gate check passes: `npm test -w apps/api`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick
