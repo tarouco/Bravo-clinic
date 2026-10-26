@@ -64,6 +64,22 @@ describe('TwoFactorVerifyPage', () => {
     expect(init.body).toBe(JSON.stringify({ code: '123456' }));
   });
 
+  it('posts a recovery code normalized to upper case and navigates to /admin (FND-113)', async () => {
+    const fetchMock = stubFetch(() => json(200, { ok: true }));
+    const user = userEvent.setup();
+    renderPages('/login/2fa');
+
+    await user.type(screen.getByLabelText('Código de verificação'), 'abcd-efgh');
+    await user.click(screen.getByRole('button', { name: 'Verificar' }));
+
+    expect(await screen.findByTestId('where')).toHaveTextContent(/^\/admin$/);
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    const [url, init] = fetchMock.mock.calls[0] as [string, RequestInit];
+    expect(url).toBe('/api/app/auth/totp/verify');
+    expect(init.method).toBe('POST');
+    expect(init.body).toBe(JSON.stringify({ code: 'ABCD-EFGH' }));
+  });
+
   it('shows "Código inválido" when the API answers 401', async () => {
     stubFetch(() => json(401, { error: { code: 'INVALID_CODE', message: 'x' } }));
     const user = userEvent.setup();
