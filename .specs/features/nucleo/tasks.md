@@ -643,11 +643,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: reception → 403 on every route; hours with close ≤ open or 07:15 with slot 30 → 422 path; hours excluding a seeded 08:00 booking → 409 with that booking in `details.bookings`
-- [ ] Tests: default 45 with slot 30 → 422; cleanup 45 → warning `lostMinutesPerBooking: 15`; CC-1 data + cleanup 45 → 409 `CLEANUP_CONFLICTS`; CC-2 + 60 → future bookings get 60 and occupancy upper bound moves, a past booking and an overridden booking keep 30; audit rows exist
-- [ ] Tests: policies deadline 48 / charge 48 → 422 both paths; reminders [26, 36] → 422; a change increments `policy.version` to 2 with audit; identical PUT keeps version
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 13 tests pass
+- [x] Tests: reception → 403 on every route; hours with close ≤ open or 07:15 with slot 30 → 422 path; hours excluding a seeded 08:00 booking → 409 with that booking in `details.bookings`
+- [x] Tests: default 45 with slot 30 → 422; cleanup 45 → warning `lostMinutesPerBooking: 15`; CC-1 data + cleanup 45 → 409 `CLEANUP_CONFLICTS`; CC-2 + 60 → future bookings get 60 and occupancy upper bound moves, a past booking and an overridden booking keep 30; audit rows exist
+- [x] Tests: policies deadline 48 / charge 48 → 422 both paths; reminders [26, 36] → 422; a change increments `policy.version` to 2 with audit; identical PUT keeps version
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 13 tests pass
 
 **Tests**: integration
 **Gate**: full

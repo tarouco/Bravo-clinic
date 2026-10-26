@@ -60,3 +60,9 @@ export function auditContext(
 export function appUrl(env: Pick<Env, 'APP_BASE_URL'>, path: string): string {
   return new URL(path, env.APP_BASE_URL).toString();
 }
+
+/** Audit context of the authenticated caller of a `/app` or `/admin` route. */
+export function actorContext(c: Context<AppEnv>): RequestContext {
+  const auth = c.get('auth');
+  return auditContext(requestMeta(c), { id: auth.userId, role: auth.role });
+}

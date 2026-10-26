@@ -748,13 +748,13 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-29 | P1: Payment split and booking policies | Tasks | T4 | Implementing |
 | NUC-30 | P1: Payment split and booking policies | Tasks | T4 | Implementing |
 | NUC-31 | P1: Payment split and booking policies | Tasks | T4 | Implementing |
-| NUC-32 | P1: Business hours and calendar parameters | Tasks | T10 | In Tasks |
-| NUC-33 | P1: Business hours and calendar parameters | Tasks | T10 | In Tasks |
-| NUC-34 | P1: Business hours and calendar parameters | Tasks | T10 | In Tasks |
-| NUC-35 | P1: Business hours and calendar parameters | Tasks | T10 | In Tasks |
-| NUC-36 | P1: Business hours and calendar parameters | Tasks | T10 | In Tasks |
-| NUC-37 | P1: Business hours and calendar parameters | Tasks | T10 | In Tasks |
-| NUC-38 | P1: Business hours and calendar parameters | Tasks | T10 | In Tasks |
+| NUC-32 | P1: Business hours and calendar parameters | Tasks | T10 | Implementing |
+| NUC-33 | P1: Business hours and calendar parameters | Tasks | T10 | Implementing |
+| NUC-34 | P1: Business hours and calendar parameters | Tasks | T10 | Implementing |
+| NUC-35 | P1: Business hours and calendar parameters | Tasks | T10 | Implementing |
+| NUC-36 | P1: Business hours and calendar parameters | Tasks | T10 | Implementing |
+| NUC-37 | P1: Business hours and calendar parameters | Tasks | T10 | Implementing |
+| NUC-38 | P1: Business hours and calendar parameters | Tasks | T10 | Implementing |
 | NUC-39 | P1: Business hours and calendar parameters | Tasks | T24 | In Tasks |
 | NUC-40 | P1: Business hours and calendar parameters | Tasks | T43 | In Tasks |
 | NUC-41 | P1: Business hours and calendar parameters | Tasks | T43 | In Tasks |
@@ -888,9 +888,9 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-169 | P1: Gestão de Reservas operations | Tasks | T25 | In Tasks |
 | NUC-170 | P1: Gestão de Reservas operations | Tasks | T47 | In Tasks |
 | NUC-171 | P1: Gestão de Reservas operations | Tasks | T39 | In Tasks |
-| NUC-172 | P1: Policies panel | Tasks | T10 | In Tasks |
-| NUC-173 | P1: Policies panel | Tasks | T10 | In Tasks |
-| NUC-174 | P1: Policies panel | Tasks | T10 | In Tasks |
+| NUC-172 | P1: Policies panel | Tasks | T10 | Implementing |
+| NUC-173 | P1: Policies panel | Tasks | T10 | Implementing |
+| NUC-174 | P1: Policies panel | Tasks | T10 | Implementing |
 | NUC-175 | P1: Policies panel | Tasks | T23 | In Tasks |
 | NUC-176 | P1: Policies panel | Tasks | T48 | In Tasks |
 | NUC-177 | P1: Bookings list and CSV export | Tasks | T25 | In Tasks |
