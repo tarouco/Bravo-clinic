@@ -797,14 +797,14 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-78 | P1: Public availability and catalog | Tasks | T7 | Implementing |
 | NUC-79 | P1: Public availability and catalog | Tasks | T7 | Implementing |
 | NUC-80 | P1: Public availability and catalog | Tasks | T7 | Implementing |
-| NUC-81 | P1: Public availability and catalog | Tasks | T7, T9 | In Tasks |
+| NUC-81 | P1: Public availability and catalog | Tasks | T7, T9 | Implementing |
 | NUC-82 | P1: Public availability and catalog | Tasks | T7 | Implementing |
 | NUC-83 | P1: Public availability and catalog | Tasks | T7 | Implementing |
 | NUC-84 | P1: Public availability and catalog | Tasks | T8 | Implementing |
 | NUC-85 | P1: Public availability and catalog | Tasks | T8 | Implementing |
-| NUC-86 | P1: Book and pay the sinal | Tasks | T9 | In Tasks |
-| NUC-87 | P1: Book and pay the sinal | Tasks | T9 | In Tasks |
-| NUC-88 | P1: Book and pay the sinal | Tasks | T9 | In Tasks |
+| NUC-86 | P1: Book and pay the sinal | Tasks | T9 | Implementing |
+| NUC-87 | P1: Book and pay the sinal | Tasks | T9 | Implementing |
+| NUC-88 | P1: Book and pay the sinal | Tasks | T9 | Implementing |
 | NUC-89 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |
 | NUC-90 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |
 | NUC-91 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |
@@ -820,7 +820,7 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-101 | P1: Book and pay the sinal | Tasks | T38 | In Tasks |
 | NUC-102 | P1: Book and pay the sinal | Tasks | T39 | In Tasks |
 | NUC-103 | P1: Book and pay the sinal | Tasks | T39, T49 | In Tasks |
-| NUC-104 | P1: Book and pay the sinal | Tasks | T6, T9 | In Tasks |
+| NUC-104 | P1: Book and pay the sinal | Tasks | T6, T9 | Implementing |
 | NUC-105 | P1: Gateway-independent payments | Tasks | T15, T16 | In Tasks |
 | NUC-106 | P1: Gateway-independent payments | Tasks | T15 | In Tasks |
 | NUC-107 | P1: Gateway-independent payments | Tasks | T17 | In Tasks |

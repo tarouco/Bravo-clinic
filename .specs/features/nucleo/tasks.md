@@ -611,12 +611,12 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: PR-3 interval returns two segment lines, gross 21900, deposit 10950 (SP-1 timing), no rows written
-- [ ] Tests: CL-1 interval → 422 `SLOT_UNAVAILABLE` with reason `in_cleanup` and "Sala em limpeza"; PR-8 → 422 `NO_CATEGORY`; block with wrong window → 422 path `startMinute`
-- [ ] Test registers two fake steps (orders 400 and 100) and asserts they run in order 100 → 400 before the split
-- [ ] Test: a fake `extras` step (order 300) adding 16000 raises `netCents` by 16000, the deposit is split on the new net, and its `draft.extensions.extras` appears unchanged in `Quote.extensions`; `creditAvailableCents` comes from the credit port
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api` (phase end: Build gate)
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests: PR-3 interval returns two segment lines, gross 21900, deposit 10950 (SP-1 timing), no rows written
+- [x] Tests: CL-1 interval → 422 `SLOT_UNAVAILABLE` with reason `in_cleanup` and "Sala em limpeza"; PR-8 → 422 `NO_CATEGORY`; block with wrong window → 422 path `startMinute`
+- [x] Test registers two fake steps (orders 400 and 100) and asserts they run in order 100 → 400 before the split
+- [x] Test: a fake `extras` step (order 300) adding 16000 raises `netCents` by 16000, the deposit is split on the new net, and its `draft.extensions.extras` appears unchanged in `Quote.extensions`; `creditAvailableCents` comes from the credit port
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api` (phase end: Build gate)
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: integration
 **Gate**: build

@@ -4,6 +4,7 @@ import { publicAuthRoutes } from './auth';
 import { availabilityRoutes } from './availability';
 import { catalogRoutes } from './catalog';
 import { configRoutes } from './config';
+import { quoteRoutes } from './quote';
 
 /** Everything under `/public/*`: no session required. */
 export function publicRoutes(): Hono<AppEnv> {
@@ -12,5 +13,6 @@ export function publicRoutes(): Hono<AppEnv> {
   app.route('/', configRoutes());
   app.route('/', availabilityRoutes());
   app.route('/', catalogRoutes());
+  app.route('/', quoteRoutes());
   return app;
 }
