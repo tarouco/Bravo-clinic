@@ -1,5 +1,6 @@
 import { CouponField } from '../components/revenue/CouponField';
 import { CreditsToggle } from '../components/revenue/CreditsToggle';
+import { PackagePaymentOption } from '../components/revenue/PackagePaymentOption';
 import { registerSlot, slotComponents, type SlotComponent, type SlotName } from './slots';
 
 // receita fills núcleo's web slots (design.md "Required from nucleo" table A, AD-031). Each slot
@@ -8,6 +9,7 @@ import { registerSlot, slotComponents, type SlotComponent, type SlotName } from 
 const REGISTRATIONS: readonly (readonly [SlotName, SlotComponent])[] = [
   ['checkout.summary.discount', CouponField],
   ['checkout.summary.credits', CreditsToggle],
+  ['checkout.summary.payWith', PackagePaymentOption],
 ];
 
 export function registerRevenueSlots(): void {

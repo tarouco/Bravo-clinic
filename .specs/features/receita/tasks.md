@@ -1133,11 +1133,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Sufficient fixture shows "Esta reserva vai debitar 78 min do seu pacote" and selecting emits `payWith:'package'`
-- [ ] Insufficient fixture: option disabled, "Saldo insuficiente: esta reserva debita 78 min e você tem 40 min", link to `/app/compras/horas-extras`, "Pagar esta reserva" emits `payWith:'money'`
-- [ ] `packageOption: null` renders nothing; nucleo `BookingSummary` tests still pass
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 new tests pass
+- [x] Sufficient fixture shows "Esta reserva vai debitar 78 min do seu pacote" and selecting emits `payWith:'package'`
+- [x] Insufficient fixture: option disabled, "Saldo insuficiente: esta reserva debita 78 min e você tem 40 min", link to `/app/compras/horas-extras`, "Pagar esta reserva" emits `payWith:'money'`
+- [x] `packageOption: null` renders nothing; nucleo `BookingSummary` tests still pass
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 new tests pass
 
 **Tests**: unit
 **Gate**: quick

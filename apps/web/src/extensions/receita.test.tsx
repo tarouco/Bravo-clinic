@@ -4,7 +4,11 @@ import { http, HttpResponse } from 'msw';
 import { Route, Routes } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { BookingFlowPage } from '../features/booking/BookingFlowPage';
-import { quoteWithRevenue, revenueOverridesSufficient } from '../features/purchases/fixtures';
+import {
+  quoteWithRevenue,
+  revenueOverridesInsufficient,
+  revenueOverridesSufficient,
+} from '../features/purchases/fixtures';
 import { bookingAwaitingPayment, me } from '../test/fixtures/nucleo';
 import { server } from '../test/msw/server';
 import { renderWithProviders } from '../test/render-with-providers';
@@ -31,6 +35,7 @@ describe('registerRevenueSlots (AD-031)', () => {
 
     expect(slotComponents('checkout.summary.discount')).toHaveLength(1);
     expect(slotComponents('checkout.summary.credits')).toHaveLength(1);
+    expect(slotComponents('checkout.summary.payWith')).toHaveLength(1);
   });
 });
 
@@ -92,6 +97,25 @@ describe('checkout slots wired into the Resumo step (REC-117, REC-24, REC-28)', 
     );
 
     await waitFor(() => expect(quoteBodies.at(-1)).toMatchObject({ useCredits: true }));
+  });
+
+  it('re-quotes with payWith package when the package option is selected', async () => {
+    const { quoteBodies } = stubQuote();
+    renderResumo();
+
+    await userEvent.click(await screen.findByRole('radio', { name: 'Pagar com meu pacote' }));
+
+    await waitFor(() => expect(quoteBodies.at(-1)).toMatchObject({ payWith: 'package' }));
+  });
+
+  it('keeps the package option disabled when the balance is insufficient and falls back to money', async () => {
+    const { quoteBodies } = stubQuote(revenueOverridesInsufficient);
+    renderResumo();
+
+    expect(await screen.findByRole('radio', { name: 'Pagar com meu pacote' })).toBeDisabled();
+    await userEvent.click(screen.getByRole('button', { name: 'Pagar esta reserva' }));
+
+    await waitFor(() => expect(quoteBodies.at(-1)).toMatchObject({ payWith: 'money' }));
   });
 
   it('adds none of the receita fields to the quote request by default', async () => {
