@@ -981,11 +981,11 @@ T49 → T50
 - Skill: `impeccable`
 
 **Done when**:
-- [ ] Tests assert StatTile renders "R$ 1.600,00" and "+12,5%" / "—" for null delta
-- [ ] Tests assert EvolutionChart renders one group per bucket, a legend, and a table with the same numbers accessible by role
-- [ ] Tests assert FileUpload rejects a file over `maxBytes` with "Arquivo maior que 5 MB" before calling `onFile`; CopyField copies and shows "Copiado"; TokenList revoke opens a confirm modal
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 10 tests pass
+- [x] Tests assert StatTile renders "R$ 1.600,00" and "+12,5%" / "—" for null delta
+- [x] Tests assert EvolutionChart renders one group per bucket, a legend, and a table with the same numbers accessible by role
+- [x] Tests assert FileUpload rejects a file over `maxBytes` with "Arquivo maior que 5 MB" before calling `onFile`; CopyField copies and shows "Copiado"; TokenList revoke opens a confirm modal
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 10 tests pass
 
 **Tests**: unit
 **Gate**: quick
