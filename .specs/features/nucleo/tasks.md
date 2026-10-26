@@ -1740,10 +1740,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: typing "BRV-" updates `?q=` and refetches; "Carregar mais" appends the next cursor page; "Exportar CSV" requests `export.csv` with current filters
-- [ ] Tests: panel shows the 6 group titles of NUC-176 and "Versão 1"; changing the sinal to 30 updates the preview to "sinal de 30%"; 422 fixture shows errors on both deadline fields
-- [ ] Gate check passes: `npm test -w apps/web` (phase end: Build-B gate)
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests: typing "BRV-" updates `?q=` and refetches; "Carregar mais" appends the next cursor page; "Exportar CSV" requests `export.csv` with current filters
+- [x] Tests: panel shows the 6 group titles of NUC-176 and "Versão 1"; changing the sinal to 30 updates the preview to "sinal de 30%"; 422 fixture shows errors on both deadline fields
+- [x] Gate check passes: `npm test -w apps/web` (phase end: Build-B gate)
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: build

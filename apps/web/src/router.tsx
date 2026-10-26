@@ -12,6 +12,8 @@ import {
 } from './features/auth/guards';
 import { BookingFlowPage } from './features/booking/BookingFlowPage';
 import { CalendarConfigPage } from './pages/admin/calendar/CalendarConfigPage';
+import { BookingsListPage } from './pages/admin/reservations/BookingsListPage';
+import { PoliciesRoute } from './pages/admin/reservations/PoliciesPanel';
 import { ReservationsCalendar } from './pages/admin/reservations/ReservationsCalendar';
 import { ReservationsPage, ReservationsSlotTab } from './pages/admin/reservations/ReservationsPage';
 import { AgendaPage } from './pages/app/AgendaPage';
@@ -73,8 +75,8 @@ const adminSectionRoute = (section: AdminSection): RouteObject => {
       element: <ReservationsPage />,
       children: [
         { index: true, element: <ReservationsCalendar /> },
-        { path: 'lista', element: <ComingSoon title="Lista de reservas" /> },
-        { path: 'politicas', element: <ComingSoon title="Políticas" /> },
+        { path: 'lista', element: <BookingsListPage /> },
+        { path: 'politicas', element: <PoliciesRoute /> },
         { path: ':tabId', element: <ReservationsSlotTab /> },
       ],
     });
