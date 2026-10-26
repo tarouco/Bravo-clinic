@@ -174,7 +174,7 @@ Codes are stored; pt-BR labels live in `packages/core/src/labels.ts`.
 Allowed transitions (`packages/core/src/status/booking.ts`, enforced by services with `UPDATE ... WHERE status = <from>`):
 
 ```
-awaiting_payment → confirmed | paid | expired | cancelled_by_tenant
+awaiting_payment → confirmed | paid | expired | cancelled_by_tenant | cancelled_by_clinic
 pre_reserved     → confirmed | paid | expired | cancelled_by_clinic
 held_for_renewal → confirmed | cancelled_by_clinic | expired        (expired = renewal failed / not renewed)
 confirmed        → paid | completed | no_show | cancelled_by_tenant | cancelled_nonpayment | cancelled_by_clinic
