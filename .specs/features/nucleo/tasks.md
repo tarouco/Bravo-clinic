@@ -672,11 +672,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: `alert` true only within 30 days (injected now); closing a holiday with a booking → 409; manual create, duplicate 409, delete manual ok, delete seed 422
-- [ ] Tests with stubbed `fetch`: import 2027 inserts missing nationals, renames an existing one keeping `isClosed`; with `{ renameExisting: false }` the existing name is kept; year 2030 → 422; timeout/500/garbage → 502 and no row changed
-- [ ] Tests: preview returns affected bookings (a seeded `fixed_occurrence` booking is excluded and left to the port) and the fake port's numbers incl. `fixedOccurrencesCancelled`; create clinic-wide and per-room rows with audit and port `apply` called; past date → 422; delete reopens and availability shows cells again
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 14 tests pass
+- [x] Tests: `alert` true only within 30 days (injected now); closing a holiday with a booking → 409; manual create, duplicate 409, delete manual ok, delete seed 422
+- [x] Tests with stubbed `fetch`: import 2027 inserts missing nationals, renames an existing one keeping `isClosed`; with `{ renameExisting: false }` the existing name is kept; year 2030 → 422; timeout/500/garbage → 502 and no row changed
+- [x] Tests: preview returns affected bookings (a seeded `fixed_occurrence` booking is excluded and left to the port) and the fake port's numbers incl. `fixedOccurrencesCancelled`; create clinic-wide and per-room rows with audit and port `apply` called; past date → 422; delete reopens and availability shows cells again
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 14 tests pass
 
 **Tests**: integration
 **Gate**: full

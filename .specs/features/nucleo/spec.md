@@ -759,15 +759,15 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-40 | P1: Business hours and calendar parameters | Tasks | T43 | In Tasks |
 | NUC-41 | P1: Business hours and calendar parameters | Tasks | T43 | In Tasks |
 | NUC-42 | P2: Drag-edit business hours | Tasks | T43 | In Tasks |
-| NUC-43 | P1: Holidays and closed days | Tasks | T11 | In Tasks |
-| NUC-44 | P1: Holidays and closed days | Tasks | T11 | In Tasks |
-| NUC-45 | P1: Holidays and closed days | Tasks | T11 | In Tasks |
-| NUC-46 | P1: Holidays and closed days | Tasks | T11 | In Tasks |
-| NUC-47 | P1: Holidays and closed days | Tasks | T11 | In Tasks |
-| NUC-48 | P1: Holidays and closed days | Tasks | T11 | In Tasks |
-| NUC-49 | P1: Holidays and closed days | Tasks | T11 | In Tasks |
-| NUC-50 | P1: Holidays and closed days | Tasks | T11 | In Tasks |
-| NUC-51 | P1: Holidays and closed days | Tasks | T11, T20 | In Tasks |
+| NUC-43 | P1: Holidays and closed days | Tasks | T11 | Implementing |
+| NUC-44 | P1: Holidays and closed days | Tasks | T11 | Implementing |
+| NUC-45 | P1: Holidays and closed days | Tasks | T11 | Implementing |
+| NUC-46 | P1: Holidays and closed days | Tasks | T11 | Implementing |
+| NUC-47 | P1: Holidays and closed days | Tasks | T11 | Implementing |
+| NUC-48 | P1: Holidays and closed days | Tasks | T11 | Implementing |
+| NUC-49 | P1: Holidays and closed days | Tasks | T11 | Implementing |
+| NUC-50 | P1: Holidays and closed days | Tasks | T11 | Implementing |
+| NUC-51 | P1: Holidays and closed days | Tasks | T11, T20 | Implementing |
 | NUC-52 | P1: Holidays and closed days | Tasks | T45 | In Tasks |
 | NUC-53 | P2: Holiday review banner | Tasks | T45 | In Tasks |
 | NUC-54 | P1: Manual blocks with tags | Tasks | T12 | In Tasks |
@@ -920,7 +920,7 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-201 | P1: Extension points | Tasks | T6 | Implementing |
 | NUC-202 | P1: Extension points | Tasks | T7, T32 | In Tasks |
 | NUC-203 | P1: Extension points | Tasks | T29 | In Tasks |
-| NUC-204 | P1: Extension points | Tasks | T11 | In Tasks |
+| NUC-204 | P1: Extension points | Tasks | T11 | Implementing |
 | NUC-205 | P1: Extension points | Tasks | T6, T18, T23, T26 | In Tasks |
 | NUC-206 | P2: Booking funnel analytics | Tasks | T29, T38 | In Tasks |
 | NUC-207 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |
