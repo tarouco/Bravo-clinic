@@ -1,0 +1,135 @@
+{
+  "schema": 1,
+  "promote_threshold": 2,
+  "window_days": 45,
+  "quarantine_threshold": 2,
+  "next_id": 8,
+  "lessons": [
+    {
+      "id": "L-001",
+      "key": "surviving_mutant::test both sides of every numeric bound in a validation rule including the value just below the minimum",
+      "text": "Test both sides of every numeric bound in a validation rule, including the value just below the minimum",
+      "signal": "surviving_mutant",
+      "scope": "validation",
+      "status": "candidate",
+      "features": [
+        "fundacao"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "M1 packages/core/src/validation/auth-schemas.ts:10 (FND-17) (validation)"
+      ],
+      "created": "2026-10-26T04:00:05Z",
+      "last_seen": "2026-10-26T04:00:05Z"
+    },
+    {
+      "id": "L-002",
+      "key": "spec_precision_gap::write deploy smoke acs only for content present in the served html not text rendered client side",
+      "text": "Write deploy smoke ACs only for content present in the served HTML, not text rendered client-side",
+      "signal": "spec_precision_gap",
+      "scope": "ops",
+      "status": "candidate",
+      "features": [
+        "fundacao"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "FND-129 scripts/smoke.mjs:33 (ops)"
+      ],
+      "created": "2026-10-26T04:00:07Z",
+      "last_seen": "2026-10-26T04:00:07Z"
+    },
+    {
+      "id": "L-003",
+      "key": "ac_gap::when a spec names a timeout value assert that exact value with fake timers not just that an abort signal exists",
+      "text": "When a spec names a timeout value, assert that exact value with fake timers, not just that an abort signal exists",
+      "signal": "ac_gap",
+      "scope": "api",
+      "status": "candidate",
+      "features": [
+        "fundacao"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "FND-80 apps/api/src/lib/email.int.test.ts:84 (api)"
+      ],
+      "created": "2026-10-26T04:00:09Z",
+      "last_seen": "2026-10-26T04:00:09Z"
+    },
+    {
+      "id": "L-004",
+      "key": "ac_gap::assert every column type convention the spec names with an information schema query not only one of them",
+      "text": "Assert every column-type convention the spec names with an information_schema query, not only one of them",
+      "signal": "ac_gap",
+      "scope": "db",
+      "status": "candidate",
+      "features": [
+        "fundacao"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "FND-36 apps/api/src/db/migrations.int.test.ts:92 (db)"
+      ],
+      "created": "2026-10-26T04:00:12Z",
+      "last_seen": "2026-10-26T04:00:12Z"
+    },
+    {
+      "id": "L-005",
+      "key": "ac_gap::when an ac names a responsive breakpoint assert the breakpoint visibility classes",
+      "text": "When an AC names a responsive breakpoint, assert the breakpoint visibility classes",
+      "signal": "ac_gap",
+      "scope": "web",
+      "status": "candidate",
+      "features": [
+        "fundacao"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "FND-95 apps/web/src/components/layout/Header.tsx:35 (web)"
+      ],
+      "created": "2026-10-26T04:00:14Z",
+      "last_seen": "2026-10-26T04:00:14Z"
+    },
+    {
+      "id": "L-006",
+      "key": "ac_gap::when a page accepts several input formats test each format through the page not only through the shared schema",
+      "text": "When a page accepts several input formats, test each format through the page, not only through the shared schema",
+      "signal": "ac_gap",
+      "scope": "web",
+      "status": "candidate",
+      "features": [
+        "fundacao"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "FND-113 apps/web/src/pages/auth/TwoFactorPages.test.tsx:53 (web)"
+      ],
+      "created": "2026-10-26T04:00:16Z",
+      "last_seen": "2026-10-26T04:00:16Z"
+    },
+    {
+      "id": "L-007",
+      "key": "gate_fail::derive expected migration counts from the migration journal instead of hard coding them",
+      "text": "Derive expected migration counts from the migration journal instead of hard-coding them",
+      "signal": "gate_fail",
+      "scope": "db",
+      "status": "candidate",
+      "features": [
+        "fundacao"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "FND-31 apps/api/src/db/migrations.int.test.ts:88 (db)"
+      ],
+      "created": "2026-10-26T04:00:19Z",
+      "last_seen": "2026-10-26T04:00:19Z"
+    }
+  ]
+}
