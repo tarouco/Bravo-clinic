@@ -8,6 +8,7 @@ import { adminBookingRoutes } from './bookings';
 import { adminCalendarRoutes } from './calendar';
 import { adminCalendarExceptionRoutes } from './calendar-exceptions';
 import { adminCategoryRoutes } from './categories';
+import { adminCustomerCreditRoutes } from './customer-credits';
 import { adminCustomerRoutes } from './customers';
 import { adminSessionRoutes } from './session';
 import { adminSettingsRoutes } from './settings';
@@ -26,5 +27,6 @@ export function adminRoutes(): Hono<AppEnv> {
   app.route('/', adminBookingRoutes());
   app.route('/', adminBookingQueryRoutes());
   app.route('/', adminCustomerRoutes());
+  app.route('/', adminCustomerCreditRoutes());
   return app;
 }

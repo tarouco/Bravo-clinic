@@ -415,13 +415,13 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Grant sets `expires_at = now + credits.validity_days`; available ignores expired lots
-- [ ] Apply 7000 over lots 5000 (exp. day 10) + 5000 (day 20) → uses 5000 + 2000, one internal charge `method='credit'`, two `use` entries
-- [ ] Two parallel applies of 8000 with 10000 available → total used ≤ 10000 and no negative lot
-- [ ] Refund to an expired lot creates a new lot of the same source with fresh validity
-- [ ] `POST /api/admin/customers/:id/credits` 201 for admin with audit row; 403 for reception; 422 without justification or amount 0
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 12 new tests pass
+- [x] Grant sets `expires_at = now + credits.validity_days`; available ignores expired lots
+- [x] Apply 7000 over lots 5000 (exp. day 10) + 5000 (day 20) → uses 5000 + 2000, one internal charge `method='credit'`, two `use` entries
+- [x] Two parallel applies of 8000 with 10000 available → total used ≤ 10000 and no negative lot
+- [x] Refund to an expired lot creates a new lot of the same source with fresh validity
+- [x] `POST /api/admin/customers/:id/credits` 201 for admin with audit row; 403 for reception; 422 without justification or amount 0
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 12 new tests pass
 
 **Tests**: integration
 **Gate**: full

@@ -613,15 +613,15 @@
 | REC-102 | P1: Closed-day compensation | Tasks | T20 | In Tasks |
 | REC-103 | P1: Closed-day compensation | Tasks | T15 | In Tasks |
 | REC-104 | P1: Closed-day compensation | Tasks | T8, T15 | Implementing |
-| REC-105 | P1: Customer credits | Tasks | T9 | In Tasks |
-| REC-106 | P1: Customer credits | Tasks | T9 | In Tasks |
+| REC-105 | P1: Customer credits | Tasks | T9 | Implementing |
+| REC-106 | P1: Customer credits | Tasks | T9 | Implementing |
 | REC-107 | P1: Customer credits | Tasks | T7, T9 | Implementing |
-| REC-108 | P1: Customer credits | Tasks | T9 | In Tasks |
+| REC-108 | P1: Customer credits | Tasks | T9 | Implementing |
 | REC-109 | P1: Customer credits | Tasks | T7, T9, T16 | Implementing |
 | REC-110 | P1: Customer credits | Tasks | T16 | In Tasks |
 | REC-111 | P1: Customer credits | Tasks | T16 | In Tasks |
-| REC-112 | P1: Customer credits | Tasks | T9 | In Tasks |
-| REC-113 | P1: Customer credits | Tasks | T9, T28 | In Tasks |
+| REC-112 | P1: Customer credits | Tasks | T9 | Implementing |
+| REC-113 | P1: Customer credits | Tasks | T9, T28 | Implementing |
 | REC-114 | P1: Customer credits | Tasks | T41 | In Tasks |
 | REC-115 | P1: Customer credits | Tasks | T16, T19, T24, T27 | In Tasks |
 | REC-116 | P1: Coupons in checkout | Tasks | T4 | Implementing |
