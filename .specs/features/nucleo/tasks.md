@@ -583,10 +583,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: rooms ordered with `fromPriceCents` 8000; inactive room absent and 404 on detail; catalog excludes inactive and `admin_only`; clinic returns 8 hour rows; policies returns version 1 and the rendered sections
-- [ ] All responses parsed by their core schemas
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 7 tests pass
+- [x] Tests: rooms ordered with `fromPriceCents` 8000; inactive room absent and 404 on detail; catalog excludes inactive and `admin_only`; clinic returns 8 hour rows; policies returns version 1 and the rendered sections
+- [x] All responses parsed by their core schemas
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: integration
 **Gate**: full
