@@ -730,11 +730,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: list returns 8 seeded categories with averages (AV-1 8000) and `editable` only on hourly/block; create hourly ok and each invalid rule → 422 path; create block ok; `hour_package` → 422 "Tipo de categoria gerenciado em Pacotes"
-- [ ] Tests: price PATCH bumps version and audit before/after while an existing booking's segment keeps 9700; set reference moves the flag atomically; non-hourly reference → 422; deactivating reference → 422 message; reorder with a missing id → 422
-- [ ] Test: prices-reviewed sets the setting and writes audit; reception → 403
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api` (phase end: Build gate)
-- [ ] Test count: ≥ 12 tests pass
+- [x] Tests: list returns 8 seeded categories with averages (AV-1 8000) and `editable` only on hourly/block; create hourly ok and each invalid rule → 422 path; create block ok; `hour_package` → 422 "Tipo de categoria gerenciado em Pacotes"
+- [x] Tests: price PATCH bumps version and audit before/after while an existing booking's segment keeps 9700; set reference moves the flag atomically; non-hourly reference → 422; deactivating reference → 422 message; reorder with a missing id → 422
+- [x] Test: prices-reviewed sets the setting and writes audit; reception → 403
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api` (phase end: Build gate)
+- [x] Test count: ≥ 12 tests pass
 
 **Tests**: integration
 **Gate**: build

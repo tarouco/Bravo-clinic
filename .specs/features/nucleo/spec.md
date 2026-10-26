@@ -777,15 +777,15 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-58 | P1: Manual blocks with tags | Tasks | T12 | Implementing |
 | NUC-59 | P1: Manual blocks with tags | Tasks | T12 | Implementing |
 | NUC-60 | P1: Manual blocks with tags | Tasks | T45 | In Tasks |
-| NUC-61 | P1: Booking categories and price table | Tasks | T13 | In Tasks |
-| NUC-62 | P1: Booking categories and price table | Tasks | T13 | In Tasks |
-| NUC-63 | P1: Booking categories and price table | Tasks | T13 | In Tasks |
-| NUC-64 | P1: Booking categories and price table | Tasks | T13 | In Tasks |
-| NUC-65 | P1: Booking categories and price table | Tasks | T13 | In Tasks |
-| NUC-66 | P1: Booking categories and price table | Tasks | T13 | In Tasks |
-| NUC-67 | P1: Booking categories and price table | Tasks | T13 | In Tasks |
-| NUC-68 | P1: Booking categories and price table | Tasks | T13 | In Tasks |
-| NUC-69 | P1: Booking categories and price table | Tasks | T13 | In Tasks |
+| NUC-61 | P1: Booking categories and price table | Tasks | T13 | Implementing |
+| NUC-62 | P1: Booking categories and price table | Tasks | T13 | Implementing |
+| NUC-63 | P1: Booking categories and price table | Tasks | T13 | Implementing |
+| NUC-64 | P1: Booking categories and price table | Tasks | T13 | Implementing |
+| NUC-65 | P1: Booking categories and price table | Tasks | T13 | Implementing |
+| NUC-66 | P1: Booking categories and price table | Tasks | T13 | Implementing |
+| NUC-67 | P1: Booking categories and price table | Tasks | T13 | Implementing |
+| NUC-68 | P1: Booking categories and price table | Tasks | T13 | Implementing |
+| NUC-69 | P1: Booking categories and price table | Tasks | T13 | Implementing |
 | NUC-70 | P1: Booking categories and price table | Tasks | T20 | In Tasks |
 | NUC-71 | P1: Booking categories and price table | Tasks | T44 | In Tasks |
 | NUC-72 | P1: Booking categories and price table | Tasks | T44 | In Tasks |
