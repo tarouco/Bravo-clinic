@@ -3,7 +3,7 @@
   "promote_threshold": 2,
   "window_days": 45,
   "quarantine_threshold": 2,
-  "next_id": 8,
+  "next_id": 9,
   "lessons": [
     {
       "id": "L-001",
@@ -130,6 +130,24 @@
       ],
       "created": "2026-10-26T04:00:19Z",
       "last_seen": "2026-10-26T04:00:19Z"
+    },
+    {
+      "id": "L-008",
+      "key": "gate_fail::in page tests that load data wait for the loading state to clear before the first findby query instead of relying on the default 1 s timeout",
+      "text": "In page tests that load data, wait for the loading state to clear before the first findBy query instead of relying on the default 1 s timeout",
+      "signal": "gate_fail",
+      "scope": "web",
+      "status": "candidate",
+      "features": [
+        "nucleo"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "apps/web/src/pages/app/AgendaPage.test.tsx:32 (NUC-190, fundacao validation iteration 2) (web)"
+      ],
+      "created": "2026-10-26T14:02:48Z",
+      "last_seen": "2026-10-26T14:02:48Z"
     }
   ]
 }
