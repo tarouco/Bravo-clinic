@@ -1,5 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import {
+  availabilityDaySchema,
   bookingDetailSchema,
   localToUtc,
   rescheduleQuoteSchema,
@@ -199,6 +200,42 @@ describe('POST /app/bookings/:id/reschedule/quote (NUC-142)', () => {
     expect(res.status).toBe(422);
     expect(res.error?.code).toBe('SLOT_UNAVAILABLE');
     expect((res.error?.details as unknown as { reason: string }).reason).toBe('in_cleanup');
+  });
+});
+
+describe('GET /app/bookings/:id/reschedule/availability (NUC-142)', () => {
+  it("shows the day without the booking's own occupancy, so its own slot can be picked", async () => {
+    const { user, cookie } = await createTenant(db, { now: NOW });
+    const row = await bookingOf(user.id, { hours: 2, total: 16000, paid: 8000, deposit: 8000 });
+    const path = `/app/bookings/${row.id}/reschedule/availability?date=${TUE}`;
+
+    const own = await send(buildApp(), 'GET', path, { cookie });
+
+    expect(own.status).toBe(200);
+    const day = availabilityDaySchema.parse(own.body);
+    expect(day.cells.find((c) => c.startMinute === 840)).toMatchObject({ available: true });
+    expect((await publicCell(TUE, 840))?.available).toBe(false);
+  });
+
+  it('keeps every other occupant and answers 404 for a booking of another user', async () => {
+    const { user, cookie } = await createTenant(db, { now: NOW });
+    const row = await bookingOf(user.id, { hours: 2, total: 16000, paid: 8000, deposit: 8000 });
+    const other = await createUser(db);
+    await insertBooking(db, {
+      userId: other.id,
+      roomId,
+      startsAt: at(TUE, 1080),
+      endsAt: at(TUE, 1140),
+    });
+    const intruder = await createTenant(db, { now: NOW });
+    const path = `/app/bookings/${row.id}/reschedule/availability?date=${TUE}`;
+
+    const own = await send(buildApp(), 'GET', path, { cookie });
+    const foreign = await send(buildApp(), 'GET', path, { cookie: intruder.cookie });
+
+    const day = availabilityDaySchema.parse(own.body);
+    expect(day.cells.find((c) => c.startMinute === 1080)).toMatchObject({ available: false });
+    expect(foreign.status).toBe(404);
   });
 });
 

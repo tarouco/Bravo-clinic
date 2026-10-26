@@ -1,4 +1,9 @@
-import { idSchema, rescheduleQuoteRequestSchema, rescheduleRequestSchema } from '@bravo/core';
+import {
+  availabilityDayQuerySchema,
+  idSchema,
+  rescheduleQuoteRequestSchema,
+  rescheduleRequestSchema,
+} from '@bravo/core';
 import { Hono } from 'hono';
 import { z } from 'zod';
 import { idempotent } from '../../lib/idempotency';
@@ -8,6 +13,7 @@ import {
   loadBookingDetail,
   loadOwnedBooking,
 } from '../../modules/booking/booking-serializer.service';
+import { getDayAvailability } from '../../modules/availability/availability.service';
 import {
   quoteReschedule,
   rescheduleBooking,
@@ -43,6 +49,30 @@ export function rescheduleRoutes(): Hono<AppEnv> {
     }
     return { roomSlug, date: body.date, startMinute: body.startMinute, endMinute: body.endMinute };
   }
+
+  // The day grid of the booking's room without its own occupancy, so the reschedule modal can
+  // offer a slot overlapping the current one (NUC-142: the booking is not its own occupant).
+  app.get(
+    '/bookings/:id/reschedule/availability',
+    validate('param', idParam),
+    validate('query', availabilityDayQuerySchema),
+    async (c) => {
+      const deps = c.var.deps;
+      const booking = await loadOwnedBooking(
+        deps.db,
+        c.req.valid('param').id,
+        c.get('auth').userId,
+      );
+      const room = await getRoomById(deps.db, booking.roomId);
+      if (room === null) throw notFound();
+      const { date } = c.req.valid('query');
+      return c.json(
+        await getDayAvailability(deps.db, room.slug, date, deps.now(), deps.registry, {
+          excludeBookingId: booking.id,
+        }),
+      );
+    },
+  );
 
   app.post(
     '/bookings/:id/reschedule/quote',

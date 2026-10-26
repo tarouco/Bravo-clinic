@@ -22,7 +22,7 @@ import {
   type PublicCell,
   type SlotCell,
 } from '@bravo/core';
-import { and, asc, eq, gt, inArray, or, sql } from 'drizzle-orm';
+import { and, asc, eq, gt, inArray, or, sql, type SQL } from 'drizzle-orm';
 import type { Db, Tx } from '../../db/client';
 import { bookingCategories, bookings, holidays, rooms, users } from '../../db/schema';
 import type { Registry } from '../../extensions/registry';
@@ -86,7 +86,7 @@ const publicCell = (cell: SlotCell): PublicCell => ({
   maxEndMinute: cell.maxEndMinute,
 });
 
-async function loadBlockCategories(db: Db | Tx, roomId: string) {
+async function loadBlockCategories(db: Db | Tx, roomId: string | SQL) {
   const rows = await db
     .select()
     .from(bookingCategories)
@@ -111,18 +111,17 @@ async function loadBlockCategories(db: Db | Tx, roomId: string) {
 }
 
 /** Block categories applying to the day; `available` only when the whole window is a valid interval. */
-async function blockOptionsOf(
-  db: Db | Tx,
-  room: Room,
+function blockOptionsOf(
+  categories: BlockCategory[],
   view: DayView,
   inputs: CalendarInputs,
   now: Date,
-): Promise<AvailabilityDay['blockOptions']> {
+): AvailabilityDay['blockOptions'] {
   if (view.closed) return [];
   const settings = gridSettingsOf(inputs.settings);
   const occupied = inputs.occupied.get(view.date) ?? [];
   const options: AvailabilityDay['blockOptions'] = [];
-  for (const category of await loadBlockCategories(db, room.id)) {
+  for (const category of categories) {
     const priced = priceBlockBooking(category, { date: view.date, isHoliday: view.isHoliday });
     if (priced === null) continue;
     const check = validateInterval({
@@ -173,17 +172,30 @@ export async function getDayAvailability(
   date: LocalDate,
   now: Date,
   registry: Pick<Registry, 'availabilityDecorators'>,
+  options: { excludeBookingId?: string } = {},
 ): Promise<AvailabilityDay> {
-  const room = await getActiveRoomBySlug(db, roomSlug);
+  // One round of parallel queries: the room is resolved by slug inside each query (the p95
+  // budget of NUC-77 counts every round trip to the database).
+  const roomId = sql`(select ${rooms.id} from ${rooms} where ${rooms.slug} = ${roomSlug} and ${rooms.status} = 'active')`;
+  const [room, inputs, categories] = await Promise.all([
+    getActiveRoomBySlug(db, roomSlug),
+    loadCalendarInputs(db, {
+      roomId,
+      from: date,
+      to: date,
+      now,
+      excludeBookingId: options.excludeBookingId,
+    }),
+    loadBlockCategories(db, roomId),
+  ]);
   if (room === null) throw notFound();
-  const inputs = await loadCalendarInputs(db, { roomId: room.id, from: date, to: date, now });
   const view = viewOf(room, date, inputs, now);
   let cells = view.cells.map(publicCell);
   for (const decorator of registry.availabilityDecorators) {
     cells = await decorator.decorate(db, { roomId: room.id, date, cells });
   }
   return {
-    ...dayResponse(room, view, inputs, await blockOptionsOf(db, room, view, inputs, now)),
+    ...dayResponse(room, view, inputs, blockOptionsOf(categories, view, inputs, now)),
     cells,
   };
 }
@@ -195,16 +207,19 @@ export async function getAdminDay(
   date: LocalDate,
   now: Date,
 ): Promise<AdminAvailabilityDay> {
-  const room = await getRoomById(db, roomId);
+  const [room, inputs, categories] = await Promise.all([
+    getRoomById(db, roomId),
+    loadCalendarInputs(db, { roomId, from: date, to: date, now }),
+    loadBlockCategories(db, roomId),
+  ]);
   if (room === null) throw notFound();
-  const inputs = await loadCalendarInputs(db, { roomId, from: date, to: date, now });
   const view = viewOf(room, date, inputs, now);
   const cells = view.cells.map((cell): AdminCell => ({
     ...publicCell(cell),
     adminState: cell.adminState,
   }));
   return {
-    ...dayResponse(room, view, inputs, await blockOptionsOf(db, room, view, inputs, now)),
+    ...dayResponse(room, view, inputs, blockOptionsOf(categories, view, inputs, now)),
     cells,
   };
 }
