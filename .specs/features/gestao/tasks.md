@@ -1008,11 +1008,11 @@ T49 → T50
 - Skill: NONE
 
 **Done when**:
-- [ ] Tests assert defaults (Caixa, month, last 6 months) in the request URL
-- [ ] Tests assert switching to Competência/quarter updates URL params, refetches, and the export link carries `regime=accrual`
-- [ ] Tests assert loading skeleton, empty state, and API error alert with retry
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests assert defaults (Caixa, month, last 6 months) in the request URL
+- [x] Tests assert switching to Competência/quarter updates URL params, refetches, and the export link carries `regime=accrual`
+- [x] Tests assert loading skeleton, empty state, and API error alert with retry
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick
