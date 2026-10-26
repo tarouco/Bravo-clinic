@@ -1384,10 +1384,10 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Percent "10" submits `discountValue: 1000`; "R$ 20,00" submits 2000; first booking forces "Reservas"
-- [ ] Invalid code, `valid_from ≥ valid_until`, and a server 409 duplicate code show field errors
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 new tests pass
+- [x] Percent "10" submits `discountValue: 1000`; "R$ 20,00" submits 2000; first booking forces "Reservas"
+- [x] Invalid code, `valid_from ≥ valid_until`, and a server 409 duplicate code show field errors
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 new tests pass
 
 **Tests**: unit
 **Gate**: quick

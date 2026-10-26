@@ -14,6 +14,7 @@ import {
   couponUsesText,
   couponValidityText,
 } from './coupon-format';
+import { CouponFormModal } from './CouponFormModal';
 import { CouponUsesDrawer } from './CouponUsesDrawer';
 
 /**
@@ -70,7 +71,7 @@ function EnabledSwitch({ coupon }: { coupon: Coupon }) {
 export function CuponsPage() {
   usePageTitle('Cupons');
   const coupons = useCoupons();
-  const [, setFormTarget] = useState<Coupon | 'new' | null>(null);
+  const [formTarget, setFormTarget] = useState<Coupon | 'new' | null>(null);
   const [usesOf, setUsesOf] = useState<Coupon | null>(null);
 
   const columns: readonly TableColumn<Coupon>[] = [
@@ -140,6 +141,14 @@ export function CuponsPage() {
           rows={coupons.data.items}
           rowKey={(c) => c.id}
           emptyMessage="Nenhum cupom cadastrado."
+        />
+      ) : null}
+      {formTarget !== null ? (
+        <CouponFormModal
+          coupon={formTarget === 'new' ? null : formTarget}
+          onClose={() => {
+            setFormTarget(null);
+          }}
         />
       ) : null}
       <CouponUsesDrawer

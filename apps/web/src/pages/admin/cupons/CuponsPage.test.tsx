@@ -133,6 +133,19 @@ describe('CuponsPage list (REC-128)', () => {
     expect(screen.getByRole('button', { name: 'Novo cupom' })).toBeInTheDocument();
   });
 
+  it('opens the form from "Novo cupom" and from "Editar" of a row', async () => {
+    await renderPage();
+
+    await userEvent.click(screen.getByRole('button', { name: 'Novo cupom' }));
+    expect(await screen.findByRole('dialog', { name: 'Novo cupom' })).toBeInTheDocument();
+    await userEvent.click(screen.getByRole('button', { name: 'Cancelar' }));
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole('button', { name: 'Editar PRIMEIRA20' }));
+    const dialog = await screen.findByRole('dialog', { name: 'Editar cupom PRIMEIRA20' });
+    expect(within(dialog).getByLabelText('Código')).toHaveValue('PRIMEIRA20');
+  });
+
   it('shows the API message when the list cannot be loaded', async () => {
     server.use(
       http.get('*/api/admin/coupons', () =>
