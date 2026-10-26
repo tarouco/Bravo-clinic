@@ -110,6 +110,29 @@ describe('base migrations (FND-30, FND-31, FND-36)', () => {
     expect(instants.length).toBeGreaterThan(0);
     expect(instants.every((c) => c.data_type === 'timestamp with time zone')).toBe(true);
   });
+
+  it('stores local calendar dates as date and money columns (_cents) as integers (FND-36)', async () => {
+    const columns = await pool.query<{
+      table_name: string;
+      column_name: string;
+      data_type: string;
+    }>(
+      `select table_name, column_name, data_type from information_schema.columns
+       where table_schema = 'public'`,
+    );
+    const typeOf = (table: string, column: string) =>
+      columns.rows.find((c) => c.table_name === table && c.column_name === column)?.data_type;
+
+    expect(typeOf('holidays', 'date')).toBe('date');
+    expect(typeOf('closed_days', 'date')).toBe('date');
+    expect(typeOf('block_recurrences', 'valid_from')).toBe('date');
+    expect(typeOf('block_recurrences', 'valid_until')).toBe('date');
+
+    // The base schema has no money column yet; any `_cents` column, now or added later, must be an
+    // integer type.
+    const cents = columns.rows.filter((c) => /_cents$/.test(c.column_name));
+    expect(cents.every((c) => ['integer', 'bigint'].includes(c.data_type))).toBe(true);
+  });
 });
 
 describe('room_occupancy exclusion constraint (FND-32, FND-33, FND-34)', () => {
