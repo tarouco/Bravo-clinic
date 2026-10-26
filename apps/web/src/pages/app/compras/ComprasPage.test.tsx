@@ -170,6 +170,41 @@ describe('ComprasPage subscription cards (REC-143, REC-144, REC-147)', () => {
   });
 });
 
+describe('ComprasPage dialogs (REC-72, REC-79)', () => {
+  it('"Cancelar" opens the cancel dialog with the preview of the subscription', async () => {
+    stubArea([subscriptionActive]);
+    server.use(
+      http.get('*/api/app/subscriptions/:id/cancel-preview', () =>
+        HttpResponse.json({ minutesLost: 360, extraMinutesKept: 0 }),
+      ),
+    );
+    renderArea();
+
+    await userEvent.click(await screen.findByRole('button', { name: 'Cancelar' }));
+
+    const dialog = await screen.findByRole('dialog', { name: 'Cancelar assinatura' });
+    expect(
+      await within(dialog).findByText('Você perde 6h de saldo deste período, sem reembolso'),
+    ).toBeInTheDocument();
+  });
+
+  it('"Trocar" opens the switch dialog and it closes with "Fechar"', async () => {
+    stubArea([subscriptionActive]);
+    renderArea();
+
+    await userEvent.click(await screen.findByRole('button', { name: 'Trocar' }));
+
+    const dialog = await screen.findByRole('dialog', { name: 'Trocar pacote' });
+    expect(
+      await within(dialog).findByText(/Não há outro pacote do mesmo tipo/),
+    ).toBeInTheDocument();
+    await userEvent.click(
+      within(dialog).getAllByRole('button', { name: 'Fechar' })[0] as HTMLElement,
+    );
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  });
+});
+
 describe('ComprasLayout tabs (REC-146, REC-69)', () => {
   it('lists Assinaturas, Horas extras, Créditos and Histórico for an eligible tenant', async () => {
     stubArea([subscriptionActive]);

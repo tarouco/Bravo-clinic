@@ -7,6 +7,10 @@ import { useExtraHours, usePackages, useSubscriptions } from '../../../features/
 import { LedgerSection } from '../../../features/purchases/LedgerSection';
 import { PayDialog } from '../../../features/purchases/PayDialog';
 import { SubscriptionCard } from '../../../features/purchases/SubscriptionCard';
+import {
+  CancelSubscriptionDialog,
+  SwitchPackageDialog,
+} from '../../../features/purchases/SubscriptionDialogs';
 import { usePageTitle } from '../../../lib/usePageTitle';
 
 interface ComprasTab {
@@ -78,6 +82,7 @@ export function ComprasPage() {
   const subscriptions = useSubscriptions();
   const packages = usePackages();
   const [ledgerId, setLedgerId] = useState<string | null>(null);
+  const [dialog, setDialog] = useState<{ kind: 'switch' | 'cancel'; id: string } | null>(null);
 
   if (subscriptions.isPending) {
     return (
@@ -93,6 +98,10 @@ export function ComprasPage() {
   const items = subscriptions.data.items;
   const offers = packages.data?.items ?? [];
   const ledgerOf = items.find((subscription) => subscription.id === ledgerId);
+  const dialogOf = items.find((subscription) => subscription.id === dialog?.id);
+  const closeDialog = () => {
+    setDialog(null);
+  };
 
   return (
     <div className="space-y-space-lg">
@@ -115,6 +124,12 @@ export function ComprasPage() {
               key={subscription.id}
               subscription={subscription}
               offer={offers.find((offer) => offer.id === subscription.category.id)}
+              onSwitch={() => {
+                setDialog({ kind: 'switch', id: subscription.id });
+              }}
+              onCancel={() => {
+                setDialog({ kind: 'cancel', id: subscription.id });
+              }}
               onLedger={() => {
                 setLedgerId(subscription.id);
               }}
@@ -130,6 +145,13 @@ export function ComprasPage() {
             setLedgerId(null);
           }}
         />
+      ) : null}
+
+      {dialogOf && dialog?.kind === 'switch' ? (
+        <SwitchPackageDialog subscription={dialogOf} onClose={closeDialog} />
+      ) : null}
+      {dialogOf && dialog?.kind === 'cancel' ? (
+        <CancelSubscriptionDialog subscription={dialogOf} onClose={closeDialog} />
       ) : null}
 
       {payId ? (

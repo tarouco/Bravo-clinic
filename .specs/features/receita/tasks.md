@@ -1273,10 +1273,10 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Switch fixture shows "Seu saldo de 6h vira 6h 24min no novo pacote" and "Total no novo período: 36h 24min"
-- [ ] Cancel fixture shows "Você perde 6h de saldo deste período, sem reembolso" and "Suas horas extras continuam válidas até 08/02/2027"; confirm sends `{ confirm: true }`
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 new tests pass
+- [x] Switch fixture shows "Seu saldo de 6h vira 6h 24min no novo pacote" and "Total no novo período: 36h 24min"
+- [x] Cancel fixture shows "Você perde 6h de saldo deste período, sem reembolso" and "Suas horas extras continuam válidas até 08/02/2027"; confirm sends `{ confirm: true }`
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 new tests pass
 
 **Tests**: unit
 **Gate**: quick
