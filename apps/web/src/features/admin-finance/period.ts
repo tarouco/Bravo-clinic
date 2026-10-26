@@ -26,6 +26,15 @@ export function defaultRange(today: LocalDate): { from: LocalDate; to: LocalDate
   return { from: from as LocalDate, to: today };
 }
 
+/** First and last day of `today`'s month: the default window of the expense and receipt lists. */
+export function monthRange(today: LocalDate): { from: LocalDate; to: LocalDate } {
+  const [year = 0, month = 1] = today.split('-').map(Number);
+  const pad = (n: number) => String(n).padStart(2, '0');
+  const last = new Date(Date.UTC(year, month, 0)).getUTCDate();
+  const prefix = `${String(year).padStart(4, '0')}-${pad(month)}`;
+  return { from: `${prefix}-01` as LocalDate, to: `${prefix}-${pad(last)}` as LocalDate };
+}
+
 export interface RawFinanceParams {
   from: string;
   to: string;

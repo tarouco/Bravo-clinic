@@ -8,7 +8,13 @@ import {
   type Regime,
 } from '@bravo/core';
 import { parseFixture } from '../../test/fixtures/parse';
-import { financeSummarySchema, type FinanceSummary } from './contracts';
+import {
+  expenseCategoryListSchema,
+  expenseListSchema,
+  financeSummarySchema,
+  manualReceiptListSchema,
+  type FinanceSummary,
+} from './contracts';
 
 // Finance fixtures for the web tests: summaries computed by the core engine from a few recognized
 // entries (so totals, buckets and deltas obey the real rules) and validated against the response
@@ -110,3 +116,109 @@ export function buildSummary(options: SummaryFixtureOptions = {}): FinanceSummar
 export function buildEmptySummary(options: SummaryFixtureOptions = {}): FinanceSummary {
   return buildSummary({ ...options, current: [], previous: [] });
 }
+
+// ---- Expenses, categories and manual receipts ----
+
+export const EXPENSE_IDS = {
+  rent: 'e1111111-1111-4111-8111-111111111111',
+  energy: 'e2222222-2222-4222-8222-222222222222',
+  rentChild: 'e3333333-3333-4333-8333-333333333333',
+} as const;
+
+export const RECEIPT_IDS = {
+  rental: 'f1111111-1111-4111-8111-111111111111',
+  extras: 'f2222222-2222-4222-8222-222222222222',
+} as const;
+
+const INTERNET_CATEGORY_ID = '44444444-4444-4444-8444-444444444444';
+
+/** Four categories in display order; the last one is inactive. */
+export const expenseCategories = parseFixture(
+  expenseCategoryListSchema,
+  {
+    items: [
+      { id: EXPENSE_CATEGORY_IDS.rent, name: 'Aluguel', displayOrder: 1, active: true },
+      { id: EXPENSE_CATEGORY_IDS.energy, name: 'Energia elétrica', displayOrder: 2, active: true },
+      { id: EXPENSE_CATEGORY_IDS.marketing, name: 'Marketing', displayOrder: 3, active: true },
+      { id: INTERNET_CATEGORY_ID, name: 'Internet', displayOrder: 4, active: false },
+    ],
+  },
+  'expenseCategories',
+);
+
+/** A monthly parent with an attachment, a one-off bill and the child row the job generated. */
+export const expenses = parseFixture(
+  expenseListSchema,
+  {
+    items: [
+      {
+        id: EXPENSE_IDS.rent,
+        date: '2026-10-05',
+        categoryId: EXPENSE_CATEGORY_IDS.rent,
+        categoryName: 'Aluguel',
+        description: 'Aluguel da sala comercial',
+        amountCents: 450000,
+        recurrence: 'monthly',
+        recurrenceParentId: null,
+        attachmentName: 'contrato.pdf',
+        attachmentContentType: 'application/pdf',
+      },
+      {
+        id: EXPENSE_IDS.energy,
+        date: '2026-10-10',
+        categoryId: EXPENSE_CATEGORY_IDS.energy,
+        categoryName: 'Energia elétrica',
+        description: 'Conta de luz de setembro',
+        amountCents: 31250,
+        recurrence: 'none',
+        recurrenceParentId: null,
+        attachmentName: null,
+        attachmentContentType: null,
+      },
+      {
+        id: EXPENSE_IDS.rentChild,
+        date: '2026-09-05',
+        categoryId: EXPENSE_CATEGORY_IDS.rent,
+        categoryName: 'Aluguel',
+        description: 'Aluguel da sala comercial',
+        amountCents: 450000,
+        recurrence: 'none',
+        recurrenceParentId: EXPENSE_IDS.rent,
+        attachmentName: null,
+        attachmentContentType: null,
+      },
+    ],
+    nextCursor: null,
+  },
+  'expenses',
+);
+
+export const receipts = parseFixture(
+  manualReceiptListSchema,
+  {
+    items: [
+      {
+        id: RECEIPT_IDS.rental,
+        date: '2026-10-12',
+        revenueCategory: 'rental_single',
+        method: 'pix_direct',
+        amountCents: 15000,
+        description: 'Locação no balcão',
+        customerName: 'Ana Souza',
+        bookingCode: 'BRV-7K2Q9X',
+      },
+      {
+        id: RECEIPT_IDS.extras,
+        date: '2026-10-15',
+        revenueCategory: 'extra_services',
+        method: 'cash',
+        amountCents: 8000,
+        description: null,
+        customerName: null,
+        bookingCode: null,
+      },
+    ],
+    nextCursor: null,
+  },
+  'manualReceipts',
+);

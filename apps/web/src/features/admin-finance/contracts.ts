@@ -1,8 +1,11 @@
 import {
   REVENUE_CATEGORIES,
+  expenseRecurrenceSchema,
   financeGroupingSchema,
   financeRegimeSchema,
   localDateSchema,
+  manualReceiptMethodSchema,
+  revenueCategorySchema,
 } from '@bravo/core';
 import { z } from 'zod';
 
@@ -68,3 +71,49 @@ export const financeSummarySchema = z.object({
 });
 export type FinanceSummary = z.infer<typeof financeSummarySchema>;
 export type FinanceTotals = z.infer<typeof totalsSchema>;
+
+// ---- Expenses and manual receipts (GES-11..GES-21) ----
+
+export const expenseCategorySchema = z.object({
+  id: z.string().min(1),
+  name: z.string().min(1),
+  displayOrder: z.number().int().min(0),
+  active: z.boolean(),
+});
+export type ExpenseCategory = z.infer<typeof expenseCategorySchema>;
+export const expenseCategoryListSchema = z.object({ items: z.array(expenseCategorySchema) });
+
+export const expenseSchema = z.object({
+  id: z.string().min(1),
+  date: localDateSchema,
+  categoryId: z.string().min(1),
+  categoryName: z.string().min(1),
+  description: z.string().min(1),
+  amountCents: z.number().int().min(1),
+  recurrence: expenseRecurrenceSchema,
+  /** Set on the child rows the daily job materializes from a recurring parent (GES-14). */
+  recurrenceParentId: z.string().nullable(),
+  attachmentName: z.string().nullable(),
+  attachmentContentType: z.string().nullable(),
+});
+export type Expense = z.infer<typeof expenseSchema>;
+export const expenseListSchema = z.object({
+  items: z.array(expenseSchema),
+  nextCursor: z.string().nullable(),
+});
+
+export const manualReceiptSchema = z.object({
+  id: z.string().min(1),
+  date: localDateSchema,
+  revenueCategory: revenueCategorySchema,
+  method: manualReceiptMethodSchema,
+  amountCents: z.number().int().min(1),
+  description: z.string().nullable(),
+  customerName: z.string().nullable(),
+  bookingCode: z.string().nullable(),
+});
+export type ManualReceipt = z.infer<typeof manualReceiptSchema>;
+export const manualReceiptListSchema = z.object({
+  items: z.array(manualReceiptSchema),
+  nextCursor: z.string().nullable(),
+});

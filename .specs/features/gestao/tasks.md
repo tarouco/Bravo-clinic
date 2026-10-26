@@ -1035,11 +1035,11 @@ T49 → T50
 - Skill: NONE
 
 **Done when**:
-- [ ] Tests assert expense form validation messages from core schema, successful submit calls POST then PUT attachment, server 422 maps onto fields
-- [ ] Tests assert delete receipt requires justification text before enabling confirm
-- [ ] Tests assert category drawer rename/reorder/deactivate calls
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 7 tests pass
+- [x] Tests assert expense form validation messages from core schema, successful submit calls POST then PUT attachment, server 422 maps onto fields
+- [x] Tests assert delete receipt requires justification text before enabling confirm
+- [x] Tests assert category drawer rename/reorder/deactivate calls
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: unit
 **Gate**: quick

@@ -1,4 +1,4 @@
-import type { RevenueCategory } from '@bravo/core';
+import type { ExpenseRecurrence, RevenueCategory } from '@bravo/core';
 
 /** Revenue categories of the finance engine in report order (GES-31 sub-rows). */
 export const REVENUE_CATEGORY_LABELS: Record<RevenueCategory, string> = {
@@ -13,3 +13,20 @@ export const REVENUE_CATEGORY_LABELS: Record<RevenueCategory, string> = {
 export const REGIME_LABELS = { cash: 'Caixa', accrual: 'Competência' } as const;
 
 export const GROUPING_LABELS = { week: 'Semana', month: 'Mês', quarter: 'Trimestre' } as const;
+
+export const RECURRENCE_LABELS: Record<ExpenseRecurrence, string> = {
+  none: 'Não se repete',
+  monthly: 'Mensal',
+  quarterly: 'Trimestral',
+  yearly: 'Anual',
+};
+
+export const RECEIPT_METHOD_LABELS = {
+  cash: 'Dinheiro',
+  card_machine: 'Maquininha',
+  pix_direct: 'Pix direto',
+} as const;
+
+/** Expense attachment limits of the API (GES-16, GES-17). */
+export const ATTACHMENT_ACCEPT = 'application/pdf,image/jpeg,image/png,image/webp';
+export const ATTACHMENT_MAX_BYTES = 5 * 1024 * 1024;
