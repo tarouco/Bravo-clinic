@@ -553,12 +553,12 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests seed bookings/blocks on 2026-10-27 and assert cells for CL-1/CL-9 shapes with no admin fields, names or tags in the JSON (parsed by `availabilityDaySchema`)
-- [ ] Tests: holiday flags on 2026-11-02; closed day returns `closed: true` and no cells; month statuses `past`, `full`, `closed`, `out_of_range`; stale hold treated as free; block option `available` false when partially occupied
-- [ ] Tests: malformed date → 422; 121st request in a minute → 429 with `Retry-After`; registered fake decorator adds `discountPercent`
-- [ ] Tests: `loadDayContexts` for two dates returns window, occupied intervals and closed flag per date; `getReferenceCategory` returns "1 hora"
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 11 tests pass
+- [x] Tests seed bookings/blocks on 2026-10-27 and assert cells for CL-1/CL-9 shapes with no admin fields, names or tags in the JSON (parsed by `availabilityDaySchema`)
+- [x] Tests: holiday flags on 2026-11-02; closed day returns `closed: true` and no cells; month statuses `past`, `full`, `closed`, `out_of_range`; stale hold treated as free; block option `available` false when partially occupied
+- [x] Tests: malformed date → 422; 121st request in a minute → 429 with `Retry-After`; registered fake decorator adds `discountPercent`
+- [x] Tests: `loadDayContexts` for two dates returns window, occupied intervals and closed flag per date; `getReferenceCategory` returns "1 hora"
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 11 tests pass
 
 **Tests**: integration
 **Gate**: full

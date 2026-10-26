@@ -793,13 +793,13 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-74 | P1: Public availability and catalog | Tasks | T8 | In Tasks |
 | NUC-75 | P1: Public availability and catalog | Tasks | T8 | In Tasks |
 | NUC-76 | P1: Public availability and catalog | Tasks | T8 | In Tasks |
-| NUC-77 | P1: Public availability and catalog | Tasks | T7 | In Tasks |
-| NUC-78 | P1: Public availability and catalog | Tasks | T7 | In Tasks |
-| NUC-79 | P1: Public availability and catalog | Tasks | T7 | In Tasks |
-| NUC-80 | P1: Public availability and catalog | Tasks | T7 | In Tasks |
+| NUC-77 | P1: Public availability and catalog | Tasks | T7 | Implementing |
+| NUC-78 | P1: Public availability and catalog | Tasks | T7 | Implementing |
+| NUC-79 | P1: Public availability and catalog | Tasks | T7 | Implementing |
+| NUC-80 | P1: Public availability and catalog | Tasks | T7 | Implementing |
 | NUC-81 | P1: Public availability and catalog | Tasks | T7, T9 | In Tasks |
-| NUC-82 | P1: Public availability and catalog | Tasks | T7 | In Tasks |
-| NUC-83 | P1: Public availability and catalog | Tasks | T7 | In Tasks |
+| NUC-82 | P1: Public availability and catalog | Tasks | T7 | Implementing |
+| NUC-83 | P1: Public availability and catalog | Tasks | T7 | Implementing |
 | NUC-84 | P1: Public availability and catalog | Tasks | T8 | In Tasks |
 | NUC-85 | P1: Public availability and catalog | Tasks | T8 | In Tasks |
 | NUC-86 | P1: Book and pay the sinal | Tasks | T9 | In Tasks |
