@@ -18,6 +18,8 @@ import {
 import { users } from './identity';
 import { blocks, rooms } from './calendar';
 import { charges } from './payments';
+import { coupons } from './coupons';
+import { subscriptionPeriods, subscriptions } from './subscriptions';
 
 // Instants are always timestamptz (docs/architecture.md section 5.1).
 const tstz = (name: string) => timestamp(name, { withTimezone: true });
@@ -142,6 +144,16 @@ export const bookings = pgTable(
       onDelete: 'restrict',
     }),
     cleanupOverriddenAt: tstz('cleanup_overridden_at'),
+    // Receita (docs/architecture.md section 5.4 ALTERs).
+    couponId: uuid('coupon_id').references(() => coupons.id, { onDelete: 'restrict' }),
+    subscriptionId: uuid('subscription_id').references(() => subscriptions.id, {
+      onDelete: 'restrict',
+    }),
+    subscriptionPeriodId: uuid('subscription_period_id').references(() => subscriptionPeriods.id, {
+      onDelete: 'restrict',
+    }),
+    packageMinutesDebited: integer('package_minutes_debited').notNull().default(0),
+    extraMinutesDebited: integer('extra_minutes_debited').notNull().default(0),
     createdAt: tstz('created_at').notNull().defaultNow(),
     updatedAt: tstz('updated_at').notNull().defaultNow(),
   },
@@ -166,6 +178,9 @@ export const bookings = pgTable(
     index('bookings_user_awaiting_idx')
       .on(t.userId, t.status)
       .where(sql`${t.status} = 'awaiting_payment'`),
+    index('bookings_subscription_idx')
+      .on(t.subscriptionId, t.startsAt)
+      .where(sql`${t.subscriptionId} is not null`),
     uniqueIndex('bookings_payment_link_uq')
       .on(t.paymentLinkTokenHash)
       .where(sql`${t.paymentLinkTokenHash} is not null`),

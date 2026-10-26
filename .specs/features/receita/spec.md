@@ -520,7 +520,7 @@
 | REC-09 | P1: Package categories | Tasks | T27 | In Tasks |
 | REC-10 | P1: Buy an hour package | Tasks | T7, T18 | Implementing |
 | REC-11 | P1: Buy an hour package | Tasks | T2, T18 | Implementing |
-| REC-12 | P1: Buy an hour package | Tasks | T8, T19 | In Tasks |
+| REC-12 | P1: Buy an hour package | Tasks | T8, T19 | Implementing |
 | REC-13 | P1: Buy an hour package | Tasks | T19 | In Tasks |
 | REC-14 | P1: Buy an hour package | Tasks | T19, T25 | In Tasks |
 | REC-15 | P1: Buy an hour package | Tasks | T19 | In Tasks |
@@ -547,8 +547,8 @@
 | REC-36 | P1: Pay a booking with package hours | Tasks | T13 | In Tasks |
 | REC-37 | P1: Pay a booking with package hours | Tasks | T13, T16 | In Tasks |
 | REC-38 | P1: Pay a booking with package hours | Tasks | T13 | In Tasks |
-| REC-39 | P1: Balance ledger and extrato | Tasks | T8 | In Tasks |
-| REC-40 | P1: Balance ledger and extrato | Tasks | T8, T10 | In Tasks |
+| REC-39 | P1: Balance ledger and extrato | Tasks | T8 | Implementing |
+| REC-40 | P1: Balance ledger and extrato | Tasks | T8, T10 | Implementing |
 | REC-41 | P1: Balance ledger and extrato | Tasks | T5, T25, T32 | Implementing |
 | REC-42 | P1: Balance ledger and extrato | Tasks | T1, T32 | Implementing |
 | REC-43 | P1: Balance ledger and extrato | Tasks | T10, T26 | In Tasks |
@@ -612,7 +612,7 @@
 | REC-101 | P1: Closed-day compensation | Tasks | T15 | In Tasks |
 | REC-102 | P1: Closed-day compensation | Tasks | T20 | In Tasks |
 | REC-103 | P1: Closed-day compensation | Tasks | T15 | In Tasks |
-| REC-104 | P1: Closed-day compensation | Tasks | T8, T15 | In Tasks |
+| REC-104 | P1: Closed-day compensation | Tasks | T8, T15 | Implementing |
 | REC-105 | P1: Customer credits | Tasks | T9 | In Tasks |
 | REC-106 | P1: Customer credits | Tasks | T9 | In Tasks |
 | REC-107 | P1: Customer credits | Tasks | T7, T9 | Implementing |
@@ -643,7 +643,7 @@
 | REC-132 | P1: Admin coupons screen | Tasks | T11 | In Tasks |
 | REC-133 | P1: Slot discounts | Tasks | T12 | In Tasks |
 | REC-134 | P1: Slot discounts | Tasks | T2, T12 | Implementing |
-| REC-135 | P1: Slot discounts | Tasks | T8, T12 | In Tasks |
+| REC-135 | P1: Slot discounts | Tasks | T8, T12 | Implementing |
 | REC-136 | P1: Slot discounts | Tasks | T16, T45 | In Tasks |
 | REC-137 | P1: Slot discounts | Tasks | T12, T45 | In Tasks |
 | REC-138 | P1: Slot discounts | Tasks | T12, T16 | In Tasks |

@@ -388,10 +388,10 @@ T48 → T50
 
 **Done when**:
 
-- [ ] `npm run db:migrate -w apps/api` applies on an empty test DB after nucleo's migrations
-- [ ] Constraint tests: UPDATE/DELETE on each ledger raises `append_only_table`; second non-terminal hour package for a user → 23505; `minutes_balance = -1` → 23514; overlapping active slot discounts same room → 23P01, different room accepted; duplicate (closed_day, subscription) → 23505; coupon use `consumed → reserved` rejected
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 10 new tests pass
+- [x] `npm run db:migrate -w apps/api` applies on an empty test DB after nucleo's migrations
+- [x] Constraint tests: UPDATE/DELETE on each ledger raises `append_only_table`; second non-terminal hour package for a user → 23505; `minutes_balance = -1` → 23514; overlapping active slot discounts same room → 23P01, different room accepted; duplicate (closed_day, subscription) → 23505; coupon use `consumed → reserved` rejected
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 10 new tests pass
 
 **Tests**: integration
 **Gate**: full

@@ -29,6 +29,20 @@
       "when": 1792984998117,
       "tag": "0003_nucleo_constraints",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1793053234430,
+      "tag": "0004_receita",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1793053242407,
+      "tag": "0005_receita_constraints",
+      "breakpoints": true
     }
   ]
 }
