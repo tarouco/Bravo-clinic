@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
-import { isRoomSlug, type RoomSlug } from '../../../features/home/room-slug';
+import { useEffect } from 'react';
 import { ArchitectureSection } from './ArchitectureSection';
 import { ExtrasSection } from './ExtrasSection';
 import { HeroSection } from './HeroSection';
 import { AmenitiesSection, LaunchCtaSection, PoliciesSection } from './HomeStaticSections';
 import { PricingSimulatorSection } from './PricingSimulatorSection';
+import { ReceptionBandSection } from './ReceptionBandSection';
 import { RoomsSection } from './RoomsSection';
 
 export const HOME_TITLE = 'Bravô Clinic – Salas Inteligentes | Praia Brava, Itajaí';
@@ -14,26 +14,16 @@ function scrollToSimulator(): void {
 }
 
 export function HomePage() {
-  const [selectedRoom, setSelectedRoom] = useState<RoomSlug>('principal');
-
   useEffect(() => {
     document.title = HOME_TITLE;
   }, []);
 
   return (
     <div className="flex flex-col w-full">
-      <HeroSection
-        selectedRoom={selectedRoom}
-        onRoomChange={setSelectedRoom}
-        onCheck={scrollToSimulator}
-      />
+      <HeroSection />
       <ArchitectureSection />
-      <RoomsSection
-        onReserve={(slug) => {
-          if (isRoomSlug(slug)) setSelectedRoom(slug);
-          scrollToSimulator();
-        }}
-      />
+      <RoomsSection onReserve={scrollToSimulator} />
+      <ReceptionBandSection />
       <PricingSimulatorSection />
       <ExtrasSection />
       <AmenitiesSection />

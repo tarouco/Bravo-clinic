@@ -11,3 +11,6 @@ coverage/
 playwright-report/
 test-results/
 .claude/
+
+# Raw clinic photos and videos (optimized copies live in apps/web/public)
+Imagens e video/
