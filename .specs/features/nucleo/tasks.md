@@ -1086,12 +1086,12 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: events for a week return first/full names, cleanup end, blocks with tag, holidays; 43-day range → 422; status/room/category filters narrow results
-- [ ] Tests: list `q` by code, name (case-insensitive) and e-mail; page size 50 with `nextCursor`
-- [ ] Test: CSV bytes start with BOM, header exactly as NUC-178, `;` separator, "27/10/2026 17:30", "219,00"; 5 001 matching rows → 422 message
-- [ ] Tests: search needs ≥ 2 chars; create customer → tenant without password, verified e-mail, outbox `account.set_password`; duplicate e-mail → 409
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api` (phase end: Build gate)
-- [ ] Test count: ≥ 11 tests pass
+- [x] Tests: events for a week return first/full names, cleanup end, blocks with tag, holidays; 43-day range → 422; status/room/category filters narrow results
+- [x] Tests: list `q` by code, name (case-insensitive) and e-mail; page size 50 with `nextCursor`
+- [x] Test: CSV bytes start with BOM, header exactly as NUC-178, `;` separator, "27/10/2026 17:30", "219,00"; 5 001 matching rows → 422 message
+- [x] Tests: search needs ≥ 2 chars; create customer → tenant without password, verified e-mail, outbox `account.set_password`; duplicate e-mail → 409
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api` (phase end: Build gate)
+- [x] Test count: ≥ 11 tests pass
 
 **Tests**: integration
 **Gate**: build

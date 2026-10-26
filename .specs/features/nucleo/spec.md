@@ -873,7 +873,7 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-154 | P1: Reschedule and cancel | Tasks | T41 | In Tasks |
 | NUC-155 | P1: Reschedule and cancel | Tasks | T41 | In Tasks |
 | NUC-156 | P1: Reschedule and cancel | Tasks | T41 | In Tasks |
-| NUC-157 | P1: Gestão de Reservas operations | Tasks | T25 | In Tasks |
+| NUC-157 | P1: Gestão de Reservas operations | Tasks | T25 | Implementing |
 | NUC-158 | P1: Gestão de Reservas operations | Tasks | T33, T46 | In Tasks |
 | NUC-159 | P1: Gestão de Reservas operations | Tasks | T30, T46 | In Tasks |
 | NUC-160 | P1: Gestão de Reservas operations | Tasks | T46 | In Tasks |
@@ -885,7 +885,7 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-166 | P1: Gestão de Reservas operations | Tasks | T26 | In Tasks |
 | NUC-167 | P1: Gestão de Reservas operations | Tasks | T24 | Implementing |
 | NUC-168 | P1: Gestão de Reservas operations | Tasks | T28 | In Tasks |
-| NUC-169 | P1: Gestão de Reservas operations | Tasks | T25 | In Tasks |
+| NUC-169 | P1: Gestão de Reservas operations | Tasks | T25 | Implementing |
 | NUC-170 | P1: Gestão de Reservas operations | Tasks | T47 | In Tasks |
 | NUC-171 | P1: Gestão de Reservas operations | Tasks | T39 | In Tasks |
 | NUC-172 | P1: Policies panel | Tasks | T10 | Implementing |
@@ -893,8 +893,8 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-174 | P1: Policies panel | Tasks | T10 | Implementing |
 | NUC-175 | P1: Policies panel | Tasks | T23 | Implementing |
 | NUC-176 | P1: Policies panel | Tasks | T48 | In Tasks |
-| NUC-177 | P1: Bookings list and CSV export | Tasks | T25 | In Tasks |
-| NUC-178 | P1: Bookings list and CSV export | Tasks | T25 | In Tasks |
+| NUC-177 | P1: Bookings list and CSV export | Tasks | T25 | Implementing |
+| NUC-178 | P1: Bookings list and CSV export | Tasks | T25 | Implementing |
 | NUC-179 | P1: Bookings list and CSV export | Tasks | T31, T48 | In Tasks |
 | NUC-180 | P1: Public site pages | Tasks | T34 | In Tasks |
 | NUC-181 | P1: Public site pages | Tasks | T34 | In Tasks |

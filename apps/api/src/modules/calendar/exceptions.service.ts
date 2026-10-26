@@ -19,7 +19,7 @@ type HolidayRow = typeof holidays.$inferSelect;
 
 const ALERT_DAYS = 30;
 
-function holidayView(row: HolidayRow, today: LocalDate): Holiday {
+export function holidayView(row: HolidayRow, today: LocalDate): Holiday {
   const days = diffDays(today, row.date as LocalDate);
   return {
     id: row.id,
