@@ -23,7 +23,12 @@ export function defaultRegistry(): Registry {
     },
     closedDayCompensation: {
       preview: () =>
-        Promise.resolve({ subscribers: 0, minutes: 0, creditCents: 0, fixedOccurrencesCancelled: 0 }),
+        Promise.resolve({
+          subscribers: 0,
+          minutes: 0,
+          creditCents: 0,
+          fixedOccurrencesCancelled: 0,
+        }),
       apply: () => Promise.resolve(),
     },
     availabilityDecorators: [],

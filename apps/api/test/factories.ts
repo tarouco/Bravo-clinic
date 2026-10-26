@@ -96,7 +96,10 @@ type CategoryRow = typeof bookingCategories.$inferSelect;
 type CategoryOverrides = Partial<typeof bookingCategories.$inferInsert>;
 
 /** Inserts an active hourly category ("Hora teste", 60 min from 00:00 to 24:00) unless overridden. */
-export async function createCategory(db: Db, overrides: CategoryOverrides = {}): Promise<CategoryRow> {
+export async function createCategory(
+  db: Db,
+  overrides: CategoryOverrides = {},
+): Promise<CategoryRow> {
   const type = overrides.type ?? 'hourly';
   const base: CategoryOverrides =
     type === 'hourly'
@@ -106,7 +109,13 @@ export async function createCategory(db: Db, overrides: CategoryOverrides = {}):
         : {};
   const [row] = await db
     .insert(bookingCategories)
-    .values({ name: `Categoria ${randomUUID().slice(0, 8)}`, type, period: 'single', ...base, ...overrides })
+    .values({
+      name: `Categoria ${randomUUID().slice(0, 8)}`,
+      type,
+      period: 'single',
+      ...base,
+      ...overrides,
+    })
     .returning();
   if (row === undefined) throw new Error('createCategory: insert returned no row');
   return row;

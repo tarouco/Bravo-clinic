@@ -27,7 +27,13 @@ beforeEach(async () => {
 });
 
 const buildApp = (registry = createRegistry()) =>
-  createApp({ db, now: () => new Date('2026-10-20T12:00:00Z'), fetch: forbiddenFetch, env: testEnv(), registry });
+  createApp({
+    db,
+    now: () => new Date('2026-10-20T12:00:00Z'),
+    fetch: forbiddenFetch,
+    env: testEnv(),
+    registry,
+  });
 
 const get = (path: string, registry?: ReturnType<typeof createRegistry>) =>
   send(buildApp(registry), 'GET', `/public/${path}`);
@@ -61,16 +67,38 @@ describe('GET /public/rooms and /public/rooms/:slug (NUC-74, NUC-75)', () => {
   it('returns the room detail with photos and cover through the RoomMediaPort, null without a port URL', async () => {
     const [room] = await db.select().from(rooms).where(eq(rooms.slug, 'principal'));
     await db.insert(roomPhotos).values([
-      { roomId: room?.id ?? '', storageKey: 'principal/a', alt: 'Maca', isCover: false, displayOrder: 2 },
-      { roomId: room?.id ?? '', storageKey: 'principal/b', alt: 'Entrada', isCover: true, displayOrder: 1, width: 1600, height: 900 },
+      {
+        roomId: room?.id ?? '',
+        storageKey: 'principal/a',
+        alt: 'Maca',
+        isCover: false,
+        displayOrder: 2,
+      },
+      {
+        roomId: room?.id ?? '',
+        storageKey: 'principal/b',
+        alt: 'Entrada',
+        isCover: true,
+        displayOrder: 1,
+        width: 1600,
+        height: 900,
+      },
     ]);
     const registry = createRegistry({ roomMedia: { photoUrl: (key) => `/media/${key}.webp` } });
 
     const withMedia = roomDetailSchema.parse((await get('rooms/principal', registry)).body);
     const withoutMedia = roomDetailSchema.parse((await get('rooms/principal')).body);
 
-    expect(withMedia.cover).toEqual({ url: '/media/principal/b.webp', alt: 'Entrada', width: 1600, height: 900 });
-    expect(withMedia.photos.map((p) => p.url)).toEqual(['/media/principal/b.webp', '/media/principal/a.webp']);
+    expect(withMedia.cover).toEqual({
+      url: '/media/principal/b.webp',
+      alt: 'Entrada',
+      width: 1600,
+      height: 900,
+    });
+    expect(withMedia.photos.map((p) => p.url)).toEqual([
+      '/media/principal/b.webp',
+      '/media/principal/a.webp',
+    ]);
     expect([withoutMedia.cover, withoutMedia.photos]).toEqual([null, []]);
   });
 });
@@ -79,7 +107,15 @@ describe('GET /public/catalog (NUC-76)', () => {
   it('returns the 4 factory hourly categories, the V_ref flag and pricesReviewed false', async () => {
     const parsed = catalogSchema.parse((await get('catalog')).body);
 
-    expect(parsed.hourly.map((c) => [c.name, c.weekdayRateCents, c.weekendRateCents, c.minDurationMinutes, c.isReference])).toEqual([
+    expect(
+      parsed.hourly.map((c) => [
+        c.name,
+        c.weekdayRateCents,
+        c.weekendRateCents,
+        c.minDurationMinutes,
+        c.isReference,
+      ]),
+    ).toEqual([
       ['1 hora', 9700, 12000, 60, true],
       ['2 horas ou mais', 8000, 9900, 120, false],
       ['1 hora — noite', 12000, 12000, 60, false],
@@ -90,10 +126,29 @@ describe('GET /public/catalog (NUC-76)', () => {
   });
 
   it('excludes inactive and admin_only categories and reports the average hourly value of blocks', async () => {
-    await db.update(bookingCategories).set({ status: 'inactive' }).where(eq(bookingCategories.name, '1 hora — noite'));
-    await createCategory(db, { type: 'block', name: 'Manhã', startMinute: 420, endMinute: 720, fixedPriceCents: 28000 });
-    await createCategory(db, { type: 'block', name: 'Interno', visibility: 'admin_only', fixedPriceCents: 1000 });
-    await createCategory(db, { type: 'block', name: 'Inativo', status: 'inactive', fixedPriceCents: 1000 });
+    await db
+      .update(bookingCategories)
+      .set({ status: 'inactive' })
+      .where(eq(bookingCategories.name, '1 hora — noite'));
+    await createCategory(db, {
+      type: 'block',
+      name: 'Manhã',
+      startMinute: 420,
+      endMinute: 720,
+      fixedPriceCents: 28000,
+    });
+    await createCategory(db, {
+      type: 'block',
+      name: 'Interno',
+      visibility: 'admin_only',
+      fixedPriceCents: 1000,
+    });
+    await createCategory(db, {
+      type: 'block',
+      name: 'Inativo',
+      status: 'inactive',
+      fixedPriceCents: 1000,
+    });
 
     const parsed = catalogSchema.parse((await get('catalog')).body);
 
@@ -106,7 +161,10 @@ describe('GET /public/catalog (NUC-76)', () => {
 
 describe('GET /public/clinic and /public/policies (NUC-84, NUC-85)', () => {
   it('returns the address, contact settings and the 8 business-hours rows', async () => {
-    await db.update(settings).set({ value: '+5547999990000' }).where(eq(settings.key, 'clinic.whatsapp_e164'));
+    await db
+      .update(settings)
+      .set({ value: '+5547999990000' })
+      .where(eq(settings.key, 'clinic.whatsapp_e164'));
 
     const parsed = clinicSchema.parse((await get('clinic')).body);
 

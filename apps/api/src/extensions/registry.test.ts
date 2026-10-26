@@ -1,5 +1,10 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { createRegistry, notifyStaffAfterCommit, STAFF_EVENTS, type CheckoutStep } from './registry';
+import {
+  createRegistry,
+  notifyStaffAfterCommit,
+  STAFF_EVENTS,
+  type CheckoutStep,
+} from './registry';
 
 afterEach(() => {
   vi.restoreAllMocks();
@@ -59,7 +64,9 @@ describe('registry defaults (NUC-201)', () => {
       creditCents: 0,
       fixedOccurrencesCancelled: 0,
     });
-    await expect(closedDayCompensation.apply({} as never, ['id'], {} as never)).resolves.toBeUndefined();
+    await expect(
+      closedDayCompensation.apply({} as never, ['id'], {} as never),
+    ).resolves.toBeUndefined();
   });
 
   it('accepts the 7 staff events in the no-op notifier and returns a null photo URL', async () => {
@@ -113,10 +120,17 @@ describe('notifyStaffAfterCommit (NUC-205)', () => {
     });
 
     await expect(
-      notifyStaffAfterCommit(registry, 'new_booking', { entityId: 'booking-1' }, { requestId: 'req-123456' }),
+      notifyStaffAfterCommit(
+        registry,
+        'new_booking',
+        { entityId: 'booking-1' },
+        { requestId: 'req-123456' },
+      ),
     ).resolves.toBeUndefined();
 
-    const lines = write.mock.calls.map(([line]) => JSON.parse(String(line)) as Record<string, unknown>);
+    const lines = write.mock.calls.map(
+      ([line]) => JSON.parse(String(line)) as Record<string, unknown>,
+    );
     expect(lines).toHaveLength(1);
     expect(lines[0]).toMatchObject({
       level: 'error',

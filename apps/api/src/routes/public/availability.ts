@@ -1,7 +1,14 @@
-import { availabilityDayQuerySchema, availabilityMonthQuerySchema, roomSlugSchema } from '@bravo/core';
+import {
+  availabilityDayQuerySchema,
+  availabilityMonthQuerySchema,
+  roomSlugSchema,
+} from '@bravo/core';
 import { Hono } from 'hono';
 import { z } from 'zod';
-import { getDayAvailability, getMonthAvailability } from '../../modules/availability/availability.service';
+import {
+  getDayAvailability,
+  getMonthAvailability,
+} from '../../modules/availability/availability.service';
 import { publicCalendarRateLimit } from '../../middleware/public-rate-limit';
 import { validate } from '../../middleware/validate';
 import type { AppEnv } from '../../types';

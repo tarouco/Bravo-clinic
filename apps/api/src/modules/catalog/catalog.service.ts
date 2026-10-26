@@ -14,7 +14,11 @@ import type { Db } from '../../db/client';
 import { bookingCategories, roomPhotos, rooms } from '../../db/schema';
 import type { Registry } from '../../extensions/registry';
 import { notFound } from '../../lib/errors';
-import { loadBusinessHours, loadHourlyCategories, getActiveRoomBySlug } from '../calendar/calendar.repo';
+import {
+  loadBusinessHours,
+  loadHourlyCategories,
+  getActiveRoomBySlug,
+} from '../calendar/calendar.repo';
 import { loadSettings } from '../settings/settings.repo';
 
 type Media = Pick<Registry, 'roomMedia'>;
@@ -66,7 +70,10 @@ export async function listRooms(db: Db, registry: Media): Promise<{ items: RoomS
     db.select().from(rooms).where(eq(rooms.status, 'active')).orderBy(asc(rooms.displayOrder)),
     loadHourlyCategories(db),
   ]);
-  const photos = await photosOf(db, roomRows.map((r) => r.id));
+  const photos = await photosOf(
+    db,
+    roomRows.map((r) => r.id),
+  );
   const from = fromPriceCents(hourly);
   return { items: roomRows.map((r) => summaryOf(r, photos.get(r.id) ?? [], from, registry)) };
 }

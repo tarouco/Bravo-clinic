@@ -152,14 +152,23 @@ export async function loadCalendarInputs(
   const occupied = new Map<LocalDate, Occupied[]>();
   for (const row of occupancyRows) {
     let item: Occupied | null = null;
-    if (row.kind === 'booking' && row.bookingStart && row.bookingEnd && row.cleanupMinutes !== null) {
+    if (
+      row.kind === 'booking' &&
+      row.bookingStart &&
+      row.bookingEnd &&
+      row.cleanupMinutes !== null
+    ) {
       item = occupiedFromBooking({
         start: row.bookingStart,
         end: row.bookingEnd,
         cleanupMinutes: row.cleanupMinutes,
       });
     } else if (row.kind === 'block' && row.blockStart && row.blockEnd) {
-      item = occupiedFromBlock({ start: row.blockStart, end: row.blockEnd, tag: row.blockTag ?? '' });
+      item = occupiedFromBlock({
+        start: row.blockStart,
+        end: row.blockEnd,
+        tag: row.blockTag ?? '',
+      });
     }
     if (item === null) continue;
     for (const date of datesTouched(item.start, item.occupiedUntil)) {
@@ -171,7 +180,11 @@ export async function loadCalendarInputs(
 
   return {
     hours,
-    holidays: holidayRows.map((h) => ({ date: h.date as LocalDate, name: h.name, isClosed: h.isClosed })),
+    holidays: holidayRows.map((h) => ({
+      date: h.date as LocalDate,
+      name: h.name,
+      isClosed: h.isClosed,
+    })),
     closedDays: closedRows.map((c) => ({ date: c.date as LocalDate, roomId: c.roomId })),
     occupied,
     settings,

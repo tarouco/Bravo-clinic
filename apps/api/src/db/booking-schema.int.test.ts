@@ -129,7 +129,9 @@ describe('nucleo migrations (NUC-04, NUC-05)', () => {
   it('rejects a second is_reference category with a unique violation', async () => {
     await seededBooking();
 
-    const state = await sqlState(createCategory(db, { name: 'Outra referência', isReference: true }));
+    const state = await sqlState(
+      createCategory(db, { name: 'Outra referência', isReference: true }),
+    );
 
     expect(state).toBe('23505');
   });
@@ -184,13 +186,18 @@ describe('nucleo migrations (NUC-04, NUC-05)', () => {
     await db.insert(bookingRescheduleRequests).values(request);
 
     expect(duplicate).toBe('23505');
-    const rows = await db.select({ status: bookingRescheduleRequests.status }).from(bookingRescheduleRequests);
+    const rows = await db
+      .select({ status: bookingRescheduleRequests.status })
+      .from(bookingRescheduleRequests);
     expect(rows.map((row) => row.status).sort()).toEqual(['applied', 'pending']);
   });
 
   it('rejects a duplicate payment-link hash and accepts many bookings without one', async () => {
     const { booking, user, room } = await seededBooking();
-    await db.update(bookings).set({ paymentLinkTokenHash: 'hash-1' }).where(eq(bookings.id, booking.id));
+    await db
+      .update(bookings)
+      .set({ paymentLinkTokenHash: 'hash-1' })
+      .where(eq(bookings.id, booking.id));
     const other = await createBooking(db, {
       userId: user.id,
       roomId: room.id,

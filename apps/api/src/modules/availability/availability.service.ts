@@ -74,7 +74,8 @@ function viewOf(room: Room, date: LocalDate, inputs: CalendarInputs, now: Date):
     holidayName: holiday?.name ?? null,
     closed: window === null,
     outOfRange: diffDays(today, date) > settings.maxAdvanceDays,
-    window: window === null ? null : { openMinute: window.openMinute, closeMinute: window.closeMinute },
+    window:
+      window === null ? null : { openMinute: window.openMinute, closeMinute: window.closeMinute },
     cells: generateSlotGrid({ date, window, occupied, settings, now }),
   };
 }
@@ -98,17 +99,15 @@ async function loadBlockCategories(db: Db | Tx, roomId: string) {
       ),
     )
     .orderBy(asc(bookingCategories.displayOrder));
-  return rows.map(
-    (row): BlockCategory => ({
-      id: row.id,
-      name: row.name,
-      weekdays: row.weekdays,
-      appliesOnHolidays: row.appliesOnHolidays,
-      startMinute: row.startMinute,
-      endMinute: row.endMinute,
-      fixedPriceCents: row.fixedPriceCents ?? 0,
-    }),
-  );
+  return rows.map((row): BlockCategory => ({
+    id: row.id,
+    name: row.name,
+    weekdays: row.weekdays,
+    appliesOnHolidays: row.appliesOnHolidays,
+    startMinute: row.startMinute,
+    endMinute: row.endMinute,
+    fixedPriceCents: row.fixedPriceCents ?? 0,
+  }));
 }
 
 /** Block categories applying to the day; `available` only when the whole window is a valid interval. */
@@ -183,7 +182,10 @@ export async function getDayAvailability(
   for (const decorator of registry.availabilityDecorators) {
     cells = await decorator.decorate(db, { roomId: room.id, date, cells });
   }
-  return { ...dayResponse(room, view, inputs, await blockOptionsOf(db, room, view, inputs, now)), cells };
+  return {
+    ...dayResponse(room, view, inputs, await blockOptionsOf(db, room, view, inputs, now)),
+    cells,
+  };
 }
 
 /** Admin day grid of any room: the same cells plus the `adminState` of each. */
@@ -197,8 +199,14 @@ export async function getAdminDay(
   if (room === null) throw notFound();
   const inputs = await loadCalendarInputs(db, { roomId, from: date, to: date, now });
   const view = viewOf(room, date, inputs, now);
-  const cells = view.cells.map((cell): AdminCell => ({ ...publicCell(cell), adminState: cell.adminState }));
-  return { ...dayResponse(room, view, inputs, await blockOptionsOf(db, room, view, inputs, now)), cells };
+  const cells = view.cells.map((cell): AdminCell => ({
+    ...publicCell(cell),
+    adminState: cell.adminState,
+  }));
+  return {
+    ...dayResponse(room, view, inputs, await blockOptionsOf(db, room, view, inputs, now)),
+    cells,
+  };
 }
 
 function monthDates(month: string): LocalDate[] {
@@ -244,7 +252,13 @@ export async function getMonthAvailability(
         hasDiscount = cells.some((c) => c.discountPercent !== undefined);
       }
     } else status = view.cells.every((c) => c.adminState === 'past') ? 'past' : 'full';
-    days.push({ date, status, isHoliday: view.isHoliday, holidayName: view.holidayName, hasDiscount });
+    days.push({
+      date,
+      status,
+      isHoliday: view.isHoliday,
+      holidayName: view.holidayName,
+      hasDiscount,
+    });
   }
   return { month, days };
 }
@@ -330,7 +344,10 @@ export async function findAffectedBookings(
       const key = holidayDates.has(start.date) ? 'holiday' : WEEKDAY_KEYS[weekdayOf(start.date)];
       const hours = predicate.proposedHours.find((h) => h.dayType === key);
       if (hours === undefined || hours.isClosed) return true;
-      return start.minuteOfDay < hours.openMinute || start.minuteOfDay + row.durationMinutes > hours.closeMinute;
+      return (
+        start.minuteOfDay < hours.openMinute ||
+        start.minuteOfDay + row.durationMinutes > hours.closeMinute
+      );
     })
     .map((row) => ({
       id: row.id,

@@ -210,7 +210,7 @@ describe('GET /public/rooms/:slug/availability/month (NUC-79, NUC-82)', () => {
     send(buildApp(), 'GET', `/public/rooms/principal/availability/month?month=${value}`);
 
   it('reports past, available, full, closed and the holiday flags for October and November', async () => {
-    await blockSlot('2026-10-29' as LocalDate, '07:00', '24:00', 'Reforma');
+    await blockSlot('2026-10-29', '07:00', '24:00', 'Reforma');
     await db.insert(closedDays).values({ date: '2026-10-30', roomId: null });
 
     const october = availabilityMonthSchema.parse((await month('2026-10')).body);
@@ -218,12 +218,12 @@ describe('GET /public/rooms/:slug/availability/month (NUC-79, NUC-82)', () => {
 
     const status = (date: string) => october.days.find((d) => d.date === date)?.status;
     expect(october.days).toHaveLength(31);
-    expect([status('2026-10-19'), status('2026-10-27'), status('2026-10-29'), status('2026-10-30')]).toEqual([
-      'past',
-      'available',
-      'full',
-      'closed',
-    ]);
+    expect([
+      status('2026-10-19'),
+      status('2026-10-27'),
+      status('2026-10-29'),
+      status('2026-10-30'),
+    ]).toEqual(['past', 'available', 'full', 'closed']);
     const finados = november.days.find((d) => d.date === '2026-11-02');
     expect([finados?.isHoliday, finados?.holidayName, finados?.status]).toEqual([
       true,
@@ -262,7 +262,10 @@ describe('public availability rate limit (NUC-81)', () => {
     const otherIp = await send(app, 'GET', url, { headers: { 'X-Forwarded-For': '203.0.113.10' } });
 
     expect(hundredTwentieth.status).toBe(200);
-    expect([hundredTwentyFirst.status, hundredTwentyFirst.error?.code]).toEqual([429, 'TOO_MANY_ATTEMPTS']);
+    expect([hundredTwentyFirst.status, hundredTwentyFirst.error?.code]).toEqual([
+      429,
+      'TOO_MANY_ATTEMPTS',
+    ]);
     expect(hundredTwentyFirst.headers.get('Retry-After')).toBe('60');
     expect(otherIp.status).toBe(200);
   });
@@ -279,7 +282,13 @@ describe('calendar read helpers (NUC-14, design "Availability")', () => {
     const wednesday = contexts.get(WEDNESDAY);
     expect(tuesday?.window).toEqual({ openMinute: 420, closeMinute: 1440, isHoliday: false });
     expect(tuesday?.closed).toBe(false);
-    expect(tuesday?.occupied.map((o) => [o.start.toISOString(), o.end.toISOString(), o.occupiedUntil.toISOString()])).toEqual([
+    expect(
+      tuesday?.occupied.map((o) => [
+        o.start.toISOString(),
+        o.end.toISOString(),
+        o.occupiedUntil.toISOString(),
+      ]),
+    ).toEqual([
       ['2026-10-27T12:00:00.000Z', '2026-10-27T14:00:00.000Z', '2026-10-27T14:30:00.000Z'],
     ]);
     expect([wednesday?.window, wednesday?.closed, wednesday?.occupied]).toEqual([null, true, []]);

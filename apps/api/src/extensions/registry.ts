@@ -135,10 +135,7 @@ export interface CategoryHandler {
 }
 
 export type ChargePurposeHandled =
-  | 'subscription_initial'
-  | 'subscription_renewal'
-  | 'extra_hours'
-  | 'extra_service';
+  'subscription_initial' | 'subscription_renewal' | 'extra_hours' | 'extra_service';
 
 export interface ChargeHandler {
   onApproved(tx: Tx, ctx: RequestContext, charge: ChargeRow): Promise<void>;
@@ -166,7 +163,10 @@ export const STAFF_EVENTS: readonly StaffEvent[] = [
 
 export interface NotificationPort {
   /** `entityId` feeds gestao's dedupe key. */
-  notifyStaff(event: StaffEvent, payload: { entityId: string } & Record<string, unknown>): Promise<void>;
+  notifyStaff(
+    event: StaffEvent,
+    payload: { entityId: string } & Record<string, unknown>,
+  ): Promise<void>;
 }
 
 export interface RoomMediaPort {

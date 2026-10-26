@@ -78,7 +78,10 @@ export const bookingCategories = pgTable(
       'booking_categories_fixed_schedule_check',
       sql`${t.type} <> 'fixed_schedule' or (${t.pricePerOccurrenceCents} is not null and ${t.period} <> 'single')`,
     ),
-    check('booking_categories_reference_hourly_check', sql`not ${t.isReference} or ${t.type} = 'hourly'`),
+    check(
+      'booking_categories_reference_hourly_check',
+      sql`not ${t.isReference} or ${t.type} = 'hourly'`,
+    ),
     uniqueIndex('booking_categories_reference_uq')
       .on(t.isReference)
       .where(sql`${t.isReference}`),
