@@ -1,3 +1,4 @@
+import { notificationEventsSchema } from '@bravo/core';
 import { z } from 'zod';
 
 // Response shapes of the gestao Integrações routes (gestao design "Gateway configuration",
@@ -42,3 +43,71 @@ export type GatewayOverview = z.infer<typeof gatewayOverviewSchema>;
 
 export const gatewayTestResultSchema = z.object({ ok: z.boolean(), message: z.string() });
 export type GatewayTestResult = z.infer<typeof gatewayTestResultSchema>;
+
+// ---- Calendário (GES-42, GES-43) ----
+
+export const calendarFeedSchema = z.object({
+  id: z.string().min(1),
+  scope: z.enum(['clinic', 'room']),
+  roomId: z.string().nullable(),
+  roomName: z.string().nullable(),
+  /** First 6 characters of the token; the token itself is shown only when issued. */
+  prefix: z.string().min(1),
+  createdAt: z.string().min(1),
+});
+export type CalendarFeed = z.infer<typeof calendarFeedSchema>;
+
+/** Active feeds (revoked ones are not listed) and the rooms a room feed can be issued for. */
+export const calendarOverviewSchema = z.object({
+  feeds: z.array(calendarFeedSchema),
+  rooms: z.array(z.object({ id: z.string().min(1), name: z.string().min(1) })),
+});
+export type CalendarOverview = z.infer<typeof calendarOverviewSchema>;
+
+/** `POST .../calendar/feeds` (201): the only time the full URL is returned. */
+export const feedIssuedSchema = z.object({ url: z.string().min(1), prefix: z.string().min(1) });
+export type FeedIssued = z.infer<typeof feedIssuedSchema>;
+
+// ---- E-mails (GES-65..GES-74) ----
+
+export const outboxStatusSchema = z.enum(['pending', 'sent', 'failed', 'not_sent']);
+export type OutboxStatus = z.infer<typeof outboxStatusSchema>;
+
+export const emailRecipientSchema = z.object({
+  id: z.string().min(1),
+  email: z.string().min(1),
+  active: z.boolean(),
+});
+export type EmailRecipient = z.infer<typeof emailRecipientSchema>;
+
+export const notificationsOverviewSchema = z.object({
+  /** False while `RESEND_API_KEY` is absent (GES-74). */
+  providerConfigured: z.boolean(),
+  recipients: z.array(emailRecipientSchema),
+  events: notificationEventsSchema,
+});
+export type NotificationsOverview = z.infer<typeof notificationsOverviewSchema>;
+
+export const testEmailResultSchema = z.object({
+  results: z.array(z.object({ to: z.string().min(1), status: outboxStatusSchema })),
+});
+export type TestEmailResult = z.infer<typeof testEmailResultSchema>;
+
+export const outboxRowSchema = z.object({
+  id: z.string().min(1),
+  to: z.string().min(1),
+  template: z.string().min(1),
+  subject: z.string(),
+  status: outboxStatusSchema,
+  attempts: z.number().int().min(0),
+  lastError: z.string().nullable(),
+  createdAt: z.string().min(1),
+  sentAt: z.string().nullable(),
+});
+export type OutboxRow = z.infer<typeof outboxRowSchema>;
+
+export const outboxPageSchema = z.object({
+  items: z.array(outboxRowSchema),
+  nextCursor: z.string().nullable(),
+});
+export type OutboxPage = z.infer<typeof outboxPageSchema>;

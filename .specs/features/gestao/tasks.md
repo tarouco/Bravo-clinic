@@ -1091,11 +1091,11 @@ T49 → T50
 - Skill: NONE
 
 **Done when**:
-- [ ] Tests assert the URL is shown only right after generation with "Copie agora: o link não será exibido de novo"
-- [ ] Tests assert regenerate asks for confirmation; revoke updates the list
-- [ ] Tests assert toggles list the 7 events in pt-BR, test e-mail renders per-recipient status, missing provider message renders
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 7 tests pass
+- [x] Tests assert the URL is shown only right after generation with "Copie agora: o link não será exibido de novo"
+- [x] Tests assert regenerate asks for confirmation; revoke updates the list
+- [x] Tests assert toggles list the 7 events in pt-BR, test e-mail renders per-recipient status, missing provider message renders
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: unit
 **Gate**: quick

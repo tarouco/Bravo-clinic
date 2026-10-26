@@ -1,9 +1,11 @@
 import { useSearchParams } from 'react-router-dom';
 import { Tabs } from '../../../components/ui/Tabs';
 import { usePageTitle } from '../../../lib/usePageTitle';
+import { CalendarTab } from './CalendarTab';
+import { EmailsTab } from './EmailsTab';
 import { PaymentsTab } from './PaymentsTab';
 
-const TAB_IDS = ['pagamentos'] as const;
+const TAB_IDS = ['pagamentos', 'calendario', 'emails'] as const;
 type TabId = (typeof TAB_IDS)[number];
 
 const isTab = (value: string | null): value is TabId => TAB_IDS.some((id) => id === value);
@@ -37,6 +39,16 @@ export function IntegrationsPage() {
             id: 'pagamentos',
             label: 'Pagamentos',
             content: tab === 'pagamentos' ? <PaymentsTab /> : null,
+          },
+          {
+            id: 'calendario',
+            label: 'Calendário',
+            content: tab === 'calendario' ? <CalendarTab /> : null,
+          },
+          {
+            id: 'emails',
+            label: 'E-mails',
+            content: tab === 'emails' ? <EmailsTab /> : null,
           },
         ]}
       />
