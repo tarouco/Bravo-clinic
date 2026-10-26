@@ -411,3 +411,23 @@ interface UsageReport {
 | MCP server lifecycle | Stateless, one `McpServer` per request | Serverless function; no session affinity |
 | ICS time encoding | UTC `Z` times | Valid RFC 5545 without VTIMEZONE |
 | Lane split | Backend lane and frontend lane in separate worktrees, HTTP contracts in this file | Halves wall-clock time; frontend tests mock `fetch` |
+
+## Web-assumed API contract (lane B, Phase 7 → confirm in lane A)
+
+Lane B coded these response shapes where the Finance services section above was silent. Lane A implements them exactly as listed, or changes the web types in `apps/web/src/features/admin-finance/contracts.ts` in the same task and notes it. The web validates its MSW fixtures against those schemas.
+
+| Endpoint | Assumed shape / rule |
+| --- | --- |
+| `GET /admin/finance/summary` | `FinanceSummary` of §Data Models; every `Totals` obeys net = gross + discounts + refunds + fees and result = net + expenses; `byExpenseCategory[].cents` has the sign of `expensesCents` (negative; the web shows the magnitude); `buckets` carry `key`, `label`, `from`, `to` and `Totals` |
+| `GET /admin/finance/dre.xlsx?from&to&regime` | The web fetches it with the session cookie and saves it as `dre-<regime>-<from>-<to>.xlsx`; errors use the JSON envelope |
+| `GET /admin/finance/expense-categories` | `{ items: [{ id, name, displayOrder, active }] }` in display order, inactive rows included |
+| `POST` / `PATCH /admin/finance/expense-categories(/:id)` | 201 / 200 with the category; `PATCH` takes any of `name`, `displayOrder`, `active`; the web reorders by swapping the `displayOrder` of two neighbours in two calls, so seeded orders must be distinct |
+| `GET /admin/finance/expenses?from&to&categoryId&cursor` | `{ items: Expense[], nextCursor: string \| null }`, `Expense = { id, date, categoryId, categoryName, description, amountCents, recurrence, recurrenceParentId: string \| null, attachmentName: string \| null, attachmentContentType: string \| null }` |
+| `POST` / `PATCH /admin/finance/expenses(/:id)` | 201 / 200 with the `Expense`; `PATCH` takes the whole `expenseInputSchema` body |
+| `DELETE /admin/finance/expenses/:id` | 204; the web sends an empty JSON body |
+| `PUT /admin/finance/expenses/:id/attachment` | Raw file body, `Content-Type` = the file's media type; 200 with the updated `Expense` (a 204 is also accepted); 413 / 415 as in GES-17 |
+| `GET /admin/finance/expenses/:id/attachment` | 302 to the presigned URL; the web opens it in a new tab through a plain link |
+| `DELETE /admin/finance/expenses/:id/attachment` | 204 |
+| `GET /admin/finance/receipts?from&to&cursor` | `{ items: ManualReceipt[], nextCursor }`, `ManualReceipt = { id, date, revenueCategory, method, amountCents, description: string \| null, customerName: string \| null, bookingCode: string \| null }` |
+| `POST /admin/finance/receipts` | 201 with the `ManualReceipt`; the form sends `userId` when a customer is picked and never sends `bookingId` (no booking picker exists yet) |
+| `DELETE /admin/finance/receipts/:id` | Body `{ justification }`, 204 |
