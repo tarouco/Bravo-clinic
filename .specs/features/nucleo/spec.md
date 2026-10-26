@@ -811,7 +811,7 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-92 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |
 | NUC-93 | P1: Book and pay the sinal | Tasks | T20, T49 | In Tasks |
 | NUC-94 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |
-| NUC-95 | P1: Book and pay the sinal | Tasks | T17, T20 | In Tasks |
+| NUC-95 | P1: Book and pay the sinal | Tasks | T17, T20 | Implementing |
 | NUC-96 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |
 | NUC-97 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |
 | NUC-98 | P1: Book and pay the sinal | Tasks | T30, T37 | In Tasks |
@@ -821,41 +821,41 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-102 | P1: Book and pay the sinal | Tasks | T39 | In Tasks |
 | NUC-103 | P1: Book and pay the sinal | Tasks | T39, T49 | In Tasks |
 | NUC-104 | P1: Book and pay the sinal | Tasks | T6, T9 | Implementing |
-| NUC-105 | P1: Gateway-independent payments | Tasks | T15, T16 | In Tasks |
-| NUC-106 | P1: Gateway-independent payments | Tasks | T15 | In Tasks |
-| NUC-107 | P1: Gateway-independent payments | Tasks | T17 | In Tasks |
-| NUC-108 | P1: Gateway-independent payments | Tasks | T17 | In Tasks |
-| NUC-109 | P1: Gateway-independent payments | Tasks | T17 | In Tasks |
-| NUC-110 | P1: Gateway-independent payments | Tasks | T17 | In Tasks |
-| NUC-111 | P1: Gateway-independent payments | Tasks | T17 | In Tasks |
-| NUC-112 | P1: Gateway-independent payments | Tasks | T18 | In Tasks |
-| NUC-113 | P1: Gateway-independent payments | Tasks | T18 | In Tasks |
-| NUC-114 | P1: Gateway-independent payments | Tasks | T16, T18 | In Tasks |
-| NUC-115 | P1: Gateway-independent payments | Tasks | T18 | In Tasks |
-| NUC-116 | P1: Gateway-independent payments | Tasks | T18 | In Tasks |
-| NUC-117 | P1: Gateway-independent payments | Tasks | T18 | In Tasks |
-| NUC-118 | P1: Gateway-independent payments | Tasks | T18, T39 | In Tasks |
-| NUC-119 | P1: Gateway-independent payments | Tasks | T18, T28 | In Tasks |
-| NUC-120 | P1: Gateway-independent payments | Tasks | T19, T39 | In Tasks |
-| NUC-121 | P1: Gateway-independent payments | Tasks | T19 | In Tasks |
-| NUC-122 | P1: Gateway-independent payments | Tasks | T16 | In Tasks |
-| NUC-123 | P1: Gateway-independent payments | Tasks | T16 | In Tasks |
-| NUC-124 | P1: Gateway-independent payments | Tasks | T16 | In Tasks |
-| NUC-125 | P1: Gateway-independent payments | Tasks | T15 | In Tasks |
-| NUC-126 | P1: Gateway-independent payments | Tasks | T19 | In Tasks |
-| NUC-127 | P1: Gateway-independent payments | Tasks | T19 | In Tasks |
-| NUC-128 | P1: Gateway-independent payments | Tasks | T15, T19 | In Tasks |
-| NUC-129 | P1: Gateway-independent payments | Tasks | T19 | In Tasks |
+| NUC-105 | P1: Gateway-independent payments | Tasks | T15, T16 | Implementing |
+| NUC-106 | P1: Gateway-independent payments | Tasks | T15 | Implementing |
+| NUC-107 | P1: Gateway-independent payments | Tasks | T17 | Implementing |
+| NUC-108 | P1: Gateway-independent payments | Tasks | T17 | Implementing |
+| NUC-109 | P1: Gateway-independent payments | Tasks | T17 | Implementing |
+| NUC-110 | P1: Gateway-independent payments | Tasks | T17 | Implementing |
+| NUC-111 | P1: Gateway-independent payments | Tasks | T17 | Implementing |
+| NUC-112 | P1: Gateway-independent payments | Tasks | T18 | Implementing |
+| NUC-113 | P1: Gateway-independent payments | Tasks | T18 | Implementing |
+| NUC-114 | P1: Gateway-independent payments | Tasks | T16, T18 | Implementing |
+| NUC-115 | P1: Gateway-independent payments | Tasks | T18 | Implementing |
+| NUC-116 | P1: Gateway-independent payments | Tasks | T18 | Implementing |
+| NUC-117 | P1: Gateway-independent payments | Tasks | T18 | Implementing |
+| NUC-118 | P1: Gateway-independent payments | Tasks | T18, T39 | Implementing |
+| NUC-119 | P1: Gateway-independent payments | Tasks | T18, T28 | Implementing |
+| NUC-120 | P1: Gateway-independent payments | Tasks | T19, T39 | Implementing |
+| NUC-121 | P1: Gateway-independent payments | Tasks | T19 | Implementing |
+| NUC-122 | P1: Gateway-independent payments | Tasks | T16 | Implementing |
+| NUC-123 | P1: Gateway-independent payments | Tasks | T16 | Implementing |
+| NUC-124 | P1: Gateway-independent payments | Tasks | T16 | Implementing |
+| NUC-125 | P1: Gateway-independent payments | Tasks | T15 | Implementing |
+| NUC-126 | P1: Gateway-independent payments | Tasks | T19 | Implementing |
+| NUC-127 | P1: Gateway-independent payments | Tasks | T19 | Implementing |
+| NUC-128 | P1: Gateway-independent payments | Tasks | T15, T19 | Implementing |
+| NUC-129 | P1: Gateway-independent payments | Tasks | T19 | Implementing |
 | NUC-130 | P1: Balance charge, reminders and deadline | Tasks | T27 | In Tasks |
 | NUC-131 | P1: Balance charge, reminders and deadline | Tasks | T27 | In Tasks |
 | NUC-132 | P1: Balance charge, reminders and deadline | Tasks | T27 | In Tasks |
 | NUC-133 | P1: Balance charge, reminders and deadline | Tasks | T27 | In Tasks |
-| NUC-134 | P1: Balance charge, reminders and deadline | Tasks | T17 | In Tasks |
-| NUC-135 | P1: Balance charge, reminders and deadline | Tasks | T17 | In Tasks |
-| NUC-136 | P1: Confirmation e-mails with .ics | Tasks | T14, T18 | In Tasks |
-| NUC-137 | P1: Confirmation e-mails with .ics | Tasks | T14, T22, T23 | In Tasks |
+| NUC-134 | P1: Balance charge, reminders and deadline | Tasks | T17 | Implementing |
+| NUC-135 | P1: Balance charge, reminders and deadline | Tasks | T17 | Implementing |
+| NUC-136 | P1: Confirmation e-mails with .ics | Tasks | T14, T18 | Implementing |
+| NUC-137 | P1: Confirmation e-mails with .ics | Tasks | T14, T22, T23 | Implementing |
 | NUC-138 | P1: Confirmation e-mails with .ics | Tasks | T27 | In Tasks |
-| NUC-139 | P1: Confirmation e-mails with .ics | Tasks | T14 | In Tasks |
+| NUC-139 | P1: Confirmation e-mails with .ics | Tasks | T14 | Implementing |
 | NUC-140 | P1: Confirmation e-mails with .ics | Tasks | T21 | In Tasks |
 | NUC-141 | P1: Reschedule and cancel | Tasks | T21 | In Tasks |
 | NUC-142 | P1: Reschedule and cancel | Tasks | T22 | In Tasks |
@@ -921,11 +921,11 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-202 | P1: Extension points | Tasks | T7, T32 | In Tasks |
 | NUC-203 | P1: Extension points | Tasks | T29 | In Tasks |
 | NUC-204 | P1: Extension points | Tasks | T11 | Implementing |
-| NUC-205 | P1: Extension points | Tasks | T6, T18, T23, T26 | In Tasks |
+| NUC-205 | P1: Extension points | Tasks | T6, T18, T23, T26 | Implementing |
 | NUC-206 | P2: Booking funnel analytics | Tasks | T29, T38 | In Tasks |
 | NUC-207 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |
-| NUC-208 | P1: Gateway-independent payments | Tasks | T15, T16 | In Tasks |
-| NUC-209 | P1: Extension points | Tasks | T6, T17, T18 | In Tasks |
+| NUC-208 | P1: Gateway-independent payments | Tasks | T15, T16 | Implementing |
+| NUC-209 | P1: Extension points | Tasks | T6, T17, T18 | Implementing |
 | NUC-210 | P1: Extension points | Tasks | T6, T23 | In Tasks |
 
 **ID format:** `NUC-NN`.

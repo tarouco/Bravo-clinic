@@ -761,10 +761,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Unit tests: ICS has CRLF only, folds a 100-char SUMMARY at 75 octets, escapes `,;\`, `METHOD:REQUEST` and `METHOD:CANCEL`, UTC `DTSTART`/`DTEND` equal to booking times (cleanup excluded), `SEQUENCE` value
-- [ ] Unit tests: subject "Reserva confirmada — BRV-ABC123" and each template's subject; html contains code, room, local date/time, amounts
-- [ ] Gate check passes: `npm test -w apps/api`
-- [ ] Test count: ≥ 10 tests pass
+- [x] Unit tests: ICS has CRLF only, folds a 100-char SUMMARY at 75 octets, escapes `,;\`, `METHOD:REQUEST` and `METHOD:CANCEL`, UTC `DTSTART`/`DTEND` equal to booking times (cleanup excluded), `SEQUENCE` value
+- [x] Unit tests: subject "Reserva confirmada — BRV-ABC123" and each template's subject; html contains code, room, local date/time, amounts
+- [x] Gate check passes: `npm test -w apps/api`
+- [x] Test count: ≥ 10 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -789,11 +789,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Unit tests: sandbox `createCharge` returns `sbx_` id, checkout URL and Pix copy-paste; `parseWebhook` accepts its own signature and rejects a tampered body; `verifyCredentials` ok; `listGatewayAdapters()` lists sandbox and mercadopago with their credential fields
-- [ ] Unit tests: resolver picks the active gateway for new charges and the stored provider for an old charge; mercadopago without credentials throws `GATEWAY_NOT_CONFIGURED`
-- [ ] Test asserts adapters' logged payloads never contain keys `cardNumber`, `cvv`, `securityCode`
-- [ ] Gate check passes: `npm test -w apps/api`
-- [ ] Test count: ≥ 8 tests pass
+- [x] Unit tests: sandbox `createCharge` returns `sbx_` id, checkout URL and Pix copy-paste; `parseWebhook` accepts its own signature and rejects a tampered body; `verifyCredentials` ok; `listGatewayAdapters()` lists sandbox and mercadopago with their credential fields
+- [x] Unit tests: resolver picks the active gateway for new charges and the stored provider for an old charge; mercadopago without credentials throws `GATEWAY_NOT_CONFIGURED`
+- [x] Test asserts adapters' logged payloads never contain keys `cardNumber`, `cvv`, `securityCode`
+- [x] Gate check passes: `npm test -w apps/api`
+- [x] Test count: ≥ 8 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -817,11 +817,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Unit tests with stubbed `fetch` assert URL, method, headers (`Authorization: Bearer`, `X-Idempotency-Key`) and JSON body for Pix (amount in reais, `payment_method_id: 'pix'`, `date_of_expiration`, `external_reference`) and preference (`expiration_date_to`, back URLs)
-- [ ] Unit tests: status mapping table (approved, pending, in_process, rejected, cancelled, refunded, charged_back); 10 s timeout → typed error; refund partial body
-- [ ] Unit tests: valid `x-signature` accepted, wrong `v1` or missing `ts` rejected; webhook result re-fetches `GET /v1/payments/{id}` and uses its status
-- [ ] Gate check passes: `npm test -w apps/api`
-- [ ] Test count: ≥ 12 tests pass
+- [x] Unit tests with stubbed `fetch` assert URL, method, headers (`Authorization: Bearer`, `X-Idempotency-Key`) and JSON body for Pix (amount in reais, `payment_method_id: 'pix'`, `date_of_expiration`, `external_reference`) and preference (`expiration_date_to`, back URLs)
+- [x] Unit tests: status mapping table (approved, pending, in_process, rejected, cancelled, refunded, charged_back); 10 s timeout → typed error; refund partial body
+- [x] Unit tests: valid `x-signature` accepted, wrong `v1` or missing `ts` rejected; webhook result re-fetches `GET /v1/payments/{id}` and uses its status
+- [x] Gate check passes: `npm test -w apps/api`
+- [x] Test count: ≥ 12 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -846,12 +846,12 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: missing key → 400; replay → same status/body; same key other body → 422 `IDEMPOTENCY_MISMATCH`
-- [ ] Tests (factory booking awaiting_payment): Pix pay → charge `booking_deposit` amount = payNow, `expires_at = hold_expires_at`, response parsed by `chargeIntentSchema`; under 48 h → `booking_full`; other user → 404; expired hold → 409 `HOLD_EXPIRED`; same method reuses, other method cancels previous
-- [ ] Tests: staff-created booking without consent → 422 `POLICY_ACCEPTANCE_REQUIRED`, with acceptance → consent row with snapshot version; gateway stub throwing → 502 and charge still pending
-- [ ] Tests: pay-balance creates `booking_balance`; after an approved balance charge a new one is `booking_difference`; `createCharge` with purpose `extra_hours` and no booking creates a pending charge and `submitCharge` calls the gateway
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 12 tests pass
+- [x] Tests: missing key → 400; replay → same status/body; same key other body → 422 `IDEMPOTENCY_MISMATCH`
+- [x] Tests (factory booking awaiting_payment): Pix pay → charge `booking_deposit` amount = payNow, `expires_at = hold_expires_at`, response parsed by `chargeIntentSchema`; under 48 h → `booking_full`; other user → 404; expired hold → 409 `HOLD_EXPIRED`; same method reuses, other method cancels previous
+- [x] Tests: staff-created booking without consent → 422 `POLICY_ACCEPTANCE_REQUIRED`, with acceptance → consent row with snapshot version; gateway stub throwing → 502 and charge still pending
+- [x] Tests: pay-balance creates `booking_balance`; after an approved balance charge a new one is `booking_difference`; `createCharge` with purpose `extra_hours` and no booking creates a pending charge and `submitCharge` calls the gateway
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 12 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -876,13 +876,13 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: invalid signature → 401 and 0 `webhook_events`; unknown provider → 404; duplicate delivery processed once (also with two concurrent requests)
-- [ ] Tests: approved deposit → booking `confirmed`, `paid_cents` += amount, one `booking.confirmed` outbox row with an `.ics` attachment, `booking_events` row, notifier called after commit with `new_booking` and `payment_received` (each with `entityId`); approved full → `paid`; rejected → charge `rejected`, booking still `awaiting_payment`
-- [ ] Tests: amount mismatch → booking unchanged + audit `payment.amount_mismatch`; late approval on expired booking with free slot → `confirmed` reason `late_approval`; with slot taken → refund row + `booking.late_approval_refund` listing 3 slots
-- [ ] Tests: refund success → charge `partially_refunded`/`refunded`, refund `approved` with `completed_at`; gateway failure → refund `pending` with `attempts = 1` and `last_error`; approved charges have `approved_at` and `fee_cents` (0 for sandbox)
-- [ ] Test: an approved `extra_hours` charge calls a registered fake `chargeHandlers.extra_hours.onApproved` once inside the transaction; a rejected one calls `onFailed`
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 14 tests pass
+- [x] Tests: invalid signature → 401 and 0 `webhook_events`; unknown provider → 404; duplicate delivery processed once (also with two concurrent requests)
+- [x] Tests: approved deposit → booking `confirmed`, `paid_cents` += amount, one `booking.confirmed` outbox row with an `.ics` attachment, `booking_events` row, notifier called after commit with `new_booking` and `payment_received` (each with `entityId`); approved full → `paid`; rejected → charge `rejected`, booking still `awaiting_payment`
+- [x] Tests: amount mismatch → booking unchanged + audit `payment.amount_mismatch`; late approval on expired booking with free slot → `confirmed` reason `late_approval`; with slot taken → refund row + `booking.late_approval_refund` listing 3 slots
+- [x] Tests: refund success → charge `partially_refunded`/`refunded`, refund `approved` with `completed_at`; gateway failure → refund `pending` with `attempts = 1` and `last_error`; approved charges have `approved_at` and `fee_cents` (0 for sandbox)
+- [x] Test: an approved `extra_hours` charge calls a registered fake `chargeHandlers.extra_hours.onApproved` once inside the transaction; a rejected one calls `onFailed`
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 14 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -907,10 +907,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: approve on dev → booking confirmed through a `webhook_events` row of provider `sandbox`; approve twice → 409; with `NEON_BRANCH=production` anonymous/tenant → 403, MFA staff → 200
-- [ ] Tests: payment-config returns `sandbox` and `publicKey: null`; save card without consent → 422; with consent → row with last4/brand, consent `recurring_charge`; delete → `deleted_at`; another user's card → 404; a body with a 16-digit `cardNumber` field → 422
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api` (phase end: Build gate)
-- [ ] Test count: ≥ 10 tests pass
+- [x] Tests: approve on dev → booking confirmed through a `webhook_events` row of provider `sandbox`; approve twice → 409; with `NEON_BRANCH=production` anonymous/tenant → 403, MFA staff → 200
+- [x] Tests: payment-config returns `sandbox` and `publicKey: null`; save card without consent → 422; with consent → row with last4/brand, consent `recurring_charge`; delete → `deleted_at`; another user's card → 404; a body with a 16-digit `cardNumber` field → 422
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api` (phase end: Build gate)
+- [x] Test count: ≥ 10 tests pass
 
 **Tests**: integration
 **Gate**: build

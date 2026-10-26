@@ -73,7 +73,8 @@ function driverError(err: unknown): (Error & { code: string; constraint?: unknow
   return undefined;
 }
 
-function sqlState(err: unknown): string | undefined {
+/** SQLSTATE of the driver error inside `err` (e.g. `23P01` exclusion violation). */
+export function sqlStateOf(err: unknown): string | undefined {
   return driverError(err)?.code;
 }
 
@@ -115,7 +116,7 @@ export const onError: ErrorHandler<AppEnv> = (err, c) => {
     const e = badRequest();
     return envelope(c, e.status, e.code, e.message);
   }
-  const state = sqlState(err);
+  const state = sqlStateOf(err);
   if (state === '23P01') {
     return envelope(c, 409, 'SLOT_TAKEN', 'Este horário acabou de ser reservado.');
   }

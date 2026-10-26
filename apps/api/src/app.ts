@@ -11,6 +11,7 @@ import { adminRoutes } from './routes/admin';
 import { appRoutes } from './routes/app';
 import { healthRoutes } from './routes/health';
 import { publicRoutes } from './routes/public';
+import { paymentWebhookRoutes } from './routes/webhooks/pagamentos';
 import type { AppDeps, AppEnv } from './types';
 
 /** Builds the API. Dependencies are injectable so tests can replace db, time, fetch and env. */
@@ -37,6 +38,7 @@ export function createApp(overrides: Partial<AppDeps> = {}): Hono<AppEnv> {
   app.route('/public', publicRoutes());
   app.route('/app', appRoutes());
   app.route('/admin', adminRoutes());
+  app.route('/webhooks/pagamentos', paymentWebhookRoutes());
   app.onError(onError);
   app.notFound(notFoundHandler);
   return app;
