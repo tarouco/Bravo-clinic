@@ -1,42 +1,23 @@
-import { addDays, utcToLocal, type AvailabilityMonth, type LocalDate } from '@bravo/core';
-import { useState } from 'react';
+import { addDays } from '@bravo/core';
 import { useSearchParams } from 'react-router-dom';
-import { MonthCalendar } from '../../components/calendar/MonthCalendar';
 import { Button } from '../../components/ui/Button';
 import { cx, focusRing } from '../../components/ui/cx';
 import { Alert, Spinner } from '../../components/ui/Feedback';
-import { datesOfMonth, monthOf } from '../../lib/calendar-dates';
 import { formatLocalDateBR } from '../../lib/format';
 import { messageOf } from '../../lib/api-errors';
 import { useRooms } from '../catalog/api';
 import { useOccurrenceCheck } from './api';
 import { formatOccurrence, formatPeriodPrice, formatWeekdayDate } from './format';
+import { StartDateCalendar } from './StartDateCalendar';
 
 /** URL params that keep the chosen room and start date across login and refresh (REC-157). */
 export const PICKER_PARAMS = { room: 'roomId', baseOn: 'baseOn' } as const;
-
-/** Furthest start date offered; the API enforces `calendar.max_advance_days` (REC-11). */
-const MAX_ADVANCE_DAYS = 90;
 
 export interface FixedSchedulePickerProps {
   categoryId: string;
   /** Price of one occurrence; falls back to the period price divided by the count. */
   pricePerOccurrenceCents?: number | undefined;
   onContinue: () => void;
-}
-
-type MonthDay = AvailabilityMonth['days'][number];
-
-/** Start dates are any day from today to the advance limit: occurrences are checked afterwards. */
-function startDateDays(month: string, today: LocalDate): MonthDay[] {
-  const limit = addDays(today, MAX_ADVANCE_DAYS);
-  return datesOfMonth(month).map((date) => ({
-    date,
-    status: date < today ? 'past' : date > limit ? 'out_of_range' : 'available',
-    isHoliday: false,
-    holidayName: null,
-    hasDiscount: false,
-  }));
 }
 
 /**
@@ -51,9 +32,7 @@ export function FixedSchedulePicker({
   const [params, setParams] = useSearchParams();
   const roomId = params.get(PICKER_PARAMS.room);
   const baseOn = params.get(PICKER_PARAMS.baseOn);
-  const today = utcToLocal(new Date()).date;
 
-  const [month, setMonth] = useState(monthOf(baseOn ?? today));
   const rooms = useRooms();
   const check = useOccurrenceCheck(categoryId, {
     ...(roomId ? { roomId } : {}),
@@ -65,7 +44,6 @@ export function FixedSchedulePicker({
     if (patch.roomId) next.set(PICKER_PARAMS.room, patch.roomId);
     if (patch.baseOn) next.set(PICKER_PARAMS.baseOn, patch.baseOn);
     setParams(next, { replace: true });
-    if (patch.baseOn) setMonth(monthOf(patch.baseOn));
   };
 
   const result = roomId && baseOn ? check.data : undefined;
@@ -119,15 +97,11 @@ export function FixedSchedulePicker({
         <h2 id="fixed-start" className="font-heading-mobile text-heading-mobile text-ink">
           Início do período
         </h2>
-        <MonthCalendar
-          month={month}
-          days={startDateDays(month, today)}
+        <StartDateCalendar
           value={baseOn}
-          minMonth={monthOf(today)}
           onSelect={(date) => {
             choose({ baseOn: date });
           }}
-          onMonthChange={setMonth}
         />
       </section>
 

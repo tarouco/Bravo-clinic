@@ -36,6 +36,7 @@ import { CheckoutPage } from './pages/public/CheckoutPage';
 import { PoliciesPage } from './pages/public/PoliciesPage';
 import { PreReservationPage } from './pages/public/PreReservationPage';
 import { SandboxCheckoutPage } from './pages/public/SandboxCheckoutPage';
+import { SubscribePage } from './pages/public/SubscribePage';
 import { PricingPage } from './pages/public/PricingPage';
 import { RoomPage } from './pages/public/rooms/RoomPage';
 import { RoomsPage } from './pages/public/rooms/RoomsPage';
@@ -43,10 +44,7 @@ import { RoomsPage } from './pages/public/rooms/RoomsPage';
 type PlaceholderRoute = readonly [path: string, title: string];
 
 /** Public pages that ship with later features (docs/architecture.md section 9.1). */
-const publicPlaceholders: PlaceholderRoute[] = [
-  ['servicos-extras', 'Serviços extras'],
-  ['assinar/:categoryId', 'Assinar plano'],
-];
+const publicPlaceholders: PlaceholderRoute[] = [['servicos-extras', 'Serviços extras']];
 
 /** Tenant area pages that ship with later features. */
 const appPlaceholders: PlaceholderRoute[] = [
@@ -104,6 +102,7 @@ export const appRoutes: RouteObject[] = [
       { path: 'termos', element: <LegalPage kind="termos" /> },
       { path: 'privacidade', element: <LegalPage kind="privacidade" /> },
       { path: 'reservar', element: <BookingFlowPage /> },
+      { path: 'assinar/:categoryId', element: <SubscribePage /> },
       { path: 'pagamento/sandbox/:chargeId', element: <SandboxCheckoutPage /> },
       { path: 'pre-reserva/:token', element: <PreReservationPage /> },
       ...publicPlaceholders.map(placeholder),

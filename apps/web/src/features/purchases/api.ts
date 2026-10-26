@@ -166,10 +166,12 @@ export function useSubscriptions() {
   });
 }
 
-export function useSubscription(id: string | undefined) {
+/** One subscription; `poll` re-reads it every 2 s (waiting for a payment to be confirmed). */
+export function useSubscription(id: string | undefined, options: { poll?: boolean } = {}) {
   return useQuery<Subscription>({
     queryKey: purchaseKeys.subscription(id ?? ''),
     enabled: Boolean(id),
+    refetchInterval: options.poll ? 2000 : false,
     queryFn: () => api.get(`/api/app/subscriptions/${id ?? ''}`),
   });
 }

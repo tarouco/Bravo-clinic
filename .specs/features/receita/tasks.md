@@ -1217,11 +1217,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Hour package shows 3 steps, fixed shows 4; summary shows "Renova automaticamente em 02/12/2026 por R$ 1.600,00 (cobrança 2 dias antes)"
-- [ ] Pay button disabled until both checkboxes; logged-out user is sent to `/login?next=/assinar/<id>?baseOn=2026-11-02`
-- [ ] Purchase 409 `CONFLICT` shows the REC-12 message with a link to `/app/compras`; 409 `OCCURRENCE_CONFLICT` returns to the picker with dates
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 8 new tests pass
+- [x] Hour package shows 3 steps, fixed shows 4; summary shows "Renova automaticamente em 02/12/2026 por R$ 1.600,00 (cobrança 2 dias antes)"
+- [x] Pay button disabled until both checkboxes; logged-out user is sent to `/login?next=/assinar/<id>?baseOn=2026-11-02`
+- [x] Purchase 409 `CONFLICT` shows the REC-12 message with a link to `/app/compras`; 409 `OCCURRENCE_CONFLICT` returns to the picker with dates
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 8 new tests pass
 
 **Tests**: unit
 **Gate**: quick
