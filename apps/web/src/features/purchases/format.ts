@@ -68,6 +68,11 @@ export function formatDateTime(instant: string): string {
   return `${formatLocalDateBR(local.date)} · ${minuteToHHMM(local.minuteOfDay)}`;
 }
 
+/** "2027-02-08T15:00:00.000Z" -> "08/02/2027" in São Paulo time. */
+export function formatDay(instant: string): string {
+  return formatLocalDateBR(utcToLocal(new Date(instant)).date);
+}
+
 /** "2026-11-02" -> "Seg 02/11/2026". */
 export function formatWeekdayDate(date: string): string {
   return `${WEEKDAY_NAMES[weekdayOf(date as LocalDate) - 1] ?? ''} ${formatLocalDateBR(date)}`;

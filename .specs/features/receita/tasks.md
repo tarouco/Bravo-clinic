@@ -1300,10 +1300,10 @@ T48 → T50
 
 **Done when**:
 
-- [ ] 5 h shows "5 × R$ 80,00 = R$ 400,00"; stepper cannot go below 1 or above 20
-- [ ] Lots render "300 min · vence em 08/02/2027"; ineligible fixture navigates to `/app/compras`
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 5 new tests pass
+- [x] 5 h shows "5 × R$ 80,00 = R$ 400,00"; stepper cannot go below 1 or above 20
+- [x] Lots render "300 min · vence em 08/02/2027"; ineligible fixture navigates to `/app/compras`
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 5 new tests pass
 
 **Tests**: unit
 **Gate**: quick

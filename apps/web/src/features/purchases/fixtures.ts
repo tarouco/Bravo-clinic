@@ -508,6 +508,66 @@ export const creditsSummary = parseFixture(
   'creditsSummary',
 );
 
+/** R$ 205,33 of closed-day compensation (REC-96, REC-114). */
+export const creditsSummary205 = parseFixture(
+  creditsSummarySchema,
+  {
+    availableCents: 20533,
+    lots: [
+      {
+        id: RID.creditLot,
+        source: 'closed_day_compensation',
+        label: 'Compensação de dia fechado',
+        amountCents: 20533,
+        remainingCents: 20533,
+        expiresAt: '2027-04-20T12:00:00.000Z',
+      },
+    ],
+    ledger: [
+      {
+        at: '2026-10-20T12:00:00.000Z',
+        entryType: 'grant',
+        label: 'Compensação de dia fechado',
+        amountCents: 20533,
+      },
+    ],
+  },
+  'creditsSummary205',
+);
+
+/** A Pix renewal and a partially refunded card booking (REC-145). */
+export const purchaseHistoryMixed = parseFixture(
+  purchaseHistoryPageSchema,
+  {
+    items: [
+      {
+        chargeId: RID.charge,
+        at: '2026-12-02T09:00:00.000Z',
+        description: 'Pacote 20h mensal · Renovação',
+        purpose: 'subscription_renewal',
+        method: 'pix',
+        amountCents: 160000,
+        refundedCents: 0,
+        status: 'approved',
+        statusLabel: 'Aprovado',
+      },
+      {
+        chargeId: RID.chargeExtra,
+        at: '2026-11-04T22:00:00.000Z',
+        description: 'Reserva BRV-7K2Q9X',
+        purpose: 'booking_full',
+        method: 'card',
+        amountCents: 12000,
+        refundedCents: 4000,
+        status: 'partially_refunded',
+        statusLabel: 'Reembolsado parcialmente',
+      },
+    ],
+    nextCursor: null,
+  },
+  'purchaseHistoryMixed',
+);
+
 export const purchaseHistory = parseFixture(
   purchaseHistoryPageSchema,
   {

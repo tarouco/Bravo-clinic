@@ -270,9 +270,11 @@ export function usePaySubscription(subscriptionId: string) {
 
 // ---- Tenant: extra hours, credits, history ----
 
-export function useExtraHours() {
+/** Extra hours and their lots; `poll` re-reads them every 2 s (waiting for a purchase to be confirmed). */
+export function useExtraHours(options: { poll?: boolean } = {}) {
   return useQuery<ExtraHoursSummary>({
     queryKey: purchaseKeys.extraHours,
+    refetchInterval: options.poll ? 2000 : false,
     queryFn: () => api.get('/api/app/extra-hours'),
   });
 }
