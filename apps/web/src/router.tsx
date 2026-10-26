@@ -19,6 +19,10 @@ import { TwoFactorEnrollPage, TwoFactorVerifyPage } from './pages/auth/TwoFactor
 import { VerifyEmailPage } from './pages/auth/VerifyEmailPage';
 import { HomePage } from './pages/public/home/HomePage';
 import { NotFoundPage } from './pages/public/NotFoundPage';
+import { ContactPage } from './pages/public/ContactPage';
+import { LegalPage } from './pages/public/LegalPage';
+import { PoliciesPage } from './pages/public/PoliciesPage';
+import { PricingPage } from './pages/public/PricingPage';
 import { RoomPage } from './pages/public/rooms/RoomPage';
 import { RoomsPage } from './pages/public/rooms/RoomsPage';
 
@@ -26,12 +30,7 @@ type PlaceholderRoute = readonly [path: string, title: string];
 
 /** Public pages that ship with later features (docs/architecture.md section 9.1). */
 const publicPlaceholders: PlaceholderRoute[] = [
-  ['precos', 'Preços e pacotes'],
   ['servicos-extras', 'Serviços extras'],
-  ['politicas', 'Políticas'],
-  ['contato', 'Contato'],
-  ['termos', 'Termos de uso'],
-  ['privacidade', 'Política de privacidade'],
   ['reservar', 'Reservar'],
   ['checkout/:bookingId', 'Pagamento'],
   ['pagamento/sandbox/:chargeId', 'Pagamento de teste'],
@@ -83,6 +82,11 @@ export const appRoutes: RouteObject[] = [
       { index: true, element: <HomePage /> },
       { path: 'salas', element: <RoomsPage /> },
       { path: 'salas/:slug', element: <RoomPage /> },
+      { path: 'precos', element: <PricingPage /> },
+      { path: 'politicas', element: <PoliciesPage /> },
+      { path: 'contato', element: <ContactPage /> },
+      { path: 'termos', element: <LegalPage kind="termos" /> },
+      { path: 'privacidade', element: <LegalPage kind="privacidade" /> },
       ...publicPlaceholders.map(placeholder),
       { path: 'login', element: <LoginPage /> },
       { path: 'cadastro', element: <SignupPage /> },

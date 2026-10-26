@@ -1401,9 +1401,9 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: pricing lists 4 hourly categories with weekday/weekend rates and a registered fake `pricing.packages` slot renders after them; políticas renders the fixture section titles; contato has the exact Maps URL and per-day hours; legal pages show "Versão terms-2026-10" / "Versão privacy-2026-10"
-- [ ] Gate check passes: `npm test -w apps/web` (phase end: Build-B gate)
-- [ ] Test count: ≥ 5 tests pass
+- [x] Tests: pricing lists 4 hourly categories with weekday/weekend rates and a registered fake `pricing.packages` slot renders after them; políticas renders the fixture section titles; contato has the exact Maps URL and per-day hours; legal pages show "Versão terms-2026-10" / "Versão privacy-2026-10"
+- [x] Gate check passes: `npm test -w apps/web` (phase end: Build-B gate)
+- [x] Test count: ≥ 5 tests pass
 
 **Tests**: unit
 **Gate**: build
