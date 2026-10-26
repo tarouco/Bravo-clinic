@@ -811,7 +811,7 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-92 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |
 | NUC-93 | P1: Book and pay the sinal | Tasks | T20, T49 | In Tasks |
 | NUC-94 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |
-| NUC-95 | P1: Book and pay the sinal | Tasks | T17, T20 | In Tasks |
+| NUC-95 | P1: Book and pay the sinal | Tasks | T17, T20 | Implementing |
 | NUC-96 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |
 | NUC-97 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |
 | NUC-98 | P1: Book and pay the sinal | Tasks | T30, T37 | In Tasks |
@@ -823,11 +823,11 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-104 | P1: Book and pay the sinal | Tasks | T6, T9 | Implementing |
 | NUC-105 | P1: Gateway-independent payments | Tasks | T15, T16 | Implementing |
 | NUC-106 | P1: Gateway-independent payments | Tasks | T15 | Implementing |
-| NUC-107 | P1: Gateway-independent payments | Tasks | T17 | In Tasks |
-| NUC-108 | P1: Gateway-independent payments | Tasks | T17 | In Tasks |
-| NUC-109 | P1: Gateway-independent payments | Tasks | T17 | In Tasks |
-| NUC-110 | P1: Gateway-independent payments | Tasks | T17 | In Tasks |
-| NUC-111 | P1: Gateway-independent payments | Tasks | T17 | In Tasks |
+| NUC-107 | P1: Gateway-independent payments | Tasks | T17 | Implementing |
+| NUC-108 | P1: Gateway-independent payments | Tasks | T17 | Implementing |
+| NUC-109 | P1: Gateway-independent payments | Tasks | T17 | Implementing |
+| NUC-110 | P1: Gateway-independent payments | Tasks | T17 | Implementing |
+| NUC-111 | P1: Gateway-independent payments | Tasks | T17 | Implementing |
 | NUC-112 | P1: Gateway-independent payments | Tasks | T18 | In Tasks |
 | NUC-113 | P1: Gateway-independent payments | Tasks | T18 | In Tasks |
 | NUC-114 | P1: Gateway-independent payments | Tasks | T16, T18 | Implementing |
@@ -850,8 +850,8 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-131 | P1: Balance charge, reminders and deadline | Tasks | T27 | In Tasks |
 | NUC-132 | P1: Balance charge, reminders and deadline | Tasks | T27 | In Tasks |
 | NUC-133 | P1: Balance charge, reminders and deadline | Tasks | T27 | In Tasks |
-| NUC-134 | P1: Balance charge, reminders and deadline | Tasks | T17 | In Tasks |
-| NUC-135 | P1: Balance charge, reminders and deadline | Tasks | T17 | In Tasks |
+| NUC-134 | P1: Balance charge, reminders and deadline | Tasks | T17 | Implementing |
+| NUC-135 | P1: Balance charge, reminders and deadline | Tasks | T17 | Implementing |
 | NUC-136 | P1: Confirmation e-mails with .ics | Tasks | T14, T18 | Implementing |
 | NUC-137 | P1: Confirmation e-mails with .ics | Tasks | T14, T22, T23 | Implementing |
 | NUC-138 | P1: Confirmation e-mails with .ics | Tasks | T27 | In Tasks |
@@ -925,7 +925,7 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-206 | P2: Booking funnel analytics | Tasks | T29, T38 | In Tasks |
 | NUC-207 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |
 | NUC-208 | P1: Gateway-independent payments | Tasks | T15, T16 | Implementing |
-| NUC-209 | P1: Extension points | Tasks | T6, T17, T18 | In Tasks |
+| NUC-209 | P1: Extension points | Tasks | T6, T17, T18 | Implementing |
 | NUC-210 | P1: Extension points | Tasks | T6, T23 | In Tasks |
 
 **ID format:** `NUC-NN`.

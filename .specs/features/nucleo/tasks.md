@@ -846,12 +846,12 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: missing key → 400; replay → same status/body; same key other body → 422 `IDEMPOTENCY_MISMATCH`
-- [ ] Tests (factory booking awaiting_payment): Pix pay → charge `booking_deposit` amount = payNow, `expires_at = hold_expires_at`, response parsed by `chargeIntentSchema`; under 48 h → `booking_full`; other user → 404; expired hold → 409 `HOLD_EXPIRED`; same method reuses, other method cancels previous
-- [ ] Tests: staff-created booking without consent → 422 `POLICY_ACCEPTANCE_REQUIRED`, with acceptance → consent row with snapshot version; gateway stub throwing → 502 and charge still pending
-- [ ] Tests: pay-balance creates `booking_balance`; after an approved balance charge a new one is `booking_difference`; `createCharge` with purpose `extra_hours` and no booking creates a pending charge and `submitCharge` calls the gateway
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 12 tests pass
+- [x] Tests: missing key → 400; replay → same status/body; same key other body → 422 `IDEMPOTENCY_MISMATCH`
+- [x] Tests (factory booking awaiting_payment): Pix pay → charge `booking_deposit` amount = payNow, `expires_at = hold_expires_at`, response parsed by `chargeIntentSchema`; under 48 h → `booking_full`; other user → 404; expired hold → 409 `HOLD_EXPIRED`; same method reuses, other method cancels previous
+- [x] Tests: staff-created booking without consent → 422 `POLICY_ACCEPTANCE_REQUIRED`, with acceptance → consent row with snapshot version; gateway stub throwing → 502 and charge still pending
+- [x] Tests: pay-balance creates `booking_balance`; after an approved balance charge a new one is `booking_difference`; `createCharge` with purpose `extra_hours` and no booking creates a pending charge and `submitCharge` calls the gateway
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 12 tests pass
 
 **Tests**: integration
 **Gate**: full
