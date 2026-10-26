@@ -531,22 +531,22 @@
 | REC-20 | P1: Buy an hour package | Tasks | T25 | In Tasks |
 | REC-21 | P1: Buy an hour package | Tasks | T19 | In Tasks |
 | REC-22 | P1: Pay a booking with package hours | Tasks | T5 | Implementing |
-| REC-23 | P1: Pay a booking with package hours | Tasks | T13, T16 | In Tasks |
+| REC-23 | P1: Pay a booking with package hours | Tasks | T13, T16 | Implementing |
 | REC-24 | P1: Pay a booking with package hours | Tasks | T34 | In Tasks |
 | REC-25 | P1: Pay a booking with package hours | Tasks | T7, T13 | Implementing |
 | REC-26 | P1: Pay a booking with package hours | Tasks | T7, T13 | Implementing |
-| REC-27 | P1: Pay a booking with package hours | Tasks | T13, T16 | In Tasks |
+| REC-27 | P1: Pay a booking with package hours | Tasks | T13, T16 | Implementing |
 | REC-28 | P1: Pay a booking with package hours | Tasks | T34 | In Tasks |
-| REC-29 | P1: Pay a booking with package hours | Tasks | T13, T16 | In Tasks |
+| REC-29 | P1: Pay a booking with package hours | Tasks | T13, T16 | Implementing |
 | REC-30 | P1: Pay a booking with package hours | Tasks | T16 | In Tasks |
-| REC-31 | P1: Pay a booking with package hours | Tasks | T13 | In Tasks |
+| REC-31 | P1: Pay a booking with package hours | Tasks | T13 | Implementing |
 | REC-32 | P1: Pay a booking with package hours | Tasks | T10, T13 | Implementing |
-| REC-33 | P1: Pay a booking with package hours | Tasks | T13 | In Tasks |
-| REC-34 | P1: Pay a booking with package hours | Tasks | T13 | In Tasks |
-| REC-35 | P1: Pay a booking with package hours | Tasks | T13 | In Tasks |
-| REC-36 | P1: Pay a booking with package hours | Tasks | T13 | In Tasks |
-| REC-37 | P1: Pay a booking with package hours | Tasks | T13, T16 | In Tasks |
-| REC-38 | P1: Pay a booking with package hours | Tasks | T13 | In Tasks |
+| REC-33 | P1: Pay a booking with package hours | Tasks | T13 | Implementing |
+| REC-34 | P1: Pay a booking with package hours | Tasks | T13 | Implementing |
+| REC-35 | P1: Pay a booking with package hours | Tasks | T13 | Implementing |
+| REC-36 | P1: Pay a booking with package hours | Tasks | T13 | Implementing |
+| REC-37 | P1: Pay a booking with package hours | Tasks | T13, T16 | Implementing |
+| REC-38 | P1: Pay a booking with package hours | Tasks | T13 | Implementing |
 | REC-39 | P1: Balance ledger and extrato | Tasks | T8 | Implementing |
 | REC-40 | P1: Balance ledger and extrato | Tasks | T8, T10 | Implementing |
 | REC-41 | P1: Balance ledger and extrato | Tasks | T5, T25, T32 | Implementing |
@@ -563,7 +563,7 @@
 | REC-52 | P1: Renewal, suspension and closure | Tasks | T27 | In Tasks |
 | REC-53 | P1: Renewal, suspension and closure | Tasks | T20, T28 | In Tasks |
 | REC-54 | P1: Renewal, suspension and closure | Tasks | T23, T28 | In Tasks |
-| REC-55 | P1: Renewal, suspension and closure | Tasks | T13 | In Tasks |
+| REC-55 | P1: Renewal, suspension and closure | Tasks | T13 | Implementing |
 | REC-56 | P1: Renewal, suspension and closure | Tasks | T23 | In Tasks |
 | REC-57 | P1: Renewal, suspension and closure | Tasks | T23, T28 | In Tasks |
 | REC-58 | P1: Renewal, suspension and closure | Tasks | T27 | In Tasks |
@@ -576,7 +576,7 @@
 | REC-65 | P1: Extra hours | Tasks | T24 | In Tasks |
 | REC-66 | P1: Extra hours | Tasks | T24 | In Tasks |
 | REC-67 | P1: Extra hours | Tasks | T10, T28 | Implementing |
-| REC-68 | P1: Extra hours | Tasks | T13 | In Tasks |
+| REC-68 | P1: Extra hours | Tasks | T13 | Implementing |
 | REC-69 | P1: Extra hours | Tasks | T40 | In Tasks |
 | REC-70 | P1: Extra hours | Tasks | T29 | In Tasks |
 | REC-71 | P1: Change and cancel | Tasks | T6 | Implementing |

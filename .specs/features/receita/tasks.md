@@ -532,14 +532,14 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Factory categories: Wed 19:00–20:00 → debit 78, ledger detail holds V_ref 9700, V_pac 8000; Tue 17:30–20:00 → 152
-- [ ] Date beyond the active period uses lots only; suspended subscription → `reason:'suspended'`, lots still usable; block-priced draft → null option `block_category`
-- [ ] Insufficient → `INSUFFICIENT_BALANCE` with required/available; two parallel bookings → one succeeds
-- [ ] Cancel ≥ 24h returns package + lot minutes; < 24h returns 0; clinic cancel with closed period creates a manual lot; switch-closed period returns converted minutes to the successor
-- [ ] Reschedule reverses and re-debits; insufficient new debit leaves ledger unchanged
-- [ ] `GET /api/admin/calendar/events` returns `packageMinutes: 78` for the Wed package booking
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 14 new tests pass
+- [x] Factory categories: Wed 19:00–20:00 → debit 78, ledger detail holds V_ref 9700, V_pac 8000; Tue 17:30–20:00 → 152
+- [x] Date beyond the active period uses lots only; suspended subscription → `reason:'suspended'`, lots still usable; block-priced draft → null option `block_category`
+- [x] Insufficient → `INSUFFICIENT_BALANCE` with required/available; two parallel bookings → one succeeds
+- [x] Cancel ≥ 24h returns package + lot minutes; < 24h returns 0; clinic cancel with closed period creates a manual lot; switch-closed period returns converted minutes to the successor
+- [x] Reschedule reverses and re-debits; insufficient new debit leaves ledger unchanged
+- [x] `GET /api/admin/calendar/events` returns `packageMinutes: 78` for the Wed package booking
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 14 new tests pass
 
 **Tests**: integration
 **Gate**: full
