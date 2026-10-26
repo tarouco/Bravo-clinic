@@ -68,6 +68,27 @@ describe('resolveGateway (NUC-106, NUC-125)', () => {
     await expectNotConfigured(resolveGateway('mercadopago', deps()));
   });
 
+  it('builds the Mercado Pago adapter from the decrypted credentials of its row', async () => {
+    const key = getEnv().ENCRYPTION_KEY;
+    await db.insert(integrationSettings).values({
+      key: 'gateway.mercadopago',
+      enabled: true,
+      environment: 'test',
+      secretCiphertext: encryptSecret(JSON.stringify({ accessToken: 'APP_USR-secret' }), key),
+    });
+    const calls: { authorization: string | undefined }[] = [];
+    const fetchStub: typeof fetch = (_url, init) => {
+      calls.push({ authorization: (init?.headers as Record<string, string>)['Authorization'] });
+      return Promise.resolve(new Response('{"id":1}', { status: 200 }));
+    };
+
+    const gateway = await resolveGateway('mercadopago', { ...deps(), fetch: fetchStub });
+    await gateway.verifyCredentials({ accessToken: 'APP_USR-secret' }, 'test');
+
+    expect(gateway.id).toBe('mercadopago');
+    expect(calls).toEqual([{ authorization: 'Bearer APP_USR-secret' }]);
+  });
+
   it('throws GATEWAY_NOT_CONFIGURED for a charge whose provider is not a gateway', async () => {
     await expectNotConfigured(resolveGatewayForCharge(deps(), { provider: 'internal' }));
   });

@@ -52,8 +52,11 @@ export interface SavedCardInfo {
 
 export type ParsedWebhook =
   | { valid: false }
+  /** Authentic but not about a payment we can act on (another topic, unknown payment). */
+  | { valid: true; ignored: true }
   | {
       valid: true;
+      ignored?: false;
       externalId: string;
       /** The provider's own status word (the `webhook_events.external_status` dedupe key). */
       externalStatus: string;

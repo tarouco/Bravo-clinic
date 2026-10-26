@@ -817,11 +817,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Unit tests with stubbed `fetch` assert URL, method, headers (`Authorization: Bearer`, `X-Idempotency-Key`) and JSON body for Pix (amount in reais, `payment_method_id: 'pix'`, `date_of_expiration`, `external_reference`) and preference (`expiration_date_to`, back URLs)
-- [ ] Unit tests: status mapping table (approved, pending, in_process, rejected, cancelled, refunded, charged_back); 10 s timeout → typed error; refund partial body
-- [ ] Unit tests: valid `x-signature` accepted, wrong `v1` or missing `ts` rejected; webhook result re-fetches `GET /v1/payments/{id}` and uses its status
-- [ ] Gate check passes: `npm test -w apps/api`
-- [ ] Test count: ≥ 12 tests pass
+- [x] Unit tests with stubbed `fetch` assert URL, method, headers (`Authorization: Bearer`, `X-Idempotency-Key`) and JSON body for Pix (amount in reais, `payment_method_id: 'pix'`, `date_of_expiration`, `external_reference`) and preference (`expiration_date_to`, back URLs)
+- [x] Unit tests: status mapping table (approved, pending, in_process, rejected, cancelled, refunded, charged_back); 10 s timeout → typed error; refund partial body
+- [x] Unit tests: valid `x-signature` accepted, wrong `v1` or missing `ts` rejected; webhook result re-fetches `GET /v1/payments/{id}` and uses its status
+- [x] Gate check passes: `npm test -w apps/api`
+- [x] Test count: ≥ 12 tests pass
 
 **Tests**: unit
 **Gate**: quick

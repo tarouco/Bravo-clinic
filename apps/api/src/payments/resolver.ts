@@ -6,6 +6,7 @@ import { decryptSecret } from '../lib/crypto';
 import { AppError } from '../lib/errors';
 import { logger } from '../lib/logger';
 import { loadSettings } from '../modules/settings/settings.repo';
+import { createMercadoPagoGateway } from './adapters/mercadopago';
 import { createSandboxGateway } from './adapters/sandbox';
 import { isProviderId, type PaymentGateway, type ProviderId } from './gateway';
 
@@ -84,6 +85,23 @@ type Factory = (ctx: GatewayDeps & { config: GatewayConfig | null }) => PaymentG
 
 const factories: Partial<Record<ProviderId, Factory>> = {
   sandbox: ({ env, now }) => createSandboxGateway({ env, ...(now !== undefined && { now }) }),
+  mercadopago: ({ env, fetch, now, config }) =>
+    config === null || !config.credentials['accessToken']
+      ? null
+      : createMercadoPagoGateway({
+          credentials: {
+            accessToken: config.credentials['accessToken'],
+            ...(config.credentials['webhookSecret'] !== undefined && {
+              webhookSecret: config.credentials['webhookSecret'],
+            }),
+            ...(config.credentials['publicKey'] !== undefined && {
+              publicKey: config.credentials['publicKey'],
+            }),
+          },
+          env,
+          fetch,
+          ...(now !== undefined && { now }),
+        }),
 };
 
 /**

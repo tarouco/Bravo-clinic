@@ -830,7 +830,7 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-111 | P1: Gateway-independent payments | Tasks | T17 | In Tasks |
 | NUC-112 | P1: Gateway-independent payments | Tasks | T18 | In Tasks |
 | NUC-113 | P1: Gateway-independent payments | Tasks | T18 | In Tasks |
-| NUC-114 | P1: Gateway-independent payments | Tasks | T16, T18 | In Tasks |
+| NUC-114 | P1: Gateway-independent payments | Tasks | T16, T18 | Implementing |
 | NUC-115 | P1: Gateway-independent payments | Tasks | T18 | In Tasks |
 | NUC-116 | P1: Gateway-independent payments | Tasks | T18 | In Tasks |
 | NUC-117 | P1: Gateway-independent payments | Tasks | T18 | In Tasks |
@@ -838,9 +838,9 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-119 | P1: Gateway-independent payments | Tasks | T18, T28 | In Tasks |
 | NUC-120 | P1: Gateway-independent payments | Tasks | T19, T39 | In Tasks |
 | NUC-121 | P1: Gateway-independent payments | Tasks | T19 | In Tasks |
-| NUC-122 | P1: Gateway-independent payments | Tasks | T16 | In Tasks |
-| NUC-123 | P1: Gateway-independent payments | Tasks | T16 | In Tasks |
-| NUC-124 | P1: Gateway-independent payments | Tasks | T16 | In Tasks |
+| NUC-122 | P1: Gateway-independent payments | Tasks | T16 | Implementing |
+| NUC-123 | P1: Gateway-independent payments | Tasks | T16 | Implementing |
+| NUC-124 | P1: Gateway-independent payments | Tasks | T16 | Implementing |
 | NUC-125 | P1: Gateway-independent payments | Tasks | T15 | Implementing |
 | NUC-126 | P1: Gateway-independent payments | Tasks | T19 | In Tasks |
 | NUC-127 | P1: Gateway-independent payments | Tasks | T19 | In Tasks |
