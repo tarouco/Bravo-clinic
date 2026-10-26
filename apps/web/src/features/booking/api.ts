@@ -6,6 +6,7 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import type {
+  AvailabilityDay,
   BookingDetail,
   BookingList,
   CancellationPreview,
@@ -125,6 +126,22 @@ export function useBooking(id: string | undefined, options: { poll?: boolean } =
     enabled: id !== undefined && id !== '',
     refetchInterval: options.poll ? 2000 : false,
     queryFn: () => api.get<BookingDetail>(`/api/app/bookings/${id ?? ''}`),
+  });
+}
+
+/**
+ * Day grid for the reschedule modal: the booking's room without the booking's own occupancy, so a
+ * slot overlapping the current one can be chosen (NUC-142).
+ */
+export function useRescheduleDayAvailability(bookingId: string, date: string | undefined) {
+  return useQuery<AvailabilityDay>({
+    queryKey: [...bookingKeys.detail(bookingId), 'reschedule-day', date ?? ''] as const,
+    enabled: Boolean(date),
+    staleTime: 15 * 1000,
+    queryFn: () =>
+      api.get<AvailabilityDay>(
+        withQuery(`/api/app/bookings/${bookingId}/reschedule/availability`, { date }),
+      ),
   });
 }
 

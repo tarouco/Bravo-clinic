@@ -37,6 +37,8 @@ const ALLOWED = new Set<string>([
   'expired>confirmed',
   'expired>paid',
   'paid>confirmed',
+  // PRD 5.5 / 7.5: the clinic cancels a booking still waiting for payment
+  'awaiting_payment>cancelled_by_clinic',
 ]);
 
 describe('canTransition (NUC-01)', () => {

@@ -64,6 +64,7 @@ interface ConflictLine {
 
 /** Dates named by a 409 `OCCURRENCE_CONFLICT` (`details[]` = `{ path: 'date', message, date }`). */
 function conflictLines(error: ApiError): ConflictLine[] {
+  if (!Array.isArray(error.details)) return [];
   return error.details.map((detail) => {
     const date = (detail as { date?: unknown }).date;
     return { date: typeof date === 'string' ? date : null, text: detail.message };
@@ -182,7 +183,9 @@ function SubscribeFlow({ offer }: FlowProps) {
       setConflicts(conflictLines(error));
       setStage('pick');
     } else if (error.code === 'COUPON_INVALID' || error.code === 'COUPON_EXHAUSTED') {
-      setCouponError(error.details[0]?.message ?? error.message);
+      setCouponError(
+        (Array.isArray(error.details) ? error.details[0]?.message : undefined) ?? error.message,
+      );
       setStage('summary');
     } else if (error.status === 409 && error.code === 'CONFLICT') {
       setBlocked(error.message || HAS_PACKAGE_MESSAGE);

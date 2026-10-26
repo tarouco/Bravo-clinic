@@ -1,5 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import {
+  availabilityDaySchema,
   bookingDetailSchema,
   localToUtc,
   rescheduleQuoteSchema,
@@ -24,6 +25,7 @@ import {
 } from '../../db/schema';
 import { runSeed } from '../../db/seed';
 import { createRegistry } from '../../extensions/registry';
+import { expireHolds } from '../../jobs/expire-holds';
 import { applyProviderStatus } from '../../modules/payments/payment-effects.service';
 
 const { pool, db } = createDb(requireTestDatabaseUrl(process.env));
@@ -88,6 +90,20 @@ const wed3h = { date: WED, startMinute: 840, endMinute: 1020 };
 
 const events = (bookingId: string) =>
   db.select().from(bookingEvents).where(eq(bookingEvents.bookingId, bookingId));
+/** Whether any active occupancy of the room overlaps `[from, to)`. */
+const isHeld = async (from: Date, to: Date) => {
+  const { rows } = await pool.query<{ held: boolean }>(
+    `select exists(select 1 from room_occupancy where room_id = $1 and active
+       and period && tstzrange($2::timestamptz, $3::timestamptz, '[)')) as held`,
+    [roomId, from.toISOString(), to.toISOString()],
+  );
+  return rows[0]?.held ?? false;
+};
+const publicCell = async (date: LocalDate, startMinute: number) => {
+  const res = await send(buildApp(), 'GET', `/public/rooms/principal/availability?date=${date}`);
+  const cells = (res.body as { cells: { startMinute: number; available: boolean }[] }).cells;
+  return cells.find((c) => c.startMinute === startMinute);
+};
 const occupancyUpper = async (bookingId: string) => {
   const { rows } = await pool.query<{ until: Date }>(
     `select upper(period) as until from room_occupancy where ref_id = $1 and active`,
@@ -184,6 +200,42 @@ describe('POST /app/bookings/:id/reschedule/quote (NUC-142)', () => {
     expect(res.status).toBe(422);
     expect(res.error?.code).toBe('SLOT_UNAVAILABLE');
     expect((res.error?.details as unknown as { reason: string }).reason).toBe('in_cleanup');
+  });
+});
+
+describe('GET /app/bookings/:id/reschedule/availability (NUC-142)', () => {
+  it("shows the day without the booking's own occupancy, so its own slot can be picked", async () => {
+    const { user, cookie } = await createTenant(db, { now: NOW });
+    const row = await bookingOf(user.id, { hours: 2, total: 16000, paid: 8000, deposit: 8000 });
+    const path = `/app/bookings/${row.id}/reschedule/availability?date=${TUE}`;
+
+    const own = await send(buildApp(), 'GET', path, { cookie });
+
+    expect(own.status).toBe(200);
+    const day = availabilityDaySchema.parse(own.body);
+    expect(day.cells.find((c) => c.startMinute === 840)).toMatchObject({ available: true });
+    expect((await publicCell(TUE, 840))?.available).toBe(false);
+  });
+
+  it('keeps every other occupant and answers 404 for a booking of another user', async () => {
+    const { user, cookie } = await createTenant(db, { now: NOW });
+    const row = await bookingOf(user.id, { hours: 2, total: 16000, paid: 8000, deposit: 8000 });
+    const other = await createUser(db);
+    await insertBooking(db, {
+      userId: other.id,
+      roomId,
+      startsAt: at(TUE, 1080),
+      endsAt: at(TUE, 1140),
+    });
+    const intruder = await createTenant(db, { now: NOW });
+    const path = `/app/bookings/${row.id}/reschedule/availability?date=${TUE}`;
+
+    const own = await send(buildApp(), 'GET', path, { cookie });
+    const foreign = await send(buildApp(), 'GET', path, { cookie: intruder.cookie });
+
+    const day = availabilityDaySchema.parse(own.body);
+    expect(day.cells.find((c) => c.startMinute === 1080)).toMatchObject({ available: false });
+    expect(foreign.status).toBe(404);
   });
 });
 
@@ -329,6 +381,26 @@ describe('POST /app/bookings/:id/reschedule: equal or cheaper slot (NUC-144, NUC
 
     expect(res.status).toBe(200);
     expect(await occupancyUpper(row.id)).toEqual([at(TUE, 1020).toISOString()]);
+  });
+
+  it('moves a paid booking to a cheaper slot inside its own current one, with the surplus as credit', async () => {
+    const { user, cookie } = await createTenant(db, { now: NOW });
+    const row = await bookingOf(user.id, {
+      hours: 2,
+      total: 16000,
+      paid: 16000,
+      deposit: 8000,
+      status: 'paid',
+    });
+
+    // Tuesday 14:30-15:30 (1 h, 9700) inside 14:00-16:00.
+    const res = await move(cookie, row.id, { date: TUE, startMinute: 870, endMinute: 930 });
+
+    expect(res.status).toBe(200);
+    expect((res.body as { creditCents: number }).creditCents).toBe(6300);
+    const detail = bookingDetailSchema.parse(res.body);
+    expect(detail).toMatchObject({ totalCents: 9700, paidCents: 9700, balanceCents: 0 });
+    expect(await occupancyUpper(row.id)).toEqual([at(TUE, 960).toISOString()]);
   });
 });
 
@@ -487,6 +559,98 @@ describe('POST /app/bookings/:id/reschedule: dearer slot (NUC-146, NUC-147)', ()
     expect(block?.cancelledAt).not.toBeNull();
     const [stored] = await db.select().from(bookings).where(eq(bookings.id, row.id));
     expect(stored?.rescheduleCount).toBe(0);
+  });
+
+  // 10:00-11:00 -> 10:30-11:30 shape: Tuesday 14:00-15:00 (9700) -> 14:30-16:30 (16000), same room.
+  const overlapping = { date: TUE, startMinute: 870, endMinute: 990, method: 'pix' };
+
+  it('holds a dearer slot that overlaps its own one: 202, old and new slot both kept while paying', async () => {
+    const { cookie, row } = await dearerBooking();
+    expect((await publicCell(TUE, 930))?.available).toBe(true);
+
+    const res = await move(cookie, row.id, overlapping);
+
+    expect(res.status).toBe(202);
+    const body = res.body as { charge: { amountCents: number; status: string } };
+    expect(body.charge).toMatchObject({ amountCents: 6300, status: 'pending' });
+    const [stored] = await db.select().from(bookings).where(eq(bookings.id, row.id));
+    expect(stored).toMatchObject({ rescheduleCount: 0, totalCents: 9700, paidCents: 4851 });
+    expect(stored?.startsAt.toISOString()).toBe(at(TUE, 840).toISOString());
+    // The old slot (14:00-15:30 with cleanup) and the new one (to 17:00 with cleanup) stay taken.
+    expect(await isHeld(at(TUE, 840), at(TUE, 870))).toBe(true);
+    expect(await isHeld(at(TUE, 990), at(TUE, 1020))).toBe(true);
+    expect(await isHeld(at(TUE, 1020), at(TUE, 1050))).toBe(false);
+    expect((await publicCell(TUE, 930))?.available).toBe(false);
+  });
+
+  it('moves to the overlapping dearer slot once the 6300 difference is approved', async () => {
+    const { cookie, row } = await dearerBooking();
+    const res = await move(cookie, row.id, overlapping);
+    const chargeId = (res.body as { charge: { chargeId: string } }).charge.chargeId;
+
+    await applyProviderStatus(paymentDeps(), {
+      provider: 'sandbox',
+      chargeId,
+      status: 'approved',
+      amountCents: 6300,
+    });
+
+    const [stored] = await db.select().from(bookings).where(eq(bookings.id, row.id));
+    expect(stored).toMatchObject({
+      totalCents: 16000,
+      paidCents: 11151,
+      balanceCents: 4849,
+      rescheduleCount: 1,
+    });
+    expect(stored?.startsAt.toISOString()).toBe(at(TUE, 870).toISOString());
+    expect(await occupancyUpper(row.id)).toEqual([at(TUE, 1020).toISOString()]);
+    expect((await db.select().from(bookingRescheduleRequests))[0]?.status).toBe('applied');
+    // Only the booking's own [14:30, 17:00) is left: 14:00-14:30 is free again.
+    expect(await isHeld(at(TUE, 840), at(TUE, 870))).toBe(false);
+  });
+
+  it('gives the old slot back, and only it, when the overlapping difference is rejected', async () => {
+    const { cookie, row } = await dearerBooking();
+    const res = await move(cookie, row.id, overlapping);
+    const chargeId = (res.body as { charge: { chargeId: string } }).charge.chargeId;
+
+    await applyProviderStatus(paymentDeps(), { provider: 'sandbox', chargeId, status: 'rejected' });
+
+    expect((await db.select().from(bookingRescheduleRequests))[0]?.status).toBe('cancelled');
+    expect(await occupancyUpper(row.id)).toEqual([at(TUE, 930).toISOString()]);
+    expect(await isHeld(at(TUE, 840), at(TUE, 930))).toBe(true);
+    expect(await isHeld(at(TUE, 930), at(TUE, 1020))).toBe(false);
+    const [stored] = await db.select().from(bookings).where(eq(bookings.id, row.id));
+    expect(stored?.startsAt.toISOString()).toBe(at(TUE, 840).toISOString());
+  });
+
+  it('restores the old slot when the overlapping request expires unpaid (expire-holds)', async () => {
+    const { cookie, row } = await dearerBooking();
+    await move(cookie, row.id, overlapping);
+
+    const later = new Date(NOW.getTime() + 16 * 60_000);
+    const stats = await expireHolds({ ...paymentDeps(), now: () => later }, later);
+
+    expect(stats.expiredRescheduleRequests).toBe(1);
+    expect((await db.select().from(bookingRescheduleRequests))[0]?.status).toBe('expired');
+    expect(await occupancyUpper(row.id)).toEqual([at(TUE, 930).toISOString()]);
+    expect(await isHeld(at(TUE, 930), at(TUE, 1020))).toBe(false);
+  });
+
+  it('holds a dearer slot that surrounds its own one (13:30-15:30 around 14:00-15:00)', async () => {
+    const { cookie, row } = await dearerBooking();
+
+    const res = await move(cookie, row.id, {
+      date: TUE,
+      startMinute: 810,
+      endMinute: 930,
+      method: 'pix',
+    });
+
+    expect(res.status).toBe(202);
+    expect(await isHeld(at(TUE, 810), at(TUE, 840))).toBe(true);
+    expect(await isHeld(at(TUE, 930), at(TUE, 960))).toBe(true);
+    expect(await isHeld(at(TUE, 960), at(TUE, 990))).toBe(false);
   });
 
   it('replaces an unpaid request when the customer tries again', async () => {

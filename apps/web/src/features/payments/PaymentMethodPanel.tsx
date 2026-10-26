@@ -66,6 +66,12 @@ function IntentView({
         <p role="status" className="font-small text-small text-ink-muted">
           Aguardando o pagamento…
         </p>
+        {intent.checkoutUrl ? (
+          // The provider's hosted Pix page (the sandbox approves or rejects the charge there).
+          <Button asChild variant="secondary" size="sm">
+            <a href={intent.checkoutUrl}>Abrir página de pagamento</a>
+          </Button>
+        ) : null}
         <Button variant="ghost" size="sm" onClick={onChooseAnother}>
           Usar outro método
         </Button>

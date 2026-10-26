@@ -285,6 +285,13 @@ export const routes: RouteSpec[] = [
     respond: () => chargeIntent,
   },
   {
+    method: 'get',
+    path: `${app}/bookings/:id/reschedule/availability`,
+    sample: `${app}/bookings/${ID.booking}/reschedule/availability?date=${day}`,
+    schema: availabilityDaySchema,
+    respond: (c) => buildAvailabilityDay(c.url.searchParams.get('date') ?? day, 'principal'),
+  },
+  {
     method: 'post',
     path: `${app}/bookings/:id/reschedule/quote`,
     sample: `${app}/bookings/${ID.booking}/reschedule/quote`,

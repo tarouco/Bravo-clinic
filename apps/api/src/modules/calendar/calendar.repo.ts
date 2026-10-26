@@ -17,7 +17,7 @@ import {
   type Occupied,
   type SettingsValues,
 } from '@bravo/core';
-import { and, asc, between, eq, isNull, or, sql } from 'drizzle-orm';
+import { and, asc, between, eq, isNull, or, sql, type SQL } from 'drizzle-orm';
 import type { Db, Tx } from '../../db/client';
 import {
   blocks,
@@ -95,7 +95,8 @@ function datesTouched(start: Date, until: Date): LocalDate[] {
 export async function loadCalendarInputs(
   db: Db | Tx,
   args: {
-    roomId: string;
+    /** The room id, or a scalar subquery yielding it (lets callers skip a round trip). */
+    roomId: string | SQL;
     from: LocalDate;
     to: LocalDate;
     now: Date;

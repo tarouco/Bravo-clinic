@@ -15,9 +15,9 @@ import { Modal } from '../../components/ui/Modal';
 import { ApiError } from '../../lib/api';
 import { monthOf } from '../../lib/calendar-dates';
 import { formatLocalDateBR } from '../../lib/format';
-import { useDayAvailability, useMonthAvailability } from '../availability/api';
+import { useMonthAvailability } from '../availability/api';
 import { PaymentMethodPanel, type PayChoice } from '../payments/PaymentMethodPanel';
-import { useReschedule, useRescheduleQuote } from './api';
+import { useReschedule, useRescheduleDayAvailability, useRescheduleQuote } from './api';
 
 export interface RescheduleModalProps {
   booking: BookingDetail;
@@ -42,7 +42,7 @@ export function RescheduleModal({ booking, open, onClose, onRescheduled }: Resch
   const [error, setError] = useState<string | null>(null);
 
   const monthQuery = useMonthAvailability(booking.roomSlug, month);
-  const dayQuery = useDayAvailability(booking.roomSlug, date ?? undefined);
+  const dayQuery = useRescheduleDayAvailability(booking.id, date ?? undefined);
   const reschedule = useReschedule(booking.id);
 
   const request: RescheduleQuoteRequest | null =

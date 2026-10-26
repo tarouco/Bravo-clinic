@@ -61,7 +61,7 @@ function evaluate(booking: BookingRow, now: Date, actor: CancelActor): Cancellat
 
 const CANCELLABLE: Record<CancelActor, readonly BookingStatus[]> = {
   tenant: ['awaiting_payment', 'confirmed', 'paid'],
-  clinic: ['pre_reserved', 'held_for_renewal', 'confirmed', 'paid'],
+  clinic: ['awaiting_payment', 'pre_reserved', 'held_for_renewal', 'confirmed', 'paid'],
 };
 
 function assertCancellable(booking: BookingRow, actor: CancelActor): void {

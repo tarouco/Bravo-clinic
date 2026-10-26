@@ -334,7 +334,14 @@ function EventBlock({
         />
       ) : null}
       {card ? (
-        <HoverCard label={event.title} trigger={(props) => body(props)} align="start">
+        // The events layer ignores the pointer (free slots underneath stay clickable); the card
+        // and its actions must take it back.
+        <HoverCard
+          label={event.title}
+          trigger={(props) => body(props)}
+          align="start"
+          className="pointer-events-auto"
+        >
           {card}
         </HoverCard>
       ) : (
