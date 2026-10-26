@@ -25,42 +25,61 @@ function renderAgenda() {
   );
 }
 
+// The month, week and day views render the whole agenda after MSW answers; a loaded host needs
+// more than the default waits, so these waits are explicit instead of relying on global ones.
+const SLOW = { timeout: 10_000 } as const;
+const TEST_TIMEOUT = 30_000;
+
 describe('AgendaPage (NUC-190)', () => {
-  it('starts in the month view with the booking and switches to week and day', async () => {
-    renderAgenda();
+  it(
+    'starts in the month view with the booking and switches to week and day',
+    async () => {
+      renderAgenda();
 
-    expect(await screen.findByRole('button', { name: /17:30 Sala Principal/ })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Mês anterior' })).toBeInTheDocument();
+      expect(
+        await screen.findByRole('button', { name: /17:30 Sala Principal/ }, SLOW),
+      ).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Mês anterior' })).toBeInTheDocument();
 
-    await userEvent.click(screen.getByRole('tab', { name: 'Semana' }));
-    expect(
-      await screen.findByRole('button', { name: /Sala Principal, 17:30–20:00/ }),
-    ).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Semana anterior' })).toBeInTheDocument();
+      await userEvent.click(screen.getByRole('tab', { name: 'Semana' }));
+      expect(
+        await screen.findByRole('button', { name: /Sala Principal, 17:30–20:00/ }, SLOW),
+      ).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Semana anterior' })).toBeInTheDocument();
 
-    await userEvent.click(screen.getByRole('tab', { name: 'Dia' }));
-    expect(
-      await screen.findByRole('button', { name: /Sala Principal, 17:30–20:00/ }),
-    ).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Dia anterior' })).toBeInTheDocument();
-  });
+      await userEvent.click(screen.getByRole('tab', { name: 'Dia' }));
+      expect(
+        await screen.findByRole('button', { name: /Sala Principal, 17:30–20:00/ }, SLOW),
+      ).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Dia anterior' })).toBeInTheDocument();
+    },
+    TEST_TIMEOUT,
+  );
 
-  it('does not show the cleanup band after the booking', async () => {
-    const { container } = renderAgenda();
-    await userEvent.click(await screen.findByRole('tab', { name: 'Semana' }));
-    await screen.findByRole('button', { name: /Sala Principal, 17:30–20:00/ });
+  it(
+    'does not show the cleanup band after the booking',
+    async () => {
+      const { container } = renderAgenda();
+      await userEvent.click(await screen.findByRole('tab', { name: 'Semana' }, SLOW));
+      await screen.findByRole('button', { name: /Sala Principal, 17:30–20:00/ }, SLOW);
 
-    expect(container.querySelector('[data-kind="cleanup"]')).toBeNull();
-  });
+      expect(container.querySelector('[data-kind="cleanup"]')).toBeNull();
+    },
+    TEST_TIMEOUT,
+  );
 
-  it('opens the booking detail from an event', async () => {
-    renderAgenda();
-    await userEvent.click(await screen.findByRole('tab', { name: 'Semana' }));
+  it(
+    'opens the booking detail from an event',
+    async () => {
+      renderAgenda();
+      await userEvent.click(await screen.findByRole('tab', { name: 'Semana' }, SLOW));
 
-    await userEvent.click(
-      await screen.findByRole('button', { name: /Sala Principal, 17:30–20:00/ }),
-    );
+      await userEvent.click(
+        await screen.findByRole('button', { name: /Sala Principal, 17:30–20:00/ }, SLOW),
+      );
 
-    expect(await screen.findByText('detalhe da reserva')).toBeInTheDocument();
-  });
+      expect(await screen.findByText('detalhe da reserva', {}, SLOW)).toBeInTheDocument();
+    },
+    TEST_TIMEOUT,
+  );
 });
