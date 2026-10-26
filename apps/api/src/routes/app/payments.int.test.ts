@@ -21,6 +21,7 @@ import { runSeed } from '../../db/seed';
 import { getEnv } from '../../env';
 import { encryptSecret } from '../../lib/crypto';
 import { createCharge, submitCharge } from '../../modules/payments/charges.service';
+import { createRegistry } from '../../extensions/registry';
 import { saveSetting } from '../../modules/settings/settings.repo';
 
 const { pool, db } = createDb(requireTestDatabaseUrl(process.env));
@@ -576,7 +577,7 @@ describe('generic charges without a booking (NUC-209)', () => {
     });
 
     const submitted = await submitCharge(
-      { db, env: testEnv(), fetch: forbiddenFetch, now: () => NOW },
+      { db, env: testEnv(), fetch: forbiddenFetch, now: () => NOW, registry: createRegistry() },
       charge.id,
     );
 
@@ -603,7 +604,13 @@ describe('generic charges without a booking (NUC-209)', () => {
         expiresAt: new Date('2026-10-20T13:00:00.000Z'),
       }),
     );
-    const deps = { db, env: testEnv(), fetch: forbiddenFetch, now: () => NOW };
+    const deps = {
+      db,
+      env: testEnv(),
+      fetch: forbiddenFetch,
+      now: () => NOW,
+      registry: createRegistry(),
+    };
 
     const first = await submitCharge(deps, charge.id);
     const second = await submitCharge(deps, charge.id);

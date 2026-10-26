@@ -209,6 +209,56 @@ export async function getAdminDay(
   };
 }
 
+/**
+ * Up to `count` free slots of `durationMinutes` in the next `days` days (NUC-117 suggestions):
+ * the earliest slot of each distinct day first, then further slots of those days. Closed days,
+ * days beyond the advance window and occupied or cleanup cells never appear.
+ */
+export async function suggestFreeSlots(
+  db: Db | Tx,
+  args: { roomId: string; durationMinutes: number; from: Date; days: number; count: number },
+): Promise<{ startsAt: Date; endsAt: Date }[]> {
+  const room = await getRoomById(db, args.roomId);
+  if (room === null) return [];
+  const first = utcToLocal(args.from).date;
+  const last = addDays(first, args.days);
+  const inputs = await loadCalendarInputs(db, {
+    roomId: room.id,
+    from: first,
+    to: last,
+    now: args.from,
+  });
+  const perDay: { date: LocalDate; startMinutes: number[] }[] = [];
+  for (let date = first; date <= last; date = addDays(date, 1)) {
+    const view = viewOf(room, date, inputs, args.from);
+    if (view.closed || view.outOfRange) continue;
+    const startMinutes = view.cells
+      .filter(
+        (cell) =>
+          cell.state === 'available' &&
+          cell.maxEndMinute !== null &&
+          cell.maxEndMinute - cell.startMinute >= args.durationMinutes,
+      )
+      .map((cell) => cell.startMinute);
+    if (startMinutes.length > 0) perDay.push({ date, startMinutes });
+  }
+  const picks: { date: LocalDate; startMinute: number }[] = [];
+  for (let round = 0; picks.length < args.count; round++) {
+    const before = picks.length;
+    for (const day of perDay) {
+      const startMinute = day.startMinutes[round];
+      if (startMinute !== undefined && picks.length < args.count) {
+        picks.push({ date: day.date, startMinute });
+      }
+    }
+    if (picks.length === before) break;
+  }
+  return picks.map(({ date, startMinute }) => {
+    const startsAt = localToUtc(date, startMinute);
+    return { startsAt, endsAt: new Date(startsAt.getTime() + args.durationMinutes * 60_000) };
+  });
+}
+
 function monthDates(month: string): LocalDate[] {
   const first = `${month}-01` as LocalDate;
   const dates: LocalDate[] = [];

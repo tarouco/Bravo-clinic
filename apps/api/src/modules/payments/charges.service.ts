@@ -17,11 +17,12 @@ import { AppError, conflict, notFound } from '../../lib/errors';
 import { logger } from '../../lib/logger';
 import type { RequestMeta } from '../../lib/request-meta';
 import { GatewayError, type ChargeResult, type ProviderId } from '../../payments/gateway';
-import { resolveGateway, resolveGatewayForCharge, activeProvider } from '../../payments/resolver';
+import { activeProvider, resolveGateway, resolveGatewayForCharge } from '../../payments/resolver';
 import type { AppDeps } from '../../types';
+import { applyProviderStatus } from './payment-effects.service';
 
-/** What the payment services need from the app: no registry, so jobs can use them too. */
-export type PaymentDeps = Pick<AppDeps, 'db' | 'env' | 'fetch' | 'now'>;
+/** What the payment services need from the app; jobs build the same shape. */
+export type PaymentDeps = Pick<AppDeps, 'db' | 'env' | 'fetch' | 'now' | 'registry'>;
 
 export type ChargePurpose = ChargeRow['purpose'];
 export type PayMethod = 'pix' | 'card' | 'saved_card';
@@ -134,7 +135,7 @@ async function describeCharge(
   };
 }
 
-/** Stores the gateway answer on the charge; `status` stays untouched, effects apply it (T18). */
+/** Stores the gateway answer on the charge; `status` stays untouched, `applyProviderStatus` moves it. */
 async function recordSubmission(
   db: Db | Tx,
   charge: ChargeRow,
@@ -235,7 +236,20 @@ export async function submitCharge(
     }
     throw error;
   }
-  return recordSubmission(db, charge, result, savedCardId, deps.now());
+  const submitted = await recordSubmission(db, charge, result, savedCardId, deps.now());
+  if (result.status === 'pending') return submitted;
+  // A saved card answers at once: the status goes through the same effects as a webhook would.
+  await applyProviderStatus(deps, {
+    provider: charge.provider as ProviderId,
+    externalId: submitted.externalId,
+    chargeId: charge.id,
+    status: result.status,
+    amountCents: charge.amountCents,
+    feeCents: result.feeCents,
+    raw: result.raw,
+  });
+  const [settled] = await db.select().from(charges).where(eq(charges.id, charge.id));
+  return settled ?? submitted;
 }
 
 /**

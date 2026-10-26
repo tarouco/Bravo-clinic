@@ -65,6 +65,8 @@ export type ParsedWebhook =
       chargeId?: string;
       /** Amount the provider reports, compared with the charge (NUC-116). */
       amountCents?: Cents;
+      /** Provider fee of an approved payment, when the re-fetched payment reports it. */
+      feeCents?: Cents;
       raw: unknown;
     };
 

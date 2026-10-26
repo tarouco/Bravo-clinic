@@ -135,13 +135,13 @@ function rawPayment(payment: MpPayment) {
   };
 }
 
+const feeOf = (payment: MpPayment): Cents =>
+  (payment.fee_details ?? []).reduce((sum, fee) => sum + toCents(fee.amount ?? 0), 0);
+
 function chargeResultOf(payment: MpPayment): ChargeResult {
   const status = mapMercadoPagoStatus(payment);
   const data = payment.point_of_interaction?.transaction_data;
-  const feeCents =
-    status === 'approved'
-      ? (payment.fee_details ?? []).reduce((sum, fee) => sum + toCents(fee.amount ?? 0), 0)
-      : undefined;
+  const feeCents = status === 'approved' ? feeOf(payment) : undefined;
   return {
     externalId: String(payment.id),
     status,
@@ -467,6 +467,7 @@ export function createMercadoPagoGateway(deps: MercadoPagoDeps): PaymentGateway 
         ...(payment.transaction_amount !== undefined && {
           amountCents: toCents(payment.transaction_amount),
         }),
+        ...(status === 'approved' && { feeCents: feeOf(payment) }),
         raw: rawPayment(payment),
       };
     },

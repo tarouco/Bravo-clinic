@@ -308,6 +308,7 @@ describe('webhook signature (NUC-124)', () => {
     status: 'approved',
     transaction_amount: 109.5,
     external_reference: CHARGE_ID,
+    fee_details: [{ amount: 1.5 }],
   };
 
   it('accepts a valid signature, re-fetches the payment and uses its status, not the payload', async () => {
@@ -327,6 +328,7 @@ describe('webhook signature (NUC-124)', () => {
       chargeId: CHARGE_ID,
       amountCents: 10950,
     });
+    expect(parsed).not.toHaveProperty('feeCents');
   });
 
   it('maps the re-fetched approved payment to the charge by external_reference', async () => {
@@ -334,7 +336,12 @@ describe('webhook signature (NUC-124)', () => {
 
     const parsed = await gatewayWith(fetch).parseWebhook(delivery());
 
-    expect(parsed).toMatchObject({ valid: true, status: 'approved', chargeId: CHARGE_ID });
+    expect(parsed).toMatchObject({
+      valid: true,
+      status: 'approved',
+      chargeId: CHARGE_ID,
+      feeCents: 150,
+    });
   });
 
   it('rejects a wrong v1 without calling the provider', async () => {

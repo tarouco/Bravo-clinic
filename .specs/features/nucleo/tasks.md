@@ -876,13 +876,13 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: invalid signature → 401 and 0 `webhook_events`; unknown provider → 404; duplicate delivery processed once (also with two concurrent requests)
-- [ ] Tests: approved deposit → booking `confirmed`, `paid_cents` += amount, one `booking.confirmed` outbox row with an `.ics` attachment, `booking_events` row, notifier called after commit with `new_booking` and `payment_received` (each with `entityId`); approved full → `paid`; rejected → charge `rejected`, booking still `awaiting_payment`
-- [ ] Tests: amount mismatch → booking unchanged + audit `payment.amount_mismatch`; late approval on expired booking with free slot → `confirmed` reason `late_approval`; with slot taken → refund row + `booking.late_approval_refund` listing 3 slots
-- [ ] Tests: refund success → charge `partially_refunded`/`refunded`, refund `approved` with `completed_at`; gateway failure → refund `pending` with `attempts = 1` and `last_error`; approved charges have `approved_at` and `fee_cents` (0 for sandbox)
-- [ ] Test: an approved `extra_hours` charge calls a registered fake `chargeHandlers.extra_hours.onApproved` once inside the transaction; a rejected one calls `onFailed`
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 14 tests pass
+- [x] Tests: invalid signature → 401 and 0 `webhook_events`; unknown provider → 404; duplicate delivery processed once (also with two concurrent requests)
+- [x] Tests: approved deposit → booking `confirmed`, `paid_cents` += amount, one `booking.confirmed` outbox row with an `.ics` attachment, `booking_events` row, notifier called after commit with `new_booking` and `payment_received` (each with `entityId`); approved full → `paid`; rejected → charge `rejected`, booking still `awaiting_payment`
+- [x] Tests: amount mismatch → booking unchanged + audit `payment.amount_mismatch`; late approval on expired booking with free slot → `confirmed` reason `late_approval`; with slot taken → refund row + `booking.late_approval_refund` listing 3 slots
+- [x] Tests: refund success → charge `partially_refunded`/`refunded`, refund `approved` with `completed_at`; gateway failure → refund `pending` with `attempts = 1` and `last_error`; approved charges have `approved_at` and `fee_cents` (0 for sandbox)
+- [x] Test: an approved `extra_hours` charge calls a registered fake `chargeHandlers.extra_hours.onApproved` once inside the transaction; a rejected one calls `onFailed`
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 14 tests pass
 
 **Tests**: integration
 **Gate**: full
