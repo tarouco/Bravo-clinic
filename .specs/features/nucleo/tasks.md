@@ -1599,10 +1599,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: shortcut "Aplicar a seg–sex" copies Monday's hours to Tue–Fri; save sends 8 rows; cleanup 45 response shows the exact warning sentence; 409 fixtures open the modal listing booking codes with links
-- [ ] Tests: drag handle with ArrowDown moves end by 30 min (P2); checklist visible when `pricesReviewed: false` and the button calls the endpoint
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 7 tests pass
+- [x] Tests: shortcut "Aplicar a seg–sex" copies Monday's hours to Tue–Fri; save sends 8 rows; cleanup 45 response shows the exact warning sentence; 409 fixtures open the modal listing booking codes with links
+- [x] Tests: drag handle with ArrowDown moves end by 30 min (P2); checklist visible when `pricesReviewed: false` and the button calls the endpoint
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: unit
 **Gate**: quick
