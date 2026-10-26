@@ -1356,11 +1356,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Fixture rows render "BRAVO10", "Desconto", "10%", "3/∞", "—"; first-booking row "Primeira reserva", "R$ 20,00", "1/10", "01/11/2026–30/11/2026"
-- [ ] Toggle calls `PATCH …/enabled`; failure reverts the switch with a toast
-- [ ] Drawer lists uses with "Reservado", "Usado", "Liberado"
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 new tests pass
+- [x] Fixture rows render "BRAVO10", "Desconto", "10%", "3/∞", "—"; first-booking row "Primeira reserva", "R$ 20,00", "1/10", "01/11/2026–30/11/2026"
+- [x] Toggle calls `PATCH …/enabled`; failure reverts the switch with a toast
+- [x] Drawer lists uses with "Reservado", "Usado", "Liberado"
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 new tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1384,10 +1384,10 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Percent "10" submits `discountValue: 1000`; "R$ 20,00" submits 2000; first booking forces "Reservas"
-- [ ] Invalid code, `valid_from ≥ valid_until`, and a server 409 duplicate code show field errors
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 new tests pass
+- [x] Percent "10" submits `discountValue: 1000`; "R$ 20,00" submits 2000; first booking forces "Reservas"
+- [x] Invalid code, `valid_from ≥ valid_until`, and a server 409 duplicate code show field errors
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 new tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1411,10 +1411,10 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Typing 1.600,00 and 20 h shows "R$ 80,00/h"; Mon–Fri 07:00–09:30 at R$ 280,00 shows "R$ 112,00/h" and "20–22 ocorrências · R$ 5.600,00 – R$ 6.160,00"
-- [ ] 409 response shows the REC-05 message above the form
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 new tests pass
+- [x] Typing 1.600,00 and 20 h shows "R$ 80,00/h"; Mon–Fri 07:00–09:30 at R$ 280,00 shows "R$ 112,00/h" and "20–22 ocorrências · R$ 5.600,00 – R$ 6.160,00"
+- [x] 409 response shows the REC-05 message above the form
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 new tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1438,11 +1438,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Opening from a 19:00–22:00 drag pre-fills the range; submit sends `{ roomIds, date, startMinute:1140, endMinute:1320, percent }`
-- [ ] Result fixture with a skipped part shows "Sala Principal: 20:00–21:30 ocupado, sem desconto"; 409 shows "Já existe desconto neste horário"
-- [ ] Overlay fixture renders "−15%" on the free slot and "Remover desconto" calls DELETE
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 new tests pass
+- [x] Opening from a 19:00–22:00 drag pre-fills the range; submit sends `{ roomIds, date, startMinute:1140, endMinute:1320, percent }`
+- [x] Result fixture with a skipped part shows "Sala Principal: 20:00–21:30 ocupado, sem desconto"; 409 shows "Já existe desconto neste horário"
+- [x] Overlay fixture renders "−15%" on the free slot and "Remover desconto" calls DELETE
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 new tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1466,11 +1466,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Rows show customer, category, base date, next charge, status label and "12h 30min" balance; filters update the query key
-- [ ] Adjust dialog requires justification and sends signed minutes; grant credit sends cents from "R$ 50,00"
-- [ ] Reception role fixture shows no Ajustar/Cancelar/Conceder/Vender buttons
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 8 new tests pass
+- [x] Rows show customer, category, base date, next charge, status label and "12h 30min" balance; filters update the query key
+- [x] Adjust dialog requires justification and sends signed minutes; grant credit sends cents from "R$ 50,00"
+- [x] Reception role fixture shows no Ajustar/Cancelar/Conceder/Vender buttons
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 8 new tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1494,10 +1494,10 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Link mode sends `{ payment: { mode:'link', holdHours:24 } }`; manual mode requires a 5+ char justification
-- [ ] Fixed category shows the picker; conflict disables submit; success toast "Assinatura criada. Link enviado ao cliente."
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 new tests pass
+- [x] Link mode sends `{ payment: { mode:'link', holdHours:24 } }`; manual mode requires a 5+ char justification
+- [x] Fixed category shows the picker; conflict disables submit; success toast "Assinatura criada. Link enviado ao cliente."
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 new tests pass
 
 **Tests**: unit
 **Gate**: quick

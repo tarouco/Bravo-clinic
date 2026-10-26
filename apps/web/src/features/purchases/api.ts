@@ -7,6 +7,7 @@ import {
   type QueryClient,
 } from '@tanstack/react-query';
 import type {
+  AdminCategory,
   AdminCancelInput,
   AdminSaleInput,
   BalanceAdjustInput,
@@ -21,6 +22,8 @@ import type {
   SwitchQuoteInput,
 } from '@bravo/core';
 import { api } from '../../lib/api';
+import { categoryKeys } from '../categories/api';
+import { catalogKeys } from '../catalog/api';
 import { newIdempotencyKey, withQuery } from '../../lib/query-string';
 import { availabilityKeys } from '../availability/api';
 import { calendarKeys } from '../calendar/api';
@@ -494,5 +497,36 @@ export function useGrantCredit(userId: string) {
       api.post(`/api/admin/customers/${userId}/credits`, v.body, { idempotencyKey: keyOf(v) }),
     onSuccess: () =>
       void queryClient.invalidateQueries({ queryKey: purchaseKeys.adminCustomerCredits(userId) }),
+  });
+}
+
+// ---- Admin: package categories ----
+
+/**
+ * Fields a package category PATCH may carry (design.md "Package categories", REC-01, REC-02).
+ * Weekdays, window and period are locked by a 409 while the category has live subscriptions (REC-05).
+ */
+export interface PackageCategoryPatch {
+  name?: string;
+  fixedPriceCents?: number;
+  includedHours?: number;
+  pricePerOccurrenceCents?: number;
+  weekdays?: number[];
+  startMinute?: number;
+  endMinute?: number;
+  period?: 'monthly' | 'bimonthly' | 'quarterly';
+  status?: 'active' | 'inactive';
+  visibility?: 'public' | 'admin_only';
+}
+
+export function useUpdatePackageCategory(id: string) {
+  const queryClient = useQueryClient();
+  return useMutation<AdminCategory, Error, PackageCategoryPatch>({
+    mutationFn: (patch) => api.patch(`/api/admin/categories/${id}`, patch),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: categoryKeys.all });
+      void queryClient.invalidateQueries({ queryKey: catalogKeys.catalog });
+      void queryClient.invalidateQueries({ queryKey: purchaseKeys.packages });
+    },
   });
 }

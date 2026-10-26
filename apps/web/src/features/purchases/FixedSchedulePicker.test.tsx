@@ -172,3 +172,33 @@ describe('FixedSchedulePicker (REC-84, REC-91)', () => {
     expect(screen.getByRole('button', { name: 'Continuar' })).toBeDisabled();
   });
 });
+
+// The admin sale dialog keeps the choices in its own state, not in the admin page URL.
+describe('FixedSchedulePicker with a controlled selection', () => {
+  it('reports the chosen room and date to the parent, leaves the URL alone and offers no "Continuar"', async () => {
+    stubCheck(occurrenceCheckFull);
+    const onSelectionChange = vi.fn();
+    renderWithProviders(
+      <>
+        <FixedSchedulePicker
+          categoryId={RID.meioTurno}
+          pricePerOccurrenceCents={28000}
+          selection={{ roomId: ID.principal, baseOn: '2026-11-02' }}
+          onSelectionChange={onSelectionChange}
+        />
+        <Probe />
+      </>,
+      '/admin/reservas',
+    );
+
+    expect(
+      await screen.findByText(spaced('22 ocorrências × R$ 280,00 = R$ 6.160,00')),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Continuar' })).toBeNull();
+
+    await userEvent.click(screen.getByRole('radio', { name: 'Sala Secundária' }));
+
+    expect(onSelectionChange).toHaveBeenCalledWith({ roomId: ID.secundaria });
+    expect(screen.getByTestId('search')).toHaveTextContent('');
+  });
+});

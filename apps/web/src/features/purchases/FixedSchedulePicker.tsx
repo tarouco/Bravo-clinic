@@ -13,11 +13,21 @@ import { StartDateCalendar } from './StartDateCalendar';
 /** URL params that keep the chosen room and start date across login and refresh (REC-157). */
 export const PICKER_PARAMS = { room: 'roomId', baseOn: 'baseOn' } as const;
 
+/** Room and start date kept by the parent instead of the URL (admin sale dialog). */
+export interface PickerSelection {
+  roomId: string | null;
+  baseOn: string | null;
+}
+
 export interface FixedSchedulePickerProps {
   categoryId: string;
   /** Price of one occurrence; falls back to the period price divided by the count. */
   pricePerOccurrenceCents?: number | undefined;
-  onContinue: () => void;
+  /** Shows "Continuar" when given; the admin sale dialog has its own submit. */
+  onContinue?: (() => void) | undefined;
+  /** When given, the choices live here and not in the URL. */
+  selection?: PickerSelection | undefined;
+  onSelectionChange?: ((patch: { roomId?: string; baseOn?: string }) => void) | undefined;
 }
 
 /**
@@ -28,10 +38,12 @@ export function FixedSchedulePicker({
   categoryId,
   pricePerOccurrenceCents,
   onContinue,
+  selection,
+  onSelectionChange,
 }: FixedSchedulePickerProps) {
   const [params, setParams] = useSearchParams();
-  const roomId = params.get(PICKER_PARAMS.room);
-  const baseOn = params.get(PICKER_PARAMS.baseOn);
+  const roomId = selection ? selection.roomId : params.get(PICKER_PARAMS.room);
+  const baseOn = selection ? selection.baseOn : params.get(PICKER_PARAMS.baseOn);
 
   const rooms = useRooms();
   const check = useOccurrenceCheck(categoryId, {
@@ -40,6 +52,10 @@ export function FixedSchedulePicker({
   });
 
   const choose = (patch: { roomId?: string; baseOn?: string }) => {
+    if (selection) {
+      onSelectionChange?.(patch);
+      return;
+    }
     const next = new URLSearchParams(params);
     if (patch.roomId) next.set(PICKER_PARAMS.room, patch.roomId);
     if (patch.baseOn) next.set(PICKER_PARAMS.baseOn, patch.baseOn);
@@ -196,9 +212,11 @@ export function FixedSchedulePicker({
         </p>
       )}
 
-      <Button disabled={!canContinue} onClick={onContinue}>
-        Continuar
-      </Button>
+      {onContinue ? (
+        <Button disabled={!canContinue} onClick={onContinue}>
+          Continuar
+        </Button>
+      ) : null}
     </div>
   );
 }

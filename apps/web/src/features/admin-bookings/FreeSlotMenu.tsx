@@ -14,12 +14,15 @@ export interface FreeSlotMenuProps {
   roomId: string;
   onCreate: (kind: CreateKind, slot: FreeSlot) => void;
   onBlock: (slot: FreeSlot) => void;
+  /** Called when an action of another feature, from the slot, is chosen (closes a selection modal). */
+  onSlotAction?: () => void;
 }
 
 const item =
   'flex w-full items-center gap-space-sm rounded-control px-space-sm py-space-xs text-left font-small text-small text-ink hover:bg-champagne-soft';
 
-function Item({
+/** One row of the menu; other features reuse it for the actions they register in the slot. */
+export function FreeSlotMenuItem({
   icon,
   children,
   onClick,
@@ -40,7 +43,7 @@ function Item({
  * Menu of a free slot (NUC-160): "Criar pré-reserva", "Criar reserva", "Bloquear" and the actions
  * other features register in the `admin.calendar.freeSlotActions` slot.
  */
-export function FreeSlotMenu({ slot, roomId, onCreate, onBlock }: FreeSlotMenuProps) {
+export function FreeSlotMenu({ slot, roomId, onCreate, onBlock, onSlotAction }: FreeSlotMenuProps) {
   return (
     // The card sits inside a calendar cell: its pointer events must not start a drag selection.
     <div
@@ -51,30 +54,30 @@ export function FreeSlotMenu({ slot, roomId, onCreate, onBlock }: FreeSlotMenuPr
       }}
       className="space-y-space-xs"
     >
-      <Item
+      <FreeSlotMenuItem
         icon={CalendarClock}
         onClick={() => {
           onCreate('pre_reservation', slot);
         }}
       >
         Criar pré-reserva
-      </Item>
-      <Item
+      </FreeSlotMenuItem>
+      <FreeSlotMenuItem
         icon={CalendarPlus}
         onClick={() => {
           onCreate('booking', slot);
         }}
       >
         Criar reserva
-      </Item>
-      <Item
+      </FreeSlotMenuItem>
+      <FreeSlotMenuItem
         icon={Ban}
         onClick={() => {
           onBlock(slot);
         }}
       >
         Bloquear
-      </Item>
+      </FreeSlotMenuItem>
       <Slot
         name="admin.calendar.freeSlotActions"
         props={{
@@ -82,6 +85,7 @@ export function FreeSlotMenu({ slot, roomId, onCreate, onBlock }: FreeSlotMenuPr
           date: slot.date,
           startMinute: slot.startMinute,
           endMinute: slot.endMinute,
+          onDone: onSlotAction,
         }}
       />
     </div>
