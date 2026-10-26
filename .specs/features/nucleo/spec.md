@@ -770,12 +770,12 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-51 | P1: Holidays and closed days | Tasks | T11, T20 | Implementing |
 | NUC-52 | P1: Holidays and closed days | Tasks | T45 | In Tasks |
 | NUC-53 | P2: Holiday review banner | Tasks | T45 | In Tasks |
-| NUC-54 | P1: Manual blocks with tags | Tasks | T12 | In Tasks |
-| NUC-55 | P1: Manual blocks with tags | Tasks | T12 | In Tasks |
-| NUC-56 | P1: Manual blocks with tags | Tasks | T12 | In Tasks |
+| NUC-54 | P1: Manual blocks with tags | Tasks | T12 | Implementing |
+| NUC-55 | P1: Manual blocks with tags | Tasks | T12 | Implementing |
+| NUC-56 | P1: Manual blocks with tags | Tasks | T12 | Implementing |
 | NUC-57 | P1: Manual blocks with tags | Tasks | T12, T26 | In Tasks |
-| NUC-58 | P1: Manual blocks with tags | Tasks | T12 | In Tasks |
-| NUC-59 | P1: Manual blocks with tags | Tasks | T12 | In Tasks |
+| NUC-58 | P1: Manual blocks with tags | Tasks | T12 | Implementing |
+| NUC-59 | P1: Manual blocks with tags | Tasks | T12 | Implementing |
 | NUC-60 | P1: Manual blocks with tags | Tasks | T45 | In Tasks |
 | NUC-61 | P1: Booking categories and price table | Tasks | T13 | In Tasks |
 | NUC-62 | P1: Booking categories and price table | Tasks | T13 | In Tasks |

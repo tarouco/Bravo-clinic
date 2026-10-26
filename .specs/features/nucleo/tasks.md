@@ -701,11 +701,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: two-room block creates 2 blocks + 2 occupancies `[start,end)`; overlap with a booking's cleanup in one room → 409 naming the booking code and zero blocks created
-- [ ] Tests: weekly Monday rule materializes to today+90; conflict date → 409 `details.dates`; `skipConflicts` returns `skipped`; second `materializeRecurrences` creates 0 duplicates and extends after `now` advances
-- [ ] Tests: block delete deactivates occupancy; recurrence delete cancels future blocks and keeps past ones; reception creating a recurrence → 403
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 10 tests pass
+- [x] Tests: two-room block creates 2 blocks + 2 occupancies `[start,end)`; overlap with a booking's cleanup in one room → 409 naming the booking code and zero blocks created
+- [x] Tests: weekly Monday rule materializes to today+90; conflict date → 409 `details.dates`; `skipConflicts` returns `skipped`; second `materializeRecurrences` creates 0 duplicates and extends after `now` advances
+- [x] Tests: block delete deactivates occupancy; recurrence delete cancels future blocks and keeps past ones; reception creating a recurrence → 403
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 10 tests pass
 
 **Tests**: integration
 **Gate**: full
