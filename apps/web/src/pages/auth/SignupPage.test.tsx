@@ -95,6 +95,24 @@ describe('SignupPage', () => {
     );
   });
 
+  it('returns to the next path after signing up (booking flow, NUC-101)', async () => {
+    stubSignup(() => json(201, created));
+    const user = userEvent.setup();
+    renderWithProviders(
+      <Routes>
+        <Route path="/cadastro" element={<SignupPage />} />
+        <Route path="/reservar" element={<p>de volta ao resumo</p>} />
+      </Routes>,
+      `/cadastro?next=${encodeURIComponent('/reservar?etapa=resumo')}`,
+    );
+
+    await fillForm(user);
+    await acceptBoth(user);
+    await user.click(submitButton());
+
+    expect(await screen.findByText('de volta ao resumo')).toBeInTheDocument();
+  });
+
   it('navigates to /app with the confirmation banner on 201 and posts the normalized values', async () => {
     const fetchMock = stubSignup(() => json(201, created));
     const user = userEvent.setup();

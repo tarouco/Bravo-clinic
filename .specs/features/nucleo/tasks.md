@@ -1430,9 +1430,9 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: stepper shows exactly "Sala e data · Horário · Resumo · Pagamento"; URL params prefill and skip to Horário; choosing a block option sets `bloco=<id>`; back keeps selection
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 5 tests pass
+- [x] Tests: stepper shows exactly "Sala e data · Horário · Resumo · Pagamento"; URL params prefill and skip to Horário; choosing a block option sets `bloco=<id>`; back keeps selection
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 5 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1456,10 +1456,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: button disabled until policy checked; anonymous click navigates to `/login?next=<same resumo url>`; `PROFILE_INCOMPLETE` navigates to `/app/perfil?completar=1&next=...`
-- [ ] Tests: 409 `SLOT_TAKEN` shows "Este horário acabou de ser reservado." and returns to Horário; `PRICE_CHANGED` re-renders new total and unchecks acceptance; `pricesReviewed: false` shows the banner and disables the button; success navigates to `/checkout/<id>`
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 7 tests pass
+- [x] Tests: button disabled until policy checked; anonymous click navigates to `/login?next=<same resumo url>`; `PROFILE_INCOMPLETE` navigates to `/app/perfil?completar=1&next=...`
+- [x] Tests: 409 `SLOT_TAKEN` shows "Este horário acabou de ser reservado." and returns to Horário; `PRICE_CHANGED` re-renders new total and unchecks acceptance; `pricesReviewed: false` shows the banner and disables the button; success navigates to `/checkout/<id>`
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1484,10 +1484,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests (fake timers): countdown reaches 0 → "Tempo esgotado. O horário foi liberado."; status fixture switching to `confirmed` on the 2nd poll → "Reserva confirmada" with code; rejected charge → "Pagamento recusado. Tente outro método."
-- [ ] Tests: Pix shows QR image and copy button; sandbox page approve calls the endpoint and links back to checkout; pre-reserva anonymous → login redirect, other owner → "Este link pertence a outra conta.", owner → navigates to checkout
-- [ ] Gate check passes: `npm test -w apps/web` (phase end: Build-B gate)
-- [ ] Test count: ≥ 8 tests pass
+- [x] Tests (fake timers): countdown reaches 0 → "Tempo esgotado. O horário foi liberado."; status fixture switching to `confirmed` on the 2nd poll → "Reserva confirmada" with code; rejected charge → "Pagamento recusado. Tente outro método."
+- [x] Tests: Pix shows QR image and copy button; sandbox page approve calls the endpoint and links back to checkout; pre-reserva anonymous → login redirect, other owner → "Este link pertence a outra conta.", owner → navigates to checkout
+- [x] Gate check passes: `npm test -w apps/web` (phase end: Build-B gate)
+- [x] Test count: ≥ 8 tests pass
 
 **Tests**: unit
 **Gate**: build
@@ -1514,9 +1514,9 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: three tabs fetch their `tab` param; rows show payment status "Sinal pago · saldo pendente"; two rows with the same `group` render under one header; agenda switches views and shows no cleanup band; home lists 3 items
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 5 tests pass
+- [x] Tests: three tabs fetch their `tab` param; rows show payment status "Sinal pago · saldo pendente"; two rows with the same `group` render under one header; agenda switches views and shows no cleanup band; home lists 3 items
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 5 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1541,10 +1541,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: `canReschedule: false` hides Reagendar and shows the WhatsApp link; ST-2 quote fixture shows "Você recebe R$ 23,00 em créditos"; ST-3 shows "Diferença a pagar agora: R$ 143,00" and opens the payment panel on confirm (202)
-- [ ] Tests: cancel modal shows "Fica retido: R$ 80,00 (sinal)" and "Será devolvido: R$ 80,00" for CA-1 and calls cancel with an Idempotency-Key
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests: `canReschedule: false` hides Reagendar and shows the WhatsApp link; ST-2 quote fixture shows "Você recebe R$ 23,00 em créditos"; ST-3 shows "Diferença a pagar agora: R$ 143,00" and opens the payment panel on confirm (202)
+- [x] Tests: cancel modal shows "Fica retido: R$ 80,00 (sinal)" and "Será devolvido: R$ 80,00" for CA-1 and calls cancel with an Idempotency-Key
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1569,10 +1569,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: `completar=1` focuses and highlights the document field; save then navigate to `next`; document field read-only when already set; 409 shows message under the field
-- [ ] Tests: cards list "Visa final 4242 · 12/2029"; add disabled until consent checked; sandbox tokenizer posts only `cardToken` (request body asserted to contain no card number); remove asks confirmation
-- [ ] Gate check passes: `npm test -w apps/web` (phase end: Build-B gate)
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests: `completar=1` focuses and highlights the document field; save then navigate to `next`; document field read-only when already set; 409 shows message under the field
+- [x] Tests: cards list "Visa final 4242 · 12/2029"; add disabled until consent checked; sandbox tokenizer posts only `cardToken` (request body asserted to contain no card number); remove asks confirmation
+- [x] Gate check passes: `npm test -w apps/web` (phase end: Build-B gate)
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: build

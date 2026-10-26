@@ -1,0 +1,104 @@
+import { utcToLocal } from '@bravo/core';
+import { useState } from 'react';
+import { MonthCalendar } from '../../components/calendar/MonthCalendar';
+import { Button } from '../../components/ui/Button';
+import { cx, focusRing } from '../../components/ui/cx';
+import { Alert, Spinner } from '../../components/ui/Feedback';
+import { monthOf } from '../../lib/calendar-dates';
+import { useMonthAvailability } from '../availability/api';
+import { useRooms } from '../catalog/api';
+import type { FlowSelection } from './flow-params';
+
+export interface DateStepProps {
+  selection: FlowSelection;
+  onChange: (next: FlowSelection) => void;
+  onContinue: () => void;
+}
+
+/** Step 1, "Sala e data": choose the room, then a day of its month calendar. */
+export function DateStep({ selection, onChange, onContinue }: DateStepProps) {
+  const today = utcToLocal(new Date()).date;
+  const rooms = useRooms();
+  const [month, setMonth] = useState(monthOf(selection.data ?? today));
+  const monthQuery = useMonthAvailability(selection.sala ?? undefined, month);
+
+  const chooseRoom = (slug: string) => {
+    if (slug === selection.sala) return;
+    // Another room has other bookings, so the time chosen so far no longer applies.
+    onChange({ ...selection, sala: slug, inicio: null, fim: null, bloco: null });
+  };
+
+  const chooseDate = (date: string) => {
+    if (date === selection.data) return;
+    onChange({ ...selection, data: date, inicio: null, fim: null, bloco: null });
+  };
+
+  return (
+    <div className="space-y-space-xl">
+      <fieldset className="space-y-space-sm">
+        <legend className="font-heading-mobile text-heading-mobile text-ink">Sala</legend>
+        {rooms.isPending ? (
+          <Spinner label="Carregando salas" />
+        ) : rooms.isError ? (
+          <Alert tone="error">Não foi possível carregar as salas agora.</Alert>
+        ) : (
+          <div className="grid gap-space-sm sm:grid-cols-3">
+            {rooms.data.items.map((room) => {
+              const checked = selection.sala === room.slug;
+              return (
+                <label
+                  key={room.id}
+                  className={cx(
+                    'flex cursor-pointer flex-col gap-1 rounded-card border p-space-md font-small text-small transition-colors focus-within:ring-2 focus-within:ring-bronze',
+                    checked
+                      ? 'border-bronze bg-champagne-soft text-on-champagne'
+                      : 'border-hairline bg-surface-raised text-ink hover:border-bronze',
+                  )}
+                >
+                  <span className="flex items-center gap-space-sm">
+                    <input
+                      type="radio"
+                      name="sala"
+                      value={room.slug}
+                      checked={checked}
+                      onChange={() => {
+                        chooseRoom(room.slug);
+                      }}
+                      className={cx('h-4 w-4 accent-bronze', focusRing)}
+                    />
+                    <span className="font-medium">{room.name}</span>
+                  </span>
+                  <span className="text-ink-muted">{room.idealFor.join(' · ')}</span>
+                </label>
+              );
+            })}
+          </div>
+        )}
+      </fieldset>
+
+      <section aria-labelledby="flow-date" className="space-y-space-sm">
+        <h2 id="flow-date" className="font-heading-mobile text-heading-mobile text-ink">
+          Data
+        </h2>
+        {selection.sala ? (
+          <MonthCalendar
+            month={month}
+            days={monthQuery.data?.days ?? []}
+            value={selection.data}
+            minMonth={monthOf(today)}
+            onSelect={chooseDate}
+            onMonthChange={setMonth}
+          />
+        ) : (
+          <p className="font-small text-small text-ink-muted">
+            Escolha uma sala para ver as datas disponíveis.
+          </p>
+        )}
+      </section>
+
+      <Button disabled={!selection.sala || !selection.data} onClick={onContinue}>
+        Continuar
+      </Button>
+    </div>
+  );
+}

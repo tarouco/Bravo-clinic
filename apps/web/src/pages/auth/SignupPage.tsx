@@ -2,7 +2,7 @@ import { signupSchema } from '@bravo/core';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm, type Path } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from '../../components/ui/Button';
 import { Alert } from '../../components/ui/Feedback';
 import {
@@ -12,7 +12,7 @@ import {
   PasswordInput,
   PhoneInput,
 } from '../../components/ui/form';
-import { useSignup } from '../../features/auth/hooks';
+import { safeNextPath, useSignup } from '../../features/auth/hooks';
 import { ApiError } from '../../lib/api';
 import { AuthCard } from './AuthCard';
 
@@ -23,6 +23,8 @@ const linkClasses = 'text-bronze underline underline-offset-4';
 
 export function SignupPage() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const next = safeNextPath(searchParams.get('next'));
   const signup = useSignup();
   const [formError, setFormError] = useState<string | null>(null);
 
@@ -40,7 +42,7 @@ export function SignupPage() {
     setFormError(null);
     try {
       await signup.mutateAsync(values);
-      void navigate('/app', { state: { signupBanner: true } });
+      void navigate(next ?? '/app', { state: { signupBanner: true } });
     } catch (error) {
       if (error instanceof ApiError && error.code === 'EMAIL_TAKEN') {
         setError('email', { message: EMAIL_TAKEN_MESSAGE });
@@ -137,7 +139,10 @@ export function SignupPage() {
 
       <p className="text-center font-small text-small text-ink-muted">
         Já tem conta?{' '}
-        <Link to="/login" className={linkClasses}>
+        <Link
+          to={next ? `/login?next=${encodeURIComponent(next)}` : '/login'}
+          className={linkClasses}
+        >
           Entrar
         </Link>
       </p>

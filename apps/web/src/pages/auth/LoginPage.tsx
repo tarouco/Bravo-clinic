@@ -83,7 +83,10 @@ export function LoginPage() {
         <Link to="/esqueci-senha" className="text-bronze underline underline-offset-4">
           Esqueci minha senha
         </Link>
-        <Link to="/cadastro" className="text-bronze underline underline-offset-4">
+        <Link
+          to={next ? `/cadastro?next=${encodeURIComponent(next)}` : '/cadastro'}
+          className="text-bronze underline underline-offset-4"
+        >
           Criar conta
         </Link>
       </div>

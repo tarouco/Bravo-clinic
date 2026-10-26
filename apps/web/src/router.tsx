@@ -10,7 +10,13 @@ import {
   RequireSection,
   RequireStaff,
 } from './features/auth/guards';
+import { BookingFlowPage } from './features/booking/BookingFlowPage';
+import { AgendaPage } from './pages/app/AgendaPage';
 import { AppHomePage } from './pages/app/AppHomePage';
+import { BookingDetailPage } from './pages/app/BookingDetailPage';
+import { CardsPage } from './pages/app/CardsPage';
+import { MyBookingsPage } from './pages/app/MyBookingsPage';
+import { ProfilePage } from './pages/app/ProfilePage';
 import { LoginPage } from './pages/auth/LoginPage';
 import { ForgotPasswordPage } from './pages/auth/password/ForgotPasswordPage';
 import { ResetPasswordPage } from './pages/auth/password/ResetPasswordPage';
@@ -21,7 +27,10 @@ import { HomePage } from './pages/public/home/HomePage';
 import { NotFoundPage } from './pages/public/NotFoundPage';
 import { ContactPage } from './pages/public/ContactPage';
 import { LegalPage } from './pages/public/LegalPage';
+import { CheckoutPage } from './pages/public/CheckoutPage';
 import { PoliciesPage } from './pages/public/PoliciesPage';
+import { PreReservationPage } from './pages/public/PreReservationPage';
+import { SandboxCheckoutPage } from './pages/public/SandboxCheckoutPage';
 import { PricingPage } from './pages/public/PricingPage';
 import { RoomPage } from './pages/public/rooms/RoomPage';
 import { RoomsPage } from './pages/public/rooms/RoomsPage';
@@ -31,26 +40,16 @@ type PlaceholderRoute = readonly [path: string, title: string];
 /** Public pages that ship with later features (docs/architecture.md section 9.1). */
 const publicPlaceholders: PlaceholderRoute[] = [
   ['servicos-extras', 'Serviços extras'],
-  ['reservar', 'Reservar'],
-  ['checkout/:bookingId', 'Pagamento'],
-  ['pagamento/sandbox/:chargeId', 'Pagamento de teste'],
-  ['pre-reserva/:token', 'Pré-reserva'],
   ['assinar/:categoryId', 'Assinar plano'],
 ];
 
 /** Tenant area pages that ship with later features. */
 const appPlaceholders: PlaceholderRoute[] = [
-  ['reservar', 'Reservar'],
-  ['minhas-reservas', 'Minhas reservas'],
-  ['minhas-reservas/:id', 'Reserva'],
-  ['agenda', 'Agenda'],
   ['compras', 'Compras'],
   ['compras/horas-extras', 'Horas extras'],
   ['compras/creditos', 'Créditos'],
   ['compras/historico', 'Histórico de compras'],
   ['orcamentos', 'Orçamentos'],
-  ['perfil', 'Perfil'],
-  ['perfil/cartoes', 'Cartões'],
   ['perfil/notificacoes', 'Notificações'],
   ['perfil/privacidade', 'Privacidade'],
   ['perfil/seguranca', 'Segurança'],
@@ -87,6 +86,9 @@ export const appRoutes: RouteObject[] = [
       { path: 'contato', element: <ContactPage /> },
       { path: 'termos', element: <LegalPage kind="termos" /> },
       { path: 'privacidade', element: <LegalPage kind="privacidade" /> },
+      { path: 'reservar', element: <BookingFlowPage /> },
+      { path: 'pagamento/sandbox/:chargeId', element: <SandboxCheckoutPage /> },
+      { path: 'pre-reserva/:token', element: <PreReservationPage /> },
       ...publicPlaceholders.map(placeholder),
       { path: 'login', element: <LoginPage /> },
       { path: 'cadastro', element: <SignupPage /> },
@@ -96,6 +98,7 @@ export const appRoutes: RouteObject[] = [
       {
         element: <RequireAuth />,
         children: [
+          { path: 'checkout/:bookingId', element: <CheckoutPage /> },
           { path: 'login/2fa', element: <TwoFactorVerifyPage /> },
           { path: 'login/2fa/configurar', element: <TwoFactorEnrollPage /> },
         ],
@@ -111,6 +114,12 @@ export const appRoutes: RouteObject[] = [
         element: <AppShell />,
         children: [
           { index: true, element: <AppHomePage /> },
+          { path: 'reservar', element: <BookingFlowPage /> },
+          { path: 'minhas-reservas', element: <MyBookingsPage /> },
+          { path: 'minhas-reservas/:id', element: <BookingDetailPage /> },
+          { path: 'agenda', element: <AgendaPage /> },
+          { path: 'perfil', element: <ProfilePage /> },
+          { path: 'perfil/cartoes', element: <CardsPage /> },
           ...appPlaceholders.map(placeholder),
           { path: '*', element: <NotFoundPage /> },
         ],
