@@ -1,4 +1,5 @@
 import { addDays, minuteToHHMM, type LocalDate } from '@bravo/core';
+import type { ReactNode } from 'react';
 import {
   datesOfMonth,
   dayMonthLabel,
@@ -9,6 +10,7 @@ import {
   WEEKDAY_SHORT,
 } from '../../lib/calendar-dates';
 import { cx, focusRing } from '../ui/cx';
+import { HoverCard, type HoverCardTriggerProps } from '../ui/HoverCard';
 import {
   layoutDay,
   TONE_CLASSES,
@@ -31,6 +33,8 @@ export interface MonthCalendarViewProps {
   onNavigate: (next: NavigateEvent) => void;
   /** Called when a day number is clicked, to drill into the day or week. */
   onSelectDate?: (date: LocalDate) => void;
+  /** Content of the card shown while hovering or focusing an event chip; null for none. */
+  renderEventCard?: (event: ScheduleEvent) => ReactNode;
   className?: string;
 }
 
@@ -58,6 +62,7 @@ export function MonthCalendarView({
   closedDays = [],
   onNavigate,
   onSelectDate,
+  renderEventCard,
   className,
 }: MonthCalendarViewProps) {
   const month = monthOf(date);
@@ -128,19 +133,11 @@ export function MonthCalendarView({
                   <ul className="space-y-0.5">
                     {dayEvents.slice(0, MAX_CHIPS).map(({ event, startMinute }) => (
                       <li key={event.id}>
-                        <button
-                          type="button"
-                          onClick={event.onClick}
-                          className={cx(
-                            'block w-full truncate rounded-control border px-1 text-left font-caption text-caption',
-                            TONE_CLASSES[
-                              event.tone ?? (event.kind === 'block' ? 'block' : 'confirmed')
-                            ],
-                            focusRing,
-                          )}
-                        >
-                          {minuteToHHMM(startMinute)} {event.title}
-                        </button>
+                        <EventChip
+                          event={event}
+                          startMinute={startMinute}
+                          card={renderEventCard?.(event) ?? null}
+                        />
                       </li>
                     ))}
                   </ul>
@@ -156,5 +153,37 @@ export function MonthCalendarView({
         </div>
       </div>
     </div>
+  );
+}
+
+function EventChip({
+  event,
+  startMinute,
+  card,
+}: {
+  event: ScheduleEvent;
+  startMinute: number;
+  card: ReactNode;
+}) {
+  const chip = (props: Partial<HoverCardTriggerProps>) => (
+    <button
+      type="button"
+      onClick={event.onClick}
+      className={cx(
+        'block w-full truncate rounded-control border px-1 text-left font-caption text-caption',
+        TONE_CLASSES[event.tone ?? (event.kind === 'block' ? 'block' : 'confirmed')],
+        focusRing,
+      )}
+      {...props}
+    >
+      {minuteToHHMM(startMinute)} {event.title}
+    </button>
+  );
+  return card ? (
+    <HoverCard label={event.title} trigger={(props) => chip(props)} align="start">
+      {card}
+    </HoverCard>
+  ) : (
+    chip({})
   );
 }

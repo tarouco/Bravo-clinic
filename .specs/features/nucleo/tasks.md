@@ -1685,10 +1685,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: event shows "Ana · Sala Principal"; popup shows full name, "R$ 109,50 de R$ 219,00", times, category, badge; reception sees Check-in and Reenviar link but not Confirmar/Reagendar/Cancelar
-- [ ] Tests: free slot menu lists the 3 actions plus a registered slot action; Bloquear opens BlockModal prefilled; filters update the events query params; politicas tab hidden for reception
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 7 tests pass
+- [x] Tests: event shows "Ana · Sala Principal"; popup shows full name, "R$ 109,50 de R$ 219,00", times, category, badge; reception sees Check-in and Reenviar link but not Confirmar/Reagendar/Cancelar
+- [x] Tests: free slot menu lists the 3 actions plus a registered slot action; Bloquear opens BlockModal prefilled; filters update the events query params; politicas tab hidden for reception
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: unit
 **Gate**: quick

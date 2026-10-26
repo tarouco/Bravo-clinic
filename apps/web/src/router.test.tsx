@@ -3,6 +3,7 @@ import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, useLocation, useRoutes } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { ToastProvider } from './components/ui/Toast';
 import type { Session } from './features/auth/useSession';
 import { createQueryClient } from './lib/query-client';
 import { appRoutes } from './router';
@@ -57,12 +58,14 @@ function renderRoute(path: string) {
   render(
     <ThemeProvider>
       <QueryClientProvider client={createQueryClient()}>
-        <MemoryRouter
-          initialEntries={[path]}
-          future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
-        >
-          <RouteTable />
-        </MemoryRouter>
+        <ToastProvider>
+          <MemoryRouter
+            initialEntries={[path]}
+            future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+          >
+            <RouteTable />
+          </MemoryRouter>
+        </ToastProvider>
       </QueryClientProvider>
     </ThemeProvider>,
   );
