@@ -721,7 +721,7 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-02 | P1: Booking vocabulary and contracts | Tasks | T1 | Implementing |
 | NUC-03 | P1: Booking vocabulary and contracts | Tasks | T1 | Implementing |
 | NUC-04 | P1: Booking vocabulary and contracts | Tasks | T1, T5 | Implementing |
-| NUC-05 | P1: Booking vocabulary and contracts | Tasks | T5, T20, T23 | In Tasks |
+| NUC-05 | P1: Booking vocabulary and contracts | Tasks | T5, T20, T23 | Implementing |
 | NUC-06 | P1: Booking vocabulary and contracts | Tasks | T23, T26 | In Tasks |
 | NUC-07 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
 | NUC-08 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
@@ -729,7 +729,7 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-10 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
 | NUC-11 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
 | NUC-12 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
-| NUC-13 | P1: Slot grid with cleanup | Tasks | T2, T20 | In Tasks |
+| NUC-13 | P1: Slot grid with cleanup | Tasks | T2, T20 | Implementing |
 | NUC-14 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
 | NUC-15 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
 | NUC-16 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
@@ -786,7 +786,7 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-67 | P1: Booking categories and price table | Tasks | T13 | Implementing |
 | NUC-68 | P1: Booking categories and price table | Tasks | T13 | Implementing |
 | NUC-69 | P1: Booking categories and price table | Tasks | T13 | Implementing |
-| NUC-70 | P1: Booking categories and price table | Tasks | T20 | In Tasks |
+| NUC-70 | P1: Booking categories and price table | Tasks | T20 | Implementing |
 | NUC-71 | P1: Booking categories and price table | Tasks | T44 | In Tasks |
 | NUC-72 | P1: Booking categories and price table | Tasks | T44 | In Tasks |
 | NUC-73 | P1: Booking categories and price table | Tasks | T43 | In Tasks |
@@ -805,15 +805,15 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-86 | P1: Book and pay the sinal | Tasks | T9 | Implementing |
 | NUC-87 | P1: Book and pay the sinal | Tasks | T9 | Implementing |
 | NUC-88 | P1: Book and pay the sinal | Tasks | T9 | Implementing |
-| NUC-89 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |
-| NUC-90 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |
-| NUC-91 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |
-| NUC-92 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |
-| NUC-93 | P1: Book and pay the sinal | Tasks | T20, T49 | In Tasks |
-| NUC-94 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |
+| NUC-89 | P1: Book and pay the sinal | Tasks | T20 | Implementing |
+| NUC-90 | P1: Book and pay the sinal | Tasks | T20 | Implementing |
+| NUC-91 | P1: Book and pay the sinal | Tasks | T20 | Implementing |
+| NUC-92 | P1: Book and pay the sinal | Tasks | T20 | Implementing |
+| NUC-93 | P1: Book and pay the sinal | Tasks | T20, T49 | Implementing |
+| NUC-94 | P1: Book and pay the sinal | Tasks | T20 | Implementing |
 | NUC-95 | P1: Book and pay the sinal | Tasks | T17, T20 | Implementing |
-| NUC-96 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |
-| NUC-97 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |
+| NUC-96 | P1: Book and pay the sinal | Tasks | T20 | Implementing |
+| NUC-97 | P1: Book and pay the sinal | Tasks | T20 | Implementing |
 | NUC-98 | P1: Book and pay the sinal | Tasks | T30, T37 | In Tasks |
 | NUC-99 | P1: Book and pay the sinal | Tasks | T32, T37 | In Tasks |
 | NUC-100 | P1: Book and pay the sinal | Tasks | T31, T38 | In Tasks |
@@ -923,7 +923,7 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-204 | P1: Extension points | Tasks | T11 | Implementing |
 | NUC-205 | P1: Extension points | Tasks | T6, T18, T23, T26 | Implementing |
 | NUC-206 | P2: Booking funnel analytics | Tasks | T29, T38 | In Tasks |
-| NUC-207 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |
+| NUC-207 | P1: Book and pay the sinal | Tasks | T20 | Implementing |
 | NUC-208 | P1: Gateway-independent payments | Tasks | T15, T16 | Implementing |
 | NUC-209 | P1: Extension points | Tasks | T6, T17, T18 | Implementing |
 | NUC-210 | P1: Extension points | Tasks | T6, T23 | In Tasks |

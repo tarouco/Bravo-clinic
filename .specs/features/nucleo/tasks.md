@@ -937,13 +937,13 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: unverified → 403; no document → 422 `PROFILE_INCOMPLETE`; prices not reviewed → 409 `BOOKING_NOT_OPEN` for tenant; policy false → 422; old version → 409 `POLICY_CHANGED`; wrong expected total → 409 `PRICE_CHANGED` with quote
-- [ ] Test: PR-3 booking → 201 parsed by `bookingDetailSchema`, status `awaiting_payment`, hold = now + 15 min, occupancy upper = 20:30, 2 segments, snapshot version 1, code matches `^BRV-[A-Z2-7]{6}$`, consent `booking_policy` `policy-v1`
-- [ ] Test: 10 concurrent requests for the same slot → exactly one 201 and nine 409 `SLOT_TAKEN`; 4th awaiting hold → 429; stale hold overlapping the slot is expired in the same transaction and the new booking succeeds
-- [ ] Test: a fake credit step making `payNowCents` 0 → booking `confirmed` with no charge row and a `booking.confirmed` outbox row
-- [ ] Test: closing the date concurrently with a booking yields either the booking in `AFFECTED_BOOKINGS` or the booking rejected `closed`, never both missing
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 14 tests pass
+- [x] Tests: unverified → 403; no document → 422 `PROFILE_INCOMPLETE`; prices not reviewed → 409 `BOOKING_NOT_OPEN` for tenant; policy false → 422; old version → 409 `POLICY_CHANGED`; wrong expected total → 409 `PRICE_CHANGED` with quote
+- [x] Test: PR-3 booking → 201 parsed by `bookingDetailSchema`, status `awaiting_payment`, hold = now + 15 min, occupancy upper = 20:30, 2 segments, snapshot version 1, code matches `^BRV-[A-Z2-7]{6}$`, consent `booking_policy` `policy-v1`
+- [x] Test: 10 concurrent requests for the same slot → exactly one 201 and nine 409 `SLOT_TAKEN`; 4th awaiting hold → 429; stale hold overlapping the slot is expired in the same transaction and the new booking succeeds
+- [x] Test: a fake credit step making `payNowCents` 0 → booking `confirmed` with no charge row and a `booking.confirmed` outbox row
+- [x] Test: closing the date concurrently with a booking yields either the booking in `AFFECTED_BOOKINGS` or the booking rejected `closed`, never both missing
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 14 tests pass
 
 **Tests**: integration
 **Gate**: full

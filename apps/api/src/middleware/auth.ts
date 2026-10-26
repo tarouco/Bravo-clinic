@@ -1,7 +1,9 @@
 import { isStaff, type Role } from '@bravo/core';
+import { eq } from 'drizzle-orm';
 import { getCookie } from 'hono/cookie';
 import type { MiddlewareHandler } from 'hono';
 import { resolveSession, SESSION_COOKIE } from '../auth/session';
+import { users } from '../db/schema';
 import { forbidden, unauthorized } from '../lib/errors';
 import type { AppEnv } from '../types';
 
@@ -38,6 +40,21 @@ export function requireStaff(): MiddlewareHandler<AppEnv> {
 export function requireRole(role: Extract<Role, 'admin'>): MiddlewareHandler<AppEnv> {
   return async (c, next) => {
     if (c.get('auth').role !== role) throw forbidden();
+    await next();
+  };
+}
+
+/** Booking creation needs a verified e-mail (NUC-89). Runs after `requireAuth`. */
+export function requireVerifiedEmail(): MiddlewareHandler<AppEnv> {
+  return async (c, next) => {
+    const [user] = await c.var.deps.db
+      .select({ verifiedAt: users.emailVerifiedAt })
+      .from(users)
+      .where(eq(users.id, c.get('auth').userId));
+    if (user === undefined) throw unauthorized();
+    if (user.verifiedAt === null) {
+      throw forbidden('EMAIL_NOT_VERIFIED', 'Confirme seu e-mail para reservar.');
+    }
     await next();
   };
 }
