@@ -11,10 +11,12 @@ import {
   RequireStaff,
 } from './features/auth/guards';
 import { BookingFlowPage } from './features/booking/BookingFlowPage';
-import { AppHomePage } from './pages/app/AppHomePage';
 import { AgendaPage } from './pages/app/AgendaPage';
+import { AppHomePage } from './pages/app/AppHomePage';
 import { BookingDetailPage } from './pages/app/BookingDetailPage';
+import { CardsPage } from './pages/app/CardsPage';
 import { MyBookingsPage } from './pages/app/MyBookingsPage';
+import { ProfilePage } from './pages/app/ProfilePage';
 import { LoginPage } from './pages/auth/LoginPage';
 import { ForgotPasswordPage } from './pages/auth/password/ForgotPasswordPage';
 import { ResetPasswordPage } from './pages/auth/password/ResetPasswordPage';
@@ -48,8 +50,6 @@ const appPlaceholders: PlaceholderRoute[] = [
   ['compras/creditos', 'Créditos'],
   ['compras/historico', 'Histórico de compras'],
   ['orcamentos', 'Orçamentos'],
-  ['perfil', 'Perfil'],
-  ['perfil/cartoes', 'Cartões'],
   ['perfil/notificacoes', 'Notificações'],
   ['perfil/privacidade', 'Privacidade'],
   ['perfil/seguranca', 'Segurança'],
@@ -116,8 +116,10 @@ export const appRoutes: RouteObject[] = [
           { index: true, element: <AppHomePage /> },
           { path: 'reservar', element: <BookingFlowPage /> },
           { path: 'minhas-reservas', element: <MyBookingsPage /> },
-          { path: 'agenda', element: <AgendaPage /> },
           { path: 'minhas-reservas/:id', element: <BookingDetailPage /> },
+          { path: 'agenda', element: <AgendaPage /> },
+          { path: 'perfil', element: <ProfilePage /> },
+          { path: 'perfil/cartoes', element: <CardsPage /> },
           ...appPlaceholders.map(placeholder),
           { path: '*', element: <NotFoundPage /> },
         ],

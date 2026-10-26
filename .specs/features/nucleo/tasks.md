@@ -1569,10 +1569,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: `completar=1` focuses and highlights the document field; save then navigate to `next`; document field read-only when already set; 409 shows message under the field
-- [ ] Tests: cards list "Visa final 4242 · 12/2029"; add disabled until consent checked; sandbox tokenizer posts only `cardToken` (request body asserted to contain no card number); remove asks confirmation
-- [ ] Gate check passes: `npm test -w apps/web` (phase end: Build-B gate)
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests: `completar=1` focuses and highlights the document field; save then navigate to `next`; document field read-only when already set; 409 shows message under the field
+- [x] Tests: cards list "Visa final 4242 · 12/2029"; add disabled until consent checked; sandbox tokenizer posts only `cardToken` (request body asserted to contain no card number); remove asks confirmation
+- [x] Gate check passes: `npm test -w apps/web` (phase end: Build-B gate)
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: build
