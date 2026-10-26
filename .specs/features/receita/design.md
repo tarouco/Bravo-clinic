@@ -370,3 +370,22 @@ Fixed occurrence  awaiting_payment|pre_reserved → confirmed | expired ; held_f
 | Slot discount consumption | Split on confirmation | Discount survives expired checkouts; disappears only when really booked |
 | Late approvals | Always refund | Predictable; avoids re-validating holds after expiry |
 | Job clock | Jobs take `now` from deps; `jobs/cli.ts` injects it for e2e | Deterministic tests of date-driven behavior |
+
+## Web-assumed API contract (lane B → confirm in lane A)
+
+Lane B (Phases 7–9, merged) coded these response shapes where the API Contracts section above was silent. Lane A implements them exactly as listed, or changes the web types in `apps/web/src/features/purchases/types.ts` in the same task and notes it.
+
+| Endpoint | Assumed shape / rule |
+| --- | --- |
+| `GET /admin/subscriptions/:id` | `Subscription` |
+| `POST /admin/subscriptions/:id/adjust-balance` | `{ period }` |
+| `POST /admin/customers/:id/credits` (grant) | `{ lot }` |
+| `PATCH` package / fixed-schedule category | body fields `includedHours`, `pricePerOccurrenceCents` |
+| `POST /admin/subscriptions/quote` | `SubscriptionQuote` incl. `conflicts` and `couponRejection` |
+| `GET /admin/subscriptions/:id/ledger` | `LedgerPage` |
+| `GET /admin/slot-discounts?from&to&roomId` | inclusive `to`; active discounts; `consumed: true` rows count as not free |
+| `POST /admin/subscriptions/:id/resend-link`, `POST /admin/subscriptions/:id/cancel` `{ justification }` | admin only; reception reads list/detail/extrato only |
+| `POST /app/subscriptions/quote` | requires session; logged-out visitors see a local summary built from public offer + occurrence check |
+| Coupon `validUntil` | form date inclusive, sent as next São Paulo midnight (half-open `[validFrom, validUntil)`) |
+
+Known risk: the admin sale dialog's fixed-schedule picker uses the public occurrences endpoint, which omits `admin_only` categories (REC-08); for those, only the admin quote's `conflicts` is authoritative.
