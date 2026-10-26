@@ -234,6 +234,28 @@ describe('FreeSlotMenu (NUC-160)', () => {
     expect(await within(dialog).findByRole('checkbox', { name: 'Sala Principal' })).toBeChecked();
   });
 
+  it('opens the create drawer prefilled with the room, date and times of the free slot', async () => {
+    useEvents();
+    const { container } = renderPage();
+    await eventButton();
+    await userEvent.selectOptions(screen.getByLabelText('Sala'), 'Sala Principal');
+    const trigger = await waitFor(() => {
+      const found = freeButton(container);
+      expect(found).not.toBeNull();
+      return found as HTMLElement;
+    });
+    await userEvent.hover(trigger);
+    const menu = await screen.findByRole('menu', { name: 'Horário livre 10:00–10:30' });
+
+    await userEvent.click(within(menu).getByRole('menuitem', { name: 'Criar pré-reserva' }));
+
+    const drawer = await screen.findByRole('dialog', { name: 'Criar pré-reserva' });
+    expect(within(drawer).getByLabelText('Data')).toHaveValue('2026-10-27');
+    expect(within(drawer).getByLabelText('Início')).toHaveValue('10:00');
+    expect(within(drawer).getByLabelText('Fim')).toHaveValue('10:30');
+    expect(await within(drawer).findByLabelText('Sala')).toHaveValue(ID.principal);
+  });
+
   it('draws the markers reported through the admin.calendar.overlays slot', async () => {
     function Discounts({
       reportMarkers,

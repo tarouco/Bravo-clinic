@@ -37,6 +37,10 @@ import {
   type CalendarBooking,
 } from '../../../features/admin-bookings/BookingActions';
 import { BookingPopup } from '../../../features/admin-bookings/BookingPopup';
+import {
+  CreateBookingDrawer,
+  type CreateRequest,
+} from '../../../features/admin-bookings/CreateBookingDrawer';
 import { FreeSlotMenu, type CreateKind } from '../../../features/admin-bookings/FreeSlotMenu';
 import { useSession } from '../../../features/auth/useSession';
 import { useCalendarEvents, useDeleteBlock } from '../../../features/calendar/api';
@@ -51,15 +55,6 @@ interface Filters {
   roomId: string;
   status: string;
   categoryId: string;
-}
-
-/** What the create-booking drawer opens with: a free slot of the calendar or nothing. */
-export interface CreateRequest {
-  kind: CreateKind;
-  roomId?: string;
-  date?: LocalDate;
-  startMinute?: number;
-  endMinute?: number;
 }
 
 const LEGEND: { label: string; tone: ScheduleTone }[] = [
@@ -117,7 +112,7 @@ export function ReservationsCalendar() {
     booking: CalendarBooking;
   } | null>(null);
   const [blocking, setBlocking] = useState<BlockDefaults | null>(null);
-  const [, setCreate] = useState<CreateRequest | null>(null);
+  const [create, setCreate] = useState<CreateRequest | null>(null);
   const [selected, setSelected] = useState<FreeSlot | null>(null);
   const [markers, setMarkers] = useState<Record<string, OverlayMarker[]>>({});
 
@@ -431,6 +426,12 @@ export function ReservationsCalendar() {
         ) : null}
       </Modal>
 
+      <CreateBookingDrawer
+        request={create}
+        onClose={() => {
+          setCreate(null);
+        }}
+      />
       <BlockModal
         open={blocking !== null}
         onClose={() => {

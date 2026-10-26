@@ -1713,9 +1713,9 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: search after 2 chars lists customers; new customer form posts and selects the result; pre-reservation default expiry 24 h editable; reception never sees "Confirmar sem pagamento"; admin manual confirm requires justification; success shows link with copy button
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests: search after 2 chars lists customers; new customer form posts and selects the result; pre-reservation default expiry 24 h editable; reception never sees "Confirmar sem pagamento"; admin manual confirm requires justification; success shows link with copy button
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick
