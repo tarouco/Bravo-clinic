@@ -1,4 +1,4 @@
-import { minuteToHHMM, utcToLocal } from '@bravo/core';
+import { formatBRL, minuteToHHMM, utcToLocal, weekdayOf, type LocalDate } from '@bravo/core';
 import { formatLocalDateBR } from '../../lib/format';
 import type { PackageOffer } from './types';
 
@@ -66,4 +66,31 @@ export function formatWindow(startMinute: number, endMinute: number): string {
 export function formatDateTime(instant: string): string {
   const local = utcToLocal(new Date(instant));
   return `${formatLocalDateBR(local.date)} · ${minuteToHHMM(local.minuteOfDay)}`;
+}
+
+/** "2027-02-08T15:00:00.000Z" -> "08/02/2027" in São Paulo time. */
+export function formatDay(instant: string): string {
+  return formatLocalDateBR(utcToLocal(new Date(instant)).date);
+}
+
+/** "2026-11-02" -> "Seg 02/11/2026". */
+export function formatWeekdayDate(date: string): string {
+  return `${WEEKDAY_NAMES[weekdayOf(date as LocalDate) - 1] ?? ''} ${formatLocalDateBR(date)}`;
+}
+
+/** An occurrence as "Seg 02/11/2026 · 07:00–09:30" in São Paulo time. */
+export function formatOccurrence(occurrence: {
+  date: string;
+  startsAt: string;
+  endsAt: string;
+}): string {
+  const start = utcToLocal(new Date(occurrence.startsAt)).minuteOfDay;
+  const end = utcToLocal(new Date(occurrence.endsAt)).minuteOfDay;
+  return `${formatWeekdayDate(occurrence.date)} · ${formatWindow(start, end)}`;
+}
+
+/** REC-91: "22 ocorrências × R$ 280,00 = R$ 6.160,00" ("1 ocorrência" when there is one). */
+export function formatPeriodPrice(count: number, perOccurrenceCents: number): string {
+  const noun = count === 1 ? 'ocorrência' : 'ocorrências';
+  return `${String(count)} ${noun} × ${formatBRL(perOccurrenceCents)} = ${formatBRL(count * perOccurrenceCents)}`;
 }

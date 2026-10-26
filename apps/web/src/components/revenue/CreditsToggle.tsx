@@ -2,21 +2,28 @@ import { formatBRL, revenueQuoteSchema } from '@bravo/core';
 import type { CheckoutSlotProps } from '../../features/booking/checkout-options';
 import { Checkbox } from '../ui/form';
 
-/** Slot `checkout.summary.credits`: "Usar créditos (R$ X disponíveis)" and the applied amount (REC-107). */
-export function CreditsToggle({ quote, options, onOptionsChange }: CheckoutSlotProps) {
-  const parsed = revenueQuoteSchema.safeParse(quote.extensions);
-  if (!parsed.success || parsed.data.credit.availableCents <= 0) return null;
+export interface CreditsToggleViewProps {
+  availableCents: number;
+  appliedCents: number;
+  checked: boolean;
+  onChange: (checked: boolean) => void;
+}
 
-  const { availableCents, appliedCents } = parsed.data.credit;
-  const checked = options.useCredits ?? false;
-
+/** "Usar créditos (R$ X disponíveis)" and the applied amount; nothing without credits (REC-107). */
+export function CreditsToggleView({
+  availableCents,
+  appliedCents,
+  checked,
+  onChange,
+}: CreditsToggleViewProps) {
+  if (availableCents <= 0) return null;
   return (
     <section aria-label="Créditos" className="space-y-space-xs">
       <Checkbox
         label={`Usar créditos (${formatBRL(availableCents)} disponíveis)`}
         checked={checked}
         onChange={(event) => {
-          onOptionsChange({ useCredits: event.target.checked });
+          onChange(event.target.checked);
         }}
       />
       {checked && appliedCents > 0 ? (
@@ -25,5 +32,22 @@ export function CreditsToggle({ quote, options, onOptionsChange }: CheckoutSlotP
         </p>
       ) : null}
     </section>
+  );
+}
+
+/** Slot `checkout.summary.credits`: reads the credit state from `Quote.extensions`. */
+export function CreditsToggle({ quote, options, onOptionsChange }: CheckoutSlotProps) {
+  const parsed = revenueQuoteSchema.safeParse(quote.extensions);
+  if (!parsed.success) return null;
+
+  return (
+    <CreditsToggleView
+      availableCents={parsed.data.credit.availableCents}
+      appliedCents={parsed.data.credit.appliedCents}
+      checked={options.useCredits ?? false}
+      onChange={(useCredits) => {
+        onOptionsChange({ useCredits });
+      }}
+    />
   );
 }

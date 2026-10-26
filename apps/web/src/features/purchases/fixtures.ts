@@ -1,4 +1,5 @@
 import {
+  addDays,
   adminSubscriptionListSchema,
   couponListSchema,
   couponUseListSchema,
@@ -19,6 +20,8 @@ import {
   switchQuoteSchema,
   cancelPreviewSchema,
   quoteSchema,
+  localToUtc,
+  weekdayOf,
   type Quote,
 } from '@bravo/core';
 import { ID, quote } from '../../test/fixtures/nucleo';
@@ -32,9 +35,11 @@ import { parseFixture } from '../../test/fixtures/parse';
 export const RID = {
   pacote: 'aaaaaaaa-aaaa-4aaa-8aaa-111111111111',
   meioTurno: 'aaaaaaaa-aaaa-4aaa-8aaa-222222222222',
+  pacote30h: 'aaaaaaaa-aaaa-4aaa-8aaa-333333333333',
   subActive: 'bbbbbbbb-bbbb-4bbb-8bbb-111111111111',
   subSuspended: 'bbbbbbbb-bbbb-4bbb-8bbb-222222222222',
   subAwaiting: 'bbbbbbbb-bbbb-4bbb-8bbb-333333333333',
+  subEnded: 'bbbbbbbb-bbbb-4bbb-8bbb-444444444444',
   periodActive: 'cccccccc-cccc-4ccc-8ccc-111111111111',
   periodNext: 'cccccccc-cccc-4ccc-8ccc-222222222222',
   periodSuspended: 'cccccccc-cccc-4ccc-8ccc-333333333333',
@@ -86,6 +91,32 @@ export const packageOffers = parseFixture(
 export const pacote20h = packageOffers.items[0]!;
 export const meioTurno = packageOffers.items[1]!;
 
+/** A second hour package, the target of a switch from Pacote 20h (REC-71 example: 160000/1200 to 225000/1800). */
+export const pacote30h = parseFixture(
+  packageOfferListSchema,
+  {
+    items: [
+      {
+        id: RID.pacote30h,
+        name: 'Pacote 30h',
+        type: 'hour_package',
+        period: 'monthly',
+        periodDays: 30,
+        priceCents: 225000,
+        includedMinutes: 1800,
+        avgHourCents: 7500,
+      },
+    ],
+  },
+  'pacote30h',
+).items[0]!;
+
+export const packageOffersForSwitch = parseFixture(
+  packageOfferListSchema,
+  { items: [pacote20h, pacote30h, meioTurno] },
+  'packageOffersForSwitch',
+);
+
 /** Meio turno from 2026-11-02: 22 occurrences, none conflicting; one conflict variant below. */
 export const occurrenceCheck = parseFixture(
   occurrenceCheckSchema,
@@ -109,6 +140,31 @@ export const occurrenceCheck = parseFixture(
     suggestions: { rooms: [], baseDates: [] },
   },
   'occurrenceCheck',
+);
+
+/** Meio turno (Seg–Sex 07:00–09:30) from 2026-11-02: the 22 occurrences of the PRD example, no conflicts. */
+function meioTurnoOccurrences() {
+  const occurrences = [];
+  for (let offset = 0; offset < 30; offset += 1) {
+    const date = addDays('2026-11-02', offset);
+    if (weekdayOf(date) > 5) continue;
+    occurrences.push({
+      date,
+      startsAt: localToUtc(date, 420).toISOString(),
+      endsAt: localToUtc(date, 570).toISOString(),
+    });
+  }
+  return occurrences;
+}
+
+export const occurrenceCheckFull = parseFixture(
+  occurrenceCheckSchema,
+  {
+    ...occurrenceCheck,
+    occurrences: meioTurnoOccurrences(),
+    periodPriceCents: 616000,
+  },
+  'occurrenceCheckFull',
 );
 
 export const occurrenceCheckWithConflict = parseFixture(
@@ -228,6 +284,18 @@ export const subscriptionAwaiting = parseFixture(
   'subscriptionAwaiting',
 );
 
+export const subscriptionEnded = parseFixture(
+  subscriptionSchema,
+  {
+    ...subscriptionSuspended,
+    id: RID.subEnded,
+    status: 'ended',
+    currentPeriod: null,
+    balance: { packageMinutes: 0, includedMinutes: 1200, extraMinutes: 0 },
+  },
+  'subscriptionEnded',
+);
+
 export const subscriptionList = parseFixture(
   subscriptionListSchema,
   { items: [subscriptionActive, subscriptionSuspended, subscriptionAwaiting] },
@@ -305,6 +373,49 @@ export const switchQuote = parseFixture(
   'switchQuote',
 );
 
+/** REC-71: 6h (360 min) left become 6h 24min in Pacote 30h; the new period totals 36h 24min. */
+export const switchQuoteHour = parseFixture(
+  switchQuoteSchema,
+  {
+    remainingMinutes: 360,
+    convertedMinutes: 384,
+    newIncludedMinutes: 1800,
+    newPeriodTotalMinutes: 2184,
+    startsOn: '2026-10-26',
+    endsOn: '2026-11-25',
+    priceCents: 225000,
+    creditAppliedCents: 0,
+    payNowCents: 225000,
+  },
+  'switchQuoteHour',
+);
+
+export const switchQuoteFixed = parseFixture(
+  switchQuoteSchema,
+  {
+    releasedOccurrences: 12,
+    startsOn: '2026-11-02',
+    endsOn: '2026-12-02',
+    priceCents: 616000,
+    creditAppliedCents: 0,
+    payNowCents: 616000,
+  },
+  'switchQuoteFixed',
+);
+
+/** Cancel preview of an hour package: 6h lost, 300 extra minutes kept. */
+export const cancelPreviewHour = parseFixture(
+  cancelPreviewSchema,
+  { minutesLost: 360, extraMinutesKept: 300 },
+  'cancelPreviewHour',
+);
+
+export const cancelPreviewFixed = parseFixture(
+  cancelPreviewSchema,
+  { occurrencesReleased: 12, extraMinutesKept: 0 },
+  'cancelPreviewFixed',
+);
+
 export const cancelPreview = parseFixture(
   cancelPreviewSchema,
   { minutesLost: 750, extraMinutesKept: 90 },
@@ -334,6 +445,42 @@ export const extraHoursSummary = parseFixture(
   'extraHoursSummary',
 );
 
+/** Active Pacote 20h subscriber: unit price R$ 80,00, 1..20 h, one lot of 300 min (REC-62, REC-63). */
+export const extraHoursPackage20h = parseFixture(
+  extraHoursSummarySchema,
+  {
+    eligible: true,
+    unitPriceCents: 8000,
+    minHours: 1,
+    maxHours: 20,
+    lots: [
+      {
+        id: RID.lot,
+        source: 'purchase',
+        minutesGranted: 300,
+        minutesRemaining: 300,
+        expiresAt: '2027-02-08T15:00:00.000Z',
+      },
+    ],
+    totalRemainingMinutes: 300,
+  },
+  'extraHoursPackage20h',
+);
+
+/** Tenant without an active hour package: the Horas extras tab stays hidden (REC-69). */
+export const extraHoursIneligible = parseFixture(
+  extraHoursSummarySchema,
+  {
+    eligible: false,
+    reason: 'Horas extras são exclusivas para assinantes de um pacote de horas ativo.',
+    minHours: 1,
+    maxHours: 40,
+    lots: [],
+    totalRemainingMinutes: 0,
+  },
+  'extraHoursIneligible',
+);
+
 export const creditsSummary = parseFixture(
   creditsSummarySchema,
   {
@@ -359,6 +506,66 @@ export const creditsSummary = parseFixture(
     ],
   },
   'creditsSummary',
+);
+
+/** R$ 205,33 of closed-day compensation (REC-96, REC-114). */
+export const creditsSummary205 = parseFixture(
+  creditsSummarySchema,
+  {
+    availableCents: 20533,
+    lots: [
+      {
+        id: RID.creditLot,
+        source: 'closed_day_compensation',
+        label: 'Compensação de dia fechado',
+        amountCents: 20533,
+        remainingCents: 20533,
+        expiresAt: '2027-04-20T12:00:00.000Z',
+      },
+    ],
+    ledger: [
+      {
+        at: '2026-10-20T12:00:00.000Z',
+        entryType: 'grant',
+        label: 'Compensação de dia fechado',
+        amountCents: 20533,
+      },
+    ],
+  },
+  'creditsSummary205',
+);
+
+/** A Pix renewal and a partially refunded card booking (REC-145). */
+export const purchaseHistoryMixed = parseFixture(
+  purchaseHistoryPageSchema,
+  {
+    items: [
+      {
+        chargeId: RID.charge,
+        at: '2026-12-02T09:00:00.000Z',
+        description: 'Pacote 20h mensal · Renovação',
+        purpose: 'subscription_renewal',
+        method: 'pix',
+        amountCents: 160000,
+        refundedCents: 0,
+        status: 'approved',
+        statusLabel: 'Aprovado',
+      },
+      {
+        chargeId: RID.chargeExtra,
+        at: '2026-11-04T22:00:00.000Z',
+        description: 'Reserva BRV-7K2Q9X',
+        purpose: 'booking_full',
+        method: 'card',
+        amountCents: 12000,
+        refundedCents: 4000,
+        status: 'partially_refunded',
+        statusLabel: 'Reembolsado parcialmente',
+      },
+    ],
+    nextCursor: null,
+  },
+  'purchaseHistoryMixed',
 );
 
 export const purchaseHistory = parseFixture(

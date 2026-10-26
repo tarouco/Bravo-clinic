@@ -20,6 +20,9 @@ import { AgendaPage } from './pages/app/AgendaPage';
 import { AppHomePage } from './pages/app/AppHomePage';
 import { BookingDetailPage } from './pages/app/BookingDetailPage';
 import { CardsPage } from './pages/app/CardsPage';
+import { ComprasLayout, ComprasPage } from './pages/app/compras/ComprasPage';
+import { CreditosPage, HistoricoPage } from './pages/app/compras/CreditosHistoricoPages';
+import { HorasExtrasPage } from './pages/app/compras/HorasExtrasPage';
 import { MyBookingsPage } from './pages/app/MyBookingsPage';
 import { ProfilePage } from './pages/app/ProfilePage';
 import { LoginPage } from './pages/auth/LoginPage';
@@ -36,6 +39,7 @@ import { CheckoutPage } from './pages/public/CheckoutPage';
 import { PoliciesPage } from './pages/public/PoliciesPage';
 import { PreReservationPage } from './pages/public/PreReservationPage';
 import { SandboxCheckoutPage } from './pages/public/SandboxCheckoutPage';
+import { SubscribePage } from './pages/public/SubscribePage';
 import { PricingPage } from './pages/public/PricingPage';
 import { RoomPage } from './pages/public/rooms/RoomPage';
 import { RoomsPage } from './pages/public/rooms/RoomsPage';
@@ -43,17 +47,10 @@ import { RoomsPage } from './pages/public/rooms/RoomsPage';
 type PlaceholderRoute = readonly [path: string, title: string];
 
 /** Public pages that ship with later features (docs/architecture.md section 9.1). */
-const publicPlaceholders: PlaceholderRoute[] = [
-  ['servicos-extras', 'Serviços extras'],
-  ['assinar/:categoryId', 'Assinar plano'],
-];
+const publicPlaceholders: PlaceholderRoute[] = [['servicos-extras', 'Serviços extras']];
 
 /** Tenant area pages that ship with later features. */
 const appPlaceholders: PlaceholderRoute[] = [
-  ['compras', 'Compras'],
-  ['compras/horas-extras', 'Horas extras'],
-  ['compras/creditos', 'Créditos'],
-  ['compras/historico', 'Histórico de compras'],
   ['orcamentos', 'Orçamentos'],
   ['perfil/notificacoes', 'Notificações'],
   ['perfil/privacidade', 'Privacidade'],
@@ -104,6 +101,7 @@ export const appRoutes: RouteObject[] = [
       { path: 'termos', element: <LegalPage kind="termos" /> },
       { path: 'privacidade', element: <LegalPage kind="privacidade" /> },
       { path: 'reservar', element: <BookingFlowPage /> },
+      { path: 'assinar/:categoryId', element: <SubscribePage /> },
       { path: 'pagamento/sandbox/:chargeId', element: <SandboxCheckoutPage /> },
       { path: 'pre-reserva/:token', element: <PreReservationPage /> },
       ...publicPlaceholders.map(placeholder),
@@ -137,6 +135,17 @@ export const appRoutes: RouteObject[] = [
           { path: 'agenda', element: <AgendaPage /> },
           { path: 'perfil', element: <ProfilePage /> },
           { path: 'perfil/cartoes', element: <CardsPage /> },
+          {
+            path: 'compras',
+            element: <ComprasLayout />,
+            children: [
+              { index: true, element: <ComprasPage /> },
+              { path: 'assinaturas/:id/pagar', element: <ComprasPage /> },
+              { path: 'horas-extras', element: <HorasExtrasPage /> },
+              { path: 'creditos', element: <CreditosPage /> },
+              { path: 'historico', element: <HistoricoPage /> },
+            ],
+          },
           ...appPlaceholders.map(placeholder),
           { path: '*', element: <NotFoundPage /> },
         ],

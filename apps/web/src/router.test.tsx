@@ -154,7 +154,7 @@ describe('route guards', () => {
 });
 
 describe('app and admin shells', () => {
-  it('wraps the tenant routes: the sidebar link to Compras opens its placeholder page', async () => {
+  it('wraps the tenant routes: the sidebar link to Compras opens the Compras area', async () => {
     stubApi(base);
     renderRoute('/app/orcamentos');
     const sidebar = await screen.findByRole('navigation', { name: 'Menu lateral' });

@@ -1163,10 +1163,10 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Renders headings "Pacotes de horas" and "Horário fixo" with fixture cards; skeleton while loading; empty → section hidden
-- [ ] `PricingPage` test shows the section after the avulsas section
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 4 new tests pass
+- [x] Renders headings "Pacotes de horas" and "Horário fixo" with fixture cards; skeleton while loading; empty → section hidden
+- [x] `PricingPage` test shows the section after the avulsas section
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 4 new tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1190,10 +1190,10 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Conflict fixture lists dates with labels and disables "Continuar"; clicking a room or date suggestion updates the query params and refetches
-- [ ] Conflict-free fixture shows the REC-91 line and enables "Continuar"
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 new tests pass
+- [x] Conflict fixture lists dates with labels and disables "Continuar"; clicking a room or date suggestion updates the query params and refetches
+- [x] Conflict-free fixture shows the REC-91 line and enables "Continuar"
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 new tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1217,11 +1217,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Hour package shows 3 steps, fixed shows 4; summary shows "Renova automaticamente em 02/12/2026 por R$ 1.600,00 (cobrança 2 dias antes)"
-- [ ] Pay button disabled until both checkboxes; logged-out user is sent to `/login?next=/assinar/<id>?baseOn=2026-11-02`
-- [ ] Purchase 409 `CONFLICT` shows the REC-12 message with a link to `/app/compras`; 409 `OCCURRENCE_CONFLICT` returns to the picker with dates
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 8 new tests pass
+- [x] Hour package shows 3 steps, fixed shows 4; summary shows "Renova automaticamente em 02/12/2026 por R$ 1.600,00 (cobrança 2 dias antes)"
+- [x] Pay button disabled until both checkboxes; logged-out user is sent to `/login?next=/assinar/<id>?baseOn=2026-11-02`
+- [x] Purchase 409 `CONFLICT` shows the REC-12 message with a link to `/app/compras`; 409 `OCCURRENCE_CONFLICT` returns to the picker with dates
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 8 new tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1245,11 +1245,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Active fixture shows "Trocar", "Cancelar", "Extrato"; suspended shows "Regularizar"; awaiting shows "Pagar"; ended shows none
-- [ ] Next charge reads "30/11/2026 · R$ 1.600,00 · cartão final 4242"; empty state links `/precos`
-- [ ] Horas extras tab hidden for a non-eligible fixture; `/app/compras/assinaturas/<id>/pagar` opens `PayDialog`
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 8 new tests pass
+- [x] Active fixture shows "Trocar", "Cancelar", "Extrato"; suspended shows "Regularizar"; awaiting shows "Pagar"; ended shows none
+- [x] Next charge reads "30/11/2026 · R$ 1.600,00 · cartão final 4242"; empty state links `/precos`
+- [x] Horas extras tab hidden for a non-eligible fixture; `/app/compras/assinaturas/<id>/pagar` opens `PayDialog`
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 8 new tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1273,10 +1273,10 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Switch fixture shows "Seu saldo de 6h vira 6h 24min no novo pacote" and "Total no novo período: 36h 24min"
-- [ ] Cancel fixture shows "Você perde 6h de saldo deste período, sem reembolso" and "Suas horas extras continuam válidas até 08/02/2027"; confirm sends `{ confirm: true }`
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 new tests pass
+- [x] Switch fixture shows "Seu saldo de 6h vira 6h 24min no novo pacote" and "Total no novo período: 36h 24min"
+- [x] Cancel fixture shows "Você perde 6h de saldo deste período, sem reembolso" and "Suas horas extras continuam válidas até 08/02/2027"; confirm sends `{ confirm: true }`
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 new tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1300,10 +1300,10 @@ T48 → T50
 
 **Done when**:
 
-- [ ] 5 h shows "5 × R$ 80,00 = R$ 400,00"; stepper cannot go below 1 or above 20
-- [ ] Lots render "300 min · vence em 08/02/2027"; ineligible fixture navigates to `/app/compras`
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 5 new tests pass
+- [x] 5 h shows "5 × R$ 80,00 = R$ 400,00"; stepper cannot go below 1 or above 20
+- [x] Lots render "300 min · vence em 08/02/2027"; ineligible fixture navigates to `/app/compras`
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 5 new tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1327,10 +1327,10 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Créditos fixture shows "R$ 205,33 disponíveis", "Compensação de dia fechado", expiry date
-- [ ] Histórico fixture shows "Pacote 20h mensal · Renovação", "Pix", "R$ 1.600,00", "Aprovado" and a partially refunded row
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 5 new tests pass
+- [x] Créditos fixture shows "R$ 205,33 disponíveis", "Compensação de dia fechado", expiry date
+- [x] Histórico fixture shows "Pacote 20h mensal · Renovação", "Pix", "R$ 1.600,00", "Aprovado" and a partially refunded row
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 5 new tests pass
 
 **Tests**: unit
 **Gate**: quick

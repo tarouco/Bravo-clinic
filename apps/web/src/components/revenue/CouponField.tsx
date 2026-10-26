@@ -5,34 +5,46 @@ import { Button } from '../ui/Button';
 import { Alert } from '../ui/Feedback';
 import { Input } from '../ui/form';
 
-/** Slot `checkout.summary.discount`: coupon input, applied discount, rejection and the note (REC-117, REC-121). */
-export function CouponField({ quote, options, onOptionsChange }: CheckoutSlotProps) {
-  const parsed = revenueQuoteSchema.safeParse(quote.extensions);
-  const [draft, setDraft] = useState(options.couponCode ?? '');
-  if (!parsed.success) return null;
+export interface CouponFieldViewProps {
+  /** Code currently applied (already upper-case), if any. */
+  appliedCode: string | undefined;
+  /** Discount the applied coupon gives, in cents. */
+  discountCents: number;
+  /** Why the typed coupon was refused (REC-117). */
+  rejectionMessage?: string | undefined;
+  /** Why the discount shown is the biggest one (REC-121). */
+  note?: string | undefined;
+  onApply: (code: string) => void;
+  onRemove: () => void;
+}
 
-  const { discount } = parsed.data;
-  const applied = options.couponCode;
-  const rejection = discount.couponRejection;
+/** Coupon input, applied discount and rejection message; shared by the checkout slot and the subscription page. */
+export function CouponFieldView({
+  appliedCode,
+  discountCents,
+  rejectionMessage,
+  note,
+  onApply,
+  onRemove,
+}: CouponFieldViewProps) {
+  const [draft, setDraft] = useState(appliedCode ?? '');
 
   const apply = () => {
     const code = draft.trim().toUpperCase();
-    if (code !== '') onOptionsChange({ couponCode: code });
+    if (code !== '') onApply(code);
   };
   const remove = () => {
     setDraft('');
-    onOptionsChange({ couponCode: undefined });
+    onRemove();
   };
 
   return (
     <section aria-label="Cupom" className="space-y-space-sm">
-      {applied && !rejection ? (
+      {appliedCode && !rejectionMessage ? (
         <div className="flex flex-wrap items-center justify-between gap-space-sm">
           <p className="font-small text-small text-ink">
-            {`Cupom ${applied} aplicado`}
-            {discount.couponDiscountCents > 0
-              ? `: − ${formatBRL(discount.couponDiscountCents)}`
-              : ''}
+            {`Cupom ${appliedCode} aplicado`}
+            {discountCents > 0 ? `: − ${formatBRL(discountCents)}` : ''}
           </p>
           <Button variant="ghost" size="sm" onClick={remove}>
             Remover
@@ -43,7 +55,7 @@ export function CouponField({ quote, options, onOptionsChange }: CheckoutSlotPro
           <Input
             label="Cupom de desconto"
             value={draft}
-            error={rejection?.message}
+            error={rejectionMessage}
             autoComplete="off"
             className="uppercase"
             onChange={(event) => {
@@ -59,14 +71,36 @@ export function CouponField({ quote, options, onOptionsChange }: CheckoutSlotPro
           <Button variant="secondary" disabled={draft.trim() === ''} onClick={apply}>
             Aplicar
           </Button>
-          {applied ? (
+          {appliedCode ? (
             <Button variant="ghost" onClick={remove}>
               Remover
             </Button>
           ) : null}
         </div>
       )}
-      {discount.note ? <Alert>{discount.note}</Alert> : null}
+      {note ? <Alert>{note}</Alert> : null}
     </section>
+  );
+}
+
+/** Slot `checkout.summary.discount`: reads the coupon state from `Quote.extensions` (REC-117, REC-121). */
+export function CouponField({ quote, options, onOptionsChange }: CheckoutSlotProps) {
+  const parsed = revenueQuoteSchema.safeParse(quote.extensions);
+  if (!parsed.success) return null;
+
+  const { discount } = parsed.data;
+  return (
+    <CouponFieldView
+      appliedCode={options.couponCode}
+      discountCents={discount.couponDiscountCents}
+      rejectionMessage={discount.couponRejection?.message}
+      note={discount.note}
+      onApply={(code) => {
+        onOptionsChange({ couponCode: code });
+      }}
+      onRemove={() => {
+        onOptionsChange({ couponCode: undefined });
+      }}
+    />
   );
 }
