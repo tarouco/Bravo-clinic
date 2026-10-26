@@ -300,6 +300,7 @@ async function relocateBooking(
   money: Money,
   eventData: Record<string, unknown>,
   fx: AfterCommit,
+  options: { reactivate?: boolean } = {},
 ): Promise<BookingRow> {
   const now = deps.now();
   const until = new Date(to.endsAt.getTime() + booking.cleanupMinutes * 60_000);
@@ -310,13 +311,15 @@ async function relocateBooking(
         .set({
           roomId: to.roomId,
           period: `[${to.startsAt.toISOString()},${until.toISOString()})`,
+          active: true,
           updatedAt: sql`now()`,
         })
         .where(
           and(
             eq(roomOccupancy.kind, 'booking'),
             eq(roomOccupancy.refId, booking.id),
-            eq(roomOccupancy.active, true),
+            // A request that held the booking's own slot parked its occupancy (`holdsOwnSlot`).
+            options.reactivate === true ? undefined : eq(roomOccupancy.active, true),
           ),
         )
         .returning({ id: roomOccupancy.id });
@@ -438,6 +441,42 @@ async function releaseHoldBlock(tx: Tx, blockId: string | null): Promise<void> {
 }
 
 /**
+ * Parks or restores the booking's own occupancy around a request whose target overlaps it in the
+ * same room. While the difference is pending, the hold block covers the union of the current and
+ * the target slot (one contiguous range, cleanup included), and the booking's own row is inactive
+ * so the exclusion constraint does not see the slot twice. Restoring puts the row back on the
+ * booking's current `[start, end + cleanup)`, and only for a booking that still occupies a slot.
+ */
+async function parkOwnOccupancy(tx: Tx, bookingId: string): Promise<void> {
+  await tx
+    .update(roomOccupancy)
+    .set({ active: false, updatedAt: sql`now()` })
+    .where(
+      and(
+        eq(roomOccupancy.kind, 'booking'),
+        eq(roomOccupancy.refId, bookingId),
+        eq(roomOccupancy.active, true),
+      ),
+    );
+}
+
+async function restoreOwnOccupancy(tx: Tx, bookingId: string): Promise<void> {
+  await tx.execute(sql`
+    update room_occupancy o
+       set active = true,
+           room_id = b.room_id,
+           period = tstzrange(b.starts_at, b.ends_at + b.cleanup_minutes * interval '1 minute', '[)'),
+           updated_at = now()
+      from bookings b
+     where b.id = ${bookingId}::uuid
+       and o.kind = 'booking' and o.ref_id = b.id and not o.active
+       and b.status in ('confirmed', 'paid')`);
+}
+
+const holdsOwnSlot = (request: RescheduleRequestRow) =>
+  (request.quote as Partial<StoredQuote> | null)?.holdsOwnSlot === true;
+
+/**
  * Ends a pending request without moving the booking (NUC-147): the hold block is released and,
  * unless the caller says the charge is already settled, the pending charge is cancelled (the
  * provider is told after commit).
@@ -462,6 +501,7 @@ export async function closeRescheduleRequest(
     .returning({ id: bookingRescheduleRequests.id });
   if (closed === undefined) return false;
   await releaseHoldBlock(tx, request.holdBlockId);
+  if (holdsOwnSlot(request)) await restoreOwnOccupancy(tx, request.bookingId);
   if (request.chargeId !== null && options.cancelCharge !== false) {
     const cancelled = await cancelCharge(tx, ctx, request.chargeId);
     if (cancelled !== null) fx.cancelCharges.push(cancelled);
@@ -479,6 +519,8 @@ interface StoredQuote {
   discountSource: string;
   netCents: number;
   segments: QuoteSegment[];
+  /** The hold block also covers the booking's own (parked) slot: the target overlaps it. */
+  holdsOwnSlot?: boolean;
 }
 
 /**
@@ -542,10 +584,14 @@ export async function applyRescheduleRequest(
           differenceCents: charge.amountCents,
         },
         fx,
+        { reactivate: stored.holdsOwnSlot === true },
       );
     } catch (error) {
       if (!(error instanceof AppError) || error.code !== 'SLOT_TAKEN') throw error;
     }
+  }
+  if (moved === null && stored.holdsOwnSlot === true) {
+    await restoreOwnOccupancy(tx, booking.id);
   }
 
   if (moved !== null) {
@@ -680,10 +726,23 @@ export async function rescheduleBooking(
       }
       if (input.method !== 'saved_card') await resolveGatewayForCharge({ ...deps, db: tx });
       const expiresAt = new Date(now.getTime() + quote.holdMinutes * 60_000);
+      const cleanupMs = locked.cleanupMinutes * 60_000;
+      const ownUntil = new Date(locked.endsAt.getTime() + cleanupMs);
+      const targetUntil = new Date(evaluation.endsAt.getTime() + cleanupMs);
+      // A target overlapping the booking's own slot (same room) is held together with it.
+      const overlapsOwn =
+        quote.roomId === locked.roomId &&
+        evaluation.startsAt < ownUntil &&
+        locked.startsAt < targetUntil;
+      if (overlapsOwn) await parkOwnOccupancy(tx, locked.id);
       const block = await createHoldBlock(tx, {
         roomId: quote.roomId,
-        startsAt: evaluation.startsAt,
-        endsAt: new Date(evaluation.endsAt.getTime() + locked.cleanupMinutes * 60_000),
+        startsAt: overlapsOwn
+          ? new Date(Math.min(locked.startsAt.getTime(), evaluation.startsAt.getTime()))
+          : evaluation.startsAt,
+        endsAt: overlapsOwn
+          ? new Date(Math.max(ownUntil.getTime(), targetUntil.getTime()))
+          : targetUntil,
         tag: HOLD_TAG,
         createdBy: ctx.actorUserId,
       });
@@ -706,6 +765,7 @@ export async function rescheduleBooking(
         discountSource: quote.discount.source,
         netCents: quote.netCents,
         segments: quote.segments,
+        ...(overlapsOwn && { holdsOwnSlot: true }),
       };
       const [request] = await tx
         .insert(bookingRescheduleRequests)

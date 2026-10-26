@@ -444,6 +444,7 @@ type AffectedBooking = { id: string; code: string; customerName: string; roomNam
 ### Integration refinements (Phase 13)
 
 - **Clinic cancels a pending booking**: `awaiting_payment → cancelled_by_clinic` is allowed (PRD §5.5 "Cancelamento pela clínica", §7.5), next to the existing `pre_reserved`/`held_for_renewal → cancelled_by_clinic`. `POST /admin/bookings/:id/cancel` on an `awaiting_payment` booking frees the occupancy, cancels the pending charges (provider told after commit) and refunds nothing.
+- **Dearer reschedule overlapping the booking's own slot** (e.g. 10:00–11:00 → 10:30–11:30, same room): the hold block "Reagendamento em pagamento" covers the union of the current and the target occupancy (`[min start, max end + cleanup)`, contiguous because they overlap), and the booking's own occupancy row is parked (`active = false`) while the request is pending, so the exclusion constraint never sees the slot twice and availability shows the whole range taken. The request's frozen `quote` carries `holdsOwnSlot: true`. Approval reactivates the row on the new `[start, end + cleanup)`; rejection, expiry, replacement or cancellation release the block and restore the row on the booking's current slot. Same-price and cheaper moves already update the own row in place. No spec AC changes (NUC-146 still holds the new slot with the system block; NUC-147 leaves the booking unchanged).
 
 ---
 
