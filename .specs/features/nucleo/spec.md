@@ -852,10 +852,10 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-133 | P1: Balance charge, reminders and deadline | Tasks | T27 | In Tasks |
 | NUC-134 | P1: Balance charge, reminders and deadline | Tasks | T17 | In Tasks |
 | NUC-135 | P1: Balance charge, reminders and deadline | Tasks | T17 | In Tasks |
-| NUC-136 | P1: Confirmation e-mails with .ics | Tasks | T14, T18 | In Tasks |
-| NUC-137 | P1: Confirmation e-mails with .ics | Tasks | T14, T22, T23 | In Tasks |
+| NUC-136 | P1: Confirmation e-mails with .ics | Tasks | T14, T18 | Implementing |
+| NUC-137 | P1: Confirmation e-mails with .ics | Tasks | T14, T22, T23 | Implementing |
 | NUC-138 | P1: Confirmation e-mails with .ics | Tasks | T27 | In Tasks |
-| NUC-139 | P1: Confirmation e-mails with .ics | Tasks | T14 | In Tasks |
+| NUC-139 | P1: Confirmation e-mails with .ics | Tasks | T14 | Implementing |
 | NUC-140 | P1: Confirmation e-mails with .ics | Tasks | T21 | In Tasks |
 | NUC-141 | P1: Reschedule and cancel | Tasks | T21 | In Tasks |
 | NUC-142 | P1: Reschedule and cancel | Tasks | T22 | In Tasks |

@@ -761,10 +761,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Unit tests: ICS has CRLF only, folds a 100-char SUMMARY at 75 octets, escapes `,;\`, `METHOD:REQUEST` and `METHOD:CANCEL`, UTC `DTSTART`/`DTEND` equal to booking times (cleanup excluded), `SEQUENCE` value
-- [ ] Unit tests: subject "Reserva confirmada — BRV-ABC123" and each template's subject; html contains code, room, local date/time, amounts
-- [ ] Gate check passes: `npm test -w apps/api`
-- [ ] Test count: ≥ 10 tests pass
+- [x] Unit tests: ICS has CRLF only, folds a 100-char SUMMARY at 75 octets, escapes `,;\`, `METHOD:REQUEST` and `METHOD:CANCEL`, UTC `DTSTART`/`DTEND` equal to booking times (cleanup excluded), `SEQUENCE` value
+- [x] Unit tests: subject "Reserva confirmada — BRV-ABC123" and each template's subject; html contains code, room, local date/time, amounts
+- [x] Gate check passes: `npm test -w apps/api`
+- [x] Test count: ≥ 10 tests pass
 
 **Tests**: unit
 **Gate**: quick

@@ -8,6 +8,13 @@ const RESEND_URL = 'https://api.resend.com/emails';
 const SEND_TIMEOUT_MS = 10_000;
 const MAX_ERROR_LENGTH = 500;
 
+/** A file sent with the message, e.g. the booking `.ics` (docs/architecture.md section 5.2). */
+export interface EmailAttachment {
+  filename: string;
+  contentType: string;
+  contentBase64: string;
+}
+
 export interface QueuedEmail {
   to: string;
   template: string;
@@ -15,6 +22,7 @@ export interface QueuedEmail {
   html: string;
   text: string;
   dedupeKey?: string;
+  attachments?: EmailAttachment[];
 }
 
 /** Records the message as `pending` in the caller's transaction and returns the outbox id. */
@@ -26,6 +34,7 @@ export async function queueEmail(tx: Tx, msg: QueuedEmail): Promise<string> {
     html: msg.html,
     textBody: msg.text,
     dedupeKey: msg.dedupeKey ?? null,
+    attachments: msg.attachments ?? [],
   };
   const [inserted] = await tx
     .insert(emailOutbox)
@@ -48,6 +57,7 @@ async function send(
   row: Row,
   deps: { env: Env; fetch: typeof fetch; apiKey: string },
 ): Promise<string | null> {
+  const attachments = row.attachments as EmailAttachment[];
   const response = await deps.fetch(RESEND_URL, {
     method: 'POST',
     headers: {
@@ -60,6 +70,13 @@ async function send(
       subject: row.subject,
       html: row.html,
       text: row.textBody,
+      ...(attachments.length > 0 && {
+        attachments: attachments.map((a) => ({
+          filename: a.filename,
+          content: a.contentBase64,
+          content_type: a.contentType,
+        })),
+      }),
     }),
     signal: AbortSignal.timeout(SEND_TIMEOUT_MS),
   });
