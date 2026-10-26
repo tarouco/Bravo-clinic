@@ -907,10 +907,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: approve on dev → booking confirmed through a `webhook_events` row of provider `sandbox`; approve twice → 409; with `NEON_BRANCH=production` anonymous/tenant → 403, MFA staff → 200
-- [ ] Tests: payment-config returns `sandbox` and `publicKey: null`; save card without consent → 422; with consent → row with last4/brand, consent `recurring_charge`; delete → `deleted_at`; another user's card → 404; a body with a 16-digit `cardNumber` field → 422
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api` (phase end: Build gate)
-- [ ] Test count: ≥ 10 tests pass
+- [x] Tests: approve on dev → booking confirmed through a `webhook_events` row of provider `sandbox`; approve twice → 409; with `NEON_BRANCH=production` anonymous/tenant → 403, MFA staff → 200
+- [x] Tests: payment-config returns `sandbox` and `publicKey: null`; save card without consent → 422; with consent → row with last4/brand, consent `recurring_charge`; delete → `deleted_at`; another user's card → 404; a body with a 16-digit `cardNumber` field → 422
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api` (phase end: Build gate)
+- [x] Test count: ≥ 10 tests pass
 
 **Tests**: integration
 **Gate**: build

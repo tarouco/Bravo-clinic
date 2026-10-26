@@ -836,16 +836,16 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-117 | P1: Gateway-independent payments | Tasks | T18 | Implementing |
 | NUC-118 | P1: Gateway-independent payments | Tasks | T18, T39 | Implementing |
 | NUC-119 | P1: Gateway-independent payments | Tasks | T18, T28 | Implementing |
-| NUC-120 | P1: Gateway-independent payments | Tasks | T19, T39 | In Tasks |
-| NUC-121 | P1: Gateway-independent payments | Tasks | T19 | In Tasks |
+| NUC-120 | P1: Gateway-independent payments | Tasks | T19, T39 | Implementing |
+| NUC-121 | P1: Gateway-independent payments | Tasks | T19 | Implementing |
 | NUC-122 | P1: Gateway-independent payments | Tasks | T16 | Implementing |
 | NUC-123 | P1: Gateway-independent payments | Tasks | T16 | Implementing |
 | NUC-124 | P1: Gateway-independent payments | Tasks | T16 | Implementing |
 | NUC-125 | P1: Gateway-independent payments | Tasks | T15 | Implementing |
-| NUC-126 | P1: Gateway-independent payments | Tasks | T19 | In Tasks |
-| NUC-127 | P1: Gateway-independent payments | Tasks | T19 | In Tasks |
+| NUC-126 | P1: Gateway-independent payments | Tasks | T19 | Implementing |
+| NUC-127 | P1: Gateway-independent payments | Tasks | T19 | Implementing |
 | NUC-128 | P1: Gateway-independent payments | Tasks | T15, T19 | Implementing |
-| NUC-129 | P1: Gateway-independent payments | Tasks | T19 | In Tasks |
+| NUC-129 | P1: Gateway-independent payments | Tasks | T19 | Implementing |
 | NUC-130 | P1: Balance charge, reminders and deadline | Tasks | T27 | In Tasks |
 | NUC-131 | P1: Balance charge, reminders and deadline | Tasks | T27 | In Tasks |
 | NUC-132 | P1: Balance charge, reminders and deadline | Tasks | T27 | In Tasks |
