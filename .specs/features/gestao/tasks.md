@@ -1228,10 +1228,10 @@ T49 → T50
 - Skill: NONE
 
 **Done when**:
-- [ ] Tests assert own row has role/status actions disabled; `LAST_ADMIN` error shows its pt-BR message
-- [ ] Tests assert audit filters write URL params and the drawer shows origin label "MCP" and justification
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests assert own row has role/status actions disabled; `LAST_ADMIN` error shows its pt-BR message
+- [x] Tests assert audit filters write URL params and the drawer shows origin label "MCP" and justification
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick

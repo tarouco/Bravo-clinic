@@ -137,6 +137,37 @@ describe('route guards', () => {
     expect(await screen.findByRole('heading', { name: 'Gestão de Reservas' })).toBeInTheDocument();
   });
 
+  it.each([
+    '/admin/integracoes',
+    '/admin/servicos-extras',
+    '/admin/salas',
+    '/admin/salas/nova',
+    '/admin/usuarios',
+    '/admin/auditoria',
+  ])('shows "Acesso restrito" when reception opens %s (GES-119)', async (path) => {
+    stubApi(reception({ enrolled: true, verified: true }));
+    renderRoute(path);
+
+    expect(await screen.findByRole('heading', { name: 'Acesso restrito' })).toBeInTheDocument();
+    expect(locationOf()).toBe(path);
+  });
+
+  it('lets reception open the customer list and a customer profile (GES-119)', async () => {
+    stubApi(reception({ enrolled: true, verified: true }));
+    renderRoute('/admin/clientes');
+
+    expect(await screen.findByRole('heading', { name: 'Clientes' })).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Acesso restrito' })).not.toBeInTheDocument();
+  });
+
+  it('lets reception reach the customer profile route (GES-119)', async () => {
+    stubApi(reception({ enrolled: true, verified: true }));
+    renderRoute('/admin/clientes/c1000000-0000-4000-8000-000000000001');
+
+    expect(await screen.findByRole('link', { name: 'Voltar para clientes' })).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Acesso restrito' })).not.toBeInTheDocument();
+  });
+
   it('redirects /admin to the first section for a verified admin', async () => {
     stubApi(admin({ enrolled: true, verified: true }));
     renderRoute('/admin');
@@ -166,7 +197,7 @@ describe('app and admin shells', () => {
     expect(screen.getByRole('button', { name: 'Sair' })).toBeInTheDocument();
   });
 
-  it('wraps the admin routes: the Usuários link opens its placeholder page for a verified admin', async () => {
+  it('wraps the admin routes: the Usuários link opens its page for a verified admin', async () => {
     stubApi(admin({ enrolled: true, verified: true }));
     renderRoute('/admin/calendario');
     const menu = await screen.findByRole('navigation', { name: 'Seções do painel' });
@@ -176,6 +207,5 @@ describe('app and admin shells', () => {
 
     expect(await screen.findByRole('heading', { name: 'Usuários' })).toBeInTheDocument();
     expect(locationOf()).toBe('/admin/usuarios');
-    expect(screen.getByText('Em construção')).toBeInTheDocument();
   });
 });
