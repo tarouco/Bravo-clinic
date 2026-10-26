@@ -1770,10 +1770,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] The three specs pass headless in Chromium and at 375 px width (mobile project)
-- [ ] Logged availability p95 ≤ 300 ms with the warm local/dev database
-- [ ] Gate check passes: `npm run e2e -w apps/web` and the Build gate
-- [ ] Test count: ≥ 3 e2e specs pass; total workspace test count not lower than before the merge
+- [x] The three specs pass headless in Chromium and at 375 px width (mobile project)
+- [x] Logged availability p95 ≤ 300 ms with the warm local/dev database
+- [x] Gate check passes: `npm run e2e -w apps/web` and the Build gate
+- [x] Test count: ≥ 3 e2e specs pass; total workspace test count not lower than before the merge
 
 **Tests**: e2e
 **Gate**: build
