@@ -175,12 +175,24 @@ describe('route guards', () => {
     await waitFor(() => expect(locationOf()).toBe('/admin/calendario'));
   });
 
-  it('renders the placeholder page for a signed-in tenant on /app/orcamentos', async () => {
+  it('renders the quote requests page for a signed-in tenant on /app/orcamentos (GES-97)', async () => {
     stubApi(base);
     renderRoute('/app/orcamentos');
 
     expect(await screen.findByRole('heading', { name: 'Orçamentos' })).toBeInTheDocument();
-    expect(screen.getByText('Em construção')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Novo pedido' })).toHaveAttribute(
+      'href',
+      '/servicos-extras',
+    );
+    expect(screen.queryByText('Em construção')).not.toBeInTheDocument();
+  });
+
+  it('renders the extra services page for a visitor on /servicos-extras (GES-87)', async () => {
+    stubApi(null);
+    renderRoute('/servicos-extras');
+
+    expect(await screen.findByRole('heading', { name: 'Serviços extras' })).toBeInTheDocument();
+    expect(screen.queryByText('Em construção')).not.toBeInTheDocument();
   });
 });
 

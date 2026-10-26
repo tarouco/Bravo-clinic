@@ -1256,11 +1256,11 @@ T49 → T50
 - Skill: NONE
 
 **Done when**:
-- [ ] Tests assert prices "R$ 80,00/h", "Sob consulta"; form validation; success message "Pedido enviado. Retornaremos em breve."; 429 message
-- [ ] Test asserts logged-in tenant sees an optional "Reserva vinculada" select with their upcoming bookings
-- [ ] Test asserts Home modal no longer opens WhatsApp on submit and still shows the WhatsApp link
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 7 tests pass
+- [x] Tests assert prices "R$ 80,00/h", "Sob consulta"; form validation; success message "Pedido enviado. Retornaremos em breve."; 429 message
+- [x] Test asserts logged-in tenant sees an optional "Reserva vinculada" select with their upcoming bookings
+- [x] Test asserts Home modal no longer opens WhatsApp on submit and still shows the WhatsApp link
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: unit
 **Gate**: quick
