@@ -13,7 +13,15 @@ import {
 import { BookingFlowPage } from './features/booking/BookingFlowPage';
 import { CalendarConfigPage } from './pages/admin/calendar/CalendarConfigPage';
 import { CuponsPage } from './pages/admin/cupons/CuponsPage';
+import { CustomerDetailPage } from './pages/admin/customers/CustomerDetailPage';
+import { CustomersPage } from './pages/admin/customers/CustomersPage';
+import { ExtrasAdminPage } from './pages/admin/extras/ExtrasAdminPage';
 import { FinancePage } from './pages/admin/finance/FinancePage';
+import { IntegrationsPage } from './pages/admin/integrations/IntegrationsPage';
+import { AuditPage } from './pages/admin/audit/AuditPage';
+import { RoomEditPage } from './pages/admin/rooms/RoomEditPage';
+import { RoomsPage as RoomsAdminPage } from './pages/admin/rooms/RoomsPage';
+import { UsersPage } from './pages/admin/users/UsersPage';
 import { BookingsListPage } from './pages/admin/reservations/BookingsListPage';
 import { PoliciesRoute } from './pages/admin/reservations/PoliciesPanel';
 import { ReservationsCalendar } from './pages/admin/reservations/ReservationsCalendar';
@@ -71,6 +79,8 @@ const adminSectionRoute = (section: AdminSection): RouteObject => {
   if (section === 'calendario') children[0] = { index: true, element: <CalendarConfigPage /> };
   if (section === 'cupons') children[0] = { index: true, element: <CuponsPage /> };
   if (section === 'financeiro') children[0] = { index: true, element: <FinancePage /> };
+  if (section === 'integracoes') children[0] = { index: true, element: <IntegrationsPage /> };
+  if (section === 'servicos-extras') children[0] = { index: true, element: <ExtrasAdminPage /> };
   if (section === 'reservas') {
     children.splice(0, children.length, {
       element: <ReservationsPage />,
@@ -82,7 +92,16 @@ const adminSectionRoute = (section: AdminSection): RouteObject => {
       ],
     });
   }
-  if (section === 'clientes') children.push(placeholder([':id', 'Cliente']));
+  if (section === 'usuarios') children[0] = { index: true, element: <UsersPage /> };
+  if (section === 'auditoria') children[0] = { index: true, element: <AuditPage /> };
+  if (section === 'salas') {
+    children[0] = { index: true, element: <RoomsAdminPage /> };
+    children.push({ path: ':id', element: <RoomEditPage /> });
+  }
+  if (section === 'clientes') {
+    children[0] = { index: true, element: <CustomersPage /> };
+    children.push({ path: ':id', element: <CustomerDetailPage /> });
+  }
   return {
     path: path.replace('/admin/', ''),
     element: <RequireSection section={section} />,

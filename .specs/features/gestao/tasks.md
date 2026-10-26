@@ -1064,11 +1064,11 @@ T49 → T50
 - Skill: NONE
 
 **Done when**:
-- [ ] Tests assert secret inputs are empty with placeholder hint `••••a1b2` and an empty submit sends empty secret strings
-- [ ] Tests assert test result `ok: false` shows the message in an error alert; activate disabled for unconfigured provider
-- [ ] Test asserts the banner "Pagamentos em modo de teste" when `productionWarning` is true
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests assert secret inputs are empty with placeholder hint `••••a1b2` and an empty submit sends empty secret strings
+- [x] Tests assert test result `ok: false` shows the message in an error alert; activate disabled for unconfigured provider
+- [x] Test asserts the banner "Pagamentos em modo de teste" when `productionWarning` is true
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1091,11 +1091,11 @@ T49 → T50
 - Skill: NONE
 
 **Done when**:
-- [ ] Tests assert the URL is shown only right after generation with "Copie agora: o link não será exibido de novo"
-- [ ] Tests assert regenerate asks for confirmation; revoke updates the list
-- [ ] Tests assert toggles list the 7 events in pt-BR, test e-mail renders per-recipient status, missing provider message renders
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 7 tests pass
+- [x] Tests assert the URL is shown only right after generation with "Copie agora: o link não será exibido de novo"
+- [x] Tests assert regenerate asks for confirmation; revoke updates the list
+- [x] Tests assert toggles list the 7 events in pt-BR, test e-mail renders per-recipient status, missing provider message renders
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1118,11 +1118,11 @@ T49 → T50
 - Skill: NONE
 
 **Done when**:
-- [ ] Tests assert token modal validates name, shows the raw token once and clears it on close
-- [ ] Tests assert tool table renders scope "Leitura"/"Leitura e escrita" and destructive badge "Requer confirmação"
-- [ ] Tests assert usage item ≥ 80 % renders the warning style and text "Perto do limite", storage error message renders
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests assert token modal validates name, shows the raw token once and clears it on close
+- [x] Tests assert tool table renders scope "Leitura"/"Leitura e escrita" and destructive badge "Requer confirmação"
+- [x] Tests assert usage item ≥ 80 % renders the warning style and text "Perto do limite", storage error message renders
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1147,10 +1147,10 @@ T49 → T50
 - Skill: NONE
 
 **Done when**:
-- [ ] Tests assert online-without-price error message on the price field
-- [ ] Tests assert funnel renders 5 columns with counts, "Mover para" offers only valid next statuses, 409 shows "O pedido mudou de status. Atualize a página."
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests assert online-without-price error message on the price field
+- [x] Tests assert funnel renders 5 columns with counts, "Mover para" offers only valid next statuses, 409 shows "O pedido mudou de status. Atualize a página."
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1173,11 +1173,11 @@ T49 → T50
 - Skill: NONE
 
 **Done when**:
-- [ ] Tests assert debounced search request with `q`, empty state, pagination "Carregar mais"
-- [ ] Tests assert detail renders bookings, balances, credits, coupons, consents sections from a fixture
-- [ ] Tests assert reception sees notes editor but not "Editar cadastro" nor "Excluir dados (LGPD)"
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests assert debounced search request with `q`, empty state, pagination "Carregar mais"
+- [x] Tests assert detail renders bookings, balances, credits, coupons, consents sections from a fixture
+- [x] Tests assert reception sees notes editor but not "Editar cadastro" nor "Excluir dados (LGPD)"
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1200,12 +1200,12 @@ T49 → T50
 - Skill: NONE
 
 **Done when**:
-- [ ] Tests assert `prepareRoomPhoto` with a fake canvas returns two WebP blobs with longest sides 1600 and 800 for a 4000×3000 input
-- [ ] Tests assert upload calls two PUTs then POST registration, progress shown, alt text required
-- [ ] Test asserts 409 commitments modal lists booking codes
-- [ ] Tests assert `buildRedirects` emits `/media/*  https://x/room-photos/:splat  200` before the SPA fallback when set, omits it when unset, strips trailing slash, rejects `http://`
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 8 tests pass
+- [x] Tests assert `prepareRoomPhoto` with a fake canvas returns two WebP blobs with longest sides 1600 and 800 for a 4000×3000 input
+- [x] Tests assert upload calls two PUTs then POST registration, progress shown, alt text required
+- [x] Test asserts 409 commitments modal lists booking codes
+- [x] Tests assert `buildRedirects` emits `/media/*  https://x/room-photos/:splat  200` before the SPA fallback when set, omits it when unset, strips trailing slash, rejects `http://`
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 8 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1228,10 +1228,10 @@ T49 → T50
 - Skill: NONE
 
 **Done when**:
-- [ ] Tests assert own row has role/status actions disabled; `LAST_ADMIN` error shows its pt-BR message
-- [ ] Tests assert audit filters write URL params and the drawer shows origin label "MCP" and justification
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests assert own row has role/status actions disabled; `LAST_ADMIN` error shows its pt-BR message
+- [x] Tests assert audit filters write URL params and the drawer shows origin label "MCP" and justification
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick
