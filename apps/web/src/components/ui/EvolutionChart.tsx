@@ -6,7 +6,7 @@ import { cx } from './cx';
 // net revenue and expenses are bars per bucket (3 px of air between them), the result is a line
 // with a marker per bucket. The SVG is decorative; the same numbers are in a table for screen
 // readers (GES-27). Colors are the DESIGN.md tokens: bronze, champagne and ink, told apart by
-// lightness and by form (bar versus line), never by hue alone.
+// lightness, texture (expenses are hatched) and form (bar versus line), never by hue alone.
 
 export type EvolutionSeries = 'net' | 'expenses' | 'result';
 
@@ -89,7 +89,7 @@ function barPath(x: number, w: number, y0: number, y1: number): string {
   return `M${x},${y0} L${x},${inset} Q${x},${y1} ${x + r},${y1} L${x + w - r},${y1} Q${x + w},${y1} ${x + w},${inset} L${x + w},${y0} Z`;
 }
 
-function LegendKey({ series }: { series: EvolutionSeries }) {
+function LegendKey({ series, hatchId }: { series: EvolutionSeries; hatchId: string }) {
   return (
     <li className="flex items-center gap-space-xs font-small text-small text-ink">
       {series === 'result' ? (
@@ -97,11 +97,12 @@ function LegendKey({ series }: { series: EvolutionSeries }) {
           <span className="h-0.5 w-full bg-ink" />
           <span className="-ml-2.5 h-2 w-2 rounded-full bg-ink" />
         </span>
+      ) : series === 'net' ? (
+        <span aria-hidden="true" className="h-3 w-3 rounded-[2px] bg-bronze" />
       ) : (
-        <span
-          aria-hidden="true"
-          className={cx('h-3 w-3 rounded-[2px]', series === 'net' ? 'bg-bronze' : 'bg-champagne')}
-        />
+        <svg aria-hidden="true" focusable="false" width={12} height={12}>
+          <rect width={12} height={12} rx={2} fill={`url(#${hatchId})`} />
+        </svg>
       )}
       {SERIES_LABEL[series]}
     </li>
@@ -116,6 +117,7 @@ export function EvolutionChart({
   className,
 }: EvolutionChartProps) {
   const captionId = useId();
+  const hatchId = `${captionId}-hatch`;
   const [hovered, setHovered] = useState<number | null>(null);
 
   if (buckets.length === 0) {
@@ -150,7 +152,7 @@ export function EvolutionChart({
       {series.length > 1 ? (
         <ul aria-label="Legenda" className="flex flex-wrap gap-x-space-md gap-y-space-xs">
           {series.map((s) => (
-            <LegendKey key={s} series={s} />
+            <LegendKey key={s} series={s} hatchId={hatchId} />
           ))}
         </ul>
       ) : null}
@@ -164,6 +166,26 @@ export function EvolutionChart({
             setHovered(null);
           }}
         >
+          <defs>
+            {/* Expenses are hatched at 45 degrees: told apart from net revenue by texture, not by hue. */}
+            <pattern
+              id={hatchId}
+              width={6}
+              height={6}
+              patternUnits="userSpaceOnUse"
+              patternTransform="rotate(45)"
+            >
+              <rect width={6} height={6} className="fill-champagne" />
+              <line
+                x1={0}
+                y1={0}
+                x2={0}
+                y2={6}
+                strokeWidth={2.5}
+                className="stroke-surface-raised"
+              />
+            </pattern>
+          </defs>
           {ticks.map((tick) => (
             <g key={tick}>
               <line
@@ -210,7 +232,8 @@ export function EvolutionChart({
                     <path
                       key={s}
                       d={barPath(left + barIndex * (barWidth + BAR_GAP), barWidth, y0, y(cents))}
-                      className={s === 'net' ? 'fill-bronze' : 'fill-champagne'}
+                      className={s === 'net' ? 'fill-bronze' : undefined}
+                      fill={s === 'net' ? undefined : `url(#${hatchId})`}
                     />
                   );
                 })}

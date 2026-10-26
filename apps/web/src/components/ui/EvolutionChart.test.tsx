@@ -73,10 +73,20 @@ describe('EvolutionChart', () => {
     expect(within(rows[3] as HTMLElement).getByText(spaced('-R$ 300,00'))).toBeInTheDocument();
   });
 
+  it('hatches the expenses bars so they differ from net revenue by texture, not only by hue', () => {
+    const { container } = render(<EvolutionChart buckets={BUCKETS} />);
+
+    const pattern = container.querySelector('pattern');
+    expect(pattern).not.toBeNull();
+    const paths = container.querySelectorAll('[data-bucket="2026-10"] path');
+    expect(paths[0]).toHaveClass('fill-bronze');
+    expect(paths[1]?.getAttribute('fill')).toBe(`url(#${pattern?.id ?? ''})`);
+  });
+
   it('hides the decorative SVG from assistive technology', () => {
     const { container } = render(<EvolutionChart buckets={BUCKETS} />);
 
-    expect(container.querySelector('svg')).toHaveAttribute('aria-hidden', 'true');
+    expect(container.querySelector('svg[viewBox]')).toHaveAttribute('aria-hidden', 'true');
   });
 
   it('plots only the requested series and drops the legend of a single one', () => {
@@ -94,7 +104,7 @@ describe('EvolutionChart', () => {
     fireEvent.mouseEnter(container.querySelector('[data-bucket="2026-10"]') as Element);
     expect(screen.getByText(spaced('Receita líquida: R$ 1.600,00'))).toBeInTheDocument();
 
-    fireEvent.mouseLeave(container.querySelector('svg') as Element);
+    fireEvent.mouseLeave(container.querySelector('svg[viewBox]') as Element);
     expect(screen.queryByText(spaced('Receita líquida: R$ 1.600,00'))).not.toBeInTheDocument();
   });
 
