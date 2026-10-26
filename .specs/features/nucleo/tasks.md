@@ -1484,10 +1484,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests (fake timers): countdown reaches 0 → "Tempo esgotado. O horário foi liberado."; status fixture switching to `confirmed` on the 2nd poll → "Reserva confirmada" with code; rejected charge → "Pagamento recusado. Tente outro método."
-- [ ] Tests: Pix shows QR image and copy button; sandbox page approve calls the endpoint and links back to checkout; pre-reserva anonymous → login redirect, other owner → "Este link pertence a outra conta.", owner → navigates to checkout
-- [ ] Gate check passes: `npm test -w apps/web` (phase end: Build-B gate)
-- [ ] Test count: ≥ 8 tests pass
+- [x] Tests (fake timers): countdown reaches 0 → "Tempo esgotado. O horário foi liberado."; status fixture switching to `confirmed` on the 2nd poll → "Reserva confirmada" with code; rejected charge → "Pagamento recusado. Tente outro método."
+- [x] Tests: Pix shows QR image and copy button; sandbox page approve calls the endpoint and links back to checkout; pre-reserva anonymous → login redirect, other owner → "Este link pertence a outra conta.", owner → navigates to checkout
+- [x] Gate check passes: `npm test -w apps/web` (phase end: Build-B gate)
+- [x] Test count: ≥ 8 tests pass
 
 **Tests**: unit
 **Gate**: build

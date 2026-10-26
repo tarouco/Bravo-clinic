@@ -22,7 +22,10 @@ import { HomePage } from './pages/public/home/HomePage';
 import { NotFoundPage } from './pages/public/NotFoundPage';
 import { ContactPage } from './pages/public/ContactPage';
 import { LegalPage } from './pages/public/LegalPage';
+import { CheckoutPage } from './pages/public/CheckoutPage';
 import { PoliciesPage } from './pages/public/PoliciesPage';
+import { PreReservationPage } from './pages/public/PreReservationPage';
+import { SandboxCheckoutPage } from './pages/public/SandboxCheckoutPage';
 import { PricingPage } from './pages/public/PricingPage';
 import { RoomPage } from './pages/public/rooms/RoomPage';
 import { RoomsPage } from './pages/public/rooms/RoomsPage';
@@ -32,9 +35,6 @@ type PlaceholderRoute = readonly [path: string, title: string];
 /** Public pages that ship with later features (docs/architecture.md section 9.1). */
 const publicPlaceholders: PlaceholderRoute[] = [
   ['servicos-extras', 'Serviços extras'],
-  ['checkout/:bookingId', 'Pagamento'],
-  ['pagamento/sandbox/:chargeId', 'Pagamento de teste'],
-  ['pre-reserva/:token', 'Pré-reserva'],
   ['assinar/:categoryId', 'Assinar plano'],
 ];
 
@@ -87,6 +87,8 @@ export const appRoutes: RouteObject[] = [
       { path: 'termos', element: <LegalPage kind="termos" /> },
       { path: 'privacidade', element: <LegalPage kind="privacidade" /> },
       { path: 'reservar', element: <BookingFlowPage /> },
+      { path: 'pagamento/sandbox/:chargeId', element: <SandboxCheckoutPage /> },
+      { path: 'pre-reserva/:token', element: <PreReservationPage /> },
       ...publicPlaceholders.map(placeholder),
       { path: 'login', element: <LoginPage /> },
       { path: 'cadastro', element: <SignupPage /> },
@@ -96,6 +98,7 @@ export const appRoutes: RouteObject[] = [
       {
         element: <RequireAuth />,
         children: [
+          { path: 'checkout/:bookingId', element: <CheckoutPage /> },
           { path: 'login/2fa', element: <TwoFactorVerifyPage /> },
           { path: 'login/2fa/configurar', element: <TwoFactorEnrollPage /> },
         ],
