@@ -6,11 +6,17 @@ export interface ApiErrorDetail {
   message: string;
 }
 
+/**
+ * Field errors (`[{ path, message }]`, 422) or an object of machine-readable context that 409s
+ * and some 422s carry, e.g. `{ reason }`, `{ dates }`, `{ bookings }`, `{ quote }` (API `ErrorDetails`).
+ */
+export type ApiErrorDetails = ApiErrorDetail[] | Record<string, unknown>;
+
 interface ApiErrorInit {
   status: number;
   code: string;
   message: string;
-  details?: ApiErrorDetail[];
+  details?: ApiErrorDetails;
   requestId?: string;
   retryAfterSeconds?: number;
 }
@@ -18,7 +24,7 @@ interface ApiErrorInit {
 export class ApiError extends Error {
   readonly status: number;
   readonly code: string;
-  readonly details: ApiErrorDetail[];
+  readonly details: ApiErrorDetails;
   readonly requestId: string | undefined;
   /** Seconds from the `Retry-After` header of a 429 response. */
   readonly retryAfterSeconds: number | undefined;
@@ -42,7 +48,7 @@ export interface RequestOptions {
 type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
 interface Envelope {
-  error?: { code?: string; message?: string; details?: ApiErrorDetail[]; requestId?: string };
+  error?: { code?: string; message?: string; details?: ApiErrorDetails; requestId?: string };
 }
 
 async function toApiError(response: Response): Promise<ApiError> {

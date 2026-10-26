@@ -4,6 +4,7 @@ import { http, HttpResponse } from 'msw';
 import { Route, Routes } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
+  buildAvailabilityDay,
   bookingAwaitingPayment,
   bookingDetail,
   cancellationPreview,
@@ -156,6 +157,25 @@ describe('BookingDetailPage (NUC-154..156)', () => {
       endMinute: 750,
       method: 'pix',
     });
+  });
+
+  it("asks for the reschedule grid without the booking's own occupancy (NUC-142)", async () => {
+    serveBooking(bookingDetail);
+    let requested = '';
+    server.use(
+      http.get('*/api/app/bookings/:id/reschedule/availability', ({ request }) => {
+        requested = request.url;
+        return HttpResponse.json(buildAvailabilityDay('2026-10-28', 'principal'));
+      }),
+    );
+    renderDetail();
+
+    await pickNewSlot();
+
+    expect(new URL(requested).pathname).toBe(
+      `/api/app/bookings/${ID.booking}/reschedule/availability`,
+    );
+    expect(new URL(requested).searchParams.get('date')).toBe('2026-10-28');
   });
 
   it('moves the booking at once and reports the credit when there is no difference to pay', async () => {

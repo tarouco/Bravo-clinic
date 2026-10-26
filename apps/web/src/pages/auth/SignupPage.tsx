@@ -48,7 +48,11 @@ export function SignupPage() {
         setError('email', { message: EMAIL_TAKEN_MESSAGE });
       } else if (error instanceof ApiError && error.code === 'DOCUMENT_TAKEN') {
         setError('document', { message: DOCUMENT_TAKEN_MESSAGE });
-      } else if (error instanceof ApiError && error.details.length > 0) {
+      } else if (
+        error instanceof ApiError &&
+        Array.isArray(error.details) &&
+        error.details.length > 0
+      ) {
         // Server-side validation failures map back onto the fields they name.
         for (const detail of error.details) {
           setError(detail.path as Path<typeof values>, { message: detail.message });

@@ -11,6 +11,8 @@ export type AnchorAlign = 'start' | 'end';
 
 /** Room under the anchor below which the panel opens upwards instead. */
 const MIN_ROOM_BELOW_PX = 260;
+/** Gap kept between a panel and the viewport edge. */
+const VIEWPORT_MARGIN_PX = 8;
 
 /**
  * Fixed-position placement of a panel under (or over) its anchor element. `position: fixed`
@@ -30,11 +32,18 @@ export function useAnchoredPanel(open: boolean, align: AnchorAlign) {
     const update = () => {
       const rect = anchor.current?.getBoundingClientRect();
       if (!rect) return;
-      const below =
-        window.innerHeight - rect.bottom >= MIN_ROOM_BELOW_PX || rect.top < MIN_ROOM_BELOW_PX;
+      const roomBelow = window.innerHeight - rect.bottom;
+      const below = roomBelow >= MIN_ROOM_BELOW_PX || rect.top < MIN_ROOM_BELOW_PX;
       setStyle({
         position: 'fixed',
         zIndex: 50,
+        // A panel taller than the room left (a phone, an anchor low on the screen) scrolls inside
+        // itself instead of putting its actions outside the viewport.
+        maxHeight: Math.max(
+          MIN_ROOM_BELOW_PX / 2,
+          (below ? roomBelow : rect.top) - VIEWPORT_MARGIN_PX,
+        ),
+        overflowY: 'auto',
         ...(below ? { top: rect.bottom } : { bottom: window.innerHeight - rect.top }),
         ...(align === 'end' ? { right: window.innerWidth - rect.right } : { left: rect.left }),
       });

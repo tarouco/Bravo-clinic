@@ -50,6 +50,21 @@ describe('api client', () => {
     expect(apiError.requestId).toBe('01JREQ');
   });
 
+  it('keeps the object details of a 409 envelope (SLOT_TAKEN, AFFECTED_BOOKINGS, ...)', async () => {
+    const envelope = {
+      error: {
+        code: 'BLOCK_CONFLICT',
+        message: 'Conflito',
+        details: { dates: ['2026-10-27'], reason: 'occupied' },
+      },
+    };
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(jsonResponse(409, envelope)));
+
+    const error = await api.post('/x', {}).catch((e: unknown) => e);
+
+    expect((error as ApiError).details).toEqual({ dates: ['2026-10-27'], reason: 'occupied' });
+  });
+
   it('throws ApiError with code NETWORK when fetch rejects', async () => {
     vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new TypeError('Failed to fetch')));
 

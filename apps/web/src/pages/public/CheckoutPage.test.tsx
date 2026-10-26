@@ -141,6 +141,25 @@ describe('CheckoutPage (NUC-102, NUC-103, NUC-118)', () => {
     expect(screen.getByDisplayValue('00020126SANDBOX')).toBeInTheDocument();
   });
 
+  it('links the hosted page a Pix intent carries (sandbox "Aprovar pagamento" page)', async () => {
+    serveBooking(bookingAwaitingPayment);
+    const hosted = `http://localhost:5173/pagamento/sandbox/${chargeIntent.chargeId}`;
+    server.use(
+      http.post('*/api/app/bookings/:id/pay', () =>
+        HttpResponse.json({ ...chargeIntent, checkoutUrl: hosted }),
+      ),
+    );
+    renderCheckout();
+
+    await userEvent.click(await screen.findByRole('button', { name: /^Pagar R\$\s109,50$/ }));
+
+    expect(await screen.findByRole('link', { name: 'Abrir página de pagamento' })).toHaveAttribute(
+      'href',
+      hosted,
+    );
+    expect(screen.getByRole('img', { name: 'QR Code do Pix' })).toBeInTheDocument();
+  });
+
   it('sends the card flow to the provider page', async () => {
     serveBooking(bookingAwaitingPayment);
     server.use(

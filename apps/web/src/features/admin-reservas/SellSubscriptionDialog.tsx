@@ -36,6 +36,7 @@ interface ConflictLine {
 
 /** Dates named by a 409 `OCCURRENCE_CONFLICT` (`details[]` = `{ path: 'date', message, date }`). */
 function conflictLines(error: ApiError): ConflictLine[] {
+  if (!Array.isArray(error.details)) return [];
   return error.details.map((detail) => {
     const date = (detail as { date?: unknown }).date;
     return { date: typeof date === 'string' ? date : null, text: detail.message };
@@ -157,7 +158,10 @@ export function SellSubscriptionDialog({ open, onClose }: SellSubscriptionDialog
             error instanceof ApiError &&
             (error.code === 'COUPON_INVALID' || error.code === 'COUPON_EXHAUSTED')
           ) {
-            setCouponError(error.details[0]?.message ?? error.message);
+            setCouponError(
+              (Array.isArray(error.details) ? error.details[0]?.message : undefined) ??
+                error.message,
+            );
           } else if (Object.keys(fields).length > 0) {
             const { couponCode: coupon, ...rest } = fields;
             if (coupon) setCouponError(coupon);
