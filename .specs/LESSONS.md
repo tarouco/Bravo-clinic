@@ -56,6 +56,12 @@ Seen once or not yet corroborated. Tracked, not trusted.
 - evidence: FND-31 apps/api/src/db/migrations.int.test.ts:88 (db)
 - last seen: 2026-10-26T04:00:19Z
 
+### L-008 - In page tests that load data, wait for the loading state to clear before the first findBy query instead of relying on the default 1 s timeout
+- signal: `gate_fail` · recurrence: 1 feature(s) · scope: `web` · harmful: 0
+- features: nucleo
+- evidence: apps/web/src/pages/app/AgendaPage.test.tsx:32 (NUC-190, fundacao validation iteration 2) (web)
+- last seen: 2026-10-26T14:02:48Z
+
 ## Quarantined (failed when applied - ignore)
 
 A confirmed lesson that recurred alongside failure. Kept for the maintainer to review.
