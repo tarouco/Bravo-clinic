@@ -2173,7 +2173,7 @@ T76 → T77 → T78
 - [x] Test with `useRegisterSW` mocked (`needRefresh: true`) asserts the toast text and that "Atualizar" calls `updateServiceWorker(true)`
 - [x] `npm run build -w apps/web` (with `API_PROXY_ORIGIN` set) emits `dist/sw.js` and `dist/manifest.webmanifest`
 - [x] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 3 tests pass
+- [x] Test count: ≥ 3 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -2258,7 +2258,7 @@ T76 → T77 → T78
 
 - [x] Test (in `apps/api`, importing `../../neon.ts` with `vi.stubEnv`) asserts `functions.api.source === 'apps/api/src/index.ts'`, env has `SESSION_SECRET`, `ENCRYPTION_KEY`, `APP_BASE_URL`, `EMAIL_FROM`, and has no `RESEND_API_KEY`/`GOOGLE_CLIENT_ID` keys when those are unset, and has them when set
 - [x] `npx neonctl@latest config plan` (run by the worker, branch `dev`) shows function `api` (no apply)
-- [ ] Gate check passes: `npm test -w apps/api`
+- [x] Gate check passes: `npm test -w apps/api`
 - [x] Test count: ≥ 2 tests pass
 
 **Tests**: unit
@@ -2284,9 +2284,9 @@ T76 → T77 → T78
 **Done when**:
 
 - [x] Workflow YAML validates (`npx --yes @action-validator/cli .github/workflows/ci.yml` or equivalent) and lists the five steps in order
-- [ ] Running the same steps locally with a disposable postgres 17 (or `DATABASE_URL_TEST`) passes
-- [ ] The workflow runs green on GitHub after the user pushes (the user pushes; agents do not push)
-- [ ] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
+- [x] Running the same steps locally with a disposable postgres 17 (or `DATABASE_URL_TEST`) passes
+- [x] The workflow runs green on GitHub after the user pushes (the user pushes; agents do not push)
+- [x] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
 
 **Tests**: none
 **Gate**: build
@@ -2312,10 +2312,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] User approved this phase in chat
-- [ ] Neon `production` has the 18 base tables, `btree_gist`, 3 rooms, 28 holidays, all settings rows, and exactly one admin
-- [ ] No connection string or password appears in terminal output or files
-- [ ] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
+- [x] User approved this phase in chat
+- [x] Neon `production` has the 18 base tables, `btree_gist`, 3 rooms, 28 holidays, all settings rows, and exactly one admin
+- [x] No connection string or password appears in terminal output or files
+- [x] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
 
 **Tests**: none
 **Gate**: build
@@ -2339,10 +2339,10 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] User approved this phase in chat
-- [ ] `curl -s <invocation_url>/health` returns `{"status":"ok","db":"ok","branch":"production"}`
+- [x] User approved this phase in chat
+- [x] `curl -s <invocation_url>/health` returns `{"status":"ok","db":"ok","branch":"production"}`
 - [ ] `npx neonctl@latest logs query --branch production --source function --since 15m` shows the request log line with a requestId and no secrets
-- [ ] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
+- [x] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
 
 **Tests**: none
 **Gate**: build
@@ -2366,11 +2366,11 @@ T76 → T77 → T78
 
 **Done when**:
 
-- [ ] User approved this phase in chat
-- [ ] `node scripts/smoke.mjs https://bravo-clinic.netlify.app` exits 0 (health 200 `branch: production`, `/` 200 with the hero headline, `/api/public/config` 200)
+- [x] User approved this phase in chat
+- [x] `node scripts/smoke.mjs https://bravo-clinic.netlify.app` exits 0 (health 200 `branch: production`, `/` 200 with the hero headline, `/api/public/config` 200)
 - [ ] Admin logs in on production, enrolls TOTP, reaches `/admin` (manual check by the user)
-- [ ] `.specs/STATE.md` Handoff records site URL and function URL (no secrets)
-- [ ] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
+- [x] `.specs/STATE.md` Handoff records site URL and function URL (no secrets)
+- [x] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
 
 **Tests**: e2e
 **Gate**: build
