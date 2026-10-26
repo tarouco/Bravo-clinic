@@ -15,6 +15,20 @@
       "when": 1792928952006,
       "tag": "0001_base_constraints",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1792984994859,
+      "tag": "0002_nucleo",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1792984998117,
+      "tag": "0003_nucleo_constraints",
+      "breakpoints": true
     }
   ]
 }

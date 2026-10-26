@@ -496,11 +496,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Integration test: migrations apply on an empty DB and a second run applies nothing
-- [ ] Tests: invalid booking status rejected by CHECK; second `is_reference` row rejected; `booking_events` UPDATE/DELETE raise `append_only_table`; duplicate pending reschedule request per booking rejected; duplicate payment-link hash rejected
-- [ ] Test: seed inserts the 8 categories of design.md §Seeds (names, types, windows, rates, `is_reference` only on "1 hora"); rerun after editing a price keeps the edit
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 9 tests pass
+- [x] Integration test: migrations apply on an empty DB and a second run applies nothing
+- [x] Tests: invalid booking status rejected by CHECK; second `is_reference` row rejected; `booking_events` UPDATE/DELETE raise `append_only_table`; duplicate pending reschedule request per booking rejected; duplicate payment-link hash rejected
+- [x] Test: seed inserts the 8 categories of design.md §Seeds (names, types, windows, rates, `is_reference` only on "1 hora"); rerun after editing a price keeps the edit
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 9 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -525,10 +525,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Unit tests assert every default of NUC-201 and that `createRegistry` sorts checkout steps by `order`
-- [ ] Unit test asserts a throwing notifier is logged with requestId and never rethrown
-- [ ] Gate check passes: `npm test -w apps/api`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Unit tests assert every default of NUC-201 and that `createRegistry` sorts checkout steps by `order`
+- [x] Unit test asserts a throwing notifier is logged with requestId and never rethrown
+- [x] Gate check passes: `npm test -w apps/api`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -553,12 +553,12 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests seed bookings/blocks on 2026-10-27 and assert cells for CL-1/CL-9 shapes with no admin fields, names or tags in the JSON (parsed by `availabilityDaySchema`)
-- [ ] Tests: holiday flags on 2026-11-02; closed day returns `closed: true` and no cells; month statuses `past`, `full`, `closed`, `out_of_range`; stale hold treated as free; block option `available` false when partially occupied
-- [ ] Tests: malformed date → 422; 121st request in a minute → 429 with `Retry-After`; registered fake decorator adds `discountPercent`
-- [ ] Tests: `loadDayContexts` for two dates returns window, occupied intervals and closed flag per date; `getReferenceCategory` returns "1 hora"
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 11 tests pass
+- [x] Tests seed bookings/blocks on 2026-10-27 and assert cells for CL-1/CL-9 shapes with no admin fields, names or tags in the JSON (parsed by `availabilityDaySchema`)
+- [x] Tests: holiday flags on 2026-11-02; closed day returns `closed: true` and no cells; month statuses `past`, `full`, `closed`, `out_of_range`; stale hold treated as free; block option `available` false when partially occupied
+- [x] Tests: malformed date → 422; 121st request in a minute → 429 with `Retry-After`; registered fake decorator adds `discountPercent`
+- [x] Tests: `loadDayContexts` for two dates returns window, occupied intervals and closed flag per date; `getReferenceCategory` returns "1 hora"
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 11 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -583,10 +583,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: rooms ordered with `fromPriceCents` 8000; inactive room absent and 404 on detail; catalog excludes inactive and `admin_only`; clinic returns 8 hour rows; policies returns version 1 and the rendered sections
-- [ ] All responses parsed by their core schemas
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 7 tests pass
+- [x] Tests: rooms ordered with `fromPriceCents` 8000; inactive room absent and 404 on detail; catalog excludes inactive and `admin_only`; clinic returns 8 hour rows; policies returns version 1 and the rendered sections
+- [x] All responses parsed by their core schemas
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -611,12 +611,12 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: PR-3 interval returns two segment lines, gross 21900, deposit 10950 (SP-1 timing), no rows written
-- [ ] Tests: CL-1 interval → 422 `SLOT_UNAVAILABLE` with reason `in_cleanup` and "Sala em limpeza"; PR-8 → 422 `NO_CATEGORY`; block with wrong window → 422 path `startMinute`
-- [ ] Test registers two fake steps (orders 400 and 100) and asserts they run in order 100 → 400 before the split
-- [ ] Test: a fake `extras` step (order 300) adding 16000 raises `netCents` by 16000, the deposit is split on the new net, and its `draft.extensions.extras` appears unchanged in `Quote.extensions`; `creditAvailableCents` comes from the credit port
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api` (phase end: Build gate)
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests: PR-3 interval returns two segment lines, gross 21900, deposit 10950 (SP-1 timing), no rows written
+- [x] Tests: CL-1 interval → 422 `SLOT_UNAVAILABLE` with reason `in_cleanup` and "Sala em limpeza"; PR-8 → 422 `NO_CATEGORY`; block with wrong window → 422 path `startMinute`
+- [x] Test registers two fake steps (orders 400 and 100) and asserts they run in order 100 → 400 before the split
+- [x] Test: a fake `extras` step (order 300) adding 16000 raises `netCents` by 16000, the deposit is split on the new net, and its `draft.extensions.extras` appears unchanged in `Quote.extensions`; `creditAvailableCents` comes from the credit port
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api` (phase end: Build gate)
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: integration
 **Gate**: build
@@ -643,11 +643,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: reception → 403 on every route; hours with close ≤ open or 07:15 with slot 30 → 422 path; hours excluding a seeded 08:00 booking → 409 with that booking in `details.bookings`
-- [ ] Tests: default 45 with slot 30 → 422; cleanup 45 → warning `lostMinutesPerBooking: 15`; CC-1 data + cleanup 45 → 409 `CLEANUP_CONFLICTS`; CC-2 + 60 → future bookings get 60 and occupancy upper bound moves, a past booking and an overridden booking keep 30; audit rows exist
-- [ ] Tests: policies deadline 48 / charge 48 → 422 both paths; reminders [26, 36] → 422; a change increments `policy.version` to 2 with audit; identical PUT keeps version
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 13 tests pass
+- [x] Tests: reception → 403 on every route; hours with close ≤ open or 07:15 with slot 30 → 422 path; hours excluding a seeded 08:00 booking → 409 with that booking in `details.bookings`
+- [x] Tests: default 45 with slot 30 → 422; cleanup 45 → warning `lostMinutesPerBooking: 15`; CC-1 data + cleanup 45 → 409 `CLEANUP_CONFLICTS`; CC-2 + 60 → future bookings get 60 and occupancy upper bound moves, a past booking and an overridden booking keep 30; audit rows exist
+- [x] Tests: policies deadline 48 / charge 48 → 422 both paths; reminders [26, 36] → 422; a change increments `policy.version` to 2 with audit; identical PUT keeps version
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 13 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -672,11 +672,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: `alert` true only within 30 days (injected now); closing a holiday with a booking → 409; manual create, duplicate 409, delete manual ok, delete seed 422
-- [ ] Tests with stubbed `fetch`: import 2027 inserts missing nationals, renames an existing one keeping `isClosed`; with `{ renameExisting: false }` the existing name is kept; year 2030 → 422; timeout/500/garbage → 502 and no row changed
-- [ ] Tests: preview returns affected bookings (a seeded `fixed_occurrence` booking is excluded and left to the port) and the fake port's numbers incl. `fixedOccurrencesCancelled`; create clinic-wide and per-room rows with audit and port `apply` called; past date → 422; delete reopens and availability shows cells again
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 14 tests pass
+- [x] Tests: `alert` true only within 30 days (injected now); closing a holiday with a booking → 409; manual create, duplicate 409, delete manual ok, delete seed 422
+- [x] Tests with stubbed `fetch`: import 2027 inserts missing nationals, renames an existing one keeping `isClosed`; with `{ renameExisting: false }` the existing name is kept; year 2030 → 422; timeout/500/garbage → 502 and no row changed
+- [x] Tests: preview returns affected bookings (a seeded `fixed_occurrence` booking is excluded and left to the port) and the fake port's numbers incl. `fixedOccurrencesCancelled`; create clinic-wide and per-room rows with audit and port `apply` called; past date → 422; delete reopens and availability shows cells again
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 14 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -701,11 +701,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: two-room block creates 2 blocks + 2 occupancies `[start,end)`; overlap with a booking's cleanup in one room → 409 naming the booking code and zero blocks created
-- [ ] Tests: weekly Monday rule materializes to today+90; conflict date → 409 `details.dates`; `skipConflicts` returns `skipped`; second `materializeRecurrences` creates 0 duplicates and extends after `now` advances
-- [ ] Tests: block delete deactivates occupancy; recurrence delete cancels future blocks and keeps past ones; reception creating a recurrence → 403
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 10 tests pass
+- [x] Tests: two-room block creates 2 blocks + 2 occupancies `[start,end)`; overlap with a booking's cleanup in one room → 409 naming the booking code and zero blocks created
+- [x] Tests: weekly Monday rule materializes to today+90; conflict date → 409 `details.dates`; `skipConflicts` returns `skipped`; second `materializeRecurrences` creates 0 duplicates and extends after `now` advances
+- [x] Tests: block delete deactivates occupancy; recurrence delete cancels future blocks and keeps past ones; reception creating a recurrence → 403
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 10 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -730,11 +730,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: list returns 8 seeded categories with averages (AV-1 8000) and `editable` only on hourly/block; create hourly ok and each invalid rule → 422 path; create block ok; `hour_package` → 422 "Tipo de categoria gerenciado em Pacotes"
-- [ ] Tests: price PATCH bumps version and audit before/after while an existing booking's segment keeps 9700; set reference moves the flag atomically; non-hourly reference → 422; deactivating reference → 422 message; reorder with a missing id → 422
-- [ ] Test: prices-reviewed sets the setting and writes audit; reception → 403
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api` (phase end: Build gate)
-- [ ] Test count: ≥ 12 tests pass
+- [x] Tests: list returns 8 seeded categories with averages (AV-1 8000) and `editable` only on hourly/block; create hourly ok and each invalid rule → 422 path; create block ok; `hour_package` → 422 "Tipo de categoria gerenciado em Pacotes"
+- [x] Tests: price PATCH bumps version and audit before/after while an existing booking's segment keeps 9700; set reference moves the flag atomically; non-hourly reference → 422; deactivating reference → 422 message; reorder with a missing id → 422
+- [x] Test: prices-reviewed sets the setting and writes audit; reception → 403
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api` (phase end: Build gate)
+- [x] Test count: ≥ 12 tests pass
 
 **Tests**: integration
 **Gate**: build

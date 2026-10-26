@@ -720,7 +720,7 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-01 | P1: Booking vocabulary and contracts | Tasks | T1 | Implementing |
 | NUC-02 | P1: Booking vocabulary and contracts | Tasks | T1 | Implementing |
 | NUC-03 | P1: Booking vocabulary and contracts | Tasks | T1 | Implementing |
-| NUC-04 | P1: Booking vocabulary and contracts | Tasks | T1, T5 | In Tasks |
+| NUC-04 | P1: Booking vocabulary and contracts | Tasks | T1, T5 | Implementing |
 | NUC-05 | P1: Booking vocabulary and contracts | Tasks | T5, T20, T23 | In Tasks |
 | NUC-06 | P1: Booking vocabulary and contracts | Tasks | T23, T26 | In Tasks |
 | NUC-07 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
@@ -748,63 +748,63 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-29 | P1: Payment split and booking policies | Tasks | T4 | Implementing |
 | NUC-30 | P1: Payment split and booking policies | Tasks | T4 | Implementing |
 | NUC-31 | P1: Payment split and booking policies | Tasks | T4 | Implementing |
-| NUC-32 | P1: Business hours and calendar parameters | Tasks | T10 | In Tasks |
-| NUC-33 | P1: Business hours and calendar parameters | Tasks | T10 | In Tasks |
-| NUC-34 | P1: Business hours and calendar parameters | Tasks | T10 | In Tasks |
-| NUC-35 | P1: Business hours and calendar parameters | Tasks | T10 | In Tasks |
-| NUC-36 | P1: Business hours and calendar parameters | Tasks | T10 | In Tasks |
-| NUC-37 | P1: Business hours and calendar parameters | Tasks | T10 | In Tasks |
-| NUC-38 | P1: Business hours and calendar parameters | Tasks | T10 | In Tasks |
+| NUC-32 | P1: Business hours and calendar parameters | Tasks | T10 | Implementing |
+| NUC-33 | P1: Business hours and calendar parameters | Tasks | T10 | Implementing |
+| NUC-34 | P1: Business hours and calendar parameters | Tasks | T10 | Implementing |
+| NUC-35 | P1: Business hours and calendar parameters | Tasks | T10 | Implementing |
+| NUC-36 | P1: Business hours and calendar parameters | Tasks | T10 | Implementing |
+| NUC-37 | P1: Business hours and calendar parameters | Tasks | T10 | Implementing |
+| NUC-38 | P1: Business hours and calendar parameters | Tasks | T10 | Implementing |
 | NUC-39 | P1: Business hours and calendar parameters | Tasks | T24 | In Tasks |
 | NUC-40 | P1: Business hours and calendar parameters | Tasks | T43 | In Tasks |
 | NUC-41 | P1: Business hours and calendar parameters | Tasks | T43 | In Tasks |
 | NUC-42 | P2: Drag-edit business hours | Tasks | T43 | In Tasks |
-| NUC-43 | P1: Holidays and closed days | Tasks | T11 | In Tasks |
-| NUC-44 | P1: Holidays and closed days | Tasks | T11 | In Tasks |
-| NUC-45 | P1: Holidays and closed days | Tasks | T11 | In Tasks |
-| NUC-46 | P1: Holidays and closed days | Tasks | T11 | In Tasks |
-| NUC-47 | P1: Holidays and closed days | Tasks | T11 | In Tasks |
-| NUC-48 | P1: Holidays and closed days | Tasks | T11 | In Tasks |
-| NUC-49 | P1: Holidays and closed days | Tasks | T11 | In Tasks |
-| NUC-50 | P1: Holidays and closed days | Tasks | T11 | In Tasks |
-| NUC-51 | P1: Holidays and closed days | Tasks | T11, T20 | In Tasks |
+| NUC-43 | P1: Holidays and closed days | Tasks | T11 | Implementing |
+| NUC-44 | P1: Holidays and closed days | Tasks | T11 | Implementing |
+| NUC-45 | P1: Holidays and closed days | Tasks | T11 | Implementing |
+| NUC-46 | P1: Holidays and closed days | Tasks | T11 | Implementing |
+| NUC-47 | P1: Holidays and closed days | Tasks | T11 | Implementing |
+| NUC-48 | P1: Holidays and closed days | Tasks | T11 | Implementing |
+| NUC-49 | P1: Holidays and closed days | Tasks | T11 | Implementing |
+| NUC-50 | P1: Holidays and closed days | Tasks | T11 | Implementing |
+| NUC-51 | P1: Holidays and closed days | Tasks | T11, T20 | Implementing |
 | NUC-52 | P1: Holidays and closed days | Tasks | T45 | In Tasks |
 | NUC-53 | P2: Holiday review banner | Tasks | T45 | In Tasks |
-| NUC-54 | P1: Manual blocks with tags | Tasks | T12 | In Tasks |
-| NUC-55 | P1: Manual blocks with tags | Tasks | T12 | In Tasks |
-| NUC-56 | P1: Manual blocks with tags | Tasks | T12 | In Tasks |
+| NUC-54 | P1: Manual blocks with tags | Tasks | T12 | Implementing |
+| NUC-55 | P1: Manual blocks with tags | Tasks | T12 | Implementing |
+| NUC-56 | P1: Manual blocks with tags | Tasks | T12 | Implementing |
 | NUC-57 | P1: Manual blocks with tags | Tasks | T12, T26 | In Tasks |
-| NUC-58 | P1: Manual blocks with tags | Tasks | T12 | In Tasks |
-| NUC-59 | P1: Manual blocks with tags | Tasks | T12 | In Tasks |
+| NUC-58 | P1: Manual blocks with tags | Tasks | T12 | Implementing |
+| NUC-59 | P1: Manual blocks with tags | Tasks | T12 | Implementing |
 | NUC-60 | P1: Manual blocks with tags | Tasks | T45 | In Tasks |
-| NUC-61 | P1: Booking categories and price table | Tasks | T13 | In Tasks |
-| NUC-62 | P1: Booking categories and price table | Tasks | T13 | In Tasks |
-| NUC-63 | P1: Booking categories and price table | Tasks | T13 | In Tasks |
-| NUC-64 | P1: Booking categories and price table | Tasks | T13 | In Tasks |
-| NUC-65 | P1: Booking categories and price table | Tasks | T13 | In Tasks |
-| NUC-66 | P1: Booking categories and price table | Tasks | T13 | In Tasks |
-| NUC-67 | P1: Booking categories and price table | Tasks | T13 | In Tasks |
-| NUC-68 | P1: Booking categories and price table | Tasks | T13 | In Tasks |
-| NUC-69 | P1: Booking categories and price table | Tasks | T13 | In Tasks |
+| NUC-61 | P1: Booking categories and price table | Tasks | T13 | Implementing |
+| NUC-62 | P1: Booking categories and price table | Tasks | T13 | Implementing |
+| NUC-63 | P1: Booking categories and price table | Tasks | T13 | Implementing |
+| NUC-64 | P1: Booking categories and price table | Tasks | T13 | Implementing |
+| NUC-65 | P1: Booking categories and price table | Tasks | T13 | Implementing |
+| NUC-66 | P1: Booking categories and price table | Tasks | T13 | Implementing |
+| NUC-67 | P1: Booking categories and price table | Tasks | T13 | Implementing |
+| NUC-68 | P1: Booking categories and price table | Tasks | T13 | Implementing |
+| NUC-69 | P1: Booking categories and price table | Tasks | T13 | Implementing |
 | NUC-70 | P1: Booking categories and price table | Tasks | T20 | In Tasks |
 | NUC-71 | P1: Booking categories and price table | Tasks | T44 | In Tasks |
 | NUC-72 | P1: Booking categories and price table | Tasks | T44 | In Tasks |
 | NUC-73 | P1: Booking categories and price table | Tasks | T43 | In Tasks |
-| NUC-74 | P1: Public availability and catalog | Tasks | T8 | In Tasks |
-| NUC-75 | P1: Public availability and catalog | Tasks | T8 | In Tasks |
-| NUC-76 | P1: Public availability and catalog | Tasks | T8 | In Tasks |
-| NUC-77 | P1: Public availability and catalog | Tasks | T7 | In Tasks |
-| NUC-78 | P1: Public availability and catalog | Tasks | T7 | In Tasks |
-| NUC-79 | P1: Public availability and catalog | Tasks | T7 | In Tasks |
-| NUC-80 | P1: Public availability and catalog | Tasks | T7 | In Tasks |
-| NUC-81 | P1: Public availability and catalog | Tasks | T7, T9 | In Tasks |
-| NUC-82 | P1: Public availability and catalog | Tasks | T7 | In Tasks |
-| NUC-83 | P1: Public availability and catalog | Tasks | T7 | In Tasks |
-| NUC-84 | P1: Public availability and catalog | Tasks | T8 | In Tasks |
-| NUC-85 | P1: Public availability and catalog | Tasks | T8 | In Tasks |
-| NUC-86 | P1: Book and pay the sinal | Tasks | T9 | In Tasks |
-| NUC-87 | P1: Book and pay the sinal | Tasks | T9 | In Tasks |
-| NUC-88 | P1: Book and pay the sinal | Tasks | T9 | In Tasks |
+| NUC-74 | P1: Public availability and catalog | Tasks | T8 | Implementing |
+| NUC-75 | P1: Public availability and catalog | Tasks | T8 | Implementing |
+| NUC-76 | P1: Public availability and catalog | Tasks | T8 | Implementing |
+| NUC-77 | P1: Public availability and catalog | Tasks | T7 | Implementing |
+| NUC-78 | P1: Public availability and catalog | Tasks | T7 | Implementing |
+| NUC-79 | P1: Public availability and catalog | Tasks | T7 | Implementing |
+| NUC-80 | P1: Public availability and catalog | Tasks | T7 | Implementing |
+| NUC-81 | P1: Public availability and catalog | Tasks | T7, T9 | Implementing |
+| NUC-82 | P1: Public availability and catalog | Tasks | T7 | Implementing |
+| NUC-83 | P1: Public availability and catalog | Tasks | T7 | Implementing |
+| NUC-84 | P1: Public availability and catalog | Tasks | T8 | Implementing |
+| NUC-85 | P1: Public availability and catalog | Tasks | T8 | Implementing |
+| NUC-86 | P1: Book and pay the sinal | Tasks | T9 | Implementing |
+| NUC-87 | P1: Book and pay the sinal | Tasks | T9 | Implementing |
+| NUC-88 | P1: Book and pay the sinal | Tasks | T9 | Implementing |
 | NUC-89 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |
 | NUC-90 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |
 | NUC-91 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |
@@ -820,7 +820,7 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-101 | P1: Book and pay the sinal | Tasks | T38 | In Tasks |
 | NUC-102 | P1: Book and pay the sinal | Tasks | T39 | In Tasks |
 | NUC-103 | P1: Book and pay the sinal | Tasks | T39, T49 | In Tasks |
-| NUC-104 | P1: Book and pay the sinal | Tasks | T6, T9 | In Tasks |
+| NUC-104 | P1: Book and pay the sinal | Tasks | T6, T9 | Implementing |
 | NUC-105 | P1: Gateway-independent payments | Tasks | T15, T16 | In Tasks |
 | NUC-106 | P1: Gateway-independent payments | Tasks | T15 | In Tasks |
 | NUC-107 | P1: Gateway-independent payments | Tasks | T17 | In Tasks |
@@ -888,9 +888,9 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-169 | P1: Gestão de Reservas operations | Tasks | T25 | In Tasks |
 | NUC-170 | P1: Gestão de Reservas operations | Tasks | T47 | In Tasks |
 | NUC-171 | P1: Gestão de Reservas operations | Tasks | T39 | In Tasks |
-| NUC-172 | P1: Policies panel | Tasks | T10 | In Tasks |
-| NUC-173 | P1: Policies panel | Tasks | T10 | In Tasks |
-| NUC-174 | P1: Policies panel | Tasks | T10 | In Tasks |
+| NUC-172 | P1: Policies panel | Tasks | T10 | Implementing |
+| NUC-173 | P1: Policies panel | Tasks | T10 | Implementing |
+| NUC-174 | P1: Policies panel | Tasks | T10 | Implementing |
 | NUC-175 | P1: Policies panel | Tasks | T23 | In Tasks |
 | NUC-176 | P1: Policies panel | Tasks | T48 | In Tasks |
 | NUC-177 | P1: Bookings list and CSV export | Tasks | T25 | In Tasks |
@@ -917,10 +917,10 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-198 | P1: Scheduled jobs | Tasks | T28 | In Tasks |
 | NUC-199 | P1: Scheduled jobs | Tasks | T26, T50 | In Tasks |
 | NUC-200 | P1: Scheduled jobs | Tasks | T26 | In Tasks |
-| NUC-201 | P1: Extension points | Tasks | T6 | In Tasks |
+| NUC-201 | P1: Extension points | Tasks | T6 | Implementing |
 | NUC-202 | P1: Extension points | Tasks | T7, T32 | In Tasks |
 | NUC-203 | P1: Extension points | Tasks | T29 | In Tasks |
-| NUC-204 | P1: Extension points | Tasks | T11 | In Tasks |
+| NUC-204 | P1: Extension points | Tasks | T11 | Implementing |
 | NUC-205 | P1: Extension points | Tasks | T6, T18, T23, T26 | In Tasks |
 | NUC-206 | P2: Booking funnel analytics | Tasks | T29, T38 | In Tasks |
 | NUC-207 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |

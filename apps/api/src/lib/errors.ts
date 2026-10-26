@@ -10,12 +10,15 @@ export interface ErrorDetail {
   message: string;
 }
 
+/** Field errors (`path` + `message`) or an object with machine-readable context, e.g. `{ reason }`. */
+export type ErrorDetails = ErrorDetail[] | Record<string, unknown>;
+
 export class AppError extends Error {
   constructor(
     readonly status: ContentfulStatusCode,
     readonly code: string,
     message: string,
-    readonly details?: ErrorDetail[],
+    readonly details?: ErrorDetails,
     readonly headers?: Record<string, string>,
   ) {
     super(message);
@@ -86,7 +89,7 @@ function envelope(
   status: ContentfulStatusCode,
   code: string,
   message: string,
-  details?: ErrorDetail[],
+  details?: ErrorDetails,
   headers?: Record<string, string>,
 ): Response {
   const body = {
