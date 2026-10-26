@@ -1118,11 +1118,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: unverified request → 401 and no `job_runs`; verified (stubbed) → `job_runs` `ok` with stats; a job throwing → `error` row; concurrent second run → `{ skipped: true }`
-- [ ] Tests: a held `fixed_occurrence` booking past its hold is left untouched; expired awaiting booking → `expired`, occupancy inactive, pending charge `cancelled`, a fake step's `release` called; pre-reservation → `expired` + outbox `booking.pre_reservation_expired` + notifier event; pending reschedule request → `expired` with its hold block cancelled; expired idempotency rows deleted
-- [ ] Unit test (`neon.test.ts`) asserts the 6 triggers of NUC-199 with schedules and `functionPath`
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 10 tests pass
+- [x] Tests: unverified request → 401 and no `job_runs`; verified (stubbed) → `job_runs` `ok` with stats; a job throwing → `error` row; concurrent second run → `{ skipped: true }`
+- [x] Tests: a held `fixed_occurrence` booking past its hold is left untouched; expired awaiting booking → `expired`, occupancy inactive, pending charge `cancelled`, a fake step's `release` called; pre-reservation → `expired` + outbox `booking.pre_reservation_expired` + notifier event; pending reschedule request → `expired` with its hold block cancelled; expired idempotency rows deleted
+- [x] Unit test (`neon.test.ts`) asserts the 6 triggers of NUC-199 with schedules and `functionPath`
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 10 tests pass
 
 **Tests**: integration
 **Gate**: full

@@ -3,6 +3,7 @@ import type { AuthContext } from './auth/session';
 import type { Db } from './db/client';
 import type { Env } from './env';
 import type { Registry } from './extensions/registry';
+import type { TriggerDelivery } from './lib/trigger-auth';
 
 /** Injectable dependencies of the app; tests replace what they need. */
 export interface AppDeps {
@@ -14,6 +15,8 @@ export interface AppDeps {
   registry: Registry;
   /** Google's signing keys; tests inject a local key set. Defaults to Google's remote JWKS. */
   googleJwks?: JWTVerifyGetKey;
+  /** Authenticates `/jobs/*`; defaults to the Neon trigger delivery check, tests stub it. */
+  verifyTrigger?: (request: Request) => Promise<TriggerDelivery | null>;
 }
 
 /** Hono environment shared by every middleware and route of the API. */

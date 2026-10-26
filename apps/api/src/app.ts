@@ -10,6 +10,7 @@ import { requireJson } from './middleware/require-json';
 import { adminRoutes } from './routes/admin';
 import { appRoutes } from './routes/app';
 import { healthRoutes } from './routes/health';
+import { jobRoutes } from './routes/jobs';
 import { publicRoutes } from './routes/public';
 import { paymentWebhookRoutes } from './routes/webhooks/pagamentos';
 import type { AppDeps, AppEnv } from './types';
@@ -23,6 +24,7 @@ export function createApp(overrides: Partial<AppDeps> = {}): Hono<AppEnv> {
     db: overrides.db ?? getDb(),
     registry: overrides.registry ?? buildRegistry(),
     ...(overrides.googleJwks !== undefined && { googleJwks: overrides.googleJwks }),
+    ...(overrides.verifyTrigger !== undefined && { verifyTrigger: overrides.verifyTrigger }),
   };
 
   const app = new Hono<AppEnv>();
@@ -39,6 +41,7 @@ export function createApp(overrides: Partial<AppDeps> = {}): Hono<AppEnv> {
   app.route('/app', appRoutes());
   app.route('/admin', adminRoutes());
   app.route('/webhooks/pagamentos', paymentWebhookRoutes());
+  app.route('/jobs', jobRoutes());
   app.onError(onError);
   app.notFound(notFoundHandler);
   return app;

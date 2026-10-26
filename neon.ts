@@ -7,6 +7,14 @@ const optional = (key: string): Record<string, string> => {
   return value ? { [key]: value } : {};
 };
 
+const job = (cron: string, name: string) =>
+  ({
+    type: 'schedule',
+    function: 'api',
+    cron,
+    functionPath: `/jobs/${name}`,
+  }) as const;
+
 export default defineConfig({
   functions: {
     api: {
@@ -26,7 +34,16 @@ export default defineConfig({
       },
     },
   },
-  // triggers: added by nucleo (every 5 min) and receita/gestao (daily) per AD-007, all `type: 'schedule'`,
-  // `function: 'api'`, `functionPath: '/jobs/<name>'`.
+  // Schedule triggers (AD-007): the nucleo jobs every 5 minutes, materialize-blocks daily at 05:00
+  // BRT (08:00 UTC). receita and gestao add theirs here as `type: 'schedule'`, `function: 'api'`,
+  // `functionPath: '/jobs/<name>'`. Each route authenticates with `parseTriggerDelivery`.
+  triggers: {
+    'expire-holds': job('*/5 * * * *', 'expire-holds'),
+    'charge-balances': job('*/5 * * * *', 'charge-balances'),
+    reminders: job('*/5 * * * *', 'reminders'),
+    'no-shows': job('*/5 * * * *', 'no-shows'),
+    'reconcile-payments': job('*/5 * * * *', 'reconcile-payments'),
+    'materialize-blocks': job('0 8 * * *', 'materialize-blocks'),
+  },
   // buckets: added by gestao (room photos, expense attachments) per AD-009.
 });

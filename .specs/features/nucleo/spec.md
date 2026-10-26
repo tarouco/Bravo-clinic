@@ -773,7 +773,7 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-54 | P1: Manual blocks with tags | Tasks | T12 | Implementing |
 | NUC-55 | P1: Manual blocks with tags | Tasks | T12 | Implementing |
 | NUC-56 | P1: Manual blocks with tags | Tasks | T12 | Implementing |
-| NUC-57 | P1: Manual blocks with tags | Tasks | T12, T26 | In Tasks |
+| NUC-57 | P1: Manual blocks with tags | Tasks | T12, T26 | Implementing |
 | NUC-58 | P1: Manual blocks with tags | Tasks | T12 | Implementing |
 | NUC-59 | P1: Manual blocks with tags | Tasks | T12 | Implementing |
 | NUC-60 | P1: Manual blocks with tags | Tasks | T45 | In Tasks |
@@ -882,7 +882,7 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-163 | P1: Gestão de Reservas operations | Tasks | T24 | Implementing |
 | NUC-164 | P1: Gestão de Reservas operations | Tasks | T24 | Implementing |
 | NUC-165 | P1: Gestão de Reservas operations | Tasks | T24 | Implementing |
-| NUC-166 | P1: Gestão de Reservas operations | Tasks | T26 | In Tasks |
+| NUC-166 | P1: Gestão de Reservas operations | Tasks | T26 | Implementing |
 | NUC-167 | P1: Gestão de Reservas operations | Tasks | T24 | Implementing |
 | NUC-168 | P1: Gestão de Reservas operations | Tasks | T28 | In Tasks |
 | NUC-169 | P1: Gestão de Reservas operations | Tasks | T25 | Implementing |
@@ -911,12 +911,12 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-192 | P1: Minhas reservas, agenda and profile | Tasks | T21 | Implementing |
 | NUC-193 | P1: Minhas reservas, agenda and profile | Tasks | T42 | In Tasks |
 | NUC-194 | P1: Minhas reservas, agenda and profile | Tasks | T42 | In Tasks |
-| NUC-195 | P1: Scheduled jobs | Tasks | T26 | In Tasks |
-| NUC-196 | P1: Scheduled jobs | Tasks | T26 | In Tasks |
-| NUC-197 | P1: Scheduled jobs | Tasks | T26 | In Tasks |
+| NUC-195 | P1: Scheduled jobs | Tasks | T26 | Implementing |
+| NUC-196 | P1: Scheduled jobs | Tasks | T26 | Implementing |
+| NUC-197 | P1: Scheduled jobs | Tasks | T26 | Implementing |
 | NUC-198 | P1: Scheduled jobs | Tasks | T28 | In Tasks |
-| NUC-199 | P1: Scheduled jobs | Tasks | T26, T50 | In Tasks |
-| NUC-200 | P1: Scheduled jobs | Tasks | T26 | In Tasks |
+| NUC-199 | P1: Scheduled jobs | Tasks | T26, T50 | Implementing |
+| NUC-200 | P1: Scheduled jobs | Tasks | T26 | Implementing |
 | NUC-201 | P1: Extension points | Tasks | T6 | Implementing |
 | NUC-202 | P1: Extension points | Tasks | T7, T32 | In Tasks |
 | NUC-203 | P1: Extension points | Tasks | T29 | In Tasks |
