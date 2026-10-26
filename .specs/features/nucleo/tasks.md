@@ -1541,10 +1541,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: `canReschedule: false` hides Reagendar and shows the WhatsApp link; ST-2 quote fixture shows "Você recebe R$ 23,00 em créditos"; ST-3 shows "Diferença a pagar agora: R$ 143,00" and opens the payment panel on confirm (202)
-- [ ] Tests: cancel modal shows "Fica retido: R$ 80,00 (sinal)" and "Será devolvido: R$ 80,00" for CA-1 and calls cancel with an Idempotency-Key
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests: `canReschedule: false` hides Reagendar and shows the WhatsApp link; ST-2 quote fixture shows "Você recebe R$ 23,00 em créditos"; ST-3 shows "Diferença a pagar agora: R$ 143,00" and opens the payment panel on confirm (202)
+- [x] Tests: cancel modal shows "Fica retido: R$ 80,00 (sinal)" and "Será devolvido: R$ 80,00" for CA-1 and calls cancel with an Idempotency-Key
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick

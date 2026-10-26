@@ -13,6 +13,7 @@ import {
 import { BookingFlowPage } from './features/booking/BookingFlowPage';
 import { AppHomePage } from './pages/app/AppHomePage';
 import { AgendaPage } from './pages/app/AgendaPage';
+import { BookingDetailPage } from './pages/app/BookingDetailPage';
 import { MyBookingsPage } from './pages/app/MyBookingsPage';
 import { LoginPage } from './pages/auth/LoginPage';
 import { ForgotPasswordPage } from './pages/auth/password/ForgotPasswordPage';
@@ -42,7 +43,6 @@ const publicPlaceholders: PlaceholderRoute[] = [
 
 /** Tenant area pages that ship with later features. */
 const appPlaceholders: PlaceholderRoute[] = [
-  ['minhas-reservas/:id', 'Reserva'],
   ['compras', 'Compras'],
   ['compras/horas-extras', 'Horas extras'],
   ['compras/creditos', 'Créditos'],
@@ -117,6 +117,7 @@ export const appRoutes: RouteObject[] = [
           { path: 'reservar', element: <BookingFlowPage /> },
           { path: 'minhas-reservas', element: <MyBookingsPage /> },
           { path: 'agenda', element: <AgendaPage /> },
+          { path: 'minhas-reservas/:id', element: <BookingDetailPage /> },
           ...appPlaceholders.map(placeholder),
           { path: '*', element: <NotFoundPage /> },
         ],
