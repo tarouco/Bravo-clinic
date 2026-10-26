@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { afterAll, describe, expect, it } from 'vitest';
 import { assertNotProduction, requireTestDatabaseUrl } from '../../test/require-test-db';
 import { createUser } from '../../test/factories';
@@ -75,18 +76,27 @@ describe('base migrations (FND-30, FND-31, FND-36)', () => {
   });
 
   it('applies no statements when run a second time', async () => {
-    const count = async () =>
+    // The expected count comes from the drizzle journal, so later features that add migrations keep
+    // this test valid. The shared test database may also hold migrations of other branches, hence
+    // "at least"; what matters is that every journal entry is applied and a rerun adds nothing.
+    const journal = JSON.parse(
+      readFileSync(new URL('../../drizzle/meta/_journal.json', import.meta.url), 'utf8'),
+    ) as { entries: { when: number; tag: string }[] };
+    expect(journal.entries.length).toBeGreaterThanOrEqual(2);
+
+    const applied = async () =>
       (
-        await pool.query<{ n: string }>(
-          `select count(*)::text as n from drizzle.__drizzle_migrations`,
+        await pool.query<{ created_at: string }>(
+          `select created_at::text as created_at from drizzle.__drizzle_migrations order by id`,
         )
-      ).rows[0]?.n;
-    const before = await count();
+      ).rows.map((row) => row.created_at);
+    const before = await applied();
 
     await runMigrations(testUrl);
 
-    expect(before).toBe('2');
-    expect(await count()).toBe(before);
+    expect(before.length).toBeGreaterThanOrEqual(journal.entries.length);
+    for (const entry of journal.entries) expect(before).toContain(String(entry.when));
+    expect(await applied()).toEqual(before);
   });
 
   it('stores instants as timestamptz and no column as timestamp without time zone', async () => {
