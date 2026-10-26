@@ -58,6 +58,20 @@ describe('Header', () => {
     expect(screen.getByText('Praia Brava - Itajaí')).toBeInTheDocument();
   });
 
+  it('shows the location only from the xl breakpoint and the nav only from lg (FND-95)', () => {
+    renderHeader();
+    const location = screen.getByText('Praia Brava - Itajaí').parentElement;
+    expect(location).toHaveClass('hidden', 'xl:flex');
+    expect(location).not.toHaveClass('lg:flex');
+
+    const nav = screen.getByRole('navigation', { name: 'Principal' });
+    expect(nav).toHaveClass('hidden', 'lg:flex');
+    expect(nav).not.toHaveClass('xl:flex');
+
+    // the hamburger button disappears exactly where the desktop nav appears
+    expect(screen.getByRole('button', { name: 'Menu' })).toHaveClass('lg:hidden');
+  });
+
   it('is fixed at the top with an 80px (h-20) bar', () => {
     renderHeader();
     expect(screen.getByRole('banner')).toHaveClass('fixed', 'top-0');
