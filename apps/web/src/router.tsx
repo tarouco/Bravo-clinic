@@ -35,6 +35,7 @@ import { CreditosPage, HistoricoPage } from './pages/app/compras/CreditosHistori
 import { HorasExtrasPage } from './pages/app/compras/HorasExtrasPage';
 import { MyBookingsPage } from './pages/app/MyBookingsPage';
 import { NotificationSettingsPage } from './pages/app/NotificationSettingsPage';
+import { PrivacyPage } from './pages/app/PrivacyPage';
 import { ProfilePage } from './pages/app/ProfilePage';
 import { QuotesPage } from './pages/app/QuotesPage';
 import { LoginPage } from './pages/auth/LoginPage';
@@ -63,10 +64,7 @@ type PlaceholderRoute = readonly [path: string, title: string];
 const publicPlaceholders: PlaceholderRoute[] = [];
 
 /** Tenant area pages that ship with later features. */
-const appPlaceholders: PlaceholderRoute[] = [
-  ['perfil/privacidade', 'Privacidade'],
-  ['perfil/seguranca', 'Segurança'],
-];
+const appPlaceholders: PlaceholderRoute[] = [['perfil/seguranca', 'Segurança']];
 
 const placeholder = ([path, title]: PlaceholderRoute): RouteObject => ({
   path,
@@ -162,6 +160,7 @@ export const appRoutes: RouteObject[] = [
           { path: 'perfil', element: <ProfilePage /> },
           { path: 'perfil/cartoes', element: <CardsPage /> },
           { path: 'perfil/notificacoes', element: <NotificationSettingsPage /> },
+          { path: 'perfil/privacidade', element: <PrivacyPage /> },
           {
             path: 'compras',
             element: <ComprasLayout />,

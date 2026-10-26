@@ -1335,11 +1335,11 @@ T49 → T50
 - Skill: NONE
 
 **Done when**:
-- [ ] Tests assert consent labels/versions/dates, export triggers a download of the API URL
-- [ ] Tests assert deletion modal requires password (or `EXCLUIR` for Google-only), shows 409 blockers list, logs out on success
-- [ ] Tests assert feed card shows URL once after generation and nucleo's booking-detail "Baixar .ics" link still targets `/api/app/bookings/<id>/ics`
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 7 tests pass
+- [x] Tests assert consent labels/versions/dates, export triggers a download of the API URL
+- [x] Tests assert deletion modal requires password (or `EXCLUIR` for Google-only), shows 409 blockers list, logs out on success
+- [x] Tests assert feed card shows URL once after generation and nucleo's booking-detail "Baixar .ics" link still targets `/api/app/bookings/<id>/ics`
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: unit
 **Gate**: quick

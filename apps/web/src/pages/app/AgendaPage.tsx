@@ -8,6 +8,7 @@ import { WeekCalendar } from '../../components/calendar/WeekCalendar';
 import { Alert, Spinner } from '../../components/ui/Feedback';
 import { Tabs } from '../../components/ui/Tabs';
 import { useMyBookings } from '../../features/booking/api';
+import { CalendarSyncCard } from '../../features/calendar-sync/CalendarSyncCard';
 import { usePageTitle } from '../../lib/usePageTitle';
 
 type View = 'month' | 'week' | 'day';
@@ -110,6 +111,7 @@ export function AgendaPage() {
         }}
         items={VIEWS.map(({ id, label }) => ({ id, label, content: body(id) }))}
       />
+      <CalendarSyncCard />
     </div>
   );
 }

@@ -130,5 +130,9 @@ describe('ProfilePage (NUC-193)', () => {
       'href',
       '/app/perfil/notificacoes',
     );
+    expect(screen.getByRole('link', { name: 'Privacidade e dados' })).toHaveAttribute(
+      'href',
+      '/app/perfil/privacidade',
+    );
   });
 });
