@@ -53,11 +53,12 @@ describe('registerRevenueSlots (AD-031)', () => {
     expect(slotComponents('admin.calendar.overlays')).toHaveLength(1);
   });
 
-  it('fills the reservations tabs slot once', () => {
+  it('fills the reservations tabs and header actions slots once', () => {
     registerRevenueSlots();
     registerRevenueSlots();
 
     expect(slotComponents('admin.reservations.tabs')).toHaveLength(1);
+    expect(slotComponents('admin.reservations.headerActions')).toHaveLength(1);
   });
 });
 

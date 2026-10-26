@@ -1494,10 +1494,10 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Link mode sends `{ payment: { mode:'link', holdHours:24 } }`; manual mode requires a 5+ char justification
-- [ ] Fixed category shows the picker; conflict disables submit; success toast "Assinatura criada. Link enviado ao cliente."
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 new tests pass
+- [x] Link mode sends `{ payment: { mode:'link', holdHours:24 } }`; manual mode requires a 5+ char justification
+- [x] Fixed category shows the picker; conflict disables submit; success toast "Assinatura criada. Link enviado ao cliente."
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 new tests pass
 
 **Tests**: unit
 **Gate**: quick

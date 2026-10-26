@@ -7,6 +7,7 @@ import {
   SlotDiscountOverlay,
 } from '../features/admin-reservas/SlotDiscountSlots';
 import { AssinaturasTab } from '../features/admin-reservas/AssinaturasTab';
+import { SellSubscriptionAction } from '../features/admin-reservas/SellSubscriptionDialog';
 import { PackagesSection } from '../features/purchases/PackagesSection';
 import { registerSlot, slotComponents, type SlotComponent, type SlotName } from './slots';
 
@@ -22,6 +23,7 @@ const REGISTRATIONS: readonly (readonly [SlotName, SlotComponent])[] = [
   ['admin.calendar.freeSlotActions', SlotDiscountAction],
   ['admin.calendar.overlays', SlotDiscountOverlay],
   ['admin.reservations.tabs', AssinaturasTab],
+  ['admin.reservations.headerActions', SellSubscriptionAction],
 ];
 
 export function registerRevenueSlots(): void {
