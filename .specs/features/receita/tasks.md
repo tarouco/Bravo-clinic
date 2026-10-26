@@ -1025,10 +1025,10 @@ T48 → T50
 
 **Done when**:
 
-- [ ] A test parses every fixture with its contract schema
-- [ ] Hook tests (mocked `lib/api`) assert paths, query keys, invalidation after purchase/cancel/switch, and a UUID `Idempotency-Key` reused on retry of the same mutation call
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 14 new tests pass
+- [x] A test parses every fixture with its contract schema
+- [x] Hook tests (mocked `lib/api`) assert paths, query keys, invalidation after purchase/cancel/switch, and a UUID `Idempotency-Key` reused on retry of the same mutation call
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 14 new tests pass
 
 **Tests**: unit
 **Gate**: quick
