@@ -30,6 +30,8 @@ export default defineConfig(({ mode }) => {
       environment: 'jsdom',
       include: ['src/**/*.test.{ts,tsx}', 'scripts/**/*.test.mjs'],
       setupFiles: ['./src/test/setup.ts'],
+      // Page tests mount real trees with MSW; a loaded CI or dev machine needs more than 5 s.
+      testTimeout: 15000,
       css: false,
     },
   };

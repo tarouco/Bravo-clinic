@@ -42,6 +42,13 @@ export function resetSlots(): void {
   Object.assign(slots, emptySlots());
 }
 
+/** The components registered for a slot, in registration order. */
+export function slotComponents(name: SlotName): SlotComponent[] {
+  const entry = slots[name];
+  if (entry === null) return [];
+  return Array.isArray(entry) ? entry : [entry];
+}
+
 /** Renders the components registered for `name` with `props`, or nothing. */
 export function Slot({ name, props }: { name: SlotName; props?: Record<string, unknown> }) {
   const entry = slots[name];

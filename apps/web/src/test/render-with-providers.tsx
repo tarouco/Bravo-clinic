@@ -3,6 +3,7 @@ import { render, type RenderResult } from '@testing-library/react';
 import type { ReactElement } from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { vi } from 'vitest';
+import { ToastProvider } from '../components/ui/Toast';
 import { createQueryClient } from '../lib/query-client';
 import { ThemeProvider } from '../theme/ThemeProvider';
 
@@ -42,12 +43,14 @@ export function renderWithProviders(ui: ReactElement, route = '/'): RenderResult
   return render(
     <ThemeProvider>
       <QueryClientProvider client={createQueryClient()}>
-        <MemoryRouter
-          initialEntries={[route]}
-          future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
-        >
-          {ui}
-        </MemoryRouter>
+        <ToastProvider>
+          <MemoryRouter
+            initialEntries={[route]}
+            future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+          >
+            {ui}
+          </MemoryRouter>
+        </ToastProvider>
       </QueryClientProvider>
     </ThemeProvider>,
   );

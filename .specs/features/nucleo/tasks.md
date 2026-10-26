@@ -1599,10 +1599,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: shortcut "Aplicar a seg–sex" copies Monday's hours to Tue–Fri; save sends 8 rows; cleanup 45 response shows the exact warning sentence; 409 fixtures open the modal listing booking codes with links
-- [ ] Tests: drag handle with ArrowDown moves end by 30 min (P2); checklist visible when `pricesReviewed: false` and the button calls the endpoint
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 7 tests pass
+- [x] Tests: shortcut "Aplicar a seg–sex" copies Monday's hours to Tue–Fri; save sends 8 rows; cleanup 45 response shows the exact warning sentence; 409 fixtures open the modal listing booking codes with links
+- [x] Tests: drag handle with ArrowDown moves end by 30 min (P2); checklist visible when `pricesReviewed: false` and the button calls the endpoint
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1627,10 +1627,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: typing "1.600,00" with 20 h shows "R$ 1.600,00 → R$ 80,00/h" before saving; package rows read-only with "Gerenciado em Pacotes"; V_ref radio calls the reference endpoint; 422 shows field errors
-- [ ] Tests: overlay with "1 hora — noite" unchecked as inactive fixture hatches 19:00–00:00 with "Horário sem categoria"
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests: typing "1.600,00" with 20 h shows "R$ 1.600,00 → R$ 80,00/h" before saving; package rows read-only with "Gerenciado em Pacotes"; V_ref radio calls the reference endpoint; 422 shows field errors
+- [x] Tests: overlay with "1 hora — noite" unchecked as inactive fixture hatches 19:00–00:00 with "Horário sem categoria"
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1655,10 +1655,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: holiday with `alert` shows the alert icon; toggling closed with 409 opens the affected list; import shows `{ inserted, updated }` toast; closed-day modal shows "3 assinantes · 120 min · R$ 205,33" from fixture and confirm posts
-- [ ] Tests: BlockModal preset "Limpeza" and free text; weekly option hidden for reception; 409 shows conflicting code; banner shown with now = 2026-10-01 and next-year `needsReview` fixture (P2)
-- [ ] Gate check passes: `npm test -w apps/web` (phase end: Build-B gate)
-- [ ] Test count: ≥ 7 tests pass
+- [x] Tests: holiday with `alert` shows the alert icon; toggling closed with 409 opens the affected list; import shows `{ inserted, updated }` toast; closed-day modal shows "3 assinantes · 120 min · R$ 205,33" from fixture and confirm posts
+- [x] Tests: BlockModal preset "Limpeza" and free text; weekly option hidden for reception; 409 shows conflicting code; banner shown with now = 2026-10-01 and next-year `needsReview` fixture (P2)
+- [x] Gate check passes: `npm test -w apps/web` (phase end: Build-B gate)
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: unit
 **Gate**: build
@@ -1685,10 +1685,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: event shows "Ana · Sala Principal"; popup shows full name, "R$ 109,50 de R$ 219,00", times, category, badge; reception sees Check-in and Reenviar link but not Confirmar/Reagendar/Cancelar
-- [ ] Tests: free slot menu lists the 3 actions plus a registered slot action; Bloquear opens BlockModal prefilled; filters update the events query params; politicas tab hidden for reception
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 7 tests pass
+- [x] Tests: event shows "Ana · Sala Principal"; popup shows full name, "R$ 109,50 de R$ 219,00", times, category, badge; reception sees Check-in and Reenviar link but not Confirmar/Reagendar/Cancelar
+- [x] Tests: free slot menu lists the 3 actions plus a registered slot action; Bloquear opens BlockModal prefilled; filters update the events query params; politicas tab hidden for reception
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1713,9 +1713,9 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: search after 2 chars lists customers; new customer form posts and selects the result; pre-reservation default expiry 24 h editable; reception never sees "Confirmar sem pagamento"; admin manual confirm requires justification; success shows link with copy button
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests: search after 2 chars lists customers; new customer form posts and selects the result; pre-reservation default expiry 24 h editable; reception never sees "Confirmar sem pagamento"; admin manual confirm requires justification; success shows link with copy button
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1740,10 +1740,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: typing "BRV-" updates `?q=` and refetches; "Carregar mais" appends the next cursor page; "Exportar CSV" requests `export.csv` with current filters
-- [ ] Tests: panel shows the 6 group titles of NUC-176 and "Versão 1"; changing the sinal to 30 updates the preview to "sinal de 30%"; 422 fixture shows errors on both deadline fields
-- [ ] Gate check passes: `npm test -w apps/web` (phase end: Build-B gate)
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests: typing "BRV-" updates `?q=` and refetches; "Carregar mais" appends the next cursor page; "Exportar CSV" requests `export.csv` with current filters
+- [x] Tests: panel shows the 6 group titles of NUC-176 and "Versão 1"; changing the sinal to 30 updates the preview to "sinal de 30%"; 422 fixture shows errors on both deadline fields
+- [x] Gate check passes: `npm test -w apps/web` (phase end: Build-B gate)
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: build
