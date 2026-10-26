@@ -1,5 +1,7 @@
 import {
+  ACTIVE_STATUSES,
   bookingStatusLabel,
+  CANCELLED_STATUSES,
   evaluateReschedule,
   paymentStatusOf,
   renderPolicyText,
@@ -12,7 +14,7 @@ import {
   type QuoteSegment,
   type ReschedulePolicy,
 } from '@bravo/core';
-import { and, asc, eq, inArray, sql } from 'drizzle-orm';
+import { and, asc, desc, eq, gt, inArray, lte, or, sql, type SQL } from 'drizzle-orm';
 import type { Db, Tx } from '../../db/client';
 import {
   bookingRescheduleRequests,
@@ -23,6 +25,7 @@ import {
   rooms,
 } from '../../db/schema';
 import type { BookingRow, Registry } from '../../extensions/registry';
+import { decodeCursor, encodeCursor } from '../../lib/cursor';
 import { notFound } from '../../lib/errors';
 
 type Handlers = Pick<Registry, 'paymentModeHandlers'>;
@@ -262,4 +265,77 @@ export async function loadOwnedBooking(
     .where(and(eq(bookings.id, bookingId), eq(bookings.userId, userId)));
   if (booking === undefined) throw notFound();
   return booking;
+}
+
+export type BookingTab = 'upcoming' | 'past' | 'cancelled';
+
+export const BOOKING_PAGE_SIZE = 50;
+
+function tabCondition(tab: BookingTab, now: Date): SQL | undefined {
+  switch (tab) {
+    case 'upcoming':
+      return and(inArray(bookings.status, [...ACTIVE_STATUSES]), gt(bookings.endsAt, now));
+    case 'past':
+      return or(
+        inArray(bookings.status, ['completed', 'no_show']),
+        and(inArray(bookings.status, ['confirmed', 'paid']), lte(bookings.endsAt, now)),
+      );
+    case 'cancelled':
+      return inArray(bookings.status, ['expired', ...CANCELLED_STATUSES]);
+  }
+}
+
+/**
+ * The owner's bookings by tab (NUC-188): upcoming by start ascending, the others by start
+ * descending, with keyset pagination on `(starts_at, id)`.
+ */
+export async function listOwnBookings(
+  db: Db,
+  userId: string,
+  tab: BookingTab,
+  cursor: string | undefined,
+  now: Date,
+): Promise<{ items: BookingSummary[]; nextCursor: string | null }> {
+  const ascending = tab === 'upcoming';
+  const after = cursor === undefined ? undefined : decodeCursor(cursor);
+  const rows = await db
+    .select({ booking: bookings, roomSlug: rooms.slug, roomName: rooms.name })
+    .from(bookings)
+    .innerJoin(rooms, eq(rooms.id, bookings.roomId))
+    .where(
+      and(
+        eq(bookings.userId, userId),
+        tabCondition(tab, now),
+        after === undefined
+          ? undefined
+          : ascending
+            ? sql`(${bookings.startsAt}, ${bookings.id}) > (${after.at.toISOString()}::timestamptz, ${after.id}::uuid)`
+            : sql`(${bookings.startsAt}, ${bookings.id}) < (${after.at.toISOString()}::timestamptz, ${after.id}::uuid)`,
+      ),
+    )
+    .orderBy(
+      ...(ascending
+        ? [asc(bookings.startsAt), asc(bookings.id)]
+        : [desc(bookings.startsAt), desc(bookings.id)]),
+    )
+    .limit(BOOKING_PAGE_SIZE + 1);
+  const page = rows.slice(0, BOOKING_PAGE_SIZE);
+  const refunded = await refundedCentsByBooking(
+    db,
+    page.map((r) => r.booking.id),
+  );
+  const last = page.at(-1);
+  return {
+    items: page.map((r) =>
+      toBookingSummary(r.booking, {
+        roomSlug: r.roomSlug,
+        roomName: r.roomName,
+        refundedCents: refunded.get(r.booking.id) ?? 0,
+      }),
+    ),
+    nextCursor:
+      rows.length > BOOKING_PAGE_SIZE && last !== undefined
+        ? encodeCursor({ at: last.booking.startsAt, id: last.booking.id })
+        : null,
+  };
 }

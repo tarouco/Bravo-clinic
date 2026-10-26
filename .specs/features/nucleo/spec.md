@@ -856,8 +856,8 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-137 | P1: Confirmation e-mails with .ics | Tasks | T14, T22, T23 | Implementing |
 | NUC-138 | P1: Confirmation e-mails with .ics | Tasks | T27 | In Tasks |
 | NUC-139 | P1: Confirmation e-mails with .ics | Tasks | T14 | Implementing |
-| NUC-140 | P1: Confirmation e-mails with .ics | Tasks | T21 | In Tasks |
-| NUC-141 | P1: Reschedule and cancel | Tasks | T21 | In Tasks |
+| NUC-140 | P1: Confirmation e-mails with .ics | Tasks | T21 | Implementing |
+| NUC-141 | P1: Reschedule and cancel | Tasks | T21 | Implementing |
 | NUC-142 | P1: Reschedule and cancel | Tasks | T22 | In Tasks |
 | NUC-143 | P1: Reschedule and cancel | Tasks | T22 | In Tasks |
 | NUC-144 | P1: Reschedule and cancel | Tasks | T22 | In Tasks |
@@ -904,11 +904,11 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-185 | P1: Public site pages | Tasks | T36 | In Tasks |
 | NUC-186 | P1: Public site pages | Tasks | T36 | In Tasks |
 | NUC-187 | P1: Public site pages | Tasks | T38 | In Tasks |
-| NUC-188 | P1: Minhas reservas, agenda and profile | Tasks | T21 | In Tasks |
+| NUC-188 | P1: Minhas reservas, agenda and profile | Tasks | T21 | Implementing |
 | NUC-189 | P1: Minhas reservas, agenda and profile | Tasks | T40 | In Tasks |
 | NUC-190 | P1: Minhas reservas, agenda and profile | Tasks | T33, T40 | In Tasks |
 | NUC-191 | P1: Minhas reservas, agenda and profile | Tasks | T40 | In Tasks |
-| NUC-192 | P1: Minhas reservas, agenda and profile | Tasks | T21 | In Tasks |
+| NUC-192 | P1: Minhas reservas, agenda and profile | Tasks | T21 | Implementing |
 | NUC-193 | P1: Minhas reservas, agenda and profile | Tasks | T42 | In Tasks |
 | NUC-194 | P1: Minhas reservas, agenda and profile | Tasks | T42 | In Tasks |
 | NUC-195 | P1: Scheduled jobs | Tasks | T26 | In Tasks |

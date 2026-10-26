@@ -968,11 +968,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: tabs split upcoming/past/cancelled with the ordering of NUC-188 and `paymentStatus` labels; cursor pagination; other user's booking → 404
-- [ ] Tests: `actions.canReschedule` false with reason `too_late` at 23 h; `canPayBalance` true for deposit-paid booking; `.ics` content type `text/calendar` and UID = `ics_uid`
-- [ ] Tests: PATCH name/phone ok; document set when null; second document → 422; taken document → 409 `DOCUMENT_TAKEN`
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 10 tests pass
+- [x] Tests: tabs split upcoming/past/cancelled with the ordering of NUC-188 and `paymentStatus` labels; cursor pagination; other user's booking → 404
+- [x] Tests: `actions.canReschedule` false with reason `too_late` at 23 h; `canPayBalance` true for deposit-paid booking; `.ics` content type `text/calendar` and UID = `ics_uid`
+- [x] Tests: PATCH name/phone ok; document set when null; second document → 422; taken document → 409 `DOCUMENT_TAKEN`
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 10 tests pass
 
 **Tests**: integration
 **Gate**: full
