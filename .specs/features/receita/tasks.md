@@ -1356,11 +1356,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Fixture rows render "BRAVO10", "Desconto", "10%", "3/∞", "—"; first-booking row "Primeira reserva", "R$ 20,00", "1/10", "01/11/2026–30/11/2026"
-- [ ] Toggle calls `PATCH …/enabled`; failure reverts the switch with a toast
-- [ ] Drawer lists uses with "Reservado", "Usado", "Liberado"
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 new tests pass
+- [x] Fixture rows render "BRAVO10", "Desconto", "10%", "3/∞", "—"; first-booking row "Primeira reserva", "R$ 20,00", "1/10", "01/11/2026–30/11/2026"
+- [x] Toggle calls `PATCH …/enabled`; failure reverts the switch with a toast
+- [x] Drawer lists uses with "Reservado", "Usado", "Liberado"
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 new tests pass
 
 **Tests**: unit
 **Gate**: quick

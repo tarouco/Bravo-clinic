@@ -12,6 +12,7 @@ import {
 } from './features/auth/guards';
 import { BookingFlowPage } from './features/booking/BookingFlowPage';
 import { CalendarConfigPage } from './pages/admin/calendar/CalendarConfigPage';
+import { CuponsPage } from './pages/admin/cupons/CuponsPage';
 import { BookingsListPage } from './pages/admin/reservations/BookingsListPage';
 import { PoliciesRoute } from './pages/admin/reservations/PoliciesPanel';
 import { ReservationsCalendar } from './pages/admin/reservations/ReservationsCalendar';
@@ -67,6 +68,7 @@ const adminSectionRoute = (section: AdminSection): RouteObject => {
   const { label, path } = adminSectionMeta[section];
   const children: RouteObject[] = [{ index: true, element: <ComingSoon title={label} /> }];
   if (section === 'calendario') children[0] = { index: true, element: <CalendarConfigPage /> };
+  if (section === 'cupons') children[0] = { index: true, element: <CuponsPage /> };
   if (section === 'reservas') {
     children.splice(0, children.length, {
       element: <ReservationsPage />,
