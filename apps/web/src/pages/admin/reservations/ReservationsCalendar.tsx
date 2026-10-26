@@ -422,6 +422,9 @@ export function ReservationsCalendar() {
             roomId={filters.roomId}
             onCreate={startCreate}
             onBlock={startBlock}
+            onSlotAction={() => {
+              setSelected(null);
+            }}
           />
         ) : null}
       </Modal>

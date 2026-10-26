@@ -1438,11 +1438,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Opening from a 19:00–22:00 drag pre-fills the range; submit sends `{ roomIds, date, startMinute:1140, endMinute:1320, percent }`
-- [ ] Result fixture with a skipped part shows "Sala Principal: 20:00–21:30 ocupado, sem desconto"; 409 shows "Já existe desconto neste horário"
-- [ ] Overlay fixture renders "−15%" on the free slot and "Remover desconto" calls DELETE
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 new tests pass
+- [x] Opening from a 19:00–22:00 drag pre-fills the range; submit sends `{ roomIds, date, startMinute:1140, endMinute:1320, percent }`
+- [x] Result fixture with a skipped part shows "Sala Principal: 20:00–21:30 ocupado, sem desconto"; 409 shows "Já existe desconto neste horário"
+- [x] Overlay fixture renders "−15%" on the free slot and "Remover desconto" calls DELETE
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 new tests pass
 
 **Tests**: unit
 **Gate**: quick

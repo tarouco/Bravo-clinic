@@ -44,6 +44,14 @@ describe('registerRevenueSlots (AD-031)', () => {
 
     expect(slotComponents('admin.categories.forms')).toHaveLength(1);
   });
+
+  it('fills the calendar slots for slot discounts once', () => {
+    registerRevenueSlots();
+    registerRevenueSlots();
+
+    expect(slotComponents('admin.calendar.freeSlotActions')).toHaveLength(1);
+    expect(slotComponents('admin.calendar.overlays')).toHaveLength(1);
+  });
 });
 
 describe('checkout slots wired into the Resumo step (REC-117, REC-24, REC-28)', () => {
