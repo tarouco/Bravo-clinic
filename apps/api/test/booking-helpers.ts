@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { eq } from 'drizzle-orm';
 import type { Db } from '../src/db/client';
-import { rooms, users } from '../src/db/schema';
+import { charges, rooms, users } from '../src/db/schema';
 import { createUser, loginAs, type CreateUserOptions } from './factories';
 
 /** A valid CPF (11 digits) derived from `seed`; different seeds give different numbers. */
@@ -48,6 +48,44 @@ export async function createStaff(db: Db, role: 'admin' | 'reception' = 'admin',
   const user = await createUser(db, { role, totp: true, name: `Equipe ${role}` });
   const cookie = await loginAs(db, user, { mfaVerified: true, ...(now !== undefined && { now }) });
   return { user, cookie };
+}
+
+/** Inserts a charge of a booking; `approved` by default, with an external id the sandbox can refund. */
+export async function createCharge(
+  db: Db,
+  input: {
+    userId: string;
+    bookingId: string | null;
+    purpose: string;
+    amountCents: number;
+    status?: string;
+    method?: string;
+    approvedAt?: Date | null;
+    externalId?: string | null;
+    expiresAt?: Date | null;
+    createdAt?: Date;
+  },
+) {
+  const status = input.status ?? 'approved';
+  const [charge] = await db
+    .insert(charges)
+    .values({
+      provider: 'sandbox',
+      externalId: input.externalId === undefined ? `sbx_${randomUUID()}` : input.externalId,
+      purpose: input.purpose,
+      method: input.method ?? 'pix',
+      userId: input.userId,
+      bookingId: input.bookingId,
+      amountCents: input.amountCents,
+      status,
+      approvedAt: status === 'approved' ? (input.approvedAt ?? new Date()) : null,
+      expiresAt: input.expiresAt ?? null,
+      idempotencyKey: `ch_${randomUUID()}`,
+      ...(input.createdAt !== undefined && { createdAt: input.createdAt }),
+    })
+    .returning();
+  if (charge === undefined) throw new Error('createCharge: insert returned no row');
+  return charge;
 }
 
 /** The seeded room with the given slug (default: Sala Principal). */

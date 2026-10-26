@@ -1027,12 +1027,12 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: preview equals CA-1, CA-2, CA-3, CA-4 for seeded bookings; a booking with snapshot `deposit_refundable=true` keeps CA-10 after the setting is changed to false (snapshot wins)
-- [ ] Tests: CA-1 cancel → `cancelled_by_tenant`, one refund of 8000 on the balance charge, occupancy inactive, outbox with `METHOD:CANCEL`; awaiting cancel → pending charge cancelled, no refund
-- [ ] Test: a fake step's `release` receives the cancellation result (`refundCents` 8000) on CA-1
-- [ ] Tests: clinic `refund` → refunds total paid with audit; clinic `credit` with deferred port → 422; with a fake live port → port called with 16000; reception → 403
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 10 tests pass
+- [x] Tests: preview equals CA-1, CA-2, CA-3, CA-4 for seeded bookings; a booking with snapshot `deposit_refundable=true` keeps CA-10 after the setting is changed to false (snapshot wins)
+- [x] Tests: CA-1 cancel → `cancelled_by_tenant`, one refund of 8000 on the balance charge, occupancy inactive, outbox with `METHOD:CANCEL`; awaiting cancel → pending charge cancelled, no refund
+- [x] Test: a fake step's `release` receives the cancellation result (`refundCents` 8000) on CA-1
+- [x] Tests: clinic `refund` → refunds total paid with audit; clinic `credit` with deferred port → 422; with a fake live port → port called with 16000; reception → 403
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 10 tests pass
 
 **Tests**: integration
 **Gate**: full

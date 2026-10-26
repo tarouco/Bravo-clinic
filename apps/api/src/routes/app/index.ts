@@ -2,6 +2,7 @@ import { Hono } from 'hono';
 import type { AppEnv } from '../../types';
 import { appAuthRoutes } from './auth';
 import { bookingRoutes } from './bookings';
+import { cancelRoutes } from './cancel';
 import { cardRoutes } from './cards';
 import { meRoutes } from './me';
 import { paymentRoutes } from './payments';
@@ -14,6 +15,7 @@ export function appRoutes(): Hono<AppEnv> {
   app.route('/auth', appAuthRoutes());
   app.route('/', bookingRoutes());
   app.route('/', rescheduleRoutes());
+  app.route('/', cancelRoutes());
   app.route('/', paymentRoutes());
   app.route('/', cardRoutes());
   return app;

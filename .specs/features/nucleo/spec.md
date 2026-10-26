@@ -722,7 +722,7 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-03 | P1: Booking vocabulary and contracts | Tasks | T1 | Implementing |
 | NUC-04 | P1: Booking vocabulary and contracts | Tasks | T1, T5 | Implementing |
 | NUC-05 | P1: Booking vocabulary and contracts | Tasks | T5, T20, T23 | Implementing |
-| NUC-06 | P1: Booking vocabulary and contracts | Tasks | T23, T26 | In Tasks |
+| NUC-06 | P1: Booking vocabulary and contracts | Tasks | T23, T26 | Implementing |
 | NUC-07 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
 | NUC-08 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
 | NUC-09 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
@@ -866,10 +866,10 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-147 | P1: Reschedule and cancel | Tasks | T22, T26 | Implementing |
 | NUC-148 | P1: Reschedule and cancel | Tasks | T22, T23 | Implementing |
 | NUC-149 | P1: Reschedule and cancel | Tasks | T22 | Implementing |
-| NUC-150 | P1: Reschedule and cancel | Tasks | T23 | In Tasks |
-| NUC-151 | P1: Reschedule and cancel | Tasks | T23 | In Tasks |
-| NUC-152 | P1: Reschedule and cancel | Tasks | T23 | In Tasks |
-| NUC-153 | P1: Reschedule and cancel | Tasks | T23 | In Tasks |
+| NUC-150 | P1: Reschedule and cancel | Tasks | T23 | Implementing |
+| NUC-151 | P1: Reschedule and cancel | Tasks | T23 | Implementing |
+| NUC-152 | P1: Reschedule and cancel | Tasks | T23 | Implementing |
+| NUC-153 | P1: Reschedule and cancel | Tasks | T23 | Implementing |
 | NUC-154 | P1: Reschedule and cancel | Tasks | T41 | In Tasks |
 | NUC-155 | P1: Reschedule and cancel | Tasks | T41 | In Tasks |
 | NUC-156 | P1: Reschedule and cancel | Tasks | T41 | In Tasks |
@@ -891,7 +891,7 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-172 | P1: Policies panel | Tasks | T10 | Implementing |
 | NUC-173 | P1: Policies panel | Tasks | T10 | Implementing |
 | NUC-174 | P1: Policies panel | Tasks | T10 | Implementing |
-| NUC-175 | P1: Policies panel | Tasks | T23 | In Tasks |
+| NUC-175 | P1: Policies panel | Tasks | T23 | Implementing |
 | NUC-176 | P1: Policies panel | Tasks | T48 | In Tasks |
 | NUC-177 | P1: Bookings list and CSV export | Tasks | T25 | In Tasks |
 | NUC-178 | P1: Bookings list and CSV export | Tasks | T25 | In Tasks |
@@ -926,7 +926,7 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-207 | P1: Book and pay the sinal | Tasks | T20 | Implementing |
 | NUC-208 | P1: Gateway-independent payments | Tasks | T15, T16 | Implementing |
 | NUC-209 | P1: Extension points | Tasks | T6, T17, T18 | Implementing |
-| NUC-210 | P1: Extension points | Tasks | T6, T23 | In Tasks |
+| NUC-210 | P1: Extension points | Tasks | T6, T23 | Implementing |
 
 **ID format:** `NUC-NN`.
 
