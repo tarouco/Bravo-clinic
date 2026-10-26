@@ -445,12 +445,12 @@ T48 → T50
 
 **Done when**:
 
-- [ ] After every operation `minutes_balance` equals the ledger sum (asserted by SQL)
-- [ ] Adjust +30 with justification writes entry and audit before/after; adjust making balance negative → `INSUFFICIENT_BALANCE`
-- [ ] Two parallel debits of 700 on a 1200 balance → one succeeds, one `INSUFFICIENT_BALANCE`
-- [ ] Expire lots with `expires_at ≤ now` writes `expiry` and zeroes remaining; second run changes 0 rows
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 10 new tests pass
+- [x] After every operation `minutes_balance` equals the ledger sum (asserted by SQL)
+- [x] Adjust +30 with justification writes entry and audit before/after; adjust making balance negative → `INSUFFICIENT_BALANCE`
+- [x] Two parallel debits of 700 on a 1200 balance → one succeeds, one `INSUFFICIENT_BALANCE`
+- [x] Expire lots with `expires_at ≤ now` writes `expiry` and zeroes remaining; second run changes 0 rows
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 10 new tests pass
 
 **Tests**: integration
 **Gate**: full
