@@ -16,6 +16,7 @@ import {
   bookingEvents,
   bookings,
   charges,
+  emailOutbox,
   refunds,
   roomOccupancy,
 } from '../../db/schema';
@@ -83,6 +84,16 @@ async function paidBooking() {
   return { user, row, deposit, balance };
 }
 
+/** NUC-153: the customer is told at once, with a METHOD:CANCEL invitation. */
+async function expectCustomerCancelMail(email: string) {
+  const mails = await db.select().from(emailOutbox);
+  expect(mails.map((m) => [m.template, m.toAddress])).toEqual([['booking.cancelled', email]]);
+  const attachment = (mails[0]?.attachments as { contentBase64: string }[])[0];
+  expect(Buffer.from(attachment?.contentBase64 ?? '', 'base64').toString('utf8')).toContain(
+    'METHOD:CANCEL',
+  );
+}
+
 const cancel = (cookie: string, id: string, body: Record<string, unknown>, app = buildApp()) =>
   send(app, 'POST', `/admin/bookings/${id}/cancel`, { cookie, body });
 
@@ -118,7 +129,7 @@ describe('GET /admin/bookings/:id/cancellation-preview (NUC-153)', () => {
 describe('POST /admin/bookings/:id/cancel (NUC-153)', () => {
   it('refunds everything paid, newest charge first, audits it and notifies the customer', async () => {
     const admin = await createStaff(db, 'admin', NOW);
-    const { row, deposit, balance } = await paidBooking();
+    const { row, deposit, balance, user } = await paidBooking();
 
     const res = await cancel(admin.cookie, row.id, {
       reason: 'Sala em manutenção',
@@ -148,6 +159,7 @@ describe('POST /admin/bookings/:id/cancel (NUC-153)', () => {
       status: 'cancelled_by_clinic',
       cancelReason: 'Sala em manutenção',
     });
+    await expectCustomerCancelMail(user.email);
   });
 
   it('refuses the credit resolution while the port is deferred and cancels nothing', async () => {
@@ -240,6 +252,7 @@ describe('POST /admin/bookings/:id/cancel (NUC-153)', () => {
       fromStatus: 'awaiting_payment',
       toStatus: 'cancelled_by_clinic',
     });
+    await expectCustomerCancelMail(user.email);
   });
 
   it('answers 422 for the minutes resolution on a booking paid in money, and 403 to reception', async () => {
