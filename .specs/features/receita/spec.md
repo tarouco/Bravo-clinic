@@ -641,15 +641,15 @@
 | REC-130 | P1: Admin coupons screen | Tasks | T11 | Implementing |
 | REC-131 | P1: Admin coupons screen | Tasks | T11, T42 | Implementing |
 | REC-132 | P1: Admin coupons screen | Tasks | T11 | Implementing |
-| REC-133 | P1: Slot discounts | Tasks | T12 | In Tasks |
+| REC-133 | P1: Slot discounts | Tasks | T12 | Implementing |
 | REC-134 | P1: Slot discounts | Tasks | T2, T12 | Implementing |
 | REC-135 | P1: Slot discounts | Tasks | T8, T12 | Implementing |
 | REC-136 | P1: Slot discounts | Tasks | T16, T45 | In Tasks |
-| REC-137 | P1: Slot discounts | Tasks | T12, T45 | In Tasks |
-| REC-138 | P1: Slot discounts | Tasks | T12, T16 | In Tasks |
-| REC-139 | P1: Slot discounts | Tasks | T12 | In Tasks |
-| REC-140 | P1: Slot discounts | Tasks | T12 | In Tasks |
-| REC-141 | P1: Slot discounts | Tasks | T12 | In Tasks |
+| REC-137 | P1: Slot discounts | Tasks | T12, T45 | Implementing |
+| REC-138 | P1: Slot discounts | Tasks | T12, T16 | Implementing |
+| REC-139 | P1: Slot discounts | Tasks | T12 | Implementing |
+| REC-140 | P1: Slot discounts | Tasks | T12 | Implementing |
+| REC-141 | P1: Slot discounts | Tasks | T12 | Implementing |
 | REC-142 | P1: Slot discounts | Tasks | T4 | Implementing |
 | REC-143 | P1: Perfil → Compras | Tasks | T31, T38 | In Tasks |
 | REC-144 | P1: Perfil → Compras | Tasks | T38 | In Tasks |

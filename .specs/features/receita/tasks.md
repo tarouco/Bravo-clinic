@@ -503,12 +503,12 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Tue 19:00–22:00 at 15% on 3 rooms with a booking 20:00–21:00 (cleanup 30) in one room → that room gets 19:00–20:00 and 21:30–22:00, `skipped` lists 20:00–21:30, the other rooms get 19:00–22:00
-- [ ] Misaligned / past / outside window / percent 0 → 422; overlap → 409 "Já existe desconto neste horário"
-- [ ] `consumeForBooking` for a 19:00–20:00 booking on a 19:00–22:00 discount leaves an active 20:00–22:00 part
-- [ ] Remove sets `removed_at` + audit; list excludes parts ending ≤ now; reception POST → 403
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 12 new tests pass
+- [x] Tue 19:00–22:00 at 15% on 3 rooms with a booking 20:00–21:00 (cleanup 30) in one room → that room gets 19:00–20:00 and 21:30–22:00, `skipped` lists 20:00–21:30, the other rooms get 19:00–22:00
+- [x] Misaligned / past / outside window / percent 0 → 422; overlap → 409 "Já existe desconto neste horário"
+- [x] `consumeForBooking` for a 19:00–20:00 booking on a 19:00–22:00 discount leaves an active 20:00–22:00 part
+- [x] Remove sets `removed_at` + audit; list excludes parts ending ≤ now; reception POST → 403
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 12 new tests pass
 
 **Tests**: integration
 **Gate**: full
