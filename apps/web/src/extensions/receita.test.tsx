@@ -37,6 +37,13 @@ describe('registerRevenueSlots (AD-031)', () => {
     expect(slotComponents('checkout.summary.credits')).toHaveLength(1);
     expect(slotComponents('checkout.summary.payWith')).toHaveLength(1);
   });
+
+  it('fills the admin category forms slot once', () => {
+    registerRevenueSlots();
+    registerRevenueSlots();
+
+    expect(slotComponents('admin.categories.forms')).toHaveLength(1);
+  });
 });
 
 describe('checkout slots wired into the Resumo step (REC-117, REC-24, REC-28)', () => {

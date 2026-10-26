@@ -1,6 +1,7 @@
 import { CouponField } from '../components/revenue/CouponField';
 import { CreditsToggle } from '../components/revenue/CreditsToggle';
 import { PackagePaymentOption } from '../components/revenue/PackagePaymentOption';
+import { PackageCategoryForms } from '../features/admin-categories/PackageCategoryForms';
 import { PackagesSection } from '../features/purchases/PackagesSection';
 import { registerSlot, slotComponents, type SlotComponent, type SlotName } from './slots';
 
@@ -12,6 +13,7 @@ const REGISTRATIONS: readonly (readonly [SlotName, SlotComponent])[] = [
   ['checkout.summary.credits', CreditsToggle],
   ['checkout.summary.payWith', PackagePaymentOption],
   ['pricing.packages', PackagesSection],
+  ['admin.categories.forms', PackageCategoryForms],
 ];
 
 export function registerRevenueSlots(): void {

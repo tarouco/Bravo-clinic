@@ -1411,10 +1411,10 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Typing 1.600,00 and 20 h shows "R$ 80,00/h"; Mon–Fri 07:00–09:30 at R$ 280,00 shows "R$ 112,00/h" and "20–22 ocorrências · R$ 5.600,00 – R$ 6.160,00"
-- [ ] 409 response shows the REC-05 message above the form
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 new tests pass
+- [x] Typing 1.600,00 and 20 h shows "R$ 80,00/h"; Mon–Fri 07:00–09:30 at R$ 280,00 shows "R$ 112,00/h" and "20–22 ocorrências · R$ 5.600,00 – R$ 6.160,00"
+- [x] 409 response shows the REC-05 message above the form
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 new tests pass
 
 **Tests**: unit
 **Gate**: quick
