@@ -631,16 +631,16 @@
 | REC-120 | P1: Coupons in checkout | Tasks | T4, T16 | Implementing |
 | REC-121 | P1: Coupons in checkout | Tasks | T33 | In Tasks |
 | REC-122 | P1: Coupons in checkout | Tasks | T16 | In Tasks |
-| REC-123 | P1: Coupons in checkout | Tasks | T11 | In Tasks |
-| REC-124 | P1: Coupons in checkout | Tasks | T11, T16 | In Tasks |
+| REC-123 | P1: Coupons in checkout | Tasks | T11 | Implementing |
+| REC-124 | P1: Coupons in checkout | Tasks | T11, T16 | Implementing |
 | REC-125 | P1: Coupons in checkout | Tasks | T19, T27 | In Tasks |
-| REC-126 | P1: Coupons in checkout | Tasks | T11 | In Tasks |
+| REC-126 | P1: Coupons in checkout | Tasks | T11 | Implementing |
 | REC-127 | P1: Coupons in checkout | Tasks | T2, T11 | Implementing |
 | REC-128 | P1: Admin coupons screen | Tasks | T42 | In Tasks |
 | REC-129 | P1: Admin coupons screen | Tasks | T2, T11, T43 | Implementing |
-| REC-130 | P1: Admin coupons screen | Tasks | T11 | In Tasks |
-| REC-131 | P1: Admin coupons screen | Tasks | T11, T42 | In Tasks |
-| REC-132 | P1: Admin coupons screen | Tasks | T11 | In Tasks |
+| REC-130 | P1: Admin coupons screen | Tasks | T11 | Implementing |
+| REC-131 | P1: Admin coupons screen | Tasks | T11, T42 | Implementing |
+| REC-132 | P1: Admin coupons screen | Tasks | T11 | Implementing |
 | REC-133 | P1: Slot discounts | Tasks | T12 | In Tasks |
 | REC-134 | P1: Slot discounts | Tasks | T2, T12 | Implementing |
 | REC-135 | P1: Slot discounts | Tasks | T8, T12 | Implementing |

@@ -474,12 +474,12 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Last use raced by two transactions → one reserved, other `COUPON_EXHAUSTED`; `uses_count` ends at `max_uses`
-- [ ] Release decrements `uses_count`; consume keeps it; consumed use cannot be released
-- [ ] First-booking coupon rejected for a second account with the same CPF that has a confirmed booking
-- [ ] Routes: create (code upper-cased, duplicate → 409 `CONFLICT`), edit `max_uses` below `uses_count` → 422, toggle, uses list; reception 403
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 16 new tests pass
+- [x] Last use raced by two transactions → one reserved, other `COUPON_EXHAUSTED`; `uses_count` ends at `max_uses`
+- [x] Release decrements `uses_count`; consume keeps it; consumed use cannot be released
+- [x] First-booking coupon rejected for a second account with the same CPF that has a confirmed booking
+- [x] Routes: create (code upper-cased, duplicate → 409 `CONFLICT`), edit `max_uses` below `uses_count` → 422, toggle, uses list; reception 403
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 16 new tests pass
 
 **Tests**: integration
 **Gate**: full
