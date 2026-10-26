@@ -1,5 +1,5 @@
 import type { BookingStatus, Cents } from '@bravo/core';
-import { and, eq, sql } from 'drizzle-orm';
+import { and, eq, inArray, sql } from 'drizzle-orm';
 import type { Tx } from '../../db/client';
 import {
   bookingRescheduleRequests,
@@ -232,7 +232,9 @@ async function applyBookingEffects(
     .where(
       and(
         eq(bookingRescheduleRequests.chargeId, charge.id),
-        eq(bookingRescheduleRequests.status, 'pending'),
+        // An expired or cancelled request still owns its charge: a late approval is applied if
+        // the slot is free, else refunded (NUC-147).
+        inArray(bookingRescheduleRequests.status, ['pending', 'expired', 'cancelled']),
       ),
     );
   if (request !== undefined) {
@@ -240,7 +242,11 @@ async function applyBookingEffects(
     if (rescheduleRequestHook.apply === null) {
       logger.warn('reschedule request payment without an applier', { requestId: request.id });
     } else {
-      await rescheduleRequestHook.apply(tx, ctx, request, 'approved');
+      const effects = await rescheduleRequestHook.apply(tx, ctx, request, 'approved', deps);
+      if (effects !== undefined) {
+        fx.emailIds.push(...effects.emailIds);
+        fx.refundIds.push(...effects.refundIds);
+      }
     }
     return 'applied';
   }
@@ -377,7 +383,9 @@ async function fail(
           eq(bookingRescheduleRequests.status, 'pending'),
         ),
       );
-    if (request !== undefined) await rescheduleRequestHook.apply?.(tx, ctx, request, 'failed');
+    if (request !== undefined) {
+      await rescheduleRequestHook.apply?.(tx, ctx, request, 'failed', deps);
+    }
     return 'applied';
   }
   await deps.registry.chargeHandlers[failed.purpose as ChargePurposeHandled]?.onFailed(

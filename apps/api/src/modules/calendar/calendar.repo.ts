@@ -94,9 +94,20 @@ function datesTouched(start: Date, until: Date): LocalDate[] {
  */
 export async function loadCalendarInputs(
   db: Db | Tx,
-  args: { roomId: string; from: LocalDate; to: LocalDate; now: Date },
+  args: {
+    roomId: string;
+    from: LocalDate;
+    to: LocalDate;
+    now: Date;
+    /** A reschedule validates its target ignoring the occupancy of the booking being moved. */
+    excludeBookingId?: string | undefined;
+  },
 ): Promise<CalendarInputs> {
   const { roomId, from, to, now } = args;
+  const notExcluded =
+    args.excludeBookingId === undefined
+      ? undefined
+      : sql`not (${roomOccupancy.kind} = 'booking' and ${roomOccupancy.refId} = ${args.excludeBookingId}::uuid)`;
   const rangeStart = localToUtc(addDays(from, -1), 0).toISOString();
   const rangeEnd = localToUtc(addDays(to, 1), 1440).toISOString();
 
@@ -139,6 +150,7 @@ export async function loadCalendarInputs(
         and(
           eq(roomOccupancy.roomId, roomId),
           eq(roomOccupancy.active, true),
+          notExcluded,
           sql`${roomOccupancy.period} && tstzrange(${rangeStart}::timestamptz, ${rangeEnd}::timestamptz, '[)')`,
           sql`not coalesce(${bookings.status} in (${sql.join(
             HOLDING_STATUSES.map((s) => sql`${s}`),

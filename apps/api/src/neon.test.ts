@@ -30,7 +30,36 @@ afterEach(() => {
   vi.unstubAllEnvs();
 });
 
+async function loadTriggers() {
+  vi.resetModules();
+  const { default: config } = await import('../../../neon');
+  return config.triggers ?? {};
+}
+
 describe('neon.ts', () => {
+  it('declares the six nucleo schedule triggers of the jobs routes (NUC-199)', async () => {
+    const every5 = (name: string) => ({
+      type: 'schedule',
+      function: 'api',
+      cron: '*/5 * * * *',
+      functionPath: `/jobs/${name}`,
+    });
+
+    expect(await loadTriggers()).toEqual({
+      'expire-holds': every5('expire-holds'),
+      'charge-balances': every5('charge-balances'),
+      reminders: every5('reminders'),
+      'no-shows': every5('no-shows'),
+      'reconcile-payments': every5('reconcile-payments'),
+      'materialize-blocks': {
+        type: 'schedule',
+        function: 'api',
+        cron: '0 8 * * *',
+        functionPath: '/jobs/materialize-blocks',
+      },
+    });
+  });
+
   it('declares the api function from apps/api/src/index.ts (FND-127)', async () => {
     const api = await loadFunction();
     expect(api.source).toBe('apps/api/src/index.ts');

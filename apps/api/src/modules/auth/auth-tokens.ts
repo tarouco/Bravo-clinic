@@ -11,17 +11,23 @@ const TTL_SECONDS: Record<AuthTokenPurpose, number> = {
   password_reset: 3_600,
 };
 
-/** Stores the sha256 of a fresh random token and returns the raw token (it only ever travels by e-mail). */
+/**
+ * Stores the sha256 of a fresh random token and returns the raw token (it only ever travels by
+ * e-mail). `ttlSeconds` overrides the lifetime of the purpose, e.g. the 72 h "create your
+ * password" link of an account made at the counter.
+ */
 export async function createAuthToken(
   tx: Tx,
-  input: { userId: string; purpose: AuthTokenPurpose; now: Date },
+  input: { userId: string; purpose: AuthTokenPurpose; now: Date; ttlSeconds?: number },
 ): Promise<string> {
   const token = randomToken();
   await tx.insert(authTokens).values({
     userId: input.userId,
     purpose: input.purpose,
     tokenHash: sha256Hex(token),
-    expiresAt: new Date(input.now.getTime() + TTL_SECONDS[input.purpose] * 1000),
+    expiresAt: new Date(
+      input.now.getTime() + (input.ttlSeconds ?? TTL_SECONDS[input.purpose]) * 1000,
+    ),
   });
   return token;
 }

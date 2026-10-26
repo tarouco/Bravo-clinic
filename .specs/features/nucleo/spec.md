@@ -721,15 +721,15 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-02 | P1: Booking vocabulary and contracts | Tasks | T1 | Implementing |
 | NUC-03 | P1: Booking vocabulary and contracts | Tasks | T1 | Implementing |
 | NUC-04 | P1: Booking vocabulary and contracts | Tasks | T1, T5 | Implementing |
-| NUC-05 | P1: Booking vocabulary and contracts | Tasks | T5, T20, T23 | In Tasks |
-| NUC-06 | P1: Booking vocabulary and contracts | Tasks | T23, T26 | In Tasks |
+| NUC-05 | P1: Booking vocabulary and contracts | Tasks | T5, T20, T23 | Implementing |
+| NUC-06 | P1: Booking vocabulary and contracts | Tasks | T23, T26 | Implementing |
 | NUC-07 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
 | NUC-08 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
 | NUC-09 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
 | NUC-10 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
 | NUC-11 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
 | NUC-12 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
-| NUC-13 | P1: Slot grid with cleanup | Tasks | T2, T20 | In Tasks |
+| NUC-13 | P1: Slot grid with cleanup | Tasks | T2, T20 | Implementing |
 | NUC-14 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
 | NUC-15 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
 | NUC-16 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
@@ -755,7 +755,7 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-36 | P1: Business hours and calendar parameters | Tasks | T10 | Implementing |
 | NUC-37 | P1: Business hours and calendar parameters | Tasks | T10 | Implementing |
 | NUC-38 | P1: Business hours and calendar parameters | Tasks | T10 | Implementing |
-| NUC-39 | P1: Business hours and calendar parameters | Tasks | T24 | In Tasks |
+| NUC-39 | P1: Business hours and calendar parameters | Tasks | T24 | Implementing |
 | NUC-40 | P1: Business hours and calendar parameters | Tasks | T43 | In Tasks |
 | NUC-41 | P1: Business hours and calendar parameters | Tasks | T43 | In Tasks |
 | NUC-42 | P2: Drag-edit business hours | Tasks | T43 | In Tasks |
@@ -773,7 +773,7 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-54 | P1: Manual blocks with tags | Tasks | T12 | Implementing |
 | NUC-55 | P1: Manual blocks with tags | Tasks | T12 | Implementing |
 | NUC-56 | P1: Manual blocks with tags | Tasks | T12 | Implementing |
-| NUC-57 | P1: Manual blocks with tags | Tasks | T12, T26 | In Tasks |
+| NUC-57 | P1: Manual blocks with tags | Tasks | T12, T26 | Implementing |
 | NUC-58 | P1: Manual blocks with tags | Tasks | T12 | Implementing |
 | NUC-59 | P1: Manual blocks with tags | Tasks | T12 | Implementing |
 | NUC-60 | P1: Manual blocks with tags | Tasks | T45 | In Tasks |
@@ -786,7 +786,7 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-67 | P1: Booking categories and price table | Tasks | T13 | Implementing |
 | NUC-68 | P1: Booking categories and price table | Tasks | T13 | Implementing |
 | NUC-69 | P1: Booking categories and price table | Tasks | T13 | Implementing |
-| NUC-70 | P1: Booking categories and price table | Tasks | T20 | In Tasks |
+| NUC-70 | P1: Booking categories and price table | Tasks | T20 | Implementing |
 | NUC-71 | P1: Booking categories and price table | Tasks | T44 | In Tasks |
 | NUC-72 | P1: Booking categories and price table | Tasks | T44 | In Tasks |
 | NUC-73 | P1: Booking categories and price table | Tasks | T43 | In Tasks |
@@ -805,15 +805,15 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-86 | P1: Book and pay the sinal | Tasks | T9 | Implementing |
 | NUC-87 | P1: Book and pay the sinal | Tasks | T9 | Implementing |
 | NUC-88 | P1: Book and pay the sinal | Tasks | T9 | Implementing |
-| NUC-89 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |
-| NUC-90 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |
-| NUC-91 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |
-| NUC-92 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |
-| NUC-93 | P1: Book and pay the sinal | Tasks | T20, T49 | In Tasks |
-| NUC-94 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |
+| NUC-89 | P1: Book and pay the sinal | Tasks | T20 | Implementing |
+| NUC-90 | P1: Book and pay the sinal | Tasks | T20 | Implementing |
+| NUC-91 | P1: Book and pay the sinal | Tasks | T20 | Implementing |
+| NUC-92 | P1: Book and pay the sinal | Tasks | T20 | Implementing |
+| NUC-93 | P1: Book and pay the sinal | Tasks | T20, T49 | Implementing |
+| NUC-94 | P1: Book and pay the sinal | Tasks | T20 | Implementing |
 | NUC-95 | P1: Book and pay the sinal | Tasks | T17, T20 | Implementing |
-| NUC-96 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |
-| NUC-97 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |
+| NUC-96 | P1: Book and pay the sinal | Tasks | T20 | Implementing |
+| NUC-97 | P1: Book and pay the sinal | Tasks | T20 | Implementing |
 | NUC-98 | P1: Book and pay the sinal | Tasks | T30, T37 | In Tasks |
 | NUC-99 | P1: Book and pay the sinal | Tasks | T32, T37 | In Tasks |
 | NUC-100 | P1: Book and pay the sinal | Tasks | T31, T38 | In Tasks |
@@ -846,55 +846,55 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-127 | P1: Gateway-independent payments | Tasks | T19 | Implementing |
 | NUC-128 | P1: Gateway-independent payments | Tasks | T15, T19 | Implementing |
 | NUC-129 | P1: Gateway-independent payments | Tasks | T19 | Implementing |
-| NUC-130 | P1: Balance charge, reminders and deadline | Tasks | T27 | In Tasks |
-| NUC-131 | P1: Balance charge, reminders and deadline | Tasks | T27 | In Tasks |
-| NUC-132 | P1: Balance charge, reminders and deadline | Tasks | T27 | In Tasks |
-| NUC-133 | P1: Balance charge, reminders and deadline | Tasks | T27 | In Tasks |
+| NUC-130 | P1: Balance charge, reminders and deadline | Tasks | T27 | Implementing |
+| NUC-131 | P1: Balance charge, reminders and deadline | Tasks | T27 | Implementing |
+| NUC-132 | P1: Balance charge, reminders and deadline | Tasks | T27 | Implementing |
+| NUC-133 | P1: Balance charge, reminders and deadline | Tasks | T27 | Implementing |
 | NUC-134 | P1: Balance charge, reminders and deadline | Tasks | T17 | Implementing |
 | NUC-135 | P1: Balance charge, reminders and deadline | Tasks | T17 | Implementing |
 | NUC-136 | P1: Confirmation e-mails with .ics | Tasks | T14, T18 | Implementing |
 | NUC-137 | P1: Confirmation e-mails with .ics | Tasks | T14, T22, T23 | Implementing |
-| NUC-138 | P1: Confirmation e-mails with .ics | Tasks | T27 | In Tasks |
+| NUC-138 | P1: Confirmation e-mails with .ics | Tasks | T27 | Implementing |
 | NUC-139 | P1: Confirmation e-mails with .ics | Tasks | T14 | Implementing |
-| NUC-140 | P1: Confirmation e-mails with .ics | Tasks | T21 | In Tasks |
-| NUC-141 | P1: Reschedule and cancel | Tasks | T21 | In Tasks |
-| NUC-142 | P1: Reschedule and cancel | Tasks | T22 | In Tasks |
-| NUC-143 | P1: Reschedule and cancel | Tasks | T22 | In Tasks |
-| NUC-144 | P1: Reschedule and cancel | Tasks | T22 | In Tasks |
-| NUC-145 | P1: Reschedule and cancel | Tasks | T6, T22 | In Tasks |
-| NUC-146 | P1: Reschedule and cancel | Tasks | T22 | In Tasks |
-| NUC-147 | P1: Reschedule and cancel | Tasks | T22, T26 | In Tasks |
-| NUC-148 | P1: Reschedule and cancel | Tasks | T22, T23 | In Tasks |
-| NUC-149 | P1: Reschedule and cancel | Tasks | T22 | In Tasks |
-| NUC-150 | P1: Reschedule and cancel | Tasks | T23 | In Tasks |
-| NUC-151 | P1: Reschedule and cancel | Tasks | T23 | In Tasks |
-| NUC-152 | P1: Reschedule and cancel | Tasks | T23 | In Tasks |
-| NUC-153 | P1: Reschedule and cancel | Tasks | T23 | In Tasks |
+| NUC-140 | P1: Confirmation e-mails with .ics | Tasks | T21 | Implementing |
+| NUC-141 | P1: Reschedule and cancel | Tasks | T21 | Implementing |
+| NUC-142 | P1: Reschedule and cancel | Tasks | T22 | Implementing |
+| NUC-143 | P1: Reschedule and cancel | Tasks | T22 | Implementing |
+| NUC-144 | P1: Reschedule and cancel | Tasks | T22 | Implementing |
+| NUC-145 | P1: Reschedule and cancel | Tasks | T6, T22 | Implementing |
+| NUC-146 | P1: Reschedule and cancel | Tasks | T22 | Implementing |
+| NUC-147 | P1: Reschedule and cancel | Tasks | T22, T26 | Implementing |
+| NUC-148 | P1: Reschedule and cancel | Tasks | T22, T23 | Implementing |
+| NUC-149 | P1: Reschedule and cancel | Tasks | T22 | Implementing |
+| NUC-150 | P1: Reschedule and cancel | Tasks | T23 | Implementing |
+| NUC-151 | P1: Reschedule and cancel | Tasks | T23 | Implementing |
+| NUC-152 | P1: Reschedule and cancel | Tasks | T23 | Implementing |
+| NUC-153 | P1: Reschedule and cancel | Tasks | T23 | Implementing |
 | NUC-154 | P1: Reschedule and cancel | Tasks | T41 | In Tasks |
 | NUC-155 | P1: Reschedule and cancel | Tasks | T41 | In Tasks |
 | NUC-156 | P1: Reschedule and cancel | Tasks | T41 | In Tasks |
-| NUC-157 | P1: Gestão de Reservas operations | Tasks | T25 | In Tasks |
+| NUC-157 | P1: Gestão de Reservas operations | Tasks | T25 | Implementing |
 | NUC-158 | P1: Gestão de Reservas operations | Tasks | T33, T46 | In Tasks |
 | NUC-159 | P1: Gestão de Reservas operations | Tasks | T30, T46 | In Tasks |
 | NUC-160 | P1: Gestão de Reservas operations | Tasks | T46 | In Tasks |
-| NUC-161 | P1: Gestão de Reservas operations | Tasks | T24 | In Tasks |
-| NUC-162 | P1: Gestão de Reservas operations | Tasks | T24 | In Tasks |
-| NUC-163 | P1: Gestão de Reservas operations | Tasks | T24 | In Tasks |
-| NUC-164 | P1: Gestão de Reservas operations | Tasks | T24 | In Tasks |
-| NUC-165 | P1: Gestão de Reservas operations | Tasks | T24 | In Tasks |
-| NUC-166 | P1: Gestão de Reservas operations | Tasks | T26 | In Tasks |
-| NUC-167 | P1: Gestão de Reservas operations | Tasks | T24 | In Tasks |
-| NUC-168 | P1: Gestão de Reservas operations | Tasks | T28 | In Tasks |
-| NUC-169 | P1: Gestão de Reservas operations | Tasks | T25 | In Tasks |
+| NUC-161 | P1: Gestão de Reservas operations | Tasks | T24 | Implementing |
+| NUC-162 | P1: Gestão de Reservas operations | Tasks | T24 | Implementing |
+| NUC-163 | P1: Gestão de Reservas operations | Tasks | T24 | Implementing |
+| NUC-164 | P1: Gestão de Reservas operations | Tasks | T24 | Implementing |
+| NUC-165 | P1: Gestão de Reservas operations | Tasks | T24 | Implementing |
+| NUC-166 | P1: Gestão de Reservas operations | Tasks | T26 | Implementing |
+| NUC-167 | P1: Gestão de Reservas operations | Tasks | T24 | Implementing |
+| NUC-168 | P1: Gestão de Reservas operations | Tasks | T28 | Implementing |
+| NUC-169 | P1: Gestão de Reservas operations | Tasks | T25 | Implementing |
 | NUC-170 | P1: Gestão de Reservas operations | Tasks | T47 | In Tasks |
 | NUC-171 | P1: Gestão de Reservas operations | Tasks | T39 | In Tasks |
 | NUC-172 | P1: Policies panel | Tasks | T10 | Implementing |
 | NUC-173 | P1: Policies panel | Tasks | T10 | Implementing |
 | NUC-174 | P1: Policies panel | Tasks | T10 | Implementing |
-| NUC-175 | P1: Policies panel | Tasks | T23 | In Tasks |
+| NUC-175 | P1: Policies panel | Tasks | T23 | Implementing |
 | NUC-176 | P1: Policies panel | Tasks | T48 | In Tasks |
-| NUC-177 | P1: Bookings list and CSV export | Tasks | T25 | In Tasks |
-| NUC-178 | P1: Bookings list and CSV export | Tasks | T25 | In Tasks |
+| NUC-177 | P1: Bookings list and CSV export | Tasks | T25 | Implementing |
+| NUC-178 | P1: Bookings list and CSV export | Tasks | T25 | Implementing |
 | NUC-179 | P1: Bookings list and CSV export | Tasks | T31, T48 | In Tasks |
 | NUC-180 | P1: Public site pages | Tasks | T34 | In Tasks |
 | NUC-181 | P1: Public site pages | Tasks | T34 | In Tasks |
@@ -904,29 +904,29 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-185 | P1: Public site pages | Tasks | T36 | In Tasks |
 | NUC-186 | P1: Public site pages | Tasks | T36 | In Tasks |
 | NUC-187 | P1: Public site pages | Tasks | T38 | In Tasks |
-| NUC-188 | P1: Minhas reservas, agenda and profile | Tasks | T21 | In Tasks |
+| NUC-188 | P1: Minhas reservas, agenda and profile | Tasks | T21 | Implementing |
 | NUC-189 | P1: Minhas reservas, agenda and profile | Tasks | T40 | In Tasks |
 | NUC-190 | P1: Minhas reservas, agenda and profile | Tasks | T33, T40 | In Tasks |
 | NUC-191 | P1: Minhas reservas, agenda and profile | Tasks | T40 | In Tasks |
-| NUC-192 | P1: Minhas reservas, agenda and profile | Tasks | T21 | In Tasks |
+| NUC-192 | P1: Minhas reservas, agenda and profile | Tasks | T21 | Implementing |
 | NUC-193 | P1: Minhas reservas, agenda and profile | Tasks | T42 | In Tasks |
 | NUC-194 | P1: Minhas reservas, agenda and profile | Tasks | T42 | In Tasks |
-| NUC-195 | P1: Scheduled jobs | Tasks | T26 | In Tasks |
-| NUC-196 | P1: Scheduled jobs | Tasks | T26 | In Tasks |
-| NUC-197 | P1: Scheduled jobs | Tasks | T26 | In Tasks |
-| NUC-198 | P1: Scheduled jobs | Tasks | T28 | In Tasks |
-| NUC-199 | P1: Scheduled jobs | Tasks | T26, T50 | In Tasks |
-| NUC-200 | P1: Scheduled jobs | Tasks | T26 | In Tasks |
+| NUC-195 | P1: Scheduled jobs | Tasks | T26 | Implementing |
+| NUC-196 | P1: Scheduled jobs | Tasks | T26 | Implementing |
+| NUC-197 | P1: Scheduled jobs | Tasks | T26 | Implementing |
+| NUC-198 | P1: Scheduled jobs | Tasks | T28 | Implementing |
+| NUC-199 | P1: Scheduled jobs | Tasks | T26, T50 | Implementing |
+| NUC-200 | P1: Scheduled jobs | Tasks | T26 | Implementing |
 | NUC-201 | P1: Extension points | Tasks | T6 | Implementing |
 | NUC-202 | P1: Extension points | Tasks | T7, T32 | In Tasks |
 | NUC-203 | P1: Extension points | Tasks | T29 | In Tasks |
 | NUC-204 | P1: Extension points | Tasks | T11 | Implementing |
 | NUC-205 | P1: Extension points | Tasks | T6, T18, T23, T26 | Implementing |
 | NUC-206 | P2: Booking funnel analytics | Tasks | T29, T38 | In Tasks |
-| NUC-207 | P1: Book and pay the sinal | Tasks | T20 | In Tasks |
+| NUC-207 | P1: Book and pay the sinal | Tasks | T20 | Implementing |
 | NUC-208 | P1: Gateway-independent payments | Tasks | T15, T16 | Implementing |
 | NUC-209 | P1: Extension points | Tasks | T6, T17, T18 | Implementing |
-| NUC-210 | P1: Extension points | Tasks | T6, T23 | In Tasks |
+| NUC-210 | P1: Extension points | Tasks | T6, T23 | Implementing |
 
 **ID format:** `NUC-NN`.
 

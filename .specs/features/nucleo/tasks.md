@@ -937,13 +937,13 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: unverified → 403; no document → 422 `PROFILE_INCOMPLETE`; prices not reviewed → 409 `BOOKING_NOT_OPEN` for tenant; policy false → 422; old version → 409 `POLICY_CHANGED`; wrong expected total → 409 `PRICE_CHANGED` with quote
-- [ ] Test: PR-3 booking → 201 parsed by `bookingDetailSchema`, status `awaiting_payment`, hold = now + 15 min, occupancy upper = 20:30, 2 segments, snapshot version 1, code matches `^BRV-[A-Z2-7]{6}$`, consent `booking_policy` `policy-v1`
-- [ ] Test: 10 concurrent requests for the same slot → exactly one 201 and nine 409 `SLOT_TAKEN`; 4th awaiting hold → 429; stale hold overlapping the slot is expired in the same transaction and the new booking succeeds
-- [ ] Test: a fake credit step making `payNowCents` 0 → booking `confirmed` with no charge row and a `booking.confirmed` outbox row
-- [ ] Test: closing the date concurrently with a booking yields either the booking in `AFFECTED_BOOKINGS` or the booking rejected `closed`, never both missing
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 14 tests pass
+- [x] Tests: unverified → 403; no document → 422 `PROFILE_INCOMPLETE`; prices not reviewed → 409 `BOOKING_NOT_OPEN` for tenant; policy false → 422; old version → 409 `POLICY_CHANGED`; wrong expected total → 409 `PRICE_CHANGED` with quote
+- [x] Test: PR-3 booking → 201 parsed by `bookingDetailSchema`, status `awaiting_payment`, hold = now + 15 min, occupancy upper = 20:30, 2 segments, snapshot version 1, code matches `^BRV-[A-Z2-7]{6}$`, consent `booking_policy` `policy-v1`
+- [x] Test: 10 concurrent requests for the same slot → exactly one 201 and nine 409 `SLOT_TAKEN`; 4th awaiting hold → 429; stale hold overlapping the slot is expired in the same transaction and the new booking succeeds
+- [x] Test: a fake credit step making `payNowCents` 0 → booking `confirmed` with no charge row and a `booking.confirmed` outbox row
+- [x] Test: closing the date concurrently with a booking yields either the booking in `AFFECTED_BOOKINGS` or the booking rejected `closed`, never both missing
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 14 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -968,11 +968,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: tabs split upcoming/past/cancelled with the ordering of NUC-188 and `paymentStatus` labels; cursor pagination; other user's booking → 404
-- [ ] Tests: `actions.canReschedule` false with reason `too_late` at 23 h; `canPayBalance` true for deposit-paid booking; `.ics` content type `text/calendar` and UID = `ics_uid`
-- [ ] Tests: PATCH name/phone ok; document set when null; second document → 422; taken document → 409 `DOCUMENT_TAKEN`
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 10 tests pass
+- [x] Tests: tabs split upcoming/past/cancelled with the ordering of NUC-188 and `paymentStatus` labels; cursor pagination; other user's booking → 404
+- [x] Tests: `actions.canReschedule` false with reason `too_late` at 23 h; `canPayBalance` true for deposit-paid booking; `.ics` content type `text/calendar` and UID = `ics_uid`
+- [x] Tests: PATCH name/phone ok; document set when null; second document → 422; taken document → 409 `DOCUMENT_TAKEN`
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 10 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -997,12 +997,12 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: quote returns settlement for ST-1 and ST-3; RS-2/RS-3/RS-4 → 422 `POLICY_VIOLATION` with reason; target in cleanup → 422 `SLOT_UNAVAILABLE`
-- [ ] Tests: ST-2 move → occupancy moved, `reschedule_count` 1, `ics_sequence` +1, response `creditCents` 2300, `booking_events.data.creditGrant` `{ amountCents: 2300, status: 'deferred' }`, outbox `booking.rescheduled`
-- [ ] Tests: ST-3 → 202 with charge 14300, hold block on the new slot, booking unchanged; approving the charge applies the move (paid 19151, balance 4849); approving after the slot was taken refunds 14300
-- [ ] Tests: admin exception bypasses RS-5 with audit; `waive` writes `booking.difference_waived`; `add_to_balance` on a paid booking → `confirmed` with balance; package mode without handler → 422 `unsupported_payment_mode`
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 14 tests pass
+- [x] Tests: quote returns settlement for ST-1 and ST-3; RS-2/RS-3/RS-4 → 422 `POLICY_VIOLATION` with reason; target in cleanup → 422 `SLOT_UNAVAILABLE`
+- [x] Tests: ST-2 move → occupancy moved, `reschedule_count` 1, `ics_sequence` +1, response `creditCents` 2300, `booking_events.data.creditGrant` `{ amountCents: 2300, status: 'deferred' }`, outbox `booking.rescheduled`
+- [x] Tests: ST-3 → 202 with charge 14300, hold block on the new slot, booking unchanged; approving the charge applies the move (paid 19151, balance 4849); approving after the slot was taken refunds 14300
+- [x] Tests: admin exception bypasses RS-5 with audit; `waive` writes `booking.difference_waived`; `add_to_balance` on a paid booking → `confirmed` with balance; package mode without handler → 422 `unsupported_payment_mode`
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 14 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -1027,12 +1027,12 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: preview equals CA-1, CA-2, CA-3, CA-4 for seeded bookings; a booking with snapshot `deposit_refundable=true` keeps CA-10 after the setting is changed to false (snapshot wins)
-- [ ] Tests: CA-1 cancel → `cancelled_by_tenant`, one refund of 8000 on the balance charge, occupancy inactive, outbox with `METHOD:CANCEL`; awaiting cancel → pending charge cancelled, no refund
-- [ ] Test: a fake step's `release` receives the cancellation result (`refundCents` 8000) on CA-1
-- [ ] Tests: clinic `refund` → refunds total paid with audit; clinic `credit` with deferred port → 422; with a fake live port → port called with 16000; reception → 403
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 10 tests pass
+- [x] Tests: preview equals CA-1, CA-2, CA-3, CA-4 for seeded bookings; a booking with snapshot `deposit_refundable=true` keeps CA-10 after the setting is changed to false (snapshot wins)
+- [x] Tests: CA-1 cancel → `cancelled_by_tenant`, one refund of 8000 on the balance charge, occupancy inactive, outbox with `METHOD:CANCEL`; awaiting cancel → pending charge cancelled, no refund
+- [x] Test: a fake step's `release` receives the cancellation result (`refundCents` 8000) on CA-1
+- [x] Tests: clinic `refund` → refunds total paid with audit; clinic `credit` with deferred port → 422; with a fake live port → port called with 16000; reception → 403
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 10 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -1057,11 +1057,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: reception creates `awaiting_payment` (hold 15 min) and `pre_reserved` (hold 24 h default, 48 h when given) with source `admin` and outbox link `/pre-reserva/<token>`; reception `confirmManually` → 403; admin → `confirmed`, `payment_mode = 'manual'`, audit `booking.confirm_manual`, no balance schedule
-- [ ] Tests: resend rotates the token (old → 404, new → summary); expired hold token → 404
-- [ ] Tests: check-in at start − 61 min → 409 message; at start − 30 min → `checked_in_at` + audit; cleanup exception 0 with justification → occupancy upper = end; no justification → 422; reception → 403
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 12 tests pass
+- [x] Tests: reception creates `awaiting_payment` (hold 15 min) and `pre_reserved` (hold 24 h default, 48 h when given) with source `admin` and outbox link `/pre-reserva/<token>`; reception `confirmManually` → 403; admin → `confirmed`, `payment_mode = 'manual'`, audit `booking.confirm_manual`, no balance schedule
+- [x] Tests: resend rotates the token (old → 404, new → summary); expired hold token → 404
+- [x] Tests: check-in at start − 61 min → 409 message; at start − 30 min → `checked_in_at` + audit; cleanup exception 0 with justification → occupancy upper = end; no justification → 422; reception → 403
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 12 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -1086,12 +1086,12 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: events for a week return first/full names, cleanup end, blocks with tag, holidays; 43-day range → 422; status/room/category filters narrow results
-- [ ] Tests: list `q` by code, name (case-insensitive) and e-mail; page size 50 with `nextCursor`
-- [ ] Test: CSV bytes start with BOM, header exactly as NUC-178, `;` separator, "27/10/2026 17:30", "219,00"; 5 001 matching rows → 422 message
-- [ ] Tests: search needs ≥ 2 chars; create customer → tenant without password, verified e-mail, outbox `account.set_password`; duplicate e-mail → 409
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api` (phase end: Build gate)
-- [ ] Test count: ≥ 11 tests pass
+- [x] Tests: events for a week return first/full names, cleanup end, blocks with tag, holidays; 43-day range → 422; status/room/category filters narrow results
+- [x] Tests: list `q` by code, name (case-insensitive) and e-mail; page size 50 with `nextCursor`
+- [x] Test: CSV bytes start with BOM, header exactly as NUC-178, `;` separator, "27/10/2026 17:30", "219,00"; 5 001 matching rows → 422 message
+- [x] Tests: search needs ≥ 2 chars; create customer → tenant without password, verified e-mail, outbox `account.set_password`; duplicate e-mail → 409
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api` (phase end: Build gate)
+- [x] Test count: ≥ 11 tests pass
 
 **Tests**: integration
 **Gate**: build
@@ -1118,11 +1118,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: unverified request → 401 and no `job_runs`; verified (stubbed) → `job_runs` `ok` with stats; a job throwing → `error` row; concurrent second run → `{ skipped: true }`
-- [ ] Tests: a held `fixed_occurrence` booking past its hold is left untouched; expired awaiting booking → `expired`, occupancy inactive, pending charge `cancelled`, a fake step's `release` called; pre-reservation → `expired` + outbox `booking.pre_reservation_expired` + notifier event; pending reschedule request → `expired` with its hold block cancelled; expired idempotency rows deleted
-- [ ] Unit test (`neon.test.ts`) asserts the 6 triggers of NUC-199 with schedules and `functionPath`
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 10 tests pass
+- [x] Tests: unverified request → 401 and no `job_runs`; verified (stubbed) → `job_runs` `ok` with stats; a job throwing → `error` row; concurrent second run → `{ skipped: true }`
+- [x] Tests: a held `fixed_occurrence` booking past its hold is left untouched; expired awaiting booking → `expired`, occupancy inactive, pending charge `cancelled`, a fake step's `release` called; pre-reservation → `expired` + outbox `booking.pre_reservation_expired` + notifier event; pending reschedule request → `expired` with its hold block cancelled; expired idempotency rows deleted
+- [x] Unit test (`neon.test.ts`) asserts the 6 triggers of NUC-199 with schedules and `functionPath`
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 10 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -1147,11 +1147,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests (injected now = start − 48 h): saved card with consent → `booking_balance` saved_card charge; none → Pix expiring at start − 24 h + `booking.balance_charge`; declined card → Pix + `booking.balance_card_failed`; rerun creates no second charge
-- [ ] Test (now = start − 24 h, unpaid): `cancelled_nonpayment`, `paid_cents` unchanged (sinal retained), occupancy inactive, pending charge cancelled, outbox `booking.cancelled_nonpayment`
-- [ ] Tests: reminders at 48/36/26 h produce 3 rows total over repeated runs; booking reminders 24 h and 2 h once each; cancelled booking gets none
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 9 tests pass
+- [x] Tests (injected now = start − 48 h): saved card with consent → `booking_balance` saved_card charge; none → Pix expiring at start − 24 h + `booking.balance_charge`; declined card → Pix + `booking.balance_card_failed`; rerun creates no second charge
+- [x] Test (now = start − 24 h, unpaid): `cancelled_nonpayment`, `paid_cents` unchanged (sinal retained), occupancy inactive, pending charge cancelled, outbox `booking.cancelled_nonpayment`
+- [x] Tests: reminders at 48/36/26 h produce 3 rows total over repeated runs; booking reminders 24 h and 2 h once each; cancelled booking gets none
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 9 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -1176,10 +1176,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: confirmed booking at start + 31 min without check-in → `no_show`; checked-in after end → `completed`; at start + 29 min unchanged
-- [ ] Tests: pending sandbox charge whose stub status is approved → booking confirmed exactly as the webhook path; pending without external id at 11 min → `cancelled`; refund failing 5 times → `failed` + notifier `payment_issue`
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api` (phase end: Build gate)
-- [ ] Test count: ≥ 7 tests pass
+- [x] Tests: confirmed booking at start + 31 min without check-in → `no_show`; checked-in after end → `completed`; at start + 29 min unchanged
+- [x] Tests: pending sandbox charge whose stub status is approved → booking confirmed exactly as the webhook path; pending without external id at 11 min → `cancelled`; refund failing 5 times → `failed` + notifier `payment_issue`
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api` (phase end: Build gate)
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: integration
 **Gate**: build
