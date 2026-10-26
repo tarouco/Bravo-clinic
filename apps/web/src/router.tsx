@@ -21,6 +21,7 @@ import { AppHomePage } from './pages/app/AppHomePage';
 import { BookingDetailPage } from './pages/app/BookingDetailPage';
 import { CardsPage } from './pages/app/CardsPage';
 import { ComprasLayout, ComprasPage } from './pages/app/compras/ComprasPage';
+import { CreditosPage, HistoricoPage } from './pages/app/compras/CreditosHistoricoPages';
 import { HorasExtrasPage } from './pages/app/compras/HorasExtrasPage';
 import { MyBookingsPage } from './pages/app/MyBookingsPage';
 import { ProfilePage } from './pages/app/ProfilePage';
@@ -141,8 +142,8 @@ export const appRoutes: RouteObject[] = [
               { index: true, element: <ComprasPage /> },
               { path: 'assinaturas/:id/pagar', element: <ComprasPage /> },
               { path: 'horas-extras', element: <HorasExtrasPage /> },
-              placeholder(['creditos', 'Créditos']),
-              placeholder(['historico', 'Histórico de compras']),
+              { path: 'creditos', element: <CreditosPage /> },
+              { path: 'historico', element: <HistoricoPage /> },
             ],
           },
           ...appPlaceholders.map(placeholder),

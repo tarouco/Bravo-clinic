@@ -1327,10 +1327,10 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Créditos fixture shows "R$ 205,33 disponíveis", "Compensação de dia fechado", expiry date
-- [ ] Histórico fixture shows "Pacote 20h mensal · Renovação", "Pix", "R$ 1.600,00", "Aprovado" and a partially refunded row
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 5 new tests pass
+- [x] Créditos fixture shows "R$ 205,33 disponíveis", "Compensação de dia fechado", expiry date
+- [x] Histórico fixture shows "Pacote 20h mensal · Renovação", "Pix", "R$ 1.600,00", "Aprovado" and a partially refunded row
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 5 new tests pass
 
 **Tests**: unit
 **Gate**: quick
