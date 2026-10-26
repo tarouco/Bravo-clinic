@@ -1052,10 +1052,10 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Pacote 20h fixture renders "R$ 1.600,00", "R$ 80,00/h", "20 horas · mensal", link `/assinar/<id>`; Meio turno renders "Seg–Sex · 07:00–09:30" and "20–22 ocorrências · R$ 5.600,00 – R$ 6.160,00"
-- [ ] Meter for 750 of 1200 renders "12h 30min de 20h", `aria-valuenow=750`, `aria-valuemax=1200`
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 new tests pass
+- [x] Pacote 20h fixture renders "R$ 1.600,00", "R$ 80,00/h", "20 horas · mensal", link `/assinar/<id>`; Meio turno renders "Seg–Sex · 07:00–09:30" and "20–22 ocorrências · R$ 5.600,00 – R$ 6.160,00"
+- [x] Meter for 750 of 1200 renders "12h 30min de 20h", `aria-valuenow=750`, `aria-valuemax=1200`
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 new tests pass
 
 **Tests**: unit
 **Gate**: quick
