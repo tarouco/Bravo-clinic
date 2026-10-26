@@ -1025,10 +1025,10 @@ T48 → T50
 
 **Done when**:
 
-- [ ] A test parses every fixture with its contract schema
-- [ ] Hook tests (mocked `lib/api`) assert paths, query keys, invalidation after purchase/cancel/switch, and a UUID `Idempotency-Key` reused on retry of the same mutation call
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 14 new tests pass
+- [x] A test parses every fixture with its contract schema
+- [x] Hook tests (mocked `lib/api`) assert paths, query keys, invalidation after purchase/cancel/switch, and a UUID `Idempotency-Key` reused on retry of the same mutation call
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 14 new tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1052,10 +1052,10 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Pacote 20h fixture renders "R$ 1.600,00", "R$ 80,00/h", "20 horas · mensal", link `/assinar/<id>`; Meio turno renders "Seg–Sex · 07:00–09:30" and "20–22 ocorrências · R$ 5.600,00 – R$ 6.160,00"
-- [ ] Meter for 750 of 1200 renders "12h 30min de 20h", `aria-valuenow=750`, `aria-valuemax=1200`
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 new tests pass
+- [x] Pacote 20h fixture renders "R$ 1.600,00", "R$ 80,00/h", "20 horas · mensal", link `/assinar/<id>`; Meio turno renders "Seg–Sex · 07:00–09:30" and "20–22 ocorrências · R$ 5.600,00 – R$ 6.160,00"
+- [x] Meter for 750 of 1200 renders "12h 30min de 20h", `aria-valuenow=750`, `aria-valuemax=1200`
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 new tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1079,10 +1079,10 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Fixture renders "Compra", "Reserva BRV-…", "60 min + 18 min de excedente = 78 min", "−78 min" and the balance column
-- [ ] "Carregar mais" calls `fetchNextPage` when `nextCursor` exists; hidden otherwise
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 5 new tests pass
+- [x] Fixture renders "Compra", "Reserva BRV-…", "60 min + 18 min de excedente = 78 min", "−78 min" and the balance column
+- [x] "Carregar mais" calls `fetchNextPage` when `nextCursor` exists; hidden otherwise
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 5 new tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1106,10 +1106,10 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Each rejection reason fixture shows its REC-117 message; the coupon-vs-slot fixture shows the REC-121 note
-- [ ] Typing "bravo10" submits "BRAVO10"; remove clears the code; toggle emits `useCredits`
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 8 new tests pass
+- [x] Each rejection reason fixture shows its REC-117 message; the coupon-vs-slot fixture shows the REC-121 note
+- [x] Typing "bravo10" submits "BRAVO10"; remove clears the code; toggle emits `useCredits`
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 8 new tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -1133,11 +1133,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Sufficient fixture shows "Esta reserva vai debitar 78 min do seu pacote" and selecting emits `payWith:'package'`
-- [ ] Insufficient fixture: option disabled, "Saldo insuficiente: esta reserva debita 78 min e você tem 40 min", link to `/app/compras/horas-extras`, "Pagar esta reserva" emits `payWith:'money'`
-- [ ] `packageOption: null` renders nothing; nucleo `BookingSummary` tests still pass
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 new tests pass
+- [x] Sufficient fixture shows "Esta reserva vai debitar 78 min do seu pacote" and selecting emits `payWith:'package'`
+- [x] Insufficient fixture: option disabled, "Saldo insuficiente: esta reserva debita 78 min e você tem 40 min", link to `/app/compras/horas-extras`, "Pagar esta reserva" emits `payWith:'money'`
+- [x] `packageOption: null` renders nothing; nucleo `BookingSummary` tests still pass
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 new tests pass
 
 **Tests**: unit
 **Gate**: quick
