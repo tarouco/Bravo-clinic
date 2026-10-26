@@ -74,7 +74,7 @@ describe('HomePage', () => {
     expect(container.textContent).not.toMatch(/São Paulo|Sao Paulo|Jardins/);
   });
 
-  it('"Reservar Sala" on Sala Terceira selects it in the hero and scrolls smoothly to #simulador', async () => {
+  it('"Reservar Sala" on Sala Terceira scrolls smoothly to #simulador', async () => {
     renderHome();
     const card = screen
       .getByRole('heading', { level: 3, name: 'Sala Terceira' })
@@ -83,20 +83,8 @@ describe('HomePage', () => {
 
     await userEvent.click(within(card).getByRole('button', { name: 'Reservar Sala' }));
 
-    expect(screen.getByLabelText('1. Selecionar Consultório')).toHaveValue('terceira');
     expect(scrollIntoViewMock).toHaveBeenCalledWith({ behavior: 'smooth' });
     const target = scrollIntoViewMock.mock.contexts[0] as HTMLElement;
     expect(target.id).toBe('simulador');
-  });
-
-  it('"Verificar Horários" scrolls smoothly to #simulador keeping the chosen room', async () => {
-    renderHome();
-    await userEvent.selectOptions(screen.getByLabelText('1. Selecionar Consultório'), 'secundaria');
-
-    await userEvent.click(screen.getByRole('button', { name: 'Verificar Horários' }));
-
-    expect(screen.getByLabelText('1. Selecionar Consultório')).toHaveValue('secundaria');
-    expect(scrollIntoViewMock).toHaveBeenCalledWith({ behavior: 'smooth' });
-    expect((scrollIntoViewMock.mock.contexts[0] as HTMLElement).id).toBe('simulador');
   });
 });

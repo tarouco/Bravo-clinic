@@ -55,6 +55,7 @@ import { PreReservationPage } from './pages/public/PreReservationPage';
 import { SandboxCheckoutPage } from './pages/public/SandboxCheckoutPage';
 import { SubscribePage } from './pages/public/SubscribePage';
 import { PricingPage } from './pages/public/PricingPage';
+import { StructurePage } from './pages/public/StructurePage';
 import { RoomPage } from './pages/public/rooms/RoomPage';
 import { RoomsPage } from './pages/public/rooms/RoomsPage';
 
@@ -117,6 +118,7 @@ export const appRoutes: RouteObject[] = [
       { index: true, element: <HomePage /> },
       { path: 'salas', element: <RoomsPage /> },
       { path: 'salas/:slug', element: <RoomPage /> },
+      { path: 'estrutura', element: <StructurePage /> },
       { path: 'precos', element: <PricingPage /> },
       { path: 'politicas', element: <PoliciesPage /> },
       { path: 'contato', element: <ContactPage /> },

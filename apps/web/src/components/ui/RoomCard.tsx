@@ -19,6 +19,8 @@ export interface RoomCardProps {
   /** Lowest hourly rate, in integer cents; null when no hourly category is active. */
   fromPriceCents: number | null;
   onReserve: () => void;
+  /** Photo-led card: taller cover, no description or equipment list (home showcase). */
+  compact?: boolean;
 }
 
 export function RoomCard({
@@ -31,12 +33,13 @@ export function RoomCard({
   equipment,
   fromPriceCents,
   onReserve,
+  compact = false,
 }: RoomCardProps) {
   return (
     <article className="flex flex-col overflow-hidden rounded-xl bg-surface-raised shadow-lg transition-transform duration-300 hover:-translate-y-1">
-      <div className="relative h-64 w-full">
+      <div className={`relative w-full ${compact ? 'aspect-[4/3]' : 'h-64'}`}>
         <img
-          className="h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover"
           src={imageUrl ?? ROOM_PLACEHOLDER_SRC}
           alt={imageAlt ?? `Foto da ${name}`}
         />
@@ -60,15 +63,19 @@ export function RoomCard({
             ))}
           </div>
           <h3 className="mb-space-xs font-heading text-heading text-ink">{name}</h3>
-          <p className="font-small text-small text-ink-muted">{description}</p>
-          <ul className="mt-space-md space-y-space-xs font-small text-small text-ink-muted">
-            {equipment.map((item) => (
-              <li key={item} className="flex items-center gap-space-xs">
-                <Icon as={CircleCheck} size={16} className="shrink-0 text-bronze" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
+          {compact ? null : (
+            <>
+              <p className="font-small text-small text-ink-muted">{description}</p>
+              <ul className="mt-space-md space-y-space-xs font-small text-small text-ink-muted">
+                {equipment.map((item) => (
+                  <li key={item} className="flex items-center gap-space-xs">
+                    <Icon as={CircleCheck} size={16} className="shrink-0 text-bronze" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
         </div>
         <div className="-mx-space-lg -mb-space-lg mt-space-md flex items-center justify-between bg-surface-container-low p-space-lg">
           {fromPriceCents === null ? (

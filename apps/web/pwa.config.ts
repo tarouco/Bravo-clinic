@@ -29,6 +29,8 @@ export const pwaOptions: Partial<VitePWAOptions> = {
   },
   workbox: {
     globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,woff2}'],
+    // Marketing photos and video posters load on demand; precaching them costs every visitor ~600 KB.
+    globIgnores: ['images/**', 'videos/**'],
     cleanupOutdatedCaches: true,
     // Web push handler (GES-82): public/push-sw.js runs inside the generated worker.
     importScripts: ['push-sw.js'],
