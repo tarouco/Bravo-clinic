@@ -16,6 +16,7 @@ import { availabilityKeys, useDayAvailability } from '../availability/api';
 import { useCatalog, catalogKeys, usePolicies } from '../catalog/api';
 import { useClinicConfig } from '../config/useClinicConfig';
 import { bookingKeys, useCreateBooking, useQuote } from './api';
+import { optionsToRequest, type CheckoutOptions } from './checkout-options';
 import type { FlowSelection } from './flow-params';
 
 export interface SummaryStepProps {
@@ -26,7 +27,11 @@ export interface SummaryStepProps {
 }
 
 /** Quote request for the selection; a block is priced over the window the API reports for it. */
-function useQuoteRequest(selection: FlowSelection, addons: Record<string, unknown>) {
+function useQuoteRequest(
+  selection: FlowSelection,
+  addons: Record<string, unknown>,
+  options: CheckoutOptions,
+) {
   const day = useDayAvailability(selection.sala ?? undefined, selection.data ?? undefined);
   const { sala, data, bloco, inicio, fim } = selection;
   if (!sala || !data) return { request: null, pending: false };
@@ -47,6 +52,7 @@ function useQuoteRequest(selection: FlowSelection, addons: Record<string, unknow
     startMinute,
     endMinute,
     ...(bloco ? { blockCategoryId: bloco } : {}),
+    ...optionsToRequest(options),
     ...(Object.keys(addons).length > 0 ? { addons } : {}),
   };
   return { request, pending: false };
@@ -64,7 +70,12 @@ export function SummaryStep({ selection, onBack, onChooseAnotherTime }: SummaryS
   const { whatsappE164 } = useClinicConfig();
 
   const [addons, setAddons] = useState<Record<string, unknown>>({});
-  const { request, pending } = useQuoteRequest(selection, addons);
+  // Coupon, credits and "pagar com pacote" chosen in the extension slots (receita).
+  const [options, setOptions] = useState<CheckoutOptions>({});
+  const changeOptions = (patch: CheckoutOptions) => {
+    setOptions((current) => ({ ...current, ...patch }));
+  };
+  const { request, pending } = useQuoteRequest(selection, addons, options);
   const quoteQuery = useQuote(request);
   const catalog = useCatalog();
   const policies = usePolicies();
@@ -208,9 +219,18 @@ export function SummaryStep({ selection, onBack, onChooseAnotherTime }: SummaryS
         </ul>
       ) : null}
 
-      <Slot name="checkout.summary.discount" props={{ quote }} />
-      <Slot name="checkout.summary.credits" props={{ quote }} />
-      <Slot name="checkout.summary.payWith" props={{ quote }} />
+      <Slot
+        name="checkout.summary.discount"
+        props={{ quote, options, onOptionsChange: changeOptions }}
+      />
+      <Slot
+        name="checkout.summary.credits"
+        props={{ quote, options, onOptionsChange: changeOptions }}
+      />
+      <Slot
+        name="checkout.summary.payWith"
+        props={{ quote, options, onOptionsChange: changeOptions }}
+      />
       <Slot name="checkout.summary.extras" props={{ draft: quote, onChange: setAddons }} />
 
       <PolicyAcceptance

@@ -18,8 +18,10 @@ import {
   subscriptionSchema,
   switchQuoteSchema,
   cancelPreviewSchema,
+  quoteSchema,
+  type Quote,
 } from '@bravo/core';
-import { ID } from '../../test/fixtures/nucleo';
+import { ID, quote } from '../../test/fixtures/nucleo';
 import { parseFixture } from '../../test/fixtures/parse';
 
 // Receita contract fixtures for the web tests (AD-035, Lane B). Every fixture is parsed by its
@@ -558,21 +560,35 @@ const baseRevenue = {
   package: noPackage,
 };
 
-/** `RevenueQuote` as the web reads it; overrides replace whole sections. */
-export function buildRevenueQuote(overrides: RevenueQuoteOverrides = {}) {
-  return parseFixture(revenueQuoteSchema, { ...baseRevenue, ...overrides }, 'revenueQuote');
+/** Raw `Quote.extensions` as the API sends it (`package` key); overrides replace whole sections. */
+export function buildRevenueExtensions(overrides: RevenueQuoteOverrides = {}) {
+  return { ...baseRevenue, ...overrides };
 }
 
-export const revenueQuoteSufficient = buildRevenueQuote({
+/** `RevenueQuote` as the web reads it (`packageOption` key). */
+export function buildRevenueQuote(overrides: RevenueQuoteOverrides = {}) {
+  return parseFixture(revenueQuoteSchema, buildRevenueExtensions(overrides), 'revenueQuote');
+}
+
+/** The núcleo PR-3 quote carrying receita's extensions, as the checkout slots receive it. */
+export function quoteWithRevenue(overrides: RevenueQuoteOverrides = {}): Quote {
+  return parseFixture(
+    quoteSchema,
+    { ...quote, extensions: buildRevenueExtensions(overrides) },
+    'quoteWithRevenue',
+  );
+}
+
+export const revenueOverridesSufficient: RevenueQuoteOverrides = {
   credit: { availableCents: 5000, appliedCents: 0 },
   package: sufficientPackage,
-});
-export const revenueQuoteInsufficient = buildRevenueQuote({
+};
+export const revenueOverridesInsufficient: RevenueQuoteOverrides = {
   credit: { availableCents: 5000, appliedCents: 0 },
   package: insufficientPackage,
-});
+};
 /** Coupon R$ 20,00 beat the slot discount of R$ 16,00 (REC-121). */
-export const revenueQuoteCouponWins = buildRevenueQuote({
+export const revenueOverridesCouponWins: RevenueQuoteOverrides = {
   discount: {
     source: 'coupon',
     discountCents: 2000,
@@ -582,4 +598,34 @@ export const revenueQuoteCouponWins = buildRevenueQuote({
     slotDiscountIds: [],
     note: 'Aplicamos o maior desconto: cupom R$ 20,00 (o desconto do horário era R$ 16,00).',
   },
-});
+};
+
+export const revenueQuoteSufficient = buildRevenueQuote(revenueOverridesSufficient);
+export const revenueQuoteInsufficient = buildRevenueQuote(revenueOverridesInsufficient);
+export const revenueQuoteCouponWins = buildRevenueQuote(revenueOverridesCouponWins);
+
+/** The eight coupon rejection reasons with their REC-117 messages. */
+export const COUPON_REJECTIONS = [
+  ['not_found', 'Cupom inexistente'],
+  ['disabled', 'Cupom desabilitado'],
+  ['exhausted', 'Cupom esgotado'],
+  ['expired', 'Cupom expirado'],
+  ['not_yet_valid', 'Cupom ainda não está válido'],
+  ['first_booking_only', 'Válido só na primeira reserva'],
+  ['not_applicable', 'Cupom não se aplica a esta compra'],
+  ['customer_limit', 'Você já usou este cupom o número máximo de vezes'],
+] as const;
+
+/** Extension overrides where the typed coupon was rejected. */
+export function revenueOverridesRejected(reason: string, message: string): RevenueQuoteOverrides {
+  return {
+    discount: {
+      source: 'none',
+      discountCents: 0,
+      slotDiscountCents: 0,
+      couponDiscountCents: 0,
+      slotDiscountIds: [],
+      couponRejection: { reason, message },
+    },
+  };
+}

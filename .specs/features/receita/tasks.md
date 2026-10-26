@@ -1106,10 +1106,10 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Each rejection reason fixture shows its REC-117 message; the coupon-vs-slot fixture shows the REC-121 note
-- [ ] Typing "bravo10" submits "BRAVO10"; remove clears the code; toggle emits `useCredits`
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 8 new tests pass
+- [x] Each rejection reason fixture shows its REC-117 message; the coupon-vs-slot fixture shows the REC-121 note
+- [x] Typing "bravo10" submits "BRAVO10"; remove clears the code; toggle emits `useCredits`
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 8 new tests pass
 
 **Tests**: unit
 **Gate**: quick
