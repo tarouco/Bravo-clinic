@@ -27,13 +27,7 @@ export function TimeStep({ selection, onChange, onBack, onContinue }: TimeStepPr
   useEffect(() => {
     if (!isComplete(selection) || tracked.current === choiceKey) return;
     tracked.current = choiceKey;
-    track('select_slot', {
-      room: selection.sala,
-      date: selection.data,
-      start_minute: selection.inicio,
-      end_minute: selection.fim,
-      block: selection.bloco,
-    });
+    track('select_slot', { roomSlug: selection.sala ?? undefined });
   }, [selection, choiceKey]);
 
   const value: SlotSelection = { startMinute: selection.inicio, endMinute: selection.fim };

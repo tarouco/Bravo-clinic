@@ -1,7 +1,8 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it } from 'vitest';
+import { disableAnalytics, enableGa4, gtagEvents } from '../../test/analytics';
 import { bookingList, me } from '../../test/fixtures/nucleo';
 import { apiError } from '../../test/msw/handlers';
 import { server } from '../../test/msw/server';
@@ -10,6 +11,10 @@ import { publicExtraServices, PUBLIC_SERVICE_IDS } from './fixtures';
 import { QuoteRequestForm } from './QuoteRequestForm';
 
 type Post = Record<string, unknown>;
+
+afterEach(() => {
+  disableAnalytics();
+});
 
 /** Serves the catalog and records the bodies posted to the quote endpoint. */
 function stubApi(options: { anonymous?: boolean; post?: () => Response } = {}): Post[] {
@@ -117,6 +122,40 @@ describe('QuoteRequestForm submit (GES-98)', () => {
     await waitFor(() =>
       expect(screen.getByLabelText('Serviço')).toHaveValue(PUBLIC_SERVICE_IDS.videomaker),
     );
+  });
+});
+
+describe('QuoteRequestForm analytics (GES-135)', () => {
+  it('tracks quote_requested once after a successful submit and nothing before', async () => {
+    enableGa4();
+    stubApi({ anonymous: true });
+    const user = userEvent.setup();
+    renderWithProviders(<QuoteRequestForm />);
+    await fillValid(user);
+    expect(gtagEvents().filter((event) => event.name === 'quote_requested')).toHaveLength(0);
+
+    await user.click(screen.getByRole('button', { name: 'Enviar pedido' }));
+
+    await screen.findByText('Pedido enviado. Retornaremos em breve.');
+    const events = gtagEvents().filter((event) => event.name === 'quote_requested');
+    expect(events).toHaveLength(1);
+    expect(JSON.stringify(events[0])).not.toContain('Mariana');
+  });
+
+  it('does not track a request the API refused', async () => {
+    enableGa4();
+    stubApi({
+      anonymous: true,
+      post: () => apiError(429, 'TOO_MANY_ATTEMPTS', 'Muitas tentativas.'),
+    });
+    const user = userEvent.setup();
+    renderWithProviders(<QuoteRequestForm />);
+    await fillValid(user);
+
+    await user.click(screen.getByRole('button', { name: 'Enviar pedido' }));
+
+    await screen.findByText(/muitos pedidos/);
+    expect(gtagEvents().filter((event) => event.name === 'quote_requested')).toHaveLength(0);
   });
 });
 

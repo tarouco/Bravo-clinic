@@ -8,7 +8,7 @@ import { Alert, Spinner } from '../../components/ui/Feedback';
 import { useBooking, usePay } from '../../features/booking/api';
 import { PaymentMethodPanel, type PayChoice } from '../../features/payments/PaymentMethodPanel';
 import { ApiError } from '../../lib/api';
-import { track } from '../../lib/analytics';
+import { track, valueBucketOf } from '../../lib/analytics';
 import { usePageTitle } from '../../lib/usePageTitle';
 import { NotFoundPage } from './NotFoundPage';
 
@@ -60,11 +60,11 @@ function Confirmed({ booking }: { booking: BookingDetail }) {
     sent.current = true;
     if (!firstPurchaseReport(booking.code)) return;
     track('purchase', {
-      booking_code: booking.code,
-      value: booking.paidCents / 100,
-      currency: 'BRL',
+      roomSlug: booking.roomSlug,
+      paymentMethod: booking.charges.find((charge) => charge.status === 'approved')?.method,
+      valueBucket: valueBucketOf(booking.paidCents),
     });
-  }, [booking.code, booking.paidCents]);
+  }, [booking.code, booking.paidCents, booking.roomSlug, booking.charges]);
 
   return (
     <div className="space-y-space-lg">

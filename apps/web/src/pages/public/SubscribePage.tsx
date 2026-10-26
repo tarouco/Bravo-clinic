@@ -6,7 +6,7 @@ import {
   type SubscriptionQuoteInput,
 } from '@bravo/core';
 import { useQueryClient } from '@tanstack/react-query';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { CouponFieldView } from '../../components/revenue/CouponField';
 import { CreditsToggleView } from '../../components/revenue/CreditsToggle';
@@ -41,6 +41,7 @@ import type { PackageOffer, Subscription } from '../../features/purchases/types'
 import { useRooms } from '../../features/catalog/api';
 import { PaymentMethodPanel, type PayChoice } from '../../features/payments/PaymentMethodPanel';
 import { ApiError } from '../../lib/api';
+import { track, valueBucketOf } from '../../lib/analytics';
 import { newIdempotencyKey } from '../../lib/query-string';
 import { usePageTitle } from '../../lib/usePageTitle';
 import { NotFoundPage } from './NotFoundPage';
@@ -426,6 +427,17 @@ function PayStage({ offer, values, quoteRequest, blocked, onBack, onError }: Pay
 
   const watched = useSubscription(purchased?.id, { poll: purchased?.status !== 'active' });
   const status = watched.data?.status ?? purchased?.status;
+
+  // The subscription is paid and active: one funnel event per purchase.
+  const reported = useRef(false);
+  useEffect(() => {
+    if (status !== 'active' || reported.current) return;
+    reported.current = true;
+    track('subscription_purchased', {
+      categoryType: offer.type,
+      valueBucket: valueBucketOf(values.priceCents),
+    });
+  }, [status, offer.type, values.priceCents]);
 
   const submit = async (choice: PayChoice) => {
     if (!quoteRequest) throw new Error('Quote missing');

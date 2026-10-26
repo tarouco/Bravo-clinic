@@ -14,6 +14,7 @@ import {
 } from '../../components/ui/form';
 import { safeNextPath, useSignup } from '../../features/auth/hooks';
 import { ApiError } from '../../lib/api';
+import { track } from '../../lib/analytics';
 import { AuthCard } from './AuthCard';
 
 const EMAIL_TAKEN_MESSAGE = 'Este e-mail já está cadastrado.';
@@ -42,6 +43,7 @@ export function SignupPage() {
     setFormError(null);
     try {
       await signup.mutateAsync(values);
+      track('signup_completed');
       void navigate(next ?? '/app', { state: { signupBanner: true } });
     } catch (error) {
       if (error instanceof ApiError && error.code === 'EMAIL_TAKEN') {

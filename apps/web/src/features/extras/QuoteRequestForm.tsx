@@ -5,6 +5,7 @@ import { Alert, Spinner } from '../../components/ui/Feedback';
 import { Input, PhoneInput, Select, Textarea } from '../../components/ui/form';
 import { ApiError } from '../../lib/api';
 import { fieldErrorsOf, messageOf } from '../../lib/api-errors';
+import { track } from '../../lib/analytics';
 import { bookingWhen } from '../../lib/booking-time';
 import { useSession } from '../auth/useSession';
 import { useMyBookings } from '../booking/api';
@@ -138,6 +139,7 @@ export function QuoteRequestForm({ serviceId, preselect, footer, onSent }: Quote
     setErrors({});
     try {
       await submit.mutateAsync(parsed.data);
+      track('quote_requested');
       setValues(EMPTY);
       setChosenService(null);
       setSent(true);

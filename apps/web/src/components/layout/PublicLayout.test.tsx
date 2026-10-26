@@ -2,6 +2,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { disableAnalytics, enableGa4, gtagEvents } from '../../test/analytics';
 import { NotFoundPage } from '../../pages/public/NotFoundPage';
 import { createQueryClient } from '../../lib/query-client';
 import { ThemeProvider } from '../../theme/ThemeProvider';
@@ -25,6 +26,7 @@ beforeEach(() => {
 
 afterEach(() => {
   vi.unstubAllGlobals();
+  disableAnalytics();
 });
 
 function renderAt(path: string) {
@@ -93,5 +95,14 @@ describe('PublicLayout', () => {
   it('scrolls to the top when the route has no hash', () => {
     renderAt('/salas');
     expect(scrollToMock).toHaveBeenCalledWith({ top: 0 });
+  });
+
+  it('records one page view per public route (GES-135)', () => {
+    enableGa4();
+
+    renderAt('/salas');
+
+    expect(gtagEvents().map((event) => event.name)).toEqual(['page_view']);
+    expect(gtagEvents()[0]?.params).toMatchObject({ page_path: '/salas' });
   });
 });

@@ -13,6 +13,7 @@ import { Link, NavLink, Outlet } from 'react-router-dom';
 import { useResendVerification } from '../../features/auth/hooks';
 import { useSession } from '../../features/auth/useSession';
 import { useSignOut } from '../../features/auth/useSignOut';
+import { usePageViews } from '../../lib/analytics';
 import { ThemeToggle } from '../../theme/ThemeToggle';
 import { BrandLockup } from '../ui/Brand';
 import { Button } from '../ui/Button';
@@ -61,6 +62,7 @@ function EmailVerificationBanner() {
 
 /** Tenant area shell: sidebar from `lg`, bottom tab bar below it, header with the account actions. */
 export function AppShell() {
+  usePageViews();
   const { session } = useSession();
   const { signOut, isPending, failed } = useSignOut();
   const firstName = session?.name.trim().split(/\s+/)[0];

@@ -2,6 +2,7 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Route, Routes } from 'react-router-dom';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { disableAnalytics, enableGa4, gtagEvents } from '../../test/analytics';
 import { renderWithProviders } from '../../test/render-with-providers';
 import { AppHomePage } from '../app/AppHomePage';
 import { SignupPage } from './SignupPage';
@@ -60,6 +61,7 @@ const submitButton = () => screen.getByRole('button', { name: 'Criar conta' });
 
 afterEach(() => {
   vi.unstubAllGlobals();
+  disableAnalytics();
 });
 
 describe('SignupPage', () => {
@@ -93,6 +95,36 @@ describe('SignupPage', () => {
       'href',
       '/privacidade',
     );
+  });
+
+  it('tracks signup_completed once, with no personal property (GES-135)', async () => {
+    enableGa4();
+    stubSignup(() => json(201, created));
+    const user = userEvent.setup();
+    renderSignup();
+
+    await fillForm(user);
+    await acceptBoth(user);
+    await user.click(submitButton());
+
+    await screen.findByText('Enviamos um link de confirmação para o seu e-mail.');
+    const events = gtagEvents().filter((event) => event.name === 'signup_completed');
+    expect(events).toHaveLength(1);
+    expect(JSON.stringify(events[0])).not.toMatch(/Ana|example\.com|529/);
+  });
+
+  it('does not track signup_completed when the API refuses the signup', async () => {
+    enableGa4();
+    stubSignup(() => json(409, { error: { code: 'EMAIL_TAKEN', message: 'x' } }));
+    const user = userEvent.setup();
+    renderSignup();
+
+    await fillForm(user);
+    await acceptBoth(user);
+    await user.click(submitButton());
+
+    await screen.findByText('Este e-mail já está cadastrado.');
+    expect(gtagEvents().filter((event) => event.name === 'signup_completed')).toHaveLength(0);
   });
 
   it('returns to the next path after signing up (booking flow, NUC-101)', async () => {
