@@ -1514,9 +1514,9 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: three tabs fetch their `tab` param; rows show payment status "Sinal pago · saldo pendente"; two rows with the same `group` render under one header; agenda switches views and shows no cleanup band; home lists 3 items
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 5 tests pass
+- [x] Tests: three tabs fetch their `tab` param; rows show payment status "Sinal pago · saldo pendente"; two rows with the same `group` render under one header; agenda switches views and shows no cleanup band; home lists 3 items
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 5 tests pass
 
 **Tests**: unit
 **Gate**: quick

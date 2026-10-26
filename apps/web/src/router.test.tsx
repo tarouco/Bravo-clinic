@@ -141,11 +141,11 @@ describe('route guards', () => {
     await waitFor(() => expect(locationOf()).toBe('/admin/calendario'));
   });
 
-  it('renders the placeholder page for a signed-in tenant on /app/agenda', async () => {
+  it('renders the placeholder page for a signed-in tenant on /app/orcamentos', async () => {
     stubApi(base);
-    renderRoute('/app/agenda');
+    renderRoute('/app/orcamentos');
 
-    expect(await screen.findByRole('heading', { name: 'Agenda' })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: 'Orçamentos' })).toBeInTheDocument();
     expect(screen.getByText('Em construção')).toBeInTheDocument();
   });
 });
@@ -153,7 +153,7 @@ describe('route guards', () => {
 describe('app and admin shells', () => {
   it('wraps the tenant routes: the sidebar link to Compras opens its placeholder page', async () => {
     stubApi(base);
-    renderRoute('/app/agenda');
+    renderRoute('/app/orcamentos');
     const sidebar = await screen.findByRole('navigation', { name: 'Menu lateral' });
 
     await userEvent.click(within(sidebar).getByRole('link', { name: 'Compras' }));
