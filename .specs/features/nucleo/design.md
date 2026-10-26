@@ -441,6 +441,10 @@ type AffectedBooking = { id: string; code: string; customerName: string; roomNam
 | 502 | `EXTERNAL_UNAVAILABLE` | "Não foi possível consultar os feriados agora." |
 | 503 | `GATEWAY_NOT_CONFIGURED` | "Pagamento online indisponível. Fale com a recepção." |
 
+### Integration refinements (Phase 13)
+
+- **Clinic cancels a pending booking**: `awaiting_payment → cancelled_by_clinic` is allowed (PRD §5.5 "Cancelamento pela clínica", §7.5), next to the existing `pre_reserved`/`held_for_renewal → cancelled_by_clinic`. `POST /admin/bookings/:id/cancel` on an `awaiting_payment` booking frees the occupancy, cancels the pending charges (provider told after commit) and refunds nothing.
+
 ---
 
 ## Cross-feature interface map

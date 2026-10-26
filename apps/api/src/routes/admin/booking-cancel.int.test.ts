@@ -11,7 +11,14 @@ import { forbiddenFetch, send, testEnv } from '../../../test/http';
 import { requireTestDatabaseUrl } from '../../../test/require-test-db';
 import { createApp } from '../../app';
 import { createDb } from '../../db/client';
-import { auditLog, bookingEvents, bookings, refunds } from '../../db/schema';
+import {
+  auditLog,
+  bookingEvents,
+  bookings,
+  charges,
+  refunds,
+  roomOccupancy,
+} from '../../db/schema';
 import { runSeed } from '../../db/seed';
 import { createRegistry, type CreditPort, type Registry } from '../../extensions/registry';
 
@@ -184,6 +191,54 @@ describe('POST /admin/bookings/:id/cancel (NUC-153)', () => {
       amountCents: 16000,
       status: 'granted',
       creditLotId: 'lot-1',
+    });
+  });
+
+  it('cancels a booking still awaiting payment: slot freed, pending charge cancelled, nothing refunded', async () => {
+    const admin = await createStaff(db, 'admin', NOW);
+    const { user } = await createTenant(db, { now: NOW });
+    const row = await insertBooking(db, {
+      userId: user.id,
+      roomId,
+      status: 'awaiting_payment',
+      startsAt: after(30),
+      endsAt: after(32),
+      totalCents: 16000,
+      depositCents: 8000,
+      paidCents: 0,
+      holdExpiresAt: after(0.25),
+    });
+    const pending = await createCharge(db, {
+      userId: user.id,
+      bookingId: row.id,
+      purpose: 'booking_deposit',
+      amountCents: 8000,
+      status: 'pending',
+      expiresAt: after(0.25),
+    });
+
+    const res = await cancel(admin.cookie, row.id, {
+      reason: 'Sala em manutenção',
+      resolution: 'refund',
+    });
+
+    expect(res.status).toBe(200);
+    expect(bookingDetailSchema.parse(res.body).status).toBe('cancelled_by_clinic');
+    const [stored] = await db.select().from(bookings).where(eq(bookings.id, row.id));
+    expect(stored?.status).toBe('cancelled_by_clinic');
+    const occupancy = await db.select().from(roomOccupancy).where(eq(roomOccupancy.refId, row.id));
+    expect(occupancy).toHaveLength(1);
+    expect(occupancy[0]?.active).toBe(false);
+    const [charge] = await db.select().from(charges).where(eq(charges.id, pending.id));
+    expect(charge?.status).toBe('cancelled');
+    expect(await db.select().from(refunds)).toHaveLength(0);
+    const [event] = await db
+      .select()
+      .from(bookingEvents)
+      .where(eq(bookingEvents.bookingId, row.id));
+    expect(event).toMatchObject({
+      fromStatus: 'awaiting_payment',
+      toStatus: 'cancelled_by_clinic',
     });
   });
 

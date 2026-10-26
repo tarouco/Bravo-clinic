@@ -49,9 +49,10 @@ export const paymentModeSchema = z.enum(PAYMENT_MODES);
 export type PaymentMode = z.infer<typeof paymentModeSchema>;
 
 // Architecture section 3.1 plus AD-032: expired -> confirmed | paid (late approval) and
-// paid -> confirmed (admin reschedule adding the difference to the balance).
+// paid -> confirmed (admin reschedule adding the difference to the balance), plus
+// awaiting_payment -> cancelled_by_clinic (PRD 5.5 and 7.5: the clinic may cancel any open booking).
 const TRANSITIONS: Record<BookingStatus, readonly BookingStatus[]> = {
-  awaiting_payment: ['confirmed', 'paid', 'expired', 'cancelled_by_tenant'],
+  awaiting_payment: ['confirmed', 'paid', 'expired', 'cancelled_by_tenant', 'cancelled_by_clinic'],
   pre_reserved: ['confirmed', 'paid', 'expired', 'cancelled_by_clinic'],
   held_for_renewal: ['confirmed', 'cancelled_by_clinic', 'expired'],
   confirmed: [
