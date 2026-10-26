@@ -1,161 +1,108 @@
-import { ArrowRight, BadgeCheck, Calendar, Lock, SearchCheck, SprayCan } from 'lucide-react';
-import { useState } from 'react';
+import { ArrowRight, BadgeCheck, Clock, Receipt } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 import { focusRing } from '../../../components/ui/cx';
 import { Icon } from '../../../components/ui/Icon';
-import { isRoomSlug, type RoomSlug } from '../../../features/home/room-slug';
 
-export interface HeroSectionProps {
-  selectedRoom: RoomSlug;
-  onRoomChange: (slug: RoomSlug) => void;
-  /** "Verificar Horários": the page scrolls to the simulator. */
-  onCheck: () => void;
-}
-
-const ROOM_OPTIONS: { value: RoomSlug; label: string }[] = [
-  { value: 'principal', label: 'Sala Principal (Estética, Médico & Gravação)' },
-  { value: 'secundaria', label: 'Sala Secundária (Médico, Estética & Vídeos)' },
-  { value: 'terceira', label: 'Sala Terceira (Massagem, Terapias & Spa)' },
+const HIGHLIGHTS = [
+  { icon: Clock, label: 'Por hora, meio turno ou turno' },
+  { icon: Receipt, label: 'Sem taxa de adesão' },
+  { icon: BadgeCheck, label: 'Sem condomínio ou burocracia fixa' },
 ];
 
-const MODALITY_OPTIONS = [
-  { value: 'avulsa', label: 'Por Hora (mín. 1h)' },
-  { value: 'meio-turno', label: 'Meio Turno (Bloco fixo 2h30)' },
-  { value: 'turno', label: 'Turno Completo (5h)' },
-  { value: 'noite', label: 'Período Noturno (19h às 00h)' },
-];
-
-const labelClasses =
-  'block font-eyebrow text-caption uppercase text-ink-muted mb-space-xs tracking-[0.16em]';
-
-/** Today as `YYYY-MM-DD` in the visitor's local time zone (the default of the date field). */
-function todayLocalIso(): string {
-  const now = new Date();
-  const month = String(now.getMonth() + 1).padStart(2, '0');
-  const day = String(now.getDate()).padStart(2, '0');
-  return `${String(now.getFullYear())}-${month}-${day}`;
+/** Pauses the mobile tour loop for visitors who asked the system for reduced motion. */
+function useReducedMotionPause() {
+  const ref = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    const video = ref.current;
+    if (!video || typeof window.matchMedia !== 'function') return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      video.removeAttribute('autoplay');
+      try {
+        video.pause();
+      } catch {
+        // jsdom and some embedded browsers do not implement media playback.
+      }
+    }
+  }, []);
+  return ref;
 }
 
-export function HeroSection({ selectedRoom, onRoomChange, onCheck }: HeroSectionProps) {
-  const [today] = useState(todayLocalIso);
+/**
+ * Full-bleed photo hero: the flagship room on wide screens, a short vertical tour of the
+ * clinic on phones. One primary action; booking details live in the simulator.
+ */
+/** The tour loop only exists below `md`, so wide screens never download it. */
+function useIsWideScreen(): boolean {
+  const [wide] = useState(
+    () =>
+      typeof window.matchMedia === 'function' && window.matchMedia('(min-width: 768px)').matches,
+  );
+  return wide;
+}
+
+export function HeroSection() {
+  const videoRef = useReducedMotionPause();
+  const isWide = useIsWideScreen();
 
   return (
-    <section className="relative w-full overflow-hidden bg-surface pb-space-3xl">
-      <div className="absolute inset-0 bg-gradient-to-b from-champagne-soft/25 via-transparent to-surface pointer-events-none" />
-      <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-champagne/15 blur-3xl pointer-events-none" />
-      <div className="max-w-7xl mx-auto px-gutter relative z-10 pt-space-xl">
-        <div className="flex flex-col items-center text-center space-y-space-sm mb-space-lg">
-          <div className="inline-flex items-center gap-space-sm px-space-md py-space-xs rounded-full bg-surface-raised shadow-sm text-ink-muted">
-            <span className="w-1.5 h-1.5 rounded-full bg-bronze" />
-            <span className="font-eyebrow text-eyebrow uppercase tracking-[0.32em] text-bronze font-medium">
-              SALAS INTELIGENTES SOB DEMANDA
-            </span>
-            <span className="w-1.5 h-1.5 rounded-full bg-bronze" />
-          </div>
-          <h1 className="font-display-xl-mobile text-display-xl-mobile md:font-display-xl md:text-display-xl text-ink max-w-4xl tracking-tight mt-space-sm">
+    <section className="relative isolate w-full overflow-hidden bg-surface-night min-h-[min(88vh,820px)] flex items-end">
+      <img
+        className="absolute inset-0 -z-20 hidden h-full w-full object-cover md:block"
+        src="/images/sala-principal.webp"
+        alt="Sala Principal da Bravô Clinic: maca motorizada, mesa de mármore orgânica, poltronas em bouclé e cortinas de linho sob luz quente"
+        fetchPriority="high"
+      />
+      {isWide ? null : (
+        <video
+          ref={videoRef}
+          className="absolute inset-0 -z-20 h-full w-full object-cover md:hidden"
+          poster="/images/tour-poster.webp"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-label="Tour pela recepção e pelos consultórios da Bravô Clinic"
+        >
+          <source src="/images/tour-loop.webm" type="video/webm" />
+          <source src="/images/tour-loop.mp4" type="video/mp4" />
+        </video>
+      )}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-t from-surface-night/90 via-surface-night/45 to-surface-night/5 md:bg-gradient-to-r md:from-surface-night/85 md:via-surface-night/40 md:to-transparent" />
+
+      <div className="max-w-7xl w-full mx-auto px-gutter pb-space-3xl pt-space-3xl">
+        <div className="max-w-xl space-y-space-lg text-ink-night">
+          <h1 className="font-display-xl-mobile text-display-xl-mobile md:font-display-xl md:text-display-xl tracking-tight [text-wrap:balance]">
             Saúde, beleza e bem-estar em um só lugar.
           </h1>
-          <p className="font-lead text-lead text-ink-muted max-w-2xl mx-auto">
-            Consultórios inteligentes e estúdios clínicos na Praia Brava, em Itajaí, prontos para
-            atender por hora, meio turno ou turno. Sem taxa de adesão, condomínio ou burocracia
-            fixa.
+          <p className="font-lead text-lead text-ink-night/85">
+            Consultórios inteligentes e estúdios clínicos na Praia Brava, em Itajaí.
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-space-md pt-space-xs">
+          <ul className="flex flex-wrap gap-space-sm" aria-label="Destaques">
+            {HIGHLIGHTS.map(({ icon, label }) => (
+              <li
+                key={label}
+                className="inline-flex items-center gap-space-xs rounded-full bg-surface-night/55 px-space-md py-space-xs font-caption text-caption text-ink-night ring-1 ring-ink-night/20"
+              >
+                <Icon as={icon} size={14} className="shrink-0 text-champagne" />
+                <span>{label}</span>
+              </li>
+            ))}
+          </ul>
+          <div className="flex flex-wrap items-center gap-space-lg pt-space-xs">
             <a
-              className={`inline-flex items-center gap-space-xs bg-bronze hover:bg-walnut text-on-bronze font-small text-small uppercase tracking-[0.08em] px-space-xl py-space-md rounded shadow-md transition-all duration-300 ${focusRing}`}
+              className={`inline-flex items-center gap-space-xs bg-bronze hover:bg-walnut text-on-bronze font-small text-small uppercase tracking-[0.08em] px-space-xl py-space-md rounded shadow-md transition-colors duration-300 ${focusRing}`}
               href="#simulador"
             >
               <span>Simular e Reservar</span>
               <Icon as={ArrowRight} size={16} />
             </a>
             <a
-              className={`inline-flex items-center gap-space-xs bg-surface-raised hover:bg-surface-stone text-ink font-small text-small uppercase tracking-[0.08em] px-space-xl py-space-md rounded shadow-sm transition-all duration-300 ${focusRing}`}
+              className={`font-small text-small text-ink-night underline underline-offset-4 decoration-ink-night/40 hover:decoration-ink-night ${focusRing}`}
               href="#salas"
             >
-              <span>Conhecer as Salas</span>
+              Conhecer as Salas
             </a>
-          </div>
-        </div>
-
-        <div className="w-full bg-surface-raised rounded-xl shadow-xl p-space-lg md:p-space-xl mt-space-lg">
-          <div className="flex flex-col lg:flex-row items-stretch lg:items-end gap-space-md">
-            <div className="flex-1 min-w-0">
-              <label className={labelClasses} htmlFor="heroRoomSelect">
-                1. Selecionar Consultório
-              </label>
-              <div className="relative bg-surface rounded px-space-md py-space-sm">
-                <select
-                  className="w-full bg-transparent text-ink font-body text-body focus:outline-none cursor-pointer"
-                  id="heroRoomSelect"
-                  value={selectedRoom}
-                  onChange={(event) => {
-                    if (isRoomSlug(event.target.value)) onRoomChange(event.target.value);
-                  }}
-                >
-                  {ROOM_OPTIONS.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-            <div className="flex-1 min-w-0">
-              <label className={labelClasses} htmlFor="heroDateInput">
-                2. Data do Atendimento
-              </label>
-              <div className="relative bg-surface rounded px-space-md py-space-sm flex items-center">
-                <Icon as={Calendar} size={18} className="text-bronze mr-space-xs shrink-0" />
-                <input
-                  className="w-full bg-transparent text-ink font-body text-body focus:outline-none cursor-pointer"
-                  id="heroDateInput"
-                  type="date"
-                  defaultValue={today}
-                  min={today}
-                />
-              </div>
-            </div>
-            <div className="flex-1 min-w-0">
-              <label className={labelClasses} htmlFor="heroModalidadeSelect">
-                3. Modalidade / Formato
-              </label>
-              <div className="relative bg-surface rounded px-space-md py-space-sm">
-                <select
-                  className="w-full bg-transparent text-ink font-body text-body focus:outline-none cursor-pointer"
-                  id="heroModalidadeSelect"
-                  defaultValue="avulsa"
-                >
-                  {MODALITY_OPTIONS.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-            <div className="flex-none">
-              <button
-                type="button"
-                className={`w-full lg:w-auto h-[48px] px-space-xl bg-bronze hover:bg-walnut text-on-bronze font-small text-small uppercase tracking-[0.08em] rounded inline-flex items-center justify-center gap-space-xs shadow-md transition-all ${focusRing}`}
-                onClick={onCheck}
-              >
-                <Icon as={SearchCheck} size={18} />
-                <span>Verificar Horários</span>
-              </button>
-            </div>
-          </div>
-          <div className="pt-space-md mt-space-md flex flex-wrap items-center justify-between gap-space-md text-ink-muted font-caption text-caption">
-            <div className="flex items-center gap-space-xs">
-              <Icon as={BadgeCheck} size={16} className="text-bronze shrink-0" />
-              <span>Sem fidelidade: pague apenas pelo tempo de uso reservado</span>
-            </div>
-            <div className="flex items-center gap-space-xs">
-              <Icon as={SprayCan} size={16} className="text-bronze shrink-0" />
-              <span>Bloqueio de limpeza de 30 min automático e sem custo após cada sessão</span>
-            </div>
-            <div className="flex items-center gap-space-xs">
-              <Icon as={Lock} size={16} className="text-bronze shrink-0" />
-              <span>Sinal de 50% seguro via Mercado Pago (Pix ou Cartão)</span>
-            </div>
           </div>
         </div>
       </div>
