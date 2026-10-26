@@ -115,6 +115,38 @@ describe('dispatchEmails', () => {
     expect(row.lastError).toContain('network down');
   });
 
+  it('aborts a hung provider call after 10 000 ms and marks the row failed (FND-80)', async () => {
+    const id = await queueOne();
+    const controller = new AbortController();
+    const timeoutSpy = vi.spyOn(AbortSignal, 'timeout').mockReturnValue(controller.signal);
+    const fetchStub = vi.fn<typeof fetch>(
+      (_url, init) =>
+        new Promise<Response>((_resolve, reject) => {
+          init?.signal?.addEventListener('abort', () => {
+            reject(new DOMException('The operation timed out.', 'TimeoutError'));
+          });
+        }),
+    );
+
+    try {
+      const dispatched = dispatchEmails(db, [id], { env: envWithKey, fetch: fetchStub });
+      await vi.waitFor(() => expect(fetchStub).toHaveBeenCalledTimes(1));
+      expect(timeoutSpy).toHaveBeenCalledTimes(1);
+      expect(timeoutSpy).toHaveBeenCalledWith(10_000);
+      expect(fetchStub.mock.calls[0]?.[1]?.signal).toBe(controller.signal);
+
+      controller.abort();
+      await expect(dispatched).resolves.toBeUndefined();
+    } finally {
+      timeoutSpy.mockRestore();
+    }
+
+    const row = await rowOf(id);
+    expect(row.status).toBe('failed');
+    expect(row.attempts).toBe(1);
+    expect(row.lastError).toContain('timed out');
+  });
+
   it('marks failed when the provider answers 500, without throwing (FND-80)', async () => {
     const id = await queueOne();
     const fetchStub = vi.fn<typeof fetch>(() =>

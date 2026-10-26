@@ -37,6 +37,7 @@ function issuesOf(result: Failure) {
 describe('passwordSchema (FND-17)', () => {
   it.each([
     ['too short', 'abc12'],
+    ['7 characters long with letters and digits', 'abcde12'],
     ['without a digit', 'abcdefgh'],
     ['without a letter', '12345678'],
     ['129 characters long', `a1${'x'.repeat(127)}`],
@@ -55,6 +56,19 @@ describe('passwordSchema (FND-17)', () => {
     expect(passwordSchema.parse('senha123')).toBe('senha123');
     expect(passwordSchema.safeParse('abcdefg1').success).toBe(true);
     expect(passwordSchema.safeParse(`a1${'x'.repeat(126)}`).success).toBe(true);
+  });
+
+  it('accepts exactly 8 ("abcdef12") and exactly 128 characters, rejecting 7 and 129', () => {
+    const at128 = `a1${'x'.repeat(126)}`;
+    const at129 = `a1${'x'.repeat(127)}`;
+    expect(at128).toHaveLength(128);
+    expect(at129).toHaveLength(129);
+    expect('abcdef12').toHaveLength(8);
+    expect('abcde12').toHaveLength(7);
+    expect(passwordSchema.safeParse('abcdef12').success).toBe(true);
+    expect(passwordSchema.safeParse(at128).success).toBe(true);
+    expect(passwordSchema.safeParse('abcde12').success).toBe(false);
+    expect(passwordSchema.safeParse(at129).success).toBe(false);
   });
 });
 

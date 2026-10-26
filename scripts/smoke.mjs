@@ -16,7 +16,9 @@ const checks = [
     async () => {
       const { status, body } = await get('/api/health');
       const json = JSON.parse(body);
-      return status === 200 && json.status === 'ok' && json.db === 'ok' && json.branch === 'production';
+      return (
+        status === 200 && json.status === 'ok' && json.db === 'ok' && json.branch === 'production'
+      );
     },
   ],
   [
@@ -29,8 +31,23 @@ const checks = [
   [
     'home page',
     async () => {
+      // SPEC_DEVIATION: FND-129 asks for the Home to carry "the hero headline", but the hero renders
+      // client-side (React SPA), so it is absent from the served HTML and cannot be asserted here.
+      // The static, server-delivered proof of the Home is its <title> and the LocalBusiness JSON-LD.
       const { status, body } = await get('/');
-      return status === 200 && body.includes('Bravô Clinic');
+      const title = /<title[^>]*>([^<]*)<\/title>/i.exec(body)?.[1] ?? '';
+      const jsonLd = [
+        ...body.matchAll(/<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/gi),
+      ]
+        .map((m) => {
+          try {
+            return JSON.parse(m[1]);
+          } catch {
+            return null;
+          }
+        })
+        .some((data) => data?.['@type'] === 'LocalBusiness');
+      return status === 200 && title.includes('Bravô Clinic – Salas Inteligentes') && jsonLd;
     },
   ],
 ];
