@@ -1176,10 +1176,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: confirmed booking at start + 31 min without check-in → `no_show`; checked-in after end → `completed`; at start + 29 min unchanged
-- [ ] Tests: pending sandbox charge whose stub status is approved → booking confirmed exactly as the webhook path; pending without external id at 11 min → `cancelled`; refund failing 5 times → `failed` + notifier `payment_issue`
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api` (phase end: Build gate)
-- [ ] Test count: ≥ 7 tests pass
+- [x] Tests: confirmed booking at start + 31 min without check-in → `no_show`; checked-in after end → `completed`; at start + 29 min unchanged
+- [x] Tests: pending sandbox charge whose stub status is approved → booking confirmed exactly as the webhook path; pending without external id at 11 min → `cancelled`; refund failing 5 times → `failed` + notifier `payment_issue`
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api` (phase end: Build gate)
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: integration
 **Gate**: build

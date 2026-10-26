@@ -884,7 +884,7 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-165 | P1: Gestão de Reservas operations | Tasks | T24 | Implementing |
 | NUC-166 | P1: Gestão de Reservas operations | Tasks | T26 | Implementing |
 | NUC-167 | P1: Gestão de Reservas operations | Tasks | T24 | Implementing |
-| NUC-168 | P1: Gestão de Reservas operations | Tasks | T28 | In Tasks |
+| NUC-168 | P1: Gestão de Reservas operations | Tasks | T28 | Implementing |
 | NUC-169 | P1: Gestão de Reservas operations | Tasks | T25 | Implementing |
 | NUC-170 | P1: Gestão de Reservas operations | Tasks | T47 | In Tasks |
 | NUC-171 | P1: Gestão de Reservas operations | Tasks | T39 | In Tasks |
@@ -914,7 +914,7 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-195 | P1: Scheduled jobs | Tasks | T26 | Implementing |
 | NUC-196 | P1: Scheduled jobs | Tasks | T26 | Implementing |
 | NUC-197 | P1: Scheduled jobs | Tasks | T26 | Implementing |
-| NUC-198 | P1: Scheduled jobs | Tasks | T28 | In Tasks |
+| NUC-198 | P1: Scheduled jobs | Tasks | T28 | Implementing |
 | NUC-199 | P1: Scheduled jobs | Tasks | T26, T50 | Implementing |
 | NUC-200 | P1: Scheduled jobs | Tasks | T26 | Implementing |
 | NUC-201 | P1: Extension points | Tasks | T6 | Implementing |
