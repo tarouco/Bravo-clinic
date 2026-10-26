@@ -259,7 +259,7 @@ export const bookingMailer = {
       ctx.user.email,
       'booking.balance_reminder',
       bookingBalanceReminderTemplate(emailData(booking, ctx)),
-      { dedupeKey: `booking.balance_reminder:${booking.id}:${String(extra.hoursBefore)}` },
+      { dedupeKey: `balance_reminder:${booking.id}:${String(extra.hoursBefore)}` },
     );
   },
 

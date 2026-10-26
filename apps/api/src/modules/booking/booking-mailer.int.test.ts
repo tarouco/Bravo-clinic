@@ -173,6 +173,9 @@ describe('bookingMailer (NUC-136, NUC-137, NUC-139)', () => {
       'booking.pre_reservation_link',
       'booking.rescheduled',
     ]);
+    expect(rows.find((r) => r.template === 'booking.balance_reminder')?.dedupeKey).toBe(
+      `balance_reminder:${booking.id}:36`,
+    );
     const withIcs = rows.filter((r) => (r.attachments as unknown[]).length > 0);
     expect(withIcs.map((r) => r.template).sort()).toEqual([
       'booking.cancelled_nonpayment',
