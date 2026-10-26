@@ -4,8 +4,8 @@ import type { RoomSlug } from './room-slug';
 export interface StaticRoom {
   slug: RoomSlug;
   name: string;
-  /** Cover photo; omitted until the clinic supplies photos (RoomCard falls back to the placeholder). */
-  imageUrl?: string;
+  /** Cover photo, also used when the API room has no cover yet. */
+  imageUrl: string;
   imageAlt: string;
   featureChip: { label: string; icon: LucideIcon };
   tags: string[];
@@ -19,6 +19,7 @@ export interface StaticRoom {
 export const staticRooms: readonly StaticRoom[] = [
   {
     slug: 'principal',
+    imageUrl: '/images/sala-principal-800.webp',
     name: 'Sala Principal',
     imageAlt:
       'Sala clínica e estética de alto padrão com maca motorizada, foco cirúrgico, painéis de nogueira e estrutura para gravação de vídeo',
@@ -36,9 +37,10 @@ export const staticRooms: readonly StaticRoom[] = [
   },
   {
     slug: 'secundaria',
+    imageUrl: '/images/sala-secundaria.webp',
     name: 'Sala Secundária',
     imageAlt:
-      'Consultório médico boutique com ripado acústico em madeira clara, poltrona de couro para o paciente e luz âmbar difusa',
+      'Consultório boutique com ripado em madeira clara, cadeira em couro caramelo e mesa de mármore em formato orgânico',
     featureChip: { label: 'Filmagem & Estúdio', icon: Video },
     tags: ['Médico Geral', 'Nutrição & Estética', 'Telemedicina'],
     description:
@@ -53,9 +55,10 @@ export const staticRooms: readonly StaticRoom[] = [
   },
   {
     slug: 'terceira',
+    imageUrl: '/images/sala-terceira.webp',
     name: 'Sala Terceira',
     imageAlt:
-      'Sala de terapias e relaxamento com luz indireta quente, maca de massagem em madeira, linho natural e difusor de aromas',
+      'Sala de terapias com maca coberta por manta, nicho orgânico em madeira iluminado com velas e forro ripado com luz linear',
     featureChip: { label: 'Terapia & Relaxamento', icon: Leaf },
     tags: ['Massoterapia', 'Fisioterapia', 'Terapias Integrativas'],
     description:
