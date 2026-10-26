@@ -29,6 +29,25 @@ const checks = [
     },
   ],
   [
+    'public rooms',
+    async () => {
+      const { status, body } = await get('/api/public/rooms');
+      return status === 200 && JSON.parse(body).items.some((room) => room.slug === 'principal');
+    },
+  ],
+  [
+    'principal availability',
+    async () => {
+      // Tomorrow on the clinic's calendar (America/Sao_Paulo), so the day is never in the past.
+      const date = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo' }).format(
+        new Date(Date.now() + 24 * 60 * 60 * 1000),
+      );
+      const { status, body } = await get(`/api/public/rooms/principal/availability?date=${date}`);
+      const json = JSON.parse(body);
+      return status === 200 && json.date === date && Array.isArray(json.cells);
+    },
+  ],
+  [
     'home page',
     async () => {
       // SPEC_DEVIATION: FND-129 asks for the Home to carry "the hero headline", but the hero renders
