@@ -755,7 +755,7 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-36 | P1: Business hours and calendar parameters | Tasks | T10 | Implementing |
 | NUC-37 | P1: Business hours and calendar parameters | Tasks | T10 | Implementing |
 | NUC-38 | P1: Business hours and calendar parameters | Tasks | T10 | Implementing |
-| NUC-39 | P1: Business hours and calendar parameters | Tasks | T24 | In Tasks |
+| NUC-39 | P1: Business hours and calendar parameters | Tasks | T24 | Implementing |
 | NUC-40 | P1: Business hours and calendar parameters | Tasks | T43 | In Tasks |
 | NUC-41 | P1: Business hours and calendar parameters | Tasks | T43 | In Tasks |
 | NUC-42 | P2: Drag-edit business hours | Tasks | T43 | In Tasks |
@@ -877,13 +877,13 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 | NUC-158 | P1: Gestão de Reservas operations | Tasks | T33, T46 | In Tasks |
 | NUC-159 | P1: Gestão de Reservas operations | Tasks | T30, T46 | In Tasks |
 | NUC-160 | P1: Gestão de Reservas operations | Tasks | T46 | In Tasks |
-| NUC-161 | P1: Gestão de Reservas operations | Tasks | T24 | In Tasks |
-| NUC-162 | P1: Gestão de Reservas operations | Tasks | T24 | In Tasks |
-| NUC-163 | P1: Gestão de Reservas operations | Tasks | T24 | In Tasks |
-| NUC-164 | P1: Gestão de Reservas operations | Tasks | T24 | In Tasks |
-| NUC-165 | P1: Gestão de Reservas operations | Tasks | T24 | In Tasks |
+| NUC-161 | P1: Gestão de Reservas operations | Tasks | T24 | Implementing |
+| NUC-162 | P1: Gestão de Reservas operations | Tasks | T24 | Implementing |
+| NUC-163 | P1: Gestão de Reservas operations | Tasks | T24 | Implementing |
+| NUC-164 | P1: Gestão de Reservas operations | Tasks | T24 | Implementing |
+| NUC-165 | P1: Gestão de Reservas operations | Tasks | T24 | Implementing |
 | NUC-166 | P1: Gestão de Reservas operations | Tasks | T26 | In Tasks |
-| NUC-167 | P1: Gestão de Reservas operations | Tasks | T24 | In Tasks |
+| NUC-167 | P1: Gestão de Reservas operations | Tasks | T24 | Implementing |
 | NUC-168 | P1: Gestão de Reservas operations | Tasks | T28 | In Tasks |
 | NUC-169 | P1: Gestão de Reservas operations | Tasks | T25 | In Tasks |
 | NUC-170 | P1: Gestão de Reservas operations | Tasks | T47 | In Tasks |

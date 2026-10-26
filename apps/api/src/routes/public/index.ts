@@ -5,6 +5,7 @@ import { availabilityRoutes } from './availability';
 import { catalogRoutes } from './catalog';
 import { configRoutes } from './config';
 import { paymentConfigRoutes } from './payment-config';
+import { preReservationRoutes } from './pre-reservations';
 import { quoteRoutes } from './quote';
 import { sandboxRoutes } from './sandbox';
 
@@ -17,6 +18,7 @@ export function publicRoutes(): Hono<AppEnv> {
   app.route('/', catalogRoutes());
   app.route('/', quoteRoutes());
   app.route('/', paymentConfigRoutes());
+  app.route('/', preReservationRoutes());
   app.route('/', sandboxRoutes());
   return app;
 }

@@ -1057,11 +1057,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: reception creates `awaiting_payment` (hold 15 min) and `pre_reserved` (hold 24 h default, 48 h when given) with source `admin` and outbox link `/pre-reserva/<token>`; reception `confirmManually` → 403; admin → `confirmed`, `payment_mode = 'manual'`, audit `booking.confirm_manual`, no balance schedule
-- [ ] Tests: resend rotates the token (old → 404, new → summary); expired hold token → 404
-- [ ] Tests: check-in at start − 61 min → 409 message; at start − 30 min → `checked_in_at` + audit; cleanup exception 0 with justification → occupancy upper = end; no justification → 422; reception → 403
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 12 tests pass
+- [x] Tests: reception creates `awaiting_payment` (hold 15 min) and `pre_reserved` (hold 24 h default, 48 h when given) with source `admin` and outbox link `/pre-reserva/<token>`; reception `confirmManually` → 403; admin → `confirmed`, `payment_mode = 'manual'`, audit `booking.confirm_manual`, no balance schedule
+- [x] Tests: resend rotates the token (old → 404, new → summary); expired hold token → 404
+- [x] Tests: check-in at start − 61 min → 409 message; at start − 30 min → `checked_in_at` + audit; cleanup exception 0 with justification → occupancy upper = end; no justification → 422; reception → 403
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 12 tests pass
 
 **Tests**: integration
 **Gate**: full
