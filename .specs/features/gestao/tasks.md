@@ -1173,11 +1173,11 @@ T49 → T50
 - Skill: NONE
 
 **Done when**:
-- [ ] Tests assert debounced search request with `q`, empty state, pagination "Carregar mais"
-- [ ] Tests assert detail renders bookings, balances, credits, coupons, consents sections from a fixture
-- [ ] Tests assert reception sees notes editor but not "Editar cadastro" nor "Excluir dados (LGPD)"
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests assert debounced search request with `q`, empty state, pagination "Carregar mais"
+- [x] Tests assert detail renders bookings, balances, credits, coupons, consents sections from a fixture
+- [x] Tests assert reception sees notes editor but not "Editar cadastro" nor "Excluir dados (LGPD)"
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick

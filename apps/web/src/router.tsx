@@ -13,6 +13,8 @@ import {
 import { BookingFlowPage } from './features/booking/BookingFlowPage';
 import { CalendarConfigPage } from './pages/admin/calendar/CalendarConfigPage';
 import { CuponsPage } from './pages/admin/cupons/CuponsPage';
+import { CustomerDetailPage } from './pages/admin/customers/CustomerDetailPage';
+import { CustomersPage } from './pages/admin/customers/CustomersPage';
 import { ExtrasAdminPage } from './pages/admin/extras/ExtrasAdminPage';
 import { FinancePage } from './pages/admin/finance/FinancePage';
 import { IntegrationsPage } from './pages/admin/integrations/IntegrationsPage';
@@ -86,7 +88,10 @@ const adminSectionRoute = (section: AdminSection): RouteObject => {
       ],
     });
   }
-  if (section === 'clientes') children.push(placeholder([':id', 'Cliente']));
+  if (section === 'clientes') {
+    children[0] = { index: true, element: <CustomersPage /> };
+    children.push({ path: ':id', element: <CustomerDetailPage /> });
+  }
   return {
     path: path.replace('/admin/', ''),
     element: <RequireSection section={section} />,
