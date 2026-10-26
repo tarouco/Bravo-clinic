@@ -1655,10 +1655,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests: holiday with `alert` shows the alert icon; toggling closed with 409 opens the affected list; import shows `{ inserted, updated }` toast; closed-day modal shows "3 assinantes · 120 min · R$ 205,33" from fixture and confirm posts
-- [ ] Tests: BlockModal preset "Limpeza" and free text; weekly option hidden for reception; 409 shows conflicting code; banner shown with now = 2026-10-01 and next-year `needsReview` fixture (P2)
-- [ ] Gate check passes: `npm test -w apps/web` (phase end: Build-B gate)
-- [ ] Test count: ≥ 7 tests pass
+- [x] Tests: holiday with `alert` shows the alert icon; toggling closed with 409 opens the affected list; import shows `{ inserted, updated }` toast; closed-day modal shows "3 assinantes · 120 min · R$ 205,33" from fixture and confirm posts
+- [x] Tests: BlockModal preset "Limpeza" and free text; weekly option hidden for reception; 409 shows conflicting code; banner shown with now = 2026-10-01 and next-year `needsReview` fixture (P2)
+- [x] Gate check passes: `npm test -w apps/web` (phase end: Build-B gate)
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: unit
 **Gate**: build

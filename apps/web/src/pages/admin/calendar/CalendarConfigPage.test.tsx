@@ -144,6 +144,19 @@ describe('CalendarConfigPage category overlay (NUC-72)', () => {
   });
 });
 
+describe('CalendarConfigPage sections', () => {
+  it('opens the price table and the exceptions view from their tabs', async () => {
+    renderPage();
+    await field('Abertura segunda');
+
+    await userEvent.click(screen.getByRole('tab', { name: 'Valores' }));
+    expect(await screen.findByRole('heading', { name: 'Tabela de valores' })).toBeVisible();
+
+    await userEvent.click(screen.getByRole('tab', { name: 'Exceções e bloqueios' }));
+    expect(await screen.findByRole('heading', { name: /^Feriados de \d{4}$/ })).toBeVisible();
+  });
+});
+
 describe('CalendarConfigPage first-access checklist (NUC-73)', () => {
   it('is hidden once the prices were reviewed', async () => {
     renderPage();

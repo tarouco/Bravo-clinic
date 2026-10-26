@@ -1,3 +1,4 @@
+import { utcToLocal, type LocalDate } from '@bravo/core';
 import { useEffect, useState } from 'react';
 import { Button } from '../../../components/ui/Button';
 import { Alert, Spinner } from '../../../components/ui/Feedback';
@@ -10,6 +11,8 @@ import {
   CategoryOverlayPicker,
 } from '../../../features/admin-calendar/CategoryBandOverlay';
 import { CategoriesTable } from '../../../features/admin-calendar/CategoriesTable';
+import { ExceptionsMonth } from '../../../features/admin-calendar/ExceptionsMonth';
+import { HolidayReviewBanner } from '../../../features/admin-calendar/HolidayReviewBanner';
 import { toHourlyCategories } from '../../../features/admin-calendar/category-utils';
 import { OnboardingChecklist } from '../../../features/admin-calendar/OnboardingChecklist';
 import {
@@ -28,6 +31,15 @@ export function CalendarConfigPage() {
   usePageTitle('Calendário');
   const config = useCalendarConfig();
   const data = config.data;
+  const today = utcToLocal(new Date()).date;
+  const [tab, setTab] = useState('funcionamento');
+  // A tab mounts when first opened and then stays mounted, so unsaved edits survive tab changes.
+  const [visited, setVisited] = useState<ReadonlySet<string>>(new Set(['funcionamento']));
+  const open = (id: string) => {
+    setVisited((current) => new Set(current).add(id));
+    setTab(id);
+  };
+  const [exceptionsDate, setExceptionsDate] = useState<LocalDate>(today);
 
   return (
     <div className="mx-auto max-w-7xl space-y-space-lg">
@@ -41,8 +53,17 @@ export function CalendarConfigPage() {
       {data ? (
         <>
           {data.onboarding.pricesReviewed ? null : <OnboardingChecklist />}
+          <HolidayReviewBanner
+            today={today}
+            onViewList={(year) => {
+              setExceptionsDate(`${String(year)}-01-01` as LocalDate);
+              open('excecoes');
+            }}
+          />
           <Tabs
             label="Seções do calendário"
+            value={tab}
+            onValueChange={open}
             items={[
               {
                 id: 'funcionamento',
@@ -58,7 +79,22 @@ export function CalendarConfigPage() {
                   </div>
                 ),
               },
-              { id: 'valores', label: 'Valores', content: <CategoriesTable /> },
+              {
+                id: 'valores',
+                label: 'Valores',
+                content: visited.has('valores') ? <CategoriesTable /> : null,
+              },
+              {
+                id: 'excecoes',
+                label: 'Exceções e bloqueios',
+                content: visited.has('excecoes') ? (
+                  <ExceptionsMonth
+                    date={exceptionsDate}
+                    today={today}
+                    onDateChange={setExceptionsDate}
+                  />
+                ) : null,
+              },
             ]}
           />
         </>
