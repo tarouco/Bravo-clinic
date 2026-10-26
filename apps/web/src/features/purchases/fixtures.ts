@@ -1,4 +1,5 @@
 import {
+  addDays,
   adminSubscriptionListSchema,
   couponListSchema,
   couponUseListSchema,
@@ -19,6 +20,8 @@ import {
   switchQuoteSchema,
   cancelPreviewSchema,
   quoteSchema,
+  localToUtc,
+  weekdayOf,
   type Quote,
 } from '@bravo/core';
 import { ID, quote } from '../../test/fixtures/nucleo';
@@ -109,6 +112,31 @@ export const occurrenceCheck = parseFixture(
     suggestions: { rooms: [], baseDates: [] },
   },
   'occurrenceCheck',
+);
+
+/** Meio turno (Seg–Sex 07:00–09:30) from 2026-11-02: the 22 occurrences of the PRD example, no conflicts. */
+function meioTurnoOccurrences() {
+  const occurrences = [];
+  for (let offset = 0; offset < 30; offset += 1) {
+    const date = addDays('2026-11-02', offset);
+    if (weekdayOf(date) > 5) continue;
+    occurrences.push({
+      date,
+      startsAt: localToUtc(date, 420).toISOString(),
+      endsAt: localToUtc(date, 570).toISOString(),
+    });
+  }
+  return occurrences;
+}
+
+export const occurrenceCheckFull = parseFixture(
+  occurrenceCheckSchema,
+  {
+    ...occurrenceCheck,
+    occurrences: meioTurnoOccurrences(),
+    periodPriceCents: 616000,
+  },
+  'occurrenceCheckFull',
 );
 
 export const occurrenceCheckWithConflict = parseFixture(

@@ -1190,10 +1190,10 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Conflict fixture lists dates with labels and disables "Continuar"; clicking a room or date suggestion updates the query params and refetches
-- [ ] Conflict-free fixture shows the REC-91 line and enables "Continuar"
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 new tests pass
+- [x] Conflict fixture lists dates with labels and disables "Continuar"; clicking a room or date suggestion updates the query params and refetches
+- [x] Conflict-free fixture shows the REC-91 line and enables "Continuar"
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 new tests pass
 
 **Tests**: unit
 **Gate**: quick
