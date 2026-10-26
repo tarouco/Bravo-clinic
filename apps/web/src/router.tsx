@@ -13,6 +13,7 @@ import {
 import { BookingFlowPage } from './features/booking/BookingFlowPage';
 import { CalendarConfigPage } from './pages/admin/calendar/CalendarConfigPage';
 import { CuponsPage } from './pages/admin/cupons/CuponsPage';
+import { ExtrasAdminPage } from './pages/admin/extras/ExtrasAdminPage';
 import { FinancePage } from './pages/admin/finance/FinancePage';
 import { IntegrationsPage } from './pages/admin/integrations/IntegrationsPage';
 import { BookingsListPage } from './pages/admin/reservations/BookingsListPage';
@@ -73,6 +74,7 @@ const adminSectionRoute = (section: AdminSection): RouteObject => {
   if (section === 'cupons') children[0] = { index: true, element: <CuponsPage /> };
   if (section === 'financeiro') children[0] = { index: true, element: <FinancePage /> };
   if (section === 'integracoes') children[0] = { index: true, element: <IntegrationsPage /> };
+  if (section === 'servicos-extras') children[0] = { index: true, element: <ExtrasAdminPage /> };
   if (section === 'reservas') {
     children.splice(0, children.length, {
       element: <ReservationsPage />,

@@ -1147,10 +1147,10 @@ T49 → T50
 - Skill: NONE
 
 **Done when**:
-- [ ] Tests assert online-without-price error message on the price field
-- [ ] Tests assert funnel renders 5 columns with counts, "Mover para" offers only valid next statuses, 409 shows "O pedido mudou de status. Atualize a página."
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests assert online-without-price error message on the price field
+- [x] Tests assert funnel renders 5 columns with counts, "Mover para" offers only valid next statuses, 409 shows "O pedido mudou de status. Atualize a página."
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick
