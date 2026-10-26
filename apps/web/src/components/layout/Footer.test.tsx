@@ -55,7 +55,7 @@ describe('Footer', () => {
     renderFooter();
     const expected: Record<string, string> = {
       'Salas Clínicas': '/salas',
-      'Estrutura & Amenidades': '/#estrutura',
+      'Estrutura & Amenidades': '/estrutura',
       'Preços & Assinaturas': '/precos',
       'Serviços Extras & Apoio': '/servicos-extras',
       'Regras de Reserva & Cancelamento': '/politicas',

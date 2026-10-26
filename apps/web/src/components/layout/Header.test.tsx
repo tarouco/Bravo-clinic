@@ -44,7 +44,7 @@ describe('Header', () => {
     expect(within(nav).getByRole('link', { name: 'Salas' })).toHaveAttribute('href', '/salas');
     expect(within(nav).getByRole('link', { name: 'Estrutura' })).toHaveAttribute(
       'href',
-      '/#estrutura',
+      '/estrutura',
     );
     expect(within(nav).getByRole('link', { name: 'Preços & Planos' })).toHaveAttribute(
       'href',

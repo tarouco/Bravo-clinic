@@ -10,7 +10,7 @@ import { Icon } from '../ui/Icon';
 
 export const NAV_LINKS = [
   { to: '/salas', label: 'Salas' },
-  { to: '/#estrutura', label: 'Estrutura' },
+  { to: '/estrutura', label: 'Estrutura' },
   { to: '/precos', label: 'Preços & Planos' },
   { to: '/servicos-extras', label: 'Serviços Extras' },
   { to: '/contato', label: 'Contato' },

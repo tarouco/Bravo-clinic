@@ -6,7 +6,7 @@ import { Icon } from '../ui/Icon';
 
 const NAVIGATION_LINKS = [
   { to: '/salas', label: 'Salas Clínicas' },
-  { to: '/#estrutura', label: 'Estrutura & Amenidades' },
+  { to: '/estrutura', label: 'Estrutura & Amenidades' },
   { to: '/precos', label: 'Preços & Assinaturas' },
   { to: '/servicos-extras', label: 'Serviços Extras & Apoio' },
 ] as const;
