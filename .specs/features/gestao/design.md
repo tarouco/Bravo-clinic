@@ -457,3 +457,21 @@ Same rule: lane A implements these shapes, or changes the response schemas in `a
 | `GET /admin/audit?actorId&origin&actionPrefix&entityType&entityId&from&to&cursor` | `{ items: [{ id: number, at, actorUserId \| null, actorName \| null, actorRole \| null, origin, action, entityType, entityId \| null, justification \| null, before, after }], nextCursor }`, newest first; the web leaves `limit` at its default |
 
 Build note for the `/media/*` proxy (GES-108): `apps/web/scripts/write-redirects.mjs` reads `STORAGE_PUBLIC_ORIGIN` at build time (https only; unset leaves the rule out). Declaring it in `.env.example`, `netlify.toml` docs and the release steps is left to the integration phase.
+
+### Phase 10 (public and tenant UI)
+
+Same rule: lane A implements these shapes, or changes the response schemas in `apps/web/src/features/extras/contracts.ts`, `calendar-sync/contracts.ts` or `privacy/contracts.ts` in the same task and notes it. The web validates its MSW fixtures against those schemas.
+
+| Endpoint | Assumed shape / rule |
+| --- | --- |
+| `GET /public/extra-services` | `{ items: [{ id, name, description, referencePriceCents \| null, unit, saleMode }] }`: active services in display order (the public rows carry `id`; the add-on picker and the quote form need it) |
+| `POST /public/quote-requests` | Body = `quoteRequestInputSchema` output: `phone` as E.164, `email`, `desiredOn` and `bookingId` left out when empty, `website` always sent (`''` for people). 201 with any body. 422 `details: [{ path, message }]` with the field path (`bookingId`...) is shown under that field; 429 is shown as a fixed pt-BR text whatever the message. The web does not call it while the form is invalid |
+| `GET /app/quote-requests?cursor` | `{ items: [{ id, status, serviceName, description, desiredOn \| null, bookingCode \| null, createdAt }], nextCursor }`: only the session user's requests, newest first |
+| checkout add-on | The quote and booking bodies carry `addons: { extras: [{ serviceId, quantity }] }` (`addons` is left out when nothing is picked). Hourly services: `quantity` 1..ceil(minutes ÷ 60); `project` services: `quantity` 1. `Quote.extensions.extras` is not read by the web; the quote `lines` of kind `extra` and `extrasCents` show the priced lines |
+| `GET /public/config` | Adds `vapidPublicKey: string \| null` (GES-75); absent counts as `null` |
+| `POST /app/push/subscriptions` | Body = `PushSubscription.toJSON()` parsed by `pushSubscriptionSchema` (`endpoint`, `keys.p256dh`, `keys.auth`; `expirationTime` is dropped). 201 with any body. `DELETE` sends `{ endpoint }` and gets 204 |
+| `GET /app/calendar-feed` | `{ active: boolean, prefix: string \| null, createdAt: string \| null }`; `POST` answers 201 `{ url }`. The web keeps the URL in memory only and shows the prefix afterwards |
+| `GET /app/me/consents` | `{ items: [{ id, kind, version, acceptedAt }] }`, `kind` one of `booking_policy`, `recurring_charge`, `subscription_terms` (unknown kinds are shown as stored) |
+| `GET /app/me/data-export` | The JSON file as an attachment. The web fetches it with the session cookie and saves it as `bravo-meus-dados-<yyyy-mm-dd>.json` (São Paulo date); errors use the JSON envelope (429 `TOO_MANY_ATTEMPTS` message is shown as is) |
+| `POST /app/me/deletion` | Body `{ password }`, or `{ confirmText: 'EXCLUIR' }` when the person ticks "Minha conta usa apenas o login com Google" (the session payload has no password flag). 200 with any body; 401 `INVALID_CREDENTIALS` keeps the modal open; 409 `HAS_ACTIVE_COMMITMENTS` carries `details: { bookings: [{ code }], subscriptions: [{ id }] }` (pending charges have no list; the message covers them). On 200 the web drops the cached session and goes to `/` |
+| analytics | No API. `VITE_ANALYTICS_PROVIDER` (`posthog` \| `ga4`) with `VITE_GA4_ID` or `VITE_POSTHOG_KEY` (+ optional `VITE_POSTHOG_HOST`, default `https://us.i.posthog.com`); events carry only `roomSlug`, `categoryType`, `paymentMethod`, `valueBucket` plus a redacted `page_path` (ids and tokens in paths become `:id`) |
