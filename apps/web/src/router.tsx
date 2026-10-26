@@ -14,6 +14,7 @@ import { BookingFlowPage } from './features/booking/BookingFlowPage';
 import { CalendarConfigPage } from './pages/admin/calendar/CalendarConfigPage';
 import { CuponsPage } from './pages/admin/cupons/CuponsPage';
 import { FinancePage } from './pages/admin/finance/FinancePage';
+import { IntegrationsPage } from './pages/admin/integrations/IntegrationsPage';
 import { BookingsListPage } from './pages/admin/reservations/BookingsListPage';
 import { PoliciesRoute } from './pages/admin/reservations/PoliciesPanel';
 import { ReservationsCalendar } from './pages/admin/reservations/ReservationsCalendar';
@@ -71,6 +72,7 @@ const adminSectionRoute = (section: AdminSection): RouteObject => {
   if (section === 'calendario') children[0] = { index: true, element: <CalendarConfigPage /> };
   if (section === 'cupons') children[0] = { index: true, element: <CuponsPage /> };
   if (section === 'financeiro') children[0] = { index: true, element: <FinancePage /> };
+  if (section === 'integracoes') children[0] = { index: true, element: <IntegrationsPage /> };
   if (section === 'reservas') {
     children.splice(0, children.length, {
       element: <ReservationsPage />,

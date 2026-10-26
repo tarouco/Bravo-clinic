@@ -1064,11 +1064,11 @@ T49 → T50
 - Skill: NONE
 
 **Done when**:
-- [ ] Tests assert secret inputs are empty with placeholder hint `••••a1b2` and an empty submit sends empty secret strings
-- [ ] Tests assert test result `ok: false` shows the message in an error alert; activate disabled for unconfigured provider
-- [ ] Test asserts the banner "Pagamentos em modo de teste" when `productionWarning` is true
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests assert secret inputs are empty with placeholder hint `••••a1b2` and an empty submit sends empty secret strings
+- [x] Tests assert test result `ok: false` shows the message in an error alert; activate disabled for unconfigured provider
+- [x] Test asserts the banner "Pagamentos em modo de teste" when `productionWarning` is true
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick
