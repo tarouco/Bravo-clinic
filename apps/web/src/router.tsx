@@ -34,7 +34,10 @@ import { ComprasLayout, ComprasPage } from './pages/app/compras/ComprasPage';
 import { CreditosPage, HistoricoPage } from './pages/app/compras/CreditosHistoricoPages';
 import { HorasExtrasPage } from './pages/app/compras/HorasExtrasPage';
 import { MyBookingsPage } from './pages/app/MyBookingsPage';
+import { NotificationSettingsPage } from './pages/app/NotificationSettingsPage';
+import { PrivacyPage } from './pages/app/PrivacyPage';
 import { ProfilePage } from './pages/app/ProfilePage';
+import { QuotesPage } from './pages/app/QuotesPage';
 import { LoginPage } from './pages/auth/LoginPage';
 import { ForgotPasswordPage } from './pages/auth/password/ForgotPasswordPage';
 import { ResetPasswordPage } from './pages/auth/password/ResetPasswordPage';
@@ -44,6 +47,7 @@ import { VerifyEmailPage } from './pages/auth/VerifyEmailPage';
 import { HomePage } from './pages/public/home/HomePage';
 import { NotFoundPage } from './pages/public/NotFoundPage';
 import { ContactPage } from './pages/public/ContactPage';
+import { ExtrasPage } from './pages/public/ExtrasPage';
 import { LegalPage } from './pages/public/LegalPage';
 import { CheckoutPage } from './pages/public/CheckoutPage';
 import { PoliciesPage } from './pages/public/PoliciesPage';
@@ -57,15 +61,10 @@ import { RoomsPage } from './pages/public/rooms/RoomsPage';
 type PlaceholderRoute = readonly [path: string, title: string];
 
 /** Public pages that ship with later features (docs/architecture.md section 9.1). */
-const publicPlaceholders: PlaceholderRoute[] = [['servicos-extras', 'Serviços extras']];
+const publicPlaceholders: PlaceholderRoute[] = [];
 
 /** Tenant area pages that ship with later features. */
-const appPlaceholders: PlaceholderRoute[] = [
-  ['orcamentos', 'Orçamentos'],
-  ['perfil/notificacoes', 'Notificações'],
-  ['perfil/privacidade', 'Privacidade'],
-  ['perfil/seguranca', 'Segurança'],
-];
+const appPlaceholders: PlaceholderRoute[] = [['perfil/seguranca', 'Segurança']];
 
 const placeholder = ([path, title]: PlaceholderRoute): RouteObject => ({
   path,
@@ -121,6 +120,7 @@ export const appRoutes: RouteObject[] = [
       { path: 'precos', element: <PricingPage /> },
       { path: 'politicas', element: <PoliciesPage /> },
       { path: 'contato', element: <ContactPage /> },
+      { path: 'servicos-extras', element: <ExtrasPage /> },
       { path: 'termos', element: <LegalPage kind="termos" /> },
       { path: 'privacidade', element: <LegalPage kind="privacidade" /> },
       { path: 'reservar', element: <BookingFlowPage /> },
@@ -156,8 +156,11 @@ export const appRoutes: RouteObject[] = [
           { path: 'minhas-reservas', element: <MyBookingsPage /> },
           { path: 'minhas-reservas/:id', element: <BookingDetailPage /> },
           { path: 'agenda', element: <AgendaPage /> },
+          { path: 'orcamentos', element: <QuotesPage /> },
           { path: 'perfil', element: <ProfilePage /> },
           { path: 'perfil/cartoes', element: <CardsPage /> },
+          { path: 'perfil/notificacoes', element: <NotificationSettingsPage /> },
+          { path: 'perfil/privacidade', element: <PrivacyPage /> },
           {
             path: 'compras',
             element: <ComprasLayout />,

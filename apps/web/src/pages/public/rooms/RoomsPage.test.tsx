@@ -2,7 +2,8 @@ import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { http } from 'msw';
 import { Route, Routes } from 'react-router-dom';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it } from 'vitest';
+import { disableAnalytics, enableGa4, gtagEvents } from '../../../test/analytics';
 import { apiError } from '../../../test/msw/handlers';
 import { server } from '../../../test/msw/server';
 import { renderWithProviders } from '../../../test/render-with-providers';
@@ -19,11 +20,7 @@ function renderPage() {
 }
 
 afterEach(() => {
-  vi.unstubAllEnvs();
-  delete window.dataLayer;
-  document.head.querySelectorAll('script[data-ga4]').forEach((node) => {
-    node.remove();
-  });
+  disableAnalytics();
 });
 
 describe('RoomsPage (NUC-180)', () => {
@@ -62,7 +59,7 @@ describe('RoomsPage (NUC-180)', () => {
   });
 
   it('opens the room page and tracks view_room when a card is clicked', async () => {
-    vi.stubEnv('VITE_GA4_ID', 'G-TEST123');
+    enableGa4();
     renderPage();
     const cards = await screen.findAllByRole('article');
 
@@ -71,11 +68,10 @@ describe('RoomsPage (NUC-180)', () => {
     );
 
     expect(await screen.findByText('Página da sala')).toBeInTheDocument();
-    expect(window.dataLayer).toContainEqual({
-      event: 'view_room',
-      slug: 'secundaria',
-      name: 'Sala Secundária',
-    });
+    const events = gtagEvents().filter((event) => event.name === 'view_room');
+    expect(events).toHaveLength(1);
+    expect(events[0]?.params).toMatchObject({ roomSlug: 'secundaria' });
+    expect(events[0]?.params).not.toHaveProperty('name');
   });
 
   it('shows an error with a retry when the rooms cannot be loaded', async () => {

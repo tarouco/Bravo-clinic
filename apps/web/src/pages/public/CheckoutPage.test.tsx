@@ -4,6 +4,7 @@ import { http, HttpResponse } from 'msw';
 import { Route, Routes } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { bookingAwaitingPayment, bookingDetail, chargeIntent } from '../../test/fixtures/nucleo';
+import { disableAnalytics, enableGa4, gtagEvents } from '../../test/analytics';
 import { server } from '../../test/msw/server';
 import { renderWithProviders } from '../../test/render-with-providers';
 import { CheckoutPage } from './CheckoutPage';
@@ -84,25 +85,20 @@ describe('CheckoutPage (NUC-102, NUC-103, NUC-118)', () => {
     );
   });
 
-  it('reports the purchase once when the booking is confirmed', async () => {
-    vi.stubEnv('VITE_GA4_ID', 'G-TEST123');
-    window.dataLayer = [];
+  it('reports the purchase once when the booking is confirmed, without the booking code', async () => {
+    enableGa4();
     sessionStorage.clear();
     try {
       serveBooking(bookingDetail);
       renderCheckout();
       await screen.findByText('Reserva confirmada');
 
-      const purchases = (window.dataLayer ?? []).filter(
-        (entry) => (entry as { event?: string }).event === 'purchase',
-      );
-      expect(purchases).toEqual([
-        expect.objectContaining({ event: 'purchase', booking_code: 'BRV-7K2Q9X', value: 109.5 }),
-      ]);
+      const purchases = gtagEvents().filter((event) => event.name === 'purchase');
+      expect(purchases).toHaveLength(1);
+      expect(purchases[0]?.params).toMatchObject({ roomSlug: 'principal', valueBucket: '100-300' });
+      expect(JSON.stringify(purchases[0])).not.toContain('BRV-7K2Q9X');
     } finally {
-      vi.unstubAllEnvs();
-      delete window.dataLayer;
-      document.querySelector('script[data-ga4]')?.remove();
+      disableAnalytics();
     }
   });
 

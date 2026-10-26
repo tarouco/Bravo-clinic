@@ -2,6 +2,7 @@ import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { disableAnalytics, enableGa4, gtagEvents } from '../../test/analytics';
 import { renderWithProviders } from '../../test/render-with-providers';
 import { BookingFlowPage } from './BookingFlowPage';
 
@@ -145,21 +146,19 @@ describe('BookingFlowPage steps (NUC-98)', () => {
     expect(params().get('inicio')).toBe('690');
   });
 
-  it('tracks select_slot when a start and duration are chosen', async () => {
-    vi.stubEnv('VITE_GA4_ID', 'G-TEST123');
-    window.dataLayer = [];
+  it('tracks select_slot once, with only the room slug, when a start and duration are chosen', async () => {
+    enableGa4();
     try {
       renderFlow('/reservar?sala=principal&data=2026-10-27');
       await userEvent.click(await screen.findByRole('button', { name: /^11:30/ }));
       await userEvent.click(screen.getByRole('button', { name: '1h30' }));
 
-      expect(window.dataLayer).toContainEqual(
-        expect.objectContaining({ event: 'select_slot', room: 'principal', date: '2026-10-27' }),
-      );
+      const events = gtagEvents().filter((event) => event.name === 'select_slot');
+      expect(events).toHaveLength(1);
+      expect(events[0]?.params).toMatchObject({ roomSlug: 'principal' });
+      expect(events[0]?.params).not.toHaveProperty('date');
     } finally {
-      vi.unstubAllEnvs();
-      delete window.dataLayer;
-      document.querySelector('script[data-ga4]')?.remove();
+      disableAnalytics();
     }
   });
 });

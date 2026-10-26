@@ -9,7 +9,7 @@ import { Button } from '../../components/ui/Button';
 import { Alert, Spinner } from '../../components/ui/Feedback';
 import { Slot } from '../../extensions/slots';
 import { ApiError } from '../../lib/api';
-import { track } from '../../lib/analytics';
+import { track, valueBucketOf } from '../../lib/analytics';
 import { newIdempotencyKey } from '../../lib/query-string';
 import { useSession } from '../auth/useSession';
 import { availabilityKeys, useDayAvailability } from '../availability/api';
@@ -158,9 +158,8 @@ export function SummaryStep({ selection, onBack, onChooseAnotherTime }: SummaryS
         idempotencyKey: attempt.current.key,
       });
       track('begin_checkout', {
-        booking_code: booking.code,
-        value: booking.totalCents / 100,
-        currency: 'BRL',
+        roomSlug: request.roomSlug,
+        valueBucket: valueBucketOf(booking.totalCents),
       });
       void navigate(`/checkout/${booking.id}`);
     } catch (error) {

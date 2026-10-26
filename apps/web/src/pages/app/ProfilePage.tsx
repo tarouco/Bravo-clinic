@@ -156,6 +156,12 @@ function ProfileForm({ me }: { me: Me }) {
         <Button asChild variant="secondary">
           <Link to="/app/perfil/cartoes">Meus cartões</Link>
         </Button>
+        <Button asChild variant="secondary">
+          <Link to="/app/perfil/notificacoes">Notificações</Link>
+        </Button>
+        <Button asChild variant="secondary">
+          <Link to="/app/perfil/privacidade">Privacidade e dados</Link>
+        </Button>
       </div>
     </form>
   );

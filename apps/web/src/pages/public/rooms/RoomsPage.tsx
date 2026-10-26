@@ -49,7 +49,7 @@ export function RoomsPage() {
               key={room.id}
               {...roomCardData(room)}
               onReserve={() => {
-                track('view_room', { slug: room.slug, name: room.name });
+                track('view_room', { roomSlug: room.slug });
                 void navigate(`/salas/${room.slug}`);
               }}
             />

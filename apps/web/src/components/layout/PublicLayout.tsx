@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
+import { usePageViews } from '../../lib/analytics';
 import { Footer } from './Footer';
 import { Header } from './Header';
 import { WhatsAppButton } from './WhatsAppButton';
@@ -21,6 +22,7 @@ function ScrollToHash() {
 }
 
 export function PublicLayout() {
+  usePageViews();
   return (
     <>
       <ScrollToHash />

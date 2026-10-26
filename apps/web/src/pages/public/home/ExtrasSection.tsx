@@ -3,14 +3,16 @@ import { useState, type ReactNode } from 'react';
 import { Eyebrow } from '../../../components/ui/Brand';
 import { focusRing } from '../../../components/ui/cx';
 import { Icon } from '../../../components/ui/Icon';
-import { QuoteModal } from './QuoteModal';
+import { QuoteModal, type QuoteTarget } from './QuoteModal';
 
 interface ExtraService {
   icon: LucideIcon;
   chip: string;
   title: string;
-  /** Name used in the quote modal and in the WhatsApp message. */
+  /** Name used in the quote modal title and in the WhatsApp message. */
   quoteTitle: string;
+  /** Finds this service in the API catalog (`/api/public/extra-services`) to preselect it. */
+  quoteMatch: RegExp;
   description: string;
   priceCaption: string;
   price: ReactNode;
@@ -22,6 +24,7 @@ const EXTRAS: ExtraService[] = [
     chip: 'Disponível em qualquer sala',
     title: 'Pacote Filmagem & Gravação',
     quoteTitle: 'Pacote de Filmagem & Gravação',
+    quoteMatch: /filmagem/i,
     description:
       'Cenário ajustado, iluminação profissional estroboscópica e contínua, microfonação lapela sem fio e captação em 4K. Ideal para procedimentos estéticos e podcasts de saúde.',
     priceCaption: 'Valor referencial sugerido',
@@ -36,6 +39,7 @@ const EXTRAS: ExtraService[] = [
     chip: 'Operador Dedicado',
     title: 'Videomaker Dedicado',
     quoteTitle: 'Videomaker Dedicado',
+    quoteMatch: /videomaker/i,
     description:
       'Profissional no local operando câmeras, enquadramentos dinâmicos em macro de procedimentos e entrega de arquivos brutos ou cortes prontos no formato Reels e TikTok.',
     priceCaption: 'Orçamento personalizado',
@@ -48,6 +52,7 @@ const EXTRAS: ExtraService[] = [
     chip: 'Captação de Pacientes',
     title: 'Marketing para Saúde',
     quoteTitle: 'Marketing Digital para Saúde & Estética',
+    quoteMatch: /marketing/i,
     description:
       'Estratégias de tráfego pago geolocalizado na Praia Brava, Itajaí e região para médicos, esteticistas e terapeutas com foco em conversão no WhatsApp.',
     priceCaption: 'Gestão completa',
@@ -58,7 +63,7 @@ const EXTRAS: ExtraService[] = [
 ];
 
 export function ExtrasSection() {
-  const [quoteService, setQuoteService] = useState<string | null>(null);
+  const [quoteService, setQuoteService] = useState<QuoteTarget | null>(null);
 
   return (
     <section className="w-full py-space-3xl bg-surface">
@@ -103,7 +108,7 @@ export function ExtrasSection() {
                 type="button"
                 className={`mt-space-lg w-full py-space-sm bg-surface hover:bg-surface-stone text-ink font-small text-small uppercase tracking-wider rounded transition-colors text-center ${focusRing}`}
                 onClick={() => {
-                  setQuoteService(extra.quoteTitle);
+                  setQuoteService({ title: extra.quoteTitle, match: extra.quoteMatch });
                 }}
               >
                 Solicitar Orçamento

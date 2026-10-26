@@ -14,6 +14,7 @@ import {
   subscriptionPurchaseResult,
   subscriptionQuote,
 } from '../../features/purchases/fixtures';
+import { disableAnalytics, enableGa4, gtagEvents } from '../../test/analytics';
 import { ID, me } from '../../test/fixtures/nucleo';
 import { server } from '../../test/msw/server';
 import { renderWithProviders } from '../../test/render-with-providers';
@@ -333,6 +334,34 @@ describe('SubscribePage payment (REC-14, REC-20)', () => {
       'href',
       '/app/compras',
     );
+  });
+
+  it('tracks subscription_purchased once when the subscription becomes active (GES-135)', async () => {
+    enableGa4();
+    try {
+      stubCatalog({ loggedIn: true });
+      stubQuote();
+      stubPurchase();
+      server.use(
+        http.get('*/api/app/subscriptions/:id', () => HttpResponse.json(subscriptionActive)),
+      );
+
+      await goToPayment(HOUR_URL);
+      expect(gtagEvents().filter((event) => event.name === 'subscription_purchased')).toHaveLength(
+        0,
+      );
+      await userEvent.click(screen.getByRole('button', { name: /^Pagar R\$/ }));
+
+      await screen.findByText('Assinatura ativa');
+      const events = gtagEvents().filter((event) => event.name === 'subscription_purchased');
+      expect(events).toHaveLength(1);
+      expect(events[0]?.params).toMatchObject({
+        categoryType: 'hour_package',
+        valueBucket: '>1000',
+      });
+    } finally {
+      disableAnalytics();
+    }
   });
 
   it('confirms without a payment form when credits and coupon cover everything', async () => {

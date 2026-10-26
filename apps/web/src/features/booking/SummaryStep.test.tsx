@@ -4,6 +4,7 @@ import { http, HttpResponse } from 'msw';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { registerSlot, resetSlots } from '../../extensions/slots';
+import { disableAnalytics, enableGa4, gtagEvents } from '../../test/analytics';
 import { server } from '../../test/msw/server';
 import { apiError } from '../../test/msw/handlers';
 import { bookingAwaitingPayment, catalog, me, quote } from '../../test/fixtures/nucleo';
@@ -251,9 +252,8 @@ describe('SummaryStep (NUC-100, NUC-101)', () => {
     expect(screen.getByText('extras do slot: 21900')).toBeInTheDocument();
   });
 
-  it('tracks begin_checkout when the booking is created', async () => {
-    vi.stubEnv('VITE_GA4_ID', 'G-TEST123');
-    window.dataLayer = [];
+  it('tracks begin_checkout once, with the room slug and the value bucket, when the booking is created', async () => {
+    enableGa4();
     try {
       asTenant();
       renderResumo();
@@ -263,13 +263,13 @@ describe('SummaryStep (NUC-100, NUC-101)', () => {
       await userEvent.click(continueButton());
 
       await screen.findByText('página de checkout');
-      expect(window.dataLayer).toContainEqual(
-        expect.objectContaining({ event: 'begin_checkout', value: 219 }),
-      );
+      const events = gtagEvents().filter((event) => event.name === 'begin_checkout');
+      expect(events).toHaveLength(1);
+      // The fixture booking totals R$ 219,00.
+      expect(events[0]?.params).toMatchObject({ roomSlug: 'principal', valueBucket: '100-300' });
+      expect(events[0]?.params).not.toHaveProperty('booking_code');
     } finally {
-      vi.unstubAllEnvs();
-      delete window.dataLayer;
-      document.querySelector('script[data-ga4]')?.remove();
+      disableAnalytics();
     }
   });
 });
