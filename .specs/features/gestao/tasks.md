@@ -265,12 +265,12 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Integration test asserts all §5.5 tables exist after `runMigrations`
-- [ ] Tests assert a second active clinic feed insert fails with 23505 and succeeds after revoking the first
-- [ ] Tests assert duplicate `(recurrence_parent_id, date)` child fails with 23505; scope/user/room checks reject mismatches (23514)
-- [ ] Tests assert seeding twice yields 14 expense categories in PRD order, 3 extra services in `quote` mode, and keeps an edited row unchanged
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 7 tests pass
+- [x] Integration test asserts all §5.5 tables exist after `runMigrations`
+- [x] Tests assert a second active clinic feed insert fails with 23505 and succeeds after revoking the first
+- [x] Tests assert duplicate `(recurrence_parent_id, date)` child fails with 23505; scope/user/room checks reject mismatches (23514)
+- [x] Tests assert seeding twice yields 14 expense categories in PRD order, 3 extra services in `quote` mode, and keeps an edited row unchanged
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: integration
 **Gate**: full

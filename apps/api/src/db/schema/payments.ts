@@ -112,6 +112,10 @@ export const charges = pgTable(
     index('charges_period_idx')
       .on(t.subscriptionPeriodId)
       .where(sql`${t.subscriptionPeriodId} is not null`),
+    // Finance report facts by approval date (gestao design "Risks").
+    index('charges_approved_at_idx')
+      .on(t.approvedAt)
+      .where(sql`${t.approvedAt} is not null`),
   ],
 );
 

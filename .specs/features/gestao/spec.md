@@ -511,7 +511,7 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-11 | P1: Expenses and manual receipts | Tasks | T15 | In Tasks |
 | GES-12 | P1: Expenses and manual receipts | Tasks | T15 | In Tasks |
 | GES-13 | P1: Expenses and manual receipts | Tasks | T15 | In Tasks |
-| GES-14 | P1: Expenses and manual receipts | Tasks | T16 | In Tasks |
+| GES-14 | P1: Expenses and manual receipts | Tasks | T16 | Implementing |
 | GES-15 | P1: Expenses and manual receipts | Tasks | T16 | In Tasks |
 | GES-16 | P1: Expenses and manual receipts | Tasks | T15 | In Tasks |
 | GES-17 | P1: Expenses and manual receipts | Tasks | T4, T15 | In Tasks |
@@ -539,7 +539,7 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-39 | P1: Payment gateway configuration | Tasks | T11 | In Tasks |
 | GES-40 | P1: Payment gateway configuration | Tasks | T11 | In Tasks |
 | GES-41 | P1: Payment gateway configuration | Tasks | T11, T31 | In Tasks |
-| GES-42 | P1: Calendar feeds and .ics files | Tasks | T10, T32 | In Tasks |
+| GES-42 | P1: Calendar feeds and .ics files | Tasks | T10, T32 | Implementing |
 | GES-43 | P1: Calendar feeds and .ics files | Tasks | T10 | In Tasks |
 | GES-44 | P1: Calendar feeds and .ics files | Tasks | T10 | In Tasks |
 | GES-45 | P1: Calendar feeds and .ics files | Tasks | T10, T41 | In Tasks |
@@ -602,7 +602,7 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-102 | P1: Clientes | Tasks | T23 | In Tasks |
 | GES-103 | P1: Salas admin | Tasks | T22, T36 | In Tasks |
 | GES-104 | P1: Salas admin | Tasks | T22 | In Tasks |
-| GES-105 | P1: Salas admin | Tasks | T22 | In Tasks |
+| GES-105 | P1: Salas admin | Tasks | T22 | Implementing |
 | GES-106 | P1: Salas admin | Tasks | T4, T22 | In Tasks |
 | GES-107 | P1: Salas admin | Tasks | T22 | In Tasks |
 | GES-108 | P1: Salas admin | Tasks | T1, T22, T36 | Implementing |

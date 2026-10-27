@@ -50,6 +50,13 @@
       "when": 1793097805287,
       "tag": "0006_receita_switch_index",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1793110434513,
+      "tag": "0007_gestao",
+      "breakpoints": true
     }
   ]
 }
