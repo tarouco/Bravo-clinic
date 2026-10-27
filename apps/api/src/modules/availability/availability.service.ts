@@ -192,7 +192,7 @@ export async function getDayAvailability(
   const view = viewOf(room, date, inputs, now);
   let cells = view.cells.map(publicCell);
   for (const decorator of registry.availabilityDecorators) {
-    cells = await decorator.decorate(db, { roomId: room.id, date, cells });
+    cells = await decorator.decorate(db, { roomId: room.id, date, cells, now });
   }
   return {
     ...dayResponse(room, view, inputs, blockOptionsOf(categories, view, inputs, now)),
@@ -312,7 +312,7 @@ export async function getMonthAvailability(
       if (decorators.length > 0) {
         let cells = view.cells.map(publicCell);
         for (const decorator of decorators) {
-          cells = await decorator.decorate(db, { roomId: room.id, date, cells });
+          cells = await decorator.decorate(db, { roomId: room.id, date, cells, now });
         }
         hasDiscount = cells.some((c) => c.discountPercent !== undefined);
       }

@@ -122,7 +122,7 @@ export interface ClosedDayCompensationPort {
 export interface AvailabilityDecorator {
   decorate(
     db: Db,
-    args: { roomId: string; date: LocalDate; cells: PublicCell[] },
+    args: { roomId: string; date: LocalDate; cells: PublicCell[]; now: Date },
   ): Promise<PublicCell[]>;
 }
 

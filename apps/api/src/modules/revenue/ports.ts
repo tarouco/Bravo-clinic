@@ -125,8 +125,7 @@ export const closedDayCompensationPort: ClosedDayCompensationPort = {
 
 /** `discountPercent` on available public cells inside an active discount (REC-136, REC-140). */
 export const slotDiscountDecorator: AvailabilityDecorator = {
-  async decorate(db, { roomId, date, cells }) {
-    const now = new Date();
+  async decorate(db, { roomId, date, cells, now }) {
     const parts = await discountMinutes(db, { roomId, date, now });
     if (parts.length === 0) return cells;
     const nowMinute = utcToLocal(now).date === date ? utcToLocal(now).minuteOfDay : -1;
