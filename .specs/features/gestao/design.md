@@ -475,3 +475,26 @@ Same rule: lane A implements these shapes, or changes the response schemas in `a
 | `GET /app/me/data-export` | The JSON file as an attachment. The web fetches it with the session cookie and saves it as `bravo-meus-dados-<yyyy-mm-dd>.json` (São Paulo date); errors use the JSON envelope (429 `TOO_MANY_ATTEMPTS` message is shown as is) |
 | `POST /app/me/deletion` | Body `{ password }`, or `{ confirmText: 'EXCLUIR' }` when the person ticks "Minha conta usa apenas o login com Google" (the session payload has no password flag). 200 with any body; 401 `INVALID_CREDENTIALS` keeps the modal open; 409 `HAS_ACTIVE_COMMITMENTS` carries `details: { bookings: [{ code }], subscriptions: [{ id }] }` (pending charges have no list; the message covers them). On 200 the web drops the cached session and goes to `/` |
 | analytics | No API. `VITE_ANALYTICS_PROVIDER` (`posthog` \| `ga4`) with `VITE_GA4_ID` or `VITE_POSTHOG_KEY` (+ optional `VITE_POSTHOG_HOST`, default `https://us.i.posthog.com`); events carry only `roomSlug`, `categoryType`, `paymentMethod`, `valueBucket` plus a redacted `page_path` (ids and tokens in paths become `:id`) |
+
+## Lane A notes (Phases 1–2)
+
+Precondition check (R1–R17, before Phase 1 work resumed at T3): every contract exists. Three R10 service names differ from the table; T14 must call the shipped names (nothing is re-implemented):
+
+| R10 name in this design | Shipped name |
+| --- | --- |
+| nucleo `serializeBookingDetail` | `loadBookingDetail(db, booking, now, registry?)` in `modules/booking/booking-serializer.service.ts` |
+| nucleo `listBookings` | `listAdminBookings(db, filters, cursor)` in `modules/admin/booking-queries.service.ts` |
+| nucleo `applyReschedule` | `rescheduleBooking(deps, ctx, input)` in `modules/booking/reschedule.service.ts` |
+
+Also: R12 `getCustomerSubscriptions` takes `(db, userId, now)`; R9 `registerJob`/`runJob` live in `jobs/runner.ts` (re-exported by `jobs/index.ts`) and `verifyTriggerRequest` in `lib/trigger-auth.ts`.
+
+Implementation notes:
+
+- **T3**: one generated migration `0007_gestao` holds every table, check and partial/expression index (drizzle-kit expresses them all); `charges_approved_at_idx` is declared in `db/schema/payments.ts`. Expense categories and extra services are seeded into empty tables only, so a renamed or edited row is never re-added or overwritten.
+- **T4**: `AppDeps.storage` is optional in the type; `createApp` always sets it (`createS3Storage(env)` by default). Without `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` and `AWS_ENDPOINT_URL_S3` every storage call answers 503 `STORAGE_UNAVAILABLE`. `env.ts` accepts the four `AWS_*` vars.
+- **T5**: `emit(tx, ctx, event, { env })` takes the env as a fourth argument (staff templates need `APP_BASE_URL`). An explicit `event.to` replaces the recipient list (invite, holiday review, test e-mail to one address). The dedupe key uses the event name without `staff.` (`staff:new_booking:<entityId>:<recipientId>`). `withNotifications(deps, ctx, fn)` runs `fn` in one transaction and dispatches after commit; T43's staff port can use it.
+- **T6**: the web contract (`usePushSubscription`) matches: `POST` body `{ endpoint, keys }` (extra keys such as `expirationTime` are dropped), 201 `{ endpoint }`; `DELETE` body `{ endpoint }`, 204, scoped to the session user. `vapidPublicKey` is non-null only when all three `VAPID_*` vars are set, the same condition under which pushes are sent. Fundacao's exact-shape `GET /public/config` test now includes `vapidPublicKey: null`.
+- **T7**: gestao templates take `(data, { APP_BASE_URL })` and build absolute links from site paths; `renderStaffEmail` renders a staff template from the loose `notifyStaff` payload with neutral fallbacks.
+- **T8**: `PRODID` changed to the GES-47 value `-//Bravo Clinic//Salas Inteligentes//PT-BR` for every output, attachments included; `icsCalendar` writes `METHOD` only when given and `X-WR-CALNAME` for the feed name.
+- **T9**: `email-retry` and `retention` are registered jobs (`/jobs/email-retry`, `/jobs/retention`); their schedule triggers stay for T49, which owns the gestao edits to `neon.ts`.
+- Production env needed: `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT` (already passed through by `neon.ts`); `AWS_*` storage vars are injected by Neon once T49 declares the buckets.
