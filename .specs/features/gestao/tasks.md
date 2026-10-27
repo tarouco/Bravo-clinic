@@ -467,13 +467,13 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests assert issue returns the URL once, DB holds hash + prefix only, regenerate revokes the previous one, audit rows written
-- [ ] Tests assert clinic feed includes each listed status and active blocks, excludes cancelled/expired bookings, cleanup and amounts; room scope filters; window edges (today − 90 / + 180) included/excluded
-- [ ] Tests assert personal feed contains only the owner's allowed statuses and summary "Bravô Clinic · <sala>"
-- [ ] Test asserts after a reschedule (nucleo service) the feed has the same UID, new DTSTART and SEQUENCE + 1; after cancel the event is gone
-- [ ] Tests assert per-booking `.ics` PUBLISH/CANCEL, 404 for another user's booking, 404 for unknown/revoked token, 429 on the 61st request in an hour
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 14 tests pass
+- [x] Tests assert issue returns the URL once, DB holds hash + prefix only, regenerate revokes the previous one, audit rows written
+- [x] Tests assert clinic feed includes each listed status and active blocks, excludes cancelled/expired bookings, cleanup and amounts; room scope filters; window edges (today − 90 / + 180) included/excluded
+- [x] Tests assert personal feed contains only the owner's allowed statuses and summary "Bravô Clinic · <sala>"
+- [x] Test asserts after a reschedule (nucleo service) the feed has the same UID, new DTSTART and SEQUENCE + 1; after cancel the event is gone
+- [x] Tests assert per-booking `.ics` PUBLISH/CANCEL, 404 for another user's booking, 404 for unknown/revoked token, 429 on the 61st request in an hour
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 14 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -497,13 +497,13 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests assert listing never contains a secret value and shows `webhookUrl` per provider
-- [ ] Tests assert saved secrets decrypt to the input, hint is `••••` + last 4, empty field keeps the stored secret, audit `after` has no secret
-- [ ] Tests assert test connection `{ ok: true }` for sandbox, `{ ok: false }` for a 401 and for a timeout from stubbed Mercado Pago `fetch`
-- [ ] Tests assert activation of an unconfigured provider → 422; valid activation updates `payment.active_gateway`, leaves existing charges' provider, queues one re-register e-mail per affected subscription (none on repeat)
-- [ ] Tests assert reception → 403 on every route
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 10 tests pass
+- [x] Tests assert listing never contains a secret value and shows `webhookUrl` per provider
+- [x] Tests assert saved secrets decrypt to the input, hint is `••••` + last 4, empty field keeps the stored secret, audit `after` has no secret
+- [x] Tests assert test connection `{ ok: true }` for sandbox, `{ ok: false }` for a 401 and for a timeout from stubbed Mercado Pago `fetch`
+- [x] Tests assert activation of an unconfigured provider → 422; valid activation updates `payment.active_gateway`, leaves existing charges' provider, queues one re-register e-mail per affected subscription (none on repeat)
+- [x] Tests assert reception → 403 on every route
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 10 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -527,12 +527,12 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests assert add/duplicate (409)/11th recipient (422)/toggle/remove, all audited
-- [ ] Tests assert unknown event key → 422 and stored toggles round-trip
-- [ ] Tests assert test e-mail returns per-recipient status with Resend stubbed, `not_sent` without key, 429 on the 6th call in an hour
-- [ ] Tests assert outbox list filters by status, excludes `html`, covers 30 days only
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 9 tests pass
+- [x] Tests assert add/duplicate (409)/11th recipient (422)/toggle/remove, all audited
+- [x] Tests assert unknown event key → 422 and stored toggles round-trip
+- [x] Tests assert test e-mail returns per-recipient status with Resend stubbed, `not_sent` without key, 429 on the 6th call in an hour
+- [x] Tests assert outbox list filters by status, excludes `html`, covers 30 days only
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 9 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -556,13 +556,13 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests assert token format `^bmcp_[A-Za-z0-9_-]{43}$`, only hash stored, list without raw token, revoke audited
-- [ ] Tests assert `/mcp` 404 when disabled; 401 for missing, unknown, revoked, expired token and for an owner demoted to reception
-- [ ] Test asserts the request over `mcp.rate_limit_per_minute` gets 429 with `Retry-After`
-- [ ] Test with a dummy tool through the SDK client asserts one `audit_log` row origin `mcp`, action `mcp.<tool>`
-- [ ] Tests assert `GET /admin/integrations/mcp` server URL uses `API_FUNCTION_URL` and sets the warning when unset; reception → 403 on token creation
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 11 tests pass
+- [x] Tests assert token format `^bmcp_[A-Za-z0-9_-]{43}$`, only hash stored, list without raw token, revoke audited
+- [x] Tests assert `/mcp` 404 when disabled; 401 for missing, unknown, revoked, expired token and for an owner demoted to reception
+- [x] Test asserts the request over `mcp.rate_limit_per_minute` gets 429 with `Retry-After`
+- [x] Test with a dummy tool through the SDK client asserts one `audit_log` row origin `mcp`, action `mcp.<tool>`
+- [x] Tests assert `GET /admin/integrations/mcp` server URL uses `API_FUNCTION_URL` and sets the warning when unset; reception → 403 on token creation
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 11 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -586,12 +586,12 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Test asserts `tools/list` with a read token returns exactly the read tools registered so far, and with read_write all of them
-- [ ] Tests assert a read token calling `booking_create` gets tool error `FORBIDDEN` with no booking row
-- [ ] Tests assert `booking_cancel` without `confirm` returns `CONFIRMATION_REQUIRED` + preview and leaves status unchanged; with `confirm: true` cancels and writes the service audit with origin `mcp`
-- [ ] Tests assert invalid args return `VALIDATION_FAILED` with pt-BR messages; `agenda_list` and `pre_reservation_create` happy paths
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 10 tests pass
+- [x] Test asserts `tools/list` with a read token returns exactly the read tools registered so far, and with read_write all of them
+- [x] Tests assert a read token calling `booking_create` gets tool error `FORBIDDEN` with no booking row
+- [x] Tests assert `booking_cancel` without `confirm` returns `CONFIRMATION_REQUIRED` + preview and leaves status unchanged; with `confirm: true` cancels and writes the service audit with origin `mcp`
+- [x] Tests assert invalid args return `VALIDATION_FAILED` with pt-BR messages; `agenda_list` and `pre_reservation_create` happy paths
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 10 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -617,12 +617,12 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests assert create 201 + audit, inactive category 422 on `categoryId`, edit/delete audited with before/after, deleted rows excluded from list
-- [ ] Tests assert attachment upload stores object + name + content type, replace deletes the old object after commit, 413/415 paths, GET responds 302 to a URL with 300 s expiry
-- [ ] Tests assert category duplicate name (case-insensitive) → 409, deactivate keeps old expenses listed
-- [ ] Tests assert tenant/reception → 403
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 12 tests pass
+- [x] Tests assert create 201 + audit, inactive category 422 on `categoryId`, edit/delete audited with before/after, deleted rows excluded from list
+- [x] Tests assert attachment upload stores object + name + content type, replace deletes the old object after commit, 413/415 paths, GET responds 302 to a URL with 300 s expiry
+- [x] Tests assert category duplicate name (case-insensitive) → 409, deactivate keeps old expenses listed
+- [x] Tests assert tenant/reception → 403
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 12 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -646,10 +646,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests (injected `now`) assert monthly parent 2026-01-31 creates 2026-02-28 and 2026-03-31 children by 2026-03-31, quarterly and yearly cadence, no future-dated child
-- [ ] Tests assert a re-run creates no duplicates and a parent switched to `none` stops generating while old children remain
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 5 tests pass
+- [x] Tests (injected `now`) assert monthly parent 2026-01-31 creates 2026-02-28 and 2026-03-31 children by 2026-03-31, quarterly and yearly cadence, no future-dated child
+- [x] Tests assert a re-run creates no duplicates and a parent switched to `none` stops generating while old children remain
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 5 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -673,9 +673,9 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests assert create 201 + audit, invalid method/amount 422, delete without justification 422, with justification soft-deleted + audit containing it
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 5 tests pass
+- [x] Tests assert create 201 + audit, invalid method/amount 422, delete without justification 422, with justification soft-deleted + audit containing it
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 5 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -699,10 +699,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Integration test seeds a booking with deposit + balance across months, a refund, a fixed-schedule period, extra hours, a manual receipt, expenses, and asserts Caixa and Competência buckets equal the design worked examples
-- [ ] Tests assert previous-range totals and deltas, empty range zeros with `null` percents, 422 for > 731 days, 403 for reception
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 7 tests pass
+- [x] Integration test seeds a booking with deposit + balance across months, a refund, a fixed-schedule period, extra hours, a manual receipt, expenses, and asserts Caixa and Competência buckets equal the design worked examples
+- [x] Tests assert previous-range totals and deltas, empty range zeros with `null` percents, 422 for > 731 days, 403 for reception
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -726,11 +726,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Test downloads the file, checks content type and file name, parses it with exceljs and asserts month column labels (`nov/2026`), the 7 line labels in order, numeric cells, negative deductions, BRL format
-- [ ] Test asserts the `Total` column equals `summary.totals` for the same query in both regimes
-- [ ] Test asserts header rows (regime, period, timestamp) and a mid-month `from` producing a partial first month
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 5 tests pass
+- [x] Test downloads the file, checks content type and file name, parses it with exceljs and asserts month column labels (`nov/2026`), the 7 line labels in order, numeric cells, negative deductions, BRL format
+- [x] Test asserts the `Total` column equals `summary.totals` for the same query in both regimes
+- [x] Test asserts header rows (regime, period, timestamp) and a mid-month `from` producing a partial first month
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 5 tests pass
 
 **Tests**: integration
 **Gate**: full

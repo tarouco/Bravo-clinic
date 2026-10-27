@@ -508,17 +508,17 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-08 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
 | GES-09 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
 | GES-10 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
-| GES-11 | P1: Expenses and manual receipts | Tasks | T15 | In Tasks |
-| GES-12 | P1: Expenses and manual receipts | Tasks | T15 | In Tasks |
-| GES-13 | P1: Expenses and manual receipts | Tasks | T15 | In Tasks |
+| GES-11 | P1: Expenses and manual receipts | Tasks | T15 | Implementing |
+| GES-12 | P1: Expenses and manual receipts | Tasks | T15 | Implementing |
+| GES-13 | P1: Expenses and manual receipts | Tasks | T15 | Implementing |
 | GES-14 | P1: Expenses and manual receipts | Tasks | T16 | Implementing |
-| GES-15 | P1: Expenses and manual receipts | Tasks | T16 | In Tasks |
-| GES-16 | P1: Expenses and manual receipts | Tasks | T15 | In Tasks |
+| GES-15 | P1: Expenses and manual receipts | Tasks | T16 | Implementing |
+| GES-16 | P1: Expenses and manual receipts | Tasks | T15 | Implementing |
 | GES-17 | P1: Expenses and manual receipts | Tasks | T4, T15 | Implementing |
-| GES-18 | P1: Expenses and manual receipts | Tasks | T15 | In Tasks |
-| GES-19 | P1: Expenses and manual receipts | Tasks | T15 | In Tasks |
-| GES-20 | P1: Expenses and manual receipts | Tasks | T17 | In Tasks |
-| GES-21 | P1: Expenses and manual receipts | Tasks | T17 | In Tasks |
+| GES-18 | P1: Expenses and manual receipts | Tasks | T15 | Implementing |
+| GES-19 | P1: Expenses and manual receipts | Tasks | T15 | Implementing |
+| GES-20 | P1: Expenses and manual receipts | Tasks | T17 | Implementing |
+| GES-21 | P1: Expenses and manual receipts | Tasks | T17 | Implementing |
 | GES-22 | P1: Financeiro overview | Tasks | T2, T18 | Implementing |
 | GES-23 | P1: Financeiro overview | Tasks | T2 | Implementing |
 | GES-24 | P1: Financeiro overview | Tasks | T2, T18 | Implementing |
@@ -526,52 +526,52 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-26 | P1: Financeiro overview | Tasks | T29 | In Tasks |
 | GES-27 | P1: Financeiro overview | Tasks | T28, T29 | In Tasks |
 | GES-28 | P1: Financeiro overview | Tasks | T29 | In Tasks |
-| GES-29 | P1: DRE export | Tasks | T19 | In Tasks |
+| GES-29 | P1: DRE export | Tasks | T19 | Implementing |
 | GES-30 | P1: DRE export | Tasks | T2, T19 | Implementing |
 | GES-31 | P1: DRE export | Tasks | T2, T19 | Implementing |
 | GES-32 | P1: DRE export | Tasks | T2, T19 | Implementing |
-| GES-33 | P1: DRE export | Tasks | T19 | In Tasks |
-| GES-34 | P1: DRE export | Tasks | T19 | In Tasks |
-| GES-35 | P1: Payment gateway configuration | Tasks | T11 | In Tasks |
-| GES-36 | P1: Payment gateway configuration | Tasks | T11 | In Tasks |
-| GES-37 | P1: Payment gateway configuration | Tasks | T11 | In Tasks |
-| GES-38 | P1: Payment gateway configuration | Tasks | T11 | In Tasks |
-| GES-39 | P1: Payment gateway configuration | Tasks | T11 | In Tasks |
-| GES-40 | P1: Payment gateway configuration | Tasks | T11 | In Tasks |
-| GES-41 | P1: Payment gateway configuration | Tasks | T11, T31 | In Tasks |
+| GES-33 | P1: DRE export | Tasks | T19 | Implementing |
+| GES-34 | P1: DRE export | Tasks | T19 | Implementing |
+| GES-35 | P1: Payment gateway configuration | Tasks | T11 | Implementing |
+| GES-36 | P1: Payment gateway configuration | Tasks | T11 | Implementing |
+| GES-37 | P1: Payment gateway configuration | Tasks | T11 | Implementing |
+| GES-38 | P1: Payment gateway configuration | Tasks | T11 | Implementing |
+| GES-39 | P1: Payment gateway configuration | Tasks | T11 | Implementing |
+| GES-40 | P1: Payment gateway configuration | Tasks | T11 | Implementing |
+| GES-41 | P1: Payment gateway configuration | Tasks | T11, T31 | Implementing |
 | GES-42 | P1: Calendar feeds and .ics files | Tasks | T10, T32 | Implementing |
-| GES-43 | P1: Calendar feeds and .ics files | Tasks | T10 | In Tasks |
-| GES-44 | P1: Calendar feeds and .ics files | Tasks | T10 | In Tasks |
-| GES-45 | P1: Calendar feeds and .ics files | Tasks | T10, T41 | In Tasks |
-| GES-46 | P1: Calendar feeds and .ics files | Tasks | T10 | In Tasks |
+| GES-43 | P1: Calendar feeds and .ics files | Tasks | T10 | Implementing |
+| GES-44 | P1: Calendar feeds and .ics files | Tasks | T10 | Implementing |
+| GES-45 | P1: Calendar feeds and .ics files | Tasks | T10, T41 | Implementing |
+| GES-46 | P1: Calendar feeds and .ics files | Tasks | T10 | Implementing |
 | GES-47 | P1: Calendar feeds and .ics files | Tasks | T8 | Implementing |
 | GES-48 | P1: Calendar feeds and .ics files | Tasks | T8, T10 | Implementing |
-| GES-49 | P1: Calendar feeds and .ics files | Tasks | T10, T45 | In Tasks |
-| GES-50 | P1: Calendar feeds and .ics files | Tasks | T10, T41 | In Tasks |
-| GES-51 | P1: Calendar feeds and .ics files | Tasks | T10 | In Tasks |
-| GES-52 | P1: Calendar feeds and .ics files | Tasks | T10 | In Tasks |
-| GES-53 | P1: MCP server | Tasks | T13 | In Tasks |
-| GES-54 | P1: MCP server | Tasks | T13 | In Tasks |
-| GES-55 | P1: MCP server | Tasks | T13 | In Tasks |
-| GES-56 | P1: MCP server | Tasks | T13 | In Tasks |
-| GES-57 | P1: MCP server | Tasks | T14 | In Tasks |
-| GES-58 | P1: MCP server | Tasks | T14 | In Tasks |
-| GES-59 | P1: MCP server | Tasks | T14 | In Tasks |
-| GES-60 | P1: MCP server | Tasks | T13 | In Tasks |
-| GES-61 | P1: MCP server | Tasks | T13, T14 | In Tasks |
-| GES-62 | P1: MCP server | Tasks | T14 | In Tasks |
-| GES-63 | P1: MCP server | Tasks | T13, T33 | In Tasks |
-| GES-64 | P1: MCP server | Tasks | T13 | In Tasks |
-| GES-65 | P1: Notification e-mails | Tasks | T12 | In Tasks |
-| GES-66 | P1: Notification e-mails | Tasks | T12 | In Tasks |
+| GES-49 | P1: Calendar feeds and .ics files | Tasks | T10, T45 | Implementing |
+| GES-50 | P1: Calendar feeds and .ics files | Tasks | T10, T41 | Implementing |
+| GES-51 | P1: Calendar feeds and .ics files | Tasks | T10 | Implementing |
+| GES-52 | P1: Calendar feeds and .ics files | Tasks | T10 | Implementing |
+| GES-53 | P1: MCP server | Tasks | T13 | Implementing |
+| GES-54 | P1: MCP server | Tasks | T13 | Implementing |
+| GES-55 | P1: MCP server | Tasks | T13 | Implementing |
+| GES-56 | P1: MCP server | Tasks | T13 | Implementing |
+| GES-57 | P1: MCP server | Tasks | T14 | Implementing |
+| GES-58 | P1: MCP server | Tasks | T14 | Implementing |
+| GES-59 | P1: MCP server | Tasks | T14 | Implementing |
+| GES-60 | P1: MCP server | Tasks | T13 | Implementing |
+| GES-61 | P1: MCP server | Tasks | T13, T14 | Implementing |
+| GES-62 | P1: MCP server | Tasks | T14 | Implementing |
+| GES-63 | P1: MCP server | Tasks | T13, T33 | Implementing |
+| GES-64 | P1: MCP server | Tasks | T13 | Implementing |
+| GES-65 | P1: Notification e-mails | Tasks | T12 | Implementing |
+| GES-66 | P1: Notification e-mails | Tasks | T12 | Implementing |
 | GES-67 | P1: Notification e-mails | Tasks | T5 | Implementing |
 | GES-68 | P1: Notification e-mails | Tasks | T5 | Implementing |
 | GES-69 | P1: Notification e-mails | Tasks | T43 | In Tasks |
-| GES-70 | P1: Notification e-mails | Tasks | T12 | In Tasks |
-| GES-71 | P1: Notification e-mails | Tasks | T12 | In Tasks |
+| GES-70 | P1: Notification e-mails | Tasks | T12 | Implementing |
+| GES-71 | P1: Notification e-mails | Tasks | T12 | Implementing |
 | GES-72 | P1: Notification e-mails | Tasks | T9 | Implementing |
 | GES-73 | P1: Notification e-mails | Tasks | T7 | Implementing |
-| GES-74 | P1: Notification e-mails | Tasks | T12, T32 | In Tasks |
+| GES-74 | P1: Notification e-mails | Tasks | T12, T32 | Implementing |
 | GES-75 | P1: Web push | Tasks | T6 | Implementing |
 | GES-76 | P1: Web push | Tasks | T6 | Implementing |
 | GES-77 | P1: Web push | Tasks | T6 | Implementing |
@@ -617,7 +617,7 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-117 | P1: Reception restrictions end-to-end | Tasks | T44 | In Tasks |
 | GES-118 | P1: Reception restrictions end-to-end | Tasks | T44 | In Tasks |
 | GES-119 | P1: Reception restrictions end-to-end | Tasks | T44 | In Tasks |
-| GES-120 | P1: Reception restrictions end-to-end | Tasks | T13, T44 | In Tasks |
+| GES-120 | P1: Reception restrictions end-to-end | Tasks | T13, T44 | Implementing |
 | GES-121 | P1: LGPD self-service | Tasks | T25 | In Tasks |
 | GES-122 | P1: LGPD self-service | Tasks | T25 | In Tasks |
 | GES-123 | P1: LGPD self-service | Tasks | T25 | In Tasks |

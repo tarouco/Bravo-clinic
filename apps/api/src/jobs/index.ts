@@ -6,6 +6,7 @@ import { materializeBlocks } from './materialize-blocks';
 import { noShows } from './no-shows';
 import { periodRollover } from './period-rollover';
 import { reconcilePayments } from './reconcile-payments';
+import { recurringExpenses } from './recurring-expenses';
 import { reminders } from './reminders';
 import { renewals } from './renewals';
 import { registerJob } from './runner';
@@ -30,6 +31,8 @@ registerJob('expire-purchases', expirePurchases);
 // retention weekly. Their triggers are added to neon.ts by gestao T49.
 registerJob('email-retry', emailRetry);
 registerJob('retention', retention);
+// Daily `0 9 * * *` UTC (GES-14); trigger added to neon.ts by T49.
+registerJob('recurring-expenses', recurringExpenses);
 
 export { getJob, registerJob, registeredJobs, runJob, JOB_CONTEXT } from './runner';
 export type { Job, JobDeps, JobStats } from './runner';

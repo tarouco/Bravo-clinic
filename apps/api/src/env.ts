@@ -25,6 +25,8 @@ export const envSchema = z.object({
   VAPID_PUBLIC_KEY: z.string().min(1).optional(),
   VAPID_PRIVATE_KEY: z.string().min(1).optional(),
   VAPID_SUBJECT: z.string().min(1).optional(),
+  // Native URL of the API function; MCP clients use `${API_FUNCTION_URL}/mcp` (AD-028, GES-63).
+  API_FUNCTION_URL: z.url({ protocol: /^https?$/ }).optional(),
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
 });
 

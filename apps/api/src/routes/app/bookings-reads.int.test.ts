@@ -235,7 +235,8 @@ describe('GET /app/bookings/:id/ics (NUC-140)', () => {
     expect(response.status).toBe(200);
     expect(response.headers.get('Content-Type')).toContain('text/calendar');
     expect(text).toContain(`UID:${row.icsUid}`);
-    expect(text).toContain('METHOD:REQUEST');
+    // GES-50: the downloadable file is PUBLISH (REQUEST stays on the e-mail attachments).
+    expect(text).toContain('METHOD:PUBLISH');
     expect(text).toContain(
       `DTSTART:${row.startsAt.toISOString().replace(/[-:]/g, '').replace('.000', '')}`,
     );

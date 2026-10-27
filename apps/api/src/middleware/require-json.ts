@@ -11,6 +11,9 @@ const BINARY_UPLOADS = [
   /^\/admin\/rooms\/[^/]+\/photo-uploads\/[^/]+\/[^/]+$/,
 ];
 
+// The MCP transport checks its own content type and answers in JSON-RPC (AD-011).
+const isMcp = (path: string) => path === '/mcp' || path === '/mcp/';
+
 const isBinaryUpload = (method: string, path: string) =>
   method === 'PUT' && BINARY_UPLOADS.some((pattern) => pattern.test(path));
 
@@ -19,6 +22,7 @@ export function requireJson(): MiddlewareHandler<AppEnv> {
     if (
       MUTATING.has(c.req.method) &&
       !EXEMPT_PREFIXES.some((p) => c.req.path.startsWith(p)) &&
+      !isMcp(c.req.path) &&
       !isBinaryUpload(c.req.method, c.req.path)
     ) {
       const mediaType = c.req.header('Content-Type')?.split(';')[0]?.trim().toLowerCase();

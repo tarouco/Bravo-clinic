@@ -70,7 +70,8 @@ export async function loadBookingMailContext(
 export function bookingIcs(
   booking: Pick<BookingRow, 'icsUid' | 'icsSequence' | 'startsAt' | 'endsAt' | 'code'>,
   ctx: Pick<BookingMailContext, 'roomName' | 'clinicAddress'>,
-  method: Extract<IcsMethod, 'REQUEST' | 'CANCEL'>,
+  /** REQUEST/CANCEL for e-mail attachments; PUBLISH/CANCEL for the downloadable file (GES-50). */
+  method: IcsMethod,
   now?: Date,
 ): string {
   return buildIcs({
