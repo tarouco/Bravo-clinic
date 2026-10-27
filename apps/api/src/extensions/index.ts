@@ -6,6 +6,7 @@ import {
   subscriptionModeHandler,
 } from '../modules/revenue/ports';
 import { extraHoursHandler } from '../modules/extra-hours/extra-hours.service';
+import { extrasStep } from '../modules/extras/extras-step';
 import { creditStep, discountStep, packageStep } from '../modules/revenue/steps';
 import {
   fixedScheduleHandler,
@@ -26,7 +27,8 @@ import { createRegistry, type Registry } from './registry';
 export function buildRegistry(): Registry {
   return createRegistry({
     // receita (AD-031)
-    checkoutSteps: [discountStep, packageStep, creditStep],
+    // receita discount (100), package (200), credit (400); gestao extras (300, R6)
+    checkoutSteps: [discountStep, packageStep, extrasStep, creditStep],
     paymentModeHandlers: [
       ...defaultRegistry().paymentModeHandlers,
       packageModeHandler,

@@ -756,11 +756,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests assert CRUD with audit, online-without-price 422, public list returns active only in display order
-- [ ] Test runs nucleo checkout with `addons.extras` for a 2 h booking and an hourly online service (8000/h × 2) and asserts total + 16000, deposit split on the new total, two frozen `booking_extra_items` fields
-- [ ] Tests assert inactive/quote-mode service and quantity 3 for a 2 h booking → 422; project quantity ≠ 1 → 422
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 8 tests pass
+- [x] Tests assert CRUD with audit, online-without-price 422, public list returns active only in display order
+- [x] Test runs nucleo checkout with `addons.extras` for a 2 h booking and an hourly online service (8000/h × 2) and asserts total + 16000, deposit split on the new total, two frozen `booking_extra_items` fields
+- [x] Tests assert inactive/quote-mode service and quantity 3 for a 2 h booking → 422; project quantity ≠ 1 → 422
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 8 tests pass
 
 **Tests**: integration
 **Gate**: full

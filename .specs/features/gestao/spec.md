@@ -581,12 +581,12 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-81 | P1: Web push | Tasks | T5 | Implementing |
 | GES-82 | P1: Web push | Tasks | T40 | In Tasks |
 | GES-83 | P1: Web push | Tasks | T40 | In Tasks |
-| GES-84 | P1: Extra services catalog and online add-on | Tasks | T20 | In Tasks |
+| GES-84 | P1: Extra services catalog and online add-on | Tasks | T20 | Implementing |
 | GES-85 | P1: Extra services catalog and online add-on | Tasks | T1, T20 | Implementing |
-| GES-86 | P1: Extra services catalog and online add-on | Tasks | T20 | In Tasks |
+| GES-86 | P1: Extra services catalog and online add-on | Tasks | T20 | Implementing |
 | GES-87 | P1: Extra services catalog and online add-on | Tasks | T38 | In Tasks |
-| GES-88 | P1: Extra services catalog and online add-on | Tasks | T20, T39 | In Tasks |
-| GES-89 | P1: Extra services catalog and online add-on | Tasks | T20 | In Tasks |
+| GES-88 | P1: Extra services catalog and online add-on | Tasks | T20, T39 | Implementing |
+| GES-89 | P1: Extra services catalog and online add-on | Tasks | T20 | Implementing |
 | GES-90 | P1: Quote request funnel | Tasks | T21 | In Tasks |
 | GES-91 | P1: Quote request funnel | Tasks | T21 | In Tasks |
 | GES-92 | P1: Quote request funnel | Tasks | T21 | In Tasks |

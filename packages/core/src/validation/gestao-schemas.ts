@@ -212,6 +212,26 @@ export const extraServiceInputSchema = z
 export type ExtraServiceInput = z.infer<typeof extraServiceInputSchema>;
 
 /**
+ * `addons.extras` of the booking quote and create bodies (GES-88): one line per online service.
+ * The quantity bounds depend on the booking (GES-89), so the checkout step checks them.
+ */
+export const extrasAddonSchema = z
+  .array(
+    z.object({
+      serviceId: z.uuid({ error: 'Escolha o serviço' }),
+      quantity: z
+        .number({ error: 'Quantidade inválida' })
+        .int({ error: 'Quantidade inválida' })
+        .min(1, { error: 'Quantidade inválida' }),
+    }),
+  )
+  .max(20, { error: 'Escolha no máximo 20 serviços' })
+  .refine((lines) => new Set(lines.map((l) => l.serviceId)).size === lines.length, {
+    error: 'Cada serviço só pode aparecer uma vez',
+  });
+export type ExtrasAddon = z.infer<typeof extrasAddonSchema>;
+
+/**
  * `POST /public/quote-requests` (GES-90). `today` is the clinic's local date, injected so the
  * desired date stays within today..today + 365. `website` is the honeypot (GES-93).
  */
