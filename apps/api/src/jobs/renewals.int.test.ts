@@ -209,6 +209,18 @@ describe('renewals job (REC-47, REC-48, REC-125)', () => {
     expect(await periodsOf(subscription.id)).toHaveLength(2);
   });
 
+  it('an admin_only category still renews (REC-09)', async () => {
+    const { subscription, category } = await hourPackage();
+    await db
+      .update(bookingCategories)
+      .set({ visibility: 'admin_only' })
+      .where(eq(bookingCategories.id, category.id));
+    await run(DUE);
+    const [, next] = await periodsOf(subscription.id);
+    expect(next).toMatchObject({ seq: 2, status: 'awaiting_payment' });
+    expect(await chargesOf(next?.id ?? '')).toHaveLength(1);
+  });
+
   it('fixed schedule: promotes the held period priced per occurrence × held count (REC-93)', async () => {
     const { user } = await createTenant(db, { now: NOW });
     const category = await seeded('Meio turno mensal');

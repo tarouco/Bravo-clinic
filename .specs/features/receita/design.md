@@ -403,6 +403,7 @@ Lane A notes (Phases 5–6):
 - Switch quote: `creditAppliedCents` is 0 (`switchQuoteInput` has no `useCredits`); credits apply on `POST …/switch` with `useCredits`.
 - Extrato entry ids are `p:<n>` (package) / `e:<n>` (extra); the extrato of a subscription also lists the user's extra-minute entries. Purchase history lists every charge of the user (internal credit, cancelled and expired ones included).
 - `AdminSubscriptionRow.balanceText`: "6h de 20h" (hour package), "N ocorrências no período" (fixed), "—" without an active period.
+- SPEC_DEVIATION (`modules/subscriptions/quote.service.ts`): an open holiday keeps the weekday's business hours for a fixed schedule, not the holiday hours. REC-90 says holidays keep their occurrences, and with the holiday opening (09:00) the PRD example (Meio turno 07:00–09:30 from 2026-11-02, 22 occurrences) would conflict on Finados and Consciência Negra.
 - `jobs/cli.ts` (`npm run job -w apps/api -- <name> --now=<iso>`) runs through `runJob` on `DATABASE_URL_TEST` (root `.env`), refuses `NODE_ENV=production`; renewal charges take `created_at = --now`, so retries ("next daily run") and Pix reminders ("once per local day") follow the injected clock.
 
 Known risk: the admin sale dialog's fixed-schedule picker uses the public occurrences endpoint, which omits `admin_only` categories (REC-08); for those, only the admin quote's `conflicts` is authoritative.

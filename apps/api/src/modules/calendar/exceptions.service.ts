@@ -230,7 +230,7 @@ export async function createClosedDays(
     throw conflict('CONFLICT', 'Esta data já está fechada.');
   }
   const ids = created.map((row) => row.id);
-  await registry.closedDayCompensation.apply(tx, ids, ctx);
+  await registry.closedDayCompensation.apply(tx, ids, ctx, now);
   for (const id of ids) {
     await audit(tx, ctx, {
       action: 'closed_day.create',

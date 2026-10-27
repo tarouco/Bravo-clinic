@@ -166,7 +166,7 @@ async function confirmBooking(
     { paidCents, balanceCents },
   );
   for (const step of deps.registry.checkoutSteps) {
-    await step.onConfirmed?.(tx, confirmed);
+    await step.onConfirmed?.(tx, confirmed, deps.now());
   }
   const mail = await loadBookingMailContext(tx, confirmed, deps.env);
   fx.emailIds.push(await bookingMailer.confirmed(tx, confirmed, mail));

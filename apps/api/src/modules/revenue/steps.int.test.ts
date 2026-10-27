@@ -167,7 +167,7 @@ describe('discount step (REC-120, REC-122, REC-124, REC-138)', () => {
     const row = await bookingRow((res.body as { id: string }).id);
     if (row === undefined) throw new Error('no booking');
     await withTransaction(db, (tx) =>
-      expireHoldingBooking(tx, deps(), SYSTEM_CONTEXT, row, newAfterCommit()),
+      expireHoldingBooking(tx, deps(), SYSTEM_CONTEXT, row, newAfterCommit(), NOW),
     );
     const [use] = await db.select().from(couponUses).where(eq(couponUses.bookingId, row.id));
     expect(use?.status).toBe('released');

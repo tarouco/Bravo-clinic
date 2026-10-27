@@ -714,7 +714,7 @@ export async function rescheduleBooking(
     let settlement = evaluation.settlement;
     const handler = handlerFor(registry, locked.paymentMode as PaymentMode);
     if (handler?.reschedule !== undefined) {
-      const minutes = await handler.reschedule(tx, locked, built.draft);
+      const minutes = await handler.reschedule(tx, locked, built.draft, now);
       settlement = { ...settlement, payNowCents: minutes.payNowCents, creditCents: 0 };
     }
     const to = placementOf(quote, evaluation);
@@ -834,6 +834,7 @@ export async function rescheduleBooking(
         refType: 'booking',
         refId: locked.id,
         ctx,
+        now,
       });
       eventData['creditGrant'] =
         registry.credits.mode === 'deferred'

@@ -76,12 +76,18 @@ async function cancelForNonpayment(deps: JobDeps, bookingId: string, now: Date):
     );
     await cancelPendingCharges(tx, bookingId, fx);
     for (const step of deps.registry.checkoutSteps) {
-      await step.release?.(tx, result, 'cancelled', {
-        retainedCents: booking.paidCents,
-        refundCents: 0,
-        minutesReturned: 0,
-        clinicOptions: [],
-      });
+      await step.release?.(
+        tx,
+        result,
+        'cancelled',
+        {
+          retainedCents: booking.paidCents,
+          refundCents: 0,
+          minutesReturned: 0,
+          clinicOptions: [],
+        },
+        now,
+      );
     }
     const mail = await loadBookingMailContext(tx, result, deps.env);
     fx.emailIds.push(await bookingMailer.cancelledNonpayment(tx, result, mail));

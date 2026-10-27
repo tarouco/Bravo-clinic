@@ -21,23 +21,23 @@ import { bookingContext, packageDraftOf } from './steps';
 /** Package bookings: re-debit on reschedule (REC-37), minute returns on cancel (REC-34..REC-38). */
 export const packageModeHandler: PaymentModeHandler = {
   mode: 'package',
-  async reschedule(tx, booking, next) {
+  async reschedule(tx, booking, next, now) {
     const draft = packageDraftOf(next);
     if (draft === null) throw new Error('package reschedule without a package draft');
     await redebitForReschedule(tx, bookingContext(booking), {
       bookingId: booking.id,
       userId: booking.userId,
       draft,
-      now: new Date(),
+      now,
     });
     return { payNowCents: 0 };
   },
-  async cancel(tx, booking, evaluation) {
+  async cancel(tx, booking, evaluation, now) {
     // nucleo evaluates the debited minutes: > 0 means within the deadline, or a clinic cancel.
     return returnForCancellation(tx, bookingContext(booking), booking.id, {
       withinDeadline: evaluation.minutesReturned > 0,
       actor: evaluation.clinicOptions.length > 0 ? 'clinic' : 'tenant',
-      now: new Date(),
+      now,
     });
   },
 };
@@ -61,7 +61,7 @@ export const liveCreditPort: CreditPort = {
       refType: input.refType,
       refId: input.refId,
       bookingId: input.refType === 'booking' ? input.refId : null,
-      now: new Date(),
+      now: input.now,
     });
     return { creditLotId: lot.id };
   },
@@ -115,9 +115,9 @@ export async function backfillDeferredCreditGrants(db: Db, now: Date): Promise<n
 /** Closed-day compensation (REC-97..REC-104). */
 export const closedDayCompensationPort: ClosedDayCompensationPort = {
   preview: (db, args) => previewClosedDay(db, args),
-  async apply(tx, closedDayIds, ctx) {
+  async apply(tx, closedDayIds, ctx, now) {
     await applyClosedDay(tx, closedDayIds, ctx, {
-      now: new Date(),
+      now,
       appBaseUrl: getEnv().APP_BASE_URL,
     });
   },

@@ -150,6 +150,7 @@ describe('admin mutations (REC-43..REC-45, REC-82, REC-150..REC-154)', () => {
         headers: { 'Idempotency-Key': randomUUID() },
       });
       expect(res.status).toBe(403);
+      expect(res.error?.code).toBe('FORBIDDEN');
     }
   });
 

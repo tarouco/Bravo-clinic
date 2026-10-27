@@ -247,7 +247,7 @@ export async function cancelBooking(
     const handler = handlerFor(registry, booking.paymentMode as PaymentMode);
     let minutesReturned = evaluation.minutesReturned;
     if (handler?.cancel !== undefined) {
-      minutesReturned = (await handler.cancel(tx, booking, evaluation)).minutesReturned;
+      minutesReturned = (await handler.cancel(tx, booking, evaluation, now)).minutesReturned;
     }
 
     const eventData: Record<string, unknown> = {
@@ -265,6 +265,7 @@ export async function cancelBooking(
         refType: 'booking',
         refId: booking.id,
         ctx,
+        now,
       });
       eventData['creditGrant'] = {
         amountCents: evaluation.refundCents,
@@ -299,7 +300,7 @@ export async function cancelBooking(
     );
     await cancelPendingCharges(tx, booking.id, fx);
     for (const step of registry.checkoutSteps) {
-      await step.release?.(tx, result, 'cancelled', evaluation);
+      await step.release?.(tx, result, 'cancelled', evaluation, now);
     }
 
     const mail = await loadBookingMailContext(tx, result, deps.env);
