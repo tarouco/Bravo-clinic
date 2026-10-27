@@ -9,6 +9,7 @@ import { packageRoutes } from './packages';
 import { paymentConfigRoutes } from './payment-config';
 import { preReservationRoutes } from './pre-reservations';
 import { quoteRoutes } from './quote';
+import { publicQuoteRequestRoutes } from './quote-requests';
 import { sandboxRoutes } from './sandbox';
 
 /** Everything under `/public/*`: no session required. */
@@ -24,5 +25,6 @@ export function publicRoutes(): Hono<AppEnv> {
   app.route('/', preReservationRoutes());
   app.route('/', sandboxRoutes());
   app.route('/', publicExtraServiceRoutes());
+  app.route('/', publicQuoteRequestRoutes());
   return app;
 }

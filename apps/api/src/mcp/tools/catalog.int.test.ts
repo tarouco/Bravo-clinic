@@ -56,6 +56,8 @@ const DESIGN_TABLE: [name: string, scope: 'read' | 'write', destructive: boolean
   ['expense_create', 'write', false],
   ['expense_delete', 'write', true],
   ['manual_receipt_create', 'write', false],
+  ['quotes_list', 'read', false],
+  ['quote_update_status', 'write', false],
   ['categories_list', 'read', false],
   ['policies_get', 'read', false],
 ];

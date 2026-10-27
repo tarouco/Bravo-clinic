@@ -784,12 +784,12 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests assert anonymous 201, session-linked 201 with `user_id`, foreign booking 422, 6th request/hour/IP 429, honeypot 202 with zero rows
-- [ ] Tests assert staff e-mails queued per recipient and `quote.received` only when e-mail given
-- [ ] Tests assert each valid transition, `won → contacted` 409, concurrent double move → one 200 and one 409, notes saved + audited
-- [ ] Tests assert tenant list returns only own requests
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 11 tests pass
+- [x] Tests assert anonymous 201, session-linked 201 with `user_id`, foreign booking 422, 6th request/hour/IP 429, honeypot 202 with zero rows
+- [x] Tests assert staff e-mails queued per recipient and `quote.received` only when e-mail given
+- [x] Tests assert each valid transition, `won → contacted` 409, concurrent double move → one 200 and one 409, notes saved + audited
+- [x] Tests assert tenant list returns only own requests
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 11 tests pass
 
 **Tests**: integration
 **Gate**: full

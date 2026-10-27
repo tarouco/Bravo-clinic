@@ -13,6 +13,7 @@ import { adminCouponRoutes } from './coupons';
 import { adminCustomerCreditRoutes } from './customer-credits';
 import { adminCustomerRoutes } from './customers';
 import { adminExtraServiceRoutes } from './extra-services';
+import { adminQuoteRequestRoutes } from './quote-requests';
 import { adminFinanceExpenseRoutes } from './finance-expenses';
 import { adminFinanceReceiptRoutes } from './finance-receipts';
 import { adminFinanceReportRoutes } from './finance-reports';
@@ -33,9 +34,11 @@ export function adminRoutes(): Hono<AppEnv> {
   app.use('/integrations/*', requireRole('admin'));
   // Financeiro is admin only as well.
   app.use('/finance/*', requireRole('admin'));
-  // Serviços extras are admin only (design §Reception allowlist).
+  // Serviços extras and the quote funnel are admin only (design §Reception allowlist).
   app.use('/extra-services', requireRole('admin'));
   app.use('/extra-services/*', requireRole('admin'));
+  app.use('/quote-requests', requireRole('admin'));
+  app.use('/quote-requests/*', requireRole('admin'));
   app.route('/', adminSessionRoutes());
   app.route('/', adminCalendarRoutes());
   app.route('/', adminCalendarExceptionRoutes());
@@ -59,5 +62,6 @@ export function adminRoutes(): Hono<AppEnv> {
   app.route('/', adminFinanceReceiptRoutes());
   app.route('/', adminFinanceReportRoutes());
   app.route('/', adminExtraServiceRoutes());
+  app.route('/', adminQuoteRequestRoutes());
   return app;
 }

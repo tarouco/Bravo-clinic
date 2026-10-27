@@ -1,6 +1,7 @@
 import type { ToolDefinition } from '../server';
 import { financeTools } from './finance';
 import { nucleoTools } from './nucleo';
+import { operationsTools } from './operations';
 import { receitaTools } from './receita';
 
 // The MCP tool catalog (gestao design "MCP tool catalog"). Gestao-backed tools are added by the
@@ -55,7 +56,7 @@ const rank = (name: string) => {
 
 /** Every tool the MCP server exposes, in catalog order. */
 export function mcpToolCatalog(): ToolDefinition[] {
-  return [...nucleoTools(), ...receitaTools(), ...financeTools()].sort(
+  return [...nucleoTools(), ...receitaTools(), ...financeTools(), ...operationsTools()].sort(
     (a, b) => rank(a.name) - rank(b.name) || a.name.localeCompare(b.name),
   );
 }
