@@ -394,4 +394,15 @@ Lane A notes (Phases 3–4):
 - `PATCH /admin/categories/:id` accepts `includedHours`, `pricePerOccurrenceCents` and `period` (core `categoryUpdateSchema` extended in T17); a field that does not apply to the category type answers 422.
 - `GET /admin/customers/:userId/credits` answers `CreditsSummary` (same shape as `GET /app/credits`).
 
+Lane A notes (Phases 5–6):
+
+- Migration `0006_receita_switch_index`: `subscriptions_one_hour_pkg` leaves out an `awaiting_payment` row with `switch_from_subscription_id` set (the pending target of an hour-package switch); it becomes `active` in the approval transaction that switches the old one.
+- nucleo seams, additive: `ChargeHandler.onApproved(tx, ctx, charge, effects?)` / `onFailed(…, status, effects?)` receive the payment transaction's after-commit queues (`ChargeEffects`: e-mails, staff notices, refunds); `createCharge` accepts `subscriptionPeriodId`, `extraHoursPurchaseId` and a deterministic `idempotencyKey` (`renewal:<periodId>:<attempt>`). Charge handlers date their writes with `charges.approved_at` (the payment service clock).
+- `POST /app/subscriptions` (and every Idempotency-Key route) without the header answers 400 `BAD_REQUEST` (nucleo middleware), not 422; missing consents answer 422 `POLICY_VIOLATION` before the body schema.
+- `POST /app/subscriptions/:id/pay` answers 200 `{ charge, subscription }`; `POST /admin/subscriptions/quote` takes the `AdminSaleInput` body (payment ignored); `POST /admin/subscriptions/:id/resend-link` answers 200 `{ queued: true }`, 409 `INVALID_TRANSITION` unless it is an `awaiting_payment` link sale.
+- Switch quote: `creditAppliedCents` is 0 (`switchQuoteInput` has no `useCredits`); credits apply on `POST …/switch` with `useCredits`.
+- Extrato entry ids are `p:<n>` (package) / `e:<n>` (extra); the extrato of a subscription also lists the user's extra-minute entries. Purchase history lists every charge of the user (internal credit, cancelled and expired ones included).
+- `AdminSubscriptionRow.balanceText`: "6h de 20h" (hour package), "N ocorrências no período" (fixed), "—" without an active period.
+- `jobs/cli.ts` (`npm run job -w apps/api -- <name> --now=<iso>`) runs through `runJob` on `DATABASE_URL_TEST` (root `.env`), refuses `NODE_ENV=production`; renewal charges take `created_at = --now`, so retries ("next daily run") and Pix reminders ("once per local day") follow the injected clock.
+
 Known risk: the admin sale dialog's fixed-schedule picker uses the public occurrences endpoint, which omits `admin_only` categories (REC-08); for those, only the admin quote's `conflicts` is authoritative.

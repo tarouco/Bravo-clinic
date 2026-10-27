@@ -39,6 +39,11 @@ export interface CreateChargeParams {
   expiresAt: Date;
   /** Defaults to the active gateway; a saved card always uses its own provider. */
   provider?: ProviderId;
+  /** Receita charges point at the period or the extra-hours purchase they pay. */
+  subscriptionPeriodId?: string | null;
+  extraHoursPurchaseId?: string | null;
+  /** A deterministic key (e.g. `renewal:<periodId>:<attempt>`); random when omitted. */
+  idempotencyKey?: string;
 }
 
 const profileIncomplete = () =>
@@ -100,10 +105,12 @@ export async function createCharge(
       method: params.method,
       userId: params.userId,
       bookingId: params.bookingId ?? null,
+      subscriptionPeriodId: params.subscriptionPeriodId ?? null,
+      extraHoursPurchaseId: params.extraHoursPurchaseId ?? null,
       amountCents: params.amountCents,
       status: 'pending',
       expiresAt: params.expiresAt,
-      idempotencyKey: `ch_${randomUUID()}`,
+      idempotencyKey: params.idempotencyKey ?? `ch_${randomUUID()}`,
       rawLast,
     })
     .returning();

@@ -8,6 +8,7 @@
     "bundle": "esbuild src/index.ts --bundle --platform=node --format=esm --target=node24 --outfile=dist/index.mjs --packages=bundle --external:pg-native \"--banner:js=import { createRequire } from 'node:module'; const require = createRequire(import.meta.url);\"",
     "db:migrate": "tsx src/db/migrate.ts",
     "db:seed": "tsx src/db/seed.ts",
+    "job": "tsx src/jobs/cli.ts",
     "test": "vitest run",
     "typecheck": "tsc --noEmit -p ."
   },

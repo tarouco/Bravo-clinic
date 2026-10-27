@@ -89,11 +89,13 @@ export const subscriptions = pgTable(
     index('subscriptions_user_status_idx').on(t.userId, t.status),
     index('subscriptions_status_base_idx').on(t.status, t.baseOn),
     index('subscriptions_status_hold_idx').on(t.status, t.holdExpiresAt),
-    // One minute balance per tenant (spec assumption "One hour package per tenant", REC-12).
+    // One minute balance per tenant (spec assumption "One hour package per tenant", REC-12). A
+    // pending switch target (awaiting payment, pointing to the package it replaces) is left out:
+    // it becomes active in the same transaction that switches the old one (REC-73).
     uniqueIndex('subscriptions_one_hour_pkg')
       .on(t.userId)
       .where(
-        sql`${t.type} = 'hour_package' and ${t.status} in ('awaiting_payment','active','suspended')`,
+        sql`${t.type} = 'hour_package' and (${t.status} in ('active','suspended') or (${t.status} = 'awaiting_payment' and ${t.switchFromSubscriptionId} is null))`,
       ),
   ],
 );

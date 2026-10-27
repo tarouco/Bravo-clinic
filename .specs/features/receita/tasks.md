@@ -709,12 +709,12 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Hour purchase creates the rows of REC-14 and a pending `subscription_initial` charge; second hour package → 409; missing consents → 422; foreign saved card → 422
-- [ ] Coupon + credits covering the price activates immediately without charge
-- [ ] Fixed purchase of Meio turno creates 22 `awaiting_payment` occurrences with occupancy; a conflicting date → 409 `OCCURRENCE_CONFLICT`, zero rows; a racing insert → 409 with that date
-- [ ] Admin link sale holds `pre_reserved` occurrences for 24 h and queues `sale_link`; manual sale is active with an audit row
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 14 new tests pass
+- [x] Hour purchase creates the rows of REC-14 and a pending `subscription_initial` charge; second hour package → 409; missing consents → 422; foreign saved card → 422
+- [x] Coupon + credits covering the price activates immediately without charge
+- [x] Fixed purchase of Meio turno creates 22 `awaiting_payment` occurrences with occupancy; a conflicting date → 409 `OCCURRENCE_CONFLICT`, zero rows; a racing insert → 409 with that date
+- [x] Admin link sale holds `pre_reserved` occurrences for 24 h and queues `sale_link`; manual sale is active with an audit row
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 14 new tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -738,12 +738,12 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Activation grants 1200 min once; a known clinic closure in the period yields a 40-min lot at activation
-- [ ] Fixed activation creates seq 2 `upcoming` and holds its free occurrences as `held_for_renewal`; a blocked date lands in `held_conflicts` and one `next_period_conflicts` e-mail
-- [ ] Renewal pricing: hour = current category price; fixed = per-occurrence × held count (known closed day reduces count)
-- [ ] Illegal transitions throw `INVALID_TRANSITION`
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 10 new tests pass
+- [x] Activation grants 1200 min once; a known clinic closure in the period yields a 40-min lot at activation
+- [x] Fixed activation creates seq 2 `upcoming` and holds its free occurrences as `held_for_renewal`; a blocked date lands in `held_conflicts` and one `next_period_conflicts` e-mail
+- [x] Renewal pricing: hour = current category price; fixed = per-occurrence × held count (known closed day reduces count)
+- [x] Illegal transitions throw `INVALID_TRANSITION`
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 10 new tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -767,11 +767,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Sandbox approval of an initial charge → active, period active (base today) or paid (future base); fixed occurrences confirmed with one e-mail carrying an `.ics` of 22 VEVENTs
-- [ ] Duplicate webhook → no second change; approval of an expired subscription → full refund + `payment.late_refund`
-- [ ] Renewal approval → period `paid`, held occurrences `confirmed`; rejection → declined e-mail + staff event
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 10 new tests pass
+- [x] Sandbox approval of an initial charge → active, period active (base today) or paid (future base); fixed occurrences confirmed with one e-mail carrying an `.ics` of 22 VEVENTs
+- [x] Duplicate webhook → no second change; approval of an expired subscription → full refund + `payment.late_refund`
+- [x] Renewal approval → period `paid`, held occurrences `confirmed`; rejection → declined e-mail + staff event
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 10 new tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -795,12 +795,12 @@ T48 → T50
 
 **Done when**:
 
-- [ ] 360 min left on 160000/1200 → switch to 225000/1800: quote shows 384 + 1800; approval writes `conversion_out −360`, `conversion_in +384`, old `switched`, new `base_on` = approval date
-- [ ] A booking debited between quote and approval reduces the converted amount (conversion at approval)
-- [ ] Rejected/expired switch leaves the old subscription active; different type or same category → 422
-- [ ] Fixed switch to Turno mensal in the same room releases old future occurrences and inserts the new ones; a taken slot at approval → refund, old kept
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 10 new tests pass
+- [x] 360 min left on 160000/1200 → switch to 225000/1800: quote shows 384 + 1800; approval writes `conversion_out −360`, `conversion_in +384`, old `switched`, new `base_on` = approval date
+- [x] A booking debited between quote and approval reduces the converted amount (conversion at approval)
+- [x] Rejected/expired switch leaves the old subscription active; different type or same category → 422
+- [x] Fixed switch to Turno mensal in the same room releases old future occurrences and inserts the new ones; a taken slot at approval → refund, old kept
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 10 new tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -824,12 +824,12 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Preview for 6 h left → `minutesLost: 360`; paid upcoming period reported; fixed preview counts future occurrences
-- [ ] Cancel: expiry entry, pending charge cancelled, future periods cancelled, existing package bookings untouched; fixed occurrences released per actor
-- [ ] Suspend at `starts_on` releases held occurrences; end at `starts_on + 7` sets `ended`, period `failed`
-- [ ] Regularize hour package during grace → active, full minutes, same dates; fixed regularization re-holds only free future occurrences and prices them
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 12 new tests pass
+- [x] Preview for 6 h left → `minutesLost: 360`; paid upcoming period reported; fixed preview counts future occurrences
+- [x] Cancel: expiry entry, pending charge cancelled, future periods cancelled, existing package bookings untouched; fixed occurrences released per actor
+- [x] Suspend at `starts_on` releases held occurrences; end at `starts_on + 7` sets `ended`, period `failed`
+- [x] Regularize hour package during grace → active, full minutes, same dates; fixed regularization re-holds only free future occurrences and prices them
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 12 new tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -853,11 +853,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Summary for a Pacote 20h subscriber: `eligible:true`, `unitPriceCents:8000`, min 1, max 20; non-subscriber → `eligible:false` and POST 422 with REC-65 message
-- [ ] Buying 5 h → charge 40000; approval → lot 300 min expiring at paid_at + 90 days, `extra_hours.purchased`; 21 h → 422
-- [ ] History lists the user's charges newest first; credits endpoint matches the contract; other users' data never appears
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 10 new tests pass
+- [x] Summary for a Pacote 20h subscriber: `eligible:true`, `unitPriceCents:8000`, min 1, max 20; non-subscriber → `eligible:false` and POST 422 with REC-65 message
+- [x] Buying 5 h → charge 40000; approval → lot 300 min expiring at paid_at + 90 days, `extra_hours.purchased`; 21 h → 422
+- [x] History lists the user's charges newest first; credits endpoint matches the contract; other users' data never appears
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 10 new tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -883,11 +883,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Every endpoint: happy path parsed by its contract schema, 401 unauthenticated, 404 for another user's subscription, CSRF rejected without Origin
-- [ ] Purchase replay with same key returns the stored 201; different body → 422 `IDEMPOTENCY_MISMATCH`; no key → 422
-- [ ] Ledger shows "60 min + 18 min de excedente = 78 min" for a Wed booking
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 16 new tests pass
+- [x] Every endpoint: happy path parsed by its contract schema, 401 unauthenticated, 404 for another user's subscription, CSRF rejected without Origin
+- [x] Purchase replay with same key returns the stored 201; different body → 422 `IDEMPOTENCY_MISMATCH`; no key → 422
+- [x] Ledger shows "60 min + 18 min de excedente = 78 min" for a Wed booking
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 16 new tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -911,11 +911,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] List filters by status/type and searches by name; reception GET 200, reception POST sell/cancel/adjust 403
-- [ ] Cancel without justification 422; with it → audit row; resend-link queues a new outbox row
-- [ ] `getCustomerBalances` returns open-period minutes, extra lots and credit lots of one user only; `listCouponUsesByUser` lists that user's uses newest first
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 12 new tests pass
+- [x] List filters by status/type and searches by name; reception GET 200, reception POST sell/cancel/adjust 403
+- [x] Cancel without justification 422; with it → audit row; resend-link queues a new outbox row
+- [x] `getCustomerBalances` returns open-period minutes, extra lots and credit lots of one user only; `listCouponUsesByUser` lists that user's uses newest first
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 12 new tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -939,11 +939,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] With `now = 2026-11-30T06:00Z`: Pacote 20h (base 2026-11-02) gets seq 2 `awaiting_payment` priced 160000 (coupon not reapplied) and one charge; a second run creates nothing
-- [ ] Declined saved card → retry next day (attempt 2) only before `starts_on`; missing card → Pix + card-update e-mail; credits 50000 reduce the charge to 110000
-- [ ] Pix reminder once per day; period-ending e-mails on 2026-11-25 and 2026-12-01; inactive category still renews
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 10 new tests pass
+- [x] With `now = 2026-11-30T06:00Z`: Pacote 20h (base 2026-11-02) gets seq 2 `awaiting_payment` priced 160000 (coupon not reapplied) and one charge; a second run creates nothing
+- [x] Declined saved card → retry next day (attempt 2) only before `starts_on`; missing card → Pix + card-update e-mail; credits 50000 reduce the charge to 110000
+- [x] Pix reminder once per day; period-ending e-mails on 2026-11-25 and 2026-12-01; inactive category still renews
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 10 new tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -967,11 +967,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] On 2026-12-02 06:00Z: paid seq 2 activated with grant; seq 1 closed with expiry of the remaining minutes; unpaid seq 2 → subscription suspended; on 2026-12-09 → ended
-- [ ] Running both jobs in either order gives the same final state; re-run changes 0 rows
-- [ ] Expired lots and credits zeroed with `expiry` entries
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 10 new tests pass
+- [x] On 2026-12-02 06:00Z: paid seq 2 activated with grant; seq 1 closed with expiry of the remaining minutes; unpaid seq 2 → subscription suspended; on 2026-12-09 → ended
+- [x] Running both jobs in either order gives the same final state; re-run changes 0 rows
+- [x] Expired lots and credits zeroed with `expiry` entries
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 10 new tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -995,11 +995,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] An `awaiting_payment` fixed subscription past hold → `expired`, its occurrences `expired` (occupancy inactive), coupon released, credits refunded, charge cancelled; extra-hours hold → purchase `cancelled`
-- [ ] POST `/jobs/<name>` without a trigger signature → 401; with the test signer → 200 and a `job_runs` row
-- [ ] `npm run job -w apps/api -- renewals --now=2026-11-30T06:00:00Z` runs locally and refuses `NODE_ENV=production`
-- [ ] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
-- [ ] Test count: ≥ 8 new tests pass
+- [x] An `awaiting_payment` fixed subscription past hold → `expired`, its occurrences `expired` (occupancy inactive), coupon released, credits refunded, charge cancelled; extra-hours hold → purchase `cancelled`
+- [x] POST `/jobs/<name>` without a trigger signature → 401; with the test signer → 200 and a `job_runs` row
+- [x] `npm run job -w apps/api -- renewals --now=2026-11-30T06:00:00Z` runs locally and refuses `NODE_ENV=production`
+- [x] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
+- [x] Test count: ≥ 8 new tests pass
 
 **Tests**: integration
 **Gate**: build

@@ -13,6 +13,7 @@ import { adminCustomerCreditRoutes } from './customer-credits';
 import { adminCustomerRoutes } from './customers';
 import { adminSessionRoutes } from './session';
 import { adminSlotDiscountRoutes } from './slot-discounts';
+import { adminSubscriptionRoutes } from './subscriptions';
 import { adminSettingsRoutes } from './settings';
 
 /** Everything under `/admin/*`; CSRF, auth and the staff + MFA guard are applied by `createApp`. */
@@ -32,5 +33,6 @@ export function adminRoutes(): Hono<AppEnv> {
   app.route('/', adminCustomerCreditRoutes());
   app.route('/', adminCouponRoutes());
   app.route('/', adminSlotDiscountRoutes());
+  app.route('/', adminSubscriptionRoutes());
   return app;
 }
