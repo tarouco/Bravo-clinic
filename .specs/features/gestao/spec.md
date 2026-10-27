@@ -544,8 +544,8 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-44 | P1: Calendar feeds and .ics files | Tasks | T10 | In Tasks |
 | GES-45 | P1: Calendar feeds and .ics files | Tasks | T10, T41 | In Tasks |
 | GES-46 | P1: Calendar feeds and .ics files | Tasks | T10 | In Tasks |
-| GES-47 | P1: Calendar feeds and .ics files | Tasks | T8 | In Tasks |
-| GES-48 | P1: Calendar feeds and .ics files | Tasks | T8, T10 | In Tasks |
+| GES-47 | P1: Calendar feeds and .ics files | Tasks | T8 | Implementing |
+| GES-48 | P1: Calendar feeds and .ics files | Tasks | T8, T10 | Implementing |
 | GES-49 | P1: Calendar feeds and .ics files | Tasks | T10, T45 | In Tasks |
 | GES-50 | P1: Calendar feeds and .ics files | Tasks | T10, T41 | In Tasks |
 | GES-51 | P1: Calendar feeds and .ics files | Tasks | T10 | In Tasks |

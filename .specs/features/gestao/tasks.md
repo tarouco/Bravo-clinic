@@ -408,12 +408,12 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests assert every line ends with CRLF and no unfolded line exceeds 75 octets, including a summary with "ô" crossing the boundary
-- [ ] Tests assert `,`, `;`, `\` and newline are escaped; `DTSTART:20261027T130000Z` for 10:00 local on 2026-10-27
-- [ ] Tests assert `METHOD:CANCEL` output carries `STATUS:CANCELLED` and the same UID with the given SEQUENCE
-- [ ] Existing nucleo ics tests still pass unchanged
-- [ ] Gate check passes: `npm test -w apps/api`
-- [ ] Test count: ≥ 7 new tests pass
+- [x] Tests assert every line ends with CRLF and no unfolded line exceeds 75 octets, including a summary with "ô" crossing the boundary
+- [x] Tests assert `,`, `;`, `\` and newline are escaped; `DTSTART:20261027T130000Z` for 10:00 local on 2026-10-27
+- [x] Tests assert `METHOD:CANCEL` output carries `STATUS:CANCELLED` and the same UID with the given SEQUENCE
+- [x] Existing nucleo ics tests still pass unchanged
+- [x] Gate check passes: `npm test -w apps/api`
+- [x] Test count: ≥ 7 new tests pass
 
 **Tests**: unit
 **Gate**: quick

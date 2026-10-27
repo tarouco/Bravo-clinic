@@ -1,5 +1,6 @@
-// RFC 5545 iCalendar builder (NUC-139). One or more VEVENTs per calendar; the booking e-mails
-// attach it with METHOD:REQUEST (confirmed, rescheduled) or METHOD:CANCEL (cancelled).
+// RFC 5545 iCalendar serializer (NUC-139, GES-47, GES-48). One or more VEVENTs per calendar; the
+// booking e-mails attach it with METHOD:REQUEST (confirmed, rescheduled) or METHOD:CANCEL
+// (cancelled); the per-booking file and the calendar feeds use METHOD:PUBLISH / METHOD:CANCEL.
 
 export type IcsMethod = 'PUBLISH' | 'REQUEST' | 'CANCEL';
 export type IcsStatus = 'CONFIRMED' | 'TENTATIVE' | 'CANCELLED';
@@ -26,7 +27,8 @@ export interface IcsInput {
 
 const CRLF = '\r\n';
 const MAX_LINE_OCTETS = 75;
-const PRODID = '-//Bravô Clinic//Reservas//PT-BR';
+// GES-47.
+const PRODID = '-//Bravo Clinic//Salas Inteligentes//PT-BR';
 
 /** `20261027T130000Z` */
 export function icsUtc(instant: Date): string {
@@ -70,42 +72,73 @@ export function foldIcsLine(line: string): string {
   return parts.join(`${CRLF} `);
 }
 
-function eventLines(
-  event: IcsEventInput,
-  method: IcsMethod,
-  stamp: string,
-  organizerEmail: string | undefined,
-): string[] {
-  const status = event.status ?? (method === 'CANCEL' ? 'CANCELLED' : 'CONFIRMED');
+/** One VEVENT of a feed or attachment (GES-47); times are written in UTC. */
+export interface IcsEvent {
+  uid: string;
+  sequence: number;
+  dtstamp: Date;
+  start: Date;
+  end: Date;
+  summary: string;
+  location?: string;
+  description?: string;
+  /** Defaults to CONFIRMED. */
+  status?: IcsStatus;
+  organizerEmail?: string;
+}
+
+/** The unfolded content lines of one VEVENT; `icsCalendar` folds and joins them. */
+export function icsEvent(e: IcsEvent): string[] {
   return [
     'BEGIN:VEVENT',
-    `UID:${event.uid}`,
-    `DTSTAMP:${stamp}`,
-    `SEQUENCE:${String(event.sequence)}`,
-    `DTSTART:${icsUtc(event.start)}`,
-    `DTEND:${icsUtc(event.end)}`,
-    `SUMMARY:${escapeIcsText(event.summary)}`,
-    `LOCATION:${escapeIcsText(event.location)}`,
-    `DESCRIPTION:${escapeIcsText(event.description)}`,
-    `STATUS:${status}`,
-    ...(organizerEmail === undefined ? [] : [`ORGANIZER:mailto:${organizerEmail}`]),
+    `UID:${e.uid}`,
+    `DTSTAMP:${icsUtc(e.dtstamp)}`,
+    `SEQUENCE:${String(e.sequence)}`,
+    `DTSTART:${icsUtc(e.start)}`,
+    `DTEND:${icsUtc(e.end)}`,
+    `SUMMARY:${escapeIcsText(e.summary)}`,
+    ...(e.location === undefined ? [] : [`LOCATION:${escapeIcsText(e.location)}`]),
+    ...(e.description === undefined ? [] : [`DESCRIPTION:${escapeIcsText(e.description)}`]),
+    `STATUS:${e.status ?? 'CONFIRMED'}`,
+    ...(e.organizerEmail === undefined ? [] : [`ORGANIZER:mailto:${e.organizerEmail}`]),
     'END:VEVENT',
   ];
 }
 
-/** The calendar text with CRLF line endings and a trailing CRLF. */
-export function buildIcs(input: IcsInput): string {
-  const stamp = icsUtc(input.now ?? new Date());
+/**
+ * The calendar text (RFC 5545): CRLF line endings with a trailing CRLF, every line folded at 75
+ * octets on UTF-8 boundaries, `METHOD` only when given, `X-WR-CALNAME` = `name` when given.
+ */
+export function icsCalendar(
+  events: string[][],
+  opts: { method?: IcsMethod; name?: string } = {},
+): string {
   const lines = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
     `PRODID:${PRODID}`,
     'CALSCALE:GREGORIAN',
-    `METHOD:${input.method}`,
-    ...input.events.flatMap((event) =>
-      eventLines(event, input.method, stamp, input.organizerEmail),
-    ),
+    ...(opts.method === undefined ? [] : [`METHOD:${opts.method}`]),
+    ...(opts.name === undefined ? [] : [`X-WR-CALNAME:${escapeIcsText(opts.name)}`]),
+    ...events.flat(),
     'END:VCALENDAR',
   ];
   return lines.map(foldIcsLine).join(CRLF) + CRLF;
+}
+
+/**
+ * The booking e-mail attachments and per-booking file (nucleo's signature, R4), built on
+ * `icsEvent`/`icsCalendar`. METHOD:CANCEL marks every event CANCELLED unless a status is given.
+ */
+export function buildIcs(input: IcsInput): string {
+  const dtstamp = input.now ?? new Date();
+  const events = input.events.map((event) =>
+    icsEvent({
+      ...event,
+      dtstamp,
+      status: event.status ?? (input.method === 'CANCEL' ? 'CANCELLED' : 'CONFIRMED'),
+      ...(input.organizerEmail !== undefined && { organizerEmail: input.organizerEmail }),
+    }),
+  );
+  return icsCalendar(events, { method: input.method });
 }
