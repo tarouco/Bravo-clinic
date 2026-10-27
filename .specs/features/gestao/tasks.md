@@ -265,12 +265,12 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Integration test asserts all §5.5 tables exist after `runMigrations`
-- [ ] Tests assert a second active clinic feed insert fails with 23505 and succeeds after revoking the first
-- [ ] Tests assert duplicate `(recurrence_parent_id, date)` child fails with 23505; scope/user/room checks reject mismatches (23514)
-- [ ] Tests assert seeding twice yields 14 expense categories in PRD order, 3 extra services in `quote` mode, and keeps an edited row unchanged
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 7 tests pass
+- [x] Integration test asserts all §5.5 tables exist after `runMigrations`
+- [x] Tests assert a second active clinic feed insert fails with 23505 and succeeds after revoking the first
+- [x] Tests assert duplicate `(recurrence_parent_id, date)` child fails with 23505; scope/user/room checks reject mismatches (23514)
+- [x] Tests assert seeding twice yields 14 expense categories in PRD order, 3 extra services in `quote` mode, and keeps an edited row unchanged
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -296,11 +296,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests assert PDF/JPEG/PNG/WebP magic bytes accepted, a `.exe` labelled `application/pdf` rejected with 415, 5 MiB + 1 byte rejected with 413
-- [ ] Tests assert `createS3Storage` builds the client with `forcePathStyle: true` and presign uses the requested expiry (S3 client mocked)
-- [ ] Tests assert `memoryStorage` put/head/delete/totalBytes behave like the interface
-- [ ] Gate check passes: `npm test -w apps/api`
-- [ ] Test count: ≥ 8 tests pass
+- [x] Tests assert PDF/JPEG/PNG/WebP magic bytes accepted, a `.exe` labelled `application/pdf` rejected with 415, 5 MiB + 1 byte rejected with 413
+- [x] Tests assert `createS3Storage` builds the client with `forcePathStyle: true` and presign uses the requested expiry (S3 client mocked)
+- [x] Tests assert `memoryStorage` put/head/delete/totalBytes behave like the interface
+- [x] Gate check passes: `npm test -w apps/api`
+- [x] Test count: ≥ 8 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -324,13 +324,13 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Test asserts a staff event with toggle on queues one row per active recipient with dedupe key `staff:<event>:<entityId>:<recipientId>`; a repeat emit queues none
-- [ ] Test asserts toggle off queues nothing; rolled-back transaction leaves no rows and sends no push
-- [ ] Test asserts tenant event sends one push per subscription (web-push stubbed) with payload ≤ 3 KB containing title/body/url/tag
-- [ ] Tests assert 410 deletes the subscription, 500 increments `failure_count`, the 5th failure deletes it, success resets it and sets `last_success_at`
-- [ ] Test asserts no VAPID env → no push call and `emit` still resolves
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 9 tests pass
+- [x] Test asserts a staff event with toggle on queues one row per active recipient with dedupe key `staff:<event>:<entityId>:<recipientId>`; a repeat emit queues none
+- [x] Test asserts toggle off queues nothing; rolled-back transaction leaves no rows and sends no push
+- [x] Test asserts tenant event sends one push per subscription (web-push stubbed) with payload ≤ 3 KB containing title/body/url/tag
+- [x] Tests assert 410 deletes the subscription, 500 increments `failure_count`, the 5th failure deletes it, success resets it and sets `last_success_at`
+- [x] Test asserts no VAPID env → no push call and `emit` still resolves
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 9 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -354,10 +354,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests assert 201 upsert, reassignment of an endpoint from user A to user B, 204 delete, 422 for `http://` endpoint or non-base64url keys, 401 without session
-- [ ] Tests assert `vapidPublicKey` is `null` without env and equals the env value when set
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests assert 201 upsert, reassignment of an endpoint from user A to user B, 204 delete, 422 for `http://` endpoint or non-base64url keys, 401 without session
+- [x] Tests assert `vapidPublicKey` is `null` without env and equals the env value when set
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -381,10 +381,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests iterate every gestao-owned catalog template and assert non-empty subject/html/text, absolute links on `APP_BASE_URL`, and no emoji (regex `\p{Extended_Pictographic}`)
-- [ ] Tests assert `staff.new_booking` contains customer first name, room, local date/time and booking code; `staff.invite` contains the set-password link
-- [ ] Gate check passes: `npm test -w apps/api`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests iterate every gestao-owned catalog template and assert non-empty subject/html/text, absolute links on `APP_BASE_URL`, and no emoji (regex `\p{Extended_Pictographic}`)
+- [x] Tests assert `staff.new_booking` contains customer first name, room, local date/time and booking code; `staff.invite` contains the set-password link
+- [x] Gate check passes: `npm test -w apps/api`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -408,12 +408,12 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests assert every line ends with CRLF and no unfolded line exceeds 75 octets, including a summary with "ô" crossing the boundary
-- [ ] Tests assert `,`, `;`, `\` and newline are escaped; `DTSTART:20261027T130000Z` for 10:00 local on 2026-10-27
-- [ ] Tests assert `METHOD:CANCEL` output carries `STATUS:CANCELLED` and the same UID with the given SEQUENCE
-- [ ] Existing nucleo ics tests still pass unchanged
-- [ ] Gate check passes: `npm test -w apps/api`
-- [ ] Test count: ≥ 7 new tests pass
+- [x] Tests assert every line ends with CRLF and no unfolded line exceeds 75 octets, including a summary with "ô" crossing the boundary
+- [x] Tests assert `,`, `;`, `\` and newline are escaped; `DTSTART:20261027T130000Z` for 10:00 local on 2026-10-27
+- [x] Tests assert `METHOD:CANCEL` output carries `STATUS:CANCELLED` and the same UID with the given SEQUENCE
+- [x] Existing nucleo ics tests still pass unchanged
+- [x] Gate check passes: `npm test -w apps/api`
+- [x] Test count: ≥ 7 new tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -437,11 +437,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests assert retry picks `failed` with attempts < 5 within 48 h and `pending` older than 5 min, skips attempts = 5 and fresh pending rows
-- [ ] Tests assert retention deletes only rows past each threshold (sessions/tokens 30 days, buckets 2 days, expired idempotency keys), blanks bodies of 181-day-old outbox rows and keeps 179-day ones; `job_runs.stats` has the counts
-- [ ] Tests assert both job routes reject requests without a valid trigger delivery
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 7 tests pass
+- [x] Tests assert retry picks `failed` with attempts < 5 within 48 h and `pending` older than 5 min, skips attempts = 5 and fresh pending rows
+- [x] Tests assert retention deletes only rows past each threshold (sessions/tokens 30 days, buckets 2 days, expired idempotency keys), blanks bodies of 181-day-old outbox rows and keeps 179-day ones; `job_runs.stats` has the counts
+- [x] Tests assert both job routes reject requests without a valid trigger delivery
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: integration
 **Gate**: full

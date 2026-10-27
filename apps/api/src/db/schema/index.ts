@@ -6,3 +6,4 @@ export * from './payments';
 export * from './subscriptions';
 export * from './ledgers';
 export * from './coupons';
+export * from './gestao';

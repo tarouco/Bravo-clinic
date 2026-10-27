@@ -1,6 +1,7 @@
 import { chargeBalances } from './charge-balances';
 import { expireHolds } from './expire-holds';
 import { expirePurchases } from './expire-purchases';
+import { emailRetry, retention } from './maintenance';
 import { materializeBlocks } from './materialize-blocks';
 import { noShows } from './no-shows';
 import { periodRollover } from './period-rollover';
@@ -24,6 +25,11 @@ registerJob('renewals', renewals);
 registerJob('period-rollover', periodRollover);
 registerJob('suspensions', suspensions);
 registerJob('expire-purchases', expirePurchases);
+
+// gestao (design.md "Privacy (LGPD) and maintenance jobs"): e-mail retry every 5 minutes,
+// retention weekly. Their triggers are added to neon.ts by gestao T49.
+registerJob('email-retry', emailRetry);
+registerJob('retention', retention);
 
 export { getJob, registerJob, registeredJobs, runJob, JOB_CONTEXT } from './runner';
 export type { Job, JobDeps, JobStats } from './runner';

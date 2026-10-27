@@ -50,6 +50,26 @@ export const tooManyRequests = (retryAfterSeconds: number) =>
     { 'Retry-After': String(retryAfterSeconds) },
   );
 
+/** 413 for an upload over the limit (GES-17, GES-106). */
+export const payloadTooLarge = (maxBytes: number) =>
+  new AppError(
+    413,
+    'PAYLOAD_TOO_LARGE',
+    `Arquivo maior que ${String(Math.round(maxBytes / (1024 * 1024)))} MB`,
+  );
+
+/** 415 for a media type, or file contents, that the route does not accept (GES-17, GES-106). */
+export const unsupportedMediaType = () =>
+  new AppError(415, 'UNSUPPORTED_MEDIA_TYPE', 'Formato não suportado');
+
+/** 503 when object storage is unreachable or not configured (AD-026). */
+export const storageUnavailable = () =>
+  new AppError(
+    503,
+    'STORAGE_UNAVAILABLE',
+    'Armazenamento de arquivos indisponível. Tente novamente em instantes.',
+  );
+
 /** 422 VALIDATION_FAILED from zod issues; `path` is the issue path joined by ".". */
 export function validationFailed(issues: ReadonlyArray<{ path: PropertyKey[]; message: string }>) {
   return new AppError(

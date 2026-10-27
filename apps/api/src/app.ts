@@ -3,6 +3,7 @@ import { getDb } from './db/client';
 import { getEnv } from './env';
 import { buildRegistry } from './extensions';
 import { notFoundHandler, onError } from './lib/errors';
+import { createS3Storage } from './lib/storage';
 import { requireAuth, requireStaff } from './middleware/auth';
 import { csrf } from './middleware/csrf';
 import { requestContext } from './middleware/request-context';
@@ -17,12 +18,14 @@ import type { AppDeps, AppEnv } from './types';
 
 /** Builds the API. Dependencies are injectable so tests can replace db, time, fetch and env. */
 export function createApp(overrides: Partial<AppDeps> = {}): Hono<AppEnv> {
+  const env = overrides.env ?? getEnv();
   const deps: AppDeps = {
     now: overrides.now ?? (() => new Date()),
     fetch: overrides.fetch ?? globalThis.fetch,
-    env: overrides.env ?? getEnv(),
+    env,
     db: overrides.db ?? getDb(),
     registry: overrides.registry ?? buildRegistry(),
+    storage: overrides.storage ?? createS3Storage(env),
     ...(overrides.googleJwks !== undefined && { googleJwks: overrides.googleJwks }),
     ...(overrides.verifyTrigger !== undefined && { verifyTrigger: overrides.verifyTrigger }),
   };

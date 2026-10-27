@@ -511,10 +511,10 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-11 | P1: Expenses and manual receipts | Tasks | T15 | In Tasks |
 | GES-12 | P1: Expenses and manual receipts | Tasks | T15 | In Tasks |
 | GES-13 | P1: Expenses and manual receipts | Tasks | T15 | In Tasks |
-| GES-14 | P1: Expenses and manual receipts | Tasks | T16 | In Tasks |
+| GES-14 | P1: Expenses and manual receipts | Tasks | T16 | Implementing |
 | GES-15 | P1: Expenses and manual receipts | Tasks | T16 | In Tasks |
 | GES-16 | P1: Expenses and manual receipts | Tasks | T15 | In Tasks |
-| GES-17 | P1: Expenses and manual receipts | Tasks | T4, T15 | In Tasks |
+| GES-17 | P1: Expenses and manual receipts | Tasks | T4, T15 | Implementing |
 | GES-18 | P1: Expenses and manual receipts | Tasks | T15 | In Tasks |
 | GES-19 | P1: Expenses and manual receipts | Tasks | T15 | In Tasks |
 | GES-20 | P1: Expenses and manual receipts | Tasks | T17 | In Tasks |
@@ -539,13 +539,13 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-39 | P1: Payment gateway configuration | Tasks | T11 | In Tasks |
 | GES-40 | P1: Payment gateway configuration | Tasks | T11 | In Tasks |
 | GES-41 | P1: Payment gateway configuration | Tasks | T11, T31 | In Tasks |
-| GES-42 | P1: Calendar feeds and .ics files | Tasks | T10, T32 | In Tasks |
+| GES-42 | P1: Calendar feeds and .ics files | Tasks | T10, T32 | Implementing |
 | GES-43 | P1: Calendar feeds and .ics files | Tasks | T10 | In Tasks |
 | GES-44 | P1: Calendar feeds and .ics files | Tasks | T10 | In Tasks |
 | GES-45 | P1: Calendar feeds and .ics files | Tasks | T10, T41 | In Tasks |
 | GES-46 | P1: Calendar feeds and .ics files | Tasks | T10 | In Tasks |
-| GES-47 | P1: Calendar feeds and .ics files | Tasks | T8 | In Tasks |
-| GES-48 | P1: Calendar feeds and .ics files | Tasks | T8, T10 | In Tasks |
+| GES-47 | P1: Calendar feeds and .ics files | Tasks | T8 | Implementing |
+| GES-48 | P1: Calendar feeds and .ics files | Tasks | T8, T10 | Implementing |
 | GES-49 | P1: Calendar feeds and .ics files | Tasks | T10, T45 | In Tasks |
 | GES-50 | P1: Calendar feeds and .ics files | Tasks | T10, T41 | In Tasks |
 | GES-51 | P1: Calendar feeds and .ics files | Tasks | T10 | In Tasks |
@@ -564,21 +564,21 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-64 | P1: MCP server | Tasks | T13 | In Tasks |
 | GES-65 | P1: Notification e-mails | Tasks | T12 | In Tasks |
 | GES-66 | P1: Notification e-mails | Tasks | T12 | In Tasks |
-| GES-67 | P1: Notification e-mails | Tasks | T5 | In Tasks |
-| GES-68 | P1: Notification e-mails | Tasks | T5 | In Tasks |
+| GES-67 | P1: Notification e-mails | Tasks | T5 | Implementing |
+| GES-68 | P1: Notification e-mails | Tasks | T5 | Implementing |
 | GES-69 | P1: Notification e-mails | Tasks | T43 | In Tasks |
 | GES-70 | P1: Notification e-mails | Tasks | T12 | In Tasks |
 | GES-71 | P1: Notification e-mails | Tasks | T12 | In Tasks |
-| GES-72 | P1: Notification e-mails | Tasks | T9 | In Tasks |
-| GES-73 | P1: Notification e-mails | Tasks | T7 | In Tasks |
+| GES-72 | P1: Notification e-mails | Tasks | T9 | Implementing |
+| GES-73 | P1: Notification e-mails | Tasks | T7 | Implementing |
 | GES-74 | P1: Notification e-mails | Tasks | T12, T32 | In Tasks |
-| GES-75 | P1: Web push | Tasks | T6 | In Tasks |
-| GES-76 | P1: Web push | Tasks | T6 | In Tasks |
-| GES-77 | P1: Web push | Tasks | T6 | In Tasks |
-| GES-78 | P1: Web push | Tasks | T5 | In Tasks |
-| GES-79 | P1: Web push | Tasks | T5 | In Tasks |
-| GES-80 | P1: Web push | Tasks | T5 | In Tasks |
-| GES-81 | P1: Web push | Tasks | T5 | In Tasks |
+| GES-75 | P1: Web push | Tasks | T6 | Implementing |
+| GES-76 | P1: Web push | Tasks | T6 | Implementing |
+| GES-77 | P1: Web push | Tasks | T6 | Implementing |
+| GES-78 | P1: Web push | Tasks | T5 | Implementing |
+| GES-79 | P1: Web push | Tasks | T5 | Implementing |
+| GES-80 | P1: Web push | Tasks | T5 | Implementing |
+| GES-81 | P1: Web push | Tasks | T5 | Implementing |
 | GES-82 | P1: Web push | Tasks | T40 | In Tasks |
 | GES-83 | P1: Web push | Tasks | T40 | In Tasks |
 | GES-84 | P1: Extra services catalog and online add-on | Tasks | T20 | In Tasks |
@@ -602,8 +602,8 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-102 | P1: Clientes | Tasks | T23 | In Tasks |
 | GES-103 | P1: Salas admin | Tasks | T22, T36 | In Tasks |
 | GES-104 | P1: Salas admin | Tasks | T22 | In Tasks |
-| GES-105 | P1: Salas admin | Tasks | T22 | In Tasks |
-| GES-106 | P1: Salas admin | Tasks | T4, T22 | In Tasks |
+| GES-105 | P1: Salas admin | Tasks | T22 | Implementing |
+| GES-106 | P1: Salas admin | Tasks | T4, T22 | Implementing |
 | GES-107 | P1: Salas admin | Tasks | T22 | In Tasks |
 | GES-108 | P1: Salas admin | Tasks | T1, T22, T36 | Implementing |
 | GES-109 | P1: Salas admin | Tasks | T36 | In Tasks |
@@ -626,7 +626,7 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-126 | P1: LGPD self-service | Tasks | T25 | In Tasks |
 | GES-127 | P1: LGPD self-service | Tasks | T25 | In Tasks |
 | GES-128 | P1: LGPD self-service | Tasks | T41 | In Tasks |
-| GES-129 | P1: LGPD self-service | Tasks | T9 | In Tasks |
+| GES-129 | P1: LGPD self-service | Tasks | T9 | Implementing |
 | GES-130 | P1: Holiday jobs | Tasks | T26 | In Tasks |
 | GES-131 | P1: Holiday jobs | Tasks | T26 | In Tasks |
 | GES-132 | P1: Holiday jobs | Tasks | T26 | In Tasks |

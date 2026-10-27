@@ -13,6 +13,8 @@ import {
   auditLog,
   bookingCategories,
   businessHours,
+  expenseCategories,
+  extraServices,
   holidays,
   rooms,
   settings,
@@ -165,6 +167,49 @@ const CATEGORIES = [
   },
 ];
 
+/** Expense categories of docs/architecture.md section 5.5, in PRD order (distinct display orders). */
+const EXPENSE_CATEGORIES = [
+  'Aluguel',
+  'Condomínio e IPTU',
+  'Energia',
+  'Água',
+  'Internet',
+  'Limpeza e higienização',
+  'Manutenção',
+  'Materiais e insumos',
+  'Marketing',
+  'Pessoal',
+  'Contabilidade',
+  'Taxas do gateway',
+  'Impostos',
+  'Outros',
+].map((name, index) => ({ name, displayOrder: index + 1 }));
+
+/** The 3 extra services of the Home page, all sold by quote (gestao design.md "Seeds"). */
+const EXTRA_SERVICES = [
+  {
+    name: 'Pacote de filmagem',
+    description:
+      'Cenário ajustado, iluminação profissional, microfonação lapela sem fio e captação em 4K. Ideal para procedimentos estéticos e podcasts de saúde.',
+    referencePriceCents: 8000,
+    unit: 'hour',
+  },
+  {
+    name: 'Videomaker',
+    description:
+      'Profissional no local operando câmeras e entregando arquivos brutos ou cortes prontos para Reels e TikTok.',
+    referencePriceCents: null,
+    unit: 'project',
+  },
+  {
+    name: 'Marketing digital',
+    description:
+      'Tráfego pago geolocalizado na Praia Brava, Itajaí e região para profissionais de saúde e estética.',
+    referencePriceCents: null,
+    unit: 'project',
+  },
+].map((service, index) => ({ ...service, saleMode: 'quote', displayOrder: index + 1 }));
+
 /** Prepares the first admin: null when none is needed, throws before any write when the password is weak. */
 async function prepareAdmin(db: Db, bootstrap: AdminBootstrap | undefined) {
   if (bootstrap === undefined) return null;
@@ -231,6 +276,21 @@ export async function runSeed(
     );
     const missingCategories = CATEGORIES.filter((category) => !existingNames.has(category.name));
     if (missingCategories.length > 0) await tx.insert(bookingCategories).values(missingCategories);
+
+    // Gestao catalogs are seeded into empty tables only, so a renamed or edited row is never
+    // duplicated or overwritten by a rerun.
+    const [anyExpenseCategory] = await tx
+      .select({ id: expenseCategories.id })
+      .from(expenseCategories)
+      .limit(1);
+    if (anyExpenseCategory === undefined) {
+      await tx.insert(expenseCategories).values(EXPENSE_CATEGORIES);
+    }
+    const [anyExtraService] = await tx
+      .select({ id: extraServices.id })
+      .from(extraServices)
+      .limit(1);
+    if (anyExtraService === undefined) await tx.insert(extraServices).values(EXTRA_SERVICES);
 
     let adminCreated = false;
     if (admin !== null) {
