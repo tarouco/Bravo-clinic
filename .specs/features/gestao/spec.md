@@ -532,13 +532,13 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-32 | P1: DRE export | Tasks | T2, T19 | Implementing |
 | GES-33 | P1: DRE export | Tasks | T19 | In Tasks |
 | GES-34 | P1: DRE export | Tasks | T19 | In Tasks |
-| GES-35 | P1: Payment gateway configuration | Tasks | T11 | In Tasks |
-| GES-36 | P1: Payment gateway configuration | Tasks | T11 | In Tasks |
-| GES-37 | P1: Payment gateway configuration | Tasks | T11 | In Tasks |
-| GES-38 | P1: Payment gateway configuration | Tasks | T11 | In Tasks |
-| GES-39 | P1: Payment gateway configuration | Tasks | T11 | In Tasks |
-| GES-40 | P1: Payment gateway configuration | Tasks | T11 | In Tasks |
-| GES-41 | P1: Payment gateway configuration | Tasks | T11, T31 | In Tasks |
+| GES-35 | P1: Payment gateway configuration | Tasks | T11 | Implementing |
+| GES-36 | P1: Payment gateway configuration | Tasks | T11 | Implementing |
+| GES-37 | P1: Payment gateway configuration | Tasks | T11 | Implementing |
+| GES-38 | P1: Payment gateway configuration | Tasks | T11 | Implementing |
+| GES-39 | P1: Payment gateway configuration | Tasks | T11 | Implementing |
+| GES-40 | P1: Payment gateway configuration | Tasks | T11 | Implementing |
+| GES-41 | P1: Payment gateway configuration | Tasks | T11, T31 | Implementing |
 | GES-42 | P1: Calendar feeds and .ics files | Tasks | T10, T32 | Implementing |
 | GES-43 | P1: Calendar feeds and .ics files | Tasks | T10 | Implementing |
 | GES-44 | P1: Calendar feeds and .ics files | Tasks | T10 | Implementing |

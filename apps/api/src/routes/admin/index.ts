@@ -13,6 +13,7 @@ import { adminCouponRoutes } from './coupons';
 import { adminCustomerCreditRoutes } from './customer-credits';
 import { adminCustomerRoutes } from './customers';
 import { adminIntegrationsCalendarRoutes } from './integrations-calendar';
+import { adminIntegrationsGatewayRoutes } from './integrations-gateway';
 import { adminSessionRoutes } from './session';
 import { adminSlotDiscountRoutes } from './slot-discounts';
 import { adminSubscriptionRoutes } from './subscriptions';
@@ -40,5 +41,6 @@ export function adminRoutes(): Hono<AppEnv> {
   app.route('/', adminSlotDiscountRoutes());
   app.route('/', adminSubscriptionRoutes());
   app.route('/', adminIntegrationsCalendarRoutes());
+  app.route('/', adminIntegrationsGatewayRoutes());
   return app;
 }

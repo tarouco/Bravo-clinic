@@ -497,13 +497,13 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests assert listing never contains a secret value and shows `webhookUrl` per provider
-- [ ] Tests assert saved secrets decrypt to the input, hint is `••••` + last 4, empty field keeps the stored secret, audit `after` has no secret
-- [ ] Tests assert test connection `{ ok: true }` for sandbox, `{ ok: false }` for a 401 and for a timeout from stubbed Mercado Pago `fetch`
-- [ ] Tests assert activation of an unconfigured provider → 422; valid activation updates `payment.active_gateway`, leaves existing charges' provider, queues one re-register e-mail per affected subscription (none on repeat)
-- [ ] Tests assert reception → 403 on every route
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 10 tests pass
+- [x] Tests assert listing never contains a secret value and shows `webhookUrl` per provider
+- [x] Tests assert saved secrets decrypt to the input, hint is `••••` + last 4, empty field keeps the stored secret, audit `after` has no secret
+- [x] Tests assert test connection `{ ok: true }` for sandbox, `{ ok: false }` for a 401 and for a timeout from stubbed Mercado Pago `fetch`
+- [x] Tests assert activation of an unconfigured provider → 422; valid activation updates `payment.active_gateway`, leaves existing charges' provider, queues one re-register e-mail per affected subscription (none on repeat)
+- [x] Tests assert reception → 403 on every route
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 10 tests pass
 
 **Tests**: integration
 **Gate**: full
