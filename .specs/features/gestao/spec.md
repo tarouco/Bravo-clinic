@@ -526,12 +526,12 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-26 | P1: Financeiro overview | Tasks | T29 | In Tasks |
 | GES-27 | P1: Financeiro overview | Tasks | T28, T29 | In Tasks |
 | GES-28 | P1: Financeiro overview | Tasks | T29 | In Tasks |
-| GES-29 | P1: DRE export | Tasks | T19 | In Tasks |
+| GES-29 | P1: DRE export | Tasks | T19 | Implementing |
 | GES-30 | P1: DRE export | Tasks | T2, T19 | Implementing |
 | GES-31 | P1: DRE export | Tasks | T2, T19 | Implementing |
 | GES-32 | P1: DRE export | Tasks | T2, T19 | Implementing |
-| GES-33 | P1: DRE export | Tasks | T19 | In Tasks |
-| GES-34 | P1: DRE export | Tasks | T19 | In Tasks |
+| GES-33 | P1: DRE export | Tasks | T19 | Implementing |
+| GES-34 | P1: DRE export | Tasks | T19 | Implementing |
 | GES-35 | P1: Payment gateway configuration | Tasks | T11 | Implementing |
 | GES-36 | P1: Payment gateway configuration | Tasks | T11 | Implementing |
 | GES-37 | P1: Payment gateway configuration | Tasks | T11 | Implementing |

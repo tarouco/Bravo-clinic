@@ -726,11 +726,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Test downloads the file, checks content type and file name, parses it with exceljs and asserts month column labels (`nov/2026`), the 7 line labels in order, numeric cells, negative deductions, BRL format
-- [ ] Test asserts the `Total` column equals `summary.totals` for the same query in both regimes
-- [ ] Test asserts header rows (regime, period, timestamp) and a mid-month `from` producing a partial first month
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 5 tests pass
+- [x] Test downloads the file, checks content type and file name, parses it with exceljs and asserts month column labels (`nov/2026`), the 7 line labels in order, numeric cells, negative deductions, BRL format
+- [x] Test asserts the `Total` column equals `summary.totals` for the same query in both regimes
+- [x] Test asserts header rows (regime, period, timestamp) and a mid-month `from` producing a partial first month
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 5 tests pass
 
 **Tests**: integration
 **Gate**: full

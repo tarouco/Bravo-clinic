@@ -12,7 +12,7 @@ import { withTransaction } from '../../db/client';
 import { expenseCategories, expenses } from '../../db/schema';
 import { notFound } from '../../lib/errors';
 import { createExpense, deleteExpense, listExpenses } from '../../modules/finance/expenses.service';
-import { buildSummary } from '../../modules/finance/finance-report.service';
+import { buildDreMatrix, buildSummary } from '../../modules/finance/finance-report.service';
 import { createReceipt } from '../../modules/finance/receipts.service';
 import { defineTool, type ToolDefinition } from '../server';
 
@@ -29,6 +29,14 @@ export function financeTools(): ToolDefinition[] {
       scope: 'read',
       input: financeQuerySchema,
       run: (tc, input) => buildSummary(tc.deps.db, input),
+    }),
+    defineTool({
+      name: 'finance_dre',
+      description:
+        'DRE do período (até 731 dias) em regime de caixa (cash) ou competência (accrual): uma coluna por mês, valores em centavos.',
+      scope: 'read',
+      input: financeQuerySchema,
+      run: (tc, { from, to, regime }) => buildDreMatrix(tc.deps.db, { from, to, regime }),
     }),
     defineTool({
       name: 'expenses_list',
