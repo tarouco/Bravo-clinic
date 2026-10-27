@@ -54,13 +54,14 @@ interface BookArgs {
   body?: Record<string, unknown>;
   key?: string | null;
   app?: ReturnType<typeof buildApp>;
+  headers?: Record<string, string>;
 }
 
-const book = ({ cookie, body, key = randomUUID(), app = buildApp() }: BookArgs) =>
+const book = ({ cookie, body, key = randomUUID(), app = buildApp(), headers = {} }: BookArgs) =>
   send(app, 'POST', '/app/bookings', {
     cookie,
     body: { ...PR3, acceptPolicy: true, policyVersion: 1, expectedTotalCents: 21900, ...body },
-    ...(key !== null && { headers: { 'Idempotency-Key': key } }),
+    headers: { ...(key !== null && { 'Idempotency-Key': key }), ...headers },
   });
 
 const details = (res: { error?: { details?: unknown } | undefined }) =>
@@ -95,6 +96,7 @@ describe('POST /app/bookings: guards (NUC-89..NUC-92)', () => {
 
     expect(res.status).toBe(409);
     expect(res.error?.code).toBe('BOOKING_NOT_OPEN');
+    expect(res.error?.message).toBe('As reservas online abrem em breve.');
     expect(await db.select().from(bookings)).toHaveLength(0);
   });
 
@@ -151,7 +153,7 @@ describe('POST /app/bookings: creation (NUC-93, NUC-94)', () => {
     const { user, cookie } = await createTenant(db, { now: NOW });
     const room = await seededRoom(db);
 
-    const res = await book({ cookie });
+    const res = await book({ cookie, headers: { 'X-Forwarded-For': '203.0.113.7, 10.0.0.1' } });
 
     expect(res.status).toBe(201);
     const detail = bookingDetailSchema.parse(res.body);
@@ -195,6 +197,7 @@ describe('POST /app/bookings: creation (NUC-93, NUC-94)', () => {
       kind: 'booking_policy',
       version: 'policy-v1',
       refType: 'booking',
+      ip: '203.0.113.7',
     });
     const events = await db.select().from(bookingEvents);
     expect(events.map((e) => [e.fromStatus, e.toStatus, e.reason])).toEqual([

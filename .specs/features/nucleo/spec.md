@@ -185,7 +185,7 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 
 **Acceptance Criteria**:
 
-1. The core module `status/booking.ts` SHALL allow exactly the transitions of `docs/architecture.md` §3.1 plus `expired → confirmed`, `expired → paid` and `paid → confirmed` (AD-032), and `canTransition(from, to)` SHALL return false for every other pair. [NUC-01]
+1. The core module `status/booking.ts` SHALL allow exactly the transitions of `docs/architecture.md` §3.1 plus `expired → confirmed`, `expired → paid` and `paid → confirmed` (AD-032) and `awaiting_payment → cancelled_by_clinic` (clinic cancellation of a pending booking, PRD §5.5/§7.5; commit 8ae1fc7, `design.md` Integration refinements), and `canTransition(from, to)` SHALL return false for every other pair. [NUC-01]
 2. The core `labels.ts` SHALL map each booking status code to its pt-BR label: Aguardando pgto, Pré-reserva, Pré-reservada (renovação), Confirmada, Quitada, Concluída, No-show, Expirada, Cancelada pelo locatário, Cancelada por falta de pagamento, Cancelada pela clínica. [NUC-02]
 3. WHEN `paymentStatusOf(booking)` is called THEN core SHALL return `awaiting` "Aguardando pagamento" for `awaiting_payment`/`pre_reserved`, `deposit_paid` "Sinal pago · saldo pendente" for `confirmed` with balance > 0 in deposit mode, `manual_pending` "Confirmada manualmente · pagamento pendente" for manual mode with balance > 0, `paid` "Quitada" for `paid` or balance 0, `package` "Pago com pacote" for package/subscription modes, `refunded` "Reembolsada" for cancelled bookings with approved refunds, and `none` "—" otherwise. [NUC-03]
 4. The core `contracts/` modules SHALL export a zod schema for every request and response body listed in design.md §API contract, and the API SHALL validate requests with them and its integration tests SHALL parse every response with them. [NUC-04]
@@ -690,7 +690,7 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 
 **Acceptance Criteria**:
 
-1. WHERE `VITE_GA4_ID` is set, the web SHALL load GA4 and push `view_room`, `select_slot`, `begin_checkout` and `purchase` (with booking code and value) to `dataLayer`; WHERE it is unset `track()` SHALL do nothing and load no script. [NUC-206]
+1. WHERE `VITE_GA4_ID` is set, the web SHALL load GA4 and push `view_room`, `select_slot`, `begin_checkout` and `purchase` (with booking code and value) to `dataLayer`; WHERE it is unset `track()` SHALL do nothing and load no script. [NUC-206] _Superseded by gestao GES-134/GES-135 (`.specs/features/gestao/spec.md`): GA4 loads only when `VITE_ANALYTICS_PROVIDER=ga4` (cookieless, after `load`), and `purchase` carries no booking code, only whitelisted properties (room slug, category type, payment method, value bucket); the event names are kept._
 
 ---
 

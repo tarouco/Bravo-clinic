@@ -214,6 +214,30 @@ describe('webhook authenticity and idempotency (NUC-112, NUC-113)', () => {
     expect(await db.select().from(emailOutbox)).toHaveLength(1);
   });
 
+  it('does not reprocess a processed event delivered again after the stale window (NUC-113)', async () => {
+    const { charge } = await setup();
+    const delivery = sandboxEvent(charge, 'approved');
+    const later = new Date(NOW.getTime() + 10 * 60_000);
+    const laterApp = createApp({
+      db,
+      now: () => later,
+      fetch: forbiddenFetch,
+      env,
+      registry: createRegistry(),
+    });
+
+    const first = await deliver(buildApp(), 'sandbox', delivery);
+    const second = await deliver(laterApp, 'sandbox', delivery);
+
+    expect([first.status, second.status]).toEqual([200, 200]);
+    const [event] = await db.select().from(webhookEvents);
+    expect(await db.select().from(webhookEvents)).toHaveLength(1);
+    // A reclaimed event would carry the later clock in both columns.
+    expect(event?.receivedAt.toISOString()).toBe(NOW.toISOString());
+    expect(event?.processedAt?.toISOString()).toBe(NOW.toISOString());
+    expect(event?.error).toBeNull();
+  });
+
   it('processes two concurrent deliveries of the same approval exactly once', async () => {
     const { charge, booking } = await setup();
     const app = buildApp();
