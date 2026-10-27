@@ -42,6 +42,8 @@ export interface CreateChargeParams {
   /** Receita charges point at the period or the extra-hours purchase they pay. */
   subscriptionPeriodId?: string | null;
   extraHoursPurchaseId?: string | null;
+  /** A deterministic key (e.g. `renewal:<periodId>:<attempt>`); random when omitted. */
+  idempotencyKey?: string;
 }
 
 const profileIncomplete = () =>
@@ -108,7 +110,7 @@ export async function createCharge(
       amountCents: params.amountCents,
       status: 'pending',
       expiresAt: params.expiresAt,
-      idempotencyKey: `ch_${randomUUID()}`,
+      idempotencyKey: params.idempotencyKey ?? `ch_${randomUUID()}`,
       rawLast,
     })
     .returning();

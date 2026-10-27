@@ -939,11 +939,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] With `now = 2026-11-30T06:00Z`: Pacote 20h (base 2026-11-02) gets seq 2 `awaiting_payment` priced 160000 (coupon not reapplied) and one charge; a second run creates nothing
-- [ ] Declined saved card → retry next day (attempt 2) only before `starts_on`; missing card → Pix + card-update e-mail; credits 50000 reduce the charge to 110000
-- [ ] Pix reminder once per day; period-ending e-mails on 2026-11-25 and 2026-12-01; inactive category still renews
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 10 new tests pass
+- [x] With `now = 2026-11-30T06:00Z`: Pacote 20h (base 2026-11-02) gets seq 2 `awaiting_payment` priced 160000 (coupon not reapplied) and one charge; a second run creates nothing
+- [x] Declined saved card → retry next day (attempt 2) only before `starts_on`; missing card → Pix + card-update e-mail; credits 50000 reduce the charge to 110000
+- [x] Pix reminder once per day; period-ending e-mails on 2026-11-25 and 2026-12-01; inactive category still renews
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 10 new tests pass
 
 **Tests**: integration
 **Gate**: full

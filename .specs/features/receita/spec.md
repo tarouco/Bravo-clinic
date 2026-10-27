@@ -517,7 +517,7 @@
 | REC-06 | P1: Package categories | Tasks | T17, T14 | Implementing |
 | REC-07 | P1: Package categories | Tasks | T18, T19 | Implementing |
 | REC-08 | P1: Package categories | Tasks | T18, T19 | Implementing |
-| REC-09 | P1: Package categories | Tasks | T27 | In Tasks |
+| REC-09 | P1: Package categories | Tasks | T27 | Implementing |
 | REC-10 | P1: Buy an hour package | Tasks | T7, T18 | Implementing |
 | REC-11 | P1: Buy an hour package | Tasks | T2, T18 | Implementing |
 | REC-12 | P1: Buy an hour package | Tasks | T8, T19 | Implementing |
@@ -555,18 +555,18 @@
 | REC-44 | P1: Balance ledger and extrato | Tasks | T10, T26 | Implementing |
 | REC-45 | P1: Balance ledger and extrato | Tasks | T26 | Implementing |
 | REC-46 | P1: Renewal, suspension and closure | Tasks | T7 | Implementing |
-| REC-47 | P1: Renewal, suspension and closure | Tasks | T27 | In Tasks |
-| REC-48 | P1: Renewal, suspension and closure | Tasks | T27 | In Tasks |
+| REC-47 | P1: Renewal, suspension and closure | Tasks | T27 | Implementing |
+| REC-48 | P1: Renewal, suspension and closure | Tasks | T27 | Implementing |
 | REC-49 | P1: Renewal, suspension and closure | Tasks | T21 | Implementing |
 | REC-50 | P1: Renewal, suspension and closure | Tasks | T21, T27 | Implementing |
-| REC-51 | P1: Renewal, suspension and closure | Tasks | T27 | In Tasks |
-| REC-52 | P1: Renewal, suspension and closure | Tasks | T27 | In Tasks |
+| REC-51 | P1: Renewal, suspension and closure | Tasks | T27 | Implementing |
+| REC-52 | P1: Renewal, suspension and closure | Tasks | T27 | Implementing |
 | REC-53 | P1: Renewal, suspension and closure | Tasks | T20, T28 | Implementing |
 | REC-54 | P1: Renewal, suspension and closure | Tasks | T23, T28 | Implementing |
 | REC-55 | P1: Renewal, suspension and closure | Tasks | T13 | Implementing |
 | REC-56 | P1: Renewal, suspension and closure | Tasks | T23 | Implementing |
 | REC-57 | P1: Renewal, suspension and closure | Tasks | T23, T28 | Implementing |
-| REC-58 | P1: Renewal, suspension and closure | Tasks | T27 | In Tasks |
+| REC-58 | P1: Renewal, suspension and closure | Tasks | T27 | Implementing |
 | REC-59 | P1: Renewal, suspension and closure | Tasks | T29 | In Tasks |
 | REC-60 | P1: Renewal, suspension and closure | Tasks | T1, T20 | Implementing |
 | REC-61 | P1: Renewal, suspension and closure | Tasks | T1, T20 | Implementing |
@@ -633,7 +633,7 @@
 | REC-122 | P1: Coupons in checkout | Tasks | T16 | Implementing |
 | REC-123 | P1: Coupons in checkout | Tasks | T11 | Implementing |
 | REC-124 | P1: Coupons in checkout | Tasks | T11, T16 | Implementing |
-| REC-125 | P1: Coupons in checkout | Tasks | T19, T27 | In Tasks |
+| REC-125 | P1: Coupons in checkout | Tasks | T19, T27 | Implementing |
 | REC-126 | P1: Coupons in checkout | Tasks | T11 | Implementing |
 | REC-127 | P1: Coupons in checkout | Tasks | T2, T11 | Implementing |
 | REC-128 | P1: Admin coupons screen | Tasks | T42 | In Tasks |
