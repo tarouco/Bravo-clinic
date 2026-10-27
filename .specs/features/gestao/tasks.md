@@ -354,10 +354,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests assert 201 upsert, reassignment of an endpoint from user A to user B, 204 delete, 422 for `http://` endpoint or non-base64url keys, 401 without session
-- [ ] Tests assert `vapidPublicKey` is `null` without env and equals the env value when set
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests assert 201 upsert, reassignment of an endpoint from user A to user B, 204 delete, 422 for `http://` endpoint or non-base64url keys, 401 without session
+- [x] Tests assert `vapidPublicKey` is `null` without env and equals the env value when set
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: integration
 **Gate**: full

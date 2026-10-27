@@ -58,6 +58,7 @@ describe('GET /public/config: whatsappE164 (FND-76)', () => {
       googleEnabled: false,
       whatsappE164: '',
       environment: 'development',
+      vapidPublicKey: null,
     });
 
     await db
