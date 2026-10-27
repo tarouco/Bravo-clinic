@@ -7,6 +7,7 @@ import {
 } from '../modules/revenue/ports';
 import { extraHoursHandler } from '../modules/extra-hours/extra-hours.service';
 import { extrasStep } from '../modules/extras/extras-step';
+import { roomMediaPort } from '../modules/rooms/rooms-admin.service';
 import { creditStep, discountStep, packageStep } from '../modules/revenue/steps';
 import {
   fixedScheduleHandler,
@@ -43,6 +44,8 @@ export function buildRegistry(): Registry {
       subscription_renewal: subscriptionRenewalHandler,
       extra_hours: extraHoursHandler,
     },
+    // gestao: public room photo URLs `/media/<key>-large.webp` (R13)
+    roomMedia: roomMediaPort,
   });
 }
 

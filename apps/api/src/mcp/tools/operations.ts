@@ -2,6 +2,7 @@ import { idSchema, quoteStatusSchema } from '@bravo/core';
 import { z } from 'zod';
 import { withTransaction } from '../../db/client';
 import { listQuoteRequests, updateQuoteRequest } from '../../modules/extras/quote-requests.service';
+import { listAdminRooms } from '../../modules/rooms/rooms-admin.service';
 import { defineTool, type ToolDefinition } from '../server';
 
 // gestao admin-operations tools of design "MCP tool catalog" (AD-028): the same services as the
@@ -40,6 +41,14 @@ export function operationsTools(): ToolDefinition[] {
             tc.now,
           ),
         ),
+    }),
+    defineTool({
+      name: 'rooms_list',
+      description:
+        'Lista as salas (ativas e inativas) com descrição, itens "ideal para", equipamentos e fotos.',
+      scope: 'read',
+      input: z.object({}),
+      run: (tc) => listAdminRooms(tc.deps.db),
     }),
   ];
 }

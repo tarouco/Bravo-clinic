@@ -812,12 +812,12 @@ T49 → T50
 - Skill: `neon-object-storage`
 
 **Done when**:
-- [ ] Tests assert room create/edit validation and audit, slug uniqueness 409
-- [ ] Tests assert inactivation with a future confirmed booking and with an active fixed-schedule subscription → 409 with codes/ids; without them → 200
-- [ ] Tests assert variant upload stores `Cache-Control: public, max-age=31536000, immutable`, non-WebP 415, 13th photo 422, registration with a missing variant 422
-- [ ] Tests assert single cover after switching, reorder, delete removes both objects after commit, public rooms endpoint returns `/media/...-large.webp` URLs
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 11 tests pass
+- [x] Tests assert room create/edit validation and audit, slug uniqueness 409
+- [x] Tests assert inactivation with a future confirmed booking and with an active fixed-schedule subscription → 409 with codes/ids; without them → 200
+- [x] Tests assert variant upload stores `Cache-Control: public, max-age=31536000, immutable`, non-WebP 415, 13th photo 422, registration with a missing variant 422
+- [x] Tests assert single cover after switching, reorder, delete removes both objects after commit, public rooms endpoint returns `/media/...-large.webp` URLs
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 11 tests pass
 
 **Tests**: integration
 **Gate**: full

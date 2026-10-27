@@ -20,6 +20,8 @@ import {
   roleChangeSchema,
   roomInputSchema,
   roomPhotoInputSchema,
+  roomPhotoOrderSchema,
+  roomPhotoUpdateSchema,
   staffUserInputSchema,
 } from './gestao-schemas';
 
@@ -370,6 +372,15 @@ describe('room schemas (GES-103, GES-105)', () => {
     expect(issuePaths(roomPhotoInputSchema, photo)).toEqual([]);
     expect(issuePaths(roomPhotoInputSchema, { ...photo, alt: ' ' })).toEqual(['alt']);
     expect(issuePaths(roomPhotoInputSchema, { ...photo, alt: 'a'.repeat(201) })).toEqual(['alt']);
+  });
+
+  it('photo edits need one field and keep the alt rules; the order lists 1..12 ids', () => {
+    expect(issuePaths(roomPhotoUpdateSchema, { isCover: true })).toEqual([]);
+    expect(issuePaths(roomPhotoUpdateSchema, {})).toEqual(['']);
+    expect(issuePaths(roomPhotoUpdateSchema, { alt: '' })).toEqual(['alt']);
+    expect(issuePaths(roomPhotoOrderSchema, { ids: [ID] })).toEqual([]);
+    expect(issuePaths(roomPhotoOrderSchema, { ids: [] })).toEqual(['ids']);
+    expect(issuePaths(roomPhotoOrderSchema, { ids: Array(13).fill(ID) })).toEqual(['ids']);
   });
 });
 

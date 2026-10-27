@@ -303,6 +303,26 @@ export const roomPhotoInputSchema = z.object({
 });
 export type RoomPhotoInput = z.infer<typeof roomPhotoInputSchema>;
 
+/** `PATCH /admin/rooms/:id/photos/:photoId`: alt text, cover flag and/or position (GES-107). */
+export const roomPhotoUpdateSchema = z
+  .object({
+    alt: requiredText('a descrição da foto', 1, 200).optional(),
+    isCover: z.boolean({ error: 'Valor inválido' }).optional(),
+    displayOrder: z.number().int().min(0, { error: 'Ordem inválida' }).optional(),
+  })
+  .refine((v) => v.alt !== undefined || v.isCover !== undefined || v.displayOrder !== undefined, {
+    error: 'Informe o que alterar na foto',
+  });
+export type RoomPhotoUpdateInput = z.infer<typeof roomPhotoUpdateSchema>;
+
+/** `PUT /admin/rooms/:id/photos/order`: every photo id of the room, in the new order (GES-107). */
+export const roomPhotoOrderSchema = z.object({
+  ids: z
+    .array(z.uuid({ error: 'Foto inválida' }))
+    .min(1, { error: 'Informe a ordem das fotos' })
+    .max(12, { error: 'Uma sala tem no máximo 12 fotos' }),
+});
+
 // ---- Usuários, Clientes, auditoria (GES-101..GES-115) ----
 
 export const staffUserInputSchema = z.object({

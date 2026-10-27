@@ -14,6 +14,7 @@ import { adminCustomerCreditRoutes } from './customer-credits';
 import { adminCustomerRoutes } from './customers';
 import { adminExtraServiceRoutes } from './extra-services';
 import { adminQuoteRequestRoutes } from './quote-requests';
+import { adminRoomRoutes } from './rooms';
 import { adminFinanceExpenseRoutes } from './finance-expenses';
 import { adminFinanceReceiptRoutes } from './finance-receipts';
 import { adminFinanceReportRoutes } from './finance-reports';
@@ -63,5 +64,6 @@ export function adminRoutes(): Hono<AppEnv> {
   app.route('/', adminFinanceReportRoutes());
   app.route('/', adminExtraServiceRoutes());
   app.route('/', adminQuoteRequestRoutes());
+  app.route('/', adminRoomRoutes());
   return app;
 }

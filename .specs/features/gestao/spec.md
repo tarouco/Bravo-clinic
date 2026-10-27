@@ -600,11 +600,11 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-100 | P1: Clientes | Tasks | T23, T35 | In Tasks |
 | GES-101 | P1: Clientes | Tasks | T23 | In Tasks |
 | GES-102 | P1: Clientes | Tasks | T23 | In Tasks |
-| GES-103 | P1: Salas admin | Tasks | T22, T36 | In Tasks |
-| GES-104 | P1: Salas admin | Tasks | T22 | In Tasks |
+| GES-103 | P1: Salas admin | Tasks | T22, T36 | Implementing |
+| GES-104 | P1: Salas admin | Tasks | T22 | Implementing |
 | GES-105 | P1: Salas admin | Tasks | T22 | Implementing |
 | GES-106 | P1: Salas admin | Tasks | T4, T22 | Implementing |
-| GES-107 | P1: Salas admin | Tasks | T22 | In Tasks |
+| GES-107 | P1: Salas admin | Tasks | T22 | Implementing |
 | GES-108 | P1: Salas admin | Tasks | T1, T22, T36 | Implementing |
 | GES-109 | P1: Salas admin | Tasks | T36 | In Tasks |
 | GES-110 | P1: Usuários and audit log | Tasks | T24 | In Tasks |
