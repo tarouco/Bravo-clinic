@@ -21,6 +21,8 @@ import {
   subscriptions,
 } from '../../db/schema';
 import { runSeed } from '../../db/seed';
+import { buildRegistry } from '../../extensions';
+import { noShows } from '../../jobs/no-shows';
 import type { RequestContext } from '../../lib/audit';
 import { AppError } from '../../lib/errors';
 import { loadHourlyCategories } from '../calendar/calendar.repo';
@@ -329,6 +331,31 @@ describe('returnForCancellation (REC-34..REC-36, REC-38)', () => {
       .from(packageLedger)
       .where(and(eq(packageLedger.bookingId, booking.id), eq(packageLedger.entryType, 'refund')));
     expect(refunds.map((r) => r.minutes)).toEqual([40]);
+  });
+
+  it('a package booking marked no_show keeps its debit: no minutes return (REC-35)', async () => {
+    const { period, lot, booking } = await debitedWithLot();
+    const afterStart = new Date(localToUtc(WED, 1140).getTime() + 31 * 60_000);
+    const stats = await noShows(
+      {
+        db,
+        env: testEnv(),
+        fetch: forbiddenFetch,
+        now: () => afterStart,
+        registry: buildRegistry(),
+      },
+      afterStart,
+    );
+    expect(stats).toMatchObject({ noShow: 1 });
+    const [row] = await db.select().from(bookings).where(eq(bookings.id, booking.id));
+    expect(row?.status).toBe('no_show');
+    expect(await balanceOf(period.id)).toBe(0);
+    expect(await lotRemaining(lot.id)).toBe(262);
+    const refunds = await db
+      .select()
+      .from(packageLedger)
+      .where(and(eq(packageLedger.bookingId, booking.id), eq(packageLedger.entryType, 'refund')));
+    expect(refunds).toEqual([]);
   });
 
   it('tenant < 24h returns nothing', async () => {
