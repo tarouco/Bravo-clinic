@@ -840,11 +840,11 @@ T49 → T50
 - Skill: NONE
 
 **Done when**:
-- [ ] Tests assert search by name, e-mail, document digits and phone digits, excludes staff and deleted users, cursor pagination
-- [ ] Test asserts detail sections (bookings, subscriptions with balance, lots, credits, coupon uses, consents, quotes) from factory data
-- [ ] Tests assert reception can read and save notes (audited) but gets 403 on profile edit; admin edit audited
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 8 tests pass
+- [x] Tests assert search by name, e-mail, document digits and phone digits, excludes staff and deleted users, cursor pagination
+- [x] Test asserts detail sections (bookings, subscriptions with balance, lots, credits, coupon uses, consents, quotes) from factory data
+- [x] Tests assert reception can read and save notes (audited) but gets 403 on profile edit; admin edit audited
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 8 tests pass
 
 **Tests**: integration
 **Gate**: full

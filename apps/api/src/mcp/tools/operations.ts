@@ -1,6 +1,11 @@
-import { idSchema, quoteStatusSchema } from '@bravo/core';
+import { customerNotesSchema, idSchema, quoteStatusSchema } from '@bravo/core';
 import { z } from 'zod';
 import { withTransaction } from '../../db/client';
+import {
+  getCustomerDetail,
+  saveCustomerNotes,
+  searchCustomerProfiles,
+} from '../../modules/customers/customers.service';
 import { listQuoteRequests, updateQuoteRequest } from '../../modules/extras/quote-requests.service';
 import { listAdminRooms } from '../../modules/rooms/rooms-admin.service';
 import { defineTool, type ToolDefinition } from '../server';
@@ -10,6 +15,34 @@ import { defineTool, type ToolDefinition } from '../server';
 
 export function operationsTools(): ToolDefinition[] {
   return [
+    defineTool({
+      name: 'customers_search',
+      description:
+        'Busca clientes (locatários) por nome, e-mail, dígitos do CPF/CNPJ ou do telefone; 50 por página.',
+      scope: 'read',
+      input: z.object({
+        q: z.string().max(120),
+        cursor: z.string().min(1).max(200).optional(),
+      }),
+      run: (tc, input) => searchCustomerProfiles(tc.deps.db, input),
+    }),
+    defineTool({
+      name: 'customer_get',
+      description:
+        'Ficha de um cliente: perfil, reservas recentes, assinaturas com saldo, minutos extras, créditos, cupons, consentimentos e pedidos de orçamento.',
+      scope: 'read',
+      input: z.object({ id: idSchema }),
+      run: (tc, { id }) => getCustomerDetail(tc.deps.db, id, tc.now),
+    }),
+    defineTool({
+      name: 'customer_notes_update',
+      description:
+        'Substitui as anotações internas da equipe sobre um cliente (até 4000 caracteres).',
+      scope: 'write',
+      input: customerNotesSchema.extend({ id: idSchema }),
+      run: (tc, { id, notes }) =>
+        withTransaction(tc.deps.db, (tx) => saveCustomerNotes(tx, tc.ctx, id, notes, tc.now)),
+    }),
     defineTool({
       name: 'quotes_list',
       description:

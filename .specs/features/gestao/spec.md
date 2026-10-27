@@ -596,10 +596,10 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-96 | P1: Quote request funnel | Tasks | T21, T34 | Implementing |
 | GES-97 | P1: Quote request funnel | Tasks | T21, T38 | Implementing |
 | GES-98 | P1: Quote request funnel | Tasks | T38 | In Tasks |
-| GES-99 | P1: Clientes | Tasks | T23, T35 | In Tasks |
-| GES-100 | P1: Clientes | Tasks | T23, T35 | In Tasks |
-| GES-101 | P1: Clientes | Tasks | T23 | In Tasks |
-| GES-102 | P1: Clientes | Tasks | T23 | In Tasks |
+| GES-99 | P1: Clientes | Tasks | T23, T35 | Implementing |
+| GES-100 | P1: Clientes | Tasks | T23, T35 | Implementing |
+| GES-101 | P1: Clientes | Tasks | T23 | Implementing |
+| GES-102 | P1: Clientes | Tasks | T23 | Implementing |
 | GES-103 | P1: Salas admin | Tasks | T22, T36 | Implementing |
 | GES-104 | P1: Salas admin | Tasks | T22 | Implementing |
 | GES-105 | P1: Salas admin | Tasks | T22 | Implementing |
