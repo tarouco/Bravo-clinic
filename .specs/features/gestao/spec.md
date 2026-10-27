@@ -514,7 +514,7 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-14 | P1: Expenses and manual receipts | Tasks | T16 | Implementing |
 | GES-15 | P1: Expenses and manual receipts | Tasks | T16 | In Tasks |
 | GES-16 | P1: Expenses and manual receipts | Tasks | T15 | In Tasks |
-| GES-17 | P1: Expenses and manual receipts | Tasks | T4, T15 | In Tasks |
+| GES-17 | P1: Expenses and manual receipts | Tasks | T4, T15 | Implementing |
 | GES-18 | P1: Expenses and manual receipts | Tasks | T15 | In Tasks |
 | GES-19 | P1: Expenses and manual receipts | Tasks | T15 | In Tasks |
 | GES-20 | P1: Expenses and manual receipts | Tasks | T17 | In Tasks |
@@ -603,7 +603,7 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-103 | P1: Salas admin | Tasks | T22, T36 | In Tasks |
 | GES-104 | P1: Salas admin | Tasks | T22 | In Tasks |
 | GES-105 | P1: Salas admin | Tasks | T22 | Implementing |
-| GES-106 | P1: Salas admin | Tasks | T4, T22 | In Tasks |
+| GES-106 | P1: Salas admin | Tasks | T4, T22 | Implementing |
 | GES-107 | P1: Salas admin | Tasks | T22 | In Tasks |
 | GES-108 | P1: Salas admin | Tasks | T1, T22, T36 | Implementing |
 | GES-109 | P1: Salas admin | Tasks | T36 | In Tasks |

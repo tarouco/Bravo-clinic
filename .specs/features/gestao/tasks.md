@@ -296,11 +296,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests assert PDF/JPEG/PNG/WebP magic bytes accepted, a `.exe` labelled `application/pdf` rejected with 415, 5 MiB + 1 byte rejected with 413
-- [ ] Tests assert `createS3Storage` builds the client with `forcePathStyle: true` and presign uses the requested expiry (S3 client mocked)
-- [ ] Tests assert `memoryStorage` put/head/delete/totalBytes behave like the interface
-- [ ] Gate check passes: `npm test -w apps/api`
-- [ ] Test count: ≥ 8 tests pass
+- [x] Tests assert PDF/JPEG/PNG/WebP magic bytes accepted, a `.exe` labelled `application/pdf` rejected with 415, 5 MiB + 1 byte rejected with 413
+- [x] Tests assert `createS3Storage` builds the client with `forcePathStyle: true` and presign uses the requested expiry (S3 client mocked)
+- [x] Tests assert `memoryStorage` put/head/delete/totalBytes behave like the interface
+- [x] Gate check passes: `npm test -w apps/api`
+- [x] Test count: ≥ 8 tests pass
 
 **Tests**: unit
 **Gate**: quick
