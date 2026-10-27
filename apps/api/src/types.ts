@@ -4,6 +4,7 @@ import type { Db } from './db/client';
 import type { Env } from './env';
 import type { Registry } from './extensions/registry';
 import type { Storage } from './lib/storage';
+import type { ToolDefinition } from './mcp/server';
 import type { TriggerDelivery } from './lib/trigger-auth';
 
 /** Injectable dependencies of the app; tests replace what they need. */
@@ -20,6 +21,8 @@ export interface AppDeps {
   storage?: Storage;
   /** Authenticates `/jobs/*`; defaults to the Neon trigger delivery check, tests stub it. */
   verifyTrigger?: (request: Request) => Promise<TriggerDelivery | null>;
+  /** MCP tool catalog; defaults to `mcpToolCatalog()`, tests inject their own tools. */
+  mcpTools?: ToolDefinition[];
 }
 
 /** Hono environment shared by every middleware and route of the API. */

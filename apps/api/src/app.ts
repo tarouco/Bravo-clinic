@@ -13,6 +13,7 @@ import { appRoutes } from './routes/app';
 import { healthRoutes } from './routes/health';
 import { icsRoutes } from './routes/ics';
 import { jobRoutes } from './routes/jobs';
+import { mcpRoutes } from './routes/mcp';
 import { publicRoutes } from './routes/public';
 import { paymentWebhookRoutes } from './routes/webhooks/pagamentos';
 import type { AppDeps, AppEnv } from './types';
@@ -29,6 +30,7 @@ export function createApp(overrides: Partial<AppDeps> = {}): Hono<AppEnv> {
     storage: overrides.storage ?? createS3Storage(env),
     ...(overrides.googleJwks !== undefined && { googleJwks: overrides.googleJwks }),
     ...(overrides.verifyTrigger !== undefined && { verifyTrigger: overrides.verifyTrigger }),
+    ...(overrides.mcpTools !== undefined && { mcpTools: overrides.mcpTools }),
   };
 
   const app = new Hono<AppEnv>();
@@ -47,6 +49,7 @@ export function createApp(overrides: Partial<AppDeps> = {}): Hono<AppEnv> {
   app.route('/webhooks/pagamentos', paymentWebhookRoutes());
   app.route('/jobs', jobRoutes());
   app.route('/ics', icsRoutes());
+  app.route('/mcp', mcpRoutes());
   app.onError(onError);
   app.notFound(notFoundHandler);
   return app;

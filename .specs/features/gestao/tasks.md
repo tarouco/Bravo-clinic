@@ -556,13 +556,13 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests assert token format `^bmcp_[A-Za-z0-9_-]{43}$`, only hash stored, list without raw token, revoke audited
-- [ ] Tests assert `/mcp` 404 when disabled; 401 for missing, unknown, revoked, expired token and for an owner demoted to reception
-- [ ] Test asserts the request over `mcp.rate_limit_per_minute` gets 429 with `Retry-After`
-- [ ] Test with a dummy tool through the SDK client asserts one `audit_log` row origin `mcp`, action `mcp.<tool>`
-- [ ] Tests assert `GET /admin/integrations/mcp` server URL uses `API_FUNCTION_URL` and sets the warning when unset; reception → 403 on token creation
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 11 tests pass
+- [x] Tests assert token format `^bmcp_[A-Za-z0-9_-]{43}$`, only hash stored, list without raw token, revoke audited
+- [x] Tests assert `/mcp` 404 when disabled; 401 for missing, unknown, revoked, expired token and for an owner demoted to reception
+- [x] Test asserts the request over `mcp.rate_limit_per_minute` gets 429 with `Retry-After`
+- [x] Test with a dummy tool through the SDK client asserts one `audit_log` row origin `mcp`, action `mcp.<tool>`
+- [x] Tests assert `GET /admin/integrations/mcp` server URL uses `API_FUNCTION_URL` and sets the warning when unset; reception → 403 on token creation
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 11 tests pass
 
 **Tests**: integration
 **Gate**: full

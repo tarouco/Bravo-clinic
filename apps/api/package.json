@@ -18,6 +18,7 @@
     "@bravo/core": "*",
     "@hono/node-server": "^1.19.17",
     "@hono/zod-validator": "^0.9.1",
+    "@modelcontextprotocol/sdk": "^1.32.2",
     "@neon/functions": "^0.11.0",
     "drizzle-orm": "^0.45.4",
     "hono": "^4.13.13",

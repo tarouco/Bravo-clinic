@@ -550,18 +550,18 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-50 | P1: Calendar feeds and .ics files | Tasks | T10, T41 | Implementing |
 | GES-51 | P1: Calendar feeds and .ics files | Tasks | T10 | Implementing |
 | GES-52 | P1: Calendar feeds and .ics files | Tasks | T10 | Implementing |
-| GES-53 | P1: MCP server | Tasks | T13 | In Tasks |
-| GES-54 | P1: MCP server | Tasks | T13 | In Tasks |
-| GES-55 | P1: MCP server | Tasks | T13 | In Tasks |
-| GES-56 | P1: MCP server | Tasks | T13 | In Tasks |
+| GES-53 | P1: MCP server | Tasks | T13 | Implementing |
+| GES-54 | P1: MCP server | Tasks | T13 | Implementing |
+| GES-55 | P1: MCP server | Tasks | T13 | Implementing |
+| GES-56 | P1: MCP server | Tasks | T13 | Implementing |
 | GES-57 | P1: MCP server | Tasks | T14 | In Tasks |
 | GES-58 | P1: MCP server | Tasks | T14 | In Tasks |
 | GES-59 | P1: MCP server | Tasks | T14 | In Tasks |
-| GES-60 | P1: MCP server | Tasks | T13 | In Tasks |
-| GES-61 | P1: MCP server | Tasks | T13, T14 | In Tasks |
+| GES-60 | P1: MCP server | Tasks | T13 | Implementing |
+| GES-61 | P1: MCP server | Tasks | T13, T14 | Implementing |
 | GES-62 | P1: MCP server | Tasks | T14 | In Tasks |
-| GES-63 | P1: MCP server | Tasks | T13, T33 | In Tasks |
-| GES-64 | P1: MCP server | Tasks | T13 | In Tasks |
+| GES-63 | P1: MCP server | Tasks | T13, T33 | Implementing |
+| GES-64 | P1: MCP server | Tasks | T13 | Implementing |
 | GES-65 | P1: Notification e-mails | Tasks | T12 | Implementing |
 | GES-66 | P1: Notification e-mails | Tasks | T12 | Implementing |
 | GES-67 | P1: Notification e-mails | Tasks | T5 | Implementing |
@@ -617,7 +617,7 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-117 | P1: Reception restrictions end-to-end | Tasks | T44 | In Tasks |
 | GES-118 | P1: Reception restrictions end-to-end | Tasks | T44 | In Tasks |
 | GES-119 | P1: Reception restrictions end-to-end | Tasks | T44 | In Tasks |
-| GES-120 | P1: Reception restrictions end-to-end | Tasks | T13, T44 | In Tasks |
+| GES-120 | P1: Reception restrictions end-to-end | Tasks | T13, T44 | Implementing |
 | GES-121 | P1: LGPD self-service | Tasks | T25 | In Tasks |
 | GES-122 | P1: LGPD self-service | Tasks | T25 | In Tasks |
 | GES-123 | P1: LGPD self-service | Tasks | T25 | In Tasks |
