@@ -5,7 +5,7 @@ import {
   type SubscriptionStatus,
 } from '@bravo/core';
 import { and, eq } from 'drizzle-orm';
-import type { Tx } from '../../db/client';
+import type { Db, Tx } from '../../db/client';
 import { subscriptionPeriods, subscriptions } from '../../db/schema';
 import { AppError, notFound } from '../../lib/errors';
 
@@ -21,6 +21,20 @@ const invalid = (from: string, to: string) =>
 
 export async function lockSubscription(tx: Tx, id: string): Promise<SubscriptionRow> {
   const [row] = await tx.select().from(subscriptions).where(eq(subscriptions.id, id)).for('update');
+  if (row === undefined) throw notFound('NOT_FOUND', 'Assinatura não encontrada');
+  return row;
+}
+
+/** The caller's own subscription; another user's id is a 404 like a missing one. */
+export async function ownedSubscription(
+  db: Db | Tx,
+  userId: string,
+  id: string,
+): Promise<SubscriptionRow> {
+  const [row] = await db
+    .select()
+    .from(subscriptions)
+    .where(and(eq(subscriptions.id, id), eq(subscriptions.userId, userId)));
   if (row === undefined) throw notFound('NOT_FOUND', 'Assinatura não encontrada');
   return row;
 }

@@ -795,12 +795,12 @@ T48 → T50
 
 **Done when**:
 
-- [ ] 360 min left on 160000/1200 → switch to 225000/1800: quote shows 384 + 1800; approval writes `conversion_out −360`, `conversion_in +384`, old `switched`, new `base_on` = approval date
-- [ ] A booking debited between quote and approval reduces the converted amount (conversion at approval)
-- [ ] Rejected/expired switch leaves the old subscription active; different type or same category → 422
-- [ ] Fixed switch to Turno mensal in the same room releases old future occurrences and inserts the new ones; a taken slot at approval → refund, old kept
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 10 new tests pass
+- [x] 360 min left on 160000/1200 → switch to 225000/1800: quote shows 384 + 1800; approval writes `conversion_out −360`, `conversion_in +384`, old `switched`, new `base_on` = approval date
+- [x] A booking debited between quote and approval reduces the converted amount (conversion at approval)
+- [x] Rejected/expired switch leaves the old subscription active; different type or same category → 422
+- [x] Fixed switch to Turno mensal in the same room releases old future occurrences and inserts the new ones; a taken slot at approval → refund, old kept
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 10 new tests pass
 
 **Tests**: integration
 **Gate**: full

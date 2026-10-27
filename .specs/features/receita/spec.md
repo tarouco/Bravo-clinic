@@ -580,13 +580,13 @@
 | REC-69 | P1: Extra hours | Tasks | T40 | In Tasks |
 | REC-70 | P1: Extra hours | Tasks | T29 | In Tasks |
 | REC-71 | P1: Change and cancel | Tasks | T6 | Implementing |
-| REC-72 | P1: Change and cancel | Tasks | T22, T25 | In Tasks |
-| REC-73 | P1: Change and cancel | Tasks | T22 | In Tasks |
-| REC-74 | P1: Change and cancel | Tasks | T22 | In Tasks |
-| REC-75 | P1: Change and cancel | Tasks | T22 | In Tasks |
-| REC-76 | P1: Change and cancel | Tasks | T22 | In Tasks |
-| REC-77 | P1: Change and cancel | Tasks | T22 | In Tasks |
-| REC-78 | P1: Change and cancel | Tasks | T22 | In Tasks |
+| REC-72 | P1: Change and cancel | Tasks | T22, T25 | Implementing |
+| REC-73 | P1: Change and cancel | Tasks | T22 | Implementing |
+| REC-74 | P1: Change and cancel | Tasks | T22 | Implementing |
+| REC-75 | P1: Change and cancel | Tasks | T22 | Implementing |
+| REC-76 | P1: Change and cancel | Tasks | T22 | Implementing |
+| REC-77 | P1: Change and cancel | Tasks | T22 | Implementing |
+| REC-78 | P1: Change and cancel | Tasks | T22 | Implementing |
 | REC-79 | P1: Change and cancel | Tasks | T23, T39 | In Tasks |
 | REC-80 | P1: Change and cancel | Tasks | T23 | In Tasks |
 | REC-81 | P1: Change and cancel | Tasks | T23 | In Tasks |

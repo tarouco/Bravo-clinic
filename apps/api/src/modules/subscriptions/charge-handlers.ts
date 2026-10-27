@@ -1,14 +1,15 @@
 import { and, eq, lte } from 'drizzle-orm';
 import type { Tx } from '../../db/client';
-import { bookingCategories, subscriptionPeriods } from '../../db/schema';
+import { subscriptionPeriods } from '../../db/schema';
 import { getEnv } from '../../env';
 import type { ChargeEffects, ChargeHandler, ChargeRow } from '../../extensions/registry';
-import { audit, type RequestContext } from '../../lib/audit';
-import { requestRefund } from '../payments/refunds.service';
+import type { RequestContext } from '../../lib/audit';
 import { activateSubscription } from './activation.service';
+import { categoryName, refundLate } from './late-refund';
 import { occurrencesOf, subscriberOf, transitionOccurrences } from './occurrences.service';
 import { activatePeriod, closePeriod, todayOf } from './period.service';
 import { revenueMailer } from './revenue-mailer';
+import { completeSwitch } from './switch.service';
 import {
   lockSubscription,
   transitionPeriod,
@@ -26,19 +27,6 @@ const noEffects = (): ChargeEffects => ({ emailIds: [], staff: [], refundIds: []
 /** Approval time of the charge (the payment service's clock), for dates and ledger rows. */
 const clockOf = (charge: ChargeRow): Date => charge.approvedAt ?? charge.updatedAt;
 
-/** Swapped by the switch service (T22) to complete a pending switch at approval. */
-export const switchCompletion: {
-  complete:
-    | ((
-        tx: Tx,
-        ctx: RequestContext,
-        subscription: SubscriptionRow,
-        charge: ChargeRow,
-        fx: ChargeEffects,
-      ) => Promise<void>)
-    | null;
-} = { complete: null };
-
 async function chargedPeriod(
   tx: Tx,
   charge: ChargeRow,
@@ -53,54 +41,6 @@ async function chargedPeriod(
   return { period, subscription: await lockSubscription(tx, period.subscriptionId) };
 }
 
-async function categoryName(tx: Tx, subscription: SubscriptionRow): Promise<string> {
-  const [row] = await tx
-    .select({ name: bookingCategories.name })
-    .from(bookingCategories)
-    .where(eq(bookingCategories.id, subscription.categoryId));
-  return row?.name ?? '';
-}
-
-/**
- * The money has nothing left to pay (REC-19, REC-78): full refund `late_approval_conflict`, audit
- * and `payment.late_refund`.
- */
-export async function refundLate(
-  tx: Tx,
-  ctx: RequestContext,
-  charge: ChargeRow,
-  subscription: SubscriptionRow,
-  fx: ChargeEffects,
-  why: string,
-): Promise<void> {
-  const refund = await requestRefund(tx, {
-    chargeId: charge.id,
-    amountCents: charge.amountCents,
-    reason: 'late_approval_conflict',
-    ctx,
-  });
-  fx.refundIds.push(refund.id);
-  await audit(tx, ctx, {
-    action: 'payment.refund_unusable',
-    entityType: 'charge',
-    entityId: charge.id,
-    after: { why, refundId: refund.id, amountCents: charge.amountCents },
-  });
-  const user = await subscriberOf(tx, subscription.userId);
-  fx.emailIds.push(
-    await revenueMailer['payment.late_refund'](
-      tx,
-      { to: user.email, dedupeKey: `payment.late_refund:${charge.id}` },
-      {
-        name: user.name,
-        link: new URL('/app/compras', getEnv().APP_BASE_URL).toString(),
-        amountCents: charge.amountCents,
-        description: `Assinatura ${await categoryName(tx, subscription)}`,
-      },
-    ),
-  );
-}
-
 /** First payment (REC-16, REC-19, REC-88): activation, or a full refund when it came too late. */
 export const subscriptionInitialHandler: ChargeHandler = {
   async onApproved(tx, ctx, charge, effects) {
@@ -112,8 +52,8 @@ export const subscriptionInitialHandler: ChargeHandler = {
       await refundLate(tx, ctx, charge, subscription, fx, `subscription_${subscription.status}`);
       return;
     }
-    if (subscription.switchFromSubscriptionId !== null && switchCompletion.complete !== null) {
-      await switchCompletion.complete(tx, ctx, subscription, charge, fx);
+    if (subscription.switchFromSubscriptionId !== null) {
+      await completeSwitch(tx, ctx, subscription, charge, { now: clockOf(charge), fx });
       return;
     }
     await activateSubscription(tx, ctx, subscription.id, {

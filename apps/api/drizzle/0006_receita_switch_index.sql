@@ -1,0 +1,2 @@
+DROP INDEX "subscriptions_one_hour_pkg";--> statement-breakpoint
+CREATE UNIQUE INDEX "subscriptions_one_hour_pkg" ON "subscriptions" USING btree ("user_id") WHERE "subscriptions"."type" = 'hour_package' and ("subscriptions"."status" in ('active','suspended') or ("subscriptions"."status" = 'awaiting_payment' and "subscriptions"."switch_from_subscription_id" is null));

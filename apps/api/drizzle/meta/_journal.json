@@ -43,6 +43,13 @@
       "when": 1793053242407,
       "tag": "0005_receita_constraints",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1793097805287,
+      "tag": "0006_receita_switch_index",
+      "breakpoints": true
     }
   ]
 }
