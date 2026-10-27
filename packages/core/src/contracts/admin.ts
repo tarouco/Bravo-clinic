@@ -326,6 +326,19 @@ export const categoryUpdateSchema = z
     weekendRateCents: positiveCentsSchema.optional(),
     minDurationMinutes: z.number().int().positive().optional(),
     fixedPriceCents: positiveCentsSchema.optional(),
+    // Package categories (receita T17; web-assumed contract: `includedHours`, `pricePerOccurrenceCents`).
+    includedHours: z
+      .number({ error: 'Informe as horas incluídas' })
+      .int({ error: 'Use um número inteiro de horas' })
+      .min(1, { error: 'Inclua de 1 a 200 horas' })
+      .max(200, { error: 'Inclua de 1 a 200 horas' })
+      .optional(),
+    pricePerOccurrenceCents: positiveCentsSchema.optional(),
+    period: z
+      .enum(['monthly', 'bimonthly', 'quarterly'], {
+        error: 'Escolha o período: mensal, bimestral ou trimestral',
+      })
+      .optional(),
     status: categoryStatusSchema.optional(),
     visibility: categoryVisibilitySchema.optional(),
   })

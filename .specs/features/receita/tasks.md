@@ -652,10 +652,10 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Admin creates "Pacote 25h mensal" 187500 → stored `included_minutes = 1500`, `period = 'monthly'`; invalid combos → 422
-- [ ] Window change on a category with an active subscription → 409 with REC-05 message; price change → version + 1, audit, one `subscription.price_change` per active/suspended subscriber
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 8 new tests pass
+- [x] Admin creates "Pacote 25h mensal" 187500 → stored `included_minutes = 1500`, `period = 'monthly'`; invalid combos → 422
+- [x] Window change on a category with an active subscription → 409 with REC-05 message; price change → version + 1, audit, one `subscription.price_change` per active/suspended subscriber
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 8 new tests pass
 
 **Tests**: integration
 **Gate**: full

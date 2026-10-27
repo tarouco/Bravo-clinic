@@ -46,7 +46,8 @@ const call = (method: string, path: string, cookie: string, body?: unknown, regi
       now: () => NOW,
       fetch: forbiddenFetch,
       env: testEnv(),
-      ...(registry !== undefined && { registry }),
+      // nucleo alone: the app's default registry now carries receita's package handlers.
+      registry: registry ?? createRegistry(),
     }),
     method,
     path,

@@ -513,8 +513,8 @@
 | REC-02 | P1: Package categories | Tasks | T2, T17 | Implementing |
 | REC-03 | P1: Package categories | Tasks | T44 | In Tasks |
 | REC-04 | P1: Package categories | Tasks | T3, T44 | Implementing |
-| REC-05 | P1: Package categories | Tasks | T17 | In Tasks |
-| REC-06 | P1: Package categories | Tasks | T17, T14 | In Tasks |
+| REC-05 | P1: Package categories | Tasks | T17 | Implementing |
+| REC-06 | P1: Package categories | Tasks | T17, T14 | Implementing |
 | REC-07 | P1: Package categories | Tasks | T18, T19 | In Tasks |
 | REC-08 | P1: Package categories | Tasks | T18, T19 | In Tasks |
 | REC-09 | P1: Package categories | Tasks | T27 | In Tasks |

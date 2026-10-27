@@ -6,6 +6,10 @@ import {
   subscriptionModeHandler,
 } from '../modules/revenue/ports';
 import { creditStep, discountStep, packageStep } from '../modules/revenue/steps';
+import {
+  fixedScheduleHandler,
+  hourPackageHandler,
+} from '../modules/subscriptions/category-handlers';
 import { defaultRegistry } from './defaults';
 import { createRegistry, type Registry } from './registry';
 
@@ -26,6 +30,7 @@ export function buildRegistry(): Registry {
     credits: liveCreditPort,
     closedDayCompensation: closedDayCompensationPort,
     availabilityDecorators: [slotDiscountDecorator],
+    categoryHandlers: [hourPackageHandler, fixedScheduleHandler],
   });
 }
 
