@@ -569,7 +569,7 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-69 | P1: Notification e-mails | Tasks | T43 | In Tasks |
 | GES-70 | P1: Notification e-mails | Tasks | T12 | In Tasks |
 | GES-71 | P1: Notification e-mails | Tasks | T12 | In Tasks |
-| GES-72 | P1: Notification e-mails | Tasks | T9 | In Tasks |
+| GES-72 | P1: Notification e-mails | Tasks | T9 | Implementing |
 | GES-73 | P1: Notification e-mails | Tasks | T7 | Implementing |
 | GES-74 | P1: Notification e-mails | Tasks | T12, T32 | In Tasks |
 | GES-75 | P1: Web push | Tasks | T6 | Implementing |
@@ -626,7 +626,7 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-126 | P1: LGPD self-service | Tasks | T25 | In Tasks |
 | GES-127 | P1: LGPD self-service | Tasks | T25 | In Tasks |
 | GES-128 | P1: LGPD self-service | Tasks | T41 | In Tasks |
-| GES-129 | P1: LGPD self-service | Tasks | T9 | In Tasks |
+| GES-129 | P1: LGPD self-service | Tasks | T9 | Implementing |
 | GES-130 | P1: Holiday jobs | Tasks | T26 | In Tasks |
 | GES-131 | P1: Holiday jobs | Tasks | T26 | In Tasks |
 | GES-132 | P1: Holiday jobs | Tasks | T26 | In Tasks |

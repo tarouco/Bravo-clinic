@@ -437,11 +437,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests assert retry picks `failed` with attempts < 5 within 48 h and `pending` older than 5 min, skips attempts = 5 and fresh pending rows
-- [ ] Tests assert retention deletes only rows past each threshold (sessions/tokens 30 days, buckets 2 days, expired idempotency keys), blanks bodies of 181-day-old outbox rows and keeps 179-day ones; `job_runs.stats` has the counts
-- [ ] Tests assert both job routes reject requests without a valid trigger delivery
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 7 tests pass
+- [x] Tests assert retry picks `failed` with attempts < 5 within 48 h and `pending` older than 5 min, skips attempts = 5 and fresh pending rows
+- [x] Tests assert retention deletes only rows past each threshold (sessions/tokens 30 days, buckets 2 days, expired idempotency keys), blanks bodies of 181-day-old outbox rows and keeps 179-day ones; `job_runs.stats` has the counts
+- [x] Tests assert both job routes reject requests without a valid trigger delivery
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: integration
 **Gate**: full
