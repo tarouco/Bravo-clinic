@@ -1,9 +1,9 @@
-import { and, eq } from 'drizzle-orm';
+import { and, eq, sql } from 'drizzle-orm';
 import { afterAll, describe, expect, it } from 'vitest';
 import { createUser } from '../../../test/factories';
 import { createCreditLot } from '../../../test/factories/revenue';
 import { requireTestDatabaseUrl } from '../../../test/require-test-db';
-import { createDb, withTransaction } from '../../db/client';
+import { createDb, withTransaction, type Tx } from '../../db/client';
 import { charges, creditLedger, creditLots, settings } from '../../db/schema';
 import type { RequestContext } from '../../lib/audit';
 import {
@@ -31,6 +31,28 @@ const ctx: RequestContext = {
 };
 
 const inDays = (days: number) => new Date(NOW.getTime() + days * DAY);
+
+/** A promise with its resolver, to pause one transaction at a known point. */
+function gate(): { promise: Promise<void>; resolve: () => void } {
+  let resolve: () => void = () => undefined;
+  const promise = new Promise<void>((done) => {
+    resolve = () => done();
+  });
+  return { promise, resolve };
+}
+
+/** Polls until some session of the test database waits on a lock (5 s at most). */
+async function untilALockIsAwaited(): Promise<void> {
+  for (let attempt = 0; attempt < 200; attempt += 1) {
+    const { rows } = await db.execute<{ waiting: number }>(
+      sql`select count(*)::int as waiting from pg_stat_activity
+          where datname = current_database() and wait_event_type = 'Lock'`,
+    );
+    if ((rows[0]?.waiting ?? 0) > 0) return;
+    await new Promise((resolve) => setTimeout(resolve, 25));
+  }
+  throw new Error('the second use never waited on a lock');
+}
 
 async function lotsOf(userId: string) {
   return db
@@ -141,18 +163,29 @@ describe('applyCredits (REC-107, REC-108)', () => {
     const user = await createUser(db);
     await createCreditLot(db, { userId: user.id, amountCents: 6000, expiresAt: inDays(10) });
     await createCreditLot(db, { userId: user.id, amountCents: 4000, expiresAt: inDays(20) });
-    const apply = () =>
-      withTransaction(db, (tx) =>
-        applyCredits(tx, ctx, {
-          userId: user.id,
-          amountCents: 8000,
-          purpose: 'booking_full',
-          now: NOW,
-        }),
-      );
-    const results = await Promise.all([apply(), apply()]);
-    const used = results.map((r) => r.usedCents).sort((a, b) => a - b);
-    expect(used).toEqual([2000, 8000]);
+    const apply = (tx: Tx) =>
+      applyCredits(tx, ctx, {
+        userId: user.id,
+        amountCents: 8000,
+        purpose: 'booking_full',
+        now: NOW,
+      });
+    // The first use keeps its transaction open after its writes until the second one is seen
+    // waiting on a row lock, so the two always overlap.
+    const firstUsed = gate();
+    const release = gate();
+    const first = withTransaction(db, async (tx) => {
+      const result = await apply(tx);
+      firstUsed.resolve();
+      await release.promise;
+      return result;
+    });
+    await firstUsed.promise;
+    const second = withTransaction(db, apply);
+    await untilALockIsAwaited();
+    release.resolve();
+    const results = await Promise.all([first, second]);
+    expect(results.map((r) => r.usedCents)).toEqual([8000, 2000]);
     const lots = await lotsOf(user.id);
     expect(lots.every((l) => l.remainingCents === 0)).toBe(true);
   });
