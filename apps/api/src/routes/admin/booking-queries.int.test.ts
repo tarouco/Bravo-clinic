@@ -110,6 +110,36 @@ describe('GET /admin/calendar/events (NUC-157)', () => {
     expect(feed.holidays.map((h) => [h.date, h.name])).toContainEqual(['2026-11-02', 'Finados']);
   });
 
+  it('keeps a renewal hold without an expiry and drops an expired one (REC-92, NUC-80)', async () => {
+    const ana = await customer('Ana Souza', 'ana@exemplo.com');
+    const held = await insertBooking(db, {
+      userId: ana.id,
+      roomId,
+      startsAt: localToUtc(TUE, 420),
+      endsAt: localToUtc(TUE, 570),
+      status: 'held_for_renewal',
+      paidCents: 0,
+      holdExpiresAt: null,
+    });
+    await insertBooking(db, {
+      userId: ana.id,
+      roomId,
+      startsAt: localToUtc(TUE, 840),
+      endsAt: localToUtc(TUE, 900),
+      status: 'held_for_renewal',
+      paidCents: 0,
+      holdExpiresAt: new Date(NOW.getTime() - HOUR),
+    });
+
+    const res = await get('/admin/calendar/events?from=2026-10-26&to=2026-11-01');
+
+    expect(res.status).toBe(200);
+    const feed = calendarEventsSchema.parse(res.body);
+    expect(feed.bookings.map((b) => [b.id, b.status, b.statusLabel])).toEqual([
+      [held.id, 'held_for_renewal', 'Pré-reservada (renovação)'],
+    ]);
+  });
+
   it('answers 422 for a range of 43 days', async () => {
     const res = await get('/admin/calendar/events?from=2026-10-01&to=2026-11-13');
 
