@@ -564,8 +564,8 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-64 | P1: MCP server | Tasks | T13 | In Tasks |
 | GES-65 | P1: Notification e-mails | Tasks | T12 | In Tasks |
 | GES-66 | P1: Notification e-mails | Tasks | T12 | In Tasks |
-| GES-67 | P1: Notification e-mails | Tasks | T5 | In Tasks |
-| GES-68 | P1: Notification e-mails | Tasks | T5 | In Tasks |
+| GES-67 | P1: Notification e-mails | Tasks | T5 | Implementing |
+| GES-68 | P1: Notification e-mails | Tasks | T5 | Implementing |
 | GES-69 | P1: Notification e-mails | Tasks | T43 | In Tasks |
 | GES-70 | P1: Notification e-mails | Tasks | T12 | In Tasks |
 | GES-71 | P1: Notification e-mails | Tasks | T12 | In Tasks |
@@ -575,10 +575,10 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-75 | P1: Web push | Tasks | T6 | In Tasks |
 | GES-76 | P1: Web push | Tasks | T6 | In Tasks |
 | GES-77 | P1: Web push | Tasks | T6 | In Tasks |
-| GES-78 | P1: Web push | Tasks | T5 | In Tasks |
-| GES-79 | P1: Web push | Tasks | T5 | In Tasks |
-| GES-80 | P1: Web push | Tasks | T5 | In Tasks |
-| GES-81 | P1: Web push | Tasks | T5 | In Tasks |
+| GES-78 | P1: Web push | Tasks | T5 | Implementing |
+| GES-79 | P1: Web push | Tasks | T5 | Implementing |
+| GES-80 | P1: Web push | Tasks | T5 | Implementing |
+| GES-81 | P1: Web push | Tasks | T5 | Implementing |
 | GES-82 | P1: Web push | Tasks | T40 | In Tasks |
 | GES-83 | P1: Web push | Tasks | T40 | In Tasks |
 | GES-84 | P1: Extra services catalog and online add-on | Tasks | T20 | In Tasks |

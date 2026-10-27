@@ -21,6 +21,10 @@ export const envSchema = z.object({
   AWS_SECRET_ACCESS_KEY: z.string().min(1).optional(),
   AWS_ENDPOINT_URL_S3: z.url({ protocol: /^https?$/ }).optional(),
   AWS_REGION: z.string().min(1).optional(),
+  // Web push (GES-75..GES-81); push is off unless all three are set.
+  VAPID_PUBLIC_KEY: z.string().min(1).optional(),
+  VAPID_PRIVATE_KEY: z.string().min(1).optional(),
+  VAPID_SUBJECT: z.string().min(1).optional(),
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
 });
 

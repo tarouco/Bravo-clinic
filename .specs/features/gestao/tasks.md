@@ -324,13 +324,13 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Test asserts a staff event with toggle on queues one row per active recipient with dedupe key `staff:<event>:<entityId>:<recipientId>`; a repeat emit queues none
-- [ ] Test asserts toggle off queues nothing; rolled-back transaction leaves no rows and sends no push
-- [ ] Test asserts tenant event sends one push per subscription (web-push stubbed) with payload ≤ 3 KB containing title/body/url/tag
-- [ ] Tests assert 410 deletes the subscription, 500 increments `failure_count`, the 5th failure deletes it, success resets it and sets `last_success_at`
-- [ ] Test asserts no VAPID env → no push call and `emit` still resolves
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 9 tests pass
+- [x] Test asserts a staff event with toggle on queues one row per active recipient with dedupe key `staff:<event>:<entityId>:<recipientId>`; a repeat emit queues none
+- [x] Test asserts toggle off queues nothing; rolled-back transaction leaves no rows and sends no push
+- [x] Test asserts tenant event sends one push per subscription (web-push stubbed) with payload ≤ 3 KB containing title/body/url/tag
+- [x] Tests assert 410 deletes the subscription, 500 increments `failure_count`, the 5th failure deletes it, success resets it and sets `last_success_at`
+- [x] Test asserts no VAPID env → no push call and `emit` still resolves
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 9 tests pass
 
 **Tests**: integration
 **Gate**: full
