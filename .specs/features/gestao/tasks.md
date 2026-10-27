@@ -527,12 +527,12 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests assert add/duplicate (409)/11th recipient (422)/toggle/remove, all audited
-- [ ] Tests assert unknown event key → 422 and stored toggles round-trip
-- [ ] Tests assert test e-mail returns per-recipient status with Resend stubbed, `not_sent` without key, 429 on the 6th call in an hour
-- [ ] Tests assert outbox list filters by status, excludes `html`, covers 30 days only
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 9 tests pass
+- [x] Tests assert add/duplicate (409)/11th recipient (422)/toggle/remove, all audited
+- [x] Tests assert unknown event key → 422 and stored toggles round-trip
+- [x] Tests assert test e-mail returns per-recipient status with Resend stubbed, `not_sent` without key, 429 on the 6th call in an hour
+- [x] Tests assert outbox list filters by status, excludes `html`, covers 30 days only
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 9 tests pass
 
 **Tests**: integration
 **Gate**: full

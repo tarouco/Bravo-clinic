@@ -562,16 +562,16 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-62 | P1: MCP server | Tasks | T14 | In Tasks |
 | GES-63 | P1: MCP server | Tasks | T13, T33 | In Tasks |
 | GES-64 | P1: MCP server | Tasks | T13 | In Tasks |
-| GES-65 | P1: Notification e-mails | Tasks | T12 | In Tasks |
-| GES-66 | P1: Notification e-mails | Tasks | T12 | In Tasks |
+| GES-65 | P1: Notification e-mails | Tasks | T12 | Implementing |
+| GES-66 | P1: Notification e-mails | Tasks | T12 | Implementing |
 | GES-67 | P1: Notification e-mails | Tasks | T5 | Implementing |
 | GES-68 | P1: Notification e-mails | Tasks | T5 | Implementing |
 | GES-69 | P1: Notification e-mails | Tasks | T43 | In Tasks |
-| GES-70 | P1: Notification e-mails | Tasks | T12 | In Tasks |
-| GES-71 | P1: Notification e-mails | Tasks | T12 | In Tasks |
+| GES-70 | P1: Notification e-mails | Tasks | T12 | Implementing |
+| GES-71 | P1: Notification e-mails | Tasks | T12 | Implementing |
 | GES-72 | P1: Notification e-mails | Tasks | T9 | Implementing |
 | GES-73 | P1: Notification e-mails | Tasks | T7 | Implementing |
-| GES-74 | P1: Notification e-mails | Tasks | T12, T32 | In Tasks |
+| GES-74 | P1: Notification e-mails | Tasks | T12, T32 | Implementing |
 | GES-75 | P1: Web push | Tasks | T6 | Implementing |
 | GES-76 | P1: Web push | Tasks | T6 | Implementing |
 | GES-77 | P1: Web push | Tasks | T6 | Implementing |
