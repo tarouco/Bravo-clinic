@@ -515,8 +515,8 @@
 | REC-04 | P1: Package categories | Tasks | T3, T44 | Implementing |
 | REC-05 | P1: Package categories | Tasks | T17 | Implementing |
 | REC-06 | P1: Package categories | Tasks | T17, T14 | Implementing |
-| REC-07 | P1: Package categories | Tasks | T18, T19 | In Tasks |
-| REC-08 | P1: Package categories | Tasks | T18, T19 | In Tasks |
+| REC-07 | P1: Package categories | Tasks | T18, T19 | Implementing |
+| REC-08 | P1: Package categories | Tasks | T18, T19 | Implementing |
 | REC-09 | P1: Package categories | Tasks | T27 | In Tasks |
 | REC-10 | P1: Buy an hour package | Tasks | T7, T18 | Implementing |
 | REC-11 | P1: Buy an hour package | Tasks | T2, T18 | Implementing |
@@ -592,7 +592,7 @@
 | REC-81 | P1: Change and cancel | Tasks | T23 | In Tasks |
 | REC-82 | P1: Change and cancel | Tasks | T26 | In Tasks |
 | REC-83 | P1: Buy a fixed-schedule package | Tasks | T3 | Implementing |
-| REC-84 | P1: Buy a fixed-schedule package | Tasks | T18, T36 | In Tasks |
+| REC-84 | P1: Buy a fixed-schedule package | Tasks | T18, T36 | Implementing |
 | REC-85 | P1: Buy a fixed-schedule package | Tasks | T19 | In Tasks |
 | REC-86 | P1: Buy a fixed-schedule package | Tasks | T19 | In Tasks |
 | REC-87 | P1: Buy a fixed-schedule package | Tasks | T19 | In Tasks |
@@ -663,7 +663,7 @@
 | REC-152 | P1: Admin subscriptions and sale | Tasks | T19 | In Tasks |
 | REC-153 | P1: Admin subscriptions and sale | Tasks | T26 | In Tasks |
 | REC-154 | P1: Admin subscriptions and sale | Tasks | T26 | In Tasks |
-| REC-155 | P1: Public packages and purchase flow | Tasks | T18, T35 | In Tasks |
+| REC-155 | P1: Public packages and purchase flow | Tasks | T18, T35 | Implementing |
 | REC-156 | P1: Public packages and purchase flow | Tasks | T37 | In Tasks |
 | REC-157 | P1: Public packages and purchase flow | Tasks | T37 | In Tasks |
 | REC-158 | P1: Public packages and purchase flow | Tasks | T37 | In Tasks |

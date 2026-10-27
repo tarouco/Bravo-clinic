@@ -679,11 +679,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] `GET /api/public/packages` lists active public package categories only, with `avgHourCents` 8000 for Pacote 20h and estimate for Meio turno
-- [ ] Occurrence check for a date blocked in Sala Principal returns the conflict and suggests the other rooms and up to 3 conflict-free base dates within 14 days
-- [ ] Quote REC-10 values exact; base date out of range → 422 message; inactive category → 404
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 10 new tests pass
+- [x] `GET /api/public/packages` lists active public package categories only, with `avgHourCents` 8000 for Pacote 20h and estimate for Meio turno
+- [x] Occurrence check for a date blocked in Sala Principal returns the conflict and suggests the other rooms and up to 3 conflict-free base dates within 14 days
+- [x] Quote REC-10 values exact; base date out of range → 422 message; inactive category → 404
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 10 new tests pass
 
 **Tests**: integration
 **Gate**: full
