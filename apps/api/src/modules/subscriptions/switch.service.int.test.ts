@@ -1,3 +1,4 @@
+import { randomUUID } from 'node:crypto';
 import { generateOccurrences, localToUtc } from '@bravo/core';
 import { and, eq } from 'drizzle-orm';
 import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -9,6 +10,7 @@ import { createDb, withTransaction } from '../../db/client';
 import {
   bookingCategories,
   bookings,
+  charges,
   packageLedger,
   refunds,
   roomOccupancy,
@@ -23,6 +25,7 @@ import { addPeriodEntry } from '../packages/minutes.service';
 import { applyProviderStatus } from '../payments/payment-effects.service';
 import { loadSettings } from '../settings/settings.repo';
 import { insertOccurrences } from './occurrences.service';
+import { createRenewalPeriod } from './period.service';
 import { quoteSwitch, startSwitch } from './switch.service';
 
 const { pool, db } = createDb(requireTestDatabaseUrl(process.env));
@@ -188,6 +191,43 @@ describe('hour package switch (REC-71..REC-76)', () => {
       { type: 'period_grant', minutes: 1800 },
       { type: 'conversion_in', minutes: 384 },
     ]);
+  });
+
+  it('approval cancels the old pending renewal period and its pending charge (REC-73)', async () => {
+    const { user, target, subscription } = await hourSetup();
+    const renewal = await withTransaction(db, (tx) =>
+      createRenewalPeriod(tx, subscription.id, NOW),
+    );
+    if (renewal === null) throw new Error('no renewal period');
+    const [renewalCharge] = await db
+      .insert(charges)
+      .values({
+        provider: 'sandbox',
+        purpose: 'subscription_renewal',
+        method: 'pix',
+        userId: user.id,
+        subscriptionPeriodId: renewal.id,
+        amountCents: 160_000,
+        status: 'pending',
+        idempotencyKey: `ch_${randomUUID()}`,
+      })
+      .returning();
+    expect(renewal).toMatchObject({ seq: 2, status: 'awaiting_payment' });
+
+    const result = await switchTo(user.id, subscription.id, target.id);
+    await approve(result.charge?.id ?? '', 225_000);
+
+    expect((await subscriptionOf(subscription.id))?.status).toBe('switched');
+    const periods = await periodsOf(subscription.id);
+    expect(periods.map((p) => [p.seq, p.status])).toEqual([
+      [1, 'closed'],
+      [2, 'cancelled'],
+    ]);
+    const [storedCharge] = await db
+      .select()
+      .from(charges)
+      .where(eq(charges.id, renewalCharge?.id ?? ''));
+    expect(storedCharge?.status).toBe('cancelled');
   });
 
   it('a booking debited between quote and approval reduces the converted amount (REC-74)', async () => {
