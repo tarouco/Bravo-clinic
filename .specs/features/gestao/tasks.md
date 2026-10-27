@@ -617,12 +617,12 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests assert create 201 + audit, inactive category 422 on `categoryId`, edit/delete audited with before/after, deleted rows excluded from list
-- [ ] Tests assert attachment upload stores object + name + content type, replace deletes the old object after commit, 413/415 paths, GET responds 302 to a URL with 300 s expiry
-- [ ] Tests assert category duplicate name (case-insensitive) → 409, deactivate keeps old expenses listed
-- [ ] Tests assert tenant/reception → 403
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 12 tests pass
+- [x] Tests assert create 201 + audit, inactive category 422 on `categoryId`, edit/delete audited with before/after, deleted rows excluded from list
+- [x] Tests assert attachment upload stores object + name + content type, replace deletes the old object after commit, 413/415 paths, GET responds 302 to a URL with 300 s expiry
+- [x] Tests assert category duplicate name (case-insensitive) → 409, deactivate keeps old expenses listed
+- [x] Tests assert tenant/reception → 403
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 12 tests pass
 
 **Tests**: integration
 **Gate**: full

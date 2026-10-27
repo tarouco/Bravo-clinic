@@ -508,15 +508,15 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-08 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
 | GES-09 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
 | GES-10 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
-| GES-11 | P1: Expenses and manual receipts | Tasks | T15 | In Tasks |
-| GES-12 | P1: Expenses and manual receipts | Tasks | T15 | In Tasks |
-| GES-13 | P1: Expenses and manual receipts | Tasks | T15 | In Tasks |
+| GES-11 | P1: Expenses and manual receipts | Tasks | T15 | Implementing |
+| GES-12 | P1: Expenses and manual receipts | Tasks | T15 | Implementing |
+| GES-13 | P1: Expenses and manual receipts | Tasks | T15 | Implementing |
 | GES-14 | P1: Expenses and manual receipts | Tasks | T16 | Implementing |
 | GES-15 | P1: Expenses and manual receipts | Tasks | T16 | In Tasks |
-| GES-16 | P1: Expenses and manual receipts | Tasks | T15 | In Tasks |
+| GES-16 | P1: Expenses and manual receipts | Tasks | T15 | Implementing |
 | GES-17 | P1: Expenses and manual receipts | Tasks | T4, T15 | Implementing |
-| GES-18 | P1: Expenses and manual receipts | Tasks | T15 | In Tasks |
-| GES-19 | P1: Expenses and manual receipts | Tasks | T15 | In Tasks |
+| GES-18 | P1: Expenses and manual receipts | Tasks | T15 | Implementing |
+| GES-19 | P1: Expenses and manual receipts | Tasks | T15 | Implementing |
 | GES-20 | P1: Expenses and manual receipts | Tasks | T17 | In Tasks |
 | GES-21 | P1: Expenses and manual receipts | Tasks | T17 | In Tasks |
 | GES-22 | P1: Financeiro overview | Tasks | T2, T18 | Implementing |

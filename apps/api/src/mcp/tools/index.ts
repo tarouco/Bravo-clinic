@@ -1,4 +1,5 @@
 import type { ToolDefinition } from '../server';
+import { financeTools } from './finance';
 import { nucleoTools } from './nucleo';
 import { receitaTools } from './receita';
 
@@ -54,7 +55,7 @@ const rank = (name: string) => {
 
 /** Every tool the MCP server exposes, in catalog order. */
 export function mcpToolCatalog(): ToolDefinition[] {
-  return [...nucleoTools(), ...receitaTools()].sort(
+  return [...nucleoTools(), ...receitaTools(), ...financeTools()].sort(
     (a, b) => rank(a.name) - rank(b.name) || a.name.localeCompare(b.name),
   );
 }

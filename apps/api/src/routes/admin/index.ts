@@ -12,6 +12,7 @@ import { adminCategoryRoutes } from './categories';
 import { adminCouponRoutes } from './coupons';
 import { adminCustomerCreditRoutes } from './customer-credits';
 import { adminCustomerRoutes } from './customers';
+import { adminFinanceExpenseRoutes } from './finance-expenses';
 import { adminIntegrationsCalendarRoutes } from './integrations-calendar';
 import { adminIntegrationsGatewayRoutes } from './integrations-gateway';
 import { adminIntegrationsMcpRoutes } from './integrations-mcp';
@@ -27,6 +28,8 @@ export function adminRoutes(): Hono<AppEnv> {
   // Every Integrações route is admin only, MCP token creation included (GES-120).
   app.use('/integrations', requireRole('admin'));
   app.use('/integrations/*', requireRole('admin'));
+  // Financeiro is admin only as well.
+  app.use('/finance/*', requireRole('admin'));
   app.route('/', adminSessionRoutes());
   app.route('/', adminCalendarRoutes());
   app.route('/', adminCalendarExceptionRoutes());
@@ -46,5 +49,6 @@ export function adminRoutes(): Hono<AppEnv> {
   app.route('/', adminIntegrationsGatewayRoutes());
   app.route('/', adminIntegrationsNotificationRoutes());
   app.route('/', adminIntegrationsMcpRoutes());
+  app.route('/', adminFinanceExpenseRoutes());
   return app;
 }
