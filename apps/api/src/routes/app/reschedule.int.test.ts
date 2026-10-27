@@ -47,7 +47,15 @@ beforeEach(async () => {
   roomId = (await seededRoom(db)).id;
 });
 
-const buildApp = () => createApp({ db, now: () => NOW, fetch: forbiddenFetch, env: testEnv() });
+// nucleo alone: the app's default registry now carries receita's package handler and credit port.
+const buildApp = () =>
+  createApp({
+    db,
+    now: () => NOW,
+    fetch: forbiddenFetch,
+    env: testEnv(),
+    registry: createRegistry(),
+  });
 const paymentDeps = () => ({
   db,
   env: testEnv(),
