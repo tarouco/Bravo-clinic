@@ -528,7 +528,7 @@
 | REC-17 | P1: Buy an hour package | Tasks | T28 | In Tasks |
 | REC-18 | P1: Buy an hour package | Tasks | T29 | In Tasks |
 | REC-19 | P1: Buy an hour package | Tasks | T21 | Implementing |
-| REC-20 | P1: Buy an hour package | Tasks | T25 | In Tasks |
+| REC-20 | P1: Buy an hour package | Tasks | T25 | Implementing |
 | REC-21 | P1: Buy an hour package | Tasks | T19 | Implementing |
 | REC-22 | P1: Pay a booking with package hours | Tasks | T5 | Implementing |
 | REC-23 | P1: Pay a booking with package hours | Tasks | T13, T16 | Implementing |

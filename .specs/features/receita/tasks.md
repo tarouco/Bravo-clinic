@@ -883,11 +883,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Every endpoint: happy path parsed by its contract schema, 401 unauthenticated, 404 for another user's subscription, CSRF rejected without Origin
-- [ ] Purchase replay with same key returns the stored 201; different body → 422 `IDEMPOTENCY_MISMATCH`; no key → 422
-- [ ] Ledger shows "60 min + 18 min de excedente = 78 min" for a Wed booking
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 16 new tests pass
+- [x] Every endpoint: happy path parsed by its contract schema, 401 unauthenticated, 404 for another user's subscription, CSRF rejected without Origin
+- [x] Purchase replay with same key returns the stored 201; different body → 422 `IDEMPOTENCY_MISMATCH`; no key → 422
+- [x] Ledger shows "60 min + 18 min de excedente = 78 min" for a Wed booking
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 16 new tests pass
 
 **Tests**: integration
 **Gate**: full

@@ -8,6 +8,7 @@ import { meRoutes } from './me';
 import { paymentRoutes } from './payments';
 import { purchaseRoutes } from './purchases';
 import { rescheduleRoutes } from './reschedule';
+import { subscriptionRoutes } from './subscriptions';
 
 /** Everything under `/app/*`; the session middleware is applied by `createApp`. */
 export function appRoutes(): Hono<AppEnv> {
@@ -20,5 +21,6 @@ export function appRoutes(): Hono<AppEnv> {
   app.route('/', paymentRoutes());
   app.route('/', cardRoutes());
   app.route('/', purchaseRoutes());
+  app.route('/', subscriptionRoutes());
   return app;
 }
