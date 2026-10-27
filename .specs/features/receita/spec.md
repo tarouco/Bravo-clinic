@@ -562,7 +562,7 @@
 | REC-51 | P1: Renewal, suspension and closure | Tasks | T27 | Implementing |
 | REC-52 | P1: Renewal, suspension and closure | Tasks | T27 | Implementing |
 | REC-53 | P1: Renewal, suspension and closure | Tasks | T20, T28 | Implementing |
-| REC-54 | P1: Renewal, suspension and closure | Tasks | T23, T28 | Implementing |
+| REC-54 | P1: Renewal, suspension and closure | Tasks | T23, T28, T50 | Implementing |
 | REC-55 | P1: Renewal, suspension and closure | Tasks | T13 | Implementing |
 | REC-56 | P1: Renewal, suspension and closure | Tasks | T23 | Implementing |
 | REC-57 | P1: Renewal, suspension and closure | Tasks | T23, T28 | Implementing |
@@ -593,10 +593,10 @@
 | REC-82 | P1: Change and cancel | Tasks | T26 | Implementing |
 | REC-83 | P1: Buy a fixed-schedule package | Tasks | T3 | Implementing |
 | REC-84 | P1: Buy a fixed-schedule package | Tasks | T18, T36 | Implementing |
-| REC-85 | P1: Buy a fixed-schedule package | Tasks | T19 | Implementing |
+| REC-85 | P1: Buy a fixed-schedule package | Tasks | T19, T50 | Implementing |
 | REC-86 | P1: Buy a fixed-schedule package | Tasks | T19 | Implementing |
 | REC-87 | P1: Buy a fixed-schedule package | Tasks | T19 | Implementing |
-| REC-88 | P1: Buy a fixed-schedule package | Tasks | T21, T14 | Implementing |
+| REC-88 | P1: Buy a fixed-schedule package | Tasks | T21, T14, T50 | Implementing |
 | REC-89 | P1: Buy a fixed-schedule package | Tasks | T3, T18 | Implementing |
 | REC-90 | P1: Buy a fixed-schedule package | Tasks | T3 | Implementing |
 | REC-91 | P1: Buy a fixed-schedule package | Tasks | T37 | In Tasks |
@@ -658,7 +658,7 @@
 | REC-147 | P1: Perfil → Compras | Tasks | T38 | In Tasks |
 | REC-148 | P1: Admin subscriptions and sale | Tasks | T26, T46 | Implementing |
 | REC-149 | P1: Admin subscriptions and sale | Tasks | T26, T46 | Implementing |
-| REC-150 | P1: Admin subscriptions and sale | Tasks | T19, T26, T47 | Implementing |
+| REC-150 | P1: Admin subscriptions and sale | Tasks | T19, T26, T47, T50 | Implementing |
 | REC-151 | P1: Admin subscriptions and sale | Tasks | T19 | Implementing |
 | REC-152 | P1: Admin subscriptions and sale | Tasks | T19 | Implementing |
 | REC-153 | P1: Admin subscriptions and sale | Tasks | T26 | Implementing |

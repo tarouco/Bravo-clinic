@@ -1575,9 +1575,9 @@ T48 → T50
 
 **Done when**:
 
-- [ ] All assertions above pass; Admin calendar shows next period occurrences as "Pré-reservada (renovação)" before the suspension and released after
-- [ ] Gate check passes: `npm run e2e -w apps/web`
-- [ ] Test count: ≥ 1 e2e spec passes
+- [x] All assertions above pass; Admin calendar shows next period occurrences as "Pré-reservada (renovação)" before the suspension and released after
+- [x] Gate check passes: `npm run e2e -w apps/web`
+- [x] Test count: ≥ 1 e2e spec passes
 
 **Tests**: e2e
 **Gate**: E2E
