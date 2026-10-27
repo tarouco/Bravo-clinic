@@ -967,11 +967,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] On 2026-12-02 06:00Z: paid seq 2 activated with grant; seq 1 closed with expiry of the remaining minutes; unpaid seq 2 → subscription suspended; on 2026-12-09 → ended
-- [ ] Running both jobs in either order gives the same final state; re-run changes 0 rows
-- [ ] Expired lots and credits zeroed with `expiry` entries
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 10 new tests pass
+- [x] On 2026-12-02 06:00Z: paid seq 2 activated with grant; seq 1 closed with expiry of the remaining minutes; unpaid seq 2 → subscription suspended; on 2026-12-09 → ended
+- [x] Running both jobs in either order gives the same final state; re-run changes 0 rows
+- [x] Expired lots and credits zeroed with `expiry` entries
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 10 new tests pass
 
 **Tests**: integration
 **Gate**: full

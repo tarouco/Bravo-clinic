@@ -525,7 +525,7 @@
 | REC-14 | P1: Buy an hour package | Tasks | T19, T25 | Implementing |
 | REC-15 | P1: Buy an hour package | Tasks | T19 | Implementing |
 | REC-16 | P1: Buy an hour package | Tasks | T20, T21 | Implementing |
-| REC-17 | P1: Buy an hour package | Tasks | T28 | In Tasks |
+| REC-17 | P1: Buy an hour package | Tasks | T28 | Implementing |
 | REC-18 | P1: Buy an hour package | Tasks | T29 | In Tasks |
 | REC-19 | P1: Buy an hour package | Tasks | T21 | Implementing |
 | REC-20 | P1: Buy an hour package | Tasks | T25 | Implementing |
