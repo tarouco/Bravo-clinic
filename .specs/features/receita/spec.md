@@ -570,15 +570,15 @@
 | REC-59 | P1: Renewal, suspension and closure | Tasks | T29 | In Tasks |
 | REC-60 | P1: Renewal, suspension and closure | Tasks | T1, T20 | Implementing |
 | REC-61 | P1: Renewal, suspension and closure | Tasks | T1, T20 | Implementing |
-| REC-62 | P1: Extra hours | Tasks | T24 | In Tasks |
+| REC-62 | P1: Extra hours | Tasks | T24 | Implementing |
 | REC-63 | P1: Extra hours | Tasks | T5, T24 | Implementing |
 | REC-64 | P1: Extra hours | Tasks | T2, T24 | Implementing |
-| REC-65 | P1: Extra hours | Tasks | T24 | In Tasks |
-| REC-66 | P1: Extra hours | Tasks | T24 | In Tasks |
+| REC-65 | P1: Extra hours | Tasks | T24 | Implementing |
+| REC-66 | P1: Extra hours | Tasks | T24 | Implementing |
 | REC-67 | P1: Extra hours | Tasks | T10, T28 | Implementing |
 | REC-68 | P1: Extra hours | Tasks | T13 | Implementing |
 | REC-69 | P1: Extra hours | Tasks | T40 | In Tasks |
-| REC-70 | P1: Extra hours | Tasks | T29 | In Tasks |
+| REC-70 | P1: Extra hours | Tasks | T29 | Implementing |
 | REC-71 | P1: Change and cancel | Tasks | T6 | Implementing |
 | REC-72 | P1: Change and cancel | Tasks | T22, T25 | Implementing |
 | REC-73 | P1: Change and cancel | Tasks | T22 | Implementing |
@@ -653,7 +653,7 @@
 | REC-142 | P1: Slot discounts | Tasks | T4 | Implementing |
 | REC-143 | P1: Perfil → Compras | Tasks | T31, T38 | In Tasks |
 | REC-144 | P1: Perfil → Compras | Tasks | T38 | In Tasks |
-| REC-145 | P1: Perfil → Compras | Tasks | T24, T41 | In Tasks |
+| REC-145 | P1: Perfil → Compras | Tasks | T24, T41 | Implementing |
 | REC-146 | P1: Perfil → Compras | Tasks | T38 | In Tasks |
 | REC-147 | P1: Perfil → Compras | Tasks | T38 | In Tasks |
 | REC-148 | P1: Admin subscriptions and sale | Tasks | T26, T46 | In Tasks |

@@ -853,11 +853,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Summary for a Pacote 20h subscriber: `eligible:true`, `unitPriceCents:8000`, min 1, max 20; non-subscriber → `eligible:false` and POST 422 with REC-65 message
-- [ ] Buying 5 h → charge 40000; approval → lot 300 min expiring at paid_at + 90 days, `extra_hours.purchased`; 21 h → 422
-- [ ] History lists the user's charges newest first; credits endpoint matches the contract; other users' data never appears
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 10 new tests pass
+- [x] Summary for a Pacote 20h subscriber: `eligible:true`, `unitPriceCents:8000`, min 1, max 20; non-subscriber → `eligible:false` and POST 422 with REC-65 message
+- [x] Buying 5 h → charge 40000; approval → lot 300 min expiring at paid_at + 90 days, `extra_hours.purchased`; 21 h → 422
+- [x] History lists the user's charges newest first; credits endpoint matches the contract; other users' data never appears
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 10 new tests pass
 
 **Tests**: integration
 **Gate**: full

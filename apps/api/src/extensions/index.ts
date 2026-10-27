@@ -5,6 +5,7 @@ import {
   slotDiscountDecorator,
   subscriptionModeHandler,
 } from '../modules/revenue/ports';
+import { extraHoursHandler } from '../modules/extra-hours/extra-hours.service';
 import { creditStep, discountStep, packageStep } from '../modules/revenue/steps';
 import {
   fixedScheduleHandler,
@@ -38,6 +39,7 @@ export function buildRegistry(): Registry {
     chargeHandlers: {
       subscription_initial: subscriptionInitialHandler,
       subscription_renewal: subscriptionRenewalHandler,
+      extra_hours: extraHoursHandler,
     },
   });
 }
