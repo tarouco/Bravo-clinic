@@ -524,7 +524,7 @@
 | REC-13 | P1: Buy an hour package | Tasks | T19 | Implementing |
 | REC-14 | P1: Buy an hour package | Tasks | T19, T25 | Implementing |
 | REC-15 | P1: Buy an hour package | Tasks | T19 | Implementing |
-| REC-16 | P1: Buy an hour package | Tasks | T20, T21 | In Tasks |
+| REC-16 | P1: Buy an hour package | Tasks | T20, T21 | Implementing |
 | REC-17 | P1: Buy an hour package | Tasks | T28 | In Tasks |
 | REC-18 | P1: Buy an hour package | Tasks | T29 | In Tasks |
 | REC-19 | P1: Buy an hour package | Tasks | T21 | In Tasks |
@@ -561,7 +561,7 @@
 | REC-50 | P1: Renewal, suspension and closure | Tasks | T21, T27 | In Tasks |
 | REC-51 | P1: Renewal, suspension and closure | Tasks | T27 | In Tasks |
 | REC-52 | P1: Renewal, suspension and closure | Tasks | T27 | In Tasks |
-| REC-53 | P1: Renewal, suspension and closure | Tasks | T20, T28 | In Tasks |
+| REC-53 | P1: Renewal, suspension and closure | Tasks | T20, T28 | Implementing |
 | REC-54 | P1: Renewal, suspension and closure | Tasks | T23, T28 | In Tasks |
 | REC-55 | P1: Renewal, suspension and closure | Tasks | T13 | Implementing |
 | REC-56 | P1: Renewal, suspension and closure | Tasks | T23 | In Tasks |
@@ -600,8 +600,8 @@
 | REC-89 | P1: Buy a fixed-schedule package | Tasks | T3, T18 | Implementing |
 | REC-90 | P1: Buy a fixed-schedule package | Tasks | T3 | Implementing |
 | REC-91 | P1: Buy a fixed-schedule package | Tasks | T37 | In Tasks |
-| REC-92 | P1: Fixed-schedule lifecycle | Tasks | T20 | In Tasks |
-| REC-93 | P1: Fixed-schedule lifecycle | Tasks | T20, T27 | In Tasks |
+| REC-92 | P1: Fixed-schedule lifecycle | Tasks | T20 | Implementing |
+| REC-93 | P1: Fixed-schedule lifecycle | Tasks | T20, T27 | Implementing |
 | REC-94 | P1: Fixed-schedule lifecycle | Tasks | T16 | Implementing |
 | REC-95 | P1: Fixed-schedule lifecycle | Tasks | T16 | Implementing |
 | REC-96 | P1: Closed-day compensation | Tasks | T6 | Implementing |
@@ -610,7 +610,7 @@
 | REC-99 | P1: Closed-day compensation | Tasks | T15 | Implementing |
 | REC-100 | P1: Closed-day compensation | Tasks | T15 | Implementing |
 | REC-101 | P1: Closed-day compensation | Tasks | T15 | Implementing |
-| REC-102 | P1: Closed-day compensation | Tasks | T20 | In Tasks |
+| REC-102 | P1: Closed-day compensation | Tasks | T20 | Implementing |
 | REC-103 | P1: Closed-day compensation | Tasks | T15 | Implementing |
 | REC-104 | P1: Closed-day compensation | Tasks | T8, T15 | Implementing |
 | REC-105 | P1: Customer credits | Tasks | T9 | Implementing |

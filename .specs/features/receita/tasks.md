@@ -738,12 +738,12 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Activation grants 1200 min once; a known clinic closure in the period yields a 40-min lot at activation
-- [ ] Fixed activation creates seq 2 `upcoming` and holds its free occurrences as `held_for_renewal`; a blocked date lands in `held_conflicts` and one `next_period_conflicts` e-mail
-- [ ] Renewal pricing: hour = current category price; fixed = per-occurrence × held count (known closed day reduces count)
-- [ ] Illegal transitions throw `INVALID_TRANSITION`
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 10 new tests pass
+- [x] Activation grants 1200 min once; a known clinic closure in the period yields a 40-min lot at activation
+- [x] Fixed activation creates seq 2 `upcoming` and holds its free occurrences as `held_for_renewal`; a blocked date lands in `held_conflicts` and one `next_period_conflicts` e-mail
+- [x] Renewal pricing: hour = current category price; fixed = per-occurrence × held count (known closed day reduces count)
+- [x] Illegal transitions throw `INVALID_TRANSITION`
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 10 new tests pass
 
 **Tests**: integration
 **Gate**: full
