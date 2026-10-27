@@ -1,23 +1,14 @@
 # Núcleo Validation
 
-## Validation verdict: FAIL
+## Validation verdict: PASS
 
-**Date**: 2026-10-26 (iteration 1 of 3)
+**Date**: 2026-10-26 (re-verification, iteration 2 of 3)
 **Spec**: `.specs/features/nucleo/spec.md` (NUC-01..NUC-210)
-**Diff range**: núcleo on `main` at `c54c858` — core `nucleo/core` (T1–T4), backend lane merges (`ab75ba7` and earlier phase merges, T5–T28), frontend lane merges (T29–T48, interleaved with receita/gestao web merges), integration fixes `8ae1fc7`, `ce1171d`, `faaafc1`, `345623a`, `b029188` merged by `8247807`, rollout `c54c858`. `main` also carries receita and gestao; only NUC ACs are judged here.
-**Verifier**: independent sub-agent (author ≠ verifier), worktree branch `worktree-agent-a2ee4bb60722b0684`
-**Test DB**: a fresh empty database `nucleo_verify` created for this run on the Neon verify branch (`DATABASE_URL_VERIFY`); every API test ran with `DATABASE_URL_TEST` overridden to it (checked: vite `loadEnv` returns the shell override, path `/nucleo_verify`). Not production, not the dev branch. Dropped at the end of the run.
+**Diff range**: núcleo on `main` as judged in iteration 1 (`c54c858`, see the iteration-1 diff range: core T1–T4, backend lane T5–T28, frontend lane T29–T48, integration fixes merged by `8247807`, rollout `c54c858`) + the iteration-1 fix commits `5c0a679`, `5588ee5`, `46bae6f`, `7842ab2`, `c9f87d0`, `d5b820f`, merged by `607f195`. Verified on `main` at `607f195`. `main` also carries receita and gestao; only NUC ACs are judged here.
+**Verifier**: independent sub-agent (author ≠ verifier; wrote none of the núcleo code, tests or fixes), worktree branch `worktree-agent-a603aa7a7e247a393`
+**Test DB**: a fresh empty database `nucleo_verify_it2`, created for this run on the Neon verify branch (`DATABASE_URL_VERIFY`). Its host differs from both `DATABASE_URL` (production) and `DATABASE_URL_TEST` (dev, in use by another lane). Every API test ran with `DATABASE_URL_TEST` overridden to it in the process environment; checked that vite `loadEnv('test', …)` (what `apps/api/vitest.config.ts` and `test/global-setup.ts` read) resolves the override to the path `/nucleo_verify_it2`, and the database held 30 migrated tables after the first run. Dropped at the end of the run.
 
-Núcleo is functionally complete and every gate is green: typecheck, lint, 1191 core, 1191 web and 663 API tests (on `nucleo_verify`), the build and the production smoke. 204 of 210 ACs have exact `file:line` evidence. The verdict is FAIL because 4 of 20 sensor mutants survived. Each one marks an AC whose test does not pin the spec outcome:
-
-- NUC-153: the customer notice of a clinic cancellation (A6).
-- NUC-70: the `BOOKING_NOT_OPEN` message (A10).
-- NUC-91: the consent IP (A11).
-- NUC-113: the first webhook dedupe layer (A3). Money effects stay exactly-once.
-
-Two ACs differ from the spec text because of documented later decisions. They need spec amendments, not code: NUC-01 gained `awaiting_payment → cancelled_by_clinic` (`8ae1fc7`), and gestao GES-134/135 superseded NUC-206.
-
-All fixes are test assertions or docs. No production code change is needed.
+Every iteration-1 gap is closed with `file:line` evidence. The six fix commits only add test assertions and amend docs; no production file changed. The four mutants that survived iteration 1 (A3, A6, A10, A11) were re-applied exactly as described there and are now killed, each on an `AssertionError` in the new assertion. A regression sample of four mutants killed in iteration 1 (M1, M8, A5, A9) is still killed. All gates are green.
 
 ---
 
@@ -25,32 +16,46 @@ All fixes are test assertions or docs. No production code change is needed.
 
 | Iteration | Verdict | Summary |
 | --------- | ------- | ------- |
-| 1 (2026-10-26, this report) | FAIL | Gates green (3045 tests). 204/210 ACs fully evidenced; 16/20 mutants killed. Gaps: NUC-153, NUC-70, NUC-91, NUC-113 (survivors A6, A10, A11, A3); spec amendments for NUC-01 and NUC-206 |
+| 1 (2026-10-26, branch `worktree-agent-a2ee4bb60722b0684`, `main` at `c54c858`) | FAIL | Gates green (3045 tests). 204/210 ACs fully evidenced; 16/20 mutants killed. Gaps: NUC-153, NUC-70, NUC-91, NUC-113 (survivors A6, A10, A11, A3); spec amendments for NUC-01 and NUC-206; T4 boxes unticked and T1–T3 blocks duplicated in `tasks.md` |
+| 2 (2026-10-26, this report, branch `worktree-agent-a603aa7a7e247a393`, `main` at `607f195`) | PASS | Every iteration-1 gap closed (table below). 210/210 ACs evidenced. Sensor: 4/4 former survivors killed, 4/4 regression sample still killed (8/8). Gates green |
+
+### Iteration-1 gaps: closure evidence
+
+| Gap | Fix commit | Evidence now | Status |
+| --- | ---------- | ------------ | ------ |
+| NUC-153: clinic cancellation never asserted the customer notice (A6 survived) | `5c0a679` | `apps/api/src/routes/admin/booking-cancel.int.test.ts:88-95`: helper `expectCustomerCancelMail` asserts the outbox is exactly `[['booking.cancelled', <customer e-mail>]]` (`:90`) and the attachment decodes to text containing `METHOD:CANCEL` (`:92-94`). Called for the paid booking (`:162`, test `:130`) and the `awaiting_payment` booking (`:255`, test `:209`). Sensor A6 re-run: **killed**, 2 failed (`expected [] to deeply equal [ [ 'booking.cancelled', … ] ]` in both tests) | ✅ Closed |
+| NUC-70: `BOOKING_NOT_OPEN` message unasserted (A10 survived) | `5588ee5` | `apps/api/src/routes/app/bookings.int.test.ts:99` `expect(res.error?.message).toBe('As reservas online abrem em breve.')` (test `:91`, code `:98`). Sensor A10 re-run: **killed**, 1 failed (`expected 'Reservas fechadas.' to be 'As reservas online abrem em breve.'`) | ✅ Closed |
+| NUC-91: consent IP unasserted (A11 survived) | `46bae6f` | `apps/api/src/routes/app/bookings.int.test.ts:156` sends `X-Forwarded-For: 203.0.113.7, 10.0.0.1`; `:200` asserts `ip: '203.0.113.7'` inside the consent `toMatchObject` (`:194-201`), i.e. the first hop as `apps/api/src/lib/request-meta.ts:28-31` takes it. The `book()` helper merges extra headers with the Idempotency-Key (`:57`, `:60`, `:64`). Sensor A11 re-run: **killed**, 1 failed (`- "ip": "203.0.113.7"` / `+ "ip": null`) | ✅ Closed |
+| NUC-113: first webhook dedupe layer not observable (A3 survived) | `7842ab2` | `apps/api/src/routes/webhooks/pagamentos.int.test.ts:217-239`: the same approved delivery is sent at `NOW` and again from an app whose clock is `NOW + 10 min` (`:220-227`), past the 2-minute stale window (`apps/api/src/modules/payments/webhooks.service.ts:13`). Both answer 200 (`:232`), one `webhook_events` row (`:234`), and the row keeps `receivedAt` (`:236`) and `processedAt` (`:237`) at `NOW`, `error` null (`:238`). A re-claimed event would carry the later clock. Sensor A3 re-run: **killed**, 1 failed (`expected '2026-10-20T12:10:00.000Z' to be '2026-10-20T12:00:00.000Z'`) | ✅ Closed |
+| NUC-01: spec said "exactly" §3.1 + AD-032, implementation also allows `awaiting_payment → cancelled_by_clinic` | `c9f87d0` | `.specs/features/nucleo/spec.md:188` now lists `awaiting_payment → cancelled_by_clinic` (PRD §5.5/§7.5, commit `8ae1fc7`, `design.md:447`); `docs/architecture.md:177` now reads `awaiting_payment → confirmed \| paid \| expired \| cancelled_by_tenant \| cancelled_by_clinic`. Matches `packages/core/src/status/booking.ts:54` and the literal allow-list `packages/core/src/status/booking.test.ts:41`. Regression mutant M8 (remove that transition): **killed** | ✅ Closed |
+| NUC-206: superseded by gestao GES-134/GES-135, spec not amended | `c9f87d0` | `.specs/features/nucleo/spec.md:693` keeps the original sentence and adds an italic note: superseded by GES-134/GES-135 (`.specs/features/gestao/spec.md:436-437`), GA4 only with `VITE_ANALYTICS_PROVIDER=ga4`, `purchase` carries no booking code, event names kept. Matches `apps/web/src/lib/analytics.test.tsx:69` | ✅ Closed |
+| `tasks.md` bookkeeping: T4 boxes unticked, T1–T3 blocks duplicated | `d5b820f` | T4 Done-when boxes are `[x]` at `.specs/features/nucleo/tasks.md:286-290`. The commit removes 182 lines (old `tasks.md:270-451`); the verifier compared them with the parent file (`d5b820f~1`) and they are a line-for-line identical copy of old `:88-269` (phase graphs + T1–T3). Each of T1–T50 now has exactly one `### T<n>` header (50 headers, T1 at `:183` … T50 at `:1603`, no repeats). `python …/scripts/validate_tasks.py .specs/features/nucleo` → `0 error(s), 0 warning(s)` | ✅ Closed |
+
+Production code is unchanged by the fixes: `git show --stat` of the six commits lists only the three API test files above, `spec.md`, `docs/architecture.md` and `tasks.md`.
 
 ---
 
 ## Task Completion
 
-50 tasks (T1–T50). Every Done-when box is checked except T4.
+50 tasks (T1–T50). Every Done-when box is checked.
 
 | Task | Status | Notes |
 | ---- | ------ | ----- |
-| T1–T3, T5–T50 | ✅ Done | - |
-| T4 | ⚠️ Boxes unchecked | `tasks.md:468-472`: the five Done-when boxes of T4 are `[ ]`, but the work exists and passes (`core/payments/split.test.ts`, `core/policy/cancellation.test.ts`, `core/policy/reschedule.test.ts`, `core/policy/policy-text.test.ts`). Bookkeeping only. `tasks.md` also repeats the T1–T3 blocks twice (`:183-260` and `:365-480`) |
-| T49 | ✅ Done (not re-run) | `npm run e2e` was not run by the verifier (it resets `DATABASE_URL_TEST`); specs reviewed statically below |
+| T1–T48 | ✅ Done | T4 boxes now ticked (`tasks.md:286-290`) |
+| T49 | ✅ Done (not re-run) | `npm run e2e` not run by instruction (it resets `DATABASE_URL_TEST`); specs reviewed statically in iteration 1, unchanged since |
 | T50 | ✅ Done | `node scripts/smoke.mjs https://bravo-clinic.netlify.app` exit 0 (verifier run, GET only) |
 
 ---
 
 ## Spec-Anchored Acceptance Criteria
 
-Paths: `api/` = `apps/api/src/`, `web/` = `apps/web/src/`, `core/` = `packages/core/src/`. Every cited test file was read at `c54c858`. Line numbers point to the `it(` (or `describe(`) whose assertions carry the spec value.
+Paths: `api/` = `apps/api/src/`, `web/` = `apps/web/src/`, `core/` = `packages/core/src/`. Every cited test file was re-read at `607f195`. Line numbers point to the `it(` (or `describe(`) whose assertions carry the spec value. The three test files touched by the iteration-1 fixes (`api/routes/app/bookings.int.test.ts`, `api/routes/webhooks/pagamentos.int.test.ts`, `api/routes/admin/booking-cancel.int.test.ts`) shifted; their citations below are current.
 
 ### P1 Booking vocabulary and contracts
 
 | AC | Spec-defined outcome | Evidence | Result |
 | -- | -------------------- | -------- | ------ |
-| NUC-01 | exactly arch §3.1 + `expired→confirmed/paid`, `paid→confirmed` | `core/status/booking.test.ts:14-42` (literal allow-list), `:54-56` all 121 pairs, `:58`; sensor M8 killed | ⚠️ Deviation: the allow-list also has `awaiting_payment→cancelled_by_clinic` (`:41`, `core/status/booking.ts:52-55`, fix `8ae1fc7`). Recorded in `design.md:447` only; spec "exactly" (`spec.md:188`) and `docs/architecture.md:177` not amended, no `// SPEC_DEVIATION` |
+| NUC-01 | exactly arch §3.1 + `expired→confirmed/paid`, `paid→confirmed` + `awaiting_payment→cancelled_by_clinic` (amended) | `core/status/booking.test.ts:14-42` (literal allow-list, `awaiting_payment>cancelled_by_clinic` at `:41`), `:54-56` all 121 pairs, `:58`; code `core/status/booking.ts:54`; spec `spec.md:188` and `docs/architecture.md:177` amended in `c9f87d0`; sensor M8 killed again (iteration 2) | ✅ (gap closed) |
 | NUC-02 | 11 pt-BR labels | `core/status/booking.test.ts:67-85`; `web/components/booking/StatusBadge.test.tsx:23` | ✅ |
 | NUC-03 | 7 payment status codes + labels | `core/status/booking.test.ts:87-138` | ✅ |
 | NUC-04 | zod schema per body; API validates; tests parse responses | `core/contracts/{admin,app,common,public}.test.ts` (`admin.test.ts:154`, `public.test.ts:98`); 50 distinct `*Schema.parse(` in `api/**/*.int.test.ts` (e.g. `bookingDetailSchema` ×17, `availabilityDaySchema` ×12) | ✅ |
@@ -130,7 +135,7 @@ Paths: `api/` = `apps/api/src/`, `web/` = `apps/web/src/`, `core/` = `packages/c
 | NUC-48 | preview excludes fixed occurrences, port numbers | `calendar-exceptions.int.test.ts:315`, `:329` | ✅ |
 | NUC-49 | 201, one row or per room, port apply, audit; 409; 422 past | `calendar-exceptions.int.test.ts:357`, `:378`, `:392`, `:409` | ✅ |
 | NUC-50 | delete, audit, bookable again | `calendar-exceptions.int.test.ts:427`, `:444` | ✅ |
-| NUC-51 | advisory lock serializes closing vs booking | `api/routes/app/bookings.int.test.ts:339` | ✅ |
+| NUC-51 | advisory lock serializes closing vs booking | `api/routes/app/bookings.int.test.ts:342` | ✅ |
 | NUC-52 | exceptions month view + closed-day modal | `web/features/admin-calendar/ExceptionsMonth.test.tsx:25-107`; `ClosedDayModal.test.tsx:32`, `:62`, `:80` | ✅ |
 
 ### P2 Holiday review banner
@@ -164,7 +169,7 @@ Paths: `api/` = `apps/api/src/`, `web/` = `apps/web/src/`, `core/` = `packages/c
 | NUC-67 | exact 422 message | `categories.int.test.ts:270-280` | ✅ |
 | NUC-68 | reorder 1..n; 422 | `categories.int.test.ts:312`, `:322` | ✅ |
 | NUC-69 | prices_reviewed + audit | `categories.int.test.ts:335` | ✅ |
-| NUC-70 | tenant 409 `BOOKING_NOT_OPEN` "As reservas online abrem em breve."; staff succeeds | `api/routes/app/bookings.int.test.ts:90-99` (code only); staff path: `api/routes/admin/bookings.int.test.ts:56` runs with the factory `onboarding.prices_reviewed = false` (`core/settings/catalog.ts:84`) | ⚠️ Partial: the spec message is never asserted (only at `api/modules/booking/create-booking.service.ts:246`); sensor A10 survived |
+| NUC-70 | tenant 409 `BOOKING_NOT_OPEN` "As reservas online abrem em breve."; staff succeeds | `api/routes/app/bookings.int.test.ts:91-101`: code `:98`, message `:99` `expect(res.error?.message).toBe('As reservas online abrem em breve.')` (`5588ee5`); staff path: `api/routes/admin/bookings.int.test.ts:56` runs with the factory `onboarding.prices_reviewed = false` (`core/settings/catalog.ts:84`); sensor A10 killed | ✅ (gap closed) |
 | NUC-71 | live average, V_ref, toggles, Nova categoria | `web/features/admin-calendar/CategoriesTable.test.tsx:77-92`, `:124`, `:170`, `:196` | ✅ |
 | NUC-72 | colored bands + "Horário sem categoria" | `CategoryBandOverlay.test.tsx:58`, `:71`; `CalendarConfigPage.test.tsx:133` | ✅ |
 | NUC-73 | checklist + button | `CalendarConfigPage.test.tsx:161`, `:168` | ✅ |
@@ -193,23 +198,23 @@ Paths: `api/` = `apps/api/src/`, `web/` = `apps/web/src/`, `core/` = `packages/c
 | NUC-86 | quote PR-3 + SP-1, no rows | `api/modules/booking/quote.int.test.ts:54`, `:97` | ✅ |
 | NUC-87 | 422 `SLOT_UNAVAILABLE` + text; `NO_CATEGORY` | `quote.int.test.ts:127`, `:146` | ✅ |
 | NUC-88 | block interval mismatch → path `startMinute` | `quote.int.test.ts:158` | ✅ |
-| NUC-89 | 403 `EMAIL_NOT_VERIFIED` | `api/routes/app/bookings.int.test.ts:70` | ✅ |
-| NUC-90 | 422 `PROFILE_INCOMPLETE` + message | `bookings.int.test.ts:80-88` | ✅ |
-| NUC-91 | 422 no acceptance; 409 `POLICY_CHANGED`; consent `policy-v1`, IP, ref | `bookings.int.test.ts:101`, `:111`, `:192-198` | ⚠️ Partial: consent kind/version/ref asserted, the IP is not (code at `api/modules/booking/create-booking.service.ts:363`); sensor A11 survived |
-| NUC-92 | 409 `PRICE_CHANGED` + fresh quote | `bookings.int.test.ts:122-133` | ✅ |
-| NUC-93 | 201 awaiting, hold +15 min, occupancy +cleanup, snapshot, `BRV-`, `ics_uid` | `bookings.int.test.ts:150-203`; `ics_uid` unique in `api/db/schema/booking.ts:135`; sensor A9 killed | ✅ |
-| NUC-94 | 409 `SLOT_TAKEN` message; 1 of 10 concurrent wins | `bookings.int.test.ts:205-219`, `:275-294` | ✅ |
+| NUC-89 | 403 `EMAIL_NOT_VERIFIED` | `api/routes/app/bookings.int.test.ts:71` | ✅ |
+| NUC-90 | 422 `PROFILE_INCOMPLETE` + message | `bookings.int.test.ts:81-89` | ✅ |
+| NUC-91 | 422 no acceptance; 409 `POLICY_CHANGED`; consent `policy-v1`, IP, ref | `bookings.int.test.ts:103`, `:113`; consent `:194-201` with `ip: '203.0.113.7'` at `:200`, request sent with `X-Forwarded-For: 203.0.113.7, 10.0.0.1` at `:156` (`46bae6f`; first hop per `api/lib/request-meta.ts:28-31`); sensor A11 killed | ✅ (gap closed) |
+| NUC-92 | 409 `PRICE_CHANGED` + fresh quote | `bookings.int.test.ts:124-135` | ✅ |
+| NUC-93 | 201 awaiting, hold +15 min, occupancy +cleanup, snapshot, `BRV-`, `ics_uid` | `bookings.int.test.ts:152-206` (occupancy `until` 23:30 at `:192`); `ics_uid` unique in `api/db/schema/booking.ts:135`; sensor A9 killed again (iteration 2) | ✅ |
+| NUC-94 | 409 `SLOT_TAKEN` message; 1 of 10 concurrent wins | `bookings.int.test.ts:208-222`, `:278-297` | ✅ |
 | NUC-95 | 400 no key; replay; 422 mismatch | `api/routes/app/payments.int.test.ts:111`, `:123`, `:140`, `:154`, `:171` | ✅ |
-| NUC-96 | 429 4th hold + message | `bookings.int.test.ts:221-237` | ✅ |
-| NUC-207 | pay-now 0 → confirmed, mail | `bookings.int.test.ts:298` | ✅ |
-| NUC-97 | stale holds expired in same tx | `bookings.int.test.ts:239-273` | ✅ |
+| NUC-96 | 429 4th hold + message | `bookings.int.test.ts:224-240` | ✅ |
+| NUC-207 | pay-now 0 → confirmed, mail | `bookings.int.test.ts:301` | ✅ |
+| NUC-97 | stale holds expired in same tx | `bookings.int.test.ts:242-276` | ✅ |
 | NUC-98 | four steps, URL selection, both routes | `web/features/booking/BookingFlowPage.test.tsx:41`, `:56`, `:89`, `:140` | ✅ |
 | NUC-99 | startable cells, durations to `maxEndMinute`, blocks | `web/components/calendar/SlotGrid.test.tsx:34`, `:54`, `:79` | ✅ |
 | NUC-100 | memory line, sinal/saldo dates, unchecked acceptance | `web/features/booking/SummaryStep.test.tsx:67`; `web/components/booking/BookingSummary.test.tsx:12`, `:21` | ✅ |
 | NUC-101 | login/signup with `next`, selection intact | `SummaryStep.test.tsx:86`; `web/pages/auth/next-links.test.tsx:13`, `:38` | ✅ |
 | NUC-102 | countdown + "Tempo esgotado…" | `web/pages/public/CheckoutPage.test.tsx:55` | ✅ |
 | NUC-103 | poll 2 s, "Reserva confirmada" | `CheckoutPage.test.tsx:72`; e2e `apps/web/e2e/booking.spec.ts:145-148` | ✅ |
-| NUC-104 | steps ascending order, persist in tx | `quote.int.test.ts:190`, `:225`; `bookings.int.test.ts:298`; `api/extensions/registry.test.ts:99` | ✅ |
+| NUC-104 | steps ascending order, persist in tx | `quote.int.test.ts:190`, `:225`; `api/routes/app/bookings.int.test.ts:301`; `api/extensions/registry.test.ts:99` | ✅ |
 
 ### P1 Gateway-independent payments
 
@@ -223,12 +228,12 @@ Paths: `api/` = `apps/api/src/`, `web/` = `apps/web/src/`, `core/` = `packages/c
 | NUC-110 | 422 `POLICY_ACCEPTANCE_REQUIRED`, consent recorded | `payments.int.test.ts:354`, `:367`, `:385`, `:400` | ✅ |
 | NUC-111 | 502 `GATEWAY_ERROR` + message, charge pending; 10 s | `payments.int.test.ts:432-454`; `mercadopago.test.ts:215`, `:231` | ✅ |
 | NUC-112 | 401 invalid signature, no row; 404 provider | `api/routes/webhooks/pagamentos.int.test.ts:162`, `:176`, `:190` | ✅ |
-| NUC-113 | duplicate → 200 without reprocessing | `pagamentos.int.test.ts:202`, `:217` (one event row, one booking event, one e-mail) | ⚠️ Partial: effects are exactly-once, but sensor A3 survived, so the "without reprocessing" claim layer is not pinned (see Fix 4) |
+| NUC-113 | duplicate → 200 without reprocessing | `pagamentos.int.test.ts:202` (one event row, one booking event, one e-mail); `:217-239` (`7842ab2`): a processed event re-delivered 10 min later (past the 2 min stale window, `api/modules/payments/webhooks.service.ts:13`) answers 200 and keeps its first `receivedAt` `:236` and `processedAt` `:237`; concurrent copies `:241`; sensor A3 killed | ✅ (gap closed) |
 | NUC-114 | MP re-fetches, ignores payload | `mercadopago.test.ts:314` | ✅ |
-| NUC-115 | confirmed/paid, paid_cents, onConfirmed, notifyStaff after commit | `pagamentos.int.test.ts:246`, `:295`, `:310`, `:330` | ✅ |
-| NUC-116 | amount mismatch: unchanged, audit, staff | `pagamentos.int.test.ts:385` | ✅ |
-| NUC-117 | late approval reinstates or refunds + 3 slots | `pagamentos.int.test.ts:404`, `:431`; `api/modules/availability/suggest-free-slots.int.test.ts:35-82` | ✅ |
-| NUC-118 | rejected, hold kept, page message | `pagamentos.int.test.ts:352`; `CheckoutPage.test.tsx:105` | ✅ |
+| NUC-115 | confirmed/paid, paid_cents, onConfirmed, notifyStaff after commit | `pagamentos.int.test.ts:270`, `:319`, `:334`, `:354` | ✅ |
+| NUC-116 | amount mismatch: unchanged, audit, staff | `pagamentos.int.test.ts:409` | ✅ |
+| NUC-117 | late approval reinstates or refunds + 3 slots | `pagamentos.int.test.ts:428`, `:455`; `api/modules/availability/suggest-free-slots.int.test.ts:35-82` | ✅ |
+| NUC-118 | rejected, hold kept, page message | `pagamentos.int.test.ts:376`; `CheckoutPage.test.tsx:105` | ✅ |
 | NUC-119 | pending refund, gateway after commit, attempts/last_error | `api/modules/payments/refunds.int.test.ts:107`, `:145`, `:197`, `:210`, `:226` | ✅ |
 | NUC-120 | sandbox page emits signed webhook | `api/routes/public/sandbox.int.test.ts:124`, `:156`; `sandbox.test.ts:66-113`; `web/pages/public/SandboxCheckoutPage.test.tsx:33` | ✅ |
 | NUC-121 | production: MFA staff only | `sandbox.int.test.ts:195`, `:206`, `:225` | ✅ |
@@ -279,7 +284,7 @@ Paths: `api/` = `apps/api/src/`, `web/` = `apps/web/src/`, `core/` = `packages/c
 | NUC-150 | cancellation preview = W-CA, snapshot | `cancel.int.test.ts:85`, `:106`, `:130` | ✅ |
 | NUC-151 | tenant cancel: refunds newest first, release, mail, staff | `cancel.int.test.ts:146`, `:211`, `:239` | ✅ |
 | NUC-152 | cancel awaiting: no refund, pending charges cancelled | `cancel.int.test.ts:258`, `:283` | ✅ |
-| NUC-153 | clinic cancel: refund all / credit (live only, else 422), audit, customer notified | `api/routes/admin/booking-cancel.int.test.ts:90`, `:119`, `:153`, `:167`, `:197` (awaiting_payment, fix `8ae1fc7`), `:245` | ⚠️ Partial: no test asserts the customer e-mail of a clinic cancellation (no `emailOutbox` read in the file); sensor A6 survived |
+| NUC-153 | clinic cancel: refund all / credit (live only, else 422), audit, customer notified | `api/routes/admin/booking-cancel.int.test.ts:101`, `:130`, `:165`, `:179`, `:209` (awaiting_payment, fix `8ae1fc7`), `:258`; customer notice (`5c0a679`): helper `:88-96` asserts exactly `[['booking.cancelled', email]]` in `emailOutbox` and a `METHOD:CANCEL` attachment, called for the paid case `:162` and the awaiting case `:255`; sensor A6 killed (2 failures) | ✅ (gap closed) |
 | NUC-154 | hide Reagendar, WhatsApp link | `BookingDetailPage.test.tsx:74-86` | ✅ |
 | NUC-155 | credit / difference sentence | `BookingDetailPage.test.tsx:91-111`, `:114-145` | ✅ |
 | NUC-156 | "Fica retido" / "Será devolvido" | `BookingDetailPage.test.tsx:218-234` | ✅ |
@@ -327,7 +332,7 @@ Paths: `api/` = `apps/api/src/`, `web/` = `apps/web/src/`, `core/` = `packages/c
 | AC | Outcome | Evidence | Result |
 | -- | ------- | -------- | ------ |
 | NUC-180 | RoomCards, placeholder, "A partir de R$ 80,00/h" | `web/pages/public/rooms/RoomsPage.test.tsx:27`, `:43` | ✅ |
-| NUC-181 | Home uses catalog API + `priceHourlyBooking` | `web/pages/public/home/PricingSimulatorSection.test.tsx:137`; `RoomsSection.test.tsx:88` | ✅ |
+| NUC-181 | Home uses catalog API + `priceHourlyBooking` | `web/pages/public/home/PricingSimulatorSection.test.tsx:137`; `RoomsSection.test.tsx:72`, `:89` (re-read at `607f195`; the file changed after iteration 1 with the gestao home-photo commit `369508d`) | ✅ |
 | NUC-182 | room page, calendar holiday marker, link, 404 | `web/pages/public/rooms/RoomPage.test.tsx:29`, `:60`, `:85`, `:97`, `:106` | ✅ |
 | NUC-183 | Preços + `pricing.packages` slot | `web/pages/public/PublicPages.test.tsx:30`, `:42`, `:55` | ✅ |
 | NUC-184 | Políticas sections | `PublicPages.test.tsx:68` | ✅ |
@@ -366,17 +371,17 @@ Paths: `api/` = `apps/api/src/`, `web/` = `apps/web/src/`, `core/` = `packages/c
 | NUC-202 | decorator `discountPercent`, "−<n>%" | `availability.int.test.ts:190`; `SlotGrid.test.tsx:69` | ✅ |
 | NUC-203 | 11 web slots, empty by default | `web/extensions/slots.test.tsx:10`, `:27`, `:33` | ✅ |
 | NUC-204 | `importNationalHolidays(db, year, deps)` exported, used by route | `api/modules/calendar/holiday-import.ts:50`; `api/routes/admin/calendar-exceptions.ts:55`; direct call `calendar-exceptions.int.test.ts:257` | ✅ |
-| NUC-205 | notifyStaff after commit, errors logged | `registry.test.ts:116`, `:144`; `pagamentos.int.test.ts:365`; `bookings.int.test.ts:298` | ✅ |
-| NUC-209 | charge handlers; booking-less charges | `payments.int.test.ts:550`, `:589`; `pagamentos.int.test.ts:496`, `:512`, `:524` | ✅ |
+| NUC-205 | notifyStaff after commit, errors logged | `registry.test.ts:116`, `:144`; `pagamentos.int.test.ts:389`; `api/routes/app/bookings.int.test.ts:301` | ✅ |
+| NUC-209 | charge handlers; booking-less charges | `payments.int.test.ts:550`, `:589`; `pagamentos.int.test.ts:520`, `:536`, `:548` | ✅ |
 | NUC-210 | `release` gets the cancellation result | `cancel.int.test.ts:211` | ✅ |
 
 ### P2 Booking funnel analytics
 
 | AC | Outcome | Evidence | Result |
 | -- | ------- | -------- | ------ |
-| NUC-206 | `VITE_GA4_ID` alone loads GA4; `purchase` with booking code | `web/lib/analytics.test.tsx:48`, `:69`; `CheckoutPage.test.tsx:88` | ⚠️ Superseded by gestao GES-134/GES-135 (`.specs/features/gestao/spec.md:437`): GA4 needs `VITE_ANALYTICS_PROVIDER`, and `purchase` carries no booking code by design. Test `analytics.test.tsx:69` says so. The núcleo spec line `spec.md:693` was not amended |
+| NUC-206 | as amended: superseded by gestao GES-134/GES-135 (provider flag `VITE_ANALYTICS_PROVIDER=ga4`, `purchase` without booking code) | `spec.md:693` amended in `c9f87d0` (points at `.specs/features/gestao/spec.md:436-437`); `web/lib/analytics.test.tsx:48`, `:69`; `CheckoutPage.test.tsx:88` | ✅ (gap closed; spec text now matches the implementation) |
 
-**Status**: ❌ Gaps present. 204/210 ✅. Partial: NUC-70, NUC-91, NUC-113, NUC-153. Spec text to amend: NUC-01, NUC-206.
+**Status**: ✅ All ACs covered. 210/210 ✅ (NUC-70, NUC-91, NUC-113, NUC-153 now pinned; NUC-01 and NUC-206 spec text amended).
 
 ---
 
@@ -385,44 +390,32 @@ Paths: `api/` = `apps/api/src/`, `web/` = `apps/web/src/`, `core/` = `packages/c
 | Criterion | Evidence | Result |
 | --------- | -------- | ------ |
 | Every W-* row is a unit test with exact values | W-CL `core/slots/grid.test.ts:70-131`, W-CC `:290-310`, W-PR `core/pricing/price.test.ts:94-162`, W-SP `core/payments/split.test.ts:25-92`, W-CA `core/policy/cancellation.test.ts:61-121`, W-RS/W-ST `core/policy/reschedule.test.ts:32-131`, W-AV `price.test.ts:266-308`; all green (core gate) | ✅ |
-| Playwright smoke: signup → verify → book Tue 17:30–20:00 → sandbox approve → "Reserva confirmada" + `booking.confirmed` with `.ics`; admin pre-reservation → manual confirm → check-in | Static review: `apps/web/e2e/booking.spec.ts:52-158` (asserts R$ 219,00 / R$ 109,50 at `:88-89`, "Reserva confirmada" `:145`, outbox `.ics` `:150-157`); `apps/web/e2e/admin.spec.ts:31-91` (pre_reserved `:77`, check-in `:88`, `confirmed_manually_by` `:90`); 180 s test timeout `apps/web/playwright.config.ts:12`; desktop and 375 px projects `:26-32`. Seed `apps/api/test/e2e-seed.ts`. Not re-run by the verifier (it resets `DATABASE_URL_TEST`); integration author reported 8/8 | ✅ (static) |
-| 10 parallel bookings → exactly one 201 | `api/routes/app/bookings.int.test.ts:205-219` (`toEqual([201, 409 ×9])`), green on `nucleo_verify` | ✅ |
-| Availability p95 ≤ 300 ms, 500 bookings, warm DB | `apps/web/e2e/booking.spec.ts:214-242` (`expect(p95).toBeLessThanOrEqual(300)`), 500 rows from `e2e-seed.ts:47`, `:323-345`. Not re-run by the verifier | ✅ (static) |
-| Every NUC verified with file:line | Table above | ❌ 204/210 |
+| Playwright smoke: signup → verify → book Tue 17:30–20:00 → sandbox approve → "Reserva confirmada" + `booking.confirmed` with `.ics`; admin pre-reservation → manual confirm → check-in | Static review: `apps/web/e2e/booking.spec.ts:52-158` (asserts R$ 219,00 / R$ 109,50 at `:88-89`, "Reserva confirmada" `:145`, outbox `.ics` `:150-157`); `apps/web/e2e/admin.spec.ts:31-91` (pre_reserved `:77`, check-in `:88`, `confirmed_manually_by` `:90`); 180 s test timeout `apps/web/playwright.config.ts:12`; desktop and 375 px projects `:26-32`. Seed `apps/api/test/e2e-seed.ts`. Not re-run in iteration 1 or 2 (by instruction); integration author reported 8/8 | ✅ (static) |
+| 10 parallel bookings → exactly one 201 | `api/routes/app/bookings.int.test.ts:208-222` (`toEqual([201, 409 ×9])`), green on `nucleo_verify_it2` | ✅ |
+| Availability p95 ≤ 300 ms, 500 bookings, warm DB | `apps/web/e2e/booking.spec.ts:214-242` (`expect(p95).toBeLessThanOrEqual(300)`), 500 rows from `e2e-seed.ts:47`, `:323-345`. Not re-run in iteration 1 or 2 (by instruction) | ✅ (static) |
+| Every NUC verified with file:line | Table above | ✅ 210/210 |
 
 ---
 
 ## Discrimination Sensor
 
-Run in a scratch worktree (`git worktree add --detach node_modules/.cache/sensor HEAD`, `node_modules` junctioned to the real install), never in the real tree. Each mutation was applied with `perl`, the named test files run with vitest (API files on `nucleo_verify`), then the file restored byte for byte from a copy and compared with `cmp` against the real tree. `git status --porcelain` of the real worktree was empty before and after. Sensor depth: P0 (money, concurrency, state machine).
+Iteration 2 re-ran the four survivors of iteration 1 and a regression sample of four mutants it had killed. As instructed for this run, each mutant was applied in place in the verifier worktree by a small script that requires exactly one textual match (`node_modules/.cache/verify/mutate.mjs`, outside git). Then the named test file ran (API files on `nucleo_verify_it2`), and the file was restored with `git checkout -- <file>`. `git status --porcelain` was empty before the sensor, after every revert and at the end. No two mutants were live at once. Before the first mutant, a baseline run of the three changed API files passed (3 files, 42 tests).
 
-| # | File:line | Mutation | Tests run | Result |
-| - | --------- | -------- | --------- | ------ |
-| M1 | `core/payments/split.ts:36` | full-upfront threshold `<` → `<=` | `split.test.ts` | ✅ Killed (1 failed: SP-4) |
-| M2 | `core/payments/split.ts:37` | deposit `percentOfCents` (half up) → `Math.floor` | `split.test.ts` | ✅ Killed (1 failed: SP-2) |
-| M3 | `core/policy/cancellation.ts:66` | refund threshold `<` → `<=` | `cancellation.test.ts` | ✅ Killed (1 failed: CA-4) |
-| M4 | `core/slots/grid.ts:95` | cleanup after an occupant ignored (`s < o.until` → `s < o.end`) | `grid.test.ts` | ✅ Killed (4 failed) |
-| M5 | `core/slots/grid.ts:96` | own cleanup before next ignored (`e + cleanupMs` → `e`) | `grid.test.ts` | ✅ Killed (69 failed) |
-| M6 | `core/pricing/price.ts:107` | segment amount half up → `Math.floor` | `price.test.ts` | ✅ Killed (1 failed: 14552) |
-| M7 | `core/pricing/categories.ts:78` | category min duration `>` → `>=` | `price.test.ts` | ✅ Killed (14 failed) |
-| M8 | `core/status/booking.ts:55` | remove `awaiting_payment → cancelled_by_clinic` | `booking.test.ts` | ✅ Killed (1 failed) |
-| M9 | `core/policy/reschedule.ts:66` | credit `paid − newNet` → `oldNet − newNet` | `reschedule.test.ts` | ✅ Killed (2 failed: ST-2, ST-5) |
-| A1 | `api/modules/calendar/calendar.repo.ts:108-111` | reschedule own-slot exclusion dropped (`excludeBookingId` ignored) | `reschedule.int.test.ts` | ✅ Killed (8 failed, e.g. `:207` own slot `available: true`) |
-| A2 | `api/modules/calendar/calendar.repo.ts:159` | stale holds no longer free (`hold_expires_at <= now` → `<= 2000-01-01`) | `availability.int.test.ts` | ✅ Killed (1 failed: `:135`, NUC-80) |
-| A3 | `api/modules/payments/webhooks.service.ts:86-87` | webhook dedupe claim always re-claims a processed event (removed `isNull(processed_at)` and the stale/error filter) | `pagamentos.int.test.ts` | ❌ Survived (21/21 pass). Effects stay single because the guarded charge update in `applyProviderStatus` absorbs the replay, so `:202`/`:217` cannot see that the first layer is gone. NUC-113 "without reprocessing" is not pinned |
-| A4 | `api/modules/booking/transition.ts:75` | `isTerminalStatus(to)` → `!isTerminalStatus(to)` | `transition.int.test.ts` | ✅ Killed (2 failed: `:50`, `:123`) |
-| A5 | `api/modules/booking/cancel.service.ts:64` | clinic may no longer cancel `awaiting_payment` (fix `8ae1fc7` reverted) | `booking-cancel.int.test.ts` | ✅ Killed (1 failed: `:197`, 409 ≠ 200) |
-| A6 | `api/modules/booking/cancel.service.ts:304-305` | `booking.cancelled` e-mail queued only when `actor === 'tenant'` | `booking-cancel.int.test.ts` | ❌ Survived (6/6 pass). NUC-153 "customer notified at once" is unasserted |
-| A7 | `api/jobs/expire-holds.ts:38` | `kind = 'single'` filter removed (fixed occurrences expired) | `expire-holds.int.test.ts` | ✅ Killed (1 failed: `:120`) |
-| A8 | `api/modules/booking/create-booking.service.ts:265` | hold limit `>= 3` → `> 3` | `bookings.int.test.ts` | ✅ Killed (1 failed: `:221`) |
-| A9 | `api/modules/booking/create-booking.service.ts:68` | occupancy without cleanup (`end + cleanup` → `end`) | `bookings.int.test.ts` | ✅ Killed (1 failed: `:190`, 23:00 ≠ 23:30) |
-| A10 | `api/modules/booking/create-booking.service.ts:246` | `BOOKING_NOT_OPEN` message → "Reservas fechadas." | `bookings.int.test.ts` | ❌ Survived (14/14 pass). NUC-70 message unasserted |
-| A11 | `api/modules/booking/create-booking.service.ts:363` | consent `ip` → `null` | `bookings.int.test.ts` | ❌ Survived (14/14 pass). NUC-91 IP unasserted |
+| # | File:line | Mutation (as in iteration 1) | Tests run | Iteration 1 | Iteration 2 |
+| - | --------- | ---------------------------- | --------- | ----------- | ----------- |
+| A3 | `api/modules/payments/webhooks.service.ts:86-87` | dedupe claim re-claims a processed event (removed `isNull(processed_at)` and the error/stale `or(...)` filter) | `routes/webhooks/pagamentos.int.test.ts` | ❌ Survived | ✅ Killed (1 failed of 22: `:217` NUC-113, `receivedAt` `12:10` ≠ `12:00`) |
+| A6 | `api/modules/booking/cancel.service.ts:304-306` | `booking.cancelled` e-mail queued only when `actor === 'tenant'` | `routes/admin/booking-cancel.int.test.ts` | ❌ Survived | ✅ Killed (2 failed of 6: `:130`, `:209`, outbox `[]`) |
+| A10 | `api/modules/booking/create-booking.service.ts:246` | `BOOKING_NOT_OPEN` message → "Reservas fechadas." | `routes/app/bookings.int.test.ts` | ❌ Survived | ✅ Killed (1 failed of 14: `:91`) |
+| A11 | `api/modules/booking/create-booking.service.ts:363` | consent `ip` → `null` | `routes/app/bookings.int.test.ts` | ❌ Survived | ✅ Killed (1 failed of 14: `:152`, `ip` null ≠ `203.0.113.7`) |
+| M1 | `core/payments/split.ts:36` | full-upfront threshold `<` → `<=` (core, payment) | `payments/split.test.ts` | ✅ Killed | ✅ Killed (1 failed of 7: SP-4) |
+| M8 | `core/status/booking.ts:54` | remove `awaiting_payment → cancelled_by_clinic` (core, state machine; the NUC-01 amendment) | `status/booking.test.ts` | ✅ Killed | ✅ Killed (1 failed of 148) |
+| A5 | `api/modules/booking/cancel.service.ts:64` | clinic may no longer cancel `awaiting_payment` (fix `8ae1fc7` reverted) | `routes/admin/booking-cancel.int.test.ts` | ✅ Killed | ✅ Killed (1 failed of 6: `:209`, 409 ≠ 200) |
+| A9 | `api/modules/booking/create-booking.service.ts:68` | occupancy without cleanup (`end + cleanup` → `end`) | `routes/app/bookings.int.test.ts` | ✅ Killed | ✅ Killed (1 failed of 14: `:192`, 23:00 ≠ 23:30) |
 
-Every killed mutant failed on an `AssertionError` in the named test (checked in each run log), not on a crash. A10 and A11 were aimed at gaps found in the AC review, to confirm them empirically.
+Every killed mutant failed on an `AssertionError` in the named test (checked in each run log), not on a crash or a type error. The iteration-1 mutants M2–M7, M9, A1, A2, A4, A7 and A8 were not re-run: their code and test files are unchanged since iteration 1, except `bookings.int.test.ts`, whose A8 test (`:224`) only moved down by 3 lines.
 
-**Sensor depth**: P0 manual fault injection, 20 mutants (9 core, 11 API) over pricing/segments, proportional (half-up) amounts, sinal split, cancellation refund threshold, cleanup buffer in both directions, category selection, state machine incl. clinic cancellation of pending bookings, terminal occupancy release, hold expiry (availability and job), hold limit, reschedule own-slot exclusion and settlement, idempotent webhooks.
-**Result**: 16/20 killed - FAIL ❌ (A3, A6, A10, A11 survived)
+**Sensor depth**: P0 manual fault injection (money, idempotent webhooks, state machine, notifications). Cumulative over both iterations: 20 distinct mutants, all killed.
+**Result**: 8/8 killed in iteration 2 - PASS ✅
 
 ---
 
@@ -430,117 +423,87 @@ Every killed mutant failed on an `AssertionError` in the named test (checked in 
 
 | Principle | Status |
 | --------- | ------ |
-| Minimum code | ✅ Pure engines in `packages/core`, thin services; no speculative abstraction found in the files read |
-| Surgical changes | ✅ Integration fixes (`8ae1fc7`, `ce1171d`, `faaafc1`, `345623a`) touch only the files their messages name |
-| No scope creep | ✅ receita/gestao features live under their own specs |
-| Matches patterns | ✅ Same route/service/test layout as fundação |
-| Spec-anchored outcome check | ⚠️ NUC-70 message, NUC-91 IP, NUC-153 customer notice and the NUC-113 claim layer are not pinned; NUC-01 and NUC-206 differ from the spec text |
-| Per-layer coverage (domain 1:1; routes happy + edge + error) | ✅ Every W-* row has its own test; every route file covers happy, error codes and role checks |
-| Every test maps to a requirement | ✅ Test titles carry NUC ids or W-* row names (194 of 210 ids tagged directly, the rest by range tags such as `NUC-89..NUC-92`) |
+| Minimum code | ✅ The fixes add 1 helper (`expectCustomerCancelMail`, used twice) and 1 test; the rest are single assertions |
+| Surgical changes | ✅ Each fix commit touches only the file its message names (`git show --stat`) |
+| No scope creep | ✅ No production file changed by the fixes |
+| Matches patterns | ✅ The outbox / `.ics` check copies `api/routes/app/cancel.int.test.ts`; the second-clock app uses the file's own `createApp` deps |
+| Spec-anchored outcome check | ✅ NUC-70 asserts the exact spec message, NUC-91 the exact IP, NUC-153 the exact template and `METHOD:CANCEL`, NUC-113 the unchanged claim columns |
+| Per-layer coverage (domain 1:1; routes happy + edge + error) | ✅ Unchanged from iteration 1 |
+| Every test maps to a requirement | ✅ The new test's title carries `NUC-113`; the changed tests sit in `describe` blocks tagged NUC-153 / NUC-89..NUC-92 / NUC-93 |
 | Documented guidelines followed | ✅ `.specs/STATE.md` AD-010/AD-018 and the tasks.md Test Coverage Matrix |
 
 ---
 
 ## Edge Cases (spec.md:697-712)
 
-- [x] Late Pix after another tenant took the slot → refund + `booking.late_approval_refund`: `pagamentos.int.test.ts:431`
-- [x] Two concurrent webhooks → one effect: `pagamentos.int.test.ts:217`
-- [x] Expiry job vs webhook race → row lock, late-approval path: `pagamentos.int.test.ts:404`, `expire-holds.int.test.ts:80` (lock in `api/jobs/expire-holds.ts:47-49`)
+- [x] Late Pix after another tenant took the slot → refund + `booking.late_approval_refund`: `pagamentos.int.test.ts:455`
+- [x] Two concurrent webhooks → one effect: `pagamentos.int.test.ts:241`
+- [x] Expiry job vs webhook race → row lock, late-approval path: `pagamentos.int.test.ts:428`, `expire-holds.int.test.ts:80` (lock in `api/jobs/expire-holds.ts:47-49`)
 - [x] Fake webhook first, real one still processed: `pagamentos.int.test.ts:162` (no row stored for invalid signatures)
 - [x] Booking across midnight → `outside_hours`: `grid.test.ts:175`
 - [x] DST via `localToUtc` IANA: fundação FND-12 (`core/time.test.ts`)
-- [x] Price change on Resumo → `PRICE_CHANGED`: `bookings.int.test.ts:122`; web `SummaryStep.test.tsx:169`
-- [x] Policy change on Resumo → `POLICY_CHANGED`, re-accept: `bookings.int.test.ts:111`; `SummaryStep.test.tsx:206`
+- [x] Price change on Resumo → `PRICE_CHANGED`: `api/routes/app/bookings.int.test.ts:124`; web `SummaryStep.test.tsx:169`
+- [x] Policy change on Resumo → `POLICY_CHANGED`, re-accept: `api/routes/app/bookings.int.test.ts:113`; `SummaryStep.test.tsx:206`
 - [x] Closed day with a recurring block → block stays: by construction, `findAffectedBookings` reads only `bookings` (`api/modules/calendar/calendar-config.service.ts:134`), so blocks never count as affected. No dedicated test
 - [x] All hourly categories inactive → cells shown, `NO_CATEGORY`, overlay hatched: `quote.int.test.ts:146`, `CategoryBandOverlay.test.tsx:58`
 - [x] BrasilAPI renames a seeded holiday, keeps `isClosed`: `calendar-exceptions.int.test.ts:229`
 - [x] Dearer reschedule slot taken while paying → refund, booking unchanged: `reschedule.int.test.ts:510`
 - [x] Card deleted while a balance charge is pending: `cards.int.test.ts:189`
-- [x] Reception on admin-only routes → 403: `calendar-config.int.test.ts:65`, `bookings.int.test.ts:120`, `:412`, `booking-cancel.int.test.ts:245`
+- [x] Reception on admin-only routes → 403: `calendar-config.int.test.ts:65`, `api/routes/admin/bookings.int.test.ts:120`, `:412`, `booking-cancel.int.test.ts:258`
 
 ---
 
 ## Gate Check
 
-All commands run by the verifier in this worktree at `c54c858` after a fresh `npm install` (exit 0, `package-lock.json` unchanged).
+The verifier ran every command in this worktree at `607f195` after `npm install` (exit 0, `package-lock.json` unchanged, `npm ls --workspaces` clean). A host restart killed the first web and API runs partway through. Both were re-run from scratch, the API suite on a freshly re-created `nucleo_verify_it2`. The sensor had already finished and been reverted before the restart: `git status --porcelain` was empty on resume.
 
 | Gate | Command | Result |
 | ---- | ------- | ------ |
 | Typecheck | `npm run typecheck` | ✅ exit 0 (web, api, core) |
 | Lint | `npm run lint` | ✅ exit 0 |
 | Core | `npm test -w packages/core` | ✅ 32 files, 1191 tests passed |
-| Web | `npm test -w apps/web -- --maxWorkers=2` | ✅ 137 files, 1191 tests passed (899 s). The first run with default workers died with `FATAL ERROR: Zone Allocation failed - process out of memory` while the API suite ran in parallel; this is host memory, not a test failure |
-| API | `DATABASE_URL_TEST=<verify>/nucleo_verify npm test -w apps/api` | ✅ 65 files, 663 tests passed (2241 s). `nucleo_verify` held 30 migrated tables afterwards, confirming the override |
-| Build | `API_PROXY_ORIGIN=https://example.invalid npm run build` | ✅ exit 0 (`apps/web/dist`, PWA `sw.js`) |
-| Production smoke (T50) | `node scripts/smoke.mjs https://bravo-clinic.netlify.app` | ✅ exit 0: api health via proxy, public config, public rooms, principal availability, home page |
-| E2E | `npm run e2e -w apps/web` | ⏭️ Not run by instruction (resets `DATABASE_URL_TEST`); reviewed statically |
+| Web | `npm test -w apps/web -- --maxWorkers=2` | ✅ 1191 tests passed (138 files). The full run passed 136 files / 1158 tests (1005 s) but exited 1 on 2 vitest worker RPC timeouts (`Timeout calling "fetch" with "["/@vite/env","web"]"`) while the API suite ran in parallel. Those timeouts kept 2 receita files from starting: `src/features/admin-reservas/SellSubscriptionDialog.test.tsx` and `src/pages/public/SubscribePage.test.tsx`. Re-run alone with the same flags: 2 files, 33 tests passed, exit 0. 1158 + 33 = 1191, the iteration-1 count. This is host load, not a test failure, and neither file is a núcleo file |
+| API | `DATABASE_URL_TEST=<verify>/nucleo_verify_it2 npm test -w apps/api` | ✅ 65 files, 664 tests passed (2155 s), exit 0. `nucleo_verify_it2` held 30 migrated tables afterwards, which confirms the override reached vitest |
+| Build | `API_PROXY_ORIGIN=https://example.invalid npm run build` | ✅ exit 0 (`apps/web/dist/index.html`, PWA `sw.js`) |
+| Production smoke (T50) | `node scripts/smoke.mjs https://bravo-clinic.netlify.app` | ✅ exit 0: api health via proxy, public config, public rooms, principal availability, home page (GET only) |
+| E2E | `npm run e2e -w apps/web` | ⏭️ Not run by instruction (it resets `DATABASE_URL_TEST`) |
+| Tasks structure | `python …/tlc-spec-driven/scripts/validate_tasks.py .specs/features/nucleo` | ✅ `0 error(s), 0 warning(s)` |
 
-- **Total**: 3045 unit/integration tests passed, 0 failed, 0 skipped.
-- **Test count before the feature**: not re-measured by the verifier (main also carries receita and gestao, so a núcleo-only delta is not meaningful). No test is skipped or focused: `grep -E "(it|test|describe)\.(skip|todo|only)|xit\("` over `apps/api/src`, `apps/web/src`, `apps/web/e2e` and `packages/core/src` finds nothing.
-- **Skipped tests**: none.
+- **Total**: 3046 unit/integration tests passed, 0 failed, 0 skipped.
+- **Test count vs iteration 1**: core 1191 → 1191, web 1191 → 1191, API 663 → 664 (+1). The iteration-1 fixes add one test (`pagamentos.int.test.ts:217`) and assertions inside existing tests. No test was removed or weakened. Every line the fix commits delete from a test file is replaced by a superset: the `book()` helper signature and its header spread (now merged with extra headers), the `book({ cookie })` call (now with `X-Forwarded-For`), and the `paidBooking()` destructuring (now with `user`).
+- **Focused/skipped tests**: none. `grep -E "(it|test|describe)\.(skip|todo|only)|xit\("` over `apps/api/src`, `apps/web/src`, `apps/web/e2e` and `packages/core/src` matches only two `process.exit(` lines in `apps/api/src/db/migrate.ts:25` and `seed.ts:269` (false positives).
 
 ---
 
 ## Fix Plans
 
-### Fix 1: NUC-153 clinic cancellation never asserts the customer notice (A6 survived)
-
-- **Root cause**: `api/routes/admin/booking-cancel.int.test.ts:119-151` checks refunds, audit and status but never reads `emailOutbox`.
-- **Fix task**: in that test (and in `:197` for the awaiting case) assert one `booking.cancelled` outbox row for the customer with a `METHOD:CANCEL` `.ics` (same pattern as `api/routes/app/cancel.int.test.ts:146`).
-- **Done when**: A6 (`if (actor === 'tenant')` around `bookingMailer.cancelled`, `cancel.service.ts:304`) fails the file.
-- **Priority**: Major
-
-### Fix 2: NUC-70 message unasserted (A10 survived)
-
-- **Root cause**: `api/routes/app/bookings.int.test.ts:90-99` asserts only `code`.
-- **Fix task**: add `expect(res.error?.message).toBe('As reservas online abrem em breve.')`.
-- **Done when**: A10 fails the file.
-- **Priority**: Minor
-
-### Fix 3: NUC-91 consent IP unasserted (A11 survived)
-
-- **Root cause**: `api/routes/app/bookings.int.test.ts:192-198` matches kind, version and ref, not `ip`.
-- **Fix task**: send the request with a known client IP header (as `api/routes/public/auth/login.int.test.ts` does for its IP limits) and assert `consent.ip`.
-- **Done when**: A11 (`ip: null` at `create-booking.service.ts:363`) fails the file.
-- **Priority**: Minor
-
-### Fix 4: NUC-113 first dedupe layer not observable (A3 survived)
-
-- **Root cause**: duplicates are caught twice, by the `webhook_events` claim and by the guarded charge update. The tests use a fixed clock and assert only the effects, so removing the claim filter changes nothing visible.
-- **Fix task**: in `api/routes/webhooks/pagamentos.int.test.ts:202`, deliver the second copy with a later `now` (or spy on `applyProviderStatus` / the gateway) and assert the event row keeps its first `received_at`/`processed_at` and that the status is not applied a second time.
-- **Done when**: A3 fails the file.
-- **Priority**: Minor (money effects already exactly-once)
-
-### Fix 5: spec text behind the implementation (NUC-01, NUC-206), docs only
-
-- **NUC-01**: amend `spec.md:188` ("plus `awaiting_payment → cancelled_by_clinic`, PRD §5.5/§7.5") and `docs/architecture.md:177`, matching `design.md:447` and `core/status/booking.ts:52-55`.
-- **NUC-206**: amend `spec.md:693` to point at GES-134/GES-135 (provider flag, no booking code in `purchase`), or mark it superseded in the traceability table.
-- **Bookkeeping**: tick T4's Done-when boxes (`tasks.md:468-472`) and drop the duplicated T1–T3 blocks (`tasks.md:365-480`).
-- **Priority**: Minor
+None. No gap remains.
 
 ---
 
 ## Requirement Traceability Update
 
-| Requirement | Previous Status | New Status |
-| ----------- | --------------- | ---------- |
-| NUC-01 | Implementing | ⚠️ Needs spec amendment |
-| NUC-70, NUC-91, NUC-113, NUC-153 | Implementing | ❌ Needs fix (assertion) |
-| NUC-206 | In Tasks | ⚠️ Superseded by GES-134/GES-135 (amend spec) |
+| Requirement | Previous Status (spec.md table) | New Status |
+| ----------- | ------------------------------- | ---------- |
+| NUC-01 | Implementing (iteration 1: ⚠️ needs spec amendment) | ✅ Verified (spec amended `spec.md:188`) |
+| NUC-70, NUC-91, NUC-113, NUC-153 | Implementing (iteration 1: ❌ needs fix) | ✅ Verified |
+| NUC-206 | In Tasks (iteration 1: ⚠️ superseded) | ✅ Verified as amended (superseded by GES-134/GES-135, `spec.md:693`) |
 | All other NUC-02..NUC-210 | Implementing / In Tasks | ✅ Verified |
+
+The traceability table in `spec.md` (`:720-925`) still shows `Implementing` / `In Tasks`. The verifier does not edit it; the orchestrator should flip the statuses to Verified.
 
 ---
 
 ## Summary
 
-**Overall**: ❌ Not Ready (test-strength and spec-text gaps; no functional defect found)
+**Overall**: ✅ Ready
 
-**Spec-anchored check**: 204/210 ACs matched the spec outcome. 4 partial (NUC-70, NUC-91, NUC-113, NUC-153). 2 spec-text deviations (NUC-01, NUC-206)
-**Sensor**: 16/20 mutations killed (survived: A3, A6, A10, A11)
-**Gate**: 3045 passed, 0 failed, 0 skipped. Build and production smoke exit 0
+**Spec-anchored check**: 210/210 ACs matched the spec outcome (NUC-01 and NUC-206 against the amended text)
+**Sensor**: 8/8 killed in iteration 2 (A3, A6, A10, A11 now killed; M1, M8, A5, A9 still killed). 20/20 distinct mutants killed across both iterations
+**Gate**: 3046 passed, 0 failed, 0 skipped. Typecheck, lint, build and production smoke exit 0
 
-**What works**: every worked example (W-CL, W-CC, W-PR, W-SP, W-CA, W-RS, W-ST, W-AV) verbatim. Exclusion-constraint concurrency (1 of 10). Hold expiry, both lazily and in the job. Reschedule own-slot handling. Clinic cancellation of pending bookings. Idempotency keys, webhooks, late approval and refunds. All admin, tenant and public routes with their error codes and role checks. All web ACs. Live production smoke.
+**What works**: everything listed in iteration 1, plus the four pinned behaviors. The customer gets a `booking.cancelled` e-mail with `METHOD:CANCEL` on a clinic cancellation. `BOOKING_NOT_OPEN` carries the exact spec message. The booking consent stores the client IP. A processed webhook event is never re-claimed.
 
-**Issues found**: Fix 1 to Fix 5 above. Fixes 1–4 add assertions. Fix 5 amends the spec and tasks docs.
+**Issues found**: none blocking. Notes: (1) the spec traceability table statuses are stale (see above); (2) the web suite can lose files to vitest worker RPC timeouts under host load, so run it alone or re-run the dropped files.
 
-**Next steps**: route Fix 1–5 to an implementer, then re-verify (iteration 2 of 3). Re-run sensors A3, A6, A10 and A11 at that point.
+**Next steps**: mark núcleo verified (orchestrator updates `spec.md` traceability and `.specs/STATE.md`).
