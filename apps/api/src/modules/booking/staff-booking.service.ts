@@ -126,7 +126,9 @@ export async function confirmManual(
       },
     );
     await cancelPendingCharges(tx, booking.id, fx);
-    for (const step of deps.registry.checkoutSteps) await step.onConfirmed?.(tx, result);
+    for (const step of deps.registry.checkoutSteps) {
+      await step.onConfirmed?.(tx, result, deps.now());
+    }
     const mail = await loadBookingMailContext(tx, result, deps.env);
     fx.emailIds.push(await bookingMailer.confirmed(tx, result, mail));
     fx.staff.push({ event: 'new_booking', payload: { entityId: result.id, code: result.code } });

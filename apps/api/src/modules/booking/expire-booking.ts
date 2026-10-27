@@ -36,6 +36,7 @@ export async function expireHoldingBooking(
   ctx: RequestContext,
   booking: BookingRow,
   fx: AfterCommit,
+  now: Date,
 ): Promise<BookingRow> {
   const wasPreReservation = booking.status === 'pre_reserved';
   const expired = await transitionBooking(
@@ -48,7 +49,7 @@ export async function expireHoldingBooking(
   );
   await cancelPendingCharges(tx, booking.id, fx);
   for (const step of deps.registry.checkoutSteps) {
-    await step.release?.(tx, expired, 'expired');
+    await step.release?.(tx, expired, 'expired', undefined, now);
   }
   if (wasPreReservation) {
     const mail = await loadBookingMailContext(tx, expired, deps.env);

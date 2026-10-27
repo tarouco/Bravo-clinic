@@ -43,6 +43,7 @@ describe('registry defaults (NUC-201)', () => {
       refType: 'booking',
       refId: 'booking-1',
       ctx: { actorUserId: null, actorRole: null, origin: 'app', ip: null, requestId: null },
+      now: new Date('2026-10-20T12:00:00.000Z'),
     });
 
     expect(credits.mode).toBe('deferred');
@@ -65,7 +66,7 @@ describe('registry defaults (NUC-201)', () => {
       fixedOccurrencesCancelled: 0,
     });
     await expect(
-      closedDayCompensation.apply({} as never, ['id'], {} as never),
+      closedDayCompensation.apply({} as never, ['id'], {} as never, new Date()),
     ).resolves.toBeUndefined();
   });
 

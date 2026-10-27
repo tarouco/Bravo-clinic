@@ -158,7 +158,7 @@ export const discountStep: CheckoutStep = {
   },
 
   /** A rejected code fails the checkout; the winning coupon's use is reserved (REC-123, REC-124). */
-  async persist(tx, booking, draft) {
+  async persist(tx, booking, draft, ctx) {
     const extension = draft.extensions['discount'] as DiscountExtension | undefined;
     if (extension?.couponRejection !== undefined)
       throw couponInvalid(extension.couponRejection.reason);
@@ -169,21 +169,20 @@ export const discountStep: CheckoutStep = {
       userId: booking.userId,
       discountCents: draft.discount.cents,
       bookingId: booking.id,
-      now: new Date(),
+      now: ctx.now,
     });
     await tx.update(bookings).set({ couponId: ref.couponId }).where(eq(bookings.id, booking.id));
   },
 
   /** Confirmation consumes the coupon use and the overlapped slot-discount part (REC-124, REC-138). */
-  async onConfirmed(tx, booking) {
-    const now = new Date();
+  async onConfirmed(tx, booking, now) {
     await consumeUse(tx, { bookingId: booking.id }, now);
     await consumeForBooking(tx, booking, now);
   },
 
   /** Expiry or cancellation before approval gives the use back (REC-124). */
-  async release(tx, booking) {
-    await releaseUse(tx, { bookingId: booking.id }, new Date());
+  async release(tx, booking, _reason, _result, now) {
+    await releaseUse(tx, { bookingId: booking.id }, now);
   },
 };
 
@@ -305,14 +304,14 @@ export const creditStep: CheckoutStep = {
   },
 
   /** The credit nucleo counted as paid becomes one internal charge (AD-027). */
-  async persist(tx, booking) {
+  async persist(tx, booking, _draft, ctx) {
     if (booking.creditAppliedCents <= 0) return;
     const used = await applyCredits(tx, bookingContext(booking), {
       userId: booking.userId,
       amountCents: booking.creditAppliedCents,
       purpose: booking.paymentMode === 'full_upfront' ? 'booking_full' : 'booking_deposit',
       bookingId: booking.id,
-      now: new Date(),
+      now: ctx.now,
     });
     if (used.usedCents !== booking.creditAppliedCents) {
       throw new AppError(409, 'CONFLICT', 'Seu saldo de créditos mudou. Revise o resumo.');
@@ -324,7 +323,7 @@ export const creditStep: CheckoutStep = {
    * (`allocateRefund`: the retained amount consumes credit first). A clinic cancellation resolved
    * as credit already granted the whole paid amount, so nothing more comes back.
    */
-  async release(tx, booking, reason, result) {
+  async release(tx, booking, reason, result, now) {
     const open = await creditChargesOf(tx, booking.id);
     const creditPaid = open.reduce((sum, c) => sum + c.open, 0);
     if (creditPaid <= 0) return;
@@ -340,7 +339,6 @@ export const creditStep: CheckoutStep = {
       }).creditRefundCents;
     }
     const ctx = bookingContext(booking);
-    const now = new Date();
     for (const { charge, open: left } of open) {
       if (back <= 0) break;
       const amount = Math.min(back, left);

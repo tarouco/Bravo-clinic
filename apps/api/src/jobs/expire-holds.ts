@@ -54,7 +54,7 @@ export const expireHolds: Job = async (deps, now) => {
       ) {
         return null;
       }
-      return expireHoldingBooking(tx, deps, JOB_CONTEXT, booking, fx);
+      return expireHoldingBooking(tx, deps, JOB_CONTEXT, booking, fx, now);
     });
     await flushAfterCommit(deps, fx, JOB_CONTEXT);
     if (expired === null) continue;

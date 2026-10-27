@@ -182,7 +182,7 @@ async function expireStaleHolds(
       ),
     );
   for (const { booking } of stale) {
-    await expireHoldingBooking(tx, deps, SYSTEM_CONTEXT, booking, fx);
+    await expireHoldingBooking(tx, deps, SYSTEM_CONTEXT, booking, fx, args.now);
   }
 }
 
@@ -397,7 +397,7 @@ export async function createBooking(
       );
     }
     if (settled) {
-      for (const step of registry.checkoutSteps) await step.onConfirmed?.(tx, booking);
+      for (const step of registry.checkoutSteps) await step.onConfirmed?.(tx, booking, now);
       const mail = await loadBookingMailContext(tx, booking, deps.env);
       fx.emailIds.push(await bookingMailer.confirmed(tx, booking, mail));
       fx.staff.push({

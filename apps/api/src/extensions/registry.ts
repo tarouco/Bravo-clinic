@@ -67,23 +67,33 @@ export interface CheckoutStep {
   /** Pure: no writes. */
   apply(ctx: QuoteContext, draft: QuoteDraft): Promise<QuoteDraft>;
   persist?(tx: Tx, booking: BookingRow, draft: QuoteDraft, ctx: QuoteContext): Promise<void>;
-  /** `result` is present on cancellation, so a step can return the credit portion of a refund. */
+  /**
+   * `result` is present on cancellation, so a step can return the credit portion of a refund.
+   * `now` is the caller's request or job clock, like in `onConfirmed`.
+   */
   release?(
     tx: Tx,
     booking: BookingRow,
     reason: 'expired' | 'cancelled',
-    result?: CancellationResult,
+    result: CancellationResult | undefined,
+    now: Date,
   ): Promise<void>;
-  onConfirmed?(tx: Tx, booking: BookingRow): Promise<void>;
+  onConfirmed?(tx: Tx, booking: BookingRow, now: Date): Promise<void>;
 }
 
 export interface PaymentModeHandler {
   mode: PaymentMode;
-  reschedule?(tx: Tx, booking: BookingRow, next: QuoteDraft): Promise<{ payNowCents: Cents }>;
+  reschedule?(
+    tx: Tx,
+    booking: BookingRow,
+    next: QuoteDraft,
+    now: Date,
+  ): Promise<{ payNowCents: Cents }>;
   cancel?(
     tx: Tx,
     booking: BookingRow,
     evaluation: CancellationResult,
+    now: Date,
   ): Promise<{ minutesReturned: number }>;
 }
 
@@ -100,6 +110,7 @@ export interface CreditPort {
       refType: 'booking';
       refId: string;
       ctx: RequestContext;
+      now: Date;
     },
   ): Promise<{ creditLotId: string | null }>;
 }
@@ -116,7 +127,7 @@ export interface ClosedDayCompensationPort {
     db: Db | Tx,
     args: { date: LocalDate; roomIds: string[] | null },
   ): Promise<CompensationSummary>;
-  apply(tx: Tx, closedDayIds: string[], ctx: RequestContext): Promise<void>;
+  apply(tx: Tx, closedDayIds: string[], ctx: RequestContext, now: Date): Promise<void>;
 }
 
 export interface AvailabilityDecorator {
