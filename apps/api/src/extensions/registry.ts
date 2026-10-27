@@ -139,9 +139,30 @@ export interface CategoryHandler {
 export type ChargePurposeHandled =
   'subscription_initial' | 'subscription_renewal' | 'extra_hours' | 'extra_service';
 
+/**
+ * Work a charge handler leaves for after the commit of the payment transaction: e-mails to send,
+ * staff notices and refunds to submit (the same queues `applyProviderStatus` flushes).
+ */
+export interface ChargeEffects {
+  emailIds: string[];
+  staff: { event: StaffEvent; payload: { entityId: string } & Record<string, unknown> }[];
+  refundIds: string[];
+}
+
 export interface ChargeHandler {
-  onApproved(tx: Tx, ctx: RequestContext, charge: ChargeRow): Promise<void>;
-  onFailed(tx: Tx, ctx: RequestContext, charge: ChargeRow, status: NormalizedStatus): Promise<void>;
+  onApproved(
+    tx: Tx,
+    ctx: RequestContext,
+    charge: ChargeRow,
+    effects?: ChargeEffects,
+  ): Promise<void>;
+  onFailed(
+    tx: Tx,
+    ctx: RequestContext,
+    charge: ChargeRow,
+    status: NormalizedStatus,
+    effects?: ChargeEffects,
+  ): Promise<void>;
 }
 
 export type StaffEvent =

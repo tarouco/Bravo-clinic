@@ -521,15 +521,15 @@
 | REC-10 | P1: Buy an hour package | Tasks | T7, T18 | Implementing |
 | REC-11 | P1: Buy an hour package | Tasks | T2, T18 | Implementing |
 | REC-12 | P1: Buy an hour package | Tasks | T8, T19 | Implementing |
-| REC-13 | P1: Buy an hour package | Tasks | T19 | In Tasks |
-| REC-14 | P1: Buy an hour package | Tasks | T19, T25 | In Tasks |
-| REC-15 | P1: Buy an hour package | Tasks | T19 | In Tasks |
+| REC-13 | P1: Buy an hour package | Tasks | T19 | Implementing |
+| REC-14 | P1: Buy an hour package | Tasks | T19, T25 | Implementing |
+| REC-15 | P1: Buy an hour package | Tasks | T19 | Implementing |
 | REC-16 | P1: Buy an hour package | Tasks | T20, T21 | In Tasks |
 | REC-17 | P1: Buy an hour package | Tasks | T28 | In Tasks |
 | REC-18 | P1: Buy an hour package | Tasks | T29 | In Tasks |
 | REC-19 | P1: Buy an hour package | Tasks | T21 | In Tasks |
 | REC-20 | P1: Buy an hour package | Tasks | T25 | In Tasks |
-| REC-21 | P1: Buy an hour package | Tasks | T19 | In Tasks |
+| REC-21 | P1: Buy an hour package | Tasks | T19 | Implementing |
 | REC-22 | P1: Pay a booking with package hours | Tasks | T5 | Implementing |
 | REC-23 | P1: Pay a booking with package hours | Tasks | T13, T16 | Implementing |
 | REC-24 | P1: Pay a booking with package hours | Tasks | T34 | In Tasks |
@@ -593,9 +593,9 @@
 | REC-82 | P1: Change and cancel | Tasks | T26 | In Tasks |
 | REC-83 | P1: Buy a fixed-schedule package | Tasks | T3 | Implementing |
 | REC-84 | P1: Buy a fixed-schedule package | Tasks | T18, T36 | Implementing |
-| REC-85 | P1: Buy a fixed-schedule package | Tasks | T19 | In Tasks |
-| REC-86 | P1: Buy a fixed-schedule package | Tasks | T19 | In Tasks |
-| REC-87 | P1: Buy a fixed-schedule package | Tasks | T19 | In Tasks |
+| REC-85 | P1: Buy a fixed-schedule package | Tasks | T19 | Implementing |
+| REC-86 | P1: Buy a fixed-schedule package | Tasks | T19 | Implementing |
+| REC-87 | P1: Buy a fixed-schedule package | Tasks | T19 | Implementing |
 | REC-88 | P1: Buy a fixed-schedule package | Tasks | T21, T14 | In Tasks |
 | REC-89 | P1: Buy a fixed-schedule package | Tasks | T3, T18 | Implementing |
 | REC-90 | P1: Buy a fixed-schedule package | Tasks | T3 | Implementing |
@@ -658,9 +658,9 @@
 | REC-147 | P1: Perfil → Compras | Tasks | T38 | In Tasks |
 | REC-148 | P1: Admin subscriptions and sale | Tasks | T26, T46 | In Tasks |
 | REC-149 | P1: Admin subscriptions and sale | Tasks | T26, T46 | In Tasks |
-| REC-150 | P1: Admin subscriptions and sale | Tasks | T19, T26, T47 | In Tasks |
-| REC-151 | P1: Admin subscriptions and sale | Tasks | T19 | In Tasks |
-| REC-152 | P1: Admin subscriptions and sale | Tasks | T19 | In Tasks |
+| REC-150 | P1: Admin subscriptions and sale | Tasks | T19, T26, T47 | Implementing |
+| REC-151 | P1: Admin subscriptions and sale | Tasks | T19 | Implementing |
+| REC-152 | P1: Admin subscriptions and sale | Tasks | T19 | Implementing |
 | REC-153 | P1: Admin subscriptions and sale | Tasks | T26 | In Tasks |
 | REC-154 | P1: Admin subscriptions and sale | Tasks | T26 | In Tasks |
 | REC-155 | P1: Public packages and purchase flow | Tasks | T18, T35 | Implementing |

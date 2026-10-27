@@ -709,12 +709,12 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Hour purchase creates the rows of REC-14 and a pending `subscription_initial` charge; second hour package → 409; missing consents → 422; foreign saved card → 422
-- [ ] Coupon + credits covering the price activates immediately without charge
-- [ ] Fixed purchase of Meio turno creates 22 `awaiting_payment` occurrences with occupancy; a conflicting date → 409 `OCCURRENCE_CONFLICT`, zero rows; a racing insert → 409 with that date
-- [ ] Admin link sale holds `pre_reserved` occurrences for 24 h and queues `sale_link`; manual sale is active with an audit row
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 14 new tests pass
+- [x] Hour purchase creates the rows of REC-14 and a pending `subscription_initial` charge; second hour package → 409; missing consents → 422; foreign saved card → 422
+- [x] Coupon + credits covering the price activates immediately without charge
+- [x] Fixed purchase of Meio turno creates 22 `awaiting_payment` occurrences with occupancy; a conflicting date → 409 `OCCURRENCE_CONFLICT`, zero rows; a racing insert → 409 with that date
+- [x] Admin link sale holds `pre_reserved` occurrences for 24 h and queues `sale_link`; manual sale is active with an audit row
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 14 new tests pass
 
 **Tests**: integration
 **Gate**: full

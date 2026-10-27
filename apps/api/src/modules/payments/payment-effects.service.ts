@@ -354,7 +354,7 @@ async function approve(
     });
     return 'applied';
   }
-  await handler.onApproved(tx, ctx, approved);
+  await handler.onApproved(tx, ctx, approved, fx);
   return 'applied';
 }
 
@@ -364,6 +364,7 @@ async function fail(
   charge: ChargeRow,
   update: ProviderStatusUpdate,
   ctx: RequestContext,
+  fx: Effects,
 ): Promise<ApplyOutcome> {
   if (charge.status !== 'pending') return 'noop';
   const [failed] = await tx
@@ -393,6 +394,7 @@ async function fail(
     ctx,
     failed,
     update.status,
+    fx,
   );
   return 'applied';
 }
@@ -490,7 +492,7 @@ export async function applyProviderStatus(
       case 'rejected':
       case 'cancelled':
       case 'expired':
-        outcome = await fail(tx, deps, charge, update, ctx);
+        outcome = await fail(tx, deps, charge, update, ctx, fx);
         break;
       case 'refunded':
       case 'partially_refunded':
