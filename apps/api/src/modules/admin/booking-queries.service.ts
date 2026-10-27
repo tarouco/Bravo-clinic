@@ -48,9 +48,12 @@ export interface CalendarEventsFilters {
 const hasCategory = (categoryId: string) =>
   sql`exists (select 1 from ${bookingSegments} where ${bookingSegments.bookingId} = ${bookings.id} and ${bookingSegments.categoryId} = ${categoryId}::uuid)`;
 
-/** Holds whose time ran out are free slots, not events (NUC-80). */
+/**
+ * Holds whose time ran out are free slots, not events (NUC-80). A hold without an expiry (a fixed
+ * occurrence held for the renewal, REC-92) stays: `null <= now` would drop it from the feed.
+ */
 const liveHold = (now: Date) =>
-  sql`not (${bookings.status} in ('awaiting_payment', 'pre_reserved', 'held_for_renewal') and ${bookings.holdExpiresAt} <= ${now.toISOString()}::timestamptz)`;
+  sql`not (${bookings.status} in ('awaiting_payment', 'pre_reserved', 'held_for_renewal') and ${bookings.holdExpiresAt} is not null and ${bookings.holdExpiresAt} <= ${now.toISOString()}::timestamptz)`;
 
 /**
  * The week or month feed of Gestão de Reservas (NUC-157): bookings with first and full name,

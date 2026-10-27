@@ -1523,9 +1523,9 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Flow passes on a phone viewport (390×844) and counts ≤ 4 visible steps in the purchase
-- [ ] Gate check passes: `npm run e2e -w apps/web`
-- [ ] Test count: ≥ 1 e2e spec with ≥ 6 assertions passes
+- [x] Flow passes on a phone viewport (390×844) and counts ≤ 4 visible steps in the purchase
+- [x] Gate check passes: `npm run e2e -w apps/web`
+- [x] Test count: ≥ 1 e2e spec with ≥ 6 assertions passes
 
 **Tests**: e2e
 **Gate**: E2E
@@ -1549,9 +1549,9 @@ T48 → T50
 
 **Done when**:
 
-- [ ] All assertions above pass against the running API
-- [ ] Gate check passes: `npm run e2e -w apps/web`
-- [ ] Test count: ≥ 1 e2e spec passes
+- [x] All assertions above pass against the running API
+- [x] Gate check passes: `npm run e2e -w apps/web`
+- [x] Test count: ≥ 1 e2e spec passes
 
 **Tests**: e2e
 **Gate**: E2E
@@ -1575,9 +1575,9 @@ T48 → T50
 
 **Done when**:
 
-- [ ] All assertions above pass; Admin calendar shows next period occurrences as "Pré-reservada (renovação)" before the suspension and released after
-- [ ] Gate check passes: `npm run e2e -w apps/web`
-- [ ] Test count: ≥ 1 e2e spec passes
+- [x] All assertions above pass; Admin calendar shows next period occurrences as "Pré-reservada (renovação)" before the suspension and released after
+- [x] Gate check passes: `npm run e2e -w apps/web`
+- [x] Test count: ≥ 1 e2e spec passes
 
 **Tests**: e2e
 **Gate**: E2E
