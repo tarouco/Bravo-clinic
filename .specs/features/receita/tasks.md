@@ -767,11 +767,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Sandbox approval of an initial charge → active, period active (base today) or paid (future base); fixed occurrences confirmed with one e-mail carrying an `.ics` of 22 VEVENTs
-- [ ] Duplicate webhook → no second change; approval of an expired subscription → full refund + `payment.late_refund`
-- [ ] Renewal approval → period `paid`, held occurrences `confirmed`; rejection → declined e-mail + staff event
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 10 new tests pass
+- [x] Sandbox approval of an initial charge → active, period active (base today) or paid (future base); fixed occurrences confirmed with one e-mail carrying an `.ics` of 22 VEVENTs
+- [x] Duplicate webhook → no second change; approval of an expired subscription → full refund + `payment.late_refund`
+- [x] Renewal approval → period `paid`, held occurrences `confirmed`; rejection → declined e-mail + staff event
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 10 new tests pass
 
 **Tests**: integration
 **Gate**: full

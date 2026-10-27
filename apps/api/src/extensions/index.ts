@@ -10,13 +10,17 @@ import {
   fixedScheduleHandler,
   hourPackageHandler,
 } from '../modules/subscriptions/category-handlers';
+import {
+  subscriptionInitialHandler,
+  subscriptionRenewalHandler,
+} from '../modules/subscriptions/charge-handlers';
 import { defaultRegistry } from './defaults';
 import { createRegistry, type Registry } from './registry';
 
 /**
  * The one file later features edit to register their ports (AD-033): receita adds checkout steps,
  * payment-mode handlers, the live credit port, the closed-day compensation port, an availability
- * decorator and category handlers; gestao adds its notification and room-media ports.
+ * decorator, category handlers and charge handlers; gestao adds its notification and room-media ports.
  */
 export function buildRegistry(): Registry {
   return createRegistry({
@@ -31,6 +35,10 @@ export function buildRegistry(): Registry {
     closedDayCompensation: closedDayCompensationPort,
     availabilityDecorators: [slotDiscountDecorator],
     categoryHandlers: [hourPackageHandler, fixedScheduleHandler],
+    chargeHandlers: {
+      subscription_initial: subscriptionInitialHandler,
+      subscription_renewal: subscriptionRenewalHandler,
+    },
   });
 }
 

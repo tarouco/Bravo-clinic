@@ -527,7 +527,7 @@
 | REC-16 | P1: Buy an hour package | Tasks | T20, T21 | Implementing |
 | REC-17 | P1: Buy an hour package | Tasks | T28 | In Tasks |
 | REC-18 | P1: Buy an hour package | Tasks | T29 | In Tasks |
-| REC-19 | P1: Buy an hour package | Tasks | T21 | In Tasks |
+| REC-19 | P1: Buy an hour package | Tasks | T21 | Implementing |
 | REC-20 | P1: Buy an hour package | Tasks | T25 | In Tasks |
 | REC-21 | P1: Buy an hour package | Tasks | T19 | Implementing |
 | REC-22 | P1: Pay a booking with package hours | Tasks | T5 | Implementing |
@@ -557,8 +557,8 @@
 | REC-46 | P1: Renewal, suspension and closure | Tasks | T7 | Implementing |
 | REC-47 | P1: Renewal, suspension and closure | Tasks | T27 | In Tasks |
 | REC-48 | P1: Renewal, suspension and closure | Tasks | T27 | In Tasks |
-| REC-49 | P1: Renewal, suspension and closure | Tasks | T21 | In Tasks |
-| REC-50 | P1: Renewal, suspension and closure | Tasks | T21, T27 | In Tasks |
+| REC-49 | P1: Renewal, suspension and closure | Tasks | T21 | Implementing |
+| REC-50 | P1: Renewal, suspension and closure | Tasks | T21, T27 | Implementing |
 | REC-51 | P1: Renewal, suspension and closure | Tasks | T27 | In Tasks |
 | REC-52 | P1: Renewal, suspension and closure | Tasks | T27 | In Tasks |
 | REC-53 | P1: Renewal, suspension and closure | Tasks | T20, T28 | Implementing |
@@ -596,7 +596,7 @@
 | REC-85 | P1: Buy a fixed-schedule package | Tasks | T19 | Implementing |
 | REC-86 | P1: Buy a fixed-schedule package | Tasks | T19 | Implementing |
 | REC-87 | P1: Buy a fixed-schedule package | Tasks | T19 | Implementing |
-| REC-88 | P1: Buy a fixed-schedule package | Tasks | T21, T14 | In Tasks |
+| REC-88 | P1: Buy a fixed-schedule package | Tasks | T21, T14 | Implementing |
 | REC-89 | P1: Buy a fixed-schedule package | Tasks | T3, T18 | Implementing |
 | REC-90 | P1: Buy a fixed-schedule package | Tasks | T3 | Implementing |
 | REC-91 | P1: Buy a fixed-schedule package | Tasks | T37 | In Tasks |
@@ -668,7 +668,7 @@
 | REC-157 | P1: Public packages and purchase flow | Tasks | T37 | In Tasks |
 | REC-158 | P1: Public packages and purchase flow | Tasks | T37 | In Tasks |
 | REC-159 | P1: Subscription notifications | Tasks | T14 | Implementing |
-| REC-160 | P1: Subscription notifications | Tasks | T21 | In Tasks |
+| REC-160 | P1: Subscription notifications | Tasks | T21 | Implementing |
 | REC-161 | P1: Subscription notifications | Tasks | T14, T27 | Implementing |
 
 **Coverage:** 161 total, 161 mapped to tasks, 0 unmapped. End-to-end flows re-verify REC-14, REC-16, REC-24, REC-29, REC-41, REC-63, REC-66, REC-85, REC-88, REC-120, REC-123, REC-136, REC-150 in T48–T50.
