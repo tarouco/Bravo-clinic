@@ -911,11 +911,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] List filters by status/type and searches by name; reception GET 200, reception POST sell/cancel/adjust 403
-- [ ] Cancel without justification 422; with it → audit row; resend-link queues a new outbox row
-- [ ] `getCustomerBalances` returns open-period minutes, extra lots and credit lots of one user only; `listCouponUsesByUser` lists that user's uses newest first
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 12 new tests pass
+- [x] List filters by status/type and searches by name; reception GET 200, reception POST sell/cancel/adjust 403
+- [x] Cancel without justification 422; with it → audit row; resend-link queues a new outbox row
+- [x] `getCustomerBalances` returns open-period minutes, extra lots and credit lots of one user only; `listCouponUsesByUser` lists that user's uses newest first
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 12 new tests pass
 
 **Tests**: integration
 **Gate**: full

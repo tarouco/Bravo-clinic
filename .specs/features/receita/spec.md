@@ -553,7 +553,7 @@
 | REC-42 | P1: Balance ledger and extrato | Tasks | T1, T32 | Implementing |
 | REC-43 | P1: Balance ledger and extrato | Tasks | T10, T26 | Implementing |
 | REC-44 | P1: Balance ledger and extrato | Tasks | T10, T26 | Implementing |
-| REC-45 | P1: Balance ledger and extrato | Tasks | T26 | In Tasks |
+| REC-45 | P1: Balance ledger and extrato | Tasks | T26 | Implementing |
 | REC-46 | P1: Renewal, suspension and closure | Tasks | T7 | Implementing |
 | REC-47 | P1: Renewal, suspension and closure | Tasks | T27 | In Tasks |
 | REC-48 | P1: Renewal, suspension and closure | Tasks | T27 | In Tasks |
@@ -590,7 +590,7 @@
 | REC-79 | P1: Change and cancel | Tasks | T23, T39 | Implementing |
 | REC-80 | P1: Change and cancel | Tasks | T23 | Implementing |
 | REC-81 | P1: Change and cancel | Tasks | T23 | Implementing |
-| REC-82 | P1: Change and cancel | Tasks | T26 | In Tasks |
+| REC-82 | P1: Change and cancel | Tasks | T26 | Implementing |
 | REC-83 | P1: Buy a fixed-schedule package | Tasks | T3 | Implementing |
 | REC-84 | P1: Buy a fixed-schedule package | Tasks | T18, T36 | Implementing |
 | REC-85 | P1: Buy a fixed-schedule package | Tasks | T19 | Implementing |
@@ -656,13 +656,13 @@
 | REC-145 | P1: Perfil → Compras | Tasks | T24, T41 | Implementing |
 | REC-146 | P1: Perfil → Compras | Tasks | T38 | In Tasks |
 | REC-147 | P1: Perfil → Compras | Tasks | T38 | In Tasks |
-| REC-148 | P1: Admin subscriptions and sale | Tasks | T26, T46 | In Tasks |
-| REC-149 | P1: Admin subscriptions and sale | Tasks | T26, T46 | In Tasks |
+| REC-148 | P1: Admin subscriptions and sale | Tasks | T26, T46 | Implementing |
+| REC-149 | P1: Admin subscriptions and sale | Tasks | T26, T46 | Implementing |
 | REC-150 | P1: Admin subscriptions and sale | Tasks | T19, T26, T47 | Implementing |
 | REC-151 | P1: Admin subscriptions and sale | Tasks | T19 | Implementing |
 | REC-152 | P1: Admin subscriptions and sale | Tasks | T19 | Implementing |
-| REC-153 | P1: Admin subscriptions and sale | Tasks | T26 | In Tasks |
-| REC-154 | P1: Admin subscriptions and sale | Tasks | T26 | In Tasks |
+| REC-153 | P1: Admin subscriptions and sale | Tasks | T26 | Implementing |
+| REC-154 | P1: Admin subscriptions and sale | Tasks | T26 | Implementing |
 | REC-155 | P1: Public packages and purchase flow | Tasks | T18, T35 | Implementing |
 | REC-156 | P1: Public packages and purchase flow | Tasks | T37 | In Tasks |
 | REC-157 | P1: Public packages and purchase flow | Tasks | T37 | In Tasks |
