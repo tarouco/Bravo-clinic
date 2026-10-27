@@ -673,9 +673,9 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests assert create 201 + audit, invalid method/amount 422, delete without justification 422, with justification soft-deleted + audit containing it
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 5 tests pass
+- [x] Tests assert create 201 + audit, invalid method/amount 422, delete without justification 422, with justification soft-deleted + audit containing it
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 5 tests pass
 
 **Tests**: integration
 **Gate**: full

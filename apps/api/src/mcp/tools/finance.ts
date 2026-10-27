@@ -1,10 +1,17 @@
-import { expenseInputSchema, formatBRL, idSchema, localDateSchema } from '@bravo/core';
+import {
+  expenseInputSchema,
+  formatBRL,
+  idSchema,
+  localDateSchema,
+  manualReceiptInputSchema,
+} from '@bravo/core';
 import { and, eq, isNull } from 'drizzle-orm';
 import { z } from 'zod';
 import { withTransaction } from '../../db/client';
 import { expenseCategories, expenses } from '../../db/schema';
 import { notFound } from '../../lib/errors';
 import { createExpense, deleteExpense, listExpenses } from '../../modules/finance/expenses.service';
+import { createReceipt } from '../../modules/finance/receipts.service';
 import { defineTool, type ToolDefinition } from '../server';
 
 // gestao finance tools of design "MCP tool catalog" (AD-028): the same services as Financeiro.
@@ -59,6 +66,14 @@ export function financeTools(): ToolDefinition[] {
         );
         return { deleted: true, expense: deleted };
       },
+    }),
+    defineTool({
+      name: 'manual_receipt_create',
+      description:
+        'Registra um recebimento fora do gateway (dinheiro, maquininha ou Pix direto) com data, categoria de receita e valor em centavos.',
+      scope: 'write',
+      input: manualReceiptInputSchema,
+      run: (tc, input) => withTransaction(tc.deps.db, (tx) => createReceipt(tx, tc.ctx, input)),
     }),
   ];
 }

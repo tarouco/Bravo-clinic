@@ -517,8 +517,8 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-17 | P1: Expenses and manual receipts | Tasks | T4, T15 | Implementing |
 | GES-18 | P1: Expenses and manual receipts | Tasks | T15 | Implementing |
 | GES-19 | P1: Expenses and manual receipts | Tasks | T15 | Implementing |
-| GES-20 | P1: Expenses and manual receipts | Tasks | T17 | In Tasks |
-| GES-21 | P1: Expenses and manual receipts | Tasks | T17 | In Tasks |
+| GES-20 | P1: Expenses and manual receipts | Tasks | T17 | Implementing |
+| GES-21 | P1: Expenses and manual receipts | Tasks | T17 | Implementing |
 | GES-22 | P1: Financeiro overview | Tasks | T2, T18 | Implementing |
 | GES-23 | P1: Financeiro overview | Tasks | T2 | Implementing |
 | GES-24 | P1: Financeiro overview | Tasks | T2, T18 | Implementing |
