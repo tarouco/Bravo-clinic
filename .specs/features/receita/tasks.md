@@ -593,11 +593,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Closing 2026-11-20 (clinic) with a Pacote 20h period and a Meio turno period → 40-min lot, 20533-cent credit lot, Friday occurrence `cancelled_by_clinic`, two `subscription.compensation` outbox rows; preview returns `{ subscribers:2, minutes:40, creditCents:20533, fixedOccurrencesCancelled:1 }`
-- [ ] Room-specific closure: hour package not compensated; fixed only for the same room
-- [ ] Re-apply creates nothing; setting disabled → nothing
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 8 new tests pass
+- [x] Closing 2026-11-20 (clinic) with a Pacote 20h period and a Meio turno period → 40-min lot, 20533-cent credit lot, Friday occurrence `cancelled_by_clinic`, two `subscription.compensation` outbox rows; preview returns `{ subscribers:2, minutes:40, creditCents:20533, fixedOccurrencesCancelled:1 }`
+- [x] Room-specific closure: hour package not compensated; fixed only for the same room
+- [x] Re-apply creates nothing; setting disabled → nothing
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 8 new tests pass
 
 **Tests**: integration
 **Gate**: full

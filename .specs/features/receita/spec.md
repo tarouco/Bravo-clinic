@@ -605,13 +605,13 @@
 | REC-94 | P1: Fixed-schedule lifecycle | Tasks | T16 | In Tasks |
 | REC-95 | P1: Fixed-schedule lifecycle | Tasks | T16 | In Tasks |
 | REC-96 | P1: Closed-day compensation | Tasks | T6 | Implementing |
-| REC-97 | P1: Closed-day compensation | Tasks | T15 | In Tasks |
-| REC-98 | P1: Closed-day compensation | Tasks | T15 | In Tasks |
-| REC-99 | P1: Closed-day compensation | Tasks | T15 | In Tasks |
-| REC-100 | P1: Closed-day compensation | Tasks | T15 | In Tasks |
-| REC-101 | P1: Closed-day compensation | Tasks | T15 | In Tasks |
+| REC-97 | P1: Closed-day compensation | Tasks | T15 | Implementing |
+| REC-98 | P1: Closed-day compensation | Tasks | T15 | Implementing |
+| REC-99 | P1: Closed-day compensation | Tasks | T15 | Implementing |
+| REC-100 | P1: Closed-day compensation | Tasks | T15 | Implementing |
+| REC-101 | P1: Closed-day compensation | Tasks | T15 | Implementing |
 | REC-102 | P1: Closed-day compensation | Tasks | T20 | In Tasks |
-| REC-103 | P1: Closed-day compensation | Tasks | T15 | In Tasks |
+| REC-103 | P1: Closed-day compensation | Tasks | T15 | Implementing |
 | REC-104 | P1: Closed-day compensation | Tasks | T8, T15 | Implementing |
 | REC-105 | P1: Customer credits | Tasks | T9 | Implementing |
 | REC-106 | P1: Customer credits | Tasks | T9 | Implementing |
