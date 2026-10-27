@@ -717,216 +717,216 @@ CA-9 also returns `clinicOptions = policy.clinic_cancel_options` (factory `['ref
 
 | Requirement ID | Story | Phase | Task(s) | Status |
 | --- | --- | --- | --- | --- |
-| NUC-01 | P1: Booking vocabulary and contracts | Tasks | T1 | Implementing |
-| NUC-02 | P1: Booking vocabulary and contracts | Tasks | T1 | Implementing |
-| NUC-03 | P1: Booking vocabulary and contracts | Tasks | T1 | Implementing |
-| NUC-04 | P1: Booking vocabulary and contracts | Tasks | T1, T5 | Implementing |
-| NUC-05 | P1: Booking vocabulary and contracts | Tasks | T5, T20, T23 | Implementing |
-| NUC-06 | P1: Booking vocabulary and contracts | Tasks | T23, T26 | Implementing |
-| NUC-07 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
-| NUC-08 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
-| NUC-09 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
-| NUC-10 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
-| NUC-11 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
-| NUC-12 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
-| NUC-13 | P1: Slot grid with cleanup | Tasks | T2, T20 | Implementing |
-| NUC-14 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
-| NUC-15 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
-| NUC-16 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
-| NUC-17 | P1: Slot grid with cleanup | Tasks | T2 | Implementing |
-| NUC-18 | P1: Pricing engine | Tasks | T3 | Implementing |
-| NUC-19 | P1: Pricing engine | Tasks | T3 | Implementing |
-| NUC-20 | P1: Pricing engine | Tasks | T3 | Implementing |
-| NUC-21 | P1: Pricing engine | Tasks | T3 | Implementing |
-| NUC-22 | P1: Pricing engine | Tasks | T3 | Implementing |
-| NUC-23 | P1: Pricing engine | Tasks | T3 | Implementing |
-| NUC-24 | P1: Pricing engine | Tasks | T3 | Implementing |
-| NUC-25 | P1: Payment split and booking policies | Tasks | T4 | Implementing |
-| NUC-26 | P1: Payment split and booking policies | Tasks | T4 | Implementing |
-| NUC-27 | P1: Payment split and booking policies | Tasks | T4 | Implementing |
-| NUC-28 | P1: Payment split and booking policies | Tasks | T4 | Implementing |
-| NUC-29 | P1: Payment split and booking policies | Tasks | T4 | Implementing |
-| NUC-30 | P1: Payment split and booking policies | Tasks | T4 | Implementing |
-| NUC-31 | P1: Payment split and booking policies | Tasks | T4 | Implementing |
-| NUC-32 | P1: Business hours and calendar parameters | Tasks | T10 | Implementing |
-| NUC-33 | P1: Business hours and calendar parameters | Tasks | T10 | Implementing |
-| NUC-34 | P1: Business hours and calendar parameters | Tasks | T10 | Implementing |
-| NUC-35 | P1: Business hours and calendar parameters | Tasks | T10 | Implementing |
-| NUC-36 | P1: Business hours and calendar parameters | Tasks | T10 | Implementing |
-| NUC-37 | P1: Business hours and calendar parameters | Tasks | T10 | Implementing |
-| NUC-38 | P1: Business hours and calendar parameters | Tasks | T10 | Implementing |
-| NUC-39 | P1: Business hours and calendar parameters | Tasks | T24 | Implementing |
-| NUC-40 | P1: Business hours and calendar parameters | Tasks | T43 | In Tasks |
-| NUC-41 | P1: Business hours and calendar parameters | Tasks | T43 | In Tasks |
-| NUC-42 | P2: Drag-edit business hours | Tasks | T43 | In Tasks |
-| NUC-43 | P1: Holidays and closed days | Tasks | T11 | Implementing |
-| NUC-44 | P1: Holidays and closed days | Tasks | T11 | Implementing |
-| NUC-45 | P1: Holidays and closed days | Tasks | T11 | Implementing |
-| NUC-46 | P1: Holidays and closed days | Tasks | T11 | Implementing |
-| NUC-47 | P1: Holidays and closed days | Tasks | T11 | Implementing |
-| NUC-48 | P1: Holidays and closed days | Tasks | T11 | Implementing |
-| NUC-49 | P1: Holidays and closed days | Tasks | T11 | Implementing |
-| NUC-50 | P1: Holidays and closed days | Tasks | T11 | Implementing |
-| NUC-51 | P1: Holidays and closed days | Tasks | T11, T20 | Implementing |
-| NUC-52 | P1: Holidays and closed days | Tasks | T45 | In Tasks |
-| NUC-53 | P2: Holiday review banner | Tasks | T45 | In Tasks |
-| NUC-54 | P1: Manual blocks with tags | Tasks | T12 | Implementing |
-| NUC-55 | P1: Manual blocks with tags | Tasks | T12 | Implementing |
-| NUC-56 | P1: Manual blocks with tags | Tasks | T12 | Implementing |
-| NUC-57 | P1: Manual blocks with tags | Tasks | T12, T26 | Implementing |
-| NUC-58 | P1: Manual blocks with tags | Tasks | T12 | Implementing |
-| NUC-59 | P1: Manual blocks with tags | Tasks | T12 | Implementing |
-| NUC-60 | P1: Manual blocks with tags | Tasks | T45 | In Tasks |
-| NUC-61 | P1: Booking categories and price table | Tasks | T13 | Implementing |
-| NUC-62 | P1: Booking categories and price table | Tasks | T13 | Implementing |
-| NUC-63 | P1: Booking categories and price table | Tasks | T13 | Implementing |
-| NUC-64 | P1: Booking categories and price table | Tasks | T13 | Implementing |
-| NUC-65 | P1: Booking categories and price table | Tasks | T13 | Implementing |
-| NUC-66 | P1: Booking categories and price table | Tasks | T13 | Implementing |
-| NUC-67 | P1: Booking categories and price table | Tasks | T13 | Implementing |
-| NUC-68 | P1: Booking categories and price table | Tasks | T13 | Implementing |
-| NUC-69 | P1: Booking categories and price table | Tasks | T13 | Implementing |
-| NUC-70 | P1: Booking categories and price table | Tasks | T20 | Implementing |
-| NUC-71 | P1: Booking categories and price table | Tasks | T44 | In Tasks |
-| NUC-72 | P1: Booking categories and price table | Tasks | T44 | In Tasks |
-| NUC-73 | P1: Booking categories and price table | Tasks | T43 | In Tasks |
-| NUC-74 | P1: Public availability and catalog | Tasks | T8 | Implementing |
-| NUC-75 | P1: Public availability and catalog | Tasks | T8 | Implementing |
-| NUC-76 | P1: Public availability and catalog | Tasks | T8 | Implementing |
-| NUC-77 | P1: Public availability and catalog | Tasks | T7 | Implementing |
-| NUC-78 | P1: Public availability and catalog | Tasks | T7 | Implementing |
-| NUC-79 | P1: Public availability and catalog | Tasks | T7 | Implementing |
-| NUC-80 | P1: Public availability and catalog | Tasks | T7 | Implementing |
-| NUC-81 | P1: Public availability and catalog | Tasks | T7, T9 | Implementing |
-| NUC-82 | P1: Public availability and catalog | Tasks | T7 | Implementing |
-| NUC-83 | P1: Public availability and catalog | Tasks | T7 | Implementing |
-| NUC-84 | P1: Public availability and catalog | Tasks | T8 | Implementing |
-| NUC-85 | P1: Public availability and catalog | Tasks | T8 | Implementing |
-| NUC-86 | P1: Book and pay the sinal | Tasks | T9 | Implementing |
-| NUC-87 | P1: Book and pay the sinal | Tasks | T9 | Implementing |
-| NUC-88 | P1: Book and pay the sinal | Tasks | T9 | Implementing |
-| NUC-89 | P1: Book and pay the sinal | Tasks | T20 | Implementing |
-| NUC-90 | P1: Book and pay the sinal | Tasks | T20 | Implementing |
-| NUC-91 | P1: Book and pay the sinal | Tasks | T20 | Implementing |
-| NUC-92 | P1: Book and pay the sinal | Tasks | T20 | Implementing |
-| NUC-93 | P1: Book and pay the sinal | Tasks | T20, T49 | Implementing |
-| NUC-94 | P1: Book and pay the sinal | Tasks | T20 | Implementing |
-| NUC-95 | P1: Book and pay the sinal | Tasks | T17, T20 | Implementing |
-| NUC-96 | P1: Book and pay the sinal | Tasks | T20 | Implementing |
-| NUC-97 | P1: Book and pay the sinal | Tasks | T20 | Implementing |
-| NUC-98 | P1: Book and pay the sinal | Tasks | T30, T37 | In Tasks |
-| NUC-99 | P1: Book and pay the sinal | Tasks | T32, T37 | In Tasks |
-| NUC-100 | P1: Book and pay the sinal | Tasks | T31, T38 | In Tasks |
-| NUC-101 | P1: Book and pay the sinal | Tasks | T38 | In Tasks |
-| NUC-102 | P1: Book and pay the sinal | Tasks | T39 | In Tasks |
-| NUC-103 | P1: Book and pay the sinal | Tasks | T39, T49 | In Tasks |
-| NUC-104 | P1: Book and pay the sinal | Tasks | T6, T9 | Implementing |
-| NUC-105 | P1: Gateway-independent payments | Tasks | T15, T16 | Implementing |
-| NUC-106 | P1: Gateway-independent payments | Tasks | T15 | Implementing |
-| NUC-107 | P1: Gateway-independent payments | Tasks | T17 | Implementing |
-| NUC-108 | P1: Gateway-independent payments | Tasks | T17 | Implementing |
-| NUC-109 | P1: Gateway-independent payments | Tasks | T17 | Implementing |
-| NUC-110 | P1: Gateway-independent payments | Tasks | T17 | Implementing |
-| NUC-111 | P1: Gateway-independent payments | Tasks | T17 | Implementing |
-| NUC-112 | P1: Gateway-independent payments | Tasks | T18 | Implementing |
-| NUC-113 | P1: Gateway-independent payments | Tasks | T18 | Implementing |
-| NUC-114 | P1: Gateway-independent payments | Tasks | T16, T18 | Implementing |
-| NUC-115 | P1: Gateway-independent payments | Tasks | T18 | Implementing |
-| NUC-116 | P1: Gateway-independent payments | Tasks | T18 | Implementing |
-| NUC-117 | P1: Gateway-independent payments | Tasks | T18 | Implementing |
-| NUC-118 | P1: Gateway-independent payments | Tasks | T18, T39 | Implementing |
-| NUC-119 | P1: Gateway-independent payments | Tasks | T18, T28 | Implementing |
-| NUC-120 | P1: Gateway-independent payments | Tasks | T19, T39 | Implementing |
-| NUC-121 | P1: Gateway-independent payments | Tasks | T19 | Implementing |
-| NUC-122 | P1: Gateway-independent payments | Tasks | T16 | Implementing |
-| NUC-123 | P1: Gateway-independent payments | Tasks | T16 | Implementing |
-| NUC-124 | P1: Gateway-independent payments | Tasks | T16 | Implementing |
-| NUC-125 | P1: Gateway-independent payments | Tasks | T15 | Implementing |
-| NUC-126 | P1: Gateway-independent payments | Tasks | T19 | Implementing |
-| NUC-127 | P1: Gateway-independent payments | Tasks | T19 | Implementing |
-| NUC-128 | P1: Gateway-independent payments | Tasks | T15, T19 | Implementing |
-| NUC-129 | P1: Gateway-independent payments | Tasks | T19 | Implementing |
-| NUC-130 | P1: Balance charge, reminders and deadline | Tasks | T27 | Implementing |
-| NUC-131 | P1: Balance charge, reminders and deadline | Tasks | T27 | Implementing |
-| NUC-132 | P1: Balance charge, reminders and deadline | Tasks | T27 | Implementing |
-| NUC-133 | P1: Balance charge, reminders and deadline | Tasks | T27 | Implementing |
-| NUC-134 | P1: Balance charge, reminders and deadline | Tasks | T17 | Implementing |
-| NUC-135 | P1: Balance charge, reminders and deadline | Tasks | T17 | Implementing |
-| NUC-136 | P1: Confirmation e-mails with .ics | Tasks | T14, T18 | Implementing |
-| NUC-137 | P1: Confirmation e-mails with .ics | Tasks | T14, T22, T23 | Implementing |
-| NUC-138 | P1: Confirmation e-mails with .ics | Tasks | T27 | Implementing |
-| NUC-139 | P1: Confirmation e-mails with .ics | Tasks | T14 | Implementing |
-| NUC-140 | P1: Confirmation e-mails with .ics | Tasks | T21 | Implementing |
-| NUC-141 | P1: Reschedule and cancel | Tasks | T21 | Implementing |
-| NUC-142 | P1: Reschedule and cancel | Tasks | T22 | Implementing |
-| NUC-143 | P1: Reschedule and cancel | Tasks | T22 | Implementing |
-| NUC-144 | P1: Reschedule and cancel | Tasks | T22 | Implementing |
-| NUC-145 | P1: Reschedule and cancel | Tasks | T6, T22 | Implementing |
-| NUC-146 | P1: Reschedule and cancel | Tasks | T22 | Implementing |
-| NUC-147 | P1: Reschedule and cancel | Tasks | T22, T26 | Implementing |
-| NUC-148 | P1: Reschedule and cancel | Tasks | T22, T23 | Implementing |
-| NUC-149 | P1: Reschedule and cancel | Tasks | T22 | Implementing |
-| NUC-150 | P1: Reschedule and cancel | Tasks | T23 | Implementing |
-| NUC-151 | P1: Reschedule and cancel | Tasks | T23 | Implementing |
-| NUC-152 | P1: Reschedule and cancel | Tasks | T23 | Implementing |
-| NUC-153 | P1: Reschedule and cancel | Tasks | T23 | Implementing |
-| NUC-154 | P1: Reschedule and cancel | Tasks | T41 | In Tasks |
-| NUC-155 | P1: Reschedule and cancel | Tasks | T41 | In Tasks |
-| NUC-156 | P1: Reschedule and cancel | Tasks | T41 | In Tasks |
-| NUC-157 | P1: Gestão de Reservas operations | Tasks | T25 | Implementing |
-| NUC-158 | P1: Gestão de Reservas operations | Tasks | T33, T46 | In Tasks |
-| NUC-159 | P1: Gestão de Reservas operations | Tasks | T30, T46 | In Tasks |
-| NUC-160 | P1: Gestão de Reservas operations | Tasks | T46 | In Tasks |
-| NUC-161 | P1: Gestão de Reservas operations | Tasks | T24 | Implementing |
-| NUC-162 | P1: Gestão de Reservas operations | Tasks | T24 | Implementing |
-| NUC-163 | P1: Gestão de Reservas operations | Tasks | T24 | Implementing |
-| NUC-164 | P1: Gestão de Reservas operations | Tasks | T24 | Implementing |
-| NUC-165 | P1: Gestão de Reservas operations | Tasks | T24 | Implementing |
-| NUC-166 | P1: Gestão de Reservas operations | Tasks | T26 | Implementing |
-| NUC-167 | P1: Gestão de Reservas operations | Tasks | T24 | Implementing |
-| NUC-168 | P1: Gestão de Reservas operations | Tasks | T28 | Implementing |
-| NUC-169 | P1: Gestão de Reservas operations | Tasks | T25 | Implementing |
-| NUC-170 | P1: Gestão de Reservas operations | Tasks | T47 | In Tasks |
-| NUC-171 | P1: Gestão de Reservas operations | Tasks | T39 | In Tasks |
-| NUC-172 | P1: Policies panel | Tasks | T10 | Implementing |
-| NUC-173 | P1: Policies panel | Tasks | T10 | Implementing |
-| NUC-174 | P1: Policies panel | Tasks | T10 | Implementing |
-| NUC-175 | P1: Policies panel | Tasks | T23 | Implementing |
-| NUC-176 | P1: Policies panel | Tasks | T48 | In Tasks |
-| NUC-177 | P1: Bookings list and CSV export | Tasks | T25 | Implementing |
-| NUC-178 | P1: Bookings list and CSV export | Tasks | T25 | Implementing |
-| NUC-179 | P1: Bookings list and CSV export | Tasks | T31, T48 | In Tasks |
-| NUC-180 | P1: Public site pages | Tasks | T34 | In Tasks |
-| NUC-181 | P1: Public site pages | Tasks | T34 | In Tasks |
-| NUC-182 | P1: Public site pages | Tasks | T35 | In Tasks |
-| NUC-183 | P1: Public site pages | Tasks | T36 | In Tasks |
-| NUC-184 | P1: Public site pages | Tasks | T36 | In Tasks |
-| NUC-185 | P1: Public site pages | Tasks | T36 | In Tasks |
-| NUC-186 | P1: Public site pages | Tasks | T36 | In Tasks |
-| NUC-187 | P1: Public site pages | Tasks | T38 | In Tasks |
-| NUC-188 | P1: Minhas reservas, agenda and profile | Tasks | T21 | Implementing |
-| NUC-189 | P1: Minhas reservas, agenda and profile | Tasks | T40 | In Tasks |
-| NUC-190 | P1: Minhas reservas, agenda and profile | Tasks | T33, T40 | In Tasks |
-| NUC-191 | P1: Minhas reservas, agenda and profile | Tasks | T40 | In Tasks |
-| NUC-192 | P1: Minhas reservas, agenda and profile | Tasks | T21 | Implementing |
-| NUC-193 | P1: Minhas reservas, agenda and profile | Tasks | T42 | In Tasks |
-| NUC-194 | P1: Minhas reservas, agenda and profile | Tasks | T42 | In Tasks |
-| NUC-195 | P1: Scheduled jobs | Tasks | T26 | Implementing |
-| NUC-196 | P1: Scheduled jobs | Tasks | T26 | Implementing |
-| NUC-197 | P1: Scheduled jobs | Tasks | T26 | Implementing |
-| NUC-198 | P1: Scheduled jobs | Tasks | T28 | Implementing |
-| NUC-199 | P1: Scheduled jobs | Tasks | T26, T50 | Implementing |
-| NUC-200 | P1: Scheduled jobs | Tasks | T26 | Implementing |
-| NUC-201 | P1: Extension points | Tasks | T6 | Implementing |
-| NUC-202 | P1: Extension points | Tasks | T7, T32 | In Tasks |
-| NUC-203 | P1: Extension points | Tasks | T29 | In Tasks |
-| NUC-204 | P1: Extension points | Tasks | T11 | Implementing |
-| NUC-205 | P1: Extension points | Tasks | T6, T18, T23, T26 | Implementing |
-| NUC-206 | P2: Booking funnel analytics | Tasks | T29, T38 | In Tasks |
-| NUC-207 | P1: Book and pay the sinal | Tasks | T20 | Implementing |
-| NUC-208 | P1: Gateway-independent payments | Tasks | T15, T16 | Implementing |
-| NUC-209 | P1: Extension points | Tasks | T6, T17, T18 | Implementing |
-| NUC-210 | P1: Extension points | Tasks | T6, T23 | Implementing |
+| NUC-01 | P1: Booking vocabulary and contracts | Tasks | T1 | Verified |
+| NUC-02 | P1: Booking vocabulary and contracts | Tasks | T1 | Verified |
+| NUC-03 | P1: Booking vocabulary and contracts | Tasks | T1 | Verified |
+| NUC-04 | P1: Booking vocabulary and contracts | Tasks | T1, T5 | Verified |
+| NUC-05 | P1: Booking vocabulary and contracts | Tasks | T5, T20, T23 | Verified |
+| NUC-06 | P1: Booking vocabulary and contracts | Tasks | T23, T26 | Verified |
+| NUC-07 | P1: Slot grid with cleanup | Tasks | T2 | Verified |
+| NUC-08 | P1: Slot grid with cleanup | Tasks | T2 | Verified |
+| NUC-09 | P1: Slot grid with cleanup | Tasks | T2 | Verified |
+| NUC-10 | P1: Slot grid with cleanup | Tasks | T2 | Verified |
+| NUC-11 | P1: Slot grid with cleanup | Tasks | T2 | Verified |
+| NUC-12 | P1: Slot grid with cleanup | Tasks | T2 | Verified |
+| NUC-13 | P1: Slot grid with cleanup | Tasks | T2, T20 | Verified |
+| NUC-14 | P1: Slot grid with cleanup | Tasks | T2 | Verified |
+| NUC-15 | P1: Slot grid with cleanup | Tasks | T2 | Verified |
+| NUC-16 | P1: Slot grid with cleanup | Tasks | T2 | Verified |
+| NUC-17 | P1: Slot grid with cleanup | Tasks | T2 | Verified |
+| NUC-18 | P1: Pricing engine | Tasks | T3 | Verified |
+| NUC-19 | P1: Pricing engine | Tasks | T3 | Verified |
+| NUC-20 | P1: Pricing engine | Tasks | T3 | Verified |
+| NUC-21 | P1: Pricing engine | Tasks | T3 | Verified |
+| NUC-22 | P1: Pricing engine | Tasks | T3 | Verified |
+| NUC-23 | P1: Pricing engine | Tasks | T3 | Verified |
+| NUC-24 | P1: Pricing engine | Tasks | T3 | Verified |
+| NUC-25 | P1: Payment split and booking policies | Tasks | T4 | Verified |
+| NUC-26 | P1: Payment split and booking policies | Tasks | T4 | Verified |
+| NUC-27 | P1: Payment split and booking policies | Tasks | T4 | Verified |
+| NUC-28 | P1: Payment split and booking policies | Tasks | T4 | Verified |
+| NUC-29 | P1: Payment split and booking policies | Tasks | T4 | Verified |
+| NUC-30 | P1: Payment split and booking policies | Tasks | T4 | Verified |
+| NUC-31 | P1: Payment split and booking policies | Tasks | T4 | Verified |
+| NUC-32 | P1: Business hours and calendar parameters | Tasks | T10 | Verified |
+| NUC-33 | P1: Business hours and calendar parameters | Tasks | T10 | Verified |
+| NUC-34 | P1: Business hours and calendar parameters | Tasks | T10 | Verified |
+| NUC-35 | P1: Business hours and calendar parameters | Tasks | T10 | Verified |
+| NUC-36 | P1: Business hours and calendar parameters | Tasks | T10 | Verified |
+| NUC-37 | P1: Business hours and calendar parameters | Tasks | T10 | Verified |
+| NUC-38 | P1: Business hours and calendar parameters | Tasks | T10 | Verified |
+| NUC-39 | P1: Business hours and calendar parameters | Tasks | T24 | Verified |
+| NUC-40 | P1: Business hours and calendar parameters | Tasks | T43 | Verified |
+| NUC-41 | P1: Business hours and calendar parameters | Tasks | T43 | Verified |
+| NUC-42 | P2: Drag-edit business hours | Tasks | T43 | Verified |
+| NUC-43 | P1: Holidays and closed days | Tasks | T11 | Verified |
+| NUC-44 | P1: Holidays and closed days | Tasks | T11 | Verified |
+| NUC-45 | P1: Holidays and closed days | Tasks | T11 | Verified |
+| NUC-46 | P1: Holidays and closed days | Tasks | T11 | Verified |
+| NUC-47 | P1: Holidays and closed days | Tasks | T11 | Verified |
+| NUC-48 | P1: Holidays and closed days | Tasks | T11 | Verified |
+| NUC-49 | P1: Holidays and closed days | Tasks | T11 | Verified |
+| NUC-50 | P1: Holidays and closed days | Tasks | T11 | Verified |
+| NUC-51 | P1: Holidays and closed days | Tasks | T11, T20 | Verified |
+| NUC-52 | P1: Holidays and closed days | Tasks | T45 | Verified |
+| NUC-53 | P2: Holiday review banner | Tasks | T45 | Verified |
+| NUC-54 | P1: Manual blocks with tags | Tasks | T12 | Verified |
+| NUC-55 | P1: Manual blocks with tags | Tasks | T12 | Verified |
+| NUC-56 | P1: Manual blocks with tags | Tasks | T12 | Verified |
+| NUC-57 | P1: Manual blocks with tags | Tasks | T12, T26 | Verified |
+| NUC-58 | P1: Manual blocks with tags | Tasks | T12 | Verified |
+| NUC-59 | P1: Manual blocks with tags | Tasks | T12 | Verified |
+| NUC-60 | P1: Manual blocks with tags | Tasks | T45 | Verified |
+| NUC-61 | P1: Booking categories and price table | Tasks | T13 | Verified |
+| NUC-62 | P1: Booking categories and price table | Tasks | T13 | Verified |
+| NUC-63 | P1: Booking categories and price table | Tasks | T13 | Verified |
+| NUC-64 | P1: Booking categories and price table | Tasks | T13 | Verified |
+| NUC-65 | P1: Booking categories and price table | Tasks | T13 | Verified |
+| NUC-66 | P1: Booking categories and price table | Tasks | T13 | Verified |
+| NUC-67 | P1: Booking categories and price table | Tasks | T13 | Verified |
+| NUC-68 | P1: Booking categories and price table | Tasks | T13 | Verified |
+| NUC-69 | P1: Booking categories and price table | Tasks | T13 | Verified |
+| NUC-70 | P1: Booking categories and price table | Tasks | T20 | Verified |
+| NUC-71 | P1: Booking categories and price table | Tasks | T44 | Verified |
+| NUC-72 | P1: Booking categories and price table | Tasks | T44 | Verified |
+| NUC-73 | P1: Booking categories and price table | Tasks | T43 | Verified |
+| NUC-74 | P1: Public availability and catalog | Tasks | T8 | Verified |
+| NUC-75 | P1: Public availability and catalog | Tasks | T8 | Verified |
+| NUC-76 | P1: Public availability and catalog | Tasks | T8 | Verified |
+| NUC-77 | P1: Public availability and catalog | Tasks | T7 | Verified |
+| NUC-78 | P1: Public availability and catalog | Tasks | T7 | Verified |
+| NUC-79 | P1: Public availability and catalog | Tasks | T7 | Verified |
+| NUC-80 | P1: Public availability and catalog | Tasks | T7 | Verified |
+| NUC-81 | P1: Public availability and catalog | Tasks | T7, T9 | Verified |
+| NUC-82 | P1: Public availability and catalog | Tasks | T7 | Verified |
+| NUC-83 | P1: Public availability and catalog | Tasks | T7 | Verified |
+| NUC-84 | P1: Public availability and catalog | Tasks | T8 | Verified |
+| NUC-85 | P1: Public availability and catalog | Tasks | T8 | Verified |
+| NUC-86 | P1: Book and pay the sinal | Tasks | T9 | Verified |
+| NUC-87 | P1: Book and pay the sinal | Tasks | T9 | Verified |
+| NUC-88 | P1: Book and pay the sinal | Tasks | T9 | Verified |
+| NUC-89 | P1: Book and pay the sinal | Tasks | T20 | Verified |
+| NUC-90 | P1: Book and pay the sinal | Tasks | T20 | Verified |
+| NUC-91 | P1: Book and pay the sinal | Tasks | T20 | Verified |
+| NUC-92 | P1: Book and pay the sinal | Tasks | T20 | Verified |
+| NUC-93 | P1: Book and pay the sinal | Tasks | T20, T49 | Verified |
+| NUC-94 | P1: Book and pay the sinal | Tasks | T20 | Verified |
+| NUC-95 | P1: Book and pay the sinal | Tasks | T17, T20 | Verified |
+| NUC-96 | P1: Book and pay the sinal | Tasks | T20 | Verified |
+| NUC-97 | P1: Book and pay the sinal | Tasks | T20 | Verified |
+| NUC-98 | P1: Book and pay the sinal | Tasks | T30, T37 | Verified |
+| NUC-99 | P1: Book and pay the sinal | Tasks | T32, T37 | Verified |
+| NUC-100 | P1: Book and pay the sinal | Tasks | T31, T38 | Verified |
+| NUC-101 | P1: Book and pay the sinal | Tasks | T38 | Verified |
+| NUC-102 | P1: Book and pay the sinal | Tasks | T39 | Verified |
+| NUC-103 | P1: Book and pay the sinal | Tasks | T39, T49 | Verified |
+| NUC-104 | P1: Book and pay the sinal | Tasks | T6, T9 | Verified |
+| NUC-105 | P1: Gateway-independent payments | Tasks | T15, T16 | Verified |
+| NUC-106 | P1: Gateway-independent payments | Tasks | T15 | Verified |
+| NUC-107 | P1: Gateway-independent payments | Tasks | T17 | Verified |
+| NUC-108 | P1: Gateway-independent payments | Tasks | T17 | Verified |
+| NUC-109 | P1: Gateway-independent payments | Tasks | T17 | Verified |
+| NUC-110 | P1: Gateway-independent payments | Tasks | T17 | Verified |
+| NUC-111 | P1: Gateway-independent payments | Tasks | T17 | Verified |
+| NUC-112 | P1: Gateway-independent payments | Tasks | T18 | Verified |
+| NUC-113 | P1: Gateway-independent payments | Tasks | T18 | Verified |
+| NUC-114 | P1: Gateway-independent payments | Tasks | T16, T18 | Verified |
+| NUC-115 | P1: Gateway-independent payments | Tasks | T18 | Verified |
+| NUC-116 | P1: Gateway-independent payments | Tasks | T18 | Verified |
+| NUC-117 | P1: Gateway-independent payments | Tasks | T18 | Verified |
+| NUC-118 | P1: Gateway-independent payments | Tasks | T18, T39 | Verified |
+| NUC-119 | P1: Gateway-independent payments | Tasks | T18, T28 | Verified |
+| NUC-120 | P1: Gateway-independent payments | Tasks | T19, T39 | Verified |
+| NUC-121 | P1: Gateway-independent payments | Tasks | T19 | Verified |
+| NUC-122 | P1: Gateway-independent payments | Tasks | T16 | Verified |
+| NUC-123 | P1: Gateway-independent payments | Tasks | T16 | Verified |
+| NUC-124 | P1: Gateway-independent payments | Tasks | T16 | Verified |
+| NUC-125 | P1: Gateway-independent payments | Tasks | T15 | Verified |
+| NUC-126 | P1: Gateway-independent payments | Tasks | T19 | Verified |
+| NUC-127 | P1: Gateway-independent payments | Tasks | T19 | Verified |
+| NUC-128 | P1: Gateway-independent payments | Tasks | T15, T19 | Verified |
+| NUC-129 | P1: Gateway-independent payments | Tasks | T19 | Verified |
+| NUC-130 | P1: Balance charge, reminders and deadline | Tasks | T27 | Verified |
+| NUC-131 | P1: Balance charge, reminders and deadline | Tasks | T27 | Verified |
+| NUC-132 | P1: Balance charge, reminders and deadline | Tasks | T27 | Verified |
+| NUC-133 | P1: Balance charge, reminders and deadline | Tasks | T27 | Verified |
+| NUC-134 | P1: Balance charge, reminders and deadline | Tasks | T17 | Verified |
+| NUC-135 | P1: Balance charge, reminders and deadline | Tasks | T17 | Verified |
+| NUC-136 | P1: Confirmation e-mails with .ics | Tasks | T14, T18 | Verified |
+| NUC-137 | P1: Confirmation e-mails with .ics | Tasks | T14, T22, T23 | Verified |
+| NUC-138 | P1: Confirmation e-mails with .ics | Tasks | T27 | Verified |
+| NUC-139 | P1: Confirmation e-mails with .ics | Tasks | T14 | Verified |
+| NUC-140 | P1: Confirmation e-mails with .ics | Tasks | T21 | Verified |
+| NUC-141 | P1: Reschedule and cancel | Tasks | T21 | Verified |
+| NUC-142 | P1: Reschedule and cancel | Tasks | T22 | Verified |
+| NUC-143 | P1: Reschedule and cancel | Tasks | T22 | Verified |
+| NUC-144 | P1: Reschedule and cancel | Tasks | T22 | Verified |
+| NUC-145 | P1: Reschedule and cancel | Tasks | T6, T22 | Verified |
+| NUC-146 | P1: Reschedule and cancel | Tasks | T22 | Verified |
+| NUC-147 | P1: Reschedule and cancel | Tasks | T22, T26 | Verified |
+| NUC-148 | P1: Reschedule and cancel | Tasks | T22, T23 | Verified |
+| NUC-149 | P1: Reschedule and cancel | Tasks | T22 | Verified |
+| NUC-150 | P1: Reschedule and cancel | Tasks | T23 | Verified |
+| NUC-151 | P1: Reschedule and cancel | Tasks | T23 | Verified |
+| NUC-152 | P1: Reschedule and cancel | Tasks | T23 | Verified |
+| NUC-153 | P1: Reschedule and cancel | Tasks | T23 | Verified |
+| NUC-154 | P1: Reschedule and cancel | Tasks | T41 | Verified |
+| NUC-155 | P1: Reschedule and cancel | Tasks | T41 | Verified |
+| NUC-156 | P1: Reschedule and cancel | Tasks | T41 | Verified |
+| NUC-157 | P1: Gestão de Reservas operations | Tasks | T25 | Verified |
+| NUC-158 | P1: Gestão de Reservas operations | Tasks | T33, T46 | Verified |
+| NUC-159 | P1: Gestão de Reservas operations | Tasks | T30, T46 | Verified |
+| NUC-160 | P1: Gestão de Reservas operations | Tasks | T46 | Verified |
+| NUC-161 | P1: Gestão de Reservas operations | Tasks | T24 | Verified |
+| NUC-162 | P1: Gestão de Reservas operations | Tasks | T24 | Verified |
+| NUC-163 | P1: Gestão de Reservas operations | Tasks | T24 | Verified |
+| NUC-164 | P1: Gestão de Reservas operations | Tasks | T24 | Verified |
+| NUC-165 | P1: Gestão de Reservas operations | Tasks | T24 | Verified |
+| NUC-166 | P1: Gestão de Reservas operations | Tasks | T26 | Verified |
+| NUC-167 | P1: Gestão de Reservas operations | Tasks | T24 | Verified |
+| NUC-168 | P1: Gestão de Reservas operations | Tasks | T28 | Verified |
+| NUC-169 | P1: Gestão de Reservas operations | Tasks | T25 | Verified |
+| NUC-170 | P1: Gestão de Reservas operations | Tasks | T47 | Verified |
+| NUC-171 | P1: Gestão de Reservas operations | Tasks | T39 | Verified |
+| NUC-172 | P1: Policies panel | Tasks | T10 | Verified |
+| NUC-173 | P1: Policies panel | Tasks | T10 | Verified |
+| NUC-174 | P1: Policies panel | Tasks | T10 | Verified |
+| NUC-175 | P1: Policies panel | Tasks | T23 | Verified |
+| NUC-176 | P1: Policies panel | Tasks | T48 | Verified |
+| NUC-177 | P1: Bookings list and CSV export | Tasks | T25 | Verified |
+| NUC-178 | P1: Bookings list and CSV export | Tasks | T25 | Verified |
+| NUC-179 | P1: Bookings list and CSV export | Tasks | T31, T48 | Verified |
+| NUC-180 | P1: Public site pages | Tasks | T34 | Verified |
+| NUC-181 | P1: Public site pages | Tasks | T34 | Verified |
+| NUC-182 | P1: Public site pages | Tasks | T35 | Verified |
+| NUC-183 | P1: Public site pages | Tasks | T36 | Verified |
+| NUC-184 | P1: Public site pages | Tasks | T36 | Verified |
+| NUC-185 | P1: Public site pages | Tasks | T36 | Verified |
+| NUC-186 | P1: Public site pages | Tasks | T36 | Verified |
+| NUC-187 | P1: Public site pages | Tasks | T38 | Verified |
+| NUC-188 | P1: Minhas reservas, agenda and profile | Tasks | T21 | Verified |
+| NUC-189 | P1: Minhas reservas, agenda and profile | Tasks | T40 | Verified |
+| NUC-190 | P1: Minhas reservas, agenda and profile | Tasks | T33, T40 | Verified |
+| NUC-191 | P1: Minhas reservas, agenda and profile | Tasks | T40 | Verified |
+| NUC-192 | P1: Minhas reservas, agenda and profile | Tasks | T21 | Verified |
+| NUC-193 | P1: Minhas reservas, agenda and profile | Tasks | T42 | Verified |
+| NUC-194 | P1: Minhas reservas, agenda and profile | Tasks | T42 | Verified |
+| NUC-195 | P1: Scheduled jobs | Tasks | T26 | Verified |
+| NUC-196 | P1: Scheduled jobs | Tasks | T26 | Verified |
+| NUC-197 | P1: Scheduled jobs | Tasks | T26 | Verified |
+| NUC-198 | P1: Scheduled jobs | Tasks | T28 | Verified |
+| NUC-199 | P1: Scheduled jobs | Tasks | T26, T50 | Verified |
+| NUC-200 | P1: Scheduled jobs | Tasks | T26 | Verified |
+| NUC-201 | P1: Extension points | Tasks | T6 | Verified |
+| NUC-202 | P1: Extension points | Tasks | T7, T32 | Verified |
+| NUC-203 | P1: Extension points | Tasks | T29 | Verified |
+| NUC-204 | P1: Extension points | Tasks | T11 | Verified |
+| NUC-205 | P1: Extension points | Tasks | T6, T18, T23, T26 | Verified |
+| NUC-206 | P2: Booking funnel analytics | Tasks | T29, T38 | Verified |
+| NUC-207 | P1: Book and pay the sinal | Tasks | T20 | Verified |
+| NUC-208 | P1: Gateway-independent payments | Tasks | T15, T16 | Verified |
+| NUC-209 | P1: Extension points | Tasks | T6, T17, T18 | Verified |
+| NUC-210 | P1: Extension points | Tasks | T6, T23 | Verified |
 
 **ID format:** `NUC-NN`.
 
