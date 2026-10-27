@@ -381,10 +381,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests iterate every gestao-owned catalog template and assert non-empty subject/html/text, absolute links on `APP_BASE_URL`, and no emoji (regex `\p{Extended_Pictographic}`)
-- [ ] Tests assert `staff.new_booking` contains customer first name, room, local date/time and booking code; `staff.invite` contains the set-password link
-- [ ] Gate check passes: `npm test -w apps/api`
-- [ ] Test count: ≥ 6 tests pass
+- [x] Tests iterate every gestao-owned catalog template and assert non-empty subject/html/text, absolute links on `APP_BASE_URL`, and no emoji (regex `\p{Extended_Pictographic}`)
+- [x] Tests assert `staff.new_booking` contains customer first name, room, local date/time and booking code; `staff.invite` contains the set-password link
+- [x] Gate check passes: `npm test -w apps/api`
+- [x] Test count: ≥ 6 tests pass
 
 **Tests**: unit
 **Gate**: quick
