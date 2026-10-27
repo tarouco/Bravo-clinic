@@ -526,7 +526,7 @@
 | REC-15 | P1: Buy an hour package | Tasks | T19 | Implementing |
 | REC-16 | P1: Buy an hour package | Tasks | T20, T21 | Implementing |
 | REC-17 | P1: Buy an hour package | Tasks | T28 | Implementing |
-| REC-18 | P1: Buy an hour package | Tasks | T29 | In Tasks |
+| REC-18 | P1: Buy an hour package | Tasks | T29 | Implementing |
 | REC-19 | P1: Buy an hour package | Tasks | T21 | Implementing |
 | REC-20 | P1: Buy an hour package | Tasks | T25 | Implementing |
 | REC-21 | P1: Buy an hour package | Tasks | T19 | Implementing |
@@ -567,7 +567,7 @@
 | REC-56 | P1: Renewal, suspension and closure | Tasks | T23 | Implementing |
 | REC-57 | P1: Renewal, suspension and closure | Tasks | T23, T28 | Implementing |
 | REC-58 | P1: Renewal, suspension and closure | Tasks | T27 | Implementing |
-| REC-59 | P1: Renewal, suspension and closure | Tasks | T29 | In Tasks |
+| REC-59 | P1: Renewal, suspension and closure | Tasks | T29 | Implementing |
 | REC-60 | P1: Renewal, suspension and closure | Tasks | T1, T20 | Implementing |
 | REC-61 | P1: Renewal, suspension and closure | Tasks | T1, T20 | Implementing |
 | REC-62 | P1: Extra hours | Tasks | T24 | Implementing |

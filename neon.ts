@@ -44,6 +44,12 @@ export default defineConfig({
     'no-shows': job('*/5 * * * *', 'no-shows'),
     'reconcile-payments': job('*/5 * * * *', 'reconcile-payments'),
     'materialize-blocks': job('0 8 * * *', 'materialize-blocks'),
+    // receita: renewals, rollover and suspensions daily at 03:00 BRT (06:00 UTC), purchase holds
+    // every 5 minutes. The daily three are order-independent (guarded transitions).
+    renewals: job('0 6 * * *', 'renewals'),
+    'period-rollover': job('0 6 * * *', 'period-rollover'),
+    suspensions: job('0 6 * * *', 'suspensions'),
+    'expire-purchases': job('*/5 * * * *', 'expire-purchases'),
   },
   // buckets: added by gestao (room photos, expense attachments) per AD-009.
 });

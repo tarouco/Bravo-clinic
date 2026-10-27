@@ -995,11 +995,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] An `awaiting_payment` fixed subscription past hold → `expired`, its occurrences `expired` (occupancy inactive), coupon released, credits refunded, charge cancelled; extra-hours hold → purchase `cancelled`
-- [ ] POST `/jobs/<name>` without a trigger signature → 401; with the test signer → 200 and a `job_runs` row
-- [ ] `npm run job -w apps/api -- renewals --now=2026-11-30T06:00:00Z` runs locally and refuses `NODE_ENV=production`
-- [ ] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
-- [ ] Test count: ≥ 8 new tests pass
+- [x] An `awaiting_payment` fixed subscription past hold → `expired`, its occurrences `expired` (occupancy inactive), coupon released, credits refunded, charge cancelled; extra-hours hold → purchase `cancelled`
+- [x] POST `/jobs/<name>` without a trigger signature → 401; with the test signer → 200 and a `job_runs` row
+- [x] `npm run job -w apps/api -- renewals --now=2026-11-30T06:00:00Z` runs locally and refuses `NODE_ENV=production`
+- [x] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
+- [x] Test count: ≥ 8 new tests pass
 
 **Tests**: integration
 **Gate**: build

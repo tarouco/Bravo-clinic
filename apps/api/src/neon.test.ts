@@ -37,11 +37,17 @@ async function loadTriggers() {
 }
 
 describe('neon.ts', () => {
-  it('declares the six nucleo schedule triggers of the jobs routes (NUC-199)', async () => {
+  it('declares the nucleo (NUC-199) and receita (REC-59) schedule triggers of the jobs routes', async () => {
     const every5 = (name: string) => ({
       type: 'schedule',
       function: 'api',
       cron: '*/5 * * * *',
+      functionPath: `/jobs/${name}`,
+    });
+    const daily = (name: string) => ({
+      type: 'schedule',
+      function: 'api',
+      cron: '0 6 * * *',
       functionPath: `/jobs/${name}`,
     });
 
@@ -57,6 +63,10 @@ describe('neon.ts', () => {
         cron: '0 8 * * *',
         functionPath: '/jobs/materialize-blocks',
       },
+      renewals: daily('renewals'),
+      'period-rollover': daily('period-rollover'),
+      suspensions: daily('suspensions'),
+      'expire-purchases': every5('expire-purchases'),
     });
   });
 
