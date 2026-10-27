@@ -193,6 +193,34 @@ describe('quotePackageOption (REC-23, REC-25, REC-26, REC-33)', () => {
     expect(withLots.option).toMatchObject({ sufficient: true, fromExtraMinutes: 78 });
   });
 
+  it.each(['cancelled', 'switched', 'ended'])(
+    'a %s subscription leaves its unexpired lots usable and debitable (REC-68)',
+    async (status) => {
+      const { user, period } = await subscriber({ status });
+      await db
+        .update(subscriptionPeriods)
+        .set({ status: 'closed' })
+        .where(eq(subscriptionPeriods.id, period.id));
+      const lot = await createExtraLot(db, { userId: user.id, minutes: 300 });
+      const draft = await draftFor(WED, 1140, 1200);
+      const { option } = await quotePackageOption(db, user.id, draft, NOW);
+      expect(option).toMatchObject({
+        debitMinutes: 78,
+        sufficient: true,
+        fromPackageMinutes: 0,
+        fromExtraMinutes: 78,
+      });
+      const booking = await bookingAt(user.id, WED, 1140, 1200);
+      const result = await debit(user.id, booking.id, draft);
+      expect(result).toMatchObject({ packageMinutes: 0, extraMinutes: 78 });
+      const [stored] = await db
+        .select()
+        .from(extraMinuteLots)
+        .where(eq(extraMinuteLots.id, lot.id));
+      expect(stored?.minutesRemaining).toBe(222);
+    },
+  );
+
   it('a block-priced interval gets a null option with block_category and cannot be debited (REC-31)', async () => {
     const { user } = await subscriber();
     const draft: PackageDraft = {
