@@ -565,11 +565,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Each of the 17 templates returns non-empty subject/html/text; snapshot of the key values (e.g. renewal charge text contains "R$ 1.600,00", "02/12/2026" and the copy-paste code)
-- [ ] No template contains emoji or unescaped user input (name with `<` is escaped)
-- [ ] `revenueMailer` exposes exactly the 17 REC-159 template names (asserted against a literal list)
-- [ ] Gate check passes: `npm test -w apps/api`
-- [ ] Test count: ≥ 18 new tests pass
+- [x] Each of the 17 templates returns non-empty subject/html/text; snapshot of the key values (e.g. renewal charge text contains "R$ 1.600,00", "02/12/2026" and the copy-paste code)
+- [x] No template contains emoji or unescaped user input (name with `<` is escaped)
+- [x] `revenueMailer` exposes exactly the 17 REC-159 template names (asserted against a literal list)
+- [x] Gate check passes: `npm test -w apps/api`
+- [x] Test count: ≥ 18 new tests pass
 
 **Tests**: unit
 **Gate**: quick

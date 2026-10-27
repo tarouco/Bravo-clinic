@@ -667,9 +667,9 @@
 | REC-156 | P1: Public packages and purchase flow | Tasks | T37 | In Tasks |
 | REC-157 | P1: Public packages and purchase flow | Tasks | T37 | In Tasks |
 | REC-158 | P1: Public packages and purchase flow | Tasks | T37 | In Tasks |
-| REC-159 | P1: Subscription notifications | Tasks | T14 | In Tasks |
+| REC-159 | P1: Subscription notifications | Tasks | T14 | Implementing |
 | REC-160 | P1: Subscription notifications | Tasks | T21 | In Tasks |
-| REC-161 | P1: Subscription notifications | Tasks | T14, T27 | In Tasks |
+| REC-161 | P1: Subscription notifications | Tasks | T14, T27 | Implementing |
 
 **Coverage:** 161 total, 161 mapped to tasks, 0 unmapped. End-to-end flows re-verify REC-14, REC-16, REC-24, REC-29, REC-41, REC-63, REC-66, REC-85, REC-88, REC-120, REC-123, REC-136, REC-150 in T48–T50.
 
