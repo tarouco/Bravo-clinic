@@ -131,8 +131,8 @@ export async function adminCalendarEvents(
       statusLabel: bookingStatusLabel[booking.status as BookingStatus],
       paidCents: booking.paidCents,
       totalCents: booking.totalCents,
-      // Filled by receita from the debited minutes of the booking.
-      packageMinutes: 0,
+      // Debited package + extra minutes of a package booking (receita T13).
+      packageMinutes: booking.packageMinutesDebited + booking.extraMinutesDebited,
       startsAt: booking.startsAt.toISOString(),
       endsAt: booking.endsAt.toISOString(),
       cleanupUntil: new Date(

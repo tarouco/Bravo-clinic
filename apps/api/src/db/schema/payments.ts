@@ -15,9 +15,11 @@ import {
   unique,
   uniqueIndex,
   uuid,
+  type AnyPgColumn,
 } from 'drizzle-orm/pg-core';
 import { users } from './identity';
 import { bookings } from './booking';
+import { extraHoursPurchases, subscriptionPeriods } from './subscriptions';
 
 // Instants are always timestamptz (docs/architecture.md section 5.1).
 const tstz = (name: string) => timestamp(name, { withTimezone: true });
@@ -68,6 +70,15 @@ export const charges = pgTable(
       .notNull()
       .references(() => users.id, { onDelete: 'restrict' }),
     bookingId: uuid('booking_id').references(() => bookings.id, { onDelete: 'restrict' }),
+    // Receita (docs/architecture.md section 5.4 ALTERs).
+    subscriptionPeriodId: uuid('subscription_period_id').references(
+      (): AnyPgColumn => subscriptionPeriods.id,
+      { onDelete: 'restrict' },
+    ),
+    extraHoursPurchaseId: uuid('extra_hours_purchase_id').references(
+      (): AnyPgColumn => extraHoursPurchases.id,
+      { onDelete: 'restrict' },
+    ),
     amountCents: integer('amount_cents').notNull(),
     feeCents: integer('fee_cents').notNull().default(0),
     status: text('status').notNull(),
@@ -98,6 +109,9 @@ export const charges = pgTable(
       .where(sql`${t.externalId} is not null`),
     index('charges_status_created_idx').on(t.status, t.createdAt),
     index('charges_booking_idx').on(t.bookingId),
+    index('charges_period_idx')
+      .on(t.subscriptionPeriodId)
+      .where(sql`${t.subscriptionPeriodId} is not null`),
   ],
 );
 

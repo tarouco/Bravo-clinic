@@ -513,14 +513,14 @@
 | REC-02 | P1: Package categories | Tasks | T2, T17 | Implementing |
 | REC-03 | P1: Package categories | Tasks | T44 | In Tasks |
 | REC-04 | P1: Package categories | Tasks | T3, T44 | Implementing |
-| REC-05 | P1: Package categories | Tasks | T17 | In Tasks |
-| REC-06 | P1: Package categories | Tasks | T17, T14 | In Tasks |
-| REC-07 | P1: Package categories | Tasks | T18, T19 | In Tasks |
-| REC-08 | P1: Package categories | Tasks | T18, T19 | In Tasks |
+| REC-05 | P1: Package categories | Tasks | T17 | Implementing |
+| REC-06 | P1: Package categories | Tasks | T17, T14 | Implementing |
+| REC-07 | P1: Package categories | Tasks | T18, T19 | Implementing |
+| REC-08 | P1: Package categories | Tasks | T18, T19 | Implementing |
 | REC-09 | P1: Package categories | Tasks | T27 | In Tasks |
 | REC-10 | P1: Buy an hour package | Tasks | T7, T18 | Implementing |
 | REC-11 | P1: Buy an hour package | Tasks | T2, T18 | Implementing |
-| REC-12 | P1: Buy an hour package | Tasks | T8, T19 | In Tasks |
+| REC-12 | P1: Buy an hour package | Tasks | T8, T19 | Implementing |
 | REC-13 | P1: Buy an hour package | Tasks | T19 | In Tasks |
 | REC-14 | P1: Buy an hour package | Tasks | T19, T25 | In Tasks |
 | REC-15 | P1: Buy an hour package | Tasks | T19 | In Tasks |
@@ -531,28 +531,28 @@
 | REC-20 | P1: Buy an hour package | Tasks | T25 | In Tasks |
 | REC-21 | P1: Buy an hour package | Tasks | T19 | In Tasks |
 | REC-22 | P1: Pay a booking with package hours | Tasks | T5 | Implementing |
-| REC-23 | P1: Pay a booking with package hours | Tasks | T13, T16 | In Tasks |
+| REC-23 | P1: Pay a booking with package hours | Tasks | T13, T16 | Implementing |
 | REC-24 | P1: Pay a booking with package hours | Tasks | T34 | In Tasks |
 | REC-25 | P1: Pay a booking with package hours | Tasks | T7, T13 | Implementing |
 | REC-26 | P1: Pay a booking with package hours | Tasks | T7, T13 | Implementing |
-| REC-27 | P1: Pay a booking with package hours | Tasks | T13, T16 | In Tasks |
+| REC-27 | P1: Pay a booking with package hours | Tasks | T13, T16 | Implementing |
 | REC-28 | P1: Pay a booking with package hours | Tasks | T34 | In Tasks |
-| REC-29 | P1: Pay a booking with package hours | Tasks | T13, T16 | In Tasks |
-| REC-30 | P1: Pay a booking with package hours | Tasks | T16 | In Tasks |
-| REC-31 | P1: Pay a booking with package hours | Tasks | T13 | In Tasks |
-| REC-32 | P1: Pay a booking with package hours | Tasks | T10, T13 | In Tasks |
-| REC-33 | P1: Pay a booking with package hours | Tasks | T13 | In Tasks |
-| REC-34 | P1: Pay a booking with package hours | Tasks | T13 | In Tasks |
-| REC-35 | P1: Pay a booking with package hours | Tasks | T13 | In Tasks |
-| REC-36 | P1: Pay a booking with package hours | Tasks | T13 | In Tasks |
-| REC-37 | P1: Pay a booking with package hours | Tasks | T13, T16 | In Tasks |
-| REC-38 | P1: Pay a booking with package hours | Tasks | T13 | In Tasks |
-| REC-39 | P1: Balance ledger and extrato | Tasks | T8 | In Tasks |
-| REC-40 | P1: Balance ledger and extrato | Tasks | T8, T10 | In Tasks |
+| REC-29 | P1: Pay a booking with package hours | Tasks | T13, T16 | Implementing |
+| REC-30 | P1: Pay a booking with package hours | Tasks | T16 | Implementing |
+| REC-31 | P1: Pay a booking with package hours | Tasks | T13 | Implementing |
+| REC-32 | P1: Pay a booking with package hours | Tasks | T10, T13 | Implementing |
+| REC-33 | P1: Pay a booking with package hours | Tasks | T13 | Implementing |
+| REC-34 | P1: Pay a booking with package hours | Tasks | T13 | Implementing |
+| REC-35 | P1: Pay a booking with package hours | Tasks | T13 | Implementing |
+| REC-36 | P1: Pay a booking with package hours | Tasks | T13 | Implementing |
+| REC-37 | P1: Pay a booking with package hours | Tasks | T13, T16 | Implementing |
+| REC-38 | P1: Pay a booking with package hours | Tasks | T13 | Implementing |
+| REC-39 | P1: Balance ledger and extrato | Tasks | T8 | Implementing |
+| REC-40 | P1: Balance ledger and extrato | Tasks | T8, T10 | Implementing |
 | REC-41 | P1: Balance ledger and extrato | Tasks | T5, T25, T32 | Implementing |
 | REC-42 | P1: Balance ledger and extrato | Tasks | T1, T32 | Implementing |
-| REC-43 | P1: Balance ledger and extrato | Tasks | T10, T26 | In Tasks |
-| REC-44 | P1: Balance ledger and extrato | Tasks | T10, T26 | In Tasks |
+| REC-43 | P1: Balance ledger and extrato | Tasks | T10, T26 | Implementing |
+| REC-44 | P1: Balance ledger and extrato | Tasks | T10, T26 | Implementing |
 | REC-45 | P1: Balance ledger and extrato | Tasks | T26 | In Tasks |
 | REC-46 | P1: Renewal, suspension and closure | Tasks | T7 | Implementing |
 | REC-47 | P1: Renewal, suspension and closure | Tasks | T27 | In Tasks |
@@ -563,7 +563,7 @@
 | REC-52 | P1: Renewal, suspension and closure | Tasks | T27 | In Tasks |
 | REC-53 | P1: Renewal, suspension and closure | Tasks | T20, T28 | In Tasks |
 | REC-54 | P1: Renewal, suspension and closure | Tasks | T23, T28 | In Tasks |
-| REC-55 | P1: Renewal, suspension and closure | Tasks | T13 | In Tasks |
+| REC-55 | P1: Renewal, suspension and closure | Tasks | T13 | Implementing |
 | REC-56 | P1: Renewal, suspension and closure | Tasks | T23 | In Tasks |
 | REC-57 | P1: Renewal, suspension and closure | Tasks | T23, T28 | In Tasks |
 | REC-58 | P1: Renewal, suspension and closure | Tasks | T27 | In Tasks |
@@ -575,8 +575,8 @@
 | REC-64 | P1: Extra hours | Tasks | T2, T24 | Implementing |
 | REC-65 | P1: Extra hours | Tasks | T24 | In Tasks |
 | REC-66 | P1: Extra hours | Tasks | T24 | In Tasks |
-| REC-67 | P1: Extra hours | Tasks | T10, T28 | In Tasks |
-| REC-68 | P1: Extra hours | Tasks | T13 | In Tasks |
+| REC-67 | P1: Extra hours | Tasks | T10, T28 | Implementing |
+| REC-68 | P1: Extra hours | Tasks | T13 | Implementing |
 | REC-69 | P1: Extra hours | Tasks | T40 | In Tasks |
 | REC-70 | P1: Extra hours | Tasks | T29 | In Tasks |
 | REC-71 | P1: Change and cancel | Tasks | T6 | Implementing |
@@ -592,7 +592,7 @@
 | REC-81 | P1: Change and cancel | Tasks | T23 | In Tasks |
 | REC-82 | P1: Change and cancel | Tasks | T26 | In Tasks |
 | REC-83 | P1: Buy a fixed-schedule package | Tasks | T3 | Implementing |
-| REC-84 | P1: Buy a fixed-schedule package | Tasks | T18, T36 | In Tasks |
+| REC-84 | P1: Buy a fixed-schedule package | Tasks | T18, T36 | Implementing |
 | REC-85 | P1: Buy a fixed-schedule package | Tasks | T19 | In Tasks |
 | REC-86 | P1: Buy a fixed-schedule package | Tasks | T19 | In Tasks |
 | REC-87 | P1: Buy a fixed-schedule package | Tasks | T19 | In Tasks |
@@ -602,54 +602,54 @@
 | REC-91 | P1: Buy a fixed-schedule package | Tasks | T37 | In Tasks |
 | REC-92 | P1: Fixed-schedule lifecycle | Tasks | T20 | In Tasks |
 | REC-93 | P1: Fixed-schedule lifecycle | Tasks | T20, T27 | In Tasks |
-| REC-94 | P1: Fixed-schedule lifecycle | Tasks | T16 | In Tasks |
-| REC-95 | P1: Fixed-schedule lifecycle | Tasks | T16 | In Tasks |
+| REC-94 | P1: Fixed-schedule lifecycle | Tasks | T16 | Implementing |
+| REC-95 | P1: Fixed-schedule lifecycle | Tasks | T16 | Implementing |
 | REC-96 | P1: Closed-day compensation | Tasks | T6 | Implementing |
-| REC-97 | P1: Closed-day compensation | Tasks | T15 | In Tasks |
-| REC-98 | P1: Closed-day compensation | Tasks | T15 | In Tasks |
-| REC-99 | P1: Closed-day compensation | Tasks | T15 | In Tasks |
-| REC-100 | P1: Closed-day compensation | Tasks | T15 | In Tasks |
-| REC-101 | P1: Closed-day compensation | Tasks | T15 | In Tasks |
+| REC-97 | P1: Closed-day compensation | Tasks | T15 | Implementing |
+| REC-98 | P1: Closed-day compensation | Tasks | T15 | Implementing |
+| REC-99 | P1: Closed-day compensation | Tasks | T15 | Implementing |
+| REC-100 | P1: Closed-day compensation | Tasks | T15 | Implementing |
+| REC-101 | P1: Closed-day compensation | Tasks | T15 | Implementing |
 | REC-102 | P1: Closed-day compensation | Tasks | T20 | In Tasks |
-| REC-103 | P1: Closed-day compensation | Tasks | T15 | In Tasks |
-| REC-104 | P1: Closed-day compensation | Tasks | T8, T15 | In Tasks |
-| REC-105 | P1: Customer credits | Tasks | T9 | In Tasks |
-| REC-106 | P1: Customer credits | Tasks | T9 | In Tasks |
+| REC-103 | P1: Closed-day compensation | Tasks | T15 | Implementing |
+| REC-104 | P1: Closed-day compensation | Tasks | T8, T15 | Implementing |
+| REC-105 | P1: Customer credits | Tasks | T9 | Implementing |
+| REC-106 | P1: Customer credits | Tasks | T9 | Implementing |
 | REC-107 | P1: Customer credits | Tasks | T7, T9 | Implementing |
-| REC-108 | P1: Customer credits | Tasks | T9 | In Tasks |
+| REC-108 | P1: Customer credits | Tasks | T9 | Implementing |
 | REC-109 | P1: Customer credits | Tasks | T7, T9, T16 | Implementing |
-| REC-110 | P1: Customer credits | Tasks | T16 | In Tasks |
-| REC-111 | P1: Customer credits | Tasks | T16 | In Tasks |
-| REC-112 | P1: Customer credits | Tasks | T9 | In Tasks |
-| REC-113 | P1: Customer credits | Tasks | T9, T28 | In Tasks |
+| REC-110 | P1: Customer credits | Tasks | T16 | Implementing |
+| REC-111 | P1: Customer credits | Tasks | T16 | Implementing |
+| REC-112 | P1: Customer credits | Tasks | T9 | Implementing |
+| REC-113 | P1: Customer credits | Tasks | T9, T28 | Implementing |
 | REC-114 | P1: Customer credits | Tasks | T41 | In Tasks |
-| REC-115 | P1: Customer credits | Tasks | T16, T19, T24, T27 | In Tasks |
+| REC-115 | P1: Customer credits | Tasks | T16, T19, T24, T27 | Implementing |
 | REC-116 | P1: Coupons in checkout | Tasks | T4 | Implementing |
 | REC-117 | P1: Coupons in checkout | Tasks | T4, T33 | Implementing |
 | REC-118 | P1: Coupons in checkout | Tasks | T4, T11 | Implementing |
 | REC-119 | P1: Coupons in checkout | Tasks | T4, T11 | Implementing |
 | REC-120 | P1: Coupons in checkout | Tasks | T4, T16 | Implementing |
 | REC-121 | P1: Coupons in checkout | Tasks | T33 | In Tasks |
-| REC-122 | P1: Coupons in checkout | Tasks | T16 | In Tasks |
-| REC-123 | P1: Coupons in checkout | Tasks | T11 | In Tasks |
-| REC-124 | P1: Coupons in checkout | Tasks | T11, T16 | In Tasks |
+| REC-122 | P1: Coupons in checkout | Tasks | T16 | Implementing |
+| REC-123 | P1: Coupons in checkout | Tasks | T11 | Implementing |
+| REC-124 | P1: Coupons in checkout | Tasks | T11, T16 | Implementing |
 | REC-125 | P1: Coupons in checkout | Tasks | T19, T27 | In Tasks |
-| REC-126 | P1: Coupons in checkout | Tasks | T11 | In Tasks |
+| REC-126 | P1: Coupons in checkout | Tasks | T11 | Implementing |
 | REC-127 | P1: Coupons in checkout | Tasks | T2, T11 | Implementing |
 | REC-128 | P1: Admin coupons screen | Tasks | T42 | In Tasks |
 | REC-129 | P1: Admin coupons screen | Tasks | T2, T11, T43 | Implementing |
-| REC-130 | P1: Admin coupons screen | Tasks | T11 | In Tasks |
-| REC-131 | P1: Admin coupons screen | Tasks | T11, T42 | In Tasks |
-| REC-132 | P1: Admin coupons screen | Tasks | T11 | In Tasks |
-| REC-133 | P1: Slot discounts | Tasks | T12 | In Tasks |
+| REC-130 | P1: Admin coupons screen | Tasks | T11 | Implementing |
+| REC-131 | P1: Admin coupons screen | Tasks | T11, T42 | Implementing |
+| REC-132 | P1: Admin coupons screen | Tasks | T11 | Implementing |
+| REC-133 | P1: Slot discounts | Tasks | T12 | Implementing |
 | REC-134 | P1: Slot discounts | Tasks | T2, T12 | Implementing |
-| REC-135 | P1: Slot discounts | Tasks | T8, T12 | In Tasks |
-| REC-136 | P1: Slot discounts | Tasks | T16, T45 | In Tasks |
-| REC-137 | P1: Slot discounts | Tasks | T12, T45 | In Tasks |
-| REC-138 | P1: Slot discounts | Tasks | T12, T16 | In Tasks |
-| REC-139 | P1: Slot discounts | Tasks | T12 | In Tasks |
-| REC-140 | P1: Slot discounts | Tasks | T12 | In Tasks |
-| REC-141 | P1: Slot discounts | Tasks | T12 | In Tasks |
+| REC-135 | P1: Slot discounts | Tasks | T8, T12 | Implementing |
+| REC-136 | P1: Slot discounts | Tasks | T16, T45 | Implementing |
+| REC-137 | P1: Slot discounts | Tasks | T12, T45 | Implementing |
+| REC-138 | P1: Slot discounts | Tasks | T12, T16 | Implementing |
+| REC-139 | P1: Slot discounts | Tasks | T12 | Implementing |
+| REC-140 | P1: Slot discounts | Tasks | T12 | Implementing |
+| REC-141 | P1: Slot discounts | Tasks | T12 | Implementing |
 | REC-142 | P1: Slot discounts | Tasks | T4 | Implementing |
 | REC-143 | P1: Perfil → Compras | Tasks | T31, T38 | In Tasks |
 | REC-144 | P1: Perfil → Compras | Tasks | T38 | In Tasks |
@@ -663,13 +663,13 @@
 | REC-152 | P1: Admin subscriptions and sale | Tasks | T19 | In Tasks |
 | REC-153 | P1: Admin subscriptions and sale | Tasks | T26 | In Tasks |
 | REC-154 | P1: Admin subscriptions and sale | Tasks | T26 | In Tasks |
-| REC-155 | P1: Public packages and purchase flow | Tasks | T18, T35 | In Tasks |
+| REC-155 | P1: Public packages and purchase flow | Tasks | T18, T35 | Implementing |
 | REC-156 | P1: Public packages and purchase flow | Tasks | T37 | In Tasks |
 | REC-157 | P1: Public packages and purchase flow | Tasks | T37 | In Tasks |
 | REC-158 | P1: Public packages and purchase flow | Tasks | T37 | In Tasks |
-| REC-159 | P1: Subscription notifications | Tasks | T14 | In Tasks |
+| REC-159 | P1: Subscription notifications | Tasks | T14 | Implementing |
 | REC-160 | P1: Subscription notifications | Tasks | T21 | In Tasks |
-| REC-161 | P1: Subscription notifications | Tasks | T14, T27 | In Tasks |
+| REC-161 | P1: Subscription notifications | Tasks | T14, T27 | Implementing |
 
 **Coverage:** 161 total, 161 mapped to tasks, 0 unmapped. End-to-end flows re-verify REC-14, REC-16, REC-24, REC-29, REC-41, REC-63, REC-66, REC-85, REC-88, REC-120, REC-123, REC-136, REC-150 in T48–T50.
 

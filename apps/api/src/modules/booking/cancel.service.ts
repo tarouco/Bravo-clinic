@@ -6,7 +6,7 @@ import {
   type ClinicCancelOption,
   type PaymentMode,
 } from '@bravo/core';
-import { and, desc, eq, inArray, sql } from 'drizzle-orm';
+import { and, desc, eq, inArray, ne, sql } from 'drizzle-orm';
 import type { Tx } from '../../db/client';
 import { bookingRescheduleRequests, bookings, charges, refunds } from '../../db/schema';
 import type { BookingRow, Registry } from '../../extensions/registry';
@@ -51,9 +51,9 @@ function evaluate(booking: BookingRow, now: Date, actor: CancelActor): Cancellat
     paymentMode: booking.paymentMode as PaymentMode,
     depositCents: booking.depositCents,
     paidCents: booking.paidCents,
-    // Debited minutes live in receita's tables; its handler recomputes what comes back.
-    packageMinutes: 0,
-    extraMinutes: 0,
+    // The minutes receita debited (T13); its mode handler decides where they go back.
+    packageMinutes: booking.packageMinutesDebited,
+    extraMinutes: booking.extraMinutesDebited,
     withinCurrentPeriod: true,
     policy: cancelPolicyOf(booking),
   });
@@ -125,6 +125,8 @@ async function refundNewestFirst(
       and(
         eq(charges.bookingId, booking.id),
         inArray(charges.status, ['approved', 'partially_refunded']),
+        // Credit paid through receita's internal charges goes back via the credit step (REC-109).
+        ne(charges.provider, 'internal'),
       ),
     )
     .orderBy(desc(charges.approvedAt), desc(charges.createdAt));

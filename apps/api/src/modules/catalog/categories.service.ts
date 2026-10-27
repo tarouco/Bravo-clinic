@@ -204,6 +204,7 @@ export async function createCategory(
       displayOrder,
       ...handler.toRow(parsed.data),
     };
+    await handler.validateRow?.(tx, values);
   }
 
   const [row] = await tx.insert(bookingCategories).values(values).returning();
@@ -226,11 +227,27 @@ const PRICING_FIELDS = [
   'weekendRateCents',
   'minDurationMinutes',
   'fixedPriceCents',
+  'includedMinutes',
+  'pricePerOccurrenceCents',
+  'period',
+] as const;
+
+/** Type-specific fields a patch may carry; the others are rejected with 422. */
+const TYPED_FIELDS = [
+  'weekdayRateCents',
+  'weekendRateCents',
+  'minDurationMinutes',
+  'fixedPriceCents',
+  'includedHours',
+  'pricePerOccurrenceCents',
+  'period',
 ] as const;
 
 const FIELDS_BY_TYPE: Record<string, readonly string[]> = {
   hourly: ['weekdayRateCents', 'weekendRateCents', 'minDurationMinutes'],
   block: ['fixedPriceCents'],
+  hour_package: ['fixedPriceCents', 'includedHours', 'period'],
+  fixed_schedule: ['pricePerOccurrenceCents', 'period'],
 };
 
 /**
@@ -252,12 +269,7 @@ export async function updateCategory(
   }
   const allowed = FIELDS_BY_TYPE[before.type];
   if (allowed !== undefined) {
-    for (const field of [
-      'weekdayRateCents',
-      'weekendRateCents',
-      'minDurationMinutes',
-      'fixedPriceCents',
-    ] as const) {
+    for (const field of TYPED_FIELDS) {
       if (patch[field] !== undefined && !allowed.includes(field)) {
         throw invalid(field, 'Campo não se aplica a este tipo de categoria');
       }
@@ -267,9 +279,11 @@ export async function updateCategory(
     throw invalid('status', REFERENCE_INACTIVE);
   }
 
+  const { includedHours, ...rest } = patch;
   const next = {
     ...before,
-    ...Object.fromEntries(Object.entries(patch).filter(([, v]) => v !== undefined)),
+    ...Object.fromEntries(Object.entries(rest).filter(([, v]) => v !== undefined)),
+    ...(includedHours !== undefined && { includedMinutes: includedHours * 60 }),
   };
   if (before.type === 'hourly' || before.type === 'block') {
     assertGrid((await loadSettings(tx))['calendar.slot_minutes'], {
@@ -286,6 +300,7 @@ export async function updateCategory(
     version: changedPricing ? before.version + 1 : before.version,
     updatedAt: new Date(),
   };
+  await handler?.validateRow?.(tx, after);
   if (handler?.onUpdate !== undefined) await handler.onUpdate(tx, before, after, ctx);
 
   const [saved] = await tx
@@ -300,6 +315,9 @@ export async function updateCategory(
       weekendRateCents: after.weekendRateCents,
       minDurationMinutes: after.minDurationMinutes,
       fixedPriceCents: after.fixedPriceCents,
+      includedMinutes: after.includedMinutes,
+      pricePerOccurrenceCents: after.pricePerOccurrenceCents,
+      period: after.period,
       status: after.status,
       visibility: after.visibility,
       version: after.version,
@@ -329,6 +347,9 @@ function pick(row: CategoryRow) {
     weekendRateCents: row.weekendRateCents,
     minDurationMinutes: row.minDurationMinutes,
     fixedPriceCents: row.fixedPriceCents,
+    includedMinutes: row.includedMinutes,
+    pricePerOccurrenceCents: row.pricePerOccurrenceCents,
+    period: row.period,
     status: row.status,
     visibility: row.visibility,
     version: row.version,

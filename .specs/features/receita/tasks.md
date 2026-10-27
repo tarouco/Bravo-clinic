@@ -388,10 +388,10 @@ T48 → T50
 
 **Done when**:
 
-- [ ] `npm run db:migrate -w apps/api` applies on an empty test DB after nucleo's migrations
-- [ ] Constraint tests: UPDATE/DELETE on each ledger raises `append_only_table`; second non-terminal hour package for a user → 23505; `minutes_balance = -1` → 23514; overlapping active slot discounts same room → 23P01, different room accepted; duplicate (closed_day, subscription) → 23505; coupon use `consumed → reserved` rejected
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 10 new tests pass
+- [x] `npm run db:migrate -w apps/api` applies on an empty test DB after nucleo's migrations
+- [x] Constraint tests: UPDATE/DELETE on each ledger raises `append_only_table`; second non-terminal hour package for a user → 23505; `minutes_balance = -1` → 23514; overlapping active slot discounts same room → 23P01, different room accepted; duplicate (closed_day, subscription) → 23505; coupon use `consumed → reserved` rejected
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 10 new tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -415,13 +415,13 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Grant sets `expires_at = now + credits.validity_days`; available ignores expired lots
-- [ ] Apply 7000 over lots 5000 (exp. day 10) + 5000 (day 20) → uses 5000 + 2000, one internal charge `method='credit'`, two `use` entries
-- [ ] Two parallel applies of 8000 with 10000 available → total used ≤ 10000 and no negative lot
-- [ ] Refund to an expired lot creates a new lot of the same source with fresh validity
-- [ ] `POST /api/admin/customers/:id/credits` 201 for admin with audit row; 403 for reception; 422 without justification or amount 0
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 12 new tests pass
+- [x] Grant sets `expires_at = now + credits.validity_days`; available ignores expired lots
+- [x] Apply 7000 over lots 5000 (exp. day 10) + 5000 (day 20) → uses 5000 + 2000, one internal charge `method='credit'`, two `use` entries
+- [x] Two parallel applies of 8000 with 10000 available → total used ≤ 10000 and no negative lot
+- [x] Refund to an expired lot creates a new lot of the same source with fresh validity
+- [x] `POST /api/admin/customers/:id/credits` 201 for admin with audit row; 403 for reception; 422 without justification or amount 0
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 12 new tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -445,12 +445,12 @@ T48 → T50
 
 **Done when**:
 
-- [ ] After every operation `minutes_balance` equals the ledger sum (asserted by SQL)
-- [ ] Adjust +30 with justification writes entry and audit before/after; adjust making balance negative → `INSUFFICIENT_BALANCE`
-- [ ] Two parallel debits of 700 on a 1200 balance → one succeeds, one `INSUFFICIENT_BALANCE`
-- [ ] Expire lots with `expires_at ≤ now` writes `expiry` and zeroes remaining; second run changes 0 rows
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 10 new tests pass
+- [x] After every operation `minutes_balance` equals the ledger sum (asserted by SQL)
+- [x] Adjust +30 with justification writes entry and audit before/after; adjust making balance negative → `INSUFFICIENT_BALANCE`
+- [x] Two parallel debits of 700 on a 1200 balance → one succeeds, one `INSUFFICIENT_BALANCE`
+- [x] Expire lots with `expires_at ≤ now` writes `expiry` and zeroes remaining; second run changes 0 rows
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 10 new tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -474,12 +474,12 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Last use raced by two transactions → one reserved, other `COUPON_EXHAUSTED`; `uses_count` ends at `max_uses`
-- [ ] Release decrements `uses_count`; consume keeps it; consumed use cannot be released
-- [ ] First-booking coupon rejected for a second account with the same CPF that has a confirmed booking
-- [ ] Routes: create (code upper-cased, duplicate → 409 `CONFLICT`), edit `max_uses` below `uses_count` → 422, toggle, uses list; reception 403
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 16 new tests pass
+- [x] Last use raced by two transactions → one reserved, other `COUPON_EXHAUSTED`; `uses_count` ends at `max_uses`
+- [x] Release decrements `uses_count`; consume keeps it; consumed use cannot be released
+- [x] First-booking coupon rejected for a second account with the same CPF that has a confirmed booking
+- [x] Routes: create (code upper-cased, duplicate → 409 `CONFLICT`), edit `max_uses` below `uses_count` → 422, toggle, uses list; reception 403
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 16 new tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -503,12 +503,12 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Tue 19:00–22:00 at 15% on 3 rooms with a booking 20:00–21:00 (cleanup 30) in one room → that room gets 19:00–20:00 and 21:30–22:00, `skipped` lists 20:00–21:30, the other rooms get 19:00–22:00
-- [ ] Misaligned / past / outside window / percent 0 → 422; overlap → 409 "Já existe desconto neste horário"
-- [ ] `consumeForBooking` for a 19:00–20:00 booking on a 19:00–22:00 discount leaves an active 20:00–22:00 part
-- [ ] Remove sets `removed_at` + audit; list excludes parts ending ≤ now; reception POST → 403
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 12 new tests pass
+- [x] Tue 19:00–22:00 at 15% on 3 rooms with a booking 20:00–21:00 (cleanup 30) in one room → that room gets 19:00–20:00 and 21:30–22:00, `skipped` lists 20:00–21:30, the other rooms get 19:00–22:00
+- [x] Misaligned / past / outside window / percent 0 → 422; overlap → 409 "Já existe desconto neste horário"
+- [x] `consumeForBooking` for a 19:00–20:00 booking on a 19:00–22:00 discount leaves an active 20:00–22:00 part
+- [x] Remove sets `removed_at` + audit; list excludes parts ending ≤ now; reception POST → 403
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 12 new tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -532,14 +532,14 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Factory categories: Wed 19:00–20:00 → debit 78, ledger detail holds V_ref 9700, V_pac 8000; Tue 17:30–20:00 → 152
-- [ ] Date beyond the active period uses lots only; suspended subscription → `reason:'suspended'`, lots still usable; block-priced draft → null option `block_category`
-- [ ] Insufficient → `INSUFFICIENT_BALANCE` with required/available; two parallel bookings → one succeeds
-- [ ] Cancel ≥ 24h returns package + lot minutes; < 24h returns 0; clinic cancel with closed period creates a manual lot; switch-closed period returns converted minutes to the successor
-- [ ] Reschedule reverses and re-debits; insufficient new debit leaves ledger unchanged
-- [ ] `GET /api/admin/calendar/events` returns `packageMinutes: 78` for the Wed package booking
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 14 new tests pass
+- [x] Factory categories: Wed 19:00–20:00 → debit 78, ledger detail holds V_ref 9700, V_pac 8000; Tue 17:30–20:00 → 152
+- [x] Date beyond the active period uses lots only; suspended subscription → `reason:'suspended'`, lots still usable; block-priced draft → null option `block_category`
+- [x] Insufficient → `INSUFFICIENT_BALANCE` with required/available; two parallel bookings → one succeeds
+- [x] Cancel ≥ 24h returns package + lot minutes; < 24h returns 0; clinic cancel with closed period creates a manual lot; switch-closed period returns converted minutes to the successor
+- [x] Reschedule reverses and re-debits; insufficient new debit leaves ledger unchanged
+- [x] `GET /api/admin/calendar/events` returns `packageMinutes: 78` for the Wed package booking
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 14 new tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -565,11 +565,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Each of the 17 templates returns non-empty subject/html/text; snapshot of the key values (e.g. renewal charge text contains "R$ 1.600,00", "02/12/2026" and the copy-paste code)
-- [ ] No template contains emoji or unescaped user input (name with `<` is escaped)
-- [ ] `revenueMailer` exposes exactly the 17 REC-159 template names (asserted against a literal list)
-- [ ] Gate check passes: `npm test -w apps/api`
-- [ ] Test count: ≥ 18 new tests pass
+- [x] Each of the 17 templates returns non-empty subject/html/text; snapshot of the key values (e.g. renewal charge text contains "R$ 1.600,00", "02/12/2026" and the copy-paste code)
+- [x] No template contains emoji or unescaped user input (name with `<` is escaped)
+- [x] `revenueMailer` exposes exactly the 17 REC-159 template names (asserted against a literal list)
+- [x] Gate check passes: `npm test -w apps/api`
+- [x] Test count: ≥ 18 new tests pass
 
 **Tests**: unit
 **Gate**: quick
@@ -593,11 +593,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Closing 2026-11-20 (clinic) with a Pacote 20h period and a Meio turno period → 40-min lot, 20533-cent credit lot, Friday occurrence `cancelled_by_clinic`, two `subscription.compensation` outbox rows; preview returns `{ subscribers:2, minutes:40, creditCents:20533, fixedOccurrencesCancelled:1 }`
-- [ ] Room-specific closure: hour package not compensated; fixed only for the same room
-- [ ] Re-apply creates nothing; setting disabled → nothing
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 8 new tests pass
+- [x] Closing 2026-11-20 (clinic) with a Pacote 20h period and a Meio turno period → 40-min lot, 20533-cent credit lot, Friday occurrence `cancelled_by_clinic`, two `subscription.compensation` outbox rows; preview returns `{ subscribers:2, minutes:40, creditCents:20533, fixedOccurrencesCancelled:1 }`
+- [x] Room-specific closure: hour package not compensated; fixed only for the same room
+- [x] Re-apply creates nothing; setting disabled → nothing
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 8 new tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -621,14 +621,14 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Through nucleo's booking endpoints: coupon R$ 20 vs slot 10% on 16000 → coupon wins, net 14000, deposit 7000, use reserved; on approval consumed and slot part consumed; on expiry released
-- [ ] Package booking via `payWith:'package'` → `payment_mode = 'package'`, confirmed with debit; insufficient → 422 and no booking row; quote `extensions` parse with `revenueQuoteSchema`
-- [ ] Credits pay part of the deposit (internal charge); tenant cancel ≥ 24h returns credit per `allocateRefund`; clinic cancel with credit option grants `clinic_cancellation` lot
-- [ ] Cheaper reschedule returns `creditCents` and a `reschedule_difference` lot; fixed occurrence cancel/reschedule moves no money
-- [ ] A deferred grant written before the live port existed becomes one credit lot; running the backfill twice creates no second lot
-- [ ] Availability response carries `discountPercent` on discounted available cells
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 14 new tests pass
+- [x] Through nucleo's booking endpoints: coupon R$ 20 vs slot 10% on 16000 → coupon wins, net 14000, deposit 7000, use reserved; on approval consumed and slot part consumed; on expiry released
+- [x] Package booking via `payWith:'package'` → `payment_mode = 'package'`, confirmed with debit; insufficient → 422 and no booking row; quote `extensions` parse with `revenueQuoteSchema`
+- [x] Credits pay part of the deposit (internal charge); tenant cancel ≥ 24h returns credit per `allocateRefund`; clinic cancel with credit option grants `clinic_cancellation` lot
+- [x] Cheaper reschedule returns `creditCents` and a `reschedule_difference` lot; fixed occurrence cancel/reschedule moves no money
+- [x] A deferred grant written before the live port existed becomes one credit lot; running the backfill twice creates no second lot
+- [x] Availability response carries `discountPercent` on discounted available cells
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 14 new tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -652,10 +652,10 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Admin creates "Pacote 25h mensal" 187500 → stored `included_minutes = 1500`, `period = 'monthly'`; invalid combos → 422
-- [ ] Window change on a category with an active subscription → 409 with REC-05 message; price change → version + 1, audit, one `subscription.price_change` per active/suspended subscriber
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 8 new tests pass
+- [x] Admin creates "Pacote 25h mensal" 187500 → stored `included_minutes = 1500`, `period = 'monthly'`; invalid combos → 422
+- [x] Window change on a category with an active subscription → 409 with REC-05 message; price change → version + 1, audit, one `subscription.price_change` per active/suspended subscriber
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 8 new tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -679,11 +679,11 @@ T48 → T50
 
 **Done when**:
 
-- [ ] `GET /api/public/packages` lists active public package categories only, with `avgHourCents` 8000 for Pacote 20h and estimate for Meio turno
-- [ ] Occurrence check for a date blocked in Sala Principal returns the conflict and suggests the other rooms and up to 3 conflict-free base dates within 14 days
-- [ ] Quote REC-10 values exact; base date out of range → 422 message; inactive category → 404
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 10 new tests pass
+- [x] `GET /api/public/packages` lists active public package categories only, with `avgHourCents` 8000 for Pacote 20h and estimate for Meio turno
+- [x] Occurrence check for a date blocked in Sala Principal returns the conflict and suggests the other rooms and up to 3 conflict-free base dates within 14 days
+- [x] Quote REC-10 values exact; base date out of range → 422 message; inactive category → 404
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 10 new tests pass
 
 **Tests**: integration
 **Gate**: full

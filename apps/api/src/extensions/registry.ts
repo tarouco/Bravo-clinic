@@ -130,6 +130,8 @@ export interface CategoryHandler {
   type: 'hour_package' | 'fixed_schedule';
   schema: z.ZodType;
   toRow(input: unknown): Partial<CategoryRow>;
+  /** Checks that need the settings in force (e.g. the slot grid); runs on create and update. */
+  validateRow?(tx: Tx, row: typeof bookingCategories.$inferInsert): Promise<void>;
   /** May throw a 409 or queue notices; runs before the update is persisted. */
   onUpdate?(tx: Tx, before: CategoryRow, after: CategoryRow, ctx: RequestContext): Promise<void>;
 }
