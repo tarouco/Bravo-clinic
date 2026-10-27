@@ -562,10 +562,10 @@
 | REC-51 | P1: Renewal, suspension and closure | Tasks | T27 | In Tasks |
 | REC-52 | P1: Renewal, suspension and closure | Tasks | T27 | In Tasks |
 | REC-53 | P1: Renewal, suspension and closure | Tasks | T20, T28 | Implementing |
-| REC-54 | P1: Renewal, suspension and closure | Tasks | T23, T28 | In Tasks |
+| REC-54 | P1: Renewal, suspension and closure | Tasks | T23, T28 | Implementing |
 | REC-55 | P1: Renewal, suspension and closure | Tasks | T13 | Implementing |
-| REC-56 | P1: Renewal, suspension and closure | Tasks | T23 | In Tasks |
-| REC-57 | P1: Renewal, suspension and closure | Tasks | T23, T28 | In Tasks |
+| REC-56 | P1: Renewal, suspension and closure | Tasks | T23 | Implementing |
+| REC-57 | P1: Renewal, suspension and closure | Tasks | T23, T28 | Implementing |
 | REC-58 | P1: Renewal, suspension and closure | Tasks | T27 | In Tasks |
 | REC-59 | P1: Renewal, suspension and closure | Tasks | T29 | In Tasks |
 | REC-60 | P1: Renewal, suspension and closure | Tasks | T1, T20 | Implementing |
@@ -587,9 +587,9 @@
 | REC-76 | P1: Change and cancel | Tasks | T22 | Implementing |
 | REC-77 | P1: Change and cancel | Tasks | T22 | Implementing |
 | REC-78 | P1: Change and cancel | Tasks | T22 | Implementing |
-| REC-79 | P1: Change and cancel | Tasks | T23, T39 | In Tasks |
-| REC-80 | P1: Change and cancel | Tasks | T23 | In Tasks |
-| REC-81 | P1: Change and cancel | Tasks | T23 | In Tasks |
+| REC-79 | P1: Change and cancel | Tasks | T23, T39 | Implementing |
+| REC-80 | P1: Change and cancel | Tasks | T23 | Implementing |
+| REC-81 | P1: Change and cancel | Tasks | T23 | Implementing |
 | REC-82 | P1: Change and cancel | Tasks | T26 | In Tasks |
 | REC-83 | P1: Buy a fixed-schedule package | Tasks | T3 | Implementing |
 | REC-84 | P1: Buy a fixed-schedule package | Tasks | T18, T36 | Implementing |

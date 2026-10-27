@@ -70,15 +70,18 @@ export const subscriptionInitialHandler: ChargeHandler = {
  * Renewal paid (REC-49, REC-56): the period becomes `paid` (or `active` when its base date already
  * came, which also regularizes a suspended subscription) and its held occurrences `confirmed`.
  */
-async function settleRenewal(
+export async function settleRenewal(
   tx: Tx,
   ctx: RequestContext,
-  charge: ChargeRow,
-  period: PeriodRow,
-  subscription: SubscriptionRow,
-  fx: ChargeEffects,
+  args: {
+    period: PeriodRow;
+    subscription: SubscriptionRow;
+    now: Date;
+    amountCents: number;
+    fx: ChargeEffects;
+  },
 ): Promise<void> {
-  const now = clockOf(charge);
+  const { period, subscription, now, fx } = args;
   const appBaseUrl = getEnv().APP_BASE_URL;
   let settled: PeriodRow;
   if (period.startsOn <= todayOf(now) || subscription.status === 'suspended') {
@@ -117,7 +120,7 @@ async function settleRenewal(
         name: user.name,
         categoryName: await categoryName(tx, subscription),
         link: new URL('/app/compras', appBaseUrl).toString(),
-        amountCents: charge.amountCents,
+        amountCents: args.amountCents,
         startsOn: settled.startsOn as `${number}-${number}-${number}`,
         endsOn: settled.endsOn as `${number}-${number}-${number}`,
       },
@@ -138,7 +141,13 @@ export const subscriptionRenewalHandler: ChargeHandler = {
       await refundLate(tx, ctx, charge, subscription, fx, `period_${period.status}`);
       return;
     }
-    await settleRenewal(tx, ctx, charge, period, subscription, fx);
+    await settleRenewal(tx, ctx, {
+      period,
+      subscription,
+      now: clockOf(charge),
+      amountCents: charge.amountCents,
+      fx,
+    });
   },
   async onFailed(tx, _ctx, charge, status, effects) {
     if (status !== 'rejected') return;

@@ -824,12 +824,12 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Preview for 6 h left → `minutesLost: 360`; paid upcoming period reported; fixed preview counts future occurrences
-- [ ] Cancel: expiry entry, pending charge cancelled, future periods cancelled, existing package bookings untouched; fixed occurrences released per actor
-- [ ] Suspend at `starts_on` releases held occurrences; end at `starts_on + 7` sets `ended`, period `failed`
-- [ ] Regularize hour package during grace → active, full minutes, same dates; fixed regularization re-holds only free future occurrences and prices them
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 12 new tests pass
+- [x] Preview for 6 h left → `minutesLost: 360`; paid upcoming period reported; fixed preview counts future occurrences
+- [x] Cancel: expiry entry, pending charge cancelled, future periods cancelled, existing package bookings untouched; fixed occurrences released per actor
+- [x] Suspend at `starts_on` releases held occurrences; end at `starts_on + 7` sets `ended`, period `failed`
+- [x] Regularize hour package during grace → active, full minutes, same dates; fixed regularization re-holds only free future occurrences and prices them
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 12 new tests pass
 
 **Tests**: integration
 **Gate**: full
