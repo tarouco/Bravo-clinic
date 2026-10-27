@@ -388,4 +388,10 @@ Lane B (Phases 7–9, merged) coded these response shapes where the API Contract
 | `POST /app/subscriptions/quote` | requires session; logged-out visitors see a local summary built from public offer + occurrence check |
 | Coupon `validUntil` | form date inclusive, sent as next São Paulo midnight (half-open `[validFrom, validUntil)`) |
 
+Lane A notes (Phases 3–4):
+
+- Block-priced intervals: `Quote.extensions.package` is `null` (REC-31), so `PackagePaymentOption`'s `block_category` message branch is never reached; booking with `payWith: 'package'` on a block answers 422 `POLICY_VIOLATION`.
+- `PATCH /admin/categories/:id` accepts `includedHours`, `pricePerOccurrenceCents` and `period` (core `categoryUpdateSchema` extended in T17); a field that does not apply to the category type answers 422.
+- `GET /admin/customers/:userId/credits` answers `CreditsSummary` (same shape as `GET /app/credits`).
+
 Known risk: the admin sale dialog's fixed-schedule picker uses the public occurrences endpoint, which omits `admin_only` categories (REC-08); for those, only the admin quote's `conflicts` is authoritative.
