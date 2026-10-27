@@ -554,12 +554,12 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-54 | P1: MCP server | Tasks | T13 | Implementing |
 | GES-55 | P1: MCP server | Tasks | T13 | Implementing |
 | GES-56 | P1: MCP server | Tasks | T13 | Implementing |
-| GES-57 | P1: MCP server | Tasks | T14 | In Tasks |
-| GES-58 | P1: MCP server | Tasks | T14 | In Tasks |
-| GES-59 | P1: MCP server | Tasks | T14 | In Tasks |
+| GES-57 | P1: MCP server | Tasks | T14 | Implementing |
+| GES-58 | P1: MCP server | Tasks | T14 | Implementing |
+| GES-59 | P1: MCP server | Tasks | T14 | Implementing |
 | GES-60 | P1: MCP server | Tasks | T13 | Implementing |
 | GES-61 | P1: MCP server | Tasks | T13, T14 | Implementing |
-| GES-62 | P1: MCP server | Tasks | T14 | In Tasks |
+| GES-62 | P1: MCP server | Tasks | T14 | Implementing |
 | GES-63 | P1: MCP server | Tasks | T13, T33 | Implementing |
 | GES-64 | P1: MCP server | Tasks | T13 | Implementing |
 | GES-65 | P1: Notification e-mails | Tasks | T12 | Implementing |

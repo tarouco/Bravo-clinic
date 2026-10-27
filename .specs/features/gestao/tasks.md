@@ -586,12 +586,12 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Test asserts `tools/list` with a read token returns exactly the read tools registered so far, and with read_write all of them
-- [ ] Tests assert a read token calling `booking_create` gets tool error `FORBIDDEN` with no booking row
-- [ ] Tests assert `booking_cancel` without `confirm` returns `CONFIRMATION_REQUIRED` + preview and leaves status unchanged; with `confirm: true` cancels and writes the service audit with origin `mcp`
-- [ ] Tests assert invalid args return `VALIDATION_FAILED` with pt-BR messages; `agenda_list` and `pre_reservation_create` happy paths
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 10 tests pass
+- [x] Test asserts `tools/list` with a read token returns exactly the read tools registered so far, and with read_write all of them
+- [x] Tests assert a read token calling `booking_create` gets tool error `FORBIDDEN` with no booking row
+- [x] Tests assert `booking_cancel` without `confirm` returns `CONFIRMATION_REQUIRED` + preview and leaves status unchanged; with `confirm: true` cancels and writes the service audit with origin `mcp`
+- [x] Tests assert invalid args return `VALIDATION_FAILED` with pt-BR messages; `agenda_list` and `pre_reservation_create` happy paths
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 10 tests pass
 
 **Tests**: integration
 **Gate**: full

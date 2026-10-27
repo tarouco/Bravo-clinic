@@ -58,6 +58,16 @@ const toolError = (code: string, message: string, details?: ErrorDetails): ToolO
   error: { code, message, ...(details !== undefined && { details }) },
 });
 
+function mergeAllOf(parts: Record<string, unknown>[]): Record<string, unknown> {
+  const properties: Record<string, unknown> = {};
+  const required = new Set<string>();
+  for (const part of parts) {
+    Object.assign(properties, (part['properties'] as Record<string, unknown> | undefined) ?? {});
+    for (const key of (part['required'] as string[] | undefined) ?? []) required.add(key);
+  }
+  return { type: 'object', properties, required: [...required] };
+}
+
 function jsonSchemaOf(schema: ZodType, destructive: boolean): Record<string, unknown> {
   let json: Record<string, unknown>;
   try {
@@ -66,6 +76,8 @@ function jsonSchemaOf(schema: ZodType, destructive: boolean): Record<string, unk
     json = { type: 'object' };
   }
   delete json['$schema'];
+  // An intersection (`{ id }` & a core schema) becomes one object with both property sets.
+  if (Array.isArray(json['allOf'])) json = mergeAllOf(json['allOf'] as Record<string, unknown>[]);
   if (json['type'] !== 'object') json = { type: 'object', properties: {} };
   if (destructive) {
     const properties = { ...((json['properties'] as Record<string, unknown> | undefined) ?? {}) };
