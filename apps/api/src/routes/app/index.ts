@@ -2,6 +2,7 @@ import { Hono } from 'hono';
 import type { AppEnv } from '../../types';
 import { appAuthRoutes } from './auth';
 import { bookingRoutes } from './bookings';
+import { calendarFeedRoutes } from './calendar-feed';
 import { cancelRoutes } from './cancel';
 import { cardRoutes } from './cards';
 import { meRoutes } from './me';
@@ -24,5 +25,6 @@ export function appRoutes(): Hono<AppEnv> {
   app.route('/', purchaseRoutes());
   app.route('/', subscriptionRoutes());
   app.route('/', pushRoutes());
+  app.route('/', calendarFeedRoutes());
   return app;
 }

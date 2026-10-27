@@ -467,13 +467,13 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests assert issue returns the URL once, DB holds hash + prefix only, regenerate revokes the previous one, audit rows written
-- [ ] Tests assert clinic feed includes each listed status and active blocks, excludes cancelled/expired bookings, cleanup and amounts; room scope filters; window edges (today − 90 / + 180) included/excluded
-- [ ] Tests assert personal feed contains only the owner's allowed statuses and summary "Bravô Clinic · <sala>"
-- [ ] Test asserts after a reschedule (nucleo service) the feed has the same UID, new DTSTART and SEQUENCE + 1; after cancel the event is gone
-- [ ] Tests assert per-booking `.ics` PUBLISH/CANCEL, 404 for another user's booking, 404 for unknown/revoked token, 429 on the 61st request in an hour
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 14 tests pass
+- [x] Tests assert issue returns the URL once, DB holds hash + prefix only, regenerate revokes the previous one, audit rows written
+- [x] Tests assert clinic feed includes each listed status and active blocks, excludes cancelled/expired bookings, cleanup and amounts; room scope filters; window edges (today − 90 / + 180) included/excluded
+- [x] Tests assert personal feed contains only the owner's allowed statuses and summary "Bravô Clinic · <sala>"
+- [x] Test asserts after a reschedule (nucleo service) the feed has the same UID, new DTSTART and SEQUENCE + 1; after cancel the event is gone
+- [x] Tests assert per-booking `.ics` PUBLISH/CANCEL, 404 for another user's booking, 404 for unknown/revoked token, 429 on the 61st request in an hour
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 14 tests pass
 
 **Tests**: integration
 **Gate**: full

@@ -55,7 +55,7 @@ export function bookingRoutes(): Hono<AppEnv> {
     const booking = await loadOwnedBooking(db, c.req.valid('param').id, c.get('auth').userId);
     const mail = await loadBookingMailContext(db, booking, env);
     const cancelled = booking.status.startsWith('cancelled_') || booking.status === 'expired';
-    const calendar = bookingIcs(booking, mail, cancelled ? 'CANCEL' : 'REQUEST', now());
+    const calendar = bookingIcs(booking, mail, cancelled ? 'CANCEL' : 'PUBLISH', now());
     return c.body(calendar, 200, {
       'Content-Type': 'text/calendar; charset=utf-8',
       'Content-Disposition': `attachment; filename="reserva-${booking.code}.ics"`,

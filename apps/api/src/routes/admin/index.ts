@@ -1,4 +1,5 @@
 import { Hono } from 'hono';
+import { requireRole } from '../../middleware/auth';
 import type { AppEnv } from '../../types';
 import { adminBlockRoutes } from './blocks';
 import { adminBookingCancelRoutes } from './booking-cancel';
@@ -11,6 +12,7 @@ import { adminCategoryRoutes } from './categories';
 import { adminCouponRoutes } from './coupons';
 import { adminCustomerCreditRoutes } from './customer-credits';
 import { adminCustomerRoutes } from './customers';
+import { adminIntegrationsCalendarRoutes } from './integrations-calendar';
 import { adminSessionRoutes } from './session';
 import { adminSlotDiscountRoutes } from './slot-discounts';
 import { adminSubscriptionRoutes } from './subscriptions';
@@ -19,6 +21,9 @@ import { adminSettingsRoutes } from './settings';
 /** Everything under `/admin/*`; CSRF, auth and the staff + MFA guard are applied by `createApp`. */
 export function adminRoutes(): Hono<AppEnv> {
   const app = new Hono<AppEnv>();
+  // Every Integrações route is admin only, MCP token creation included (GES-120).
+  app.use('/integrations', requireRole('admin'));
+  app.use('/integrations/*', requireRole('admin'));
   app.route('/', adminSessionRoutes());
   app.route('/', adminCalendarRoutes());
   app.route('/', adminCalendarExceptionRoutes());
@@ -34,5 +39,6 @@ export function adminRoutes(): Hono<AppEnv> {
   app.route('/', adminCouponRoutes());
   app.route('/', adminSlotDiscountRoutes());
   app.route('/', adminSubscriptionRoutes());
+  app.route('/', adminIntegrationsCalendarRoutes());
   return app;
 }

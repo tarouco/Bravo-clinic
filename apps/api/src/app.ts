@@ -11,6 +11,7 @@ import { requireJson } from './middleware/require-json';
 import { adminRoutes } from './routes/admin';
 import { appRoutes } from './routes/app';
 import { healthRoutes } from './routes/health';
+import { icsRoutes } from './routes/ics';
 import { jobRoutes } from './routes/jobs';
 import { publicRoutes } from './routes/public';
 import { paymentWebhookRoutes } from './routes/webhooks/pagamentos';
@@ -45,6 +46,7 @@ export function createApp(overrides: Partial<AppDeps> = {}): Hono<AppEnv> {
   app.route('/admin', adminRoutes());
   app.route('/webhooks/pagamentos', paymentWebhookRoutes());
   app.route('/jobs', jobRoutes());
+  app.route('/ics', icsRoutes());
   app.onError(onError);
   app.notFound(notFoundHandler);
   return app;

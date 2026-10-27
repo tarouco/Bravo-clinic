@@ -540,16 +540,16 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-40 | P1: Payment gateway configuration | Tasks | T11 | In Tasks |
 | GES-41 | P1: Payment gateway configuration | Tasks | T11, T31 | In Tasks |
 | GES-42 | P1: Calendar feeds and .ics files | Tasks | T10, T32 | Implementing |
-| GES-43 | P1: Calendar feeds and .ics files | Tasks | T10 | In Tasks |
-| GES-44 | P1: Calendar feeds and .ics files | Tasks | T10 | In Tasks |
-| GES-45 | P1: Calendar feeds and .ics files | Tasks | T10, T41 | In Tasks |
-| GES-46 | P1: Calendar feeds and .ics files | Tasks | T10 | In Tasks |
+| GES-43 | P1: Calendar feeds and .ics files | Tasks | T10 | Implementing |
+| GES-44 | P1: Calendar feeds and .ics files | Tasks | T10 | Implementing |
+| GES-45 | P1: Calendar feeds and .ics files | Tasks | T10, T41 | Implementing |
+| GES-46 | P1: Calendar feeds and .ics files | Tasks | T10 | Implementing |
 | GES-47 | P1: Calendar feeds and .ics files | Tasks | T8 | Implementing |
 | GES-48 | P1: Calendar feeds and .ics files | Tasks | T8, T10 | Implementing |
-| GES-49 | P1: Calendar feeds and .ics files | Tasks | T10, T45 | In Tasks |
-| GES-50 | P1: Calendar feeds and .ics files | Tasks | T10, T41 | In Tasks |
-| GES-51 | P1: Calendar feeds and .ics files | Tasks | T10 | In Tasks |
-| GES-52 | P1: Calendar feeds and .ics files | Tasks | T10 | In Tasks |
+| GES-49 | P1: Calendar feeds and .ics files | Tasks | T10, T45 | Implementing |
+| GES-50 | P1: Calendar feeds and .ics files | Tasks | T10, T41 | Implementing |
+| GES-51 | P1: Calendar feeds and .ics files | Tasks | T10 | Implementing |
+| GES-52 | P1: Calendar feeds and .ics files | Tasks | T10 | Implementing |
 | GES-53 | P1: MCP server | Tasks | T13 | In Tasks |
 | GES-54 | P1: MCP server | Tasks | T13 | In Tasks |
 | GES-55 | P1: MCP server | Tasks | T13 | In Tasks |

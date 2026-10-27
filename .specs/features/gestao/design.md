@@ -498,3 +498,9 @@ Implementation notes:
 - **T8**: `PRODID` changed to the GES-47 value `-//Bravo Clinic//Salas Inteligentes//PT-BR` for every output, attachments included; `icsCalendar` writes `METHOD` only when given and `X-WR-CALNAME` for the feed name.
 - **T9**: `email-retry` and `retention` are registered jobs (`/jobs/email-retry`, `/jobs/retention`); their schedule triggers stay for T49, which owns the gestao edits to `neon.ts`.
 - Production env needed: `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT` (already passed through by `neon.ts`); `AWS_*` storage vars are injected by Neon once T49 declares the buckets.
+
+## Lane A notes (Phases 3–4)
+
+Contract check: every route below was compared with what `apps/web/src` sends and reads (lane B is the de facto consumer).
+
+- **T10**: the web contracts match (`GET /admin/integrations/calendar` → `{ feeds, rooms }` with active feeds only and the active rooms; `POST .../feeds` 201 `{ url, prefix }`; `GET /app/calendar-feed` → `{ active, prefix, createdAt }`; `POST` 201 `{ url }`; `DELETE` 204). `adminRoutes` guards `/integrations` and `/integrations/*` with `requireRole('admin')` once for every Integrações route (GES-120). Regenerating a feed writes `ics_feed.revoke` for the replaced token and `ics_feed.issue` for the new one. The feed rate-limit bucket is keyed by the token id (`ics_feed:<id>`), so unknown tokens never create buckets. The per-booking `.ics` (nucleo's route) now answers `METHOD:PUBLISH`; e-mail attachments keep `REQUEST`/`CANCEL`, and nucleo's `bookingIcs` accepts any `IcsMethod`. Clinic feeds mark `pre_reserved` and `held_for_renewal` as `STATUS:TENTATIVE`.
