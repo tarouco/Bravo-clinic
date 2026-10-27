@@ -1,5 +1,6 @@
 import {
   expenseInputSchema,
+  financeQuerySchema,
   formatBRL,
   idSchema,
   localDateSchema,
@@ -11,6 +12,7 @@ import { withTransaction } from '../../db/client';
 import { expenseCategories, expenses } from '../../db/schema';
 import { notFound } from '../../lib/errors';
 import { createExpense, deleteExpense, listExpenses } from '../../modules/finance/expenses.service';
+import { buildSummary } from '../../modules/finance/finance-report.service';
 import { createReceipt } from '../../modules/finance/receipts.service';
 import { defineTool, type ToolDefinition } from '../server';
 
@@ -20,6 +22,14 @@ const formatDate = (date: string) => date.split('-').reverse().join('/');
 
 export function financeTools(): ToolDefinition[] {
   return [
+    defineTool({
+      name: 'finance_summary',
+      description:
+        'Resumo financeiro de um período (até 731 dias) por semana, mês ou trimestre, em regime de caixa (cash) ou competência (accrual), com a comparação com o período anterior.',
+      scope: 'read',
+      input: financeQuerySchema,
+      run: (tc, input) => buildSummary(tc.deps.db, input),
+    }),
     defineTool({
       name: 'expenses_list',
       description: 'Lista as despesas de um período (de/até), opcionalmente de uma categoria.',

@@ -699,10 +699,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Integration test seeds a booking with deposit + balance across months, a refund, a fixed-schedule period, extra hours, a manual receipt, expenses, and asserts Caixa and Competência buckets equal the design worked examples
-- [ ] Tests assert previous-range totals and deltas, empty range zeros with `null` percents, 422 for > 731 days, 403 for reception
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 7 tests pass
+- [x] Integration test seeds a booking with deposit + balance across months, a refund, a fixed-schedule period, extra hours, a manual receipt, expenses, and asserts Caixa and Competência buckets equal the design worked examples
+- [x] Tests assert previous-range totals and deltas, empty range zeros with `null` percents, 422 for > 731 days, 403 for reception
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: integration
 **Gate**: full

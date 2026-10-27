@@ -14,6 +14,7 @@ import { adminCustomerCreditRoutes } from './customer-credits';
 import { adminCustomerRoutes } from './customers';
 import { adminFinanceExpenseRoutes } from './finance-expenses';
 import { adminFinanceReceiptRoutes } from './finance-receipts';
+import { adminFinanceReportRoutes } from './finance-reports';
 import { adminIntegrationsCalendarRoutes } from './integrations-calendar';
 import { adminIntegrationsGatewayRoutes } from './integrations-gateway';
 import { adminIntegrationsMcpRoutes } from './integrations-mcp';
@@ -52,5 +53,6 @@ export function adminRoutes(): Hono<AppEnv> {
   app.route('/', adminIntegrationsMcpRoutes());
   app.route('/', adminFinanceExpenseRoutes());
   app.route('/', adminFinanceReceiptRoutes());
+  app.route('/', adminFinanceReportRoutes());
   return app;
 }

@@ -50,6 +50,7 @@ const DESIGN_TABLE: [name: string, scope: 'read' | 'write', destructive: boolean
   ['coupon_create', 'write', false],
   ['coupon_set_enabled', 'write', false],
   ['credit_grant', 'write', false],
+  ['finance_summary', 'read', false],
   ['expenses_list', 'read', false],
   ['expense_create', 'write', false],
   ['expense_delete', 'write', true],
