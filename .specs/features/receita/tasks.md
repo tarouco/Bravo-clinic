@@ -1549,9 +1549,9 @@ T48 → T50
 
 **Done when**:
 
-- [ ] All assertions above pass against the running API
-- [ ] Gate check passes: `npm run e2e -w apps/web`
-- [ ] Test count: ≥ 1 e2e spec passes
+- [x] All assertions above pass against the running API
+- [x] Gate check passes: `npm run e2e -w apps/web`
+- [x] Test count: ≥ 1 e2e spec passes
 
 **Tests**: e2e
 **Gate**: E2E

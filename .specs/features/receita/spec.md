@@ -628,10 +628,10 @@
 | REC-117 | P1: Coupons in checkout | Tasks | T4, T33 | Implementing |
 | REC-118 | P1: Coupons in checkout | Tasks | T4, T11 | Implementing |
 | REC-119 | P1: Coupons in checkout | Tasks | T4, T11 | Implementing |
-| REC-120 | P1: Coupons in checkout | Tasks | T4, T16 | Implementing |
-| REC-121 | P1: Coupons in checkout | Tasks | T33 | In Tasks |
-| REC-122 | P1: Coupons in checkout | Tasks | T16 | Implementing |
-| REC-123 | P1: Coupons in checkout | Tasks | T11 | Implementing |
+| REC-120 | P1: Coupons in checkout | Tasks | T4, T16, T49 | Implementing |
+| REC-121 | P1: Coupons in checkout | Tasks | T33, T49 | Implementing |
+| REC-122 | P1: Coupons in checkout | Tasks | T16, T49 | Implementing |
+| REC-123 | P1: Coupons in checkout | Tasks | T11, T49 | Implementing |
 | REC-124 | P1: Coupons in checkout | Tasks | T11, T16 | Implementing |
 | REC-125 | P1: Coupons in checkout | Tasks | T19, T27 | Implementing |
 | REC-126 | P1: Coupons in checkout | Tasks | T11 | Implementing |
@@ -644,7 +644,7 @@
 | REC-133 | P1: Slot discounts | Tasks | T12 | Implementing |
 | REC-134 | P1: Slot discounts | Tasks | T2, T12 | Implementing |
 | REC-135 | P1: Slot discounts | Tasks | T8, T12 | Implementing |
-| REC-136 | P1: Slot discounts | Tasks | T16, T45 | Implementing |
+| REC-136 | P1: Slot discounts | Tasks | T16, T45, T49 | Implementing |
 | REC-137 | P1: Slot discounts | Tasks | T12, T45 | Implementing |
 | REC-138 | P1: Slot discounts | Tasks | T12, T16 | Implementing |
 | REC-139 | P1: Slot discounts | Tasks | T12 | Implementing |
