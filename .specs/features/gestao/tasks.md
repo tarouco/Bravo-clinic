@@ -646,10 +646,10 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests (injected `now`) assert monthly parent 2026-01-31 creates 2026-02-28 and 2026-03-31 children by 2026-03-31, quarterly and yearly cadence, no future-dated child
-- [ ] Tests assert a re-run creates no duplicates and a parent switched to `none` stops generating while old children remain
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 5 tests pass
+- [x] Tests (injected `now`) assert monthly parent 2026-01-31 creates 2026-02-28 and 2026-03-31 children by 2026-03-31, quarterly and yearly cadence, no future-dated child
+- [x] Tests assert a re-run creates no duplicates and a parent switched to `none` stops generating while old children remain
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 5 tests pass
 
 **Tests**: integration
 **Gate**: full
