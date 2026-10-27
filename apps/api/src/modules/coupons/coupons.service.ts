@@ -250,7 +250,8 @@ export async function evaluateCoupon(
   db: Db | Tx,
   args: {
     code: string;
-    userId: string;
+    /** null: an anonymous quote, checked without the customer rules. */
+    userId: string | null;
     target: 'booking' | 'package';
     grossCents: Cents;
     now: Date;
@@ -269,24 +270,29 @@ export async function evaluateCoupon(
   });
   if (coupon === null) return reject('not_found');
 
-  const scope = await customerScope(db, args.userId);
-  const [prior] = await db
-    .select({ n: sql<number>`count(*)::int` })
-    .from(couponUses)
-    .where(
-      and(
-        eq(couponUses.couponId, coupon.id),
-        inArray(couponUses.status, [...LIVE_USE]),
-        usesOfCustomer(scope),
-      ),
-    );
-  const docHasPriorBooking =
-    coupon.type === 'first_booking' ? await customerHasPriorBooking(db, scope) : false;
+  let priorUses = 0;
+  let docHasPriorBooking = false;
+  if (args.userId !== null) {
+    const scope = await customerScope(db, args.userId);
+    const [prior] = await db
+      .select({ n: sql<number>`count(*)::int` })
+      .from(couponUses)
+      .where(
+        and(
+          eq(couponUses.couponId, coupon.id),
+          inArray(couponUses.status, [...LIVE_USE]),
+          usesOfCustomer(scope),
+        ),
+      );
+    priorUses = prior?.n ?? 0;
+    docHasPriorBooking =
+      coupon.type === 'first_booking' ? await customerHasPriorBooking(db, scope) : false;
+  }
   const verdict = validateCoupon({
     coupon: coupon as CouponRow,
     now: args.now,
     target: args.target,
-    customerPriorUses: prior?.n ?? 0,
+    customerPriorUses: priorUses,
     docHasPriorBooking,
   });
   if (!verdict.ok) return reject(verdict.reason);

@@ -1,3 +1,12 @@
+import {
+  closedDayCompensationPort,
+  liveCreditPort,
+  packageModeHandler,
+  slotDiscountDecorator,
+  subscriptionModeHandler,
+} from '../modules/revenue/ports';
+import { creditStep, discountStep, packageStep } from '../modules/revenue/steps';
+import { defaultRegistry } from './defaults';
 import { createRegistry, type Registry } from './registry';
 
 /**
@@ -6,7 +15,18 @@ import { createRegistry, type Registry } from './registry';
  * decorator and category handlers; gestao adds its notification and room-media ports.
  */
 export function buildRegistry(): Registry {
-  return createRegistry({});
+  return createRegistry({
+    // receita (AD-031)
+    checkoutSteps: [discountStep, packageStep, creditStep],
+    paymentModeHandlers: [
+      ...defaultRegistry().paymentModeHandlers,
+      packageModeHandler,
+      subscriptionModeHandler,
+    ],
+    credits: liveCreditPort,
+    closedDayCompensation: closedDayCompensationPort,
+    availabilityDecorators: [slotDiscountDecorator],
+  });
 }
 
 export type { Registry } from './registry';

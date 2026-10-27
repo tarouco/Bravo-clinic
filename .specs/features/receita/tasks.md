@@ -621,14 +621,14 @@ T48 → T50
 
 **Done when**:
 
-- [ ] Through nucleo's booking endpoints: coupon R$ 20 vs slot 10% on 16000 → coupon wins, net 14000, deposit 7000, use reserved; on approval consumed and slot part consumed; on expiry released
-- [ ] Package booking via `payWith:'package'` → `payment_mode = 'package'`, confirmed with debit; insufficient → 422 and no booking row; quote `extensions` parse with `revenueQuoteSchema`
-- [ ] Credits pay part of the deposit (internal charge); tenant cancel ≥ 24h returns credit per `allocateRefund`; clinic cancel with credit option grants `clinic_cancellation` lot
-- [ ] Cheaper reschedule returns `creditCents` and a `reschedule_difference` lot; fixed occurrence cancel/reschedule moves no money
-- [ ] A deferred grant written before the live port existed becomes one credit lot; running the backfill twice creates no second lot
-- [ ] Availability response carries `discountPercent` on discounted available cells
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 14 new tests pass
+- [x] Through nucleo's booking endpoints: coupon R$ 20 vs slot 10% on 16000 → coupon wins, net 14000, deposit 7000, use reserved; on approval consumed and slot part consumed; on expiry released
+- [x] Package booking via `payWith:'package'` → `payment_mode = 'package'`, confirmed with debit; insufficient → 422 and no booking row; quote `extensions` parse with `revenueQuoteSchema`
+- [x] Credits pay part of the deposit (internal charge); tenant cancel ≥ 24h returns credit per `allocateRefund`; clinic cancel with credit option grants `clinic_cancellation` lot
+- [x] Cheaper reschedule returns `creditCents` and a `reschedule_difference` lot; fixed occurrence cancel/reschedule moves no money
+- [x] A deferred grant written before the live port existed becomes one credit lot; running the backfill twice creates no second lot
+- [x] Availability response carries `discountPercent` on discounted available cells
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 14 new tests pass
 
 **Tests**: integration
 **Gate**: full

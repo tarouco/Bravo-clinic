@@ -1,6 +1,7 @@
 import {
   addDays,
   localToUtc,
+  utcToLocal,
   type LocalDate,
   type SlotDiscount,
   type SlotDiscountApplyResult,
@@ -286,4 +287,26 @@ export async function consumeForBooking(
     consumed.push(part.id);
   }
   return consumed;
+}
+
+/** Minute-of-day pieces of the active discounts on one local date (pricing and the public grid). */
+export async function discountMinutes(
+  db: Db | Tx,
+  args: { roomId: string; date: LocalDate; now: Date },
+): Promise<{ id: string; startMinute: number; endMinute: number; percent: number }[]> {
+  const dayStart = localToUtc(args.date, 0);
+  const dayEnd = localToUtc(addDays(args.date, 1), 0);
+  const rows = await activeFor(db, {
+    roomId: args.roomId,
+    startsAt: dayStart,
+    endsAt: dayEnd,
+    now: args.now,
+  });
+  const minuteOf = (instant: Date) => utcToLocal(instant).minuteOfDay;
+  return rows.map((row) => ({
+    id: row.id,
+    startMinute: row.startsAt <= dayStart ? 0 : minuteOf(row.startsAt),
+    endMinute: row.endsAt >= dayEnd ? 1440 : minuteOf(row.endsAt),
+    percent: row.percent,
+  }));
 }
