@@ -1524,10 +1524,10 @@ T49 → T50
 - Skill: `netlify-image-cdn`
 
 **Done when**:
-- [ ] `npm run lhci -w apps/web` passes LCP ≤ 2500 ms, CLS ≤ 0.1, accessibility ≥ 0.95 on the three URLs with and without the analytics env set
-- [ ] If `/media/*` caching misses the budget, the Netlify Image CDN fallback of design Risks is applied and recorded as an AD amendment
-- [ ] Gate check passes: `npm run lhci -w apps/web`
-- [ ] Test count: 3 URLs × 3 assertions pass
+- [x] `npm run lhci -w apps/web` passes LCP ≤ 2500 ms, CLS ≤ 0.1, accessibility ≥ 0.95 on the three URLs with and without the analytics env set (measured against a Netlify draft deploy with `LHCI_URL_BASE`, design "Phase 12 notes (T48)")
+- [x] If `/media/*` caching misses the budget, the Netlify Image CDN fallback of design Risks is applied and recorded as an AD amendment (not needed: the budget passes; prerender recorded as AD-036)
+- [x] Gate check passes: `npm run lhci -w apps/web` (`LHCI_URL_BASE=<draft url> npx lhci autorun`)
+- [x] Test count: 3 URLs × 3 assertions pass
 
 **Tests**: e2e
 **Gate**: quality

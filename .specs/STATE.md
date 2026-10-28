@@ -152,6 +152,10 @@ Webhook signatures are checked before any `webhook_events` insert; Mercado Pago 
 Response bodies, not only requests, are zod schemas in `packages/core/src/contracts/*`. API integration tests parse every response with them; web types are `z.infer` of them and MSW fixtures are parsed at import. Contracts change only through a core commit on `main`, noted in the feature design.
 - **Why:** backend and frontend lanes run in parallel worktrees; drift fails a test in either lane.
 
+### AD-036 · Build-time prerender of the public pages (gestao T48, amends AD-014)
+`npm run build -w apps/web` prerenders `/`, `/salas` and every active `/salas/:slug` (room data from `API_PROXY_ORIGIN` at build time; the room pages are skipped when it cannot be reached) into `home.html`, `salas.html` and `salas/<slug>.html`, hydrated by the SPA (`hydrateRoot` with the dehydrated query state). `dist/index.html` stays the empty SPA shell and fallback (FND-125); `_redirects` gains a forced `/  /home.html  200!`. On prerendered pages the bundle and the Google Fonts stylesheet load right after the first contentful paint (hashed inline loader), so links work at once and buttons after hydration. Lighthouse budgets are measured against a Netlify draft deploy (`LHCI_URL_BASE`).
+- **Why:** a client-rendered SPA could not paint before its bundle and the two font origins on the mobile preset (LCP ~2.9–3.4 s); with prerender the three public pages measure 1.2–1.6 s (GES-143).
+
 ## Handoff
 
 - 2026-10-25: Repo cloned, Neon project + branches created, Neon Function spike verified. Next: plan `fundacao` (spec/design/tasks), then the other three features in parallel.
