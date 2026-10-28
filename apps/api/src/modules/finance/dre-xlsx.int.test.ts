@@ -7,6 +7,7 @@ import { connectMcp } from '../../../test/mcp-client';
 import { requireTestDatabaseUrl } from '../../../test/require-test-db';
 import { createApp } from '../../app';
 import { createDb, withTransaction } from '../../db/client';
+import { manualReceipts } from '../../db/schema';
 import { runSeed } from '../../db/seed';
 import { saveSetting } from '../settings/settings.repo';
 import { BRL_FORMAT, TABLE_HEADER_ROW } from './dre-xlsx';
@@ -165,6 +166,42 @@ describe('GET /admin/finance/dre.xlsx (GES-29..GES-34)', () => {
         expensesCents: total('6. (−) Despesas operacionais'),
         resultCents: total('7. = Resultado do período'),
       }).toEqual(expected);
+    }
+  });
+
+  it('leaves a deleted manual receipt out of Financeiro and the DRE, to the cent, in both regimes (GES-21)', async () => {
+    const admin = await createStaff(db, 'admin', NOW);
+    await db.insert(manualReceipts).values([
+      { date: '2026-11-12', revenueCategory: 'other', method: 'cash', amountCents: 5_000 },
+      {
+        date: '2026-11-20',
+        revenueCategory: 'other',
+        method: 'pix_direct',
+        amountCents: 1_234,
+        deletedAt: NOW,
+      },
+    ]);
+
+    for (const regime of ['cash', 'accrual'] as const) {
+      const query = `from=2026-11-01&to=2026-11-30&regime=${regime}`;
+      const res = await send(buildApp(), 'GET', `/admin/finance/summary?${query}`, {
+        cookie: admin.cookie,
+      });
+      const body = res.body as {
+        buckets: ReturnType<typeof financeTotals>[];
+        totals: ReturnType<typeof financeTotals>;
+        byRevenueCategory: Record<string, number>;
+      };
+      expect(body.buckets[0]).toMatchObject(financeTotals(5_000, 0, 0, 0, 0));
+      expect(body.totals).toEqual(financeTotals(5_000, 0, 0, 0, 0));
+      expect(body.byRevenueCategory.other).toBe(5_000);
+
+      const { bytes } = await download(admin.cookie, query);
+      const byLabel = new Map(table(await sheetOf(bytes), 1).map((r) => [r.label, r.cents]));
+      expect(byLabel.get('1. Receita bruta')).toEqual([5_000, 5_000]);
+      expect(byLabel.get('Outras receitas')).toEqual([5_000, 5_000]);
+      expect(byLabel.get('5. = Receita líquida')).toEqual([5_000, 5_000]);
+      expect(byLabel.get('7. = Resultado do período')).toEqual([5_000, 5_000]);
     }
   });
 
