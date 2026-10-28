@@ -10,13 +10,13 @@ export const consents = parseFixture(
       {
         id: 'c3000000-0000-4000-8000-000000000001',
         kind: 'booking_policy',
-        version: 2,
+        version: 'policy-v2',
         acceptedAt: '2026-10-18T13:30:00.000Z',
       },
       {
         id: 'c3000000-0000-4000-8000-000000000002',
         kind: 'recurring_charge',
-        version: 1,
+        version: 'recurring-2026-10',
         acceptedAt: '2026-10-20T02:15:00.000Z',
       },
     ],

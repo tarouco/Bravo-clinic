@@ -53,7 +53,7 @@ export function PrivacyPage() {
             >
               <span className="font-body text-body text-ink">{consentLabel(consent.kind)}</span>
               <span className="font-small text-small text-ink-muted">
-                {`Versão ${String(consent.version)} · ${acceptedOn(consent.acceptedAt)}`}
+                {`Versão ${consent.version} · ${acceptedOn(consent.acceptedAt)}`}
               </span>
             </li>
           ))}

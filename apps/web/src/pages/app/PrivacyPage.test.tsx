@@ -54,12 +54,14 @@ describe('PrivacyPage consents (GES-128)', () => {
     renderPage();
 
     const policy = (await screen.findByText('Política de reservas')).closest('li') as HTMLElement;
-    expect(within(policy).getByText('Versão 2 · 18/10/2026')).toBeInTheDocument();
+    expect(within(policy).getByText('Versão policy-v2 · 18/10/2026')).toBeInTheDocument();
     const recurring = screen
       .getByText('Cobrança recorrente no cartão')
       .closest('li') as HTMLElement;
     // 2026-10-20T02:15Z is still the 19th in São Paulo.
-    expect(within(recurring).getByText('Versão 1 · 19/10/2026')).toBeInTheDocument();
+    expect(
+      within(recurring).getByText('Versão recurring-2026-10 · 19/10/2026'),
+    ).toBeInTheDocument();
   });
 
   it('says so when there is no consent yet', async () => {
