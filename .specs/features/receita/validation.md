@@ -1,6 +1,21 @@
 # Receita Validation
 
-## Validation verdict: FAIL
+## Validation verdict: PASS
+
+Final verdict after iteration 2 (`main` at `27b56bc`): 161/161 ACs pass, sensor 16/16 iteration-1 mutants killed, all gates green. The iteration-1 report (FAIL) follows unchanged as history; the iteration-2 report is the "Iteration 2 report" section at the end.
+
+## Iteration history
+
+| Iteration | Verdict | Summary |
+| --------- | ------- | ------- |
+| 1 (2026-10-27, branch `worktree-agent-a8af581ab3cb24871`, `main` at `ca9f709`) | FAIL | 157/161 ACs pass; REC-68, REC-73, REC-108 partial, REC-136 red (wall clock); 13/16 mutants killed. Findings F1–F5 |
+| 2 (2026-10-27, branch `worktree-agent-a39fdb2740500c19d`, `main` at `27b56bc`) | PASS | F1–F5 closed; 161/161 ACs; 16/16 iteration-1 mutants killed; gates green (core 1191, web 1191, api 1041, e2e 14/14). Minor non-blocking F6 (clock assertions at `cancel.service.ts:250`, `ports.ts:64`) |
+
+---
+
+## Iteration 1 report
+
+**Iteration 1 verdict**: FAIL
 
 **Date**: 2026-10-27 (iteration 1)
 **Spec**: `.specs/features/receita/spec.md` (REC-01..REC-161)
@@ -310,7 +325,7 @@ Sensor depth: P0 (money, minutes, coupons, subscription lifecycle): 16 manual be
 | A8 | `api/modules/credits/credits.service.ts:121` | credit lots read without `FOR UPDATE` | `modules/credits/credits.service.int.test.ts` | ❌ **Survived** (8/8 passed) → F4 |
 | A9 | `api/modules/subscriptions/period.service.ts:270` | renewal priced from the previous period instead of the current category | `modules/subscriptions/period.service.int.test.ts` | ✅ Killed (`:210`, 170000 expected) |
 
-**Result**: 13/16 killed (core 7/7, API 6/9); survivors A4, A7, A8 → findings F2–F4 - FAIL ❌
+**Iteration 1 sensor outcome**: 13/16 killed (core 7/7, API 6/9); survivors A4, A7, A8 → findings F2–F4 - FAIL ❌
 
 ---
 
@@ -438,7 +453,9 @@ Not changed by the verifier (the orchestrator flips statuses after a PASS). Reco
 
 # Iteration 2
 
-## Validation verdict (iteration 2): PASS
+## Iteration 2 report
+
+**Iteration 2 verdict**: PASS
 
 **Date**: 2026-10-27 (iteration 2 of 3), runs between 19:05 and 23:20 BRT
 **Commit verified**: `27b56bc` (`main`: receita + iteration-1 fixes). Not moved mid-run.
