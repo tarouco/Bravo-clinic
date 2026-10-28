@@ -46,12 +46,17 @@ export function HeroSection() {
 
   return (
     <section className="relative isolate w-full overflow-hidden bg-surface-night min-h-[min(88vh,820px)] flex items-end">
-      <img
-        className="absolute inset-0 -z-20 hidden h-full w-full object-cover md:block"
-        src="/images/sala-principal.webp"
-        alt="Sala Principal da Bravô Clinic: maca motorizada, mesa de mármore orgânica, poltronas em bouclé e cortinas de linho sob luz quente"
-        fetchPriority="high"
-      />
+      {/* Phones hide this photo behind the tour: the source resolves to the 12 kB video poster
+          they fetch anyway, instead of the 126 kB desktop photo (GES-143). */}
+      <picture>
+        <source media="(max-width: 767px)" srcSet="/images/tour-poster.webp" />
+        <img
+          className="absolute inset-0 -z-20 hidden h-full w-full object-cover md:block"
+          src="/images/sala-principal.webp"
+          alt="Sala Principal da Bravô Clinic: maca motorizada, mesa de mármore orgânica, poltronas em bouclé e cortinas de linho sob luz quente"
+          fetchPriority="high"
+        />
+      </picture>
       {isWide ? null : (
         <video
           ref={videoRef}

@@ -1,5 +1,6 @@
 import { formatBRL } from '@bravo/core';
 import { CircleCheck, type LucideIcon } from 'lucide-react';
+import { photoSrcSet } from '../../lib/room-photo';
 import { Badge } from './Badge';
 import { Button } from './Button';
 import { Icon } from './Icon';
@@ -21,6 +22,8 @@ export interface RoomCardProps {
   onReserve: () => void;
   /** Photo-led card: taller cover, no description or equipment list (home showcase). */
   compact?: boolean;
+  /** First card above the fold: fetch the cover early; every other cover loads lazily. */
+  priority?: boolean;
 }
 
 export function RoomCard({
@@ -34,14 +37,19 @@ export function RoomCard({
   fromPriceCents,
   onReserve,
   compact = false,
+  priority = false,
 }: RoomCardProps) {
+  const src = imageUrl ?? ROOM_PLACEHOLDER_SRC;
   return (
     <article className="flex flex-col overflow-hidden rounded-xl bg-surface-raised shadow-lg transition-transform duration-300 hover:-translate-y-1">
       <div className={`relative w-full ${compact ? 'aspect-[4/3]' : 'h-64'}`}>
         <img
           className="absolute inset-0 h-full w-full object-cover"
-          src={imageUrl ?? ROOM_PLACEHOLDER_SRC}
+          src={src}
+          srcSet={photoSrcSet(src)}
+          sizes="(min-width: 1024px) 33vw, 100vw"
           alt={imageAlt ?? `Foto da ${name}`}
+          {...(priority ? { fetchPriority: 'high' as const } : { loading: 'lazy' as const })}
         />
         <div className="absolute left-3 top-3 rounded bg-bronze px-space-sm py-1 font-eyebrow text-caption font-semibold uppercase tracking-wider text-on-bronze shadow-sm">
           {name}

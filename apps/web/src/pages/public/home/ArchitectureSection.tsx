@@ -40,6 +40,7 @@ export function ArchitectureSection() {
                 <img
                   className="w-full h-full object-cover"
                   src="/images/recepcao.webp"
+                  loading="lazy"
                   alt="Recepção boutique com a sinalização em bronze da Bravô Clinic, iluminada em tom champagne, na Praia Brava, Itajaí"
                 />
                 <div className="absolute bottom-3 left-3 bg-surface-night/70 backdrop-blur-md px-space-sm py-1 rounded text-ink-night font-caption text-caption">
@@ -76,6 +77,7 @@ export function ArchitectureSection() {
                 <img
                   className="w-full h-full object-cover"
                   src="/images/consultorio.webp"
+                  loading="lazy"
                   alt="Consultório privativo com maca motorizada e mesa de pedra, em tons terrosos, na Praia Brava, Itajaí"
                 />
                 <div className="absolute bottom-3 left-3 bg-surface-night/70 backdrop-blur-md px-space-sm py-1 rounded text-ink-night font-caption text-caption">

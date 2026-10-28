@@ -14,8 +14,17 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- GES-143: the font stylesheet is preloaded at high priority but attached as `print`, so it
+         never blocks the first paint or the module script; src/main.tsx switches it to `all`. -->
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600&family=Jost:wght@300;400;500;600&display=swap"
+    />
     <link
       rel="stylesheet"
+      media="print"
+      data-brand-fonts
       href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600&family=Jost:wght@300;400;500;600&display=swap"
     />
 
