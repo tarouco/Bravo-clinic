@@ -11,8 +11,9 @@ export function shouldRetry(failureCount: number, error: unknown): boolean {
 
 export function createQueryClient(): QueryClient {
   // A 401 from any request means the session is gone: reset it so the UI falls back to anonymous.
+  // A wrong two-factor code (401 INVALID_CODE) is the exception: the session is still valid.
   const resetSessionOn401 = (error: unknown) => {
-    if (error instanceof ApiError && error.status === 401) {
+    if (error instanceof ApiError && error.status === 401 && error.code !== 'INVALID_CODE') {
       client.setQueryData(SESSION_KEY, null);
     }
   };
