@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { beforeAll, describe, expect, it } from 'vitest';
@@ -96,6 +97,20 @@ describe('index.html head', () => {
 
     expect(html).not.toContain('cdn.tailwindcss.com');
     expect(html).not.toContain('Material+Symbols');
+  });
+});
+
+describe('inline scripts and the CSP (GES-143)', () => {
+  it('lists the sha256 of every inline script of index.html in the netlify.toml script-src', () => {
+    const csp = /Content-Security-Policy = "([^"]*)"/.exec(readText('../../netlify.toml'))?.[1];
+    const scriptSrc = /script-src([^;]*)/.exec(csp ?? '')?.[1] ?? '';
+    const inline = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map((m) => m[1] ?? '');
+
+    expect(inline).toHaveLength(2);
+    for (const body of inline) {
+      const hash = createHash('sha256').update(body).digest('base64');
+      expect(scriptSrc).toContain(`'sha256-${hash}'`);
+    }
   });
 });
 

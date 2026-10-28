@@ -14,18 +14,21 @@
 
 # Headers apply to files Netlify serves, not to the proxied /api/* responses (the API sets its own).
 #
-# script-src carries the sha256 of the inline no-flash theme script in apps/web/index.html.
-# Update the hash whenever that script changes:
+# script-src carries the sha256 of each inline script in apps/web/index.html (the no-flash theme
+# script and the early requests of / and /salas pages) and of ENTRY_LOADER, the loader that
+# apps/web/scripts/prerender.mjs puts in prerendered pages to fetch the bundle and the fonts after
+# the first paint (GES-143, AD-036). Update a hash whenever its script changes
+# (static-seo.test.ts and prerender.test.mjs fail until then):
 #   node -e "const h=require('fs').readFileSync('apps/web/dist/index.html','utf8');
-#   const s=h.match(/<script>([\s\S]*?)<\/script>/)[1];
-#   console.log('sha256-'+require('crypto').createHash('sha256').update(s).digest('base64'))"
+#   for (const m of h.matchAll(/<script>([\s\S]*?)<\/script>/g))
+#   console.log('sha256-'+require('crypto').createHash('sha256').update(m[1]).digest('base64'))"
 [[headers]]
   for = "/*"
   [headers.values]
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'sha256-gHCc3FFg63IliCSRhq+zdQ/NDm7IZhVe0DTFwipqghQ=' https://www.googletagmanager.com https://us-assets.i.posthog.com https://eu-assets.i.posthog.com; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com; connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://us.i.posthog.com https://eu.i.posthog.com https://us-assets.i.posthog.com https://eu-assets.i.posthog.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'sha256-gHCc3FFg63IliCSRhq+zdQ/NDm7IZhVe0DTFwipqghQ=' 'sha256-v3bseQMpZIhHwJjiVEUV6cYcl76I7MG0kwPFZsiTGAg=' 'sha256-B6F4SAD/fgUwazVIji2gvZ/4gsy9H/7drRP+lVILD9Q=' https://www.googletagmanager.com https://us-assets.i.posthog.com https://eu-assets.i.posthog.com; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com; connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://us.i.posthog.com https://eu.i.posthog.com https://us-assets.i.posthog.com https://eu-assets.i.posthog.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
 
 # Vite fingerprints everything under /assets, so it can be cached for a year.
 [[headers]]

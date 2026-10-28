@@ -8,7 +8,7 @@ import { resolveSiteUrl } from './site-url';
 // The API runs locally on :8787 and serves routes without the `/api` prefix (AD-015),
 // so the dev proxy strips it. In production Netlify redirects `/api/*` to the function.
 // DEV_API_ORIGIN points the dev and preview proxy at another local API (a parallel e2e run).
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ mode, isSsrBuild }) => {
   // Vite replaces `%VITE_SITE_URL%` in index.html from its loaded env. Fill in the default
   // when neither the environment nor a .env file provides one (config is read before env).
   process.env['VITE_SITE_URL'] = resolveSiteUrl(
@@ -16,7 +16,8 @@ export default defineConfig(({ mode }) => {
   );
 
   return {
-    plugins: [react(), VitePWA(pwaOptions)],
+    // The prerender bundle (scripts/prerender.mjs, GES-143) runs in Node: no service worker.
+    plugins: [react(), ...(isSsrBuild ? [] : [VitePWA(pwaOptions)])],
     server: {
       port: 5173,
       proxy: {

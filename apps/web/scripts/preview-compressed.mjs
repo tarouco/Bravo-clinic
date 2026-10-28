@@ -52,14 +52,18 @@ export function pickEncoding(acceptEncoding) {
 }
 
 /**
- * The file under `root` that serves `urlPath`, or `index.html` for SPA routes. Paths that would
- * leave `root` also get the shell, never a file outside it.
+ * The file under `root` that serves `urlPath`, like Netlify: the file itself, else `<path>.html`
+ * (prerendered pages, GES-143), with `/` rewritten to `home.html` when it exists; else
+ * `index.html` for SPA routes. Paths that would leave `root` also get the shell.
  */
 export function resolveFile(root, urlPath) {
   const path = decodeURIComponent(urlPath.split('?')[0]);
-  const candidate = normalize(join(root, path));
-  const inside = candidate === root || candidate.startsWith(root.endsWith(sep) ? root : root + sep);
-  if (inside && existsSync(candidate) && statSync(candidate).isFile()) return candidate;
+  const candidates = path === '/' ? ['/home.html'] : [path, `${path.replace(/\/+$/, '')}.html`];
+  for (const name of candidates) {
+    const candidate = normalize(join(root, name));
+    const inside = candidate.startsWith(root.endsWith(sep) ? root : root + sep);
+    if (inside && existsSync(candidate) && statSync(candidate).isFile()) return candidate;
+  }
   return join(root, 'index.html');
 }
 

@@ -3,3 +3,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  /*
+   * Off-screen sections skip layout and paint until they near the viewport (GES-143): the first
+   * layout of the prerendered home was the largest task before its first paint on slow phones.
+   * `auto` keeps the real size once a section has rendered.
+   */
+  .defer-render {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 900px;
+  }
+}

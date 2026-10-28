@@ -5,12 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node scripts/write-redirects.mjs",
+    "build": "vite build && node scripts/prerender.mjs && node scripts/write-redirects.mjs",
     "preview": "vite preview",
     "test": "vitest run",
     "typecheck": "tsc --noEmit -p .",
     "e2e": "playwright test",
-    "lhci": "vite build && lhci autorun"
+    "lhci": "vite build && node scripts/prerender.mjs && lhci autorun"
   },
   "dependencies": {
     "@bravo/core": "*",

@@ -70,6 +70,24 @@ async function toApiError(response: Response): Promise<ApiError> {
   });
 }
 
+declare global {
+  interface Window {
+    /** Set by the inline script of index.html on /salas pages (GES-143). */
+    __bravoEarly?: { path: string; response: Promise<Response> };
+  }
+}
+
+/**
+ * The response the inline script of index.html started for `path` before the bundle ran, handed
+ * out once; a later request for the same path fetches again.
+ */
+function takeEarlyResponse(path: string): Promise<Response> | undefined {
+  const early = typeof window === 'undefined' ? undefined : window.__bravoEarly;
+  if (early?.path !== path) return undefined;
+  delete window.__bravoEarly;
+  return early.response;
+}
+
 const NETWORK_ERROR_MESSAGE =
   'Sem conexão com o servidor. Verifique sua internet e tente novamente.';
 
@@ -90,9 +108,10 @@ async function request<T>(
   if (options.idempotencyKey) headers.set('Idempotency-Key', options.idempotencyKey);
   if (options.signal) init.signal = options.signal;
 
+  const early = method === 'GET' ? takeEarlyResponse(path) : undefined;
   let response: Response;
   try {
-    response = await fetch(path, init);
+    response = (await early?.catch(() => undefined)) ?? (await fetch(path, init));
   } catch (cause) {
     if (cause instanceof DOMException && cause.name === 'AbortError') throw cause;
     throw new ApiError({ status: 0, code: 'NETWORK', message: NETWORK_ERROR_MESSAGE });

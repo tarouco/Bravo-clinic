@@ -32,7 +32,10 @@ export function PublicLayout() {
       <main className="w-full min-h-screen pt-20 bg-surface">
         <Outlet />
       </main>
-      <Footer />
+      {/* Below the fold on every page: laid out only near the viewport (GES-143). */}
+      <div className="defer-render">
+        <Footer />
+      </div>
       <WhatsAppButton />
     </>
   );
