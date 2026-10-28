@@ -61,13 +61,26 @@ export function ScheduleGrid({
   closedDays = [],
   markers = [],
   showCleanup = true,
-  window: visible = DEFAULT_WINDOW,
+  window: requested = DEFAULT_WINDOW,
   slotMinutes = 30,
   renderFreeSlot,
   onRangeSelect,
   renderEventCard,
   className,
 }: ScheduleGridProps) {
+  const layouts = new Map(dates.map((date) => [date, layoutDay(events, date, showCleanup)]));
+  // Widen the window to whole slots so an event outside it (e.g. an admin booking at 02:00) stays visible.
+  const items = [...layouts.values()].flat();
+  const visible = {
+    startMinute: Math.min(
+      requested.startMinute,
+      ...items.map((item) => Math.floor(item.startMinute / slotMinutes) * slotMinutes),
+    ),
+    endMinute: Math.max(
+      requested.endMinute,
+      ...items.map((item) => Math.ceil(item.endMinute / slotMinutes) * slotMinutes),
+    ),
+  };
   const pxPerMinute = SLOT_ROW_PX / slotMinutes;
   const rows = Math.ceil((visible.endMinute - visible.startMinute) / slotMinutes);
   const interactive = Boolean(onRangeSelect ?? renderFreeSlot);
@@ -77,7 +90,6 @@ export function ScheduleGrid({
   const onRangeSelectRef = useRef(onRangeSelect);
   onRangeSelectRef.current = onRangeSelect;
 
-  const layouts = new Map(dates.map((date) => [date, layoutDay(events, date, showCleanup)]));
   const busy = new Map(dates.map((date) => [date, busyIntervals(layouts.get(date) ?? [])]));
   const closedDates = new Set(closedDays.map((c) => c.date as string));
 

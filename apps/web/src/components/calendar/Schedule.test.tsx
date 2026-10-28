@@ -75,6 +75,26 @@ describe('WeekCalendar events', () => {
     expect(screen.queryByTitle(/^Limpeza/)).toBeNull();
   });
 
+  it('widens the 07:00 window to show an event of 02:00-03:00 from the top row', () => {
+    const night: ScheduleEvent = {
+      id: 'booking-night',
+      kind: 'booking',
+      startsAt: '2026-10-27T05:00:00.000Z',
+      endsAt: '2026-10-27T06:00:00.000Z',
+      title: 'Ana · Sala Secundária',
+    };
+    const { container } = week({ events: [night, BOOKING] });
+
+    expect(screen.getByRole('button', { name: /Ana · Sala Secundária, 02:00–03:00/ })).toHaveStyle({
+      top: '0px',
+      height: `${String(2 * SLOT_ROW_PX)}px`,
+    });
+    expect(slot(container, TUESDAY, 120)).not.toBeNull();
+    expect(screen.getByRole('button', { name: /Camila · Sala Principal/ })).toHaveStyle({
+      top: `${String(((17 * 60 + 30 - 120) / 30) * SLOT_ROW_PX)}px`,
+    });
+  });
+
   it('shows the tag of a block', () => {
     week({ events: [BLOCK] });
 
