@@ -19,7 +19,7 @@ const SET_PASSWORD_TTL_SECONDS = 72 * 3600;
 const SEARCH_LIMIT = 20;
 
 /** "***.***.***-25": only the last two digits of a CPF or CNPJ are shown. */
-function maskDocument(type: string, digits: string): string {
+export function maskDocument(type: string, digits: string): string {
   const formatted = formatDocument({ type: type as 'cpf' | 'cnpj', digits });
   let seen = 0;
   return formatted.replace(/\d/g, (digit) => {

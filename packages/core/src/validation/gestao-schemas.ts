@@ -212,6 +212,26 @@ export const extraServiceInputSchema = z
 export type ExtraServiceInput = z.infer<typeof extraServiceInputSchema>;
 
 /**
+ * `addons.extras` of the booking quote and create bodies (GES-88): one line per online service.
+ * The quantity bounds depend on the booking (GES-89), so the checkout step checks them.
+ */
+export const extrasAddonSchema = z
+  .array(
+    z.object({
+      serviceId: z.uuid({ error: 'Escolha o serviço' }),
+      quantity: z
+        .number({ error: 'Quantidade inválida' })
+        .int({ error: 'Quantidade inválida' })
+        .min(1, { error: 'Quantidade inválida' }),
+    }),
+  )
+  .max(20, { error: 'Escolha no máximo 20 serviços' })
+  .refine((lines) => new Set(lines.map((l) => l.serviceId)).size === lines.length, {
+    error: 'Cada serviço só pode aparecer uma vez',
+  });
+export type ExtrasAddon = z.infer<typeof extrasAddonSchema>;
+
+/**
  * `POST /public/quote-requests` (GES-90). `today` is the clinic's local date, injected so the
  * desired date stays within today..today + 365. `website` is the honeypot (GES-93).
  */
@@ -282,6 +302,26 @@ export const roomPhotoInputSchema = z.object({
   height: photoDimension,
 });
 export type RoomPhotoInput = z.infer<typeof roomPhotoInputSchema>;
+
+/** `PATCH /admin/rooms/:id/photos/:photoId`: alt text, cover flag and/or position (GES-107). */
+export const roomPhotoUpdateSchema = z
+  .object({
+    alt: requiredText('a descrição da foto', 1, 200).optional(),
+    isCover: z.boolean({ error: 'Valor inválido' }).optional(),
+    displayOrder: z.number().int().min(0, { error: 'Ordem inválida' }).optional(),
+  })
+  .refine((v) => v.alt !== undefined || v.isCover !== undefined || v.displayOrder !== undefined, {
+    error: 'Informe o que alterar na foto',
+  });
+export type RoomPhotoUpdateInput = z.infer<typeof roomPhotoUpdateSchema>;
+
+/** `PUT /admin/rooms/:id/photos/order`: every photo id of the room, in the new order (GES-107). */
+export const roomPhotoOrderSchema = z.object({
+  ids: z
+    .array(z.uuid({ error: 'Foto inválida' }))
+    .min(1, { error: 'Informe a ordem das fotos' })
+    .max(12, { error: 'Uma sala tem no máximo 12 fotos' }),
+});
 
 // ---- Usuários, Clientes, auditoria (GES-101..GES-115) ----
 

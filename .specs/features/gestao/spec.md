@@ -581,62 +581,62 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-81 | P1: Web push | Tasks | T5 | Implementing |
 | GES-82 | P1: Web push | Tasks | T40 | In Tasks |
 | GES-83 | P1: Web push | Tasks | T40 | In Tasks |
-| GES-84 | P1: Extra services catalog and online add-on | Tasks | T20 | In Tasks |
+| GES-84 | P1: Extra services catalog and online add-on | Tasks | T20 | Implementing |
 | GES-85 | P1: Extra services catalog and online add-on | Tasks | T1, T20 | Implementing |
-| GES-86 | P1: Extra services catalog and online add-on | Tasks | T20 | In Tasks |
+| GES-86 | P1: Extra services catalog and online add-on | Tasks | T20 | Implementing |
 | GES-87 | P1: Extra services catalog and online add-on | Tasks | T38 | In Tasks |
-| GES-88 | P1: Extra services catalog and online add-on | Tasks | T20, T39 | In Tasks |
-| GES-89 | P1: Extra services catalog and online add-on | Tasks | T20 | In Tasks |
-| GES-90 | P1: Quote request funnel | Tasks | T21 | In Tasks |
-| GES-91 | P1: Quote request funnel | Tasks | T21 | In Tasks |
-| GES-92 | P1: Quote request funnel | Tasks | T21 | In Tasks |
-| GES-93 | P1: Quote request funnel | Tasks | T21 | In Tasks |
-| GES-94 | P1: Quote request funnel | Tasks | T21 | In Tasks |
-| GES-95 | P1: Quote request funnel | Tasks | T21 | In Tasks |
-| GES-96 | P1: Quote request funnel | Tasks | T21, T34 | In Tasks |
-| GES-97 | P1: Quote request funnel | Tasks | T21, T38 | In Tasks |
+| GES-88 | P1: Extra services catalog and online add-on | Tasks | T20, T39 | Implementing |
+| GES-89 | P1: Extra services catalog and online add-on | Tasks | T20 | Implementing |
+| GES-90 | P1: Quote request funnel | Tasks | T21 | Implementing |
+| GES-91 | P1: Quote request funnel | Tasks | T21 | Implementing |
+| GES-92 | P1: Quote request funnel | Tasks | T21 | Implementing |
+| GES-93 | P1: Quote request funnel | Tasks | T21 | Implementing |
+| GES-94 | P1: Quote request funnel | Tasks | T21 | Implementing |
+| GES-95 | P1: Quote request funnel | Tasks | T21 | Implementing |
+| GES-96 | P1: Quote request funnel | Tasks | T21, T34 | Implementing |
+| GES-97 | P1: Quote request funnel | Tasks | T21, T38 | Implementing |
 | GES-98 | P1: Quote request funnel | Tasks | T38 | In Tasks |
-| GES-99 | P1: Clientes | Tasks | T23, T35 | In Tasks |
-| GES-100 | P1: Clientes | Tasks | T23, T35 | In Tasks |
-| GES-101 | P1: Clientes | Tasks | T23 | In Tasks |
-| GES-102 | P1: Clientes | Tasks | T23 | In Tasks |
-| GES-103 | P1: Salas admin | Tasks | T22, T36 | In Tasks |
-| GES-104 | P1: Salas admin | Tasks | T22 | In Tasks |
+| GES-99 | P1: Clientes | Tasks | T23, T35 | Implementing |
+| GES-100 | P1: Clientes | Tasks | T23, T35 | Implementing |
+| GES-101 | P1: Clientes | Tasks | T23 | Implementing |
+| GES-102 | P1: Clientes | Tasks | T23 | Implementing |
+| GES-103 | P1: Salas admin | Tasks | T22, T36 | Implementing |
+| GES-104 | P1: Salas admin | Tasks | T22 | Implementing |
 | GES-105 | P1: Salas admin | Tasks | T22 | Implementing |
 | GES-106 | P1: Salas admin | Tasks | T4, T22 | Implementing |
-| GES-107 | P1: Salas admin | Tasks | T22 | In Tasks |
+| GES-107 | P1: Salas admin | Tasks | T22 | Implementing |
 | GES-108 | P1: Salas admin | Tasks | T1, T22, T36 | Implementing |
 | GES-109 | P1: Salas admin | Tasks | T36 | In Tasks |
-| GES-110 | P1: Usuários and audit log | Tasks | T24 | In Tasks |
-| GES-111 | P1: Usuários and audit log | Tasks | T24 | In Tasks |
-| GES-112 | P1: Usuários and audit log | Tasks | T24 | In Tasks |
-| GES-113 | P1: Usuários and audit log | Tasks | T24 | In Tasks |
-| GES-114 | P1: Usuários and audit log | Tasks | T24 | In Tasks |
-| GES-115 | P1: Usuários and audit log | Tasks | T24 | In Tasks |
+| GES-110 | P1: Usuários and audit log | Tasks | T24 | Implementing |
+| GES-111 | P1: Usuários and audit log | Tasks | T24 | Implementing |
+| GES-112 | P1: Usuários and audit log | Tasks | T24 | Implementing |
+| GES-113 | P1: Usuários and audit log | Tasks | T24 | Implementing |
+| GES-114 | P1: Usuários and audit log | Tasks | T24 | Implementing |
+| GES-115 | P1: Usuários and audit log | Tasks | T24 | Implementing |
 | GES-116 | P1: Usuários and audit log | Tasks | T37 | In Tasks |
 | GES-117 | P1: Reception restrictions end-to-end | Tasks | T44 | In Tasks |
 | GES-118 | P1: Reception restrictions end-to-end | Tasks | T44 | In Tasks |
 | GES-119 | P1: Reception restrictions end-to-end | Tasks | T44 | In Tasks |
 | GES-120 | P1: Reception restrictions end-to-end | Tasks | T13, T44 | Implementing |
-| GES-121 | P1: LGPD self-service | Tasks | T25 | In Tasks |
-| GES-122 | P1: LGPD self-service | Tasks | T25 | In Tasks |
-| GES-123 | P1: LGPD self-service | Tasks | T25 | In Tasks |
-| GES-124 | P1: LGPD self-service | Tasks | T25 | In Tasks |
-| GES-125 | P1: LGPD self-service | Tasks | T25 | In Tasks |
-| GES-126 | P1: LGPD self-service | Tasks | T25 | In Tasks |
-| GES-127 | P1: LGPD self-service | Tasks | T25 | In Tasks |
+| GES-121 | P1: LGPD self-service | Tasks | T25 | Implementing |
+| GES-122 | P1: LGPD self-service | Tasks | T25 | Implementing |
+| GES-123 | P1: LGPD self-service | Tasks | T25 | Implementing |
+| GES-124 | P1: LGPD self-service | Tasks | T25 | Implementing |
+| GES-125 | P1: LGPD self-service | Tasks | T25 | Implementing |
+| GES-126 | P1: LGPD self-service | Tasks | T25 | Implementing |
+| GES-127 | P1: LGPD self-service | Tasks | T25 | Implementing |
 | GES-128 | P1: LGPD self-service | Tasks | T41 | In Tasks |
 | GES-129 | P1: LGPD self-service | Tasks | T9 | Implementing |
-| GES-130 | P1: Holiday jobs | Tasks | T26 | In Tasks |
-| GES-131 | P1: Holiday jobs | Tasks | T26 | In Tasks |
-| GES-132 | P1: Holiday jobs | Tasks | T26 | In Tasks |
+| GES-130 | P1: Holiday jobs | Tasks | T26 | Implementing |
+| GES-131 | P1: Holiday jobs | Tasks | T26 | Implementing |
+| GES-132 | P1: Holiday jobs | Tasks | T26 | Implementing |
 | GES-133 | P1: Analytics funnel | Tasks | T42 | In Tasks |
 | GES-134 | P1: Analytics funnel | Tasks | T42 | In Tasks |
 | GES-135 | P1: Analytics funnel | Tasks | T42 | In Tasks |
 | GES-136 | P1: Analytics funnel | Tasks | T42 | In Tasks |
 | GES-137 | P2: Free-tier usage panel | Tasks | T27, T33 | Implementing |
-| GES-138 | P2: Free-tier usage panel | Tasks | T27, T33 | In Tasks |
-| GES-139 | P2: Free-tier usage panel | Tasks | T27 | In Tasks |
+| GES-138 | P2: Free-tier usage panel | Tasks | T27, T33 | Implementing |
+| GES-139 | P2: Free-tier usage panel | Tasks | T27 | Implementing |
 | GES-140 | P1: MVP hardening and production release | Tasks | T45 | In Tasks |
 | GES-141 | P1: MVP hardening and production release | Tasks | T46 | In Tasks |
 | GES-142 | P1: MVP hardening and production release | Tasks | T47 | In Tasks |

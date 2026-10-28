@@ -50,14 +50,21 @@ const DESIGN_TABLE: [name: string, scope: 'read' | 'write', destructive: boolean
   ['coupon_create', 'write', false],
   ['coupon_set_enabled', 'write', false],
   ['credit_grant', 'write', false],
+  ['customers_search', 'read', false],
+  ['customer_get', 'read', false],
+  ['customer_notes_update', 'write', false],
   ['finance_summary', 'read', false],
   ['finance_dre', 'read', false],
   ['expenses_list', 'read', false],
   ['expense_create', 'write', false],
   ['expense_delete', 'write', true],
   ['manual_receipt_create', 'write', false],
+  ['quotes_list', 'read', false],
+  ['quote_update_status', 'write', false],
+  ['rooms_list', 'read', false],
   ['categories_list', 'read', false],
   ['policies_get', 'read', false],
+  ['audit_list', 'read', false],
 ];
 
 let roomId = '';

@@ -1,6 +1,7 @@
 import { chargeBalances } from './charge-balances';
 import { expireHolds } from './expire-holds';
 import { expirePurchases } from './expire-purchases';
+import { holidayReminder, importHolidays } from './holidays';
 import { emailRetry, retention } from './maintenance';
 import { materializeBlocks } from './materialize-blocks';
 import { noShows } from './no-shows';
@@ -33,6 +34,9 @@ registerJob('email-retry', emailRetry);
 registerJob('retention', retention);
 // Daily `0 9 * * *` UTC (GES-14); trigger added to neon.ts by T49.
 registerJob('recurring-expenses', recurringExpenses);
+// Daily `0 11 * * *` and weekly `0 7 * * 1` UTC (GES-130, GES-131); triggers added by T49.
+registerJob('holiday-reminder', holidayReminder);
+registerJob('import-holidays', importHolidays);
 
 export { getJob, registerJob, registeredJobs, runJob, JOB_CONTEXT } from './runner';
 export type { Job, JobDeps, JobStats } from './runner';

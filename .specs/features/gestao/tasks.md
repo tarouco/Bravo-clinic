@@ -756,11 +756,11 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests assert CRUD with audit, online-without-price 422, public list returns active only in display order
-- [ ] Test runs nucleo checkout with `addons.extras` for a 2 h booking and an hourly online service (8000/h × 2) and asserts total + 16000, deposit split on the new total, two frozen `booking_extra_items` fields
-- [ ] Tests assert inactive/quote-mode service and quantity 3 for a 2 h booking → 422; project quantity ≠ 1 → 422
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 8 tests pass
+- [x] Tests assert CRUD with audit, online-without-price 422, public list returns active only in display order
+- [x] Test runs nucleo checkout with `addons.extras` for a 2 h booking and an hourly online service (8000/h × 2) and asserts total + 16000, deposit split on the new total, two frozen `booking_extra_items` fields
+- [x] Tests assert inactive/quote-mode service and quantity 3 for a 2 h booking → 422; project quantity ≠ 1 → 422
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 8 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -784,12 +784,12 @@ T49 → T50
 
 **Done when**:
 
-- [ ] Tests assert anonymous 201, session-linked 201 with `user_id`, foreign booking 422, 6th request/hour/IP 429, honeypot 202 with zero rows
-- [ ] Tests assert staff e-mails queued per recipient and `quote.received` only when e-mail given
-- [ ] Tests assert each valid transition, `won → contacted` 409, concurrent double move → one 200 and one 409, notes saved + audited
-- [ ] Tests assert tenant list returns only own requests
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 11 tests pass
+- [x] Tests assert anonymous 201, session-linked 201 with `user_id`, foreign booking 422, 6th request/hour/IP 429, honeypot 202 with zero rows
+- [x] Tests assert staff e-mails queued per recipient and `quote.received` only when e-mail given
+- [x] Tests assert each valid transition, `won → contacted` 409, concurrent double move → one 200 and one 409, notes saved + audited
+- [x] Tests assert tenant list returns only own requests
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 11 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -812,12 +812,12 @@ T49 → T50
 - Skill: `neon-object-storage`
 
 **Done when**:
-- [ ] Tests assert room create/edit validation and audit, slug uniqueness 409
-- [ ] Tests assert inactivation with a future confirmed booking and with an active fixed-schedule subscription → 409 with codes/ids; without them → 200
-- [ ] Tests assert variant upload stores `Cache-Control: public, max-age=31536000, immutable`, non-WebP 415, 13th photo 422, registration with a missing variant 422
-- [ ] Tests assert single cover after switching, reorder, delete removes both objects after commit, public rooms endpoint returns `/media/...-large.webp` URLs
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 11 tests pass
+- [x] Tests assert room create/edit validation and audit, slug uniqueness 409
+- [x] Tests assert inactivation with a future confirmed booking and with an active fixed-schedule subscription → 409 with codes/ids; without them → 200
+- [x] Tests assert variant upload stores `Cache-Control: public, max-age=31536000, immutable`, non-WebP 415, 13th photo 422, registration with a missing variant 422
+- [x] Tests assert single cover after switching, reorder, delete removes both objects after commit, public rooms endpoint returns `/media/...-large.webp` URLs
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 11 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -840,11 +840,11 @@ T49 → T50
 - Skill: NONE
 
 **Done when**:
-- [ ] Tests assert search by name, e-mail, document digits and phone digits, excludes staff and deleted users, cursor pagination
-- [ ] Test asserts detail sections (bookings, subscriptions with balance, lots, credits, coupon uses, consents, quotes) from factory data
-- [ ] Tests assert reception can read and save notes (audited) but gets 403 on profile edit; admin edit audited
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 8 tests pass
+- [x] Tests assert search by name, e-mail, document digits and phone digits, excludes staff and deleted users, cursor pagination
+- [x] Test asserts detail sections (bookings, subscriptions with balance, lots, credits, coupon uses, consents, quotes) from factory data
+- [x] Tests assert reception can read and save notes (audited) but gets 403 on profile edit; admin edit audited
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 8 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -867,12 +867,12 @@ T49 → T50
 - Skill: NONE
 
 **Done when**:
-- [ ] Tests assert invite creates passwordless user + 72 h token + e-mail; tenant promotion changes role; staff e-mail 409
-- [ ] Tests assert role change/disable revoke target sessions (next request 401), self-target 422, last active admin 409 `LAST_ADMIN`
-- [ ] Test asserts 2FA reset deletes `user_totp`, revokes sessions, requires justification
-- [ ] Tests assert audit filters (actor, origin `mcp`, action prefix, date range), newest first, page size ≤ 100, reception 403
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 11 tests pass
+- [x] Tests assert invite creates passwordless user + 72 h token + e-mail; tenant promotion changes role; staff e-mail 409
+- [x] Tests assert role change/disable revoke target sessions (next request 401), self-target 422, last active admin 409 `LAST_ADMIN`
+- [x] Test asserts 2FA reset deletes `user_totp`, revokes sessions, requires justification
+- [x] Tests assert audit filters (actor, origin `mcp`, action prefix, date range), newest first, page size ≤ 100, reception 403
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 11 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -897,12 +897,12 @@ T49 → T50
 - Skill: NONE
 
 **Done when**:
-- [ ] Test asserts export sections present and a recursive scan finds no `password_hash`, `secret`, `token_hash`, `external_card_id` keys; 4th export in 24 h → 429
-- [ ] Tests assert future booking / active subscription / pending charge each produce 409 `HAS_ACTIVE_COMMITMENTS` with the item and no change
-- [ ] Test asserts wrong password 401; successful deletion sets every listed column, keeps bookings/charges/consents/audit, revokes sessions, clears cookie, queues `privacy.account_deleted`, rewrites older outbox rows
-- [ ] Tests assert admin anonymize requires justification, reception 403, personal feed of the deleted user 404
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 10 tests pass
+- [x] Test asserts export sections present and a recursive scan finds no `password_hash`, `secret`, `token_hash`, `external_card_id` keys; 4th export in 24 h → 429
+- [x] Tests assert future booking / active subscription / pending charge each produce 409 `HAS_ACTIVE_COMMITMENTS` with the item and no change
+- [x] Test asserts wrong password 401; successful deletion sets every listed column, keeps bookings/charges/consents/audit, revokes sessions, clears cookie, queues `privacy.account_deleted`, rewrites older outbox rows
+- [x] Tests assert admin anonymize requires justification, reception 403, personal feed of the deleted user 404
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 10 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -925,11 +925,11 @@ T49 → T50
 - Skill: NONE
 
 **Done when**:
-- [ ] Tests (injected `now`) assert e-mails to every active admin on local 2026-10-01 only once (re-run → none), nothing on 2026-10-02
-- [ ] Tests assert import inserts a new national date with `source = 'brasilapi'`, skips a date that already has a seeded national holiday, never changes `is_closed`
-- [ ] Tests assert 500/timeout/invalid JSON for one year leaves its rows unchanged, processes the other year, records the error in `job_runs`
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 7 tests pass
+- [x] Tests (injected `now`) assert e-mails to every active admin on local 2026-10-01 only once (re-run → none), nothing on 2026-10-02
+- [x] Tests assert import inserts a new national date with `source = 'brasilapi'`, skips a date that already has a seeded national holiday, never changes `is_closed`
+- [x] Tests assert 500/timeout/invalid JSON for one year leaves its rows unchanged, processes the other year, records the error in `job_runs`
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: integration
 **Gate**: full
@@ -952,11 +952,11 @@ T49 → T50
 - Skill: `neon-postgres`
 
 **Done when**:
-- [ ] Tests assert response shape of design `UsageReport`, `db.bytes > 0`, 10 largest tables sorted by size
-- [ ] Test asserts a limit set below current usage flags `warning: true` at ≥ 80 %
-- [ ] Test asserts storage failure returns `storage.buckets: null` with `storageError` and the other figures; reception 403
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 4 tests pass
+- [x] Tests assert response shape of design `UsageReport`, `db.bytes > 0`, 10 largest tables sorted by size
+- [x] Test asserts a limit set below current usage flags `warning: true` at ≥ 80 %
+- [x] Test asserts storage failure returns `storage.buckets: null` with `storageError` and the other figures; reception 403
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 4 tests pass
 
 **Tests**: integration
 **Gate**: full

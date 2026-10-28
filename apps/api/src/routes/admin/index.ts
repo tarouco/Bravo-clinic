@@ -1,6 +1,7 @@
 import { Hono } from 'hono';
 import { requireRole } from '../../middleware/auth';
 import type { AppEnv } from '../../types';
+import { adminAuditRoutes } from './audit';
 import { adminBlockRoutes } from './blocks';
 import { adminBookingCancelRoutes } from './booking-cancel';
 import { adminBookingRescheduleRoutes } from './booking-reschedule';
@@ -11,7 +12,11 @@ import { adminCalendarExceptionRoutes } from './calendar-exceptions';
 import { adminCategoryRoutes } from './categories';
 import { adminCouponRoutes } from './coupons';
 import { adminCustomerCreditRoutes } from './customer-credits';
+import { adminCustomerProfileRoutes } from './customer-profiles';
 import { adminCustomerRoutes } from './customers';
+import { adminExtraServiceRoutes } from './extra-services';
+import { adminQuoteRequestRoutes } from './quote-requests';
+import { adminRoomRoutes } from './rooms';
 import { adminFinanceExpenseRoutes } from './finance-expenses';
 import { adminFinanceReceiptRoutes } from './finance-receipts';
 import { adminFinanceReportRoutes } from './finance-reports';
@@ -23,6 +28,8 @@ import { adminSessionRoutes } from './session';
 import { adminSlotDiscountRoutes } from './slot-discounts';
 import { adminSubscriptionRoutes } from './subscriptions';
 import { adminSettingsRoutes } from './settings';
+import { adminUsageRoutes } from './usage';
+import { adminUserRoutes } from './users';
 
 /** Everything under `/admin/*`; CSRF, auth and the staff + MFA guard are applied by `createApp`. */
 export function adminRoutes(): Hono<AppEnv> {
@@ -32,6 +39,16 @@ export function adminRoutes(): Hono<AppEnv> {
   app.use('/integrations/*', requireRole('admin'));
   // Financeiro is admin only as well.
   app.use('/finance/*', requireRole('admin'));
+  // Serviços extras and the quote funnel are admin only (design §Reception allowlist).
+  app.use('/extra-services', requireRole('admin'));
+  app.use('/extra-services/*', requireRole('admin'));
+  app.use('/quote-requests', requireRole('admin'));
+  app.use('/quote-requests/*', requireRole('admin'));
+  // Usuários, the audit log and the usage panel too.
+  app.use('/users', requireRole('admin'));
+  app.use('/users/*', requireRole('admin'));
+  app.use('/audit', requireRole('admin'));
+  app.use('/usage', requireRole('admin'));
   app.route('/', adminSessionRoutes());
   app.route('/', adminCalendarRoutes());
   app.route('/', adminCalendarExceptionRoutes());
@@ -44,6 +61,7 @@ export function adminRoutes(): Hono<AppEnv> {
   app.route('/', adminBookingQueryRoutes());
   app.route('/', adminCustomerRoutes());
   app.route('/', adminCustomerCreditRoutes());
+  app.route('/', adminCustomerProfileRoutes());
   app.route('/', adminCouponRoutes());
   app.route('/', adminSlotDiscountRoutes());
   app.route('/', adminSubscriptionRoutes());
@@ -54,5 +72,11 @@ export function adminRoutes(): Hono<AppEnv> {
   app.route('/', adminFinanceExpenseRoutes());
   app.route('/', adminFinanceReceiptRoutes());
   app.route('/', adminFinanceReportRoutes());
+  app.route('/', adminExtraServiceRoutes());
+  app.route('/', adminQuoteRequestRoutes());
+  app.route('/', adminRoomRoutes());
+  app.route('/', adminUserRoutes());
+  app.route('/', adminAuditRoutes());
+  app.route('/', adminUsageRoutes());
   return app;
 }

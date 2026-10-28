@@ -8,6 +8,7 @@ import {
   deletionConfirmSchema,
   expenseInputSchema,
   extraServiceInputSchema,
+  extrasAddonSchema,
   financeQuerySchema,
   manualReceiptInputSchema,
   mcpTokenInputSchema,
@@ -19,6 +20,8 @@ import {
   roleChangeSchema,
   roomInputSchema,
   roomPhotoInputSchema,
+  roomPhotoOrderSchema,
+  roomPhotoUpdateSchema,
   staffUserInputSchema,
 } from './gestao-schemas';
 
@@ -179,6 +182,28 @@ describe('extraServiceInputSchema (GES-84, GES-85)', () => {
       issuePaths(extraServiceInputSchema, { ...service, referencePriceCents: 10_000_001 }),
     ).toEqual(['referencePriceCents']);
     expect(issuePaths(extraServiceInputSchema, { ...service, referencePriceCents: 0 })).toEqual([]);
+  });
+});
+
+describe('extrasAddonSchema (GES-88)', () => {
+  it('accepts service lines with a positive integer quantity', () => {
+    expect(issuePaths(extrasAddonSchema, [{ serviceId: ID, quantity: 2 }])).toEqual([]);
+  });
+
+  it('rejects a zero or fractional quantity, a bad id and a repeated service', () => {
+    expect(issuePaths(extrasAddonSchema, [{ serviceId: ID, quantity: 0 }])).toEqual(['0.quantity']);
+    expect(issuePaths(extrasAddonSchema, [{ serviceId: ID, quantity: 1.5 }])).toEqual([
+      '0.quantity',
+    ]);
+    expect(issuePaths(extrasAddonSchema, [{ serviceId: 'x', quantity: 1 }])).toEqual([
+      '0.serviceId',
+    ]);
+    const repeated = [
+      { serviceId: ID, quantity: 1 },
+      { serviceId: ID, quantity: 2 },
+    ];
+    expect(issuePaths(extrasAddonSchema, repeated)).toEqual(['']);
+    expect(firstMessage(extrasAddonSchema, repeated)).toBe('Cada serviço só pode aparecer uma vez');
   });
 });
 
@@ -347,6 +372,15 @@ describe('room schemas (GES-103, GES-105)', () => {
     expect(issuePaths(roomPhotoInputSchema, photo)).toEqual([]);
     expect(issuePaths(roomPhotoInputSchema, { ...photo, alt: ' ' })).toEqual(['alt']);
     expect(issuePaths(roomPhotoInputSchema, { ...photo, alt: 'a'.repeat(201) })).toEqual(['alt']);
+  });
+
+  it('photo edits need one field and keep the alt rules; the order lists 1..12 ids', () => {
+    expect(issuePaths(roomPhotoUpdateSchema, { isCover: true })).toEqual([]);
+    expect(issuePaths(roomPhotoUpdateSchema, {})).toEqual(['']);
+    expect(issuePaths(roomPhotoUpdateSchema, { alt: '' })).toEqual(['alt']);
+    expect(issuePaths(roomPhotoOrderSchema, { ids: [ID] })).toEqual([]);
+    expect(issuePaths(roomPhotoOrderSchema, { ids: [] })).toEqual(['ids']);
+    expect(issuePaths(roomPhotoOrderSchema, { ids: Array(13).fill(ID) })).toEqual(['ids']);
   });
 });
 
