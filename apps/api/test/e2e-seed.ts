@@ -18,7 +18,8 @@ import { Pool } from 'pg';
 import { assertNotProduction } from './require-test-db';
 
 const rootEnvFile = fileURLToPath(new URL('../../../.env', import.meta.url));
-export const E2E_API_PORT = 8787;
+/** A parallel local run (Lighthouse CI next to Playwright) sets another port. */
+export const E2E_API_PORT = Number(process.env.E2E_API_PORT ?? '8787');
 /** Origin of the web app under test (CSRF and e-mail links); a local run on another port sets it. */
 export const E2E_WEB_URL = process.env.E2E_WEB_URL ?? 'http://localhost:5173';
 
