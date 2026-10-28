@@ -1,6 +1,6 @@
 import { formatBRL } from '@bravo/core';
 import { expect, test, type Browser, type Page } from '@playwright/test';
-import { bookableWeekday, closeE2eDb } from '../../api/test/e2e-seed';
+import { bookableWeekday, closeE2eDb, E2E_WEB_URL } from '../../api/test/e2e-seed';
 import {
   apiFromPage,
   bookingDetails,
@@ -29,7 +29,7 @@ test.afterAll(async () => {
 /** A second signed-in actor: same app settings as the project's own context. */
 async function newActor(browser: Browser): Promise<Page> {
   const context = await browser.newContext({
-    baseURL: 'http://localhost:5173',
+    baseURL: E2E_WEB_URL,
     locale: 'pt-BR',
     timezoneId: 'America/Sao_Paulo',
     serviceWorkers: 'block',

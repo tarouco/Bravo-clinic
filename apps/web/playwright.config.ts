@@ -24,12 +24,25 @@ export default defineConfig({
     serviceWorkers: 'block',
   },
   projects: [
-    { name: 'desktop', use: { ...devices['Desktop Chrome'] } },
+    { name: 'desktop', testIgnore: /mvp-journey\.spec\.ts/, use: { ...devices['Desktop Chrome'] } },
     {
       name: 'mobile',
+      // The admin configuration journey (GES-141) runs once, on desktop.
+      testIgnore: /(mvp-journey|admin-config)\.spec\.ts/,
       use: {
         ...devices['Desktop Chrome'],
         viewport: { width: 375, height: 812 },
+        isMobile: true,
+        hasTouch: true,
+      },
+    },
+    {
+      // The MVP journey (GES-140) on the 390×844 phone of the spec.
+      name: 'journey',
+      testMatch: /mvp-journey\.spec\.ts/,
+      use: {
+        ...devices['Desktop Chrome'],
+        viewport: { width: 390, height: 844 },
         isMobile: true,
         hasTouch: true,
       },

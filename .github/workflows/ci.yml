@@ -17,7 +17,7 @@ permissions:
 jobs:
   ci:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 40
     services:
       # API integration tests run against a real Postgres 17 (AD-018); btree_gist ships with the image.
       postgres:
@@ -43,6 +43,15 @@ jobs:
       - run: npm run typecheck
       - run: npm run lint
       - run: npm test
+      # Playwright suite (nucleo, receita, gestao T45/T46) against the same Postgres 17 service: the
+      # harness resets, migrates and seeds it, serves the API on :8787 and a `vite preview` build
+      # on :5173, and drives the runner's Google Chrome. Every value below is test-only.
+      - run: npm run e2e -w apps/web
+        env:
+          SESSION_SECRET: e2e-session-secret-0123456789abcdef0123456789
+          ENCRYPTION_KEY: AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=
+          APP_BASE_URL: http://localhost:5173
+          EMAIL_FROM: reservas@bravoclinic.test
       - run: npm run build
         env:
           API_PROXY_ORIGIN: https://example.invalid

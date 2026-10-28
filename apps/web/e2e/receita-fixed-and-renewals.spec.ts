@@ -1,6 +1,6 @@
 import { addDays, formatBRL, localToUtc, type LocalDate } from '@bravo/core';
 import { expect, test, type Browser, type Page } from '@playwright/test';
-import { closeE2eDb, latestEmail } from '../../api/test/e2e-seed';
+import { closeE2eDb, E2E_WEB_URL, latestEmail } from '../../api/test/e2e-seed';
 import {
   apiFromPage,
   closeReceitaDb,
@@ -42,7 +42,7 @@ const SLOW = 180_000;
 
 async function newActor(browser: Browser): Promise<Page> {
   const context = await browser.newContext({
-    baseURL: 'http://localhost:5173',
+    baseURL: E2E_WEB_URL,
     locale: 'pt-BR',
     timezoneId: 'America/Sao_Paulo',
     serviceWorkers: 'block',

@@ -546,7 +546,7 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-46 | P1: Calendar feeds and .ics files | Tasks | T10 | Implementing |
 | GES-47 | P1: Calendar feeds and .ics files | Tasks | T8 | Implementing |
 | GES-48 | P1: Calendar feeds and .ics files | Tasks | T8, T10 | Implementing |
-| GES-49 | P1: Calendar feeds and .ics files | Tasks | T10, T45 | Implementing |
+| GES-49 | P1: Calendar feeds and .ics files | Tasks | T10, T45 | Implemented |
 | GES-50 | P1: Calendar feeds and .ics files | Tasks | T10, T41 | Implementing |
 | GES-51 | P1: Calendar feeds and .ics files | Tasks | T10 | Implementing |
 | GES-52 | P1: Calendar feeds and .ics files | Tasks | T10 | Implementing |
@@ -637,8 +637,8 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-137 | P2: Free-tier usage panel | Tasks | T27, T33 | Implementing |
 | GES-138 | P2: Free-tier usage panel | Tasks | T27, T33 | Implementing |
 | GES-139 | P2: Free-tier usage panel | Tasks | T27 | Implementing |
-| GES-140 | P1: MVP hardening and production release | Tasks | T45 | In Tasks |
-| GES-141 | P1: MVP hardening and production release | Tasks | T46 | In Tasks |
+| GES-140 | P1: MVP hardening and production release | Tasks | T45 | Implemented |
+| GES-141 | P1: MVP hardening and production release | Tasks | T46 | Implemented |
 | GES-142 | P1: MVP hardening and production release | Tasks | T47 | In Tasks |
 | GES-143 | P1: MVP hardening and production release | Tasks | T48 | In Tasks |
 | GES-144 | P1: MVP hardening and production release | Tasks | T49, T50 | In Tasks |

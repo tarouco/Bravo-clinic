@@ -19,7 +19,8 @@ import { assertNotProduction } from './require-test-db';
 
 const rootEnvFile = fileURLToPath(new URL('../../../.env', import.meta.url));
 export const E2E_API_PORT = 8787;
-export const E2E_WEB_URL = 'http://localhost:5173';
+/** Origin of the web app under test (CSRF and e-mail links); a local run on another port sets it. */
+export const E2E_WEB_URL = process.env.E2E_WEB_URL ?? 'http://localhost:5173';
 
 export const E2E_ADMIN = {
   email: 'admin.e2e@bravoclinic.test',
@@ -398,12 +399,15 @@ async function serve(): Promise<void> {
   const { serve: listen } = await import('@hono/node-server');
   const { createApp } = await import('../src/app');
   const { drizzle } = await import('drizzle-orm/node-postgres');
+  const { memoryStorage } = await import('../src/lib/storage');
   // This host is one ~130 ms round trip away from the Neon dev branch (production runs next to
   // it), so the harness pool fits one request's parallel queries (8 for a day grid) in one round.
   const app = createApp({
     db: drizzle(
       new Pool({ connectionString: process.env.DATABASE_URL, max: 10, idleTimeoutMillis: 120_000 }),
     ),
+    // Uploads (expense attachments, room photos) stay in memory: the suite never writes a bucket.
+    storage: memoryStorage(),
   });
   const server = listen({ fetch: app.fetch, port: E2E_API_PORT }, () => {
     process.stdout.write(`e2e api listening on http://localhost:${String(E2E_API_PORT)}\n`);
