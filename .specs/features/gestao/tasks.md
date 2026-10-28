@@ -952,11 +952,11 @@ T49 → T50
 - Skill: `neon-postgres`
 
 **Done when**:
-- [ ] Tests assert response shape of design `UsageReport`, `db.bytes > 0`, 10 largest tables sorted by size
-- [ ] Test asserts a limit set below current usage flags `warning: true` at ≥ 80 %
-- [ ] Test asserts storage failure returns `storage.buckets: null` with `storageError` and the other figures; reception 403
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 4 tests pass
+- [x] Tests assert response shape of design `UsageReport`, `db.bytes > 0`, 10 largest tables sorted by size
+- [x] Test asserts a limit set below current usage flags `warning: true` at ≥ 80 %
+- [x] Test asserts storage failure returns `storage.buckets: null` with `storageError` and the other figures; reception 403
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 4 tests pass
 
 **Tests**: integration
 **Gate**: full

@@ -635,8 +635,8 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-135 | P1: Analytics funnel | Tasks | T42 | In Tasks |
 | GES-136 | P1: Analytics funnel | Tasks | T42 | In Tasks |
 | GES-137 | P2: Free-tier usage panel | Tasks | T27, T33 | Implementing |
-| GES-138 | P2: Free-tier usage panel | Tasks | T27, T33 | In Tasks |
-| GES-139 | P2: Free-tier usage panel | Tasks | T27 | In Tasks |
+| GES-138 | P2: Free-tier usage panel | Tasks | T27, T33 | Implementing |
+| GES-139 | P2: Free-tier usage panel | Tasks | T27 | Implementing |
 | GES-140 | P1: MVP hardening and production release | Tasks | T45 | In Tasks |
 | GES-141 | P1: MVP hardening and production release | Tasks | T46 | In Tasks |
 | GES-142 | P1: MVP hardening and production release | Tasks | T47 | In Tasks |
