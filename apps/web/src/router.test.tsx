@@ -2,11 +2,11 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, useLocation, useRoutes } from 'react-router-dom';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { ToastProvider } from './components/ui/Toast';
 import type { Session } from './features/auth/useSession';
 import { createQueryClient } from './lib/query-client';
-import { appRoutes } from './router';
+import { appRoutes, preloadLazyRoutes } from './router';
 import { ThemeProvider } from './theme/ThemeProvider';
 
 const base: Session = {
@@ -72,6 +72,12 @@ function renderRoute(path: string) {
 }
 
 const locationOf = () => currentLocation;
+
+// Route modules load lazily (GES-143): load them once up front, so a busy machine spends the
+// module transform time here rather than inside a test's 5 s wait.
+beforeAll(async () => {
+  await preloadLazyRoutes();
+}, 120_000);
 
 beforeEach(() => {
   vi.stubGlobal('scrollTo', vi.fn());

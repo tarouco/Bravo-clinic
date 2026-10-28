@@ -1,63 +1,164 @@
 import { adminSectionMeta, type AdminSection } from '@bravo/core';
+import { lazy, Suspense, type ComponentType } from 'react';
 import { createBrowserRouter, type RouteObject } from 'react-router-dom';
-import { AdminShell } from './components/layout/AdminShell';
-import { AppShell } from './components/layout/AppShell';
 import { PublicLayout } from './components/layout/PublicLayout';
-import { ComingSoon } from './components/ui/Feedback';
+import { ComingSoon, Spinner } from './components/ui/Feedback';
 import {
   AdminIndexRedirect,
   RequireAuth,
   RequireSection,
   RequireStaff,
 } from './features/auth/guards';
-import { BookingFlowPage } from './features/booking/BookingFlowPage';
-import { CalendarConfigPage } from './pages/admin/calendar/CalendarConfigPage';
-import { CuponsPage } from './pages/admin/cupons/CuponsPage';
-import { CustomerDetailPage } from './pages/admin/customers/CustomerDetailPage';
-import { CustomersPage } from './pages/admin/customers/CustomersPage';
-import { ExtrasAdminPage } from './pages/admin/extras/ExtrasAdminPage';
-import { FinancePage } from './pages/admin/finance/FinancePage';
-import { IntegrationsPage } from './pages/admin/integrations/IntegrationsPage';
-import { AuditPage } from './pages/admin/audit/AuditPage';
-import { RoomEditPage } from './pages/admin/rooms/RoomEditPage';
-import { RoomsPage as RoomsAdminPage } from './pages/admin/rooms/RoomsPage';
-import { UsersPage } from './pages/admin/users/UsersPage';
-import { BookingsListPage } from './pages/admin/reservations/BookingsListPage';
-import { PoliciesRoute } from './pages/admin/reservations/PoliciesPanel';
-import { ReservationsCalendar } from './pages/admin/reservations/ReservationsCalendar';
-import { ReservationsPage, ReservationsSlotTab } from './pages/admin/reservations/ReservationsPage';
-import { AgendaPage } from './pages/app/AgendaPage';
-import { AppHomePage } from './pages/app/AppHomePage';
-import { BookingDetailPage } from './pages/app/BookingDetailPage';
-import { CardsPage } from './pages/app/CardsPage';
-import { ComprasLayout, ComprasPage } from './pages/app/compras/ComprasPage';
-import { CreditosPage, HistoricoPage } from './pages/app/compras/CreditosHistoricoPages';
-import { HorasExtrasPage } from './pages/app/compras/HorasExtrasPage';
-import { MyBookingsPage } from './pages/app/MyBookingsPage';
-import { NotificationSettingsPage } from './pages/app/NotificationSettingsPage';
-import { PrivacyPage } from './pages/app/PrivacyPage';
-import { ProfilePage } from './pages/app/ProfilePage';
-import { QuotesPage } from './pages/app/QuotesPage';
-import { LoginPage } from './pages/auth/LoginPage';
-import { ForgotPasswordPage } from './pages/auth/password/ForgotPasswordPage';
-import { ResetPasswordPage } from './pages/auth/password/ResetPasswordPage';
-import { SignupPage } from './pages/auth/SignupPage';
-import { TwoFactorEnrollPage, TwoFactorVerifyPage } from './pages/auth/TwoFactorPages';
-import { VerifyEmailPage } from './pages/auth/VerifyEmailPage';
 import { HomePage } from './pages/public/home/HomePage';
 import { NotFoundPage } from './pages/public/NotFoundPage';
 import { ContactPage } from './pages/public/ContactPage';
 import { ExtrasPage } from './pages/public/ExtrasPage';
 import { LegalPage } from './pages/public/LegalPage';
-import { CheckoutPage } from './pages/public/CheckoutPage';
 import { PoliciesPage } from './pages/public/PoliciesPage';
-import { PreReservationPage } from './pages/public/PreReservationPage';
-import { SandboxCheckoutPage } from './pages/public/SandboxCheckoutPage';
-import { SubscribePage } from './pages/public/SubscribePage';
 import { PricingPage } from './pages/public/PricingPage';
 import { StructurePage } from './pages/public/StructurePage';
 import { RoomPage } from './pages/public/rooms/RoomPage';
 import { RoomsPage } from './pages/public/rooms/RoomsPage';
+
+/**
+ * Route-level code splitting (GES-143): the entry chunk carries only the public marketing pages;
+ * the booking, checkout, auth, tenant and admin areas each load on first visit.
+ */
+const lazyLoaders: (() => Promise<ComponentType>)[] = [];
+
+/** Loads every lazy route module now (tests warm them so module loading stays out of their waits). */
+export function preloadLazyRoutes(): Promise<unknown> {
+  return Promise.all(lazyLoaders.map((load) => load()));
+}
+
+function lazyPage(load: () => Promise<ComponentType>): ComponentType {
+  lazyLoaders.push(load);
+  const Page = lazy(async () => ({ default: await load() }));
+  return function LazyPage() {
+    return (
+      <Suspense
+        fallback={
+          <div className="flex justify-center py-space-hero">
+            <Spinner label="Carregando página" />
+          </div>
+        }
+      >
+        <Page />
+      </Suspense>
+    );
+  };
+}
+
+const AdminShell = lazyPage(() =>
+  import('./components/layout/AdminShell').then((m) => m.AdminShell),
+);
+const AppShell = lazyPage(() => import('./components/layout/AppShell').then((m) => m.AppShell));
+const BookingFlowPage = lazyPage(() =>
+  import('./features/booking/BookingFlowPage').then((m) => m.BookingFlowPage),
+);
+const CalendarConfigPage = lazyPage(() =>
+  import('./pages/admin/calendar/CalendarConfigPage').then((m) => m.CalendarConfigPage),
+);
+const CuponsPage = lazyPage(() =>
+  import('./pages/admin/cupons/CuponsPage').then((m) => m.CuponsPage),
+);
+const CustomerDetailPage = lazyPage(() =>
+  import('./pages/admin/customers/CustomerDetailPage').then((m) => m.CustomerDetailPage),
+);
+const CustomersPage = lazyPage(() =>
+  import('./pages/admin/customers/CustomersPage').then((m) => m.CustomersPage),
+);
+const ExtrasAdminPage = lazyPage(() =>
+  import('./pages/admin/extras/ExtrasAdminPage').then((m) => m.ExtrasAdminPage),
+);
+const FinancePage = lazyPage(() =>
+  import('./pages/admin/finance/FinancePage').then((m) => m.FinancePage),
+);
+const IntegrationsPage = lazyPage(() =>
+  import('./pages/admin/integrations/IntegrationsPage').then((m) => m.IntegrationsPage),
+);
+const AuditPage = lazyPage(() => import('./pages/admin/audit/AuditPage').then((m) => m.AuditPage));
+const RoomEditPage = lazyPage(() =>
+  import('./pages/admin/rooms/RoomEditPage').then((m) => m.RoomEditPage),
+);
+const RoomsAdminPage = lazyPage(() =>
+  import('./pages/admin/rooms/RoomsPage').then((m) => m.RoomsPage),
+);
+const UsersPage = lazyPage(() => import('./pages/admin/users/UsersPage').then((m) => m.UsersPage));
+const BookingsListPage = lazyPage(() =>
+  import('./pages/admin/reservations/BookingsListPage').then((m) => m.BookingsListPage),
+);
+const PoliciesRoute = lazyPage(() =>
+  import('./pages/admin/reservations/PoliciesPanel').then((m) => m.PoliciesRoute),
+);
+const ReservationsCalendar = lazyPage(() =>
+  import('./pages/admin/reservations/ReservationsCalendar').then((m) => m.ReservationsCalendar),
+);
+const ReservationsPage = lazyPage(() =>
+  import('./pages/admin/reservations/ReservationsPage').then((m) => m.ReservationsPage),
+);
+const ReservationsSlotTab = lazyPage(() =>
+  import('./pages/admin/reservations/ReservationsPage').then((m) => m.ReservationsSlotTab),
+);
+const AgendaPage = lazyPage(() => import('./pages/app/AgendaPage').then((m) => m.AgendaPage));
+const AppHomePage = lazyPage(() => import('./pages/app/AppHomePage').then((m) => m.AppHomePage));
+const BookingDetailPage = lazyPage(() =>
+  import('./pages/app/BookingDetailPage').then((m) => m.BookingDetailPage),
+);
+const CardsPage = lazyPage(() => import('./pages/app/CardsPage').then((m) => m.CardsPage));
+const ComprasLayout = lazyPage(() =>
+  import('./pages/app/compras/ComprasPage').then((m) => m.ComprasLayout),
+);
+const ComprasPage = lazyPage(() =>
+  import('./pages/app/compras/ComprasPage').then((m) => m.ComprasPage),
+);
+const CreditosPage = lazyPage(() =>
+  import('./pages/app/compras/CreditosHistoricoPages').then((m) => m.CreditosPage),
+);
+const HistoricoPage = lazyPage(() =>
+  import('./pages/app/compras/CreditosHistoricoPages').then((m) => m.HistoricoPage),
+);
+const HorasExtrasPage = lazyPage(() =>
+  import('./pages/app/compras/HorasExtrasPage').then((m) => m.HorasExtrasPage),
+);
+const MyBookingsPage = lazyPage(() =>
+  import('./pages/app/MyBookingsPage').then((m) => m.MyBookingsPage),
+);
+const NotificationSettingsPage = lazyPage(() =>
+  import('./pages/app/NotificationSettingsPage').then((m) => m.NotificationSettingsPage),
+);
+const PrivacyPage = lazyPage(() => import('./pages/app/PrivacyPage').then((m) => m.PrivacyPage));
+const ProfilePage = lazyPage(() => import('./pages/app/ProfilePage').then((m) => m.ProfilePage));
+const QuotesPage = lazyPage(() => import('./pages/app/QuotesPage').then((m) => m.QuotesPage));
+const LoginPage = lazyPage(() => import('./pages/auth/LoginPage').then((m) => m.LoginPage));
+const ForgotPasswordPage = lazyPage(() =>
+  import('./pages/auth/password/ForgotPasswordPage').then((m) => m.ForgotPasswordPage),
+);
+const ResetPasswordPage = lazyPage(() =>
+  import('./pages/auth/password/ResetPasswordPage').then((m) => m.ResetPasswordPage),
+);
+const SignupPage = lazyPage(() => import('./pages/auth/SignupPage').then((m) => m.SignupPage));
+const TwoFactorEnrollPage = lazyPage(() =>
+  import('./pages/auth/TwoFactorPages').then((m) => m.TwoFactorEnrollPage),
+);
+const TwoFactorVerifyPage = lazyPage(() =>
+  import('./pages/auth/TwoFactorPages').then((m) => m.TwoFactorVerifyPage),
+);
+const VerifyEmailPage = lazyPage(() =>
+  import('./pages/auth/VerifyEmailPage').then((m) => m.VerifyEmailPage),
+);
+const CheckoutPage = lazyPage(() =>
+  import('./pages/public/CheckoutPage').then((m) => m.CheckoutPage),
+);
+const PreReservationPage = lazyPage(() =>
+  import('./pages/public/PreReservationPage').then((m) => m.PreReservationPage),
+);
+const SandboxCheckoutPage = lazyPage(() =>
+  import('./pages/public/SandboxCheckoutPage').then((m) => m.SandboxCheckoutPage),
+);
+const SubscribePage = lazyPage(() =>
+  import('./pages/public/SubscribePage').then((m) => m.SubscribePage),
+);
 
 type PlaceholderRoute = readonly [path: string, title: string];
 
