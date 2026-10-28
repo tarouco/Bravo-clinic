@@ -1,14 +1,23 @@
 # Gestão Validation
 
-## Validation verdict: FAIL
+## Validation verdict: PASS
 
-Iteration 1 verdict at `main` `42a920a`: **FAIL** on the discrimination sensor. 139/141 in-scope ACs (GES-01..GES-141) pass with file:line evidence; GES-95 and GES-138 are PARTIAL. Sensor 24/28 killed with 3 real survivors (A7, A12, A19) and 1 equivalent (A17). Every gate is green. GES-142..GES-144 (T47–T50) are pending and not judged. The fixes are three test additions; no product-code defect was found.
+Final verdict after iteration 2 (mutants at `main` `cb4db60`, gates at `f6399b1`): **PASS**.
+- **ACs**: 141/141 in-scope ACs (GES-01..GES-141) pass. GES-142 is verified on static evidence plus the T47 author's run. GES-143 (T48 budget) and GES-144 (T49–T50 release) are pending.
+- **Sensor**: the iteration-1 survivors A7 (both variants), A12 and A19 are now killed: 27/27 non-equivalent mutants overall.
+- **Gates**: typecheck, lint and web 1206/1206 are green at `f6399b1`.
+- **Findings**: F1–F4 and F6 are closed; F5 and F7 are accepted Minor findings.
+
+The iteration-1 report (FAIL) follows unchanged as history; the iteration-2 report is the "Iteration 2" section at the end.
+
+Iteration 1 verdict at `main` `42a920a` (kept below as history): **FAIL** on the discrimination sensor. 139/141 in-scope ACs (GES-01..GES-141) pass with file:line evidence; GES-95 and GES-138 are PARTIAL. Sensor 24/28 killed with 3 real survivors (A7, A12, A19) and 1 equivalent (A17). Every gate is green. GES-142..GES-144 (T47–T50) are pending and not judged. The fixes are three test additions; no product-code defect was found.
 
 ## Iteration history
 
 | Iteration | Verdict | Summary |
 | --------- | ------- | ------- |
 | 1 (2026-10-28, branch `worktree-agent-aaa9364ff302e0105`, `main` at `86f1b96` → fast-forwarded to `42a920a`) | FAIL | Scope T1–T46 (GES-01..GES-141). 139/141 in-scope ACs pass, GES-95 and GES-138 PARTIAL; sensor 24/28 killed (survivors A7, A12, A19; A17 equivalent); gates green (core 1194, web 1196, API 1228, typecheck, lint). GES-142..GES-144 (T47–T50) pending, not judged. Findings: F1, F2 Major (survivors A7, A19), F3 Minor survivor (A12), F4–F7 Minor non-blocking |
+| 2 (2026-10-28, same branch, `main` at `cb4db60` for the mutants, `f6399b1` for the gates) | PASS | F1–F4, F6 closed (F5, F7 accepted Minor); A7a, A7b, A12, A19 killed (27/27 non-equivalent overall); GES-95, GES-138 now pass → 141/141 in-scope; GES-142 verified on static evidence + author's run; gates green at `f6399b1` (typecheck, lint, web 1206/1206; API touched files 58/58); GES-143, GES-144 pending |
 
 ---
 
@@ -467,3 +476,114 @@ Rows for finished web tasks (GES-26..28, 82, 83, 87, 98, 109, 116, 128, 133..136
 **Lessons**: L-009 (allow-only transition tables), L-010 (soft-delete filters in reports), L-011 (threshold boundaries), L-012 (named timeout values) recorded with `scripts/lessons.py add` in `.specs/lessons.json` / `.specs/LESSONS.md`.
 
 **Next steps**: route F1–F3 to an implementer as test-only fix tasks (no product change expected), then run iteration 2: re-apply A7, A12, A19 and re-run the touched files. F4–F7 are optional. Re-verify GES-142..GES-144 after T47–T50.
+
+---
+
+# Iteration 2
+
+## Iteration 2 report
+
+**Iteration 2 verdict**: PASS
+
+**Date**: 2026-10-28 (iteration 2)
+**Scope**:
+- Re-check findings F1–F4 and F6 against the fixer's tests, merged on `main` at `cb4db60` from `worktree-agent-aecb8a51c16713a9e`. F5 and F7 were left as accepted Minor findings by the orchestrator.
+- Re-apply the iteration-1 survivors.
+- Run the full gates at `f6399b1`.
+- The fast-forward also brought in T48's perf commits (`0375ccd`: lazy public routes, `PublicLayout` min-height, room-photo `srcset`, font preload) and T47's accessibility merge (`f6399b1`). T48's LCP budget (GES-143) and the release (GES-144) stay out of scope.
+
+**Verifier**: same independent sub-agent as iteration 1 (wrote none of the fixes).
+**Test DB**: one fresh empty database `gestao_ver2_76zmso_1`, created with `CREATE DATABASE` on the Neon verify branch (`DATABASE_URL_VERIFY`). Its host was checked against production and against the shared dev `DATABASE_URL_TEST`; it differs from both. The worktree `.env` (untracked, gitignored) pointed `DATABASE_URL_TEST` at it. It was dropped at the end.
+
+## Findings F1–F7 re-checked
+
+| Finding | Iteration-2 evidence | Status |
+| ------- | -------------------- | ------ |
+| F1 (Major, GES-95, A7) | `apps/api/src/routes/admin/quote-requests.int.test.ts:282` declares the 6 allowed moves, written from the spec. `:294` asserts that 19 of the 25 `(from, to)` pairs are disallowed (same-status moves included). `:298` runs `it.each(DISALLOWED)` and asserts, for each pair, `[409, 'INVALID_TRANSITION']`, the row unchanged (`toEqual(row)`) and no `quote_request.status` audit. A7a and A7b are killed (table below) | ✅ Closed |
+| F2 (Major, A19) | `apps/api/src/modules/finance/dre-xlsx.int.test.ts:172` seeds a live receipt (5000 cents) and a soft-deleted one (1234 cents) in Nov 2026. In both regimes it asserts the summary bucket, totals and `byRevenueCategory.other` = 5000, and DRE lines 1, "Outras receitas", 5 and 7 = `[5000, 5000]`. A19 is killed | ✅ Closed |
+| F3 (Minor, GES-138, A12) | `apps/api/src/routes/admin/usage.int.test.ts:136` `it.each`: 4000/5000 bytes → `{ percent: 80, warning: true }`, 3950/5000 → `{ percent: 79, warning: false }`. A12 is killed | ✅ Closed |
+| F4 (Minor, docs) | `.specs/features/gestao/tasks.md:1365-1370`: all six T42 boxes are now `[x]`. The verifier checked the evidence behind each box:<br>• no script, no-op `track`: `apps/web/src/lib/analytics.test.tsx:48`<br>• after `load`, `client_storage: 'none'`, `persistence: 'memory'`: `:80`, `:92`, `:131`<br>• whitelist and `/admin` silent: `:182`, `:239`<br>• funnel points: `PublicLayout.test.tsx:100`, `BookingFlowPage.test.tsx:149`, `SummaryStep.test.tsx:255`, `SubscribePage.test.tsx:339`, `QuoteRequestForm.test.tsx:129`, `SignupPage.test.tsx:100`<br>• 16 tests in the file (≥ 9); web gate green below | ✅ Closed |
+| F5 (Minor, timeouts) | unchanged (`gateway-config.service.ts:36`, `holiday-import.ts:11`) | ⏸ Accepted Minor (orchestrator) |
+| F6 (Minor, GES-116) | `apps/web/src/features/admin-audit/labels.test.ts:5` (`it.each` over all six labels `Web`, `App`, `Admin`, `MCP`, `Job`, `Sistema`), `:16` (exactly those six keys, in order). Passes in the web gate | ✅ Closed |
+| F7 (Minor, edge-case code paths) | unchanged | ⏸ Accepted Minor (orchestrator) |
+
+## Spec-Anchored Acceptance Criteria (iteration 2)
+
+| AC | Iteration 1 | Iteration 2 evidence | Result |
+| -- | ----------- | -------------------- | ------ |
+| GES-95 | ⚠️ PARTIAL (A7) | `quote-requests.int.test.ts:246` (every valid move with audit), `:294`, `:298` (all 19 invalid pairs → 409 `INVALID_TRANSITION`, nothing changed), `:315` (concurrent: one 200, one 409) | ✅ |
+| GES-138 | ⚠️ PARTIAL (A12) | `usage.int.test.ts:107` (90 %, > 100 %), `:136` (exactly 80 % → warning, 79 % → none); `UsageTab.test.tsx:55`, `:67` | ✅ |
+| GES-21 (report side) | ✅ with F2 | `dre-xlsx.int.test.ts:172` (deleted receipt excluded to the cent, both regimes) | ✅ |
+| GES-116 | ✅ (3 labels code path) | `labels.test.ts:5`, `:16` | ✅ |
+| GES-142 | ⏸ pending | Static evidence; e2e not re-run, per the brief:<br>• `apps/web/e2e/a11y.spec.ts:18`: `WCAG_TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']`<br>• `:22-29`: exactly the 13 GES-142 pages<br>• `:19`: `THEMES = ['day', 'night']`<br>• `:84-133`: every page × theme<br>• `:73-80`: `expect(summary).toEqual([])` (zero violations)<br>• `grep` finds no `disableRules`, `exclude` or `include` in `apps/web/e2e/`<br>• Run result: the T47 commit `8830a5c` body reports 52 axe checks (desktop + mobile) green, and the T47 boxes are ticked. The verifier did not observe the run | ✅ (static + author's run) |
+| GES-143 | ⏸ pending | T48 LCP budget still open | ⏸ pending |
+| GES-144 | ⏸ pending | T49–T50 release not run | ⏸ pending |
+
+The other 139 in-scope ACs keep their iteration-1 evidence:
+- Since `244244b`, `apps/api/src` and `packages/` changed only in the three test files above (`git diff --stat 244244b f6399b1 -- apps/api/src packages`).
+- The web changes (layout, lazy routes, room photos, a11y attributes) are covered by the full web suite below, which is green.
+
+**Status**: 141/141 in-scope ACs (GES-01..GES-141) pass. GES-142 is verified on static evidence plus the author's run. GES-143 and GES-144 are pending (T48 budget, T49–T50).
+
+## Discrimination Sensor (iteration 2)
+
+**Method**: same harness as iteration 1 (`node_modules/.cache/verify/sensor2.mjs`: exactly one textual match, restore with `git checkout -- <file>`), run at `cb4db60` on `gestao_ver2_76zmso_1`.
+- The unmutated touched files passed first: 5 files, 58 tests (`quote-requests`, `usage`, `finance-report`, `dre-xlsx`, `finance-receipts`).
+- `git status --porcelain` was empty before and after the run.
+
+| # | File:line | Mutation | Tests run | Result |
+| - | --------- | -------- | --------- | ------ |
+| A7a | `apps/api/src/modules/extras/quote-requests.service.ts:183` | `new: ['contacted', 'quote_sent', 'lost']` | `routes/admin/quote-requests.int.test.ts` | ✅ Killed (1 failed / 34: "409 INVALID_TRANSITION to new → quote_sent", `[200, undefined]` ≠ `[409, 'INVALID_TRANSITION']`) |
+| A7b | `quote-requests.service.ts:184` | `contacted: ['quote_sent', 'won', 'lost']` | same | ✅ Killed (1 failed / 34: "contacted → won", same assertion) |
+| A12 | `apps/api/src/modules/usage/usage.service.ts:12` | `WARNING_PERCENT = 90` | `routes/admin/usage.int.test.ts` | ✅ Killed (1 failed / 6: "storage at 4000 of 5000 bytes (80 %) answers warning: true") |
+| A19 | `apps/api/src/modules/finance/finance-report.service.ts:226` | drop `isNull(manualReceipts.deletedAt)` | `finance-report.int.test.ts`, `dre-xlsx.int.test.ts`, `finance-receipts.int.test.ts` | ✅ Killed (1 failed / 18: `dre-xlsx:172`, bucket ≠ `grossCents: 5000`) |
+
+**Iteration 2 sensor outcome**: 4/4 killed. With iteration 1: 27/27 non-equivalent mutants killed (A17 is equivalent) - PASS ✅
+
+## Gate Check (iteration 2)
+
+`TEMP`, `TMP` and `npm_config_cache` were under `node_modules/.cache`. `npm install` exited 0 at both `cb4db60` and `f6399b1` (lockfile changed for `@lhci/cli` and `@axe-core/playwright`).
+
+| Gate | Command | Commit | Result |
+| ---- | ------- | ------ | ------ |
+| Typecheck | `npm run typecheck` | `cb4db60`, `f6399b1` | ✅ exit 0 at both |
+| Lint | `npm run lint` | `cb4db60`, `f6399b1` | ✅ exit 0 at both |
+| Web | `npm test -w apps/web -- --maxWorkers=2` | `f6399b1` | ✅ 140 files, 1206 tests passed (906 s) |
+| Web (earlier run) | same | `cb4db60` | ⚠️ 7 of 1206 failed under heavy host load (details below); the same files pass in the `f6399b1` run |
+| API touched files | `vitest run` of the 5 files | `cb4db60` | ✅ 5 files, 58 tests passed (no API source changed since iteration 1's full 1228/1228 run) |
+| Core | — | — | not re-run: `packages/` unchanged since `42a920a` (1194/1194) |
+| E2E | — | — | not re-run (per the brief); `a11y.spec.ts` read for GES-142 |
+
+**The 7 failures in the `cb4db60` web run**:
+- **Kind**: all wait-related, 4 × "Test timed out in 15000ms" and 3 `findBy…` misses. The run took 2856 s, three times the normal duration.
+- **Tests**: `BookingFlowPage` ×2, `SummaryStep`, `ProfilePage`, `ExtrasPage` ×2, `ExtrasSection`.
+- **Why they are not regressions**: `f6399b1` changes none of these tests or their subjects, and all of them pass in the `f6399b1` run, so these were host-load timeouts.
+
+## New findings
+
+None. F5 and F7 remain accepted Minor findings.
+
+## Requirement Traceability (iteration 2)
+
+GES-95, GES-138 and GES-142 → `Verified` in `spec.md`, which makes 142 Verified rows. GES-143 and GES-144 stay `In Tasks` (T48 budget, T49–T50).
+
+## Cleanup (iteration 2)
+
+- `gestao_ver2_76zmso_1` was dropped, and a `pg_database` lookup on the verify branch confirmed that no `gestao_ver*` database remains.
+- Each mutated file was restored with `git checkout --`. Porcelain was empty before and after the sensor, and before the commit apart from this report and the `spec.md` rows.
+- Logs and scripts live only under `node_modules/.cache/verify/` (ignored).
+- `.env` stays untracked, and no secret was printed.
+- The main checkout was not touched.
+
+## Summary (iteration 2)
+
+**Overall**: ✅ Ready for the in-scope tasks T1–T47.
+
+**Spec-anchored check**: 141/141 in-scope ACs pass. GES-142 passes on static evidence plus the author's run. GES-143 and GES-144 are pending.
+**Sensor**: the 4 iteration-2 re-applications are killed (A7a, A7b, A12, A19); 27/27 non-equivalent mutants are killed overall.
+**Gate**: typecheck ✅, lint ✅, web 1206/1206 ✅ at `f6399b1`; API touched files 58/58 ✅; core unchanged.
+
+**Next steps**:
+- Verify GES-143 once T48's LCP budget is closed.
+- Verify GES-144 after the T49–T50 release.
+- F5 and F7 remain optional hardening.

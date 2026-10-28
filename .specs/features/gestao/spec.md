@@ -592,7 +592,7 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-92 | P1: Quote request funnel | Tasks | T21 | Verified |
 | GES-93 | P1: Quote request funnel | Tasks | T21 | Verified |
 | GES-94 | P1: Quote request funnel | Tasks | T21 | Verified |
-| GES-95 | P1: Quote request funnel | Tasks | T21 | Implementing |
+| GES-95 | P1: Quote request funnel | Tasks | T21 | Verified |
 | GES-96 | P1: Quote request funnel | Tasks | T21, T34 | Verified |
 | GES-97 | P1: Quote request funnel | Tasks | T21, T38 | Verified |
 | GES-98 | P1: Quote request funnel | Tasks | T38 | Verified |
@@ -635,11 +635,11 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-135 | P1: Analytics funnel | Tasks | T42 | Verified |
 | GES-136 | P1: Analytics funnel | Tasks | T42 | Verified |
 | GES-137 | P2: Free-tier usage panel | Tasks | T27, T33 | Verified |
-| GES-138 | P2: Free-tier usage panel | Tasks | T27, T33 | Implementing |
+| GES-138 | P2: Free-tier usage panel | Tasks | T27, T33 | Verified |
 | GES-139 | P2: Free-tier usage panel | Tasks | T27 | Verified |
 | GES-140 | P1: MVP hardening and production release | Tasks | T45 | Verified |
 | GES-141 | P1: MVP hardening and production release | Tasks | T46 | Verified |
-| GES-142 | P1: MVP hardening and production release | Tasks | T47 | Implemented |
+| GES-142 | P1: MVP hardening and production release | Tasks | T47 | Verified |
 | GES-143 | P1: MVP hardening and production release | Tasks | T48 | In Tasks |
 | GES-144 | P1: MVP hardening and production release | Tasks | T49, T50 | In Tasks |
 
