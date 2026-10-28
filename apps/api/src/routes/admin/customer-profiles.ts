@@ -1,4 +1,9 @@
-import { customerNotesSchema, customerProfileSchema, idSchema } from '@bravo/core';
+import {
+  customerNotesSchema,
+  customerProfileSchema,
+  deleteWithJustificationSchema,
+  idSchema,
+} from '@bravo/core';
 import { Hono } from 'hono';
 import { z } from 'zod';
 import { withTransaction } from '../../db/client';
@@ -12,6 +17,7 @@ import {
   searchCustomerProfiles,
   updateCustomerProfile,
 } from '../../modules/customers/customers.service';
+import { anonymizeCustomer } from '../../modules/privacy/privacy.service';
 import type { AppEnv } from '../../types';
 
 const idParam = z.object({ id: idSchema });
@@ -19,8 +25,8 @@ const cursorSchema = z.string().min(1).max(200).optional();
 const listQuery = z.object({ q: z.string().max(120).optional(), cursor: cursorSchema });
 
 /**
- * Clientes (GES-99..GES-102). Staff (admin and reception) read and save notes; the profile edit
- * is admin only. Mounted after nucleo's `/customers/search`.
+ * Clientes (GES-99..GES-102, GES-127). Staff (admin and reception) read and save notes; the
+ * profile edit and the anonymization are admin only. Mounted after nucleo's `/customers/search`.
  */
 export function adminCustomerProfileRoutes(): Hono<AppEnv> {
   const app = new Hono<AppEnv>();
@@ -74,6 +80,23 @@ export function adminCustomerProfileRoutes(): Hono<AppEnv> {
         updateCustomerProfile(tx, ctx, c.req.valid('param').id, c.req.valid('json'), now()),
       );
       return c.json(profile);
+    },
+  );
+
+  // LGPD anonymization on the customer's request (GES-127), admin only.
+  app.post(
+    '/customers/:id/anonymize',
+    requireRole('admin'),
+    validate('param', idParam),
+    validate('json', deleteWithJustificationSchema),
+    async (c) => {
+      await anonymizeCustomer(
+        c.var.deps,
+        actorContext(c),
+        c.req.valid('param').id,
+        c.req.valid('json').justification,
+      );
+      return c.json({ anonymized: true });
     },
   );
   return app;

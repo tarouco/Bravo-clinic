@@ -7,6 +7,7 @@ import { cancelRoutes } from './cancel';
 import { cardRoutes } from './cards';
 import { meRoutes } from './me';
 import { paymentRoutes } from './payments';
+import { privacyRoutes } from './privacy';
 import { purchaseRoutes } from './purchases';
 import { pushRoutes } from './push';
 import { appQuoteRequestRoutes } from './quote-requests';
@@ -28,5 +29,6 @@ export function appRoutes(): Hono<AppEnv> {
   app.route('/', pushRoutes());
   app.route('/', calendarFeedRoutes());
   app.route('/', appQuoteRequestRoutes());
+  app.route('/', privacyRoutes());
   return app;
 }

@@ -897,12 +897,12 @@ T49 → T50
 - Skill: NONE
 
 **Done when**:
-- [ ] Test asserts export sections present and a recursive scan finds no `password_hash`, `secret`, `token_hash`, `external_card_id` keys; 4th export in 24 h → 429
-- [ ] Tests assert future booking / active subscription / pending charge each produce 409 `HAS_ACTIVE_COMMITMENTS` with the item and no change
-- [ ] Test asserts wrong password 401; successful deletion sets every listed column, keeps bookings/charges/consents/audit, revokes sessions, clears cookie, queues `privacy.account_deleted`, rewrites older outbox rows
-- [ ] Tests assert admin anonymize requires justification, reception 403, personal feed of the deleted user 404
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 10 tests pass
+- [x] Test asserts export sections present and a recursive scan finds no `password_hash`, `secret`, `token_hash`, `external_card_id` keys; 4th export in 24 h → 429
+- [x] Tests assert future booking / active subscription / pending charge each produce 409 `HAS_ACTIVE_COMMITMENTS` with the item and no change
+- [x] Test asserts wrong password 401; successful deletion sets every listed column, keeps bookings/charges/consents/audit, revokes sessions, clears cookie, queues `privacy.account_deleted`, rewrites older outbox rows
+- [x] Tests assert admin anonymize requires justification, reception 403, personal feed of the deleted user 404
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 10 tests pass
 
 **Tests**: integration
 **Gate**: full

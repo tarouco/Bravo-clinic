@@ -618,13 +618,13 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-118 | P1: Reception restrictions end-to-end | Tasks | T44 | In Tasks |
 | GES-119 | P1: Reception restrictions end-to-end | Tasks | T44 | In Tasks |
 | GES-120 | P1: Reception restrictions end-to-end | Tasks | T13, T44 | Implementing |
-| GES-121 | P1: LGPD self-service | Tasks | T25 | In Tasks |
-| GES-122 | P1: LGPD self-service | Tasks | T25 | In Tasks |
-| GES-123 | P1: LGPD self-service | Tasks | T25 | In Tasks |
-| GES-124 | P1: LGPD self-service | Tasks | T25 | In Tasks |
-| GES-125 | P1: LGPD self-service | Tasks | T25 | In Tasks |
-| GES-126 | P1: LGPD self-service | Tasks | T25 | In Tasks |
-| GES-127 | P1: LGPD self-service | Tasks | T25 | In Tasks |
+| GES-121 | P1: LGPD self-service | Tasks | T25 | Implementing |
+| GES-122 | P1: LGPD self-service | Tasks | T25 | Implementing |
+| GES-123 | P1: LGPD self-service | Tasks | T25 | Implementing |
+| GES-124 | P1: LGPD self-service | Tasks | T25 | Implementing |
+| GES-125 | P1: LGPD self-service | Tasks | T25 | Implementing |
+| GES-126 | P1: LGPD self-service | Tasks | T25 | Implementing |
+| GES-127 | P1: LGPD self-service | Tasks | T25 | Implementing |
 | GES-128 | P1: LGPD self-service | Tasks | T41 | In Tasks |
 | GES-129 | P1: LGPD self-service | Tasks | T9 | Implementing |
 | GES-130 | P1: Holiday jobs | Tasks | T26 | In Tasks |
