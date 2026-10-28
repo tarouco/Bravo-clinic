@@ -1419,10 +1419,10 @@ T49 → T50
 - Skill: NONE
 
 **Done when**:
-- [ ] Sweep calls every `/admin/*` route as reception: allowlisted ones do not return 403, all others return 403 `FORBIDDEN`; an unclassified route fails the test
-- [ ] Web test asserts reception visiting `/admin/financeiro`, `/admin/integracoes`, `/admin/reservas/politicas` renders the 403 page and the nav lists only Gestão de Reservas and Clientes
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api && npm test -w apps/web`
-- [ ] Test count: ≥ 3 new tests pass (sweep parametrized over all routes)
+- [x] Sweep calls every `/admin/*` route as reception: allowlisted ones do not return 403, all others return 403 `FORBIDDEN`; an unclassified route fails the test
+- [x] Web test asserts reception visiting `/admin/financeiro`, `/admin/integracoes`, `/admin/reservas/politicas` renders the 403 page and the nav lists only Gestão de Reservas and Clientes
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api && npm test -w apps/web`
+- [x] Test count: ≥ 3 new tests pass (sweep parametrized over all routes)
 
 **Tests**: integration
 **Gate**: full

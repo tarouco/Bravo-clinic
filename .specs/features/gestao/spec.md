@@ -614,10 +614,10 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-114 | P1: Usuários and audit log | Tasks | T24 | Implementing |
 | GES-115 | P1: Usuários and audit log | Tasks | T24 | Implementing |
 | GES-116 | P1: Usuários and audit log | Tasks | T37 | In Tasks |
-| GES-117 | P1: Reception restrictions end-to-end | Tasks | T44 | In Tasks |
-| GES-118 | P1: Reception restrictions end-to-end | Tasks | T44 | In Tasks |
-| GES-119 | P1: Reception restrictions end-to-end | Tasks | T44 | In Tasks |
-| GES-120 | P1: Reception restrictions end-to-end | Tasks | T13, T44 | Implementing |
+| GES-117 | P1: Reception restrictions end-to-end | Tasks | T44 | Implemented |
+| GES-118 | P1: Reception restrictions end-to-end | Tasks | T44 | Implemented |
+| GES-119 | P1: Reception restrictions end-to-end | Tasks | T44 | Implemented |
+| GES-120 | P1: Reception restrictions end-to-end | Tasks | T13, T44 | Implemented |
 | GES-121 | P1: LGPD self-service | Tasks | T25 | Implementing |
 | GES-122 | P1: LGPD self-service | Tasks | T25 | Implementing |
 | GES-123 | P1: LGPD self-service | Tasks | T25 | Implementing |

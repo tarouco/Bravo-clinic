@@ -152,6 +152,23 @@ describe('route guards', () => {
     expect(locationOf()).toBe(path);
   });
 
+  it.each(['/admin/financeiro', '/admin/integracoes', '/admin/reservas/politicas'])(
+    'renders the 403 page for reception on %s and lists only its two sections (GES-119)',
+    async (path) => {
+      stubApi(reception({ enrolled: true, verified: true }));
+      renderRoute(path);
+
+      expect(await screen.findByRole('heading', { name: 'Acesso restrito' })).toBeInTheDocument();
+      const menu = screen.getByRole('navigation', { name: 'Seções do painel' });
+      expect(
+        within(menu)
+          .getAllByRole('link')
+          .map((link) => link.textContent),
+      ).toEqual(['Gestão de Reservas', 'Clientes']);
+      expect(locationOf()).toBe(path);
+    },
+  );
+
   it('lets reception open the customer list and a customer profile (GES-119)', async () => {
     stubApi(reception({ enrolled: true, verified: true }));
     renderRoute('/admin/clientes');
