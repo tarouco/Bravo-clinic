@@ -27,11 +27,14 @@ export function injectPrerender(template, path, html, state) {
 
 /**
  * Inline loader of prerendered pages. The markup is complete, so the bundle (which only hydrates
- * it) and the Google Fonts stylesheet are requested right after the first contentful paint: on
- * slow phones neither competes with, or runs before, the first paint, which uses the fallback
- * font (`display=swap` then swaps it in). Links work before hydration (they are plain anchors);
- * buttons wait for it. Without paint timing (or in a tab that opens hidden) both load 3 s after
- * `load`. Its sha256 is in the netlify.toml CSP.
+ * it) and the Google Fonts stylesheet are requested once the hero image or video has painted
+ * (the largest-contentful-paint entry of an IMG or VIDEO): on slow phones neither competes with,
+ * or runs before, the paint of the largest content, which uses the fallback font (`display=swap`
+ * then swaps it in). On `/` the video poster paints a few frames after the first paint, so
+ * waiting for the first paint alone is not enough. Without such an entry they load 1.5 s after
+ * the first paint, and without paint timing (or in a tab that opens hidden) 3 s after `load`.
+ * Links work before hydration (they are plain anchors); buttons wait for it. Its sha256 is in
+ * the netlify.toml CSP.
  */
 export const ENTRY_LOADER =
   '(function(){var me=document.currentScript,done=false;' +
@@ -41,9 +44,12 @@ export const ENTRY_LOADER =
   'document.head.appendChild(l);}' +
   "var s=document.createElement('script');s.type='module';" +
   "s.src=me.getAttribute('data-entry');document.head.appendChild(s);}" +
-  'try{new PerformanceObserver(function(list,observer){' +
-  "if(list.getEntriesByName('first-contentful-paint').length){observer.disconnect();" +
-  "setTimeout(start,0);}}).observe({type:'paint',buffered:true});}catch(e){}" +
+  "function media(e){var t=e.element&&e.element.tagName;return t==='IMG'||t==='VIDEO';}" +
+  'try{var o=new PerformanceObserver(function(list){list.getEntries().forEach(function(e){' +
+  "if(e.name==='first-contentful-paint')setTimeout(start,1500);" +
+  "else if(e.entryType==='largest-contentful-paint'&&media(e)){o.disconnect();setTimeout(start,0);}" +
+  "});});o.observe({type:'paint',buffered:true});" +
+  "o.observe({type:'largest-contentful-paint',buffered:true});}catch(e){}" +
   "window.addEventListener('load',function(){setTimeout(start,3000);},{once:true});})();";
 
 const FONT_LINKS =

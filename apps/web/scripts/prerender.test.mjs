@@ -66,6 +66,71 @@ describe('deferEntry (GES-143)', () => {
   });
 });
 
+/** Runs ENTRY_LOADER against stubs; `emit` feeds performance entries, `fire` runs due timers. */
+function runLoader() {
+  const appended = [];
+  const timers = [];
+  let callback;
+  const env = {
+    document: {
+      currentScript: {
+        getAttribute: (name) => ({ 'data-entry': '/e.js', 'data-fonts': '/f.css' })[name],
+      },
+      createElement: (tag) => ({ tag, setAttribute() {} }),
+      head: { appendChild: (node) => appended.push(node.tag) },
+    },
+    PerformanceObserver: class {
+      constructor(cb) {
+        callback = cb;
+      }
+      observe() {}
+      disconnect() {}
+    },
+    window: { addEventListener() {} },
+    setTimeout: (fn, ms) => timers.push({ fn, ms }),
+  };
+  new Function(...Object.keys(env), ENTRY_LOADER)(...Object.values(env));
+  return {
+    appended,
+    emit: (...entries) => callback({ getEntries: () => entries }),
+    fire: (maxMs) => timers.filter((t) => t.ms <= maxMs).forEach((t) => t.fn()),
+  };
+}
+
+describe('ENTRY_LOADER (GES-143)', () => {
+  const fcp = { entryType: 'paint', name: 'first-contentful-paint' };
+  const lcp = (tagName) => ({
+    entryType: 'largest-contentful-paint',
+    name: '',
+    element: { tagName },
+  });
+
+  it('waits for the hero image or video to paint before requesting the bundle and fonts', () => {
+    const loader = runLoader();
+    loader.emit(fcp, lcp('H1'));
+    loader.fire(0);
+    expect(loader.appended).toEqual([]);
+
+    loader.emit(lcp('VIDEO'));
+    loader.fire(0);
+    expect(loader.appended).toEqual(['link', 'script']);
+  });
+
+  it('requests them 1.5 s after the first paint when no image or video paints', () => {
+    const loader = runLoader();
+    loader.emit(fcp);
+    loader.fire(1500);
+    expect(loader.appended).toEqual(['link', 'script']);
+  });
+
+  it('requests them once when both triggers fire', () => {
+    const loader = runLoader();
+    loader.emit(fcp, lcp('IMG'));
+    loader.fire(1500);
+    expect(loader.appended).toEqual(['link', 'script']);
+  });
+});
+
 describe('outputFile', () => {
   it('maps a page to the file Netlify serves it from', () => {
     expect(outputFile('/')).toBe('home.html');
