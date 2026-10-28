@@ -31,6 +31,7 @@ export default defineConfig({
         ...optional('VAPID_PUBLIC_KEY'),
         ...optional('VAPID_PRIVATE_KEY'),
         ...optional('VAPID_SUBJECT'),
+        ...optional('API_FUNCTION_URL'),
       },
     },
   },
@@ -50,6 +51,18 @@ export default defineConfig({
     'period-rollover': job('0 6 * * *', 'period-rollover'),
     suspensions: job('0 6 * * *', 'suspensions'),
     'expire-purchases': job('*/5 * * * *', 'expire-purchases'),
+    // gestao: e-mail retries every 5 minutes, retention Sundays at 05:00 BRT, recurring expenses
+    // at 06:00 BRT, the holiday review reminder at 08:00 BRT and the BrasilAPI import Mondays at
+    // 04:00 BRT (UTC crons).
+    'email-retry': job('*/5 * * * *', 'email-retry'),
+    retention: job('0 8 * * 0', 'retention'),
+    'recurring-expenses': job('0 9 * * *', 'recurring-expenses'),
+    'holiday-reminder': job('0 11 * * *', 'holiday-reminder'),
+    'import-holidays': job('0 7 * * 1', 'import-holidays'),
   },
-  // buckets: added by gestao (room photos, expense attachments) per AD-009.
+  // gestao (AD-009): room photos are served anonymously; expense attachments stay private.
+  buckets: {
+    'room-photos': { access: 'public_read' },
+    'expense-attachments': { access: 'private' },
+  },
 });

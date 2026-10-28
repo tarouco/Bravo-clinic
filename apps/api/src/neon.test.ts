@@ -16,6 +16,7 @@ const OPTIONAL_KEYS = [
   'VAPID_PUBLIC_KEY',
   'VAPID_PRIVATE_KEY',
   'VAPID_SUBJECT',
+  'API_FUNCTION_URL',
 ] as const;
 
 beforeEach(() => {
@@ -67,6 +68,40 @@ describe('neon.ts', () => {
       'period-rollover': daily('period-rollover'),
       suspensions: daily('suspensions'),
       'expire-purchases': every5('expire-purchases'),
+      'email-retry': every5('email-retry'),
+      retention: {
+        type: 'schedule',
+        function: 'api',
+        cron: '0 8 * * 0',
+        functionPath: '/jobs/retention',
+      },
+      'recurring-expenses': {
+        type: 'schedule',
+        function: 'api',
+        cron: '0 9 * * *',
+        functionPath: '/jobs/recurring-expenses',
+      },
+      'holiday-reminder': {
+        type: 'schedule',
+        function: 'api',
+        cron: '0 11 * * *',
+        functionPath: '/jobs/holiday-reminder',
+      },
+      'import-holidays': {
+        type: 'schedule',
+        function: 'api',
+        cron: '0 7 * * 1',
+        functionPath: '/jobs/import-holidays',
+      },
+    });
+  });
+
+  it('declares the public room-photos and private expense-attachments buckets (GES-144)', async () => {
+    vi.resetModules();
+    const { default: config } = await import('../../../neon');
+    expect(config.buckets).toEqual({
+      'room-photos': { access: 'public_read' },
+      'expense-attachments': { access: 'private' },
     });
   });
 
