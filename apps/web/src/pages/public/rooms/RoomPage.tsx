@@ -16,6 +16,7 @@ import { useCatalog, useRoom } from '../../../features/catalog/api';
 import { ApiError } from '../../../lib/api';
 import { monthOf } from '../../../lib/calendar-dates';
 import { photoSrcSet, smallPhotoUrl } from '../../../lib/room-photo';
+import { useHydrated } from '../../../lib/useHydrated';
 import { formatDuration, formatLocalDateBR, formatMinuteRange } from '../../../lib/format';
 import { usePageTitle } from '../../../lib/usePageTitle';
 import { NotFoundPage } from '../NotFoundPage';
@@ -202,6 +203,7 @@ function Availability({ slug }: { slug: string }) {
 export function RoomPage() {
   const { slug } = useParams();
   const { data: room, isPending, error } = useRoom(slug);
+  const hydrated = useHydrated();
   usePageTitle(room?.name ?? 'Sala');
 
   if (isPending) {
@@ -255,7 +257,16 @@ export function RoomPage() {
           </section>
           <Categories />
         </div>
-        <Availability slug={room.slug} />
+        {/* The calendar depends on today: prerendered markup (GES-143) leaves it to the browser. */}
+        {hydrated ? (
+          <Availability slug={room.slug} />
+        ) : (
+          <section aria-labelledby="room-availability" className="min-h-96 space-y-space-md">
+            <h2 id="room-availability" className="font-heading-mobile text-heading-mobile text-ink">
+              Disponibilidade
+            </h2>
+          </section>
+        )}
       </div>
     </div>
   );

@@ -29,6 +29,8 @@ function readStoredTheme(): Theme | null {
 }
 
 function initialTheme(): Theme {
+  // Prerendering (GES-143) runs without a window; the markup does not depend on the theme.
+  if (typeof window === 'undefined') return 'day';
   const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches ?? false;
   return readStoredTheme() ?? (prefersDark ? 'night' : 'day');
 }

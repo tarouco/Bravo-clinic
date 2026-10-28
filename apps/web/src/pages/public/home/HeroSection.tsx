@@ -1,7 +1,8 @@
 import { ArrowRight, BadgeCheck, Clock, Receipt } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { focusRing } from '../../../components/ui/cx';
 import { Icon } from '../../../components/ui/Icon';
+import { useMediaQueryOnce } from '../../../lib/useHydrated';
 
 const HIGHLIGHTS = [
   { icon: Clock, label: 'Por hora, meio turno ou turno' },
@@ -31,13 +32,12 @@ function useReducedMotionPause() {
  * Full-bleed photo hero: the flagship room on wide screens, a short vertical tour of the
  * clinic on phones. One primary action; booking details live in the simulator.
  */
-/** The tour loop only exists below `md`, so wide screens never download it. */
+/**
+ * The tour loop only exists below `md`, so wide screens never download it. Prerendered markup
+ * (GES-143) carries the phone layout; wide screens drop the video once hydration ends.
+ */
 function useIsWideScreen(): boolean {
-  const [wide] = useState(
-    () =>
-      typeof window.matchMedia === 'function' && window.matchMedia('(min-width: 768px)').matches,
-  );
-  return wide;
+  return useMediaQueryOnce('(min-width: 768px)');
 }
 
 export function HeroSection() {
