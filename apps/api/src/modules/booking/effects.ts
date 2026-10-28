@@ -1,13 +1,13 @@
 import { notifyStaffAfterCommit, type ChargeRow, type StaffEvent } from '../../extensions/registry';
 import type { RequestContext } from '../../lib/audit';
-import { dispatchEmails } from '../../lib/email';
 import { logger } from '../../lib/logger';
+import { dispatchNotifications } from '../notifications/notifications.service';
 import { cancelAtProvider, type PaymentDeps } from '../payments/charges.service';
 import { processRefund } from '../payments/refunds.service';
 
 /**
  * Work a booking service queues inside its transaction and runs once the transaction committed:
- * e-mails, staff notices (NUC-205), provider-side charge cancels and refund calls. A failure of
+ * e-mails (with their pushes), staff notices (NUC-205), provider-side charge cancels and refund calls. A failure of
  * any of them is logged and never undoes the committed change.
  */
 export interface AfterCommit {
@@ -29,7 +29,7 @@ export async function flushAfterCommit(
   fx: AfterCommit,
   ctx: Pick<RequestContext, 'requestId'>,
 ): Promise<void> {
-  await dispatchEmails(deps.db, fx.emailIds, { env: deps.env, fetch: deps.fetch });
+  await dispatchNotifications(deps, fx.emailIds);
   for (const { event, payload } of fx.staff) {
     await notifyStaffAfterCommit(deps.registry, event, payload, ctx);
   }

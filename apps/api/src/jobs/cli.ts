@@ -53,16 +53,16 @@ export async function runCli(
   });
   const { pool, db } = createDb(url);
   try {
+    const base = {
+      db,
+      env: parseEnv({ ...env, DATABASE_URL: url }),
+      fetch: globalThis.fetch,
+      now: () => now,
+    };
     return await runJob(
       name,
       job,
-      {
-        db,
-        env: parseEnv({ ...env, DATABASE_URL: url }),
-        fetch: globalThis.fetch,
-        registry: buildRegistry(),
-        now: () => now,
-      },
+      { ...base, registry: buildRegistry(base) },
       `cli:${randomUUID()}`,
     );
   } finally {

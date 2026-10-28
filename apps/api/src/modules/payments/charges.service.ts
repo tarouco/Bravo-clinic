@@ -22,7 +22,7 @@ import type { AppDeps } from '../../types';
 import { applyProviderStatus } from './payment-effects.service';
 
 /** What the payment services need from the app; jobs build the same shape. */
-export type PaymentDeps = Pick<AppDeps, 'db' | 'env' | 'fetch' | 'now' | 'registry'>;
+export type PaymentDeps = Pick<AppDeps, 'db' | 'env' | 'fetch' | 'now' | 'registry' | 'webPush'>;
 
 export type ChargePurpose = ChargeRow['purpose'];
 export type PayMethod = 'pix' | 'card' | 'saved_card';

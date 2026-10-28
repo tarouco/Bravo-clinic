@@ -1,4 +1,6 @@
+import { eq } from 'drizzle-orm';
 import type { Tx } from '../../db/client';
+import { users } from '../../db/schema';
 import type { Rendered } from '../../emails/templates/layout';
 import {
   cancelledTemplate,
@@ -20,12 +22,14 @@ import {
   switchedTemplate,
   type RevenueTemplate,
 } from '../../emails/templates/revenue';
-import { queueEmail, type EmailAttachment } from '../../lib/email';
+import type { EmailAttachment } from '../../lib/email';
+import { emitTenantMail } from '../notifications/notifications.service';
 
 // The single receita notification helper (AD-025, gestao R7): every receita service queues tenant
-// e-mails through it, and gestao rewires it to `emit()`. Each function writes one outbox row in
-// the caller's transaction and returns its id. Dedupe keys are chosen by the call site
-// (design.md "E-mail templates"), e.g. `subscription.activated:<subId>`.
+// e-mails through it, routed through gestao's `emit()` (T43), which also pushes the catalog text to
+// the addressee's devices once the caller dispatches the outbox id. Each function writes one
+// outbox row in the caller's transaction and returns its id. Dedupe keys are chosen by the call
+// site (design.md "E-mail templates"), e.g. `subscription.activated:<subId>`.
 
 export interface MailTarget {
   to: string;
@@ -34,16 +38,23 @@ export interface MailTarget {
 }
 
 function mailer<D>(template: RevenueTemplate, render: (data: D) => Rendered) {
-  return (tx: Tx, target: MailTarget, data: D): Promise<string> => {
+  return async (tx: Tx, target: MailTarget, data: D): Promise<string> => {
     const rendered = render(data);
-    return queueEmail(tx, {
+    // The push goes to the account that owns the address, when there is one.
+    const [owner] = await tx.select({ id: users.id }).from(users).where(eq(users.email, target.to));
+    return emitTenantMail(tx, {
+      name: template,
+      entityId: target.dedupeKey ?? target.to,
+      ...(owner !== undefined && { userId: owner.id }),
       to: target.to,
-      template,
-      subject: rendered.subject,
-      html: rendered.html,
-      text: rendered.text,
-      ...(target.dedupeKey !== undefined && { dedupeKey: target.dedupeKey }),
-      ...(target.attachments !== undefined && { attachments: target.attachments }),
+      data: data as Record<string, unknown>,
+      email: {
+        subject: rendered.subject,
+        html: rendered.html,
+        text: rendered.text,
+        ...(target.dedupeKey !== undefined && { dedupeKey: target.dedupeKey }),
+        ...(target.attachments !== undefined && { attachments: target.attachments }),
+      },
     });
   };
 }

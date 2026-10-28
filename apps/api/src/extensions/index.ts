@@ -7,6 +7,8 @@ import {
 } from '../modules/revenue/ports';
 import { extraHoursHandler } from '../modules/extra-hours/extra-hours.service';
 import { extrasStep } from '../modules/extras/extras-step';
+import type { NotificationDeps } from '../modules/notifications/notifications.service';
+import { staffNotificationPort } from '../modules/notifications/staff-port';
 import { roomMediaPort } from '../modules/rooms/rooms-admin.service';
 import { creditStep, discountStep, packageStep } from '../modules/revenue/steps';
 import {
@@ -24,8 +26,10 @@ import { createRegistry, type Registry } from './registry';
  * The one file later features edit to register their ports (AD-033): receita adds checkout steps,
  * payment-mode handlers, the live credit port, the closed-day compensation port, an availability
  * decorator, category handlers and charge handlers; gestao adds its notification and room-media ports.
+ * The notification port sends with the app's own database, env, fetch, clock and push client;
+ * without `deps` (tests composing services directly) staff notices keep núcleo's no-op.
  */
-export function buildRegistry(): Registry {
+export function buildRegistry(deps?: NotificationDeps): Registry {
   return createRegistry({
     // receita (AD-031)
     // receita discount (100), package (200), credit (400); gestao extras (300, R6)
@@ -44,6 +48,8 @@ export function buildRegistry(): Registry {
       subscription_renewal: subscriptionRenewalHandler,
       extra_hours: extraHoursHandler,
     },
+    // gestao: staff notices through `emit` (R8)
+    ...(deps !== undefined && { notifications: staffNotificationPort(deps) }),
     // gestao: public room photo URLs `/media/<key>-large.webp` (R13)
     roomMedia: roomMediaPort,
   });

@@ -17,7 +17,6 @@ import {
   type StaffEvent,
 } from '../../extensions/registry';
 import { audit, type RequestContext } from '../../lib/audit';
-import { dispatchEmails } from '../../lib/email';
 import { sqlStateOf } from '../../lib/errors';
 import { logger } from '../../lib/logger';
 import type { ProviderId } from '../../payments/gateway';
@@ -25,6 +24,7 @@ import { suggestFreeSlots } from '../availability/availability.service';
 import { bookingMailer, loadBookingMailContext } from '../booking/booking-mailer';
 import { rescheduleRequestHook } from '../booking/reschedule-hook';
 import { transitionBooking } from '../booking/transition';
+import { dispatchNotifications } from '../notifications/notifications.service';
 import type { PaymentDeps } from './charges.service';
 import { processRefund, requestRefund } from './refunds.service';
 
@@ -449,7 +449,7 @@ async function adjust(
 }
 
 async function afterCommit(deps: PaymentDeps, fx: Effects, ctx: RequestContext): Promise<void> {
-  await dispatchEmails(deps.db, fx.emailIds, { env: deps.env, fetch: deps.fetch });
+  await dispatchNotifications(deps, fx.emailIds);
   for (const { event, payload } of fx.staff) {
     await notifyStaffAfterCommit(deps.registry, event, payload, ctx);
   }

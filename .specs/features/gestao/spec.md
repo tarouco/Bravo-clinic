@@ -566,7 +566,7 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-66 | P1: Notification e-mails | Tasks | T12 | Implementing |
 | GES-67 | P1: Notification e-mails | Tasks | T5 | Implementing |
 | GES-68 | P1: Notification e-mails | Tasks | T5 | Implementing |
-| GES-69 | P1: Notification e-mails | Tasks | T43 | In Tasks |
+| GES-69 | P1: Notification e-mails | Tasks | T43 | Implemented |
 | GES-70 | P1: Notification e-mails | Tasks | T12 | Implementing |
 | GES-71 | P1: Notification e-mails | Tasks | T12 | Implementing |
 | GES-72 | P1: Notification e-mails | Tasks | T9 | Implementing |

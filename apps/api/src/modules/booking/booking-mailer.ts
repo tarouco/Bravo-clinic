@@ -1,3 +1,4 @@
+import { formatDateTimeBR } from '@bravo/core';
 import { eq } from 'drizzle-orm';
 import type { Db, Tx } from '../../db/client';
 import { rooms, users, type bookings } from '../../db/schema';
@@ -20,9 +21,10 @@ import {
   type BookingTemplate,
 } from '../../emails/templates/booking';
 import type { Rendered } from '../../emails/templates/layout';
-import { queueEmail, type EmailAttachment } from '../../lib/email';
+import type { EmailAttachment } from '../../lib/email';
 import { buildIcs, type IcsMethod } from '../../lib/ics';
 import { appUrl } from '../../lib/request-meta';
+import { emitTenantMail } from '../notifications/notifications.service';
 import { loadSettings } from '../settings/settings.repo';
 
 type BookingRow = typeof bookings.$inferSelect;
@@ -134,34 +136,47 @@ interface Options {
   attachments?: EmailAttachment[];
 }
 
+/**
+ * Emits the booking's tenant event (gestao T43): the e-mail goes to the customer's address and
+ * the catalog push to their devices once the caller dispatches the outbox id after commit.
+ */
 function queue(
   tx: Tx,
+  booking: Pick<BookingRow, 'id' | 'userId' | 'startsAt'> | null,
   to: string,
   template: BookingTemplate,
   rendered: Rendered,
   options: Options = {},
 ): Promise<string> {
-  return queueEmail(tx, {
+  return emitTenantMail(tx, {
+    name: template,
+    entityId: booking?.id ?? to,
+    ...(booking !== null && { userId: booking.userId }),
     to,
-    template,
-    subject: rendered.subject,
-    html: rendered.html,
-    text: rendered.text,
-    ...(options.dedupeKey !== undefined && { dedupeKey: options.dedupeKey }),
-    ...(options.attachments !== undefined && { attachments: options.attachments }),
+    data:
+      booking === null ? {} : { bookingId: booking.id, when: formatDateTimeBR(booking.startsAt) },
+    email: {
+      subject: rendered.subject,
+      html: rendered.html,
+      text: rendered.text,
+      ...(options.dedupeKey !== undefined && { dedupeKey: options.dedupeKey }),
+      ...(options.attachments !== undefined && { attachments: options.attachments }),
+    },
   });
 }
 
 /**
- * The single núcleo notification helper (AD-025); gestao rewires it to `emit()`. Every helper
- * queues an outbox row in the caller's transaction and returns its id, so the caller dispatches
- * it after commit. Confirmed, rescheduled and cancelled carry the `.ics` attachment.
+ * The single núcleo notification helper (AD-025), routed through gestao's `emit()` (T43). Every
+ * helper queues an outbox row in the caller's transaction and returns its id, so the caller
+ * dispatches it (and its push) after commit. Confirmed, rescheduled and cancelled carry the `.ics`
+ * attachment.
  */
 export const bookingMailer = {
   /** First confirmation only: the dedupe key is the booking, so a repeat is a no-op. */
   confirmed(tx: Tx, booking: BookingRow, ctx: BookingMailContext): Promise<string> {
     return queue(
       tx,
+      booking,
       ctx.user.email,
       'booking.confirmed',
       bookingConfirmedTemplate(emailData(booking, ctx)),
@@ -175,6 +190,7 @@ export const bookingMailer = {
   rescheduled(tx: Tx, booking: BookingRow, ctx: BookingMailContext): Promise<string> {
     return queue(
       tx,
+      booking,
       ctx.user.email,
       'booking.rescheduled',
       bookingRescheduledTemplate(emailData(booking, ctx)),
@@ -193,6 +209,7 @@ export const bookingMailer = {
   ): Promise<string> {
     return queue(
       tx,
+      booking,
       ctx.user.email,
       'booking.cancelled',
       bookingCancelledTemplate(emailData(booking, ctx, extra)),
@@ -206,6 +223,7 @@ export const bookingMailer = {
   cancelledNonpayment(tx: Tx, booking: BookingRow, ctx: BookingMailContext): Promise<string> {
     return queue(
       tx,
+      booking,
       ctx.user.email,
       'booking.cancelled_nonpayment',
       bookingCancelledNonpaymentTemplate(emailData(booking, ctx)),
@@ -220,6 +238,7 @@ export const bookingMailer = {
   reminder24h(tx: Tx, booking: BookingRow, ctx: BookingMailContext): Promise<string> {
     return queue(
       tx,
+      booking,
       ctx.user.email,
       'booking.reminder_24h',
       bookingReminder24hTemplate(emailData(booking, ctx)),
@@ -231,6 +250,7 @@ export const bookingMailer = {
   reminder2h(tx: Tx, booking: BookingRow, ctx: BookingMailContext): Promise<string> {
     return queue(
       tx,
+      booking,
       ctx.user.email,
       'booking.reminder_2h',
       bookingReminder2hTemplate(emailData(booking, ctx)),
@@ -241,6 +261,7 @@ export const bookingMailer = {
   balanceCharge(tx: Tx, booking: BookingRow, ctx: BookingMailContext): Promise<string> {
     return queue(
       tx,
+      booking,
       ctx.user.email,
       'booking.balance_charge',
       bookingBalanceChargeTemplate(emailData(booking, ctx)),
@@ -257,6 +278,7 @@ export const bookingMailer = {
   ): Promise<string> {
     return queue(
       tx,
+      booking,
       ctx.user.email,
       'booking.balance_reminder',
       bookingBalanceReminderTemplate(emailData(booking, ctx)),
@@ -272,6 +294,7 @@ export const bookingMailer = {
   ): Promise<string> {
     return queue(
       tx,
+      booking,
       ctx.user.email,
       'booking.balance_charged',
       bookingBalanceChargedTemplate(emailData(booking, ctx)),
@@ -287,6 +310,7 @@ export const bookingMailer = {
   ): Promise<string> {
     return queue(
       tx,
+      booking,
       ctx.user.email,
       'booking.balance_card_failed',
       bookingBalanceCardFailedTemplate(emailData(booking, ctx)),
@@ -303,6 +327,7 @@ export const bookingMailer = {
   ): Promise<string> {
     return queue(
       tx,
+      booking,
       ctx.user.email,
       'booking.pre_reservation_link',
       bookingPreReservationLinkTemplate(emailData(booking, ctx, { link: extra.link })),
@@ -312,6 +337,7 @@ export const bookingMailer = {
   preReservationExpired(tx: Tx, booking: BookingRow, ctx: BookingMailContext): Promise<string> {
     return queue(
       tx,
+      booking,
       ctx.user.email,
       'booking.pre_reservation_expired',
       bookingPreReservationExpiredTemplate(
@@ -334,6 +360,7 @@ export const bookingMailer = {
   ): Promise<string> {
     return queue(
       tx,
+      booking,
       ctx.user.email,
       'booking.late_approval_refund',
       bookingLateApprovalRefundTemplate(
@@ -355,6 +382,7 @@ export const bookingMailer = {
   ): Promise<string> {
     return queue(
       tx,
+      null,
       user.email,
       'account.set_password',
       setPasswordTemplate({ ...user, ...extra }),

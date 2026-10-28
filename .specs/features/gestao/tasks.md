@@ -1392,11 +1392,11 @@ T49 → T50
 - Skill: NONE
 
 **Done when**:
-- [ ] Tests assert each of the 7 staff events is emitted exactly once by its trigger (confirm, webhook approval, cancel by tenant/clinic/nonpayment, expire job, first subscription payment, renewal failure, quote) and `payment_issue` reaches recipients even with all toggles off
-- [ ] Test asserts a booking confirmation still queues nucleo's `booking.confirmed` e-mail with `.ics` and now also sends a push (web-push stubbed)
-- [ ] All pre-existing nucleo/receita tests pass unchanged
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 9 new tests pass
+- [x] Tests assert each of the 7 staff events is emitted exactly once by its trigger (confirm, webhook approval, cancel by tenant/clinic/nonpayment, expire job, first subscription payment, renewal failure, quote) and `payment_issue` reaches recipients even with all toggles off
+- [x] Test asserts a booking confirmation still queues nucleo's `booking.confirmed` e-mail with `.ics` and now also sends a push (web-push stubbed)
+- [x] All pre-existing nucleo/receita tests pass unchanged
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 9 new tests pass
 
 **Tests**: integration
 **Gate**: full
