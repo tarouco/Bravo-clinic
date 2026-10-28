@@ -27,7 +27,8 @@ export default defineConfig({
     { name: 'desktop', testIgnore: /mvp-journey\.spec\.ts/, use: { ...devices['Desktop Chrome'] } },
     {
       name: 'mobile',
-      testIgnore: /mvp-journey\.spec\.ts/,
+      // The admin configuration journey (GES-141) runs once, on desktop.
+      testIgnore: /(mvp-journey|admin-config)\.spec\.ts/,
       use: {
         ...devices['Desktop Chrome'],
         viewport: { width: 375, height: 812 },

@@ -1471,9 +1471,9 @@ T49 → T50
 - Skill: `run`
 
 **Done when**:
-- [ ] Spec passes locally and in CI with every step of GES-141 asserted
-- [ ] Gate check passes: `npm run typecheck && npm run e2e -w apps/web`
-- [ ] Test count: ≥ 1 e2e spec passes
+- [x] Spec passes locally and in CI with every step of GES-141 asserted
+- [x] Gate check passes: `npm run typecheck && npm run e2e -w apps/web`
+- [x] Test count: ≥ 1 e2e spec passes
 
 **Tests**: e2e
 **Gate**: e2e
