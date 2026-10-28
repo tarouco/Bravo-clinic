@@ -1362,12 +1362,12 @@ T49 → T50
 - Skill: NONE
 
 **Done when**:
-- [ ] Tests assert no script element and no-op `track` when the env var is unset
-- [ ] Tests assert script injected only after `load`, PostHog init with `persistence: 'memory'`, GA4 config with `client_storage: 'none'`
-- [ ] Tests assert non-whitelisted props (`email`, `name`) are dropped and `/admin` paths send nothing
-- [ ] Tests assert each funnel point component calls `track` with the event name once
-- [ ] Gate check passes: `npm test -w apps/web`
-- [ ] Test count: ≥ 9 tests pass
+- [x] Tests assert no script element and no-op `track` when the env var is unset
+- [x] Tests assert script injected only after `load`, PostHog init with `persistence: 'memory'`, GA4 config with `client_storage: 'none'`
+- [x] Tests assert non-whitelisted props (`email`, `name`) are dropped and `/admin` paths send nothing
+- [x] Tests assert each funnel point component calls `track` with the event name once
+- [x] Gate check passes: `npm test -w apps/web`
+- [x] Test count: ≥ 9 tests pass
 
 **Tests**: unit
 **Gate**: quick
