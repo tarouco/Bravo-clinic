@@ -26,6 +26,25 @@ describe('buildRedirects', () => {
     expect(buildRedirects('https://br-x-api.compute.neon.tech//')).toBe(bare);
   });
 
+  it('serves / from the prerendered home.html, forced, just before the SPA fallback (GES-143)', () => {
+    const rules = lines(
+      buildRedirects('https://br-x-api.compute.neon.tech', 'https://s.example', {
+        prerenderedHome: true,
+      }),
+    );
+    expect(rules).toEqual([
+      '/api/*  https://br-x-api.compute.neon.tech/:splat  200',
+      '/media/*  https://s.example/room-photos/:splat  200',
+      '/  /home.html  200!',
+      '/*  /index.html  200',
+    ]);
+  });
+
+  it('leaves the home rule out unless home.html was prerendered', () => {
+    const rules = lines(buildRedirects('https://br-x-api.compute.neon.tech', undefined, {}));
+    expect(rules).not.toContain('/  /home.html  200!');
+  });
+
   it('throws when the origin is missing (FND-126)', () => {
     expect(() => buildRedirects(undefined)).toThrow(MESSAGE);
     expect(() => buildRedirects('')).toThrow(MESSAGE);

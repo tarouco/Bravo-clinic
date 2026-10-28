@@ -21,6 +21,33 @@ describe('cacheControl', () => {
   });
 });
 
+describe('resolveFile with prerendered pages (GES-143)', () => {
+  let root;
+
+  beforeAll(() => {
+    root = mkdtempSync(join(tmpdir(), 'bravo-prerendered-'));
+    mkdirSync(join(root, 'salas'));
+    for (const file of ['index.html', 'home.html', 'salas.html', join('salas', 'principal.html')])
+      writeFileSync(join(root, file), file);
+  });
+
+  afterAll(() => {
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  it('serves / from home.html and a page path from its .html file, like Netlify', () => {
+    expect(resolveFile(root, '/')).toBe(join(root, 'home.html'));
+    expect(resolveFile(root, '/salas')).toBe(join(root, 'salas.html'));
+    expect(resolveFile(root, '/salas/')).toBe(join(root, 'salas.html'));
+    expect(resolveFile(root, '/salas/principal')).toBe(join(root, 'salas', 'principal.html'));
+  });
+
+  it('keeps the SPA shell for every other route', () => {
+    expect(resolveFile(root, '/salas/nova')).toBe(join(root, 'index.html'));
+    expect(resolveFile(root, '/app/agenda')).toBe(join(root, 'index.html'));
+  });
+});
+
 describe('preview server', () => {
   let root;
   let server;
