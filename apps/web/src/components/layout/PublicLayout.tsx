@@ -27,7 +27,9 @@ export function PublicLayout() {
     <>
       <ScrollToHash />
       <Header />
-      <main className="w-full pt-20 bg-surface">
+      {/* At least a screen tall: the footer never sits in view while a page is still loading,
+          so swapping the spinner for the content shifts nothing visible (CLS, GES-143). */}
+      <main className="w-full min-h-screen pt-20 bg-surface">
         <Outlet />
       </main>
       <Footer />

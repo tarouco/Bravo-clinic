@@ -15,6 +15,7 @@ import { useDayAvailability, useMonthAvailability } from '../../../features/avai
 import { useCatalog, useRoom } from '../../../features/catalog/api';
 import { ApiError } from '../../../lib/api';
 import { monthOf } from '../../../lib/calendar-dates';
+import { photoSrcSet, smallPhotoUrl } from '../../../lib/room-photo';
 import { formatDuration, formatLocalDateBR, formatMinuteRange } from '../../../lib/format';
 import { usePageTitle } from '../../../lib/usePageTitle';
 import { NotFoundPage } from '../NotFoundPage';
@@ -30,12 +31,16 @@ function Gallery({
 }) {
   const [active, setActive] = useState(0);
   const photo = photos[active];
+  const src = photo?.url ?? ROOM_PLACEHOLDER_SRC;
   return (
     <div className="space-y-space-sm">
       <img
         className="h-72 w-full rounded-card object-cover md:h-96"
-        src={photo?.url ?? ROOM_PLACEHOLDER_SRC}
+        src={src}
+        srcSet={photoSrcSet(src)}
+        sizes="(min-width: 1024px) 60vw, 100vw"
         alt={photo?.alt || `Foto da ${roomName}`}
+        fetchPriority="high"
       />
       {photos.length > 1 ? (
         <ul className="flex gap-space-xs" aria-label="Fotos da sala">
@@ -50,7 +55,12 @@ function Gallery({
                 }}
                 className="overflow-hidden rounded-control border border-hairline aria-[current=true]:border-bronze"
               >
-                <img className="h-16 w-24 object-cover" src={item.url} alt="" />
+                <img
+                  className="h-16 w-24 object-cover"
+                  src={smallPhotoUrl(item.url) ?? item.url}
+                  alt=""
+                  loading="lazy"
+                />
               </button>
             </li>
           ))}

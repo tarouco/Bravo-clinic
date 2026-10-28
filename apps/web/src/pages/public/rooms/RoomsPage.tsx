@@ -44,10 +44,11 @@ export function RoomsPage() {
         </Alert>
       ) : (
         <div className="grid grid-cols-1 gap-space-xl lg:grid-cols-3">
-          {data.items.map((room) => (
+          {data.items.map((room, index) => (
             <RoomCard
               key={room.id}
               {...roomCardData(room)}
+              priority={index === 0}
               onReserve={() => {
                 track('view_room', { roomSlug: room.slug });
                 void navigate(`/salas/${room.slug}`);
