@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 // Production smoke check: `node scripts/smoke.mjs https://bravo-clinic.netlify.app`
-// Exits 0 only when the API health (through the Netlify proxy), the public config and the Home all answer.
+// Exits 0 only when the API health (through the Netlify proxy), the public config, the Home and the
+// gestao endpoints (extras, ICS, MCP) all answer as expected.
 
 const base = (process.argv[2] ?? 'https://bravo-clinic.netlify.app').replace(/\/+$/, '');
 const TIMEOUT_MS = 60_000; // first request after scale-to-zero pays the Neon cold start
 
-async function get(path) {
-  const res = await fetch(`${base}${path}`, { signal: AbortSignal.timeout(TIMEOUT_MS) });
+async function get(path, init = {}) {
+  const res = await fetch(`${base}${path}`, { ...init, signal: AbortSignal.timeout(TIMEOUT_MS) });
   return { status: res.status, body: await res.text() };
 }
 
@@ -67,6 +68,34 @@ const checks = [
         })
         .some((data) => data?.['@type'] === 'LocalBusiness');
       return status === 200 && title.includes('Bravô Clinic – Salas Inteligentes') && jsonLd;
+    },
+  ],
+  // gestao (design §Hardening, GES-144).
+  [
+    'public extra services',
+    async () => {
+      const { status, body } = await get('/api/public/extra-services');
+      return status === 200 && JSON.parse(body).items.length >= 1;
+    },
+  ],
+  [
+    'extra services page',
+    async () => {
+      const { status, body } = await get('/servicos-extras');
+      return status === 200 && /<div id="root">/.test(body);
+    },
+  ],
+  ['unknown ics feed is 404', async () => (await get('/api/ics/xxxxxxxx.ics')).status === 404],
+  [
+    'mcp without a token is refused',
+    async () => {
+      const { status } = await get('/api/mcp', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: '{}',
+      });
+      // 404 while the MCP server is disabled in Integrações, 401 once it is enabled.
+      return status === 401 || status === 404;
     },
   ],
 ];
