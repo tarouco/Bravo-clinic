@@ -20,7 +20,7 @@ export function BrandLockup({
     >
       <span className="font-eyebrow text-eyebrow font-semibold uppercase tracking-[0.32em] text-ink">
         BRAVÔ CLINIC
-      </span>
+      </span>{' '}
       <span className="font-caption text-caption uppercase tracking-[0.2em] text-ink-muted">
         SALAS INTELIGENTES
       </span>

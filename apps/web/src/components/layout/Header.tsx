@@ -29,7 +29,7 @@ export function Header() {
       <div className="max-w-7xl mx-auto px-gutter">
         <div className="flex items-center justify-between h-20">
           <div className="flex items-center gap-space-lg">
-            <Link to="/" aria-label="Bravô Clinic - Salas Inteligentes" className="rounded">
+            <Link to="/" className="rounded">
               <BrandLockup variant="header" />
             </Link>
             <div className="hidden xl:flex items-center gap-space-xs text-ink-muted pl-space-md border-l border-hairline/40">

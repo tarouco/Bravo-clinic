@@ -639,7 +639,7 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-139 | P2: Free-tier usage panel | Tasks | T27 | Verified |
 | GES-140 | P1: MVP hardening and production release | Tasks | T45 | Verified |
 | GES-141 | P1: MVP hardening and production release | Tasks | T46 | Verified |
-| GES-142 | P1: MVP hardening and production release | Tasks | T47 | In Tasks |
+| GES-142 | P1: MVP hardening and production release | Tasks | T47 | Implemented |
 | GES-143 | P1: MVP hardening and production release | Tasks | T48 | In Tasks |
 | GES-144 | P1: MVP hardening and production release | Tasks | T49, T50 | In Tasks |
 

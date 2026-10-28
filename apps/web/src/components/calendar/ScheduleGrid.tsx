@@ -133,9 +133,14 @@ export function ScheduleGrid({
   const topOf = (minute: number) => (minute - visible.startMinute) * pxPerMinute;
 
   return (
+    // Focusable so a keyboard user can scroll the grid sideways on a narrow screen (WCAG 2.1.1).
     <div
+      role="region"
+      aria-label="Grade de horários"
+      tabIndex={0}
       className={cx(
         'overflow-x-auto rounded-card border border-hairline bg-surface-raised',
+        focusRing,
         className,
       )}
     >

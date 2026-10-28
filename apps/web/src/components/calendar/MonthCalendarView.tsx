@@ -85,7 +85,16 @@ export function MonthCalendarView({
           goTo(today);
         }}
       />
-      <div className="overflow-x-auto rounded-card border border-hairline bg-surface-raised">
+      {/* Focusable so a keyboard user can scroll the month sideways on a narrow screen. */}
+      <div
+        role="region"
+        aria-label="Calendário do mês"
+        tabIndex={0}
+        className={cx(
+          'overflow-x-auto rounded-card border border-hairline bg-surface-raised',
+          focusRing,
+        )}
+      >
         <div className="min-w-[40rem]">
           <div className="grid grid-cols-7 border-b border-hairline bg-surface-stone text-center font-caption text-caption uppercase tracking-[0.08em] text-ink-muted">
             {WEEKDAY_SHORT.map((name) => (

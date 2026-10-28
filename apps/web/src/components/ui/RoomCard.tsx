@@ -55,7 +55,7 @@ export function RoomCard({
           {name}
         </div>
         {featureChip ? (
-          <div className="absolute right-3 top-3 flex items-center gap-1 rounded bg-surface-raised/95 px-space-sm py-1 font-caption text-caption text-walnut shadow-sm backdrop-blur-md">
+          <div className="absolute right-3 top-3 flex items-center gap-1 rounded bg-surface-raised/95 px-space-sm py-1 font-caption text-caption text-ink shadow-sm backdrop-blur-md">
             {featureChip.icon ? (
               <Icon as={featureChip.icon} size={14} className="text-bronze" />
             ) : null}

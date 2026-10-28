@@ -62,9 +62,14 @@ export function Table<T>({
   };
 
   return (
+    // Focusable so a keyboard user can scroll a wide or long table (WCAG 2.1.1).
     <div
+      role="region"
+      aria-label={caption}
+      tabIndex={0}
       className={cx(
         'max-h-[70vh] overflow-auto rounded-card border border-hairline bg-surface-raised',
+        focusRing,
         className,
       )}
     >
