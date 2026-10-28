@@ -62,6 +62,30 @@ Seen once or not yet corroborated. Tracked, not trusted.
 - evidence: apps/web/src/pages/app/AgendaPage.test.tsx:32 (NUC-190, fundacao validation iteration 2) (web)
 - last seen: 2026-10-26T14:02:48Z
 
+### L-009 - For an allow-only transition table, test every disallowed (from, to) pair with it.each, not one sample per kind.
+- signal: `surviving_mutant` · recurrence: 1 feature(s) · scope: `apps/api state machines` · harmful: 0
+- features: gestao
+- evidence: A7 apps/api/src/modules/extras/quote-requests.service.ts:183 (apps/api state machines)
+- last seen: 2026-10-28T12:03:30Z
+
+### L-010 - Every soft-delete filter feeding a report needs a fixture with a deleted row next to a live one.
+- signal: `surviving_mutant` · recurrence: 1 feature(s) · scope: `apps/api reports` · harmful: 0
+- features: gestao
+- evidence: A19 apps/api/src/modules/finance/finance-report.service.ts:226 (apps/api reports)
+- last seen: 2026-10-28T12:03:30Z
+
+### L-011 - Test a percentage threshold at exactly the threshold and one step below, not only well above it.
+- signal: `surviving_mutant` · recurrence: 1 feature(s) · scope: `thresholds` · harmful: 0
+- features: gestao
+- evidence: A12 apps/api/src/modules/usage/usage.service.ts:12 (thresholds)
+- last seen: 2026-10-28T12:03:31Z
+
+### L-012 - When the spec names a timeout value, assert the value or abort time, not just a simulated TimeoutError.
+- signal: `spec_precision_gap` · recurrence: 1 feature(s) · scope: `external calls` · harmful: 0
+- features: gestao
+- evidence: GES-37 gateway-config.service.ts:36; GES-132 holiday-import.ts:11 (external calls)
+- last seen: 2026-10-28T12:03:31Z
+
 ## Quarantined (failed when applied - ignore)
 
 A confirmed lesson that recurred alongside failure. Kept for the maintainer to review.

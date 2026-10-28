@@ -498,147 +498,147 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 
 | Requirement ID | Story | Phase | Task(s) | Status |
 | --- | --- | --- | --- | --- |
-| GES-01 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
-| GES-02 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
-| GES-03 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
-| GES-04 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
-| GES-05 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
-| GES-06 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
-| GES-07 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
-| GES-08 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
-| GES-09 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
-| GES-10 | P1: Revenue recognition engine | Tasks | T2 | Implementing |
-| GES-11 | P1: Expenses and manual receipts | Tasks | T15 | Implementing |
-| GES-12 | P1: Expenses and manual receipts | Tasks | T15 | Implementing |
-| GES-13 | P1: Expenses and manual receipts | Tasks | T15 | Implementing |
-| GES-14 | P1: Expenses and manual receipts | Tasks | T16 | Implementing |
-| GES-15 | P1: Expenses and manual receipts | Tasks | T16 | Implementing |
-| GES-16 | P1: Expenses and manual receipts | Tasks | T15 | Implementing |
-| GES-17 | P1: Expenses and manual receipts | Tasks | T4, T15 | Implementing |
-| GES-18 | P1: Expenses and manual receipts | Tasks | T15 | Implementing |
-| GES-19 | P1: Expenses and manual receipts | Tasks | T15 | Implementing |
-| GES-20 | P1: Expenses and manual receipts | Tasks | T17 | Implementing |
-| GES-21 | P1: Expenses and manual receipts | Tasks | T17 | Implementing |
-| GES-22 | P1: Financeiro overview | Tasks | T2, T18 | Implementing |
-| GES-23 | P1: Financeiro overview | Tasks | T2 | Implementing |
-| GES-24 | P1: Financeiro overview | Tasks | T2, T18 | Implementing |
-| GES-25 | P1: Financeiro overview | Tasks | T1, T18 | Implementing |
-| GES-26 | P1: Financeiro overview | Tasks | T29 | In Tasks |
-| GES-27 | P1: Financeiro overview | Tasks | T28, T29 | In Tasks |
-| GES-28 | P1: Financeiro overview | Tasks | T29 | In Tasks |
-| GES-29 | P1: DRE export | Tasks | T19 | Implementing |
-| GES-30 | P1: DRE export | Tasks | T2, T19 | Implementing |
-| GES-31 | P1: DRE export | Tasks | T2, T19 | Implementing |
-| GES-32 | P1: DRE export | Tasks | T2, T19 | Implementing |
-| GES-33 | P1: DRE export | Tasks | T19 | Implementing |
-| GES-34 | P1: DRE export | Tasks | T19 | Implementing |
-| GES-35 | P1: Payment gateway configuration | Tasks | T11 | Implementing |
-| GES-36 | P1: Payment gateway configuration | Tasks | T11 | Implementing |
-| GES-37 | P1: Payment gateway configuration | Tasks | T11 | Implementing |
-| GES-38 | P1: Payment gateway configuration | Tasks | T11 | Implementing |
-| GES-39 | P1: Payment gateway configuration | Tasks | T11 | Implementing |
-| GES-40 | P1: Payment gateway configuration | Tasks | T11 | Implementing |
-| GES-41 | P1: Payment gateway configuration | Tasks | T11, T31 | Implementing |
-| GES-42 | P1: Calendar feeds and .ics files | Tasks | T10, T32 | Implementing |
-| GES-43 | P1: Calendar feeds and .ics files | Tasks | T10 | Implementing |
-| GES-44 | P1: Calendar feeds and .ics files | Tasks | T10 | Implementing |
-| GES-45 | P1: Calendar feeds and .ics files | Tasks | T10, T41 | Implementing |
-| GES-46 | P1: Calendar feeds and .ics files | Tasks | T10 | Implementing |
-| GES-47 | P1: Calendar feeds and .ics files | Tasks | T8 | Implementing |
-| GES-48 | P1: Calendar feeds and .ics files | Tasks | T8, T10 | Implementing |
-| GES-49 | P1: Calendar feeds and .ics files | Tasks | T10, T45 | Implemented |
-| GES-50 | P1: Calendar feeds and .ics files | Tasks | T10, T41 | Implementing |
-| GES-51 | P1: Calendar feeds and .ics files | Tasks | T10 | Implementing |
-| GES-52 | P1: Calendar feeds and .ics files | Tasks | T10 | Implementing |
-| GES-53 | P1: MCP server | Tasks | T13 | Implementing |
-| GES-54 | P1: MCP server | Tasks | T13 | Implementing |
-| GES-55 | P1: MCP server | Tasks | T13 | Implementing |
-| GES-56 | P1: MCP server | Tasks | T13 | Implementing |
-| GES-57 | P1: MCP server | Tasks | T14 | Implementing |
-| GES-58 | P1: MCP server | Tasks | T14 | Implementing |
-| GES-59 | P1: MCP server | Tasks | T14 | Implementing |
-| GES-60 | P1: MCP server | Tasks | T13 | Implementing |
-| GES-61 | P1: MCP server | Tasks | T13, T14 | Implementing |
-| GES-62 | P1: MCP server | Tasks | T14 | Implementing |
-| GES-63 | P1: MCP server | Tasks | T13, T33 | Implementing |
-| GES-64 | P1: MCP server | Tasks | T13 | Implementing |
-| GES-65 | P1: Notification e-mails | Tasks | T12 | Implementing |
-| GES-66 | P1: Notification e-mails | Tasks | T12 | Implementing |
-| GES-67 | P1: Notification e-mails | Tasks | T5 | Implementing |
-| GES-68 | P1: Notification e-mails | Tasks | T5 | Implementing |
-| GES-69 | P1: Notification e-mails | Tasks | T43 | Implemented |
-| GES-70 | P1: Notification e-mails | Tasks | T12 | Implementing |
-| GES-71 | P1: Notification e-mails | Tasks | T12 | Implementing |
-| GES-72 | P1: Notification e-mails | Tasks | T9 | Implementing |
-| GES-73 | P1: Notification e-mails | Tasks | T7 | Implementing |
-| GES-74 | P1: Notification e-mails | Tasks | T12, T32 | Implementing |
-| GES-75 | P1: Web push | Tasks | T6 | Implementing |
-| GES-76 | P1: Web push | Tasks | T6 | Implementing |
-| GES-77 | P1: Web push | Tasks | T6 | Implementing |
-| GES-78 | P1: Web push | Tasks | T5 | Implementing |
-| GES-79 | P1: Web push | Tasks | T5 | Implementing |
-| GES-80 | P1: Web push | Tasks | T5 | Implementing |
-| GES-81 | P1: Web push | Tasks | T5 | Implementing |
-| GES-82 | P1: Web push | Tasks | T40 | In Tasks |
-| GES-83 | P1: Web push | Tasks | T40 | In Tasks |
-| GES-84 | P1: Extra services catalog and online add-on | Tasks | T20 | Implementing |
-| GES-85 | P1: Extra services catalog and online add-on | Tasks | T1, T20 | Implementing |
-| GES-86 | P1: Extra services catalog and online add-on | Tasks | T20 | Implementing |
-| GES-87 | P1: Extra services catalog and online add-on | Tasks | T38 | In Tasks |
-| GES-88 | P1: Extra services catalog and online add-on | Tasks | T20, T39 | Implementing |
-| GES-89 | P1: Extra services catalog and online add-on | Tasks | T20 | Implementing |
-| GES-90 | P1: Quote request funnel | Tasks | T21 | Implementing |
-| GES-91 | P1: Quote request funnel | Tasks | T21 | Implementing |
-| GES-92 | P1: Quote request funnel | Tasks | T21 | Implementing |
-| GES-93 | P1: Quote request funnel | Tasks | T21 | Implementing |
-| GES-94 | P1: Quote request funnel | Tasks | T21 | Implementing |
+| GES-01 | P1: Revenue recognition engine | Tasks | T2 | Verified |
+| GES-02 | P1: Revenue recognition engine | Tasks | T2 | Verified |
+| GES-03 | P1: Revenue recognition engine | Tasks | T2 | Verified |
+| GES-04 | P1: Revenue recognition engine | Tasks | T2 | Verified |
+| GES-05 | P1: Revenue recognition engine | Tasks | T2 | Verified |
+| GES-06 | P1: Revenue recognition engine | Tasks | T2 | Verified |
+| GES-07 | P1: Revenue recognition engine | Tasks | T2 | Verified |
+| GES-08 | P1: Revenue recognition engine | Tasks | T2 | Verified |
+| GES-09 | P1: Revenue recognition engine | Tasks | T2 | Verified |
+| GES-10 | P1: Revenue recognition engine | Tasks | T2 | Verified |
+| GES-11 | P1: Expenses and manual receipts | Tasks | T15 | Verified |
+| GES-12 | P1: Expenses and manual receipts | Tasks | T15 | Verified |
+| GES-13 | P1: Expenses and manual receipts | Tasks | T15 | Verified |
+| GES-14 | P1: Expenses and manual receipts | Tasks | T16 | Verified |
+| GES-15 | P1: Expenses and manual receipts | Tasks | T16 | Verified |
+| GES-16 | P1: Expenses and manual receipts | Tasks | T15 | Verified |
+| GES-17 | P1: Expenses and manual receipts | Tasks | T4, T15 | Verified |
+| GES-18 | P1: Expenses and manual receipts | Tasks | T15 | Verified |
+| GES-19 | P1: Expenses and manual receipts | Tasks | T15 | Verified |
+| GES-20 | P1: Expenses and manual receipts | Tasks | T17 | Verified |
+| GES-21 | P1: Expenses and manual receipts | Tasks | T17 | Verified |
+| GES-22 | P1: Financeiro overview | Tasks | T2, T18 | Verified |
+| GES-23 | P1: Financeiro overview | Tasks | T2 | Verified |
+| GES-24 | P1: Financeiro overview | Tasks | T2, T18 | Verified |
+| GES-25 | P1: Financeiro overview | Tasks | T1, T18 | Verified |
+| GES-26 | P1: Financeiro overview | Tasks | T29 | Verified |
+| GES-27 | P1: Financeiro overview | Tasks | T28, T29 | Verified |
+| GES-28 | P1: Financeiro overview | Tasks | T29 | Verified |
+| GES-29 | P1: DRE export | Tasks | T19 | Verified |
+| GES-30 | P1: DRE export | Tasks | T2, T19 | Verified |
+| GES-31 | P1: DRE export | Tasks | T2, T19 | Verified |
+| GES-32 | P1: DRE export | Tasks | T2, T19 | Verified |
+| GES-33 | P1: DRE export | Tasks | T19 | Verified |
+| GES-34 | P1: DRE export | Tasks | T19 | Verified |
+| GES-35 | P1: Payment gateway configuration | Tasks | T11 | Verified |
+| GES-36 | P1: Payment gateway configuration | Tasks | T11 | Verified |
+| GES-37 | P1: Payment gateway configuration | Tasks | T11 | Verified |
+| GES-38 | P1: Payment gateway configuration | Tasks | T11 | Verified |
+| GES-39 | P1: Payment gateway configuration | Tasks | T11 | Verified |
+| GES-40 | P1: Payment gateway configuration | Tasks | T11 | Verified |
+| GES-41 | P1: Payment gateway configuration | Tasks | T11, T31 | Verified |
+| GES-42 | P1: Calendar feeds and .ics files | Tasks | T10, T32 | Verified |
+| GES-43 | P1: Calendar feeds and .ics files | Tasks | T10 | Verified |
+| GES-44 | P1: Calendar feeds and .ics files | Tasks | T10 | Verified |
+| GES-45 | P1: Calendar feeds and .ics files | Tasks | T10, T41 | Verified |
+| GES-46 | P1: Calendar feeds and .ics files | Tasks | T10 | Verified |
+| GES-47 | P1: Calendar feeds and .ics files | Tasks | T8 | Verified |
+| GES-48 | P1: Calendar feeds and .ics files | Tasks | T8, T10 | Verified |
+| GES-49 | P1: Calendar feeds and .ics files | Tasks | T10, T45 | Verified |
+| GES-50 | P1: Calendar feeds and .ics files | Tasks | T10, T41 | Verified |
+| GES-51 | P1: Calendar feeds and .ics files | Tasks | T10 | Verified |
+| GES-52 | P1: Calendar feeds and .ics files | Tasks | T10 | Verified |
+| GES-53 | P1: MCP server | Tasks | T13 | Verified |
+| GES-54 | P1: MCP server | Tasks | T13 | Verified |
+| GES-55 | P1: MCP server | Tasks | T13 | Verified |
+| GES-56 | P1: MCP server | Tasks | T13 | Verified |
+| GES-57 | P1: MCP server | Tasks | T14 | Verified |
+| GES-58 | P1: MCP server | Tasks | T14 | Verified |
+| GES-59 | P1: MCP server | Tasks | T14 | Verified |
+| GES-60 | P1: MCP server | Tasks | T13 | Verified |
+| GES-61 | P1: MCP server | Tasks | T13, T14 | Verified |
+| GES-62 | P1: MCP server | Tasks | T14 | Verified |
+| GES-63 | P1: MCP server | Tasks | T13, T33 | Verified |
+| GES-64 | P1: MCP server | Tasks | T13 | Verified |
+| GES-65 | P1: Notification e-mails | Tasks | T12 | Verified |
+| GES-66 | P1: Notification e-mails | Tasks | T12 | Verified |
+| GES-67 | P1: Notification e-mails | Tasks | T5 | Verified |
+| GES-68 | P1: Notification e-mails | Tasks | T5 | Verified |
+| GES-69 | P1: Notification e-mails | Tasks | T43 | Verified |
+| GES-70 | P1: Notification e-mails | Tasks | T12 | Verified |
+| GES-71 | P1: Notification e-mails | Tasks | T12 | Verified |
+| GES-72 | P1: Notification e-mails | Tasks | T9 | Verified |
+| GES-73 | P1: Notification e-mails | Tasks | T7 | Verified |
+| GES-74 | P1: Notification e-mails | Tasks | T12, T32 | Verified |
+| GES-75 | P1: Web push | Tasks | T6 | Verified |
+| GES-76 | P1: Web push | Tasks | T6 | Verified |
+| GES-77 | P1: Web push | Tasks | T6 | Verified |
+| GES-78 | P1: Web push | Tasks | T5 | Verified |
+| GES-79 | P1: Web push | Tasks | T5 | Verified |
+| GES-80 | P1: Web push | Tasks | T5 | Verified |
+| GES-81 | P1: Web push | Tasks | T5 | Verified |
+| GES-82 | P1: Web push | Tasks | T40 | Verified |
+| GES-83 | P1: Web push | Tasks | T40 | Verified |
+| GES-84 | P1: Extra services catalog and online add-on | Tasks | T20 | Verified |
+| GES-85 | P1: Extra services catalog and online add-on | Tasks | T1, T20 | Verified |
+| GES-86 | P1: Extra services catalog and online add-on | Tasks | T20 | Verified |
+| GES-87 | P1: Extra services catalog and online add-on | Tasks | T38 | Verified |
+| GES-88 | P1: Extra services catalog and online add-on | Tasks | T20, T39 | Verified |
+| GES-89 | P1: Extra services catalog and online add-on | Tasks | T20 | Verified |
+| GES-90 | P1: Quote request funnel | Tasks | T21 | Verified |
+| GES-91 | P1: Quote request funnel | Tasks | T21 | Verified |
+| GES-92 | P1: Quote request funnel | Tasks | T21 | Verified |
+| GES-93 | P1: Quote request funnel | Tasks | T21 | Verified |
+| GES-94 | P1: Quote request funnel | Tasks | T21 | Verified |
 | GES-95 | P1: Quote request funnel | Tasks | T21 | Implementing |
-| GES-96 | P1: Quote request funnel | Tasks | T21, T34 | Implementing |
-| GES-97 | P1: Quote request funnel | Tasks | T21, T38 | Implementing |
-| GES-98 | P1: Quote request funnel | Tasks | T38 | In Tasks |
-| GES-99 | P1: Clientes | Tasks | T23, T35 | Implementing |
-| GES-100 | P1: Clientes | Tasks | T23, T35 | Implementing |
-| GES-101 | P1: Clientes | Tasks | T23 | Implementing |
-| GES-102 | P1: Clientes | Tasks | T23 | Implementing |
-| GES-103 | P1: Salas admin | Tasks | T22, T36 | Implementing |
-| GES-104 | P1: Salas admin | Tasks | T22 | Implementing |
-| GES-105 | P1: Salas admin | Tasks | T22 | Implementing |
-| GES-106 | P1: Salas admin | Tasks | T4, T22 | Implementing |
-| GES-107 | P1: Salas admin | Tasks | T22 | Implementing |
-| GES-108 | P1: Salas admin | Tasks | T1, T22, T36 | Implementing |
-| GES-109 | P1: Salas admin | Tasks | T36 | In Tasks |
-| GES-110 | P1: Usuários and audit log | Tasks | T24 | Implementing |
-| GES-111 | P1: Usuários and audit log | Tasks | T24 | Implementing |
-| GES-112 | P1: Usuários and audit log | Tasks | T24 | Implementing |
-| GES-113 | P1: Usuários and audit log | Tasks | T24 | Implementing |
-| GES-114 | P1: Usuários and audit log | Tasks | T24 | Implementing |
-| GES-115 | P1: Usuários and audit log | Tasks | T24 | Implementing |
-| GES-116 | P1: Usuários and audit log | Tasks | T37 | In Tasks |
-| GES-117 | P1: Reception restrictions end-to-end | Tasks | T44 | Implemented |
-| GES-118 | P1: Reception restrictions end-to-end | Tasks | T44 | Implemented |
-| GES-119 | P1: Reception restrictions end-to-end | Tasks | T44 | Implemented |
-| GES-120 | P1: Reception restrictions end-to-end | Tasks | T13, T44 | Implemented |
-| GES-121 | P1: LGPD self-service | Tasks | T25 | Implementing |
-| GES-122 | P1: LGPD self-service | Tasks | T25 | Implementing |
-| GES-123 | P1: LGPD self-service | Tasks | T25 | Implementing |
-| GES-124 | P1: LGPD self-service | Tasks | T25 | Implementing |
-| GES-125 | P1: LGPD self-service | Tasks | T25 | Implementing |
-| GES-126 | P1: LGPD self-service | Tasks | T25 | Implementing |
-| GES-127 | P1: LGPD self-service | Tasks | T25 | Implementing |
-| GES-128 | P1: LGPD self-service | Tasks | T41 | In Tasks |
-| GES-129 | P1: LGPD self-service | Tasks | T9 | Implementing |
-| GES-130 | P1: Holiday jobs | Tasks | T26 | Implementing |
-| GES-131 | P1: Holiday jobs | Tasks | T26 | Implementing |
-| GES-132 | P1: Holiday jobs | Tasks | T26 | Implementing |
-| GES-133 | P1: Analytics funnel | Tasks | T42 | In Tasks |
-| GES-134 | P1: Analytics funnel | Tasks | T42 | In Tasks |
-| GES-135 | P1: Analytics funnel | Tasks | T42 | In Tasks |
-| GES-136 | P1: Analytics funnel | Tasks | T42 | In Tasks |
-| GES-137 | P2: Free-tier usage panel | Tasks | T27, T33 | Implementing |
+| GES-96 | P1: Quote request funnel | Tasks | T21, T34 | Verified |
+| GES-97 | P1: Quote request funnel | Tasks | T21, T38 | Verified |
+| GES-98 | P1: Quote request funnel | Tasks | T38 | Verified |
+| GES-99 | P1: Clientes | Tasks | T23, T35 | Verified |
+| GES-100 | P1: Clientes | Tasks | T23, T35 | Verified |
+| GES-101 | P1: Clientes | Tasks | T23 | Verified |
+| GES-102 | P1: Clientes | Tasks | T23 | Verified |
+| GES-103 | P1: Salas admin | Tasks | T22, T36 | Verified |
+| GES-104 | P1: Salas admin | Tasks | T22 | Verified |
+| GES-105 | P1: Salas admin | Tasks | T22 | Verified |
+| GES-106 | P1: Salas admin | Tasks | T4, T22 | Verified |
+| GES-107 | P1: Salas admin | Tasks | T22 | Verified |
+| GES-108 | P1: Salas admin | Tasks | T1, T22, T36 | Verified |
+| GES-109 | P1: Salas admin | Tasks | T36 | Verified |
+| GES-110 | P1: Usuários and audit log | Tasks | T24 | Verified |
+| GES-111 | P1: Usuários and audit log | Tasks | T24 | Verified |
+| GES-112 | P1: Usuários and audit log | Tasks | T24 | Verified |
+| GES-113 | P1: Usuários and audit log | Tasks | T24 | Verified |
+| GES-114 | P1: Usuários and audit log | Tasks | T24 | Verified |
+| GES-115 | P1: Usuários and audit log | Tasks | T24 | Verified |
+| GES-116 | P1: Usuários and audit log | Tasks | T37 | Verified |
+| GES-117 | P1: Reception restrictions end-to-end | Tasks | T44 | Verified |
+| GES-118 | P1: Reception restrictions end-to-end | Tasks | T44 | Verified |
+| GES-119 | P1: Reception restrictions end-to-end | Tasks | T44 | Verified |
+| GES-120 | P1: Reception restrictions end-to-end | Tasks | T13, T44 | Verified |
+| GES-121 | P1: LGPD self-service | Tasks | T25 | Verified |
+| GES-122 | P1: LGPD self-service | Tasks | T25 | Verified |
+| GES-123 | P1: LGPD self-service | Tasks | T25 | Verified |
+| GES-124 | P1: LGPD self-service | Tasks | T25 | Verified |
+| GES-125 | P1: LGPD self-service | Tasks | T25 | Verified |
+| GES-126 | P1: LGPD self-service | Tasks | T25 | Verified |
+| GES-127 | P1: LGPD self-service | Tasks | T25 | Verified |
+| GES-128 | P1: LGPD self-service | Tasks | T41 | Verified |
+| GES-129 | P1: LGPD self-service | Tasks | T9 | Verified |
+| GES-130 | P1: Holiday jobs | Tasks | T26 | Verified |
+| GES-131 | P1: Holiday jobs | Tasks | T26 | Verified |
+| GES-132 | P1: Holiday jobs | Tasks | T26 | Verified |
+| GES-133 | P1: Analytics funnel | Tasks | T42 | Verified |
+| GES-134 | P1: Analytics funnel | Tasks | T42 | Verified |
+| GES-135 | P1: Analytics funnel | Tasks | T42 | Verified |
+| GES-136 | P1: Analytics funnel | Tasks | T42 | Verified |
+| GES-137 | P2: Free-tier usage panel | Tasks | T27, T33 | Verified |
 | GES-138 | P2: Free-tier usage panel | Tasks | T27, T33 | Implementing |
-| GES-139 | P2: Free-tier usage panel | Tasks | T27 | Implementing |
-| GES-140 | P1: MVP hardening and production release | Tasks | T45 | Implemented |
-| GES-141 | P1: MVP hardening and production release | Tasks | T46 | Implemented |
+| GES-139 | P2: Free-tier usage panel | Tasks | T27 | Verified |
+| GES-140 | P1: MVP hardening and production release | Tasks | T45 | Verified |
+| GES-141 | P1: MVP hardening and production release | Tasks | T46 | Verified |
 | GES-142 | P1: MVP hardening and production release | Tasks | T47 | In Tasks |
 | GES-143 | P1: MVP hardening and production release | Tasks | T48 | In Tasks |
 | GES-144 | P1: MVP hardening and production release | Tasks | T49, T50 | In Tasks |
