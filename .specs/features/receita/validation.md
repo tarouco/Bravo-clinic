@@ -433,3 +433,260 @@ Not changed by the verifier (the orchestrator flips statuses after a PASS). Reco
 **What works**: every PRD worked example (debit 120/78/185/84/152, conversion 360 → 384, compensation 40 min and R$ 205,33, fixed price 22 × R$ 280,00, coupon 2190, larger-discount 14000 with deposit 7000, grace end 2026-12-09) is asserted verbatim in core and at least one API test; concurrency ACs (package debit, credits, last coupon use) run parallel transactions; all four jobs are re-run-safe and 401 without a trigger.
 
 **Next steps**: Route F1 (re-verify with `8261082` and sweep the residual wall-clock reads), F2, F3 and F4 to an implementer as test-strengthening tasks; F5 is optional polish. Then re-verify: full API suite, and mutants A4, A7, A8 must be killed.
+
+---
+
+# Iteration 2
+
+## Validation verdict (iteration 2): PASS
+
+**Date**: 2026-10-27 (iteration 2 of 3), runs between 19:05 and 23:20 BRT
+**Commit verified**: `27b56bc` (`main`: receita + iteration-1 fixes). Not moved mid-run.
+**Fix commits re-checked**: `8261082` (decorator clock, landed before iteration 1 finished) and `git log 9abb7c9..27b56bc`: `b0fdc11` (clock through the seams), `85ea193` (F2), `1cc43ca` (F3), `cbc973b` (F4), `a821aca` (F5 doc), `5968167` (F5 tests).
+**Verifier**: a new independent sub-agent (author ≠ verifier; it wrote none of the receita code, tests or fixes), worktree branch `worktree-agent-a39fdb2740500c19d` at `27b56bc`.
+**Test DB**: a fresh database `receita_verify_it2`, created for this run on the Neon verify branch (`DATABASE_URL_VERIFY`). Its host differs from production `DATABASE_URL` and from the dev `DATABASE_URL_TEST`, which another worker uses. Only the untracked worktree `.env` pointed `DATABASE_URL_TEST` at it. Dropped at the end of the run (see Cleanup).
+
+Same path prefixes as iteration 1: `api/` = `apps/api/src/`, `web/` = `apps/web/src/`, `core/` = `packages/core/src/`, `e2e/` = `apps/web/e2e/`.
+
+---
+
+## Findings F1–F5 re-checked
+
+### F1 (wall clock in receita decisions): ✅ Closed
+
+- **Grep, receita modules and jobs.** `grep -rnE "new Date\(\)|Date\.now\(\)"` over `api/modules/{revenue,subscriptions,packages,credits,coupons,slot-discounts,extra-hours}`, `api/jobs`, `api/routes/app/{subscriptions,purchases}.ts` and `api/routes/admin` (tests excluded) leaves two hits, and neither is a business decision:
+  - `api/jobs/cli.ts:20`: the CLI's default clock, which is the clock source itself.
+  - `api/jobs/runner.ts:73`: `job_runs.finished_at` metadata.
+- **Grep, SQL clocks.** Receita has no SQL `now()` or `current_date`. Across the whole API source, the remaining wall-clock reads are nucleo's injectable defaults (`app.ts:23`, `auth/session.ts`, `calendar.repo.ts:229`, `lib/ics.ts:134`) and `updatedAt` stamps. Every receita caller of `loadDayContexts` and `buildIcs` passes `now` (`subscriptions/{cancel,period,purchase,quote,switch}.service.ts`, `slot-discounts.service.ts:133`, `occurrences.service.ts:184`).
+- **Seam callers.** Every caller of a seam that `b0fdc11` or `8261082` changed in `api/extensions/registry.ts:70-131` passes a request or job clock:
+
+  | Seam | Callers and the clock they pass |
+  | ---- | ------------------------------- |
+  | `CheckoutStep.onConfirmed` | `booking/create-booking.service.ts:400` (`now = deps.now()`, `:202`); `payments/payment-effects.service.ts:169` and `booking/staff-booking.service.ts:130` (`deps.now()`) |
+  | `CheckoutStep.release` | `booking/cancel.service.ts:303` (`deps.now()`, `:195`); `booking/expire-booking.ts:52`, fed by `jobs/expire-holds.ts:57` (job `now`) and `booking/create-booking.service.ts:185` (`args.now`); `jobs/charge-balances.ts:79` (job `now`) |
+  | `PaymentModeHandler.cancel` | `booking/cancel.service.ts:250` |
+  | `PaymentModeHandler.reschedule` | `booking/reschedule.service.ts:717` (`deps.now()`, `:696`) |
+  | `CreditPort.grant` | `cancel.service.ts:261` and `reschedule.service.ts:830` (`now`) |
+  | `ClosedDayCompensationPort.apply` | `calendar/exceptions.service.ts:233`, called with `now()` from `routes/admin/calendar-exceptions.ts:99` |
+  | `AvailabilityDecorator.decorate` | `availability/availability.service.ts:195`, `:315` |
+
+  The implementations use what they receive (`api/modules/revenue/ports.ts:24-41`, `:64`, `:118-121`, `:128-131`; `api/modules/revenue/steps.ts:172`, `:178-186`, `:314`, `:326-345`). `tsc` enforces the new parameters, because they are required and not optional.
+- **The iteration-1 failure no longer reproduces.** `api/modules/revenue/steps.int.test.ts:435` (REC-136) passed in the full API run at about 19:30 BRT on 2026-10-27, its own pinned date `TUE` (`:51`), after 14:00. Iteration 1 failed at exactly that point.
+- **Time-travel run (fix-task "Done when").** A temporary vitest config, never committed and kept under `node_modules/.cache/verify/tt`, added a setup file. That file fakes only `Date` to `2026-11-10T15:00Z` (`vi.useFakeTimers({ toFake: ['Date'] })`), so any wall-clock read sees a date long after the tests' injected `NOW` of 2026-10-20. Under it, `steps.int.test.ts`, `packages/package-payment.service.int.test.ts`, `credits/credits.service.int.test.ts` and `subscriptions/compensation.service.int.test.ts` passed 52/52. The fake clock is effective: mutant N1 (below) fails under it.
+- The test dates were not moved off the real calendar, as iteration 1 had suggested. That is no longer needed, because nothing in the paths these tests cover reads the system clock.
+
+### F2 (REC-68): ✅ Closed
+
+`api/modules/packages/package-payment.service.int.test.ts:198` adds an `it.each` over cancelled, switched and ended subscriptions, each with a closed period and a 300-minute lot:
+- `quotePackageOption` returns `{ debitMinutes: 78, sufficient: true, fromPackageMinutes: 0, fromExtraMinutes: 78 }`.
+- `debitForBooking` leaves the lot at 222.
+
+The suspended case stays at `:184`. Mutant A7 is now killed (3 failed: `expected null to match object { debitMinutes: 78 }`).
+
+### F3 (REC-73 pending renewal): ✅ Closed
+
+`api/modules/subscriptions/switch.service.int.test.ts:196` gives the old subscription a seq 2 `awaiting_payment` renewal (`createRenewalPeriod`) with a `pending` charge. After approval:
+- the old subscription is `switched`;
+- the periods are `[[1,'closed'],[2,'cancelled']]`;
+- the renewal charge is `cancelled`.
+
+Mutant A4 is now killed.
+
+### F4 (REC-108 race): ✅ Closed
+
+`api/modules/credits/credits.service.int.test.ts:162` makes the two uses overlap:
+- Use A keeps its transaction open after its writes.
+- Use B starts after A, and A commits only after `untilALockIsAwaited()` (`:45`) sees a session waiting on a lock in `pg_stat_activity`.
+- The test asserts `results.map(r => r.usedCents)` = `[8000, 2000]` and every lot at 0.
+
+Mutant A8 is now killed: B's stale read drives a lot below zero and trips `credit_lots_remaining_check`, so the test fails. Control N6 shows that the barrier is what makes the test discriminating.
+
+### F5 (doc and precision): ✅ Closed
+
+- `design.md` "Lane A notes" now lists the open-holiday SPEC_DEVIATION (`a821aca`; code `api/modules/subscriptions/quote.service.ts:166`).
+- `api/routes/admin/subscriptions.int.test.ts:153` asserts `res.error?.code === 'FORBIDDEN'` (REC-45, REC-153).
+- REC-09 `admin_only`: `api/jobs/renewals.int.test.ts:212` (seq 2 `awaiting_payment`, one charge).
+- REC-35 `no_show`: `package-payment.service.int.test.ts:336`, through the real `noShows` job: booking `no_show`, period balance 0, lot 262, no `refund` entry.
+
+---
+
+## Spec-Anchored Acceptance Criteria (iteration 2)
+
+### ACs that iteration 1 marked PARTIAL or FAIL
+
+| AC | Spec-defined outcome | Evidence at `27b56bc` | Iteration 1 | Iteration 2 |
+| -- | -------------------- | --------------------- | ----------- | ----------- |
+| REC-68 | unexpired lots stay usable after cancel, switch, suspend or end | `package-payment.service.int.test.ts:198` (`it.each` cancelled/switched/ended: `fromExtraMinutes: 78`, lot 222), `:184` (suspended); sensor A7 killed | ⚠️ PARTIAL | ✅ PASS |
+| REC-73 | one tx: old `switched` + `switched_to`, `conversion_out`, period closed, **pending renewal cancelled**, new active, `period_grant` + `conversion_in` | `switch.service.int.test.ts:162` (all but the renewal), `:196` (period 2 `cancelled`, charge `cancelled`); sensor A4 killed | ⚠️ PARTIAL | ✅ PASS |
+| REC-108 | concurrent uses never exceed the available amount; no lot negative | `credits.service.int.test.ts:162` (forced overlap, `[8000, 2000]`, lots 0); sensor A8 killed | ⚠️ PARTIAL | ✅ PASS |
+| REC-136 | available cells inside an active discount carry `discountPercent`; web "−{p}%" | `steps.int.test.ts:435` (`[10, 10]` at 14:00 and 15:30, `undefined` outside); green in the full run after 14:00 on its own date and in the time-travel run; e2e `receita-discounts.spec.ts:48` (both projects); sensor N1 killed | ❌ FAIL | ✅ PASS |
+
+### Rows that rested on a code path in iteration 1
+
+| AC | Evidence now | Result |
+| -- | ------------ | ------ |
+| REC-09 (`admin_only` keeps renewing) | `renewals.int.test.ts:212`, plus inactive at `:202` | ✅ PASS (test) |
+| REC-35 (`no_show` returns nothing) | `package-payment.service.int.test.ts:336`, plus tenant late at `:361`; sensor A6 killed | ✅ PASS (test) |
+| REC-45 / REC-153 (reception 403 `FORBIDDEN`) | `admin/subscriptions.int.test.ts:126`, `:153` | ✅ PASS (test) |
+| REC-160 | unchanged: receita emits `new_subscription` / `renewal_failed` (`charge-handlers.int.test.ts:157`, `:330`); honoring `notifications.events` is the nucleo/gestao notification port | ✅ PASS (partly code path, as accepted in iteration 1) |
+
+### Spot-check of ACs whose code the seam change touched
+
+All rows below passed in the full API run (`27b56bc`, real clock). The rows from the four files of the time-travel run also passed under the fake clock.
+
+| Area | AC | Evidence (unchanged assertions, re-run) | Result |
+| ---- | -- | --------------------------------------- | ------ |
+| Credit grant | REC-105 | `credits.service.int.test.ts:66` (expiry = now + `credits.validity_days`, `grant` entry) | ✅ |
+| Credit grant | REC-110 | `steps.int.test.ts:352` (cheaper reschedule → `reschedule_difference` lot 6300, `creditCents` 6300) | ✅ |
+| Credit grant | REC-111 | `steps.int.test.ts:333` (clinic cancel → `clinic_cancellation` lot) | ✅ |
+| Credit release | REC-109 | `steps.int.test.ts:316` (tenant cancel returns the credit share through `creditStep.release`); `credits.service.int.test.ts:214`, `:227` | ✅ |
+| Credit release | REC-107 | `steps.int.test.ts:298` (`creditStep.persist` with `ctx.now`, one internal charge) | ✅ |
+| Closed-day compensation | REC-98..REC-100, REC-104 | `compensation.service.int.test.ts:108`, `:159`, `:203`; route `routes/admin/calendar-exceptions.int.test.ts:357` (port `apply` called with the new ids) | ✅ |
+| Closed-day compensation | REC-101..REC-103 | `compensation.service.int.test.ts:178`, `:214`, `:245`; sensor A5 killed | ✅ |
+| Reschedule | REC-37 | `steps.int.test.ts:264` (through `packageModeHandler.reschedule`); `package-payment.service.int.test.ts:443`, `:457` | ✅ |
+| Reschedule | REC-95 | `steps.int.test.ts:375` | ✅ |
+| Cancel | REC-34 | `steps.int.test.ts:240` (through `packageModeHandler.cancel`); `package-payment.service.int.test.ts:317` | ✅ |
+| Cancel | REC-35 | see above | ✅ |
+| Cancel | REC-36 | `package-payment.service.int.test.ts:375` | ✅ |
+| Cancel | REC-38 | `package-payment.service.int.test.ts:406` | ✅ |
+| Cancel | REC-94 | `steps.int.test.ts:375` | ✅ |
+| Coupon and slot-discount steps | REC-124, REC-138 | `steps.int.test.ts:112` (reserved → consumed, slot part consumed by the booking), `:159` (`expireHoldingBooking(…, NOW)` → `released`) | ✅ |
+
+### Updated per-AC summary
+
+| Result | Iteration 1 | Iteration 2 |
+| ------ | ----------- | ----------- |
+| ✅ PASS with test evidence | 153 | 160 |
+| ✅ PASS, partly on a code path | 4 (REC-09, REC-35, REC-45, REC-160) | 1 (REC-160) |
+| ⚠️ PARTIAL | 3 (REC-68, REC-73, REC-108) | 0 |
+| ❌ FAIL | 1 (REC-136) | 0 |
+| **Total** | 161 | **161 PASS / 161** |
+
+The other 153 ACs were not re-derived one by one. Their test files ran green in the full suite at `27b56bc`. The fix commits changed only the seam signatures and the tests listed above, and the spot-check covers every AC on those seams.
+
+---
+
+## Discrimination Sensor (iteration 2)
+
+Method:
+- The mutants were applied by a script outside git (scratchpad `sensor.cjs` + `mutants.json`) that requires exactly one textual match.
+- **Core mutants** ran in a scratch copy, `node_modules/.cache/verify/packages/core`. Afterwards that copy's `src/` was `diff -r`-identical to `packages/core/src`.
+- **API mutants** ran in place on `receita_verify_it2` after the full API suite had finished, strictly one at a time. Each file was restored with `git checkout -- <file>`, and `git status --porcelain` was recorded after every mutant. It always held only the then-present temporary e2e config.
+- `[tt]` marks a run under the time-travel clock (system `Date` = 2026-11-10T15:00Z, injected test clocks unchanged).
+
+**Process note.** A first API mutant batch was aborted: its revert path failed, and stopping the batch did not kill its bash loop. Two loops then ran concurrently on the database, which produced deadlocks and invalid results. Every stray process of this worktree was killed, the tree was restored with `git checkout -- apps/api/src`, and A2–A9 and N1–N7 were re-run alone. Only those clean runs are reported. A1 and the time-travel baseline ran before the overlap and are valid.
+
+### The 16 iteration-1 mutants, re-applied
+
+| # | File:line | Mutation | Tests run | Iteration 1 | Iteration 2 |
+| - | --------- | -------- | --------- | ----------- | ----------- |
+| C1 | `core/packages/debit.ts:46` | single ceiling → floor | `packages/debit.test.ts` | Killed | ✅ Killed (3: 77≠78, 184≠185, 151≠152) |
+| C2 | `core/pricing/discounts.ts:67` | tie goes to coupon (`>` → `>=`) | `pricing/discounts.test.ts` | Killed | ✅ Killed (tie keeps slot) |
+| C3 | `core/pricing/discounts.ts:30` | fixed coupon not capped | `pricing/discounts.test.ts` | Killed | ✅ Killed (50000≠16000) |
+| C4 | `core/packages/conversion.ts:15` | half-up → floor | `packages/conversion.test.ts` | Killed | ✅ Killed (0≠1) |
+| C5 | `core/packages/compensation.ts:31` | half-up → floor | `packages/conversion.test.ts` | Killed | ✅ Killed (0≠1) |
+| C6 | `core/packages/allocation.ts:49` | booking start ignored for lot expiry | `packages/allocation.test.ts` | Killed | ✅ Killed |
+| C7 | `core/packages/allocation.ts:108` | refund returns credit first | `packages/allocation.test.ts` | Killed | ✅ Killed (cash 0≠8000) |
+| A1 | `api/modules/coupons/coupons.service.ts:341` | `uses_count < max_uses` → `<=` | `coupons.service.int.test.ts` | Killed | ✅ Killed (`:34` race no longer 409 `COUPON_EXHAUSTED`) |
+| A2 | `api/modules/subscriptions/cancel.service.ts:294` | grace end one day late | `period-rollover.int.test.ts`, `cancel.service.int.test.ts` | Killed | ✅ Killed (3 failed: ended 0≠1) |
+| A3 | `api/modules/subscriptions/cancel.service.ts:246` | suspension one day after `starts_on` | same two files | Killed | ✅ Killed (4 failed: suspended 0≠1) |
+| A4 | `api/modules/subscriptions/switch.service.ts:484` | `cancelFuturePeriods` removed | `switch.service.int.test.ts` | **Survived** | ✅ Killed (`:196`: `[2,'awaiting_payment']` ≠ `[2,'cancelled']`) |
+| A5 | `api/modules/subscriptions/compensation.service.ts:85` | hour packages compensated for a one-room closure | `compensation.service.int.test.ts` | Killed | ✅ Killed (2 failed) |
+| A6 | `api/modules/packages/package-payment.service.ts:386` | late tenant cancel returns minutes | `package-payment.service.int.test.ts` | Killed | ✅ Killed (78≠0, 0≠78) |
+| A7 | `api/modules/packages/package-payment.service.ts:160` | lots unusable without a live hour package | `package-payment.service.int.test.ts` | **Survived** | ✅ Killed (3 failed, `:198` × 3) |
+| A8 | `api/modules/credits/credits.service.ts:120` | credit lots read without `FOR UPDATE` | `credits.service.int.test.ts` | **Survived** | ✅ Killed (`:162`, `credit_lots_remaining_check` on the stale update) |
+| A9 | `api/modules/subscriptions/period.service.ts:270` | renewal priced from the previous period | `period.service.int.test.ts` | Killed | ✅ Killed |
+
+**16/16 killed** (core 7/7, API 9/9). All three iteration-1 survivors are now killed.
+
+### New mutants on the changed seam code
+
+| # | File:line | Mutation | Tests run | Result |
+| - | --------- | -------- | --------- | ------ |
+| N1 | `api/modules/revenue/ports.ts:128` | decorator reads `new Date()` again (the `8261082` regression) | `steps.int.test.ts`, real clock and `[tt]` | ✅ Killed both times (`:435`: `[undefined, undefined]` ≠ `[10, 10]`) |
+| N2 | `api/modules/payments/payment-effects.service.ts:169` | `onConfirmed(…, new Date())` instead of `deps.now()` | `steps.int.test.ts` `[tt]` | Survived: **equivalent**. In `onConfirmed` the clock only stamps `coupon_uses.consumed_at` and the `created_at` of split slot-discount parts (`slot-discounts.service.ts:284`); no AC outcome depends on it |
+| N3 | `api/modules/booking/cancel.service.ts:250` | `handler.cancel(…, new Date())` | `steps.int.test.ts`, `routes/app/cancel.int.test.ts` `[tt]` | Survived (F6): changes only the lot-expiry test and the new `manual` lot's `expires_at` in `returnForCancellation`; no route-level test pins either against the request clock |
+| N4 | `api/modules/booking/create-booking.service.ts:400` | `onConfirmed(…, new Date())` | `steps.int.test.ts` `[tt]` | Survived: **equivalent** (timestamps only, as N2) |
+| N5 | `api/modules/packages/package-payment.service.ts:107` | active period read without `FOR UPDATE` during the debit | `package-payment.service.int.test.ts`, `minutes.service.int.test.ts` | Survived: **equivalent for REC-32**. `debitPeriod` → `addPeriodEntry` locks the period again and re-checks the balance (`packages/minutes.service.ts:70-73`), so the race still ends with one winner, one 422 and no negative balance |
+| N6 | `api/modules/credits/credits.service.int.test.ts:185` (test) + A8 | lock-wait barrier `await untilALockIsAwaited()` dropped, with `FOR UPDATE` removed | `credits.service.int.test.ts` | Control: A8 **survives** without the barrier (8/8 pass). The barrier is load-bearing, and with it A8 is killed. With the barrier dropped on the real code (N6c), 8/8 pass |
+| N7 | `api/modules/revenue/ports.ts:64` | `CreditPort.grant` uses `new Date()` instead of `input.now` | `steps.int.test.ts` `[tt]` | Survived (F6): only the granted lot's `expires_at` moves; `steps.int.test.ts:352` asserts source and amount, not expiry |
+
+**Sensor result**: the 16 iteration-1 mutants are 16/16 killed. Of the 6 new product mutants, 1 is killed (N1), 3 are equivalent (N2, N4, N5) and 2 survive (N3, N7), with N6 as a control. N3 and N7 do not change behavior in production. In a request path `deps.now` is `() => new Date()` (`api/app.ts:23`), so the seam clock and the wall clock differ by milliseconds and no spec-defined outcome changes. They are therefore recorded as a Minor test-hardening finding (F6) and do not block the feature. **Sensor: PASS.**
+
+---
+
+## Gate Check (iteration 2)
+
+Every command ran in the verifier worktree, with `TEMP`, `TMP` and `npm_config_cache` under `node_modules/.cache`.
+
+| Gate | Command | Result |
+| ---- | ------- | ------ |
+| Typecheck | `npm run typecheck` | ✅ exit 0 (web, api, core) |
+| Lint | `npm run lint` | ✅ exit 0 |
+| Core | `npm test -w packages/core` | ✅ 32 files, 1191/1191 passed |
+| Web | `npm test -w apps/web -- --maxWorkers=2` | ✅ 138 files, 1191/1191 passed (336 s) |
+| API | `npm test -w apps/api` (full suite on `receita_verify_it2`, 19:05–20:22 BRT) | ✅ 97 files, **1041/1041 passed** (4638 s); no `ENOTFOUND` blips, no re-runs needed |
+| E2E | Playwright suite of `apps/web/e2e`, nucleo + receita (7 tests × 2 projects) | ✅ **14/14 passed** (14.1 min): `admin.spec.ts:31`, `booking.spec.ts:52`, `:160`, `:214`, `receita-discounts.spec.ts:48`, `receita-fixed-and-renewals.spec.ts:69`, `receita-hour-package.spec.ts:26`, desktop and mobile. Nucleo availability p95: 286 ms desktop (median 282), 287 ms mobile (median 282), both under 300 ms this run |
+
+The test counts grew from iteration 1 (API 951 → 1041 over 90 → 97 files) because `main` also carries other work and the fix commits added 7 receita tests. No tests were skipped and none were removed. The 7 new receita tests are `package-payment.service.int.test.ts:198` × 3 and `:336`, `switch.service.int.test.ts:196`, `renewals.int.test.ts:212`, and the rewritten `credits.service.int.test.ts:162`.
+
+**E2E setup**: same as iteration 1.
+- The verifier ran `npx vite build`, then served `npx vite preview --host 127.0.0.1 --port 5173 --strictPort` itself. The page title "Bravô Clinic – Salas Inteligentes | Praia Brava, Itajaí" was checked on 127.0.0.1:5173, because Docker holds `[::]:5173` and wslrelay `[::1]:5173`.
+- A temporary, uncommitted `apps/web/playwright.verify.config.ts` spread `playwright.config.ts`. It kept only the API seed web server (`apps/api/test/e2e-seed.ts`, which resets `receita_verify_it2`) and added the Chrome arg `--host-resolver-rules=MAP localhost 127.0.0.1`.
+- The suite ran with `NODE_OPTIONS=--dns-result-order=ipv4first`.
+- Afterwards the config, `apps/web/dist` and the Playwright output were deleted, and the preview process of this worktree was stopped (checked by its command line).
+
+---
+
+## New findings
+
+### F6 (Minor, test hardening, non-blocking): two seam clocks are not pinned by any test
+
+- **N3.** `api/modules/booking/cancel.service.ts:250` could pass any clock to `packageModeHandler.cancel` without a test noticing. That clock decides whether a lot is still unexpired, and the `expires_at` of the `manual` 90-day lot (`api/modules/packages/package-payment.service.ts:437`, `:451`).
+- **N7.** `api/modules/revenue/ports.ts:64` could ignore `input.now` in `CreditPort.grant` without a test noticing; that changes the granted lot's `expires_at` (REC-105, REC-110, REC-111).
+- **Impact**: none in production, where the request clock is the wall clock (`api/app.ts:23`). Under an injected clock, such as tests or the job CLI's `--now`, a regression would go unnoticed. That is the same class of issue as F1.
+- **Fix task (optional)**: add `expiresAt` assertions to two existing route-level tests that run with `now: () => NOW`.
+  - In `api/modules/revenue/steps.int.test.ts:352`, the `reschedule_difference` lot `expiresAt` = NOW + `credits.validity_days`.
+  - In a clinic cancel through the cancel route with a closed period (as `package-payment.service.int.test.ts:375` does directly), the `manual` lot `expiresAt` = NOW + 90 days.
+  - Done when mutants N3 and N7 are killed.
+
+No other new findings. Code quality is unchanged from iteration 1. The fix commits are surgical: 19 files, +216/−54. The seam change is additive in shape, and its parameters are required, so the compiler checks every caller.
+
+---
+
+## Requirement Traceability
+
+Not changed by the verifier. All 161 REC ACs are now backed by passing, discriminating tests (REC-160 partly by the notification port's code path). The orchestrator may flip REC-68, REC-73, REC-108 and REC-136 together with the rest.
+
+---
+
+## Cleanup
+
+- `receita_verify_it2` was dropped (`drop database … with (force)`), and a lookup in `pg_database` confirmed it no longer exists.
+- The worktree `.env` is untracked and gitignored.
+- The temporary Playwright config, `apps/web/dist`, the scratch core copy and the time-travel config were removed or live only under `node_modules/.cache`.
+- All node, bash and tail processes started by this worktree were stopped.
+- `git status --porcelain` was empty before the report commit.
+
+---
+
+## Summary (iteration 2)
+
+**Overall**: ✅ Ready.
+
+**Spec-anchored check**: 161/161 ACs pass. 160 rest on test evidence; REC-160 rests partly on a code path, as accepted in iteration 1. No PARTIAL rows and no spec-precision gaps.
+
+**Sensor**:
+- The 16 iteration-1 mutants are 16/16 killed, including the former survivors A4, A7 and A8.
+- On the new seam code, N1 is killed and N2, N4 and N5 are equivalent.
+- N3 and N7 survive. Both are production-equivalent and recorded as Minor finding F6.
+
+**Gate**:
+- typecheck ✅, lint ✅
+- core 1191/1191 ✅, web 1191/1191 ✅
+- API 1041/1041 ✅
+- e2e 14/14 ✅, with nucleo p95 at 286/287 ms
+
+**Findings F1–F5**: all closed with fresh evidence. F1 is confirmed by the grep, the caller audit, a green run after 14:00 on the pinned date and a time-travel run.
+
+**Next steps**: F6 is optional hardening. No fix iteration is required.
