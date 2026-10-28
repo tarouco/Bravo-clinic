@@ -1,5 +1,10 @@
 import { z } from 'zod';
-import { emailSchema, phoneSchema, DOCUMENT_MESSAGE } from '../validation/auth-schemas';
+import {
+  emailSchema,
+  phoneSchema,
+  totpCodeSchema,
+  DOCUMENT_MESSAGE,
+} from '../validation/auth-schemas';
 import { parseDocument } from '../validation/document';
 import {
   bookingDetailSchema,
@@ -185,3 +190,13 @@ export const meSchema = z.object({
     .nullable(),
 });
 export type Me = z.infer<typeof meSchema>;
+
+/** `POST /app/auth/totp/disable` (FND-136): a current TOTP code or an unused recovery code. */
+export const totpDisableRequestSchema = z.object({ code: totpCodeSchema });
+export type TotpDisableRequest = z.infer<typeof totpDisableRequestSchema>;
+
+/** Two-factor authentication is off: the session payload's `mfa` after a disable (FND-136). */
+export const totpDisableResponseSchema = z.strictObject({
+  mfa: z.strictObject({ enrolled: z.literal(false), verified: z.literal(false) }),
+});
+export type TotpDisableResponse = z.infer<typeof totpDisableResponseSchema>;

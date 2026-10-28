@@ -1,4 +1,4 @@
-import { isStaff } from '@bravo/core';
+import type { TotpDisableResponse } from '@bravo/core';
 import { and, eq, isNull, lt, or, sql } from 'drizzle-orm';
 import { markSessionMfaVerified, type AuthContext } from '../../auth/session';
 import {
@@ -10,7 +10,7 @@ import {
   verifyTotp,
 } from '../../auth/totp';
 import { withTransaction, type Tx } from '../../db/client';
-import { userTotp, users } from '../../db/schema';
+import { sessions, userTotp, users } from '../../db/schema';
 import { audit } from '../../lib/audit';
 import { decryptSecret, encryptSecret } from '../../lib/crypto';
 import { conflict, forbidden, tooManyRequests, unauthorized } from '../../lib/errors';
@@ -24,9 +24,7 @@ const failureKey = (userId: string) => rateLimitKey('totp', userId);
 
 const INVALID_CODE_MESSAGE = 'Código inválido';
 
-function assertStaff(auth: AuthContext): void {
-  if (!isStaff(auth.role)) throw forbidden();
-}
+const NOT_ACTIVE_MESSAGE = 'A verificação em duas etapas não está ativa';
 
 async function assertNotLocked(deps: AppDeps, userId: string, now: Date): Promise<void> {
   const gate = await peekRateLimit(deps.db, failureKey(userId), { ...TOTP_FAILURE_LIMIT, now });
@@ -39,12 +37,14 @@ async function rejectCode(deps: AppDeps, userId: string, now: Date): Promise<nev
   throw unauthorized('INVALID_CODE', INVALID_CODE_MESSAGE);
 }
 
-/** Stores a fresh encrypted, unconfirmed secret and returns the URI for the QR code (FND-64). */
+/**
+ * Stores a fresh encrypted, unconfirmed secret and returns the URI for the QR code. Open to every
+ * role: two-factor authentication is opt-in (FND-64, FND-135).
+ */
 export async function enrollTotp(
   deps: AppDeps,
   auth: AuthContext,
 ): Promise<{ otpauthUri: string }> {
-  assertStaff(auth);
   const { db, env } = deps;
   const now = deps.now();
   const [user] = await db
@@ -87,7 +87,6 @@ export async function confirmTotp(
   code: string,
   meta: RequestMeta,
 ): Promise<{ recoveryCodes: string[] }> {
-  assertStaff(auth);
   const { db, env } = deps;
   const now = deps.now();
   await assertNotLocked(deps, auth.userId, now);
@@ -159,6 +158,36 @@ async function consumeTotpStep(tx: Tx, userId: string, step: number, now: Date):
   return spent.length > 0;
 }
 
+type TotpRow = typeof userTotp.$inferSelect;
+
+/**
+ * Spends a current TOTP code (replay-protected by step) or an unused recovery code inside `tx`;
+ * false when the code is not accepted.
+ */
+async function spendCode(
+  deps: AppDeps,
+  tx: Tx,
+  row: TotpRow,
+  code: string,
+  now: Date,
+): Promise<boolean> {
+  if (isRecoveryCode(code)) return consumeRecoveryCode(tx, row.userId, code, now);
+  const verdict = verifyTotp(
+    decryptSecret(row.secretCiphertext, deps.env.ENCRYPTION_KEY),
+    code,
+    row.lastUsedStep,
+    now,
+  );
+  return verdict.ok && (await consumeTotpStep(tx, row.userId, verdict.step, now));
+}
+
+/** The caller's confirmed TOTP row; 409 CONFLICT when two-factor authentication is not active. */
+async function confirmedTotpRow(deps: AppDeps, userId: string): Promise<TotpRow> {
+  const [row] = await deps.db.select().from(userTotp).where(eq(userTotp.userId, userId));
+  if (row === undefined || row.confirmedAt === null) throw conflict('CONFLICT', NOT_ACTIVE_MESSAGE);
+  return row;
+}
+
 /**
  * Raises the session to MFA-verified with a current TOTP code or an unused recovery code
  * (FND-67..69).
@@ -168,32 +197,51 @@ export async function verifyTotpCode(
   auth: AuthContext,
   code: string,
 ): Promise<void> {
-  const { db, env } = deps;
   const now = deps.now();
   await assertNotLocked(deps, auth.userId, now);
+  const row = await confirmedTotpRow(deps, auth.userId);
 
-  const [row] = await db.select().from(userTotp).where(eq(userTotp.userId, auth.userId));
-  if (row === undefined || row.confirmedAt === null) {
-    throw isStaff(auth.role)
-      ? forbidden('MFA_ENROLLMENT_REQUIRED', 'Cadastre a verificação em duas etapas')
-      : forbidden();
-  }
-
-  const accepted = await withTransaction(db, async (tx) => {
-    let ok: boolean;
-    if (isRecoveryCode(code)) {
-      ok = await consumeRecoveryCode(tx, auth.userId, code, now);
-    } else {
-      const verdict = verifyTotp(
-        decryptSecret(row.secretCiphertext, env.ENCRYPTION_KEY),
-        code,
-        row.lastUsedStep,
-        now,
-      );
-      ok = verdict.ok && (await consumeTotpStep(tx, auth.userId, verdict.step, now));
-    }
+  const accepted = await withTransaction(deps.db, async (tx) => {
+    const ok = await spendCode(deps, tx, row, code, now);
     if (ok) await markSessionMfaVerified(tx, auth.sessionId, now);
     return ok;
   });
   if (!accepted) await rejectCode(deps, auth.userId, now);
+}
+
+/**
+ * Turns two-factor authentication off (FND-136): only an MFA-verified session of an enrolled user,
+ * with a current TOTP code or an unused recovery code (same rate limit and replay rules as
+ * verify). Deletes the `user_totp` row with its recovery codes, clears the MFA mark of the user's
+ * sessions and audits `user.totp_disabled`, in one transaction.
+ */
+export async function disableTotp(
+  deps: AppDeps,
+  auth: AuthContext,
+  code: string,
+  meta: RequestMeta,
+): Promise<TotpDisableResponse> {
+  const now = deps.now();
+  if (!auth.totpConfirmed) throw conflict('CONFLICT', NOT_ACTIVE_MESSAGE);
+  if (!auth.mfaVerified) {
+    throw forbidden('MFA_REQUIRED', 'Confirme a verificação em duas etapas');
+  }
+  await assertNotLocked(deps, auth.userId, now);
+  const row = await confirmedTotpRow(deps, auth.userId);
+
+  const accepted = await withTransaction(deps.db, async (tx) => {
+    if (!(await spendCode(deps, tx, row, code, now))) return false;
+    await tx.delete(userTotp).where(eq(userTotp.userId, auth.userId));
+    await tx.update(sessions).set({ mfaVerifiedAt: null }).where(eq(sessions.userId, auth.userId));
+    await audit(tx, auditContext(meta, { id: auth.userId, role: auth.role }), {
+      action: 'user.totp_disabled',
+      entityType: 'user',
+      entityId: auth.userId,
+      before: { totpEnrolled: true },
+      after: { totpEnrolled: false },
+    });
+    return true;
+  });
+  if (!accepted) await rejectCode(deps, auth.userId, now);
+  return { mfa: { enrolled: false, verified: false } };
 }

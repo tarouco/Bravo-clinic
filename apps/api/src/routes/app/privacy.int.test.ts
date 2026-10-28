@@ -54,6 +54,8 @@ async function richTenant() {
     name: 'Clara Mendes',
     password: PASSWORD,
     totp: true,
+    // TOTP on means the session must have passed the second factor (AD-037).
+    mfaVerified: true,
   });
   const room = await seededRoom(db);
   const booking = await insertBooking(db, {

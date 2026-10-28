@@ -2,7 +2,7 @@
 
 ## Problem Statement
 
-Bravô Clinic has a PRD, a design system and architecture decisions, but no code. Every later feature (nucleo, receita, gestao) needs the same base: a monorepo with quality gates, pure money/time helpers, an API that boots on Neon Functions with a migrated database, authentication with staff 2FA, an audit trail, the Day/Night design system, the public home page and the app/admin shells. Building this once, tested and deployed, removes setup work and inconsistency from the three revenue-bearing features.
+Bravô Clinic has a PRD, a design system and architecture decisions, but no code. Every later feature (nucleo, receita, gestao) needs the same base: a monorepo with quality gates, pure money/time helpers, an API that boots on Neon Functions with a migrated database, authentication with optional TOTP 2FA, an audit trail, the Day/Night design system, the public home page and the app/admin shells. Building this once, tested and deployed, removes setup work and inconsistency from the three revenue-bearing features.
 
 ## Goals
 
@@ -48,9 +48,9 @@ Bravô Clinic has a PRD, a design system and architecture decisions, but no code
 | Signup logs the user in before e-mail verification | Yes; booking is blocked until verified (nucleo enforces) | PRD §7.4 only requires verification before the first booking | n |
 | Duplicate CPF/CNPJ at signup | Rejected with 409 `DOCUMENT_TAKEN` | Coupon eligibility is by document (§5.3.4); one account per document | n |
 | Login error enumeration | Same 401 message for unknown e-mail and wrong password; password-reset request always 202 | Avoid account enumeration | n |
-| 2FA recovery | 10 single-use recovery codes shown once at enrollment; admin bootstrap env can create a fresh admin if all admins are locked out | Admin 2FA is mandatory (§8); lockout must be recoverable | n |
+| 2FA recovery | 10 single-use recovery codes shown once at enrollment; admin bootstrap env can create a fresh admin if all admins are locked out | 2FA is optional for every user (user decision 2026-10-28, AD-037, amends PRD §8 "2FA obrigatório"); whoever turns it on must still be able to recover from a lost authenticator | n |
 | Google OAuth users without CPF/CNPJ | Created as tenant with no document; must complete profile before booking (nucleo enforces) | Google does not provide a document | n |
-| Reception 2FA | Mandatory, same as admin | AD-005 | y |
+| Reception 2FA | Optional, same as admin and tenants: each user turns TOTP on or off in `/app/perfil/seguranca` | User decision 2026-10-28 (AD-037, amends AD-005) | y |
 | CI database | postgres:17 service container; local runs use Neon `dev` via `DATABASE_URL_TEST` | Isolated, free, no shared-branch flakiness (AD-018) | n |
 | Production deploy | Last phase; runs only after explicit user go-ahead | Skill blast-radius rule: deploys need explicit approval | y |
 | Minimum booking advance | `calendar.min_advance_minutes = 0` | PRD §7.3.1 names the parameter without a default | n |
@@ -254,22 +254,25 @@ Bravô Clinic has a PRD, a design system and architecture decisions, but no code
 
 ---
 
-### P1: Staff two-factor authentication ⭐ MVP
+### P1: Optional two-factor authentication ⭐ MVP
 
-**User Story**: As the Administrador geral or reception, I want TOTP 2FA on my account, so that a leaked password does not expose the clinic.
+**User Story**: As any user (tenant, reception or the Administrador geral), I want to turn TOTP 2FA on or off for my own account, so that a leaked password does not expose my account when I choose the extra step.
 
-**Why P1**: PRD §8 "Admin com 2FA obrigatório".
+**Why P1**: PRD §8 asked for mandatory admin 2FA; user decision 2026-10-28 (AD-037) made it optional for every role, so nobody is blocked at first login.
 
 **Acceptance Criteria**:
 
-1. WHILE an admin or reception user has no confirmed TOTP the API SHALL return 403 `MFA_ENROLLMENT_REQUIRED` to every `/api/admin/*` request. [FND-63]
-2. WHEN a staff user calls `POST /api/app/auth/totp/enroll` THEN the API SHALL store a new encrypted, unconfirmed secret and return `{ otpauthUri }` with issuer "Bravô Clinic" and the user's e-mail as label. [FND-64]
+1. WHILE a staff user has a confirmed TOTP and the session is not MFA-verified the API SHALL return 403 `MFA_REQUIRED` to every `/api/admin/*` request; an admin or reception user without a confirmed TOTP SHALL reach `/api/admin/*` with a password session, and no endpoint SHALL answer `MFA_ENROLLMENT_REQUIRED` (amended: user decision 2026-10-28, AD-037). [FND-63]
+2. WHEN a signed-in user of any role without a confirmed TOTP calls `POST /api/app/auth/totp/enroll` THEN the API SHALL store a new encrypted, unconfirmed secret and return `{ otpauthUri }` with issuer "Bravô Clinic" and the user's e-mail as label; IF the user already has a confirmed TOTP THEN it SHALL return 409 `CONFLICT` and keep the secret (amended: user decision 2026-10-28, AD-037). [FND-64]
 3. WHEN `POST /api/app/auth/totp/confirm` receives the current 6-digit code THEN the API SHALL mark TOTP confirmed, return 10 recovery codes once, mark the session MFA-verified and write audit action `auth.totp_enabled`. [FND-65]
-4. WHEN a staff user with confirmed TOTP logs in with the correct password THEN the API SHALL return 200 `{ mfaRequired: true }` and create a session that is not MFA-verified; WHILE that session is not verified `/api/admin/*` SHALL return 403 `MFA_REQUIRED`. [FND-66]
+4. WHEN a user of any role with confirmed TOTP logs in with the correct password THEN the API SHALL return 200 `{ mfaRequired: true }` and create a session that is not MFA-verified; WHILE that session is not verified `/api/admin/*` SHALL return 403 `MFA_REQUIRED` (amended: user decision 2026-10-28, AD-037). [FND-66]
 5. WHEN `POST /api/app/auth/totp/verify` receives a valid code for the current step ±1 or an unused recovery code THEN the API SHALL mark the session MFA-verified, consume the recovery code if one was used, and return 200. [FND-67]
 6. IF a TOTP code from an already-used time step is submitted again THEN the API SHALL return 401 `INVALID_CODE`. [FND-68]
 7. IF 5 invalid codes are submitted by the same user within 15 minutes THEN the next attempt SHALL return 429 `TOO_MANY_ATTEMPTS`. [FND-69]
 8. The system SHALL store TOTP secrets only as AES-256-GCM ciphertext under `ENCRYPTION_KEY`, and recovery codes only as SHA-256 hashes. [FND-70]
+9. The system SHALL keep TOTP off by default for every role and SHALL let each tenant, reception or admin user turn it on from `/app/perfil/seguranca` ("Verificação em duas etapas", action "Ativar": QR code, manual key, confirmation code, recovery codes shown once, then the page in the "on" state), reachable from "Segurança" on `/app/perfil` and in the admin top bar; `/login/2fa/configurar` SHALL redirect there and no guard SHALL send a user to it (user decision 2026-10-28, AD-037). [FND-135]
+10. WHEN `POST /api/app/auth/totp/disable` receives `{ code }` (a current TOTP code or an unused recovery code, under the FND-68 replay and FND-69 rate-limit rules) from an MFA-verified session of a user with confirmed TOTP THEN the API SHALL delete the `user_totp` row with its recovery codes, clear the MFA mark of the user's sessions and write audit `user.totp_disabled` in one transaction, and return 200 `{ mfa: { enrolled: false, verified: false } }`; IF the code is wrong THEN it SHALL return 401 `INVALID_CODE`; IF TOTP is not on THEN 409 `CONFLICT`; and the "Desativar" action of `/app/perfil/seguranca` SHALL call it and mirror that `mfa` in the cached session (user decision 2026-10-28, AD-037). [FND-136]
+11. WHILE a user of any role has a confirmed TOTP and the session is not MFA-verified the API SHALL return 403 `MFA_REQUIRED` to every `/api/app/*` request except `GET /api/app/me`, `POST /api/app/auth/totp/verify` and `POST /api/app/auth/logout`, the Google callback SHALL redirect such a user to `/login/2fa?next=<destination>`, and the web `RequireAuth` and `RequireStaff` guards SHALL redirect such a session to `/login/2fa?next=<original path>` (user decision 2026-10-28, AD-037). [FND-137]
 
 **Independent Test**: integration tests computing codes with `otpauth` from the enrollment URI.
 
@@ -389,8 +392,8 @@ Bravô Clinic has a PRD, a design system and architecture decisions, but no code
 4. WHEN signup returns 201 THEN the page SHALL navigate to `/app` and show the banner "Enviamos um link de confirmação para o seu e-mail."; WHEN it returns 409 THEN the page SHALL show the conflict message on the e-mail or document field. [FND-109]
 5. WHEN `/verificar-email?token=<t>` loads THEN the page SHALL call the verify endpoint once and show "E-mail confirmado" on success or "Link inválido ou expirado" with a resend button on 400. [FND-110]
 6. WHEN the forgot-password form is submitted THEN the page SHALL always show "Se o e-mail estiver cadastrado, você receberá um link em instantes."; WHEN `/redefinir-senha?token=<t>` is submitted with a valid new password THEN the page SHALL show success and link to `/login`. [FND-111]
-7. WHEN `/login/2fa/configurar` loads for a staff session without TOTP THEN the page SHALL show a QR code of the otpauth URI, accept the 6-digit code, then show the 10 recovery codes once with a "Já guardei os códigos" button leading to `/admin`. [FND-112]
-8. WHEN `/login/2fa` receives a valid 6-digit code or recovery code THEN the page SHALL navigate to `/admin`; IF the API returns 401 THEN it SHALL show "Código inválido". [FND-113]
+7. WHEN "Ativar" is chosen on `/app/perfil/seguranca` THEN the page SHALL show a QR code of the otpauth URI, accept the 6-digit code, then show the 10 recovery codes once with a "Já guardei os códigos" button that returns to the page with 2FA on; WHEN `/login/2fa/configurar` is opened THEN the site SHALL redirect to `/app/perfil/seguranca` (amended: user decision 2026-10-28, AD-037). [FND-112]
+8. WHEN `/login/2fa` receives a valid 6-digit code or recovery code THEN the page SHALL navigate to the `next` query value, else `/admin` for staff and `/app` for tenants, showing the eyebrow "Área restrita" only to staff; IF the API returns 401 THEN it SHALL show "Código inválido" and keep the session (amended: user decision 2026-10-28, AD-037). [FND-113]
 
 **Independent Test**: Testing Library page tests with the API client mocked.
 
@@ -406,7 +409,7 @@ Bravô Clinic has a PRD, a design system and architecture decisions, but no code
 
 1. WHEN an unauthenticated visitor navigates to any `/app/*` or `/admin/*` path THEN the site SHALL redirect to `/login?next=<original path>`. [FND-114]
 2. WHEN a tenant navigates to any `/admin/*` path THEN the site SHALL render the page "Acesso restrito" with a link to `/app`. [FND-115]
-3. WHEN a staff user whose session is not MFA-verified navigates to `/admin/*` THEN the site SHALL redirect to `/login/2fa` if TOTP is enrolled, else to `/login/2fa/configurar`. [FND-116]
+3. WHEN a staff user with TOTP enrolled whose session is not MFA-verified navigates to `/admin/*` THEN the site SHALL redirect to `/login/2fa?next=<original path>`; staff without TOTP SHALL enter `/admin/*` with a password session (amended: user decision 2026-10-28, AD-037). [FND-116]
 4. The `AdminShell` SHALL list, for admin, Calendário, Gestão de Reservas, Financeiro, Integrações, Cupons, Serviços Extras, Clientes, Salas, Usuários and Log de auditoria in that order, and for reception only Gestão de Reservas and Clientes; each item SHALL open a placeholder page titled with the section name and the text "Em construção". [FND-117]
 5. The `AppShell` SHALL show a bottom tab bar below `lg` and a sidebar from `lg` with Reservar, Minhas reservas, Agenda, Compras and Perfil, plus a "Sair" action that calls logout and navigates to `/`. [FND-118]
 
@@ -549,14 +552,14 @@ Bravô Clinic has a PRD, a design system and architecture decisions, but no code
 | FND-60 | P1: Reset password | Tasks | T34 | In Tasks |
 | FND-61 | P1: Reset password | Tasks | T34 | In Tasks |
 | FND-62 | P1: Reset password | Tasks | T34 | In Tasks |
-| FND-63 | P1: Staff two-factor authentication | Tasks | T28 | In Tasks |
-| FND-64 | P1: Staff two-factor authentication | Tasks | T35 | In Tasks |
-| FND-65 | P1: Staff two-factor authentication | Tasks | T35 | In Tasks |
-| FND-66 | P1: Staff two-factor authentication | Tasks | T28, T35 | In Tasks |
-| FND-67 | P1: Staff two-factor authentication | Tasks | T35 | In Tasks |
-| FND-68 | P1: Staff two-factor authentication | Tasks | T35 | In Tasks |
-| FND-69 | P1: Staff two-factor authentication | Tasks | T30, T35 | In Tasks |
-| FND-70 | P1: Staff two-factor authentication | Tasks | T24, T35 | In Tasks |
+| FND-63 | P1: Optional two-factor authentication | Tasks | T28 | In Tasks |
+| FND-64 | P1: Optional two-factor authentication | Tasks | T35 | In Tasks |
+| FND-65 | P1: Optional two-factor authentication | Tasks | T35 | In Tasks |
+| FND-66 | P1: Optional two-factor authentication | Tasks | T28, T35 | In Tasks |
+| FND-67 | P1: Optional two-factor authentication | Tasks | T35 | In Tasks |
+| FND-68 | P1: Optional two-factor authentication | Tasks | T35 | In Tasks |
+| FND-69 | P1: Optional two-factor authentication | Tasks | T30, T35 | In Tasks |
+| FND-70 | P1: Optional two-factor authentication | Tasks | T24, T35 | In Tasks |
 | FND-71 | P1: Roles, access and audit | Tasks | T28 | In Tasks |
 | FND-72 | P1: Roles, access and audit | Tasks | T28 | In Tasks |
 | FND-73 | P1: Roles, access and audit | Tasks | T28 | In Tasks |
@@ -621,12 +624,15 @@ Bravô Clinic has a PRD, a design system and architecture decisions, but no code
 | FND-132 | P2: Google login | Tasks | T37 | In Tasks |
 | FND-133 | P2: Google login | Tasks | T37 | In Tasks |
 | FND-134 | P2: Google login | Tasks | T37, T64 | In Tasks |
+| FND-135 | P1: Optional two-factor authentication | Execute | AD-037 change | Implemented |
+| FND-136 | P1: Optional two-factor authentication | Execute | AD-037 change | Implemented |
+| FND-137 | P1: Optional two-factor authentication | Execute | AD-037 change | Implemented |
 
 **ID format:** `FND-NN`.
 
 **Status values:** Pending → In Design → In Tasks → Implementing → Verified
 
-**Coverage:** 134 total, 134 mapped to tasks, 0 unmapped.
+**Coverage:** 137 total, 134 mapped to tasks, 3 added by the AD-037 change (FND-135..137, user decision 2026-10-28), 0 unmapped.
 
 ### Implicit-requirement dimensions sweep
 
@@ -635,7 +641,7 @@ Bravô Clinic has a PRD, a design system and architecture decisions, but no code
 | Input validation & bounds | FND-14..17, FND-23, FND-24, FND-29, FND-44, FND-47, FND-108, FND-126; settings bounds FND-18/19 |
 | Failure / partial-failure states | FND-22, FND-26, FND-28, FND-79, FND-80 (e-mail failure never fails the request), FND-110 |
 | Idempotency / retry / duplicate handling | FND-31 (migrations), FND-40 (seeds), FND-45/46 (unique e-mail/document), FND-68 (TOTP replay). Money idempotency keys: N/A because fundacao moves no money (nucleo, `docs/architecture.md` §6.8) |
-| Auth boundaries & rate limits | FND-54, FND-50, FND-69, FND-56, FND-59, FND-63, FND-66, FND-71..74, FND-107, FND-114..116 |
+| Auth boundaries & rate limits | FND-54, FND-50, FND-69, FND-56, FND-59, FND-63, FND-66, FND-136, FND-137, FND-71..74, FND-107, FND-114..116 |
 | Concurrency / ordering | FND-32..34 (exclusion constraint), concurrent signup edge case (FND-45), FND-75 (audit in same tx) |
 | Data lifecycle / expiry | FND-49 (24h verify token), FND-60 (60 min reset token), FND-52/58 (session lifetimes), FND-55 (revocation), FND-61 (revoke on reset). Purge of expired rows: N/A because fundacao has no job runner (logged assumption) |
 | Observability | FND-27 (request logs + requestId), FND-75 (audit log), FND-77 (outbox as delivery log), FND-21 (health) |

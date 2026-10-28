@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto';
+import { meSchema } from '@bravo/core';
 import { eq } from 'drizzle-orm';
 import { createLocalJWKSet, exportJWK, generateKeyPair, SignJWT, type JWTVerifyGetKey } from 'jose';
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -10,6 +11,9 @@ import { createDb } from '../../../db/client';
 import { auditLog, sessions, users } from '../../../db/schema';
 
 const { pool, db } = createDb(requireTestDatabaseUrl(process.env));
+
+/** The `mfa` part of the session payload that `GET /app/me` returns. */
+const sessionMfa = meSchema.pick({ mfa: true });
 
 vi.setConfig({ testTimeout: 60_000 });
 
@@ -233,6 +237,27 @@ describe('GET /public/auth/google/callback: login (FND-132)', () => {
       .where(eq(sessions.id, session[0]?.id ?? ''));
     expect(old?.revokedAt).toBeInstanceOf(Date);
   });
+
+  it.each(['tenant', 'admin'] as const)(
+    'sends a %s who turned TOTP on to the 2FA step with an unverified session (FND-137)',
+    async (role) => {
+      const existing = await createUser(db, { role, email: 'ana@exemplo.com', totp: true });
+      await db
+        .update(users)
+        .set({ docType: 'cpf', docNumber: '52998224725' })
+        .where(eq(users.id, existing.id));
+
+      const { callback } = await loginWithGoogle(idToken());
+
+      expect(callback.status).toBe(302);
+      expect(callback.headers.get('Location')).toBe('/login/2fa?next=%2Fapp');
+      const cookie = sessionCookieFrom(callback.headers) ?? '';
+      const me = await send(buildApp(), 'GET', '/app/me', { cookie });
+      expect(sessionMfa.parse(me.body).mfa).toEqual({ enrolled: true, verified: false });
+      const refused = await send(buildApp(), 'GET', '/app/bookings?tab=upcoming', { cookie });
+      expect(refused.error?.code).toBe('MFA_REQUIRED');
+    },
+  );
 
   it('audits a staff login through Google', async () => {
     const staff = await createUser(db, { role: 'reception', email: 'ana@exemplo.com' });

@@ -114,19 +114,71 @@ describe('route guards', () => {
     expect(locationOf()).toBe('/admin/financeiro');
   });
 
-  it('sends staff enrolled in TOTP but not verified to /login/2fa', async () => {
+  it('sends staff enrolled in TOTP but not verified to /login/2fa with the encoded next path', async () => {
     stubApi(admin({ enrolled: true, verified: false }));
     renderRoute('/admin/cupons');
 
-    await waitFor(() => expect(locationOf()).toBe('/login/2fa'));
+    await waitFor(() => expect(locationOf()).toBe('/login/2fa?next=%2Fadmin%2Fcupons'));
+    expect(
+      await screen.findByRole('heading', { name: 'Verificação em duas etapas' }),
+    ).toBeInTheDocument();
   });
 
-  it('sends staff without TOTP to /login/2fa/configurar', async () => {
-    stubApi(admin({ enrolled: false, verified: false }));
-    renderRoute('/admin');
+  it.each([
+    ['admin', admin({ enrolled: false, verified: false }), '/admin/calendario'],
+    ['reception', reception({ enrolled: false, verified: false }), '/admin/reservas'],
+  ])(
+    'lets %s without TOTP into the panel with a password session (2FA is optional)',
+    async (_role, session, first) => {
+      stubApi(session);
+      renderRoute('/admin');
 
-    await waitFor(() => expect(locationOf()).toBe('/login/2fa/configurar'));
+      await waitFor(() => expect(locationOf()).toBe(first));
+    },
+  );
+
+  it('sends a tenant who turned TOTP on but has not verified to /login/2fa from /app/*', async () => {
+    stubApi({ ...base, mfa: { enrolled: true, verified: false } });
+    renderRoute('/app/agenda');
+
+    await waitFor(() => expect(locationOf()).toBe('/login/2fa?next=%2Fapp%2Fagenda'));
+    expect(
+      await screen.findByRole('heading', { name: 'Verificação em duas etapas' }),
+    ).toBeInTheDocument();
   });
+
+  it('keeps a session that owes its second factor on /login/2fa instead of looping', async () => {
+    stubApi({ ...base, mfa: { enrolled: true, verified: false } });
+    renderRoute('/login/2fa?next=%2Fapp');
+
+    expect(
+      await screen.findByRole('heading', { name: 'Verificação em duas etapas' }),
+    ).toBeInTheDocument();
+    expect(locationOf()).toBe('/login/2fa?next=%2Fapp');
+  });
+
+  it('opens the Segurança page for a tenant without TOTP, with "Ativar"', async () => {
+    stubApi(base);
+    renderRoute('/app/perfil/seguranca');
+
+    expect(await screen.findByRole('heading', { name: 'Segurança' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Ativar' })).toBeInTheDocument();
+    expect(screen.queryByText('Em construção')).not.toBeInTheDocument();
+  });
+
+  it.each([
+    ['a tenant', base],
+    ['staff without TOTP', admin({ enrolled: false, verified: false })],
+  ])(
+    'redirects the old /login/2fa/configurar link of %s to /app/perfil/seguranca',
+    async (_who, session) => {
+      stubApi(session);
+      renderRoute('/login/2fa/configurar');
+
+      await waitFor(() => expect(locationOf()).toBe('/app/perfil/seguranca'));
+      expect(await screen.findByRole('heading', { name: 'Segurança' })).toBeInTheDocument();
+    },
+  );
 
   it('shows "Acesso restrito" when reception opens /admin/financeiro', async () => {
     stubApi(reception({ enrolled: true, verified: true }));

@@ -1,6 +1,6 @@
 import { adminSectionMeta, type AdminSection } from '@bravo/core';
 import { lazy, Suspense, type ComponentType } from 'react';
-import { createBrowserRouter, type RouteObject } from 'react-router-dom';
+import { createBrowserRouter, Navigate, type RouteObject } from 'react-router-dom';
 import { PublicLayout } from './components/layout/PublicLayout';
 import { ComingSoon, Spinner } from './components/ui/Feedback';
 import {
@@ -129,6 +129,7 @@ const NotificationSettingsPage = lazyPage(() =>
 const PrivacyPage = lazyPage(() => import('./pages/app/PrivacyPage').then((m) => m.PrivacyPage));
 const ProfilePage = lazyPage(() => import('./pages/app/ProfilePage').then((m) => m.ProfilePage));
 const QuotesPage = lazyPage(() => import('./pages/app/QuotesPage').then((m) => m.QuotesPage));
+const SecurityPage = lazyPage(() => import('./pages/app/SecurityPage').then((m) => m.SecurityPage));
 const LoginPage = lazyPage(() => import('./pages/auth/LoginPage').then((m) => m.LoginPage));
 const ForgotPasswordPage = lazyPage(() =>
   import('./pages/auth/password/ForgotPasswordPage').then((m) => m.ForgotPasswordPage),
@@ -137,9 +138,6 @@ const ResetPasswordPage = lazyPage(() =>
   import('./pages/auth/password/ResetPasswordPage').then((m) => m.ResetPasswordPage),
 );
 const SignupPage = lazyPage(() => import('./pages/auth/SignupPage').then((m) => m.SignupPage));
-const TwoFactorEnrollPage = lazyPage(() =>
-  import('./pages/auth/TwoFactorPages').then((m) => m.TwoFactorEnrollPage),
-);
 const TwoFactorVerifyPage = lazyPage(() =>
   import('./pages/auth/TwoFactorPages').then((m) => m.TwoFactorVerifyPage),
 );
@@ -167,7 +165,7 @@ type PlaceholderRoute = readonly [path: string, title: string];
 const publicPlaceholders: PlaceholderRoute[] = [];
 
 /** Tenant area pages that ship with later features. */
-const appPlaceholders: PlaceholderRoute[] = [['perfil/seguranca', 'Segurança']];
+const appPlaceholders: PlaceholderRoute[] = [];
 
 const placeholder = ([path, title]: PlaceholderRoute): RouteObject => ({
   path,
@@ -239,12 +237,15 @@ export const appRoutes: RouteObject[] = [
       { path: 'redefinir-senha', element: <ResetPasswordPage /> },
       {
         element: <RequireAuth />,
-        children: [
-          { path: 'checkout/:bookingId', element: <CheckoutPage /> },
-          { path: 'login/2fa', element: <TwoFactorVerifyPage /> },
-          { path: 'login/2fa/configurar', element: <TwoFactorEnrollPage /> },
-        ],
+        children: [{ path: 'checkout/:bookingId', element: <CheckoutPage /> }],
       },
+      {
+        // The 2FA step itself is the one page a session that owes its second factor may open.
+        element: <RequireAuth allowPendingMfa />,
+        children: [{ path: 'login/2fa', element: <TwoFactorVerifyPage /> }],
+      },
+      // Two-factor authentication is opt-in (AD-037): the old enrollment link opens the toggle.
+      { path: 'login/2fa/configurar', element: <Navigate to="/app/perfil/seguranca" replace /> },
       { path: '*', element: <NotFoundPage /> },
     ],
   },
@@ -265,6 +266,7 @@ export const appRoutes: RouteObject[] = [
           { path: 'perfil/cartoes', element: <CardsPage /> },
           { path: 'perfil/notificacoes', element: <NotificationSettingsPage /> },
           { path: 'perfil/privacidade', element: <PrivacyPage /> },
+          { path: 'perfil/seguranca', element: <SecurityPage /> },
           {
             path: 'compras',
             element: <ComprasLayout />,

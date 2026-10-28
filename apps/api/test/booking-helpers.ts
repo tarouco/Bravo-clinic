@@ -20,14 +20,17 @@ export function cpf(seed: number): string {
 
 let counter = 0;
 
-/** A tenant with a CPF (unless `document: false`) and a session cookie. */
+/**
+ * A tenant with a CPF (unless `document: false`) and a session cookie. A tenant created with
+ * `totp: true` needs `mfaVerified: true` to use `/app/*` beyond the 2FA step (AD-037).
+ */
 export async function createTenant(
   db: Db,
-  options: CreateUserOptions & { document?: boolean; now?: Date } = {},
+  options: CreateUserOptions & { document?: boolean; now?: Date; mfaVerified?: boolean } = {},
 ) {
   counter += 1;
   const n = counter;
-  const { document, now, ...userOptions } = options;
+  const { document, now, mfaVerified, ...userOptions } = options;
   const user = await createUser(db, {
     email: `tenant-${String(n)}-${randomUUID().slice(0, 6)}@bravoclinic.test`,
     name: `Locatário ${String(n)}`,
@@ -39,7 +42,10 @@ export async function createTenant(
       .set({ docType: 'cpf', docNumber: cpf(n) })
       .where(eq(users.id, user.id));
   }
-  const cookie = await loginAs(db, user, now === undefined ? {} : { now });
+  const cookie = await loginAs(db, user, {
+    ...(now !== undefined && { now }),
+    ...(mfaVerified !== undefined && { mfaVerified }),
+  });
   return { user, cookie };
 }
 

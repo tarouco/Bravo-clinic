@@ -4,7 +4,7 @@ import { getEnv } from './env';
 import { buildRegistry } from './extensions';
 import { notFoundHandler, onError } from './lib/errors';
 import { createS3Storage } from './lib/storage';
-import { requireAuth, requireStaff } from './middleware/auth';
+import { requireAuth, requireMfaIfEnrolled, requireStaff } from './middleware/auth';
 import { csrf } from './middleware/csrf';
 import { requestContext } from './middleware/request-context';
 import { requireJson } from './middleware/require-json';
@@ -44,7 +44,7 @@ export function createApp(overrides: Partial<AppDeps> = {}): Hono<AppEnv> {
     await next();
   });
   app.use('*', requireJson());
-  app.use('/app/*', csrf(deps.env.APP_BASE_URL), requireAuth());
+  app.use('/app/*', csrf(deps.env.APP_BASE_URL), requireAuth(), requireMfaIfEnrolled());
   app.use('/admin/*', csrf(deps.env.APP_BASE_URL), requireAuth(), requireStaff());
   app.route('/health', healthRoutes());
   app.route('/public', publicRoutes());

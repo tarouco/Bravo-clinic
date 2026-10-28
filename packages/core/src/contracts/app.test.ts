@@ -15,6 +15,8 @@ import {
   saveCardSchema,
   savedCardListSchema,
   savedCardSchema,
+  totpDisableRequestSchema,
+  totpDisableResponseSchema,
   updateMeSchema,
 } from './app';
 import {
@@ -154,5 +156,17 @@ describe('app contracts (NUC-04)', () => {
       { document: '111.111.111-11' },
     ],
     ['meSchema', meSchema, me, { ...me, role: 'owner' }],
+    [
+      'totpDisableRequestSchema',
+      totpDisableRequestSchema,
+      { code: 'abcd-efgh' },
+      { code: '12345' },
+    ],
+    [
+      'totpDisableResponseSchema',
+      totpDisableResponseSchema,
+      { mfa: { enrolled: false, verified: false } },
+      { mfa: { enrolled: true, verified: true } },
+    ],
   ]);
 });

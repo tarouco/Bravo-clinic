@@ -189,8 +189,29 @@ describe('approve and reject on the hosted page (NUC-120)', () => {
   });
 });
 
-describe('sandbox approval on production (NUC-121, AD-034)', () => {
+describe('sandbox approval on production (NUC-121, AD-034, AD-037)', () => {
   const production = () => buildApp({ NEON_BRANCH: 'production' });
+
+  it('lets staff without TOTP decide with a password-only session, but not a tenant who verified 2FA', async () => {
+    const { charge, booking, user } = await pendingCharge();
+    const tenantVerified = await loginAs(db, user, { mfaVerified: true, now: NOW });
+    const reception = await createUser(db, { role: 'reception', email: 'rec@bravoclinic.test' });
+    const cookie = await loginAs(db, reception, { now: NOW });
+
+    const refused = await decide(production(), charge.id, 'approve', tenantVerified);
+    expect(refused.status).toBe(403);
+    expect(await bookingStatus(booking.id)).toBe('awaiting_payment');
+
+    const res = await decide(production(), charge.id, 'approve', cookie);
+
+    expect(res.status).toBe(200);
+    expect(await bookingStatus(booking.id)).toBe('confirmed');
+    const [entry] = await db
+      .select()
+      .from(auditLog)
+      .where(eq(auditLog.action, 'payment.sandbox_approve'));
+    expect(entry).toMatchObject({ actorUserId: reception.id, actorRole: 'reception' });
+  });
 
   it('answers 403 to an anonymous visitor and writes nothing', async () => {
     const { charge, booking } = await pendingCharge();
@@ -203,7 +224,7 @@ describe('sandbox approval on production (NUC-121, AD-034)', () => {
     expect(await db.select().from(webhookEvents)).toHaveLength(0);
   });
 
-  it('answers 403 to a tenant, and to staff whose session is not MFA-verified', async () => {
+  it('answers 403 to a tenant, and to staff with TOTP whose session is not MFA-verified', async () => {
     const { charge, user } = await pendingCharge();
     const tenantCookie = await loginAs(db, user, { now: NOW });
     const admin = await createUser(db, {

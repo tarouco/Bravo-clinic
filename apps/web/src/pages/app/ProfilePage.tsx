@@ -160,6 +160,9 @@ function ProfileForm({ me }: { me: Me }) {
           <Link to="/app/perfil/notificacoes">Notificações</Link>
         </Button>
         <Button asChild variant="secondary">
+          <Link to="/app/perfil/seguranca">Segurança</Link>
+        </Button>
+        <Button asChild variant="secondary">
           <Link to="/app/perfil/privacidade">Privacidade e dados</Link>
         </Button>
       </div>

@@ -14,7 +14,7 @@ import {
 } from '../../auth/google';
 import { issueSession, revokeAllSessions } from '../../auth/session';
 import { withTransaction, type Tx } from '../../db/client';
-import { users } from '../../db/schema';
+import { userTotp, users } from '../../db/schema';
 import { audit } from '../../lib/audit';
 import { badRequest, notFound } from '../../lib/errors';
 import { logger } from '../../lib/logger';
@@ -160,9 +160,16 @@ export async function finishGoogleLogin(
         after: { method: 'google' },
       });
     }
+    const destination = user.docNumber === null ? '/app/perfil?completar=1' : '/app';
+    // A user who turned TOTP on still owes the second factor: the session is not MFA-verified.
+    const [totp] = await tx
+      .select({ confirmedAt: userTotp.confirmedAt })
+      .from(userTotp)
+      .where(eq(userTotp.userId, user.id));
+    const mfaRequired = totp !== undefined && totp.confirmedAt !== null;
     return {
       session: { token: session.token, maxAgeSeconds: session.maxAgeSeconds },
-      redirectTo: user.docNumber === null ? '/app/perfil?completar=1' : '/app',
+      redirectTo: mfaRequired ? `/login/2fa?next=${encodeURIComponent(destination)}` : destination,
     };
   });
 }

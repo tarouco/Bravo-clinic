@@ -908,7 +908,7 @@ Reception may call: Gestão de Reservas routes (create booking/pre-reservation, 
 | --- | --- |
 | 400 | `INVALID_TOKEN`, `INVALID_STATE`, `BAD_REQUEST` |
 | 401 | `UNAUTHENTICATED`, `INVALID_CREDENTIALS`, `INVALID_CODE` |
-| 403 | `FORBIDDEN`, `MFA_REQUIRED`, `MFA_ENROLLMENT_REQUIRED`, `CSRF_REJECTED`, `EMAIL_NOT_VERIFIED` |
+| 403 | `FORBIDDEN`, `MFA_REQUIRED`, `CSRF_REJECTED`, `EMAIL_NOT_VERIFIED` |
 | 404 | `NOT_FOUND`, `FEATURE_DISABLED` |
 | 409 | `EMAIL_TAKEN`, `DOCUMENT_TAKEN`, `SLOT_TAKEN` (SQLSTATE 23P01), `INVALID_TRANSITION`, `COUPON_EXHAUSTED`, `CONFLICT` |
 | 415 | `UNSUPPORTED_MEDIA_TYPE` |
@@ -927,7 +927,8 @@ Reception may call: Gestão de Reservas routes (create booking/pre-reservation, 
 
 - Cookie `bravo_session` = HS256 JWT `{ sub, sid, role, mfa, iat, exp }` signed with `SESSION_SECRET`. `HttpOnly; Secure; SameSite=Lax; Path=/`. Max-Age: tenant 30 days, staff 12 hours.
 - `requireAuth` verifies the JWT, then loads `sessions` by `sid` (one indexed query) and rejects revoked/expired sessions with 401. It sets `c.var.auth = { userId, role, sessionId, mfaVerified }` and touches `last_seen_at` at most every 10 min.
-- `requireStaff` = role ∈ {admin, reception}; no confirmed TOTP → 403 `MFA_ENROLLMENT_REQUIRED`; `mfaVerified = false` → 403 `MFA_REQUIRED`.
+- Two-factor authentication is optional for every role (AD-037, user decision 2026-10-28): each user turns TOTP on or off in `/app/perfil/seguranca`. `requireMfaIfEnrolled` runs on `/app/*`: a user with confirmed TOTP whose session is not MFA-verified gets 403 `MFA_REQUIRED` everywhere except `GET /app/me`, `POST /app/auth/totp/verify` and `POST /app/auth/logout`.
+- `requireStaff` = role ∈ {admin, reception}; confirmed TOTP and `mfaVerified = false` → 403 `MFA_REQUIRED`; staff without TOTP pass with a password session.
 - `requireRole('admin')` → 403 `FORBIDDEN` for reception.
 - `requireVerifiedEmail` (nucleo, booking creation) → 403 `EMAIL_NOT_VERIFIED`.
 - CSRF (`middleware/csrf.ts`): on POST/PUT/PATCH/DELETE under `/app` and `/admin`, the `Origin` header (or `Referer` origin when Origin is absent) must equal the origin of `APP_BASE_URL`; else 403 `CSRF_REJECTED`. Webhooks, jobs and MCP are exempt (no cookies).
@@ -1235,15 +1236,15 @@ Public site (PublicLayout: Header + Footer + WhatsAppButton) — PRD §7.1:
 | `/pagamento/sandbox/:chargeId` | sandbox hosted checkout (AD-006) | nucleo |
 | `/pre-reserva/:token` | pay a staff pre-reservation | nucleo |
 | `/assinar/:categoryId` | subscription purchase | receita |
-| `/login`, `/login/2fa`, `/login/2fa/configurar` | auth | fundacao |
+| `/login`, `/login/2fa`, `/login/2fa/configurar` (redirects to `/app/perfil/seguranca`, AD-037) | auth | fundacao |
 | `/cadastro`, `/verificar-email`, `/esqueci-senha`, `/redefinir-senha` | auth | fundacao |
 | `*` | 404 | fundacao |
 
-Tenant app (`/app`, AppShell, PRD §7.2): `/app` (próximas reservas), `/app/reservar`, `/app/minhas-reservas` (tabs Próximas/Passadas/Canceladas), `/app/minhas-reservas/:id`, `/app/agenda` (mês/semana/dia) — nucleo; `/app/compras` (assinaturas + extrato), `/app/compras/horas-extras`, `/app/compras/creditos`, `/app/compras/historico` — receita; `/app/orcamentos` — gestao; `/app/perfil`, `/app/perfil/cartoes` (nucleo), `/app/perfil/notificacoes` (gestao), `/app/perfil/privacidade` (LGPD export/delete, gestao), `/app/perfil/seguranca` (password, fundacao placeholder).
+Tenant app (`/app`, AppShell, PRD §7.2): `/app` (próximas reservas), `/app/reservar`, `/app/minhas-reservas` (tabs Próximas/Passadas/Canceladas), `/app/minhas-reservas/:id`, `/app/agenda` (mês/semana/dia) — nucleo; `/app/compras` (assinaturas + extrato), `/app/compras/horas-extras`, `/app/compras/creditos`, `/app/compras/historico` — receita; `/app/orcamentos` — gestao; `/app/perfil`, `/app/perfil/cartoes` (nucleo), `/app/perfil/notificacoes` (gestao), `/app/perfil/privacidade` (LGPD export/delete, gestao), `/app/perfil/seguranca` (optional two-factor authentication on/off for every role, fundacao, AD-037; also linked from the admin top bar).
 
 Admin (`/admin`, AdminShell, PRD §7.3 order): `/admin` → redirect to first allowed section; `/admin/calendario`; `/admin/reservas` (sub-tabs `calendario`, `lista`, `assinaturas`, `politicas`); `/admin/financeiro`; `/admin/integracoes`; `/admin/cupons`; `/admin/servicos-extras`; `/admin/clientes`, `/admin/clientes/:id`; `/admin/salas`; `/admin/usuarios`; `/admin/auditoria`. Reception sees `reservas` (without `politicas`) and `clientes`.
 
-Guards: `RequireAuth` (→ `/login?next=`), `RequireStaff` (tenant → 403 page; staff without MFA → `/login/2fa` or `/login/2fa/configurar`), `RequireSection(sectionKey)` from `access.ts`.
+Guards: `RequireAuth` (→ `/login?next=`; a TOTP user whose session is not verified → `/login/2fa?next=`), `RequireStaff` (tenant → 403 page; staff with TOTP whose session is not verified → `/login/2fa?next=`; staff without TOTP enter, AD-037), `RequireSection(sectionKey)` from `access.ts`.
 
 ### 9.2 State and data fetching
 

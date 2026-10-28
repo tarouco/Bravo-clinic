@@ -1,5 +1,5 @@
 import { adminSectionMeta, adminSectionsFor, type Role } from '@bravo/core';
-import { LogOut } from 'lucide-react';
+import { LogOut, ShieldCheck } from 'lucide-react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import { useSession } from '../../features/auth/useSession';
 import { useSignOut } from '../../features/auth/useSignOut';
@@ -39,6 +39,10 @@ export function AdminShell() {
               </div>
             ) : null}
             <ThemeToggle />
+            {/* The user's own preferences, e.g. the optional two-factor toggle (AD-037). */}
+            <Button asChild variant="ghost" size="sm" leadingIcon={ShieldCheck}>
+              <Link to="/app/perfil/seguranca">Segurança</Link>
+            </Button>
             <Button
               variant="ghost"
               size="sm"

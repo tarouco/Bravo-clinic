@@ -1,3 +1,4 @@
+import { meSchema, totpDisableResponseSchema } from '@bravo/core';
 import { eq } from 'drizzle-orm';
 import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { createUser, currentTotp, loginAs, totpFromUri } from '../../../../test/factories';
@@ -9,6 +10,9 @@ import { auditLog, userTotp } from '../../../db/schema';
 import { decryptSecret, sha256Hex } from '../../../lib/crypto';
 
 const { pool, db } = createDb(requireTestDatabaseUrl(process.env));
+
+/** The `mfa` part of the session payload that `GET /app/me` returns. */
+const sessionMfa = meSchema.pick({ mfa: true });
 
 afterAll(async () => {
   await pool.end();
@@ -92,24 +96,35 @@ describe('POST /app/auth/totp/enroll (FND-64, FND-70)', () => {
     );
   });
 
-  it('refuses a tenant with 403 FORBIDDEN and stores nothing', async () => {
-    const tenant = await createUser(db);
+  it('lets a tenant enroll too: two-factor authentication is opt-in for every role (FND-135)', async () => {
+    const tenant = await createUser(db, { email: 'ana@exemplo.com' });
 
     const result = await call('POST', '/app/auth/totp/enroll', await loginAs(db, tenant));
 
-    expect(result.status).toBe(403);
-    expect(result.error?.code).toBe('FORBIDDEN');
-    expect(await totpRowOf(tenant.id)).toBeUndefined();
+    expect(result.status).toBe(200);
+    const totp = totpFromUri((result.body as { otpauthUri: string }).otpauthUri);
+    expect(totp.label).toBe('ana@exemplo.com');
+    const row = await totpRowOf(tenant.id);
+    expect(row?.confirmedAt).toBeNull();
+    expect(decryptSecret(row?.secretCiphertext ?? '', env.ENCRYPTION_KEY)).toBe(totp.secret.base32);
   });
 
   it('refuses to replace a confirmed secret, so a password-only session cannot swap the factor (FND-66)', async () => {
     const reception = await createUser(db, { role: 'reception', totp: true });
     const before = await totpRowOf(reception.id);
 
-    const result = await call('POST', '/app/auth/totp/enroll', await loginAs(db, reception));
+    // A password-only session is stopped before the service; a verified one gets the 409.
+    const pending = await call('POST', '/app/auth/totp/enroll', await loginAs(db, reception));
+    const verified = await call(
+      'POST',
+      '/app/auth/totp/enroll',
+      await loginAs(db, reception, { mfaVerified: true }),
+    );
 
-    expect(result.status).toBe(409);
-    expect(result.error?.code).toBe('CONFLICT');
+    expect(pending.status).toBe(403);
+    expect(pending.error?.code).toBe('MFA_REQUIRED');
+    expect(verified.status).toBe(409);
+    expect(verified.error?.code).toBe('CONFLICT');
     const after = await totpRowOf(reception.id);
     expect(after?.secretCiphertext).toBe(before?.secretCiphertext);
     expect(after?.confirmedAt).toEqual(before?.confirmedAt);
@@ -120,7 +135,8 @@ describe('POST /app/auth/totp/confirm (FND-65, FND-70)', () => {
   it('confirms with the current code: ten recovery codes once, MFA-verified session, audit row', async () => {
     const admin = await createUser(db, { role: 'admin', email: 'admin@exemplo.com' });
     const cookie = await loginAs(db, admin);
-    expect((await adminSession(cookie)).error?.code).toBe('MFA_ENROLLMENT_REQUIRED');
+    // Without TOTP the password-only session already reaches the admin area (AD-037).
+    expect((await adminSession(cookie)).status).toBe(200);
 
     const { secret, recoveryCodes, confirmed } = await activateTotp(cookie);
 
@@ -139,6 +155,12 @@ describe('POST /app/auth/totp/confirm (FND-65, FND-70)', () => {
     expect(row?.recoveryCodeHashes.some((hash) => recoveryCodes.includes(hash))).toBe(false);
 
     expect((await adminSession(cookie)).status).toBe(200);
+    expect(sessionMfa.parse((await call('GET', '/app/me', cookie)).body).mfa).toEqual({
+      enrolled: true,
+      verified: true,
+    });
+    // From now on a new password-only session owes the second factor.
+    expect((await adminSession(await loginAs(db, admin))).error?.code).toBe('MFA_REQUIRED');
     const [entry] = await db.select().from(auditLog);
     expect(entry).toMatchObject({
       action: 'auth.totp_enabled',
@@ -170,7 +192,10 @@ describe('POST /app/auth/totp/confirm (FND-65, FND-70)', () => {
     expect(result.status).toBe(401);
     expect(result.error?.code).toBe('INVALID_CODE');
     expect((await totpRowOf(admin.id))?.confirmedAt).toBeNull();
-    expect((await adminSession(cookie)).error?.code).toBe('MFA_ENROLLMENT_REQUIRED');
+    expect(sessionMfa.parse((await call('GET', '/app/me', cookie)).body).mfa).toEqual({
+      enrolled: false,
+      verified: false,
+    });
     expect(await db.select().from(auditLog)).toHaveLength(0);
   });
 });
@@ -269,14 +294,173 @@ describe('POST /app/auth/totp/verify (FND-66, FND-67, FND-68)', () => {
     expect((await adminSession(cookie)).error?.code).toBe('MFA_REQUIRED');
   });
 
-  it('tells staff without a confirmed TOTP to enroll (403 MFA_ENROLLMENT_REQUIRED)', async () => {
-    const admin = await createUser(db, { role: 'admin' });
+  it('answers 409 CONFLICT to anyone without a confirmed TOTP: nobody is told to enroll', async () => {
+    for (const options of [{ role: 'admin' }, { role: 'tenant', totp: 'unconfirmed' }] as const) {
+      const user = await createUser(db, options);
 
-    const result = await call('POST', '/app/auth/totp/verify', await loginAs(db, admin), {
-      code: '123456',
+      const result = await call('POST', '/app/auth/totp/verify', await loginAs(db, user), {
+        code: '123456',
+      });
+
+      expect(result.status).toBe(409);
+      expect(result.error?.code).toBe('CONFLICT');
+    }
+  });
+
+  it('asks an enrolled tenant for the second factor at login and lets them in after verify (FND-137)', async () => {
+    const tenant = await createUser(db, {
+      email: 'ana@exemplo.com',
+      password: PASSWORD,
+      totp: true,
+    });
+    const login = await send(app(), 'POST', '/public/auth/login', {
+      body: { email: 'ana@exemplo.com', password: PASSWORD },
+    });
+    expect(login.body).toMatchObject({
+      mfaRequired: true,
+      user: { role: 'tenant', mfa: { enrolled: true, verified: false } },
+    });
+    const cookie = sessionCookieFrom(login.headers) ?? '';
+    expect((await call('GET', '/app/bookings?tab=upcoming', cookie)).error?.code).toBe(
+      'MFA_REQUIRED',
+    );
+
+    const result = await call('POST', '/app/auth/totp/verify', cookie, {
+      code: currentTotp(tenant.totpSecret ?? '', NOW),
     });
 
+    expect(result.status).toBe(200);
+    expect((await call('GET', '/app/bookings?tab=upcoming', cookie)).status).toBe(200);
+    expect(sessionMfa.parse((await call('GET', '/app/me', cookie)).body).mfa).toEqual({
+      enrolled: true,
+      verified: true,
+    });
+  });
+});
+
+describe('POST /app/auth/totp/disable (FND-136)', () => {
+  // audit_log is append-only: count only the disable entries.
+  const disabledAudit = () =>
+    db.select().from(auditLog).where(eq(auditLog.action, 'user.totp_disabled'));
+  const disable = (cookie: string, code: unknown) =>
+    call('POST', '/app/auth/totp/disable', cookie, { code });
+
+  it.each(['tenant', 'reception', 'admin'] as const)(
+    'turns TOTP off for a verified %s with a current code: row and recovery codes gone, audit, next login without 2FA',
+    async (role) => {
+      const user = await createUser(db, { role, password: PASSWORD, email: `${role}@exemplo.com` });
+      const { secret } = await activateTotp(await loginAs(db, user));
+      const cookie = await loginAs(db, user, { mfaVerified: true });
+
+      const result = await disable(cookie, currentTotp(secret, new Date(NOW.getTime() + STEP_MS)));
+
+      expect(result.status).toBe(200);
+      expect(totpDisableResponseSchema.parse(result.body)).toEqual({
+        mfa: { enrolled: false, verified: false },
+      });
+      expect(await totpRowOf(user.id)).toBeUndefined();
+      expect(sessionMfa.parse((await call('GET', '/app/me', cookie)).body).mfa).toEqual({
+        enrolled: false,
+        verified: false,
+      });
+      const entries = await disabledAudit();
+      expect(entries).toHaveLength(1);
+      expect(entries[0]).toMatchObject({
+        action: 'user.totp_disabled',
+        actorUserId: user.id,
+        actorRole: role,
+        entityType: 'user',
+        entityId: user.id,
+        before: { totpEnrolled: true },
+        after: { totpEnrolled: false },
+      });
+
+      const login = await send(app(), 'POST', '/public/auth/login', {
+        body: { email: `${role}@exemplo.com`, password: PASSWORD },
+      });
+      expect(login.body).toMatchObject({ mfaRequired: false });
+      const fresh = sessionCookieFrom(login.headers) ?? '';
+      expect((await call('GET', '/app/bookings?tab=upcoming', fresh)).status).toBe(200);
+    },
+  );
+
+  it('accepts an unused recovery code instead of a TOTP code', async () => {
+    const admin = await createUser(db, { role: 'admin' });
+    const { recoveryCodes } = await activateTotp(await loginAs(db, admin));
+    const [code] = recoveryCodes;
+
+    const result = await disable(await loginAs(db, admin, { mfaVerified: true }), code);
+
+    expect(result.status).toBe(200);
+    expect(await totpRowOf(admin.id)).toBeUndefined();
+  });
+
+  it('rejects a wrong code, a replayed step and a spent recovery code with 401 and keeps TOTP on', async () => {
+    const admin = await createUser(db, { role: 'admin' });
+    const { secret, recoveryCodes } = await activateTotp(await loginAs(db, admin));
+    const cookie = await loginAs(db, admin, { mfaVerified: true });
+    const [spent] = recoveryCodes;
+    expect(
+      (await call('POST', '/app/auth/totp/verify', await loginAs(db, admin), { code: spent }))
+        .status,
+    ).toBe(200);
+
+    for (const code of [wrongCode(secret), currentTotp(secret, NOW), spent]) {
+      const result = await disable(cookie, code);
+      expect(result.status).toBe(401);
+      expect(result.error?.code).toBe('INVALID_CODE');
+    }
+
+    expect((await totpRowOf(admin.id))?.confirmedAt).toBeInstanceOf(Date);
+    expect(await disabledAudit()).toHaveLength(0);
+  });
+
+  it('shares the verify rate limit: after five invalid codes even a valid one gets 429', async () => {
+    const admin = await createUser(db, { role: 'reception', totp: true });
+    const secret = admin.totpSecret ?? '';
+    const cookie = await loginAs(db, admin, { mfaVerified: true });
+
+    for (let attempt = 1; attempt <= 5; attempt++) {
+      expect((await disable(cookie, wrongCode(secret))).status).toBe(401);
+    }
+    const locked = await disable(cookie, currentTotp(secret, NOW));
+
+    expect(locked.status).toBe(429);
+    expect(locked.error?.code).toBe('TOO_MANY_ATTEMPTS');
+    expect((await totpRowOf(admin.id))?.confirmedAt).toBeInstanceOf(Date);
+  });
+
+  it('refuses a password-only session of an enrolled user with 403 MFA_REQUIRED', async () => {
+    const tenant = await createUser(db, { totp: true });
+
+    const result = await disable(
+      await loginAs(db, tenant),
+      currentTotp(tenant.totpSecret ?? '', NOW),
+    );
+
     expect(result.status).toBe(403);
-    expect(result.error?.code).toBe('MFA_ENROLLMENT_REQUIRED');
+    expect(result.error?.code).toBe('MFA_REQUIRED');
+    expect((await totpRowOf(tenant.id))?.confirmedAt).toBeInstanceOf(Date);
+  });
+
+  it('answers 409 CONFLICT when TOTP is not on, keeping a pending enrollment', async () => {
+    const plain = await createUser(db, { role: 'admin' });
+    const pending = await createUser(db, { totp: 'unconfirmed' });
+
+    const none = await disable(await loginAs(db, plain, { mfaVerified: true }), '123456');
+    const unconfirmed = await disable(await loginAs(db, pending), '123456');
+
+    expect([none.status, none.error?.code]).toEqual([409, 'CONFLICT']);
+    expect([unconfirmed.status, unconfirmed.error?.code]).toEqual([409, 'CONFLICT']);
+    expect(await totpRowOf(pending.id)).toBeDefined();
+  });
+
+  it('rejects a malformed code with 422 before touching the database', async () => {
+    const admin = await createUser(db, { role: 'admin', totp: true });
+
+    const result = await disable(await loginAs(db, admin, { mfaVerified: true }), '12');
+
+    expect(result.status).toBe(422);
+    expect((await totpRowOf(admin.id))?.confirmedAt).toBeInstanceOf(Date);
   });
 });

@@ -29,8 +29,9 @@ async function loadSandboxCharge(c: Context<AppEnv>, id: string) {
 }
 
 /**
- * On the Neon `production` branch only an MFA-verified staff session may decide a sandbox
- * charge; otherwise the default gateway would give away free bookings (NUC-121, AD-034).
+ * On the Neon `production` branch only a staff session may decide a sandbox charge, and it must be
+ * MFA-verified when that user has TOTP on (the `requireStaff` rule); otherwise the default gateway
+ * would give away free bookings (NUC-121, AD-034 as amended by AD-037).
  * Returns that session's actor, or null off production.
  */
 async function sandboxActor(c: Context<AppEnv>) {
@@ -39,7 +40,7 @@ async function sandboxActor(c: Context<AppEnv>) {
   const auth =
     token === undefined ? null : await resolveSession(db, token, env.SESSION_SECRET, now());
   if (env.NEON_BRANCH === 'production') {
-    if (auth === null || !isStaff(auth.role) || !auth.totpConfirmed || !auth.mfaVerified) {
+    if (auth === null || !isStaff(auth.role) || (auth.totpConfirmed && !auth.mfaVerified)) {
       throw forbidden();
     }
   }

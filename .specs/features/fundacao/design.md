@@ -136,7 +136,7 @@ Greenfield: there is no application code yet. Reused inputs:
   - `encryptSecret(plaintext: string, keyB64: string): string` / `decryptSecret(ciphertext: string, keyB64: string): string` (AES-256-GCM, 12-byte IV, output `base64(iv|tag|ct)`).
   - `SESSION_COOKIE = 'bravo_session'`; `issueSession(tx, user, opts: { mfaVerified: boolean; ip?; userAgent? }): Promise<{ token: string; maxAgeSeconds: number; sessionId: string }>`; `verifySessionToken(token): Promise<SessionClaims | null>`; `resolveSession(db, claims): Promise<AuthContext | null>`; `markSessionMfaVerified(tx, sessionId)`; `revokeSession(tx, id)`; `revokeAllSessions(tx, userId)`; `setSessionCookie(c, token, maxAge)`; `clearSessionCookie(c)`.
   - `generateTotpSecret(): string` (base32, 20 bytes); `otpauthUri(secret, email): string`; `verifyTotp(secret, code, lastUsedStep: bigint | null, now: Date): { ok: true; step: bigint } | { ok: false }` (SHA1, 6 digits, 30 s, window 1); `generateRecoveryCodes(): string[]` (10 × `XXXX-XXXX`, alphabet without 0/O/1/I).
-  - `requireAuth`, `requireStaff`, `requireRole(role: 'admin')` (Hono middleware; `c.var.auth: AuthContext = { userId; role; sessionId; mfaVerified; totpConfirmed }`).
+  - `requireAuth`, `requireMfaIfEnrolled` (AD-037: `/app/*` allow-list `GET /app/me`, `POST /app/auth/totp/verify`, `POST /app/auth/logout` while a TOTP user's session is not verified), `requireStaff`, `requireRole(role: 'admin')` (Hono middleware; `c.var.auth: AuthContext = { userId; role; sessionId; mfaVerified; totpConfirmed }`).
   - `csrf(appBaseUrl: string): MiddlewareHandler`.
   - `consumeRateLimit(db, key: string, opts: { limit: number; windowSeconds: number }): Promise<{ allowed: boolean; retryAfterSeconds: number }>`; `peekRateLimit(...)` (read count without increment, used to block login after failures); keys hash e-mails (`sha256Hex(email)`), never store raw e-mail.
   - `audit(tx, ctx, input)` per `docs/architecture.md` §6.5.
@@ -169,7 +169,7 @@ Greenfield: there is no application code yet. Reused inputs:
   - `GET /api/app/me` → user payload of FND-57.
   - `POST /api/app/auth/logout` → 204.
   - `POST /api/app/auth/verify-email/resend` → 202.
-  - `POST /api/app/auth/totp/enroll` (staff only) → `{ otpauthUri }`; `POST /api/app/auth/totp/confirm` `{ code }` → `{ recoveryCodes: string[] }`; `POST /api/app/auth/totp/verify` `{ code }` → `{ ok: true }`.
+  - `POST /api/app/auth/totp/enroll` (any role, opt-in, AD-037) → `{ otpauthUri }`; `POST /api/app/auth/totp/disable` `{ code }` → `{ mfa: { enrolled: false, verified: false } }` (FND-136); `POST /api/app/auth/totp/confirm` `{ code }` → `{ recoveryCodes: string[] }`; `POST /api/app/auth/totp/verify` `{ code }` → `{ ok: true }`.
   - `GET /api/admin/session` → `{ role, sections }`.
 - **Dependencies**: security libraries, outbox, `@bravo/core` schemas.
 - **Reuses**: middleware chain.
@@ -320,7 +320,7 @@ All other copy and every class string stay as in the reference. Simulator logic 
 | Occupancy overlap | `23P01` → 409 `SLOT_TAKEN` (mapping ships now; first used by nucleo) | "Este horário acabou de ser reservado." |
 | Wrong credentials / lockout | 401 `INVALID_CREDENTIALS`; 429 + `Retry-After` | Generic message; lockout message with minutes |
 | Invalid/expired token | 400 `INVALID_TOKEN` | Page offers resend / new reset |
-| Missing MFA | 403 `MFA_ENROLLMENT_REQUIRED` / `MFA_REQUIRED` | Guard redirects to 2FA pages |
+| Second factor pending (user has TOTP on, session not verified) | 403 `MFA_REQUIRED` on `/admin/*` and on `/app/*` outside the allow-list (AD-037) | Guard redirects to `/login/2fa?next=` |
 | CSRF origin mismatch | 403 `CSRF_REJECTED` | Generic error toast (only attackers hit it) |
 | E-mail provider down | Outbox row `failed`; request succeeds | User can resend verification |
 | Google not configured / state mismatch | 404 `FEATURE_DISABLED` / 400 `INVALID_STATE` | Button hidden / login page shows "Não foi possível entrar com o Google." |
@@ -352,7 +352,7 @@ All other copy and every class string stay as in the reference. Simulator logic 
 | --- | --- | --- |
 | Session revocation | JWT carries `sid`; each authenticated request loads the session row | Logout and password reset must revoke immediately; one PK lookup is cheap (AD-021) |
 | Login lockout counter | Failed attempts counted in `rate_limit_buckets` keyed by sha256(e-mail); checked before verifying the password | Blocks brute force even with the right password (FND-54) without storing e-mails |
-| TOTP for reception | Mandatory, same flow as admin | AD-005 |
+| TOTP for reception | Optional for every role, same flow as admin and tenants (user decision 2026-10-28) | AD-037 (amends AD-005) |
 | Recovery codes | 10 codes, SHA-256 hashed in `user_totp.recovery_code_hashes` | Lockout recovery without support tickets |
 | Home simulator | Static port of the reference logic over factory defaults | Spec allows static Home; nucleo wires the real engine |
 | Quote modal | WhatsApp hand-off | No persistence before gestao; honest UX |
