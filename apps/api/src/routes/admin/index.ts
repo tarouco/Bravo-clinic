@@ -1,6 +1,7 @@
 import { Hono } from 'hono';
 import { requireRole } from '../../middleware/auth';
 import type { AppEnv } from '../../types';
+import { adminAuditRoutes } from './audit';
 import { adminBlockRoutes } from './blocks';
 import { adminBookingCancelRoutes } from './booking-cancel';
 import { adminBookingRescheduleRoutes } from './booking-reschedule';
@@ -27,6 +28,7 @@ import { adminSessionRoutes } from './session';
 import { adminSlotDiscountRoutes } from './slot-discounts';
 import { adminSubscriptionRoutes } from './subscriptions';
 import { adminSettingsRoutes } from './settings';
+import { adminUserRoutes } from './users';
 
 /** Everything under `/admin/*`; CSRF, auth and the staff + MFA guard are applied by `createApp`. */
 export function adminRoutes(): Hono<AppEnv> {
@@ -41,6 +43,10 @@ export function adminRoutes(): Hono<AppEnv> {
   app.use('/extra-services/*', requireRole('admin'));
   app.use('/quote-requests', requireRole('admin'));
   app.use('/quote-requests/*', requireRole('admin'));
+  // Usuários and the audit log too.
+  app.use('/users', requireRole('admin'));
+  app.use('/users/*', requireRole('admin'));
+  app.use('/audit', requireRole('admin'));
   app.route('/', adminSessionRoutes());
   app.route('/', adminCalendarRoutes());
   app.route('/', adminCalendarExceptionRoutes());
@@ -67,5 +73,7 @@ export function adminRoutes(): Hono<AppEnv> {
   app.route('/', adminExtraServiceRoutes());
   app.route('/', adminQuoteRequestRoutes());
   app.route('/', adminRoomRoutes());
+  app.route('/', adminUserRoutes());
+  app.route('/', adminAuditRoutes());
   return app;
 }

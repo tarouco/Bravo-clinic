@@ -64,6 +64,7 @@ const DESIGN_TABLE: [name: string, scope: 'read' | 'write', destructive: boolean
   ['rooms_list', 'read', false],
   ['categories_list', 'read', false],
   ['policies_get', 'read', false],
+  ['audit_list', 'read', false],
 ];
 
 let roomId = '';

@@ -1,6 +1,7 @@
-import { customerNotesSchema, idSchema, quoteStatusSchema } from '@bravo/core';
+import { auditQuerySchema, customerNotesSchema, idSchema, quoteStatusSchema } from '@bravo/core';
 import { z } from 'zod';
 import { withTransaction } from '../../db/client';
+import { listAuditLog } from '../../modules/audit/audit-query.service';
 import {
   getCustomerDetail,
   saveCustomerNotes,
@@ -82,6 +83,14 @@ export function operationsTools(): ToolDefinition[] {
       scope: 'read',
       input: z.object({}),
       run: (tc) => listAdminRooms(tc.deps.db),
+    }),
+    defineTool({
+      name: 'audit_list',
+      description:
+        'Consulta o log de auditoria, mais recentes primeiro (até 100 por página): filtros por usuário (actorId), origem (web, app, admin, mcp, job, system), prefixo da ação, entidade e período (from/to).',
+      scope: 'read',
+      input: auditQuerySchema,
+      run: (tc, input) => listAuditLog(tc.deps.db, input),
     }),
   ];
 }

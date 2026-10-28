@@ -867,12 +867,12 @@ T49 → T50
 - Skill: NONE
 
 **Done when**:
-- [ ] Tests assert invite creates passwordless user + 72 h token + e-mail; tenant promotion changes role; staff e-mail 409
-- [ ] Tests assert role change/disable revoke target sessions (next request 401), self-target 422, last active admin 409 `LAST_ADMIN`
-- [ ] Test asserts 2FA reset deletes `user_totp`, revokes sessions, requires justification
-- [ ] Tests assert audit filters (actor, origin `mcp`, action prefix, date range), newest first, page size ≤ 100, reception 403
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 11 tests pass
+- [x] Tests assert invite creates passwordless user + 72 h token + e-mail; tenant promotion changes role; staff e-mail 409
+- [x] Tests assert role change/disable revoke target sessions (next request 401), self-target 422, last active admin 409 `LAST_ADMIN`
+- [x] Test asserts 2FA reset deletes `user_totp`, revokes sessions, requires justification
+- [x] Tests assert audit filters (actor, origin `mcp`, action prefix, date range), newest first, page size ≤ 100, reception 403
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 11 tests pass
 
 **Tests**: integration
 **Gate**: full

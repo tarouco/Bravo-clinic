@@ -607,12 +607,12 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-107 | P1: Salas admin | Tasks | T22 | Implementing |
 | GES-108 | P1: Salas admin | Tasks | T1, T22, T36 | Implementing |
 | GES-109 | P1: Salas admin | Tasks | T36 | In Tasks |
-| GES-110 | P1: Usuários and audit log | Tasks | T24 | In Tasks |
-| GES-111 | P1: Usuários and audit log | Tasks | T24 | In Tasks |
-| GES-112 | P1: Usuários and audit log | Tasks | T24 | In Tasks |
-| GES-113 | P1: Usuários and audit log | Tasks | T24 | In Tasks |
-| GES-114 | P1: Usuários and audit log | Tasks | T24 | In Tasks |
-| GES-115 | P1: Usuários and audit log | Tasks | T24 | In Tasks |
+| GES-110 | P1: Usuários and audit log | Tasks | T24 | Implementing |
+| GES-111 | P1: Usuários and audit log | Tasks | T24 | Implementing |
+| GES-112 | P1: Usuários and audit log | Tasks | T24 | Implementing |
+| GES-113 | P1: Usuários and audit log | Tasks | T24 | Implementing |
+| GES-114 | P1: Usuários and audit log | Tasks | T24 | Implementing |
+| GES-115 | P1: Usuários and audit log | Tasks | T24 | Implementing |
 | GES-116 | P1: Usuários and audit log | Tasks | T37 | In Tasks |
 | GES-117 | P1: Reception restrictions end-to-end | Tasks | T44 | In Tasks |
 | GES-118 | P1: Reception restrictions end-to-end | Tasks | T44 | In Tasks |
