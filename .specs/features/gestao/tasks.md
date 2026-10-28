@@ -925,11 +925,11 @@ T49 → T50
 - Skill: NONE
 
 **Done when**:
-- [ ] Tests (injected `now`) assert e-mails to every active admin on local 2026-10-01 only once (re-run → none), nothing on 2026-10-02
-- [ ] Tests assert import inserts a new national date with `source = 'brasilapi'`, skips a date that already has a seeded national holiday, never changes `is_closed`
-- [ ] Tests assert 500/timeout/invalid JSON for one year leaves its rows unchanged, processes the other year, records the error in `job_runs`
-- [ ] Gate check passes: `npm run typecheck && npm test -w apps/api`
-- [ ] Test count: ≥ 7 tests pass
+- [x] Tests (injected `now`) assert e-mails to every active admin on local 2026-10-01 only once (re-run → none), nothing on 2026-10-02
+- [x] Tests assert import inserts a new national date with `source = 'brasilapi'`, skips a date that already has a seeded national holiday, never changes `is_closed`
+- [x] Tests assert 500/timeout/invalid JSON for one year leaves its rows unchanged, processes the other year, records the error in `job_runs`
+- [x] Gate check passes: `npm run typecheck && npm test -w apps/api`
+- [x] Test count: ≥ 7 tests pass
 
 **Tests**: integration
 **Gate**: full

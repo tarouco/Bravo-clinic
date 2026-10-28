@@ -627,9 +627,9 @@ After `nucleo` and `receita`, the clinic can sell rooms, packages and fixed sche
 | GES-127 | P1: LGPD self-service | Tasks | T25 | Implementing |
 | GES-128 | P1: LGPD self-service | Tasks | T41 | In Tasks |
 | GES-129 | P1: LGPD self-service | Tasks | T9 | Implementing |
-| GES-130 | P1: Holiday jobs | Tasks | T26 | In Tasks |
-| GES-131 | P1: Holiday jobs | Tasks | T26 | In Tasks |
-| GES-132 | P1: Holiday jobs | Tasks | T26 | In Tasks |
+| GES-130 | P1: Holiday jobs | Tasks | T26 | Implementing |
+| GES-131 | P1: Holiday jobs | Tasks | T26 | Implementing |
+| GES-132 | P1: Holiday jobs | Tasks | T26 | Implementing |
 | GES-133 | P1: Analytics funnel | Tasks | T42 | In Tasks |
 | GES-134 | P1: Analytics funnel | Tasks | T42 | In Tasks |
 | GES-135 | P1: Analytics funnel | Tasks | T42 | In Tasks |
