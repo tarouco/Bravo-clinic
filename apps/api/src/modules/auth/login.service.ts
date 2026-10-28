@@ -82,7 +82,8 @@ export async function login(
 
   const role = user.role as UserPayload['role'];
   const totpConfirmed = found.totpConfirmedAt !== null;
-  const mfaRequired = isStaff(role) && totpConfirmed;
+  // Opt-in for every role (AD-037): whoever turned TOTP on finishes the second factor.
+  const mfaRequired = totpConfirmed;
   const session = await withTransaction(db, async (tx) => {
     await tx.update(users).set({ lastLoginAt: now }).where(eq(users.id, user.id));
     const issued = await issueSession(

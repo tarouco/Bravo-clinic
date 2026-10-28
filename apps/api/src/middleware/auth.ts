@@ -21,17 +21,46 @@ export function requireAuth(): MiddlewareHandler<AppEnv> {
   };
 }
 
-/** Admin or reception with confirmed TOTP and an MFA-verified session. Runs after `requireAuth`. */
+/**
+ * Endpoints a session still waiting for its second factor may call: the session query the web
+ * app reads, the 2FA step itself and logout (AD-037).
+ */
+export const MFA_PENDING_ALLOWED = new Set([
+  'GET /app/me',
+  'POST /app/auth/totp/verify',
+  'POST /app/auth/logout',
+]);
+
+const mfaRequired = () => forbidden('MFA_REQUIRED', 'Confirme a verificação em duas etapas');
+
+/**
+ * Two-factor authentication is optional for every role (AD-037, user decision 2026-10-28): a user
+ * with a confirmed TOTP must finish the second factor before anything outside
+ * `MFA_PENDING_ALLOWED`; everyone else passes. Runs after `requireAuth`.
+ */
+export function requireMfaIfEnrolled(): MiddlewareHandler<AppEnv> {
+  return async (c, next) => {
+    const auth = c.get('auth');
+    if (
+      auth.totpConfirmed &&
+      !auth.mfaVerified &&
+      !MFA_PENDING_ALLOWED.has(`${c.req.method} ${c.req.path}`)
+    ) {
+      throw mfaRequired();
+    }
+    await next();
+  };
+}
+
+/**
+ * Admin or reception. Staff without TOTP pass with a password session; staff with a confirmed
+ * TOTP need an MFA-verified session (AD-037). Runs after `requireAuth`.
+ */
 export function requireStaff(): MiddlewareHandler<AppEnv> {
   return async (c, next) => {
     const auth = c.get('auth');
     if (!isStaff(auth.role)) throw forbidden();
-    if (!auth.totpConfirmed) {
-      throw forbidden('MFA_ENROLLMENT_REQUIRED', 'Cadastre a verificação em duas etapas');
-    }
-    if (!auth.mfaVerified) {
-      throw forbidden('MFA_REQUIRED', 'Confirme a verificação em duas etapas');
-    }
+    if (auth.totpConfirmed && !auth.mfaVerified) throw mfaRequired();
     await next();
   };
 }

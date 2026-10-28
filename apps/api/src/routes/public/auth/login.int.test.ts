@@ -200,6 +200,25 @@ describe('POST /public/auth/login: staff (FND-58, FND-66)', () => {
     });
   });
 
+  it('asks a tenant who turned TOTP on for the second factor too, without a staff audit row (FND-137)', async () => {
+    const tenant = await createUser(db, {
+      email: 'ana@exemplo.com',
+      password: PASSWORD,
+      totp: true,
+    });
+
+    const result = await login({ email: 'ana@exemplo.com', password: PASSWORD });
+
+    expect(result.status).toBe(200);
+    const body = result.body as { user: { mfa: unknown; role: string }; mfaRequired: boolean };
+    expect(body.mfaRequired).toBe(true);
+    expect(body.user).toMatchObject({ role: 'tenant', mfa: { enrolled: true, verified: false } });
+    expect(maxAgeOf(result.headers)).toBe('2592000');
+    const [session] = await db.select().from(sessions);
+    expect(session).toMatchObject({ userId: tenant.id, mfaVerifiedAt: null });
+    expect(await db.select().from(auditLog)).toHaveLength(0);
+  });
+
   it('does not ask for a second factor before TOTP is confirmed, but still audits the staff login', async () => {
     const admin = await createUser(db, {
       role: 'admin',
