@@ -2,9 +2,9 @@ import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { Route, Routes } from 'react-router-dom';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeAll, describe, expect, it } from 'vitest';
 import { registerRevenueSlots } from '../../extensions/receita';
-import { resetSlots } from '../../extensions/slots';
+import { preloadLazySlots, resetSlots } from '../../extensions/slots';
 import {
   ReservationsPage,
   ReservationsSlotTab,
@@ -23,6 +23,12 @@ import {
   subscriptionAwaiting,
 } from '../purchases/fixtures';
 import { AssinaturasTab } from './AssinaturasTab';
+
+// Slot bodies load lazily (GES-143): load them once up front, so a busy machine spends the
+// module loading time here rather than inside a test's wait.
+beforeAll(async () => {
+  await preloadLazySlots();
+}, 120_000);
 
 const ADMIN_ONLY_BUTTONS = [
   'Ajustar saldo',

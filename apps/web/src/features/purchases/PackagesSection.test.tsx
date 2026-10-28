@@ -1,14 +1,20 @@
 import { screen, waitFor } from '@testing-library/react';
 import { http, HttpResponse } from 'msw';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeAll, describe, expect, it } from 'vitest';
 import { registerRevenueSlots } from '../../extensions/receita';
-import { resetSlots } from '../../extensions/slots';
+import { preloadLazySlots, resetSlots } from '../../extensions/slots';
 import { PricingPage } from '../../pages/public/PricingPage';
 import { server } from '../../test/msw/server';
 import { renderWithProviders } from '../../test/render-with-providers';
 import { spaced } from '../../test/text';
 import { meioTurno, pacote20h, packageOffers } from './fixtures';
 import { PackagesSection } from './PackagesSection';
+
+// Slot bodies load lazily (GES-143): load them once up front, so a busy machine spends the
+// module loading time here rather than inside a test's wait.
+beforeAll(async () => {
+  await preloadLazySlots();
+}, 120_000);
 
 afterEach(() => {
   resetSlots();

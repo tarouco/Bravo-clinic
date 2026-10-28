@@ -3,9 +3,9 @@ import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { Route, Routes } from 'react-router-dom';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { registerRevenueSlots } from '../../extensions/receita';
-import { resetSlots } from '../../extensions/slots';
+import { preloadLazySlots, resetSlots } from '../../extensions/slots';
 import { ReservationsCalendar } from '../../pages/admin/reservations/ReservationsCalendar';
 import { ReservationsPage } from '../../pages/admin/reservations/ReservationsPage';
 import { calendarEvents, ID } from '../../test/fixtures/nucleo';
@@ -15,6 +15,12 @@ import { renderWithProviders } from '../../test/render-with-providers';
 import { stubStaffSession } from '../../test/session';
 import { RID } from '../purchases/fixtures';
 import { closeSlotDiscountDialog } from './slot-discount-request';
+
+// Slot bodies load lazily (GES-143): load them once up front, so a busy machine spends the
+// module loading time here rather than inside a test's wait.
+beforeAll(async () => {
+  await preloadLazySlots();
+}, 120_000);
 
 // Only `Date` is faked, so timers, MSW and Testing Library keep running normally.
 beforeEach(() => {

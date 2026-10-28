@@ -12,7 +12,6 @@ import {
 import { HomePage } from './pages/public/home/HomePage';
 import { NotFoundPage } from './pages/public/NotFoundPage';
 import { ContactPage } from './pages/public/ContactPage';
-import { ExtrasPage } from './pages/public/ExtrasPage';
 import { LegalPage } from './pages/public/LegalPage';
 import { PoliciesPage } from './pages/public/PoliciesPage';
 import { PricingPage } from './pages/public/PricingPage';
@@ -156,6 +155,8 @@ const PreReservationPage = lazyPage(() =>
 const SandboxCheckoutPage = lazyPage(() =>
   import('./pages/public/SandboxCheckoutPage').then((m) => m.SandboxCheckoutPage),
 );
+// The quote form (and its zod schema) stays out of the entry chunk.
+const ExtrasPage = lazyPage(() => import('./pages/public/ExtrasPage').then((m) => m.ExtrasPage));
 const SubscribePage = lazyPage(() =>
   import('./pages/public/SubscribePage').then((m) => m.SubscribePage),
 );
