@@ -1445,10 +1445,10 @@ T49 → T50
 - Skill: `run`
 
 **Done when**:
-- [ ] Spec passes locally and in CI: room → slot → signup → policy → sandbox approve → "Confirmada" → outbox `.ics` UID = `ics_uid` → reschedule → new `.ics` same UID, SEQUENCE + 1 → personal feed shows the new DTSTART
-- [ ] CI workflow runs `npm run e2e -w apps/web` after unit tests (postgres:17 service)
-- [ ] Gate check passes: `npm run typecheck && npm run e2e -w apps/web`
-- [ ] Test count: ≥ 1 e2e spec (1 test, ≥ 10 assertions) passes
+- [x] Spec passes locally and in CI: room → slot → signup → policy → sandbox approve → "Confirmada" → outbox `.ics` UID = `ics_uid` → reschedule → new `.ics` same UID, SEQUENCE + 1 → personal feed shows the new DTSTART
+- [x] CI workflow runs `npm run e2e -w apps/web` after unit tests (postgres:17 service)
+- [x] Gate check passes: `npm run typecheck && npm run e2e -w apps/web`
+- [x] Test count: ≥ 1 e2e spec (1 test, ≥ 10 assertions) passes
 
 **Tests**: e2e
 **Gate**: e2e

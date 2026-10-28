@@ -19,7 +19,8 @@ import { assertNotProduction } from './require-test-db';
 
 const rootEnvFile = fileURLToPath(new URL('../../../.env', import.meta.url));
 export const E2E_API_PORT = 8787;
-export const E2E_WEB_URL = 'http://localhost:5173';
+/** Origin of the web app under test (CSRF and e-mail links); a local run on another port sets it. */
+export const E2E_WEB_URL = process.env.E2E_WEB_URL ?? 'http://localhost:5173';
 
 export const E2E_ADMIN = {
   email: 'admin.e2e@bravoclinic.test',
