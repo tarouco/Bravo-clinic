@@ -88,11 +88,26 @@
       })();
     </script>
 
-    <!-- GES-143: on /salas and /salas/:slug, start the room request before the bundle runs and
-         preload the photo the page paints first (same srcset/sizes as its <img>). src/lib/api.ts
-         takes the response over. Its sha256 is in the netlify.toml CSP (static-seo.test.ts). -->
+    <!-- GES-143: on / preload the hero (the tour poster on phones, the room photo above 768 px).
+         On /salas and /salas/:slug, start the room request before the bundle runs and preload
+         the photo the page paints first (same srcset/sizes as its <img>). src/lib/api.ts takes
+         the response over. Its sha256 is in the netlify.toml CSP (static-seo.test.ts). -->
     <script>
       (function () {
+        function preload(href, attributes) {
+          var link = document.createElement('link');
+          link.rel = 'preload';
+          link.as = 'image';
+          link.href = href;
+          link.setAttribute('fetchpriority', 'high');
+          for (var name in attributes) link.setAttribute(name, attributes[name]);
+          document.head.appendChild(link);
+        }
+        if (location.pathname === '/') {
+          preload('/images/tour-poster.webp', { media: '(max-width: 767px)' });
+          preload('/images/sala-principal.webp', { media: '(min-width: 768px)' });
+          return;
+        }
         var match = /^\/salas(?:\/([a-z0-9-]{1,60}))?\/?$/.exec(location.pathname);
         if (!match || typeof fetch !== 'function') return;
         var slug = match[1];
@@ -112,22 +127,18 @@
               ? (data.photos && data.photos[0]) || data.cover
               : data.items && data.items[0] && data.items[0].cover;
             var href = (photo && photo.url) || '/room-placeholder.webp';
-            var link = document.createElement('link');
-            link.rel = 'preload';
-            link.as = 'image';
-            link.href = href;
-            link.setAttribute('fetchpriority', 'high');
-            if (/-large\.webp$/.test(href)) {
-              link.setAttribute(
-                'imagesrcset',
-                href.replace(/-large\.webp$/, '-small.webp') + ' 800w, ' + href + ' 1600w',
-              );
-              link.setAttribute(
-                'imagesizes',
-                slug ? '(min-width: 1024px) 60vw, 100vw' : '(min-width: 1024px) 33vw, 100vw',
-              );
-            }
-            document.head.appendChild(link);
+            preload(
+              href,
+              /-large\.webp$/.test(href)
+                ? {
+                    imagesrcset:
+                      href.replace(/-large\.webp$/, '-small.webp') + ' 800w, ' + href + ' 1600w',
+                    imagesizes: slug
+                      ? '(min-width: 1024px) 60vw, 100vw'
+                      : '(min-width: 1024px) 33vw, 100vw',
+                  }
+                : {},
+            );
           })
           .catch(function () {});
       })();
