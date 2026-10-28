@@ -51,11 +51,11 @@ const checks = [
   [
     'home page',
     async () => {
-      // SPEC_DEVIATION: FND-129 asks for the Home to carry "the hero headline", but the hero renders
-      // client-side (React SPA), so it is absent from the served HTML and cannot be asserted here.
-      // The static, server-delivered proof of the Home is its <title> and the LocalBusiness JSON-LD.
+      // FND-129: the Home is prerendered at build time (GES-143), so the served HTML carries the
+      // hero headline next to the <title> and the LocalBusiness JSON-LD.
       const { status, body } = await get('/');
       const title = /<title[^>]*>([^<]*)<\/title>/i.exec(body)?.[1] ?? '';
+      const headline = /<h1[^>]*>Saúde, beleza e bem-estar em um só lugar\.<\/h1>/.test(body);
       const jsonLd = [
         ...body.matchAll(/<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/gi),
       ]
@@ -67,7 +67,9 @@ const checks = [
           }
         })
         .some((data) => data?.['@type'] === 'LocalBusiness');
-      return status === 200 && title.includes('Bravô Clinic – Salas Inteligentes') && jsonLd;
+      return (
+        status === 200 && title.includes('Bravô Clinic – Salas Inteligentes') && headline && jsonLd
+      );
     },
   ],
   // gestao (design §Hardening, GES-144).
