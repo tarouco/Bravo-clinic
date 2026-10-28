@@ -204,3 +204,63 @@ describe('checkout add-on rejections (GES-89)', () => {
     expect([res.status, res.error?.details?.[0]?.path]).toEqual([422, 'addons.extras']);
   });
 });
+
+describe('reschedule keeps the extras', () => {
+  it('prices the new slot with the frozen extras: total 32000, no credit, items untouched', async () => {
+    const filming = await service({ name: 'Filmagem' });
+    const { cookie } = await createTenant(db, { now: NOW });
+    const created = await book(cookie, [{ serviceId: filming.id, quantity: 2 }], 32_000);
+    expect(created.status).toBe(201);
+    const id = (created.body as { id: string }).id;
+    // The sinal was paid; the catalog price changes before the move.
+    await db
+      .update(bookings)
+      .set({ status: 'confirmed', paidCents: 16_000, holdExpiresAt: null })
+      .where(eq(bookings.id, id));
+    await db
+      .update(extraServices)
+      .set({ referencePriceCents: 12_000 })
+      .where(eq(extraServices.id, filming.id));
+    // Wednesday 2027-03-10 14:00–16:00: same weekday rate as the original Tuesday.
+    const target = { date: '2027-03-10', startMinute: 840, endMinute: 960 };
+
+    const quoted = await send(app(), 'POST', `/app/bookings/${id}/reschedule/quote`, {
+      cookie,
+      body: target,
+    });
+    expect(quoted.status).toBe(200);
+    const result = quoted.body as {
+      allowed: boolean;
+      newQuote: { grossCents: number; extrasCents: number; netCents: number };
+      settlement: { payNowCents: number; creditCents: number; newTotalCents: number };
+    };
+    expect(result.allowed).toBe(true);
+    expect(result.newQuote).toMatchObject({
+      grossCents: 16_000,
+      extrasCents: 16_000,
+      netCents: 32_000,
+    });
+    expect(result.settlement).toMatchObject({
+      payNowCents: 0,
+      creditCents: 0,
+      newTotalCents: 32_000,
+    });
+
+    const moved = await send(app(), 'POST', `/app/bookings/${id}/reschedule`, {
+      cookie,
+      body: target,
+      headers: { 'Idempotency-Key': randomUUID() },
+    });
+    expect(moved.status).toBe(200);
+    expect((moved.body as { creditCents: number }).creditCents).toBe(0);
+    const [booking] = await db.select().from(bookings).where(eq(bookings.id, id));
+    expect(booking).toMatchObject({ grossCents: 16_000, totalCents: 32_000, paidCents: 16_000 });
+    const items = await db
+      .select()
+      .from(bookingExtraItems)
+      .where(eq(bookingExtraItems.bookingId, id));
+    expect(items).toEqual([
+      expect.objectContaining({ quantity: 2, unitPriceCents: 8000, amountCents: 16_000 }),
+    ]);
+  });
+});

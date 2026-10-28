@@ -121,10 +121,12 @@ async function getBlob(path: string, options: RequestOptions = {}): Promise<Blob
 
 /**
  * PUT of one raw file (expense attachment, room photo variant): the body is the file itself and
- * the content type its own media type, which the API checks against the magic bytes. The answer
- * is JSON, or empty for a 204.
+ * the content type its own media type, which the API checks against the magic bytes. A named
+ * `File` also sends its name, URI-encoded, in `X-File-Name` (the API shows it for the
+ * attachment). The answer is JSON, or empty for a 204.
  */
 async function upload<T>(path: string, file: Blob, options: RequestOptions = {}): Promise<T> {
+  const name = file instanceof File ? file.name : '';
   let response: Response;
   try {
     response = await fetch(path, {
@@ -133,6 +135,7 @@ async function upload<T>(path: string, file: Blob, options: RequestOptions = {})
       headers: {
         Accept: 'application/json',
         'Content-Type': file.type || 'application/octet-stream',
+        ...(name !== '' && { 'X-File-Name': encodeURIComponent(name) }),
       },
       body: file,
       ...(options.signal ? { signal: options.signal } : {}),

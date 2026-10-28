@@ -1,12 +1,13 @@
 import { ceilDiv, extrasAddonSchema, formatBRL, type Cents } from '@bravo/core';
-import { inArray } from 'drizzle-orm';
+import { eq, inArray } from 'drizzle-orm';
 import { bookingExtraItems, extraServices } from '../../db/schema';
-import type { CheckoutStep, QuoteDraft } from '../../extensions/registry';
+import type { CheckoutStep, QuoteContext, QuoteDraft } from '../../extensions/registry';
 import { AppError, type ErrorDetail } from '../../lib/errors';
 
 // Checkout add-on `extras` (nucleo R6, order 300; GES-88, GES-89): online-sold extra services are
 // priced at their unit price × quantity and added to the booking total before the deposit/balance
-// split; `persist` freezes each line in `booking_extra_items`.
+// split; `persist` freezes each line in `booking_extra_items`. A reschedule keeps those frozen
+// lines: the moved booking is priced with the same extras at the same prices.
 
 /** One priced line, kept in `draft.extras[].ref` and shown in `Quote.extensions.extras`. */
 export interface ExtraLine {
@@ -30,13 +31,50 @@ function lineLabel(line: ExtraLine): string {
 const isExtraLine = (ref: unknown): ref is ExtraLine =>
   typeof ref === 'object' && ref !== null && 'serviceId' in ref && 'unitPriceCents' in ref;
 
+function withLines(draft: QuoteDraft, lines: ExtraLine[]): QuoteDraft {
+  if (lines.length === 0) return draft;
+  return {
+    ...draft,
+    extras: [
+      ...draft.extras,
+      ...lines.map((line) => ({
+        label: lineLabel(line),
+        amountCents: line.amountCents,
+        ref: line,
+      })),
+    ],
+    extensions: { ...draft.extensions, extras: lines },
+  };
+}
+
+/** The lines frozen with a booking at checkout, oldest first. */
+async function frozenLines(ctx: QuoteContext, bookingId: string): Promise<ExtraLine[]> {
+  const rows = await ctx.db
+    .select()
+    .from(bookingExtraItems)
+    .where(eq(bookingExtraItems.bookingId, bookingId))
+    .orderBy(bookingExtraItems.createdAt, bookingExtraItems.id);
+  return rows.map((row) => ({
+    serviceId: row.serviceId,
+    serviceName: row.serviceName,
+    unit: row.unit as ExtraLine['unit'],
+    quantity: row.quantity,
+    unitPriceCents: row.unitPriceCents,
+    amountCents: row.amountCents,
+  }));
+}
+
 export const extrasStep: CheckoutStep = {
   name: 'extras',
   order: 300,
 
   async apply(ctx, draft): Promise<QuoteDraft> {
     const raw = ctx.request.addons?.['extras'];
-    if (raw === undefined) return draft;
+    if (raw === undefined) {
+      // A reschedule target is priced with the extras the booking already bought.
+      if (ctx.rescheduledBookingId === undefined) return draft;
+      return withLines(draft, await frozenLines(ctx, ctx.rescheduledBookingId));
+    }
     const parsed = extrasAddonSchema.safeParse(raw);
     if (!parsed.success) {
       throw invalid(
@@ -104,18 +142,7 @@ export const extrasStep: CheckoutStep = {
     });
     if (details.length > 0) throw invalid(details);
 
-    return {
-      ...draft,
-      extras: [
-        ...draft.extras,
-        ...lines.map((line) => ({
-          label: lineLabel(line),
-          amountCents: line.amountCents,
-          ref: line,
-        })),
-      ],
-      extensions: { ...draft.extensions, extras: lines },
-    };
+    return withLines(draft, lines);
   },
 
   /** Freezes name, unit and unit price of each line with the booking (GES-88). */

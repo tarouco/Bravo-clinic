@@ -215,6 +215,9 @@ export async function buildQuote(
     request,
     settings,
     categories,
+    ...(options.excludeBookingId !== undefined && {
+      rescheduledBookingId: options.excludeBookingId,
+    }),
   };
   let draft: QuoteDraft = {
     segments,

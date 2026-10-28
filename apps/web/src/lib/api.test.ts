@@ -141,6 +141,19 @@ describe('api.upload', () => {
     expect(new Headers(init.headers).get('Content-Type')).toBe('application/pdf');
   });
 
+  it('sends the URI-encoded name of a File in X-File-Name, and none for a bare Blob', async () => {
+    const fetchMock = vi.fn().mockResolvedValue(new Response(null, { status: 204 }));
+    vi.stubGlobal('fetch', fetchMock);
+
+    await api.upload('/x', new File(['x'], 'nota fiscal ç.pdf', { type: 'application/pdf' }));
+    await api.upload('/y', new Blob(['x'], { type: 'image/webp' }));
+
+    const headersOf = (call: number) =>
+      new Headers((fetchMock.mock.calls[call] as [string, RequestInit])[1].headers);
+    expect(headersOf(0).get('X-File-Name')).toBe('nota%20fiscal%20%C3%A7.pdf');
+    expect(headersOf(1).has('X-File-Name')).toBe(false);
+  });
+
   it('answers undefined for a 204 and throws the ApiError of a 413', async () => {
     const file = new File(['x'], 'a.png', { type: 'image/png' });
     vi.stubGlobal('fetch', vi.fn().mockResolvedValueOnce(new Response(null, { status: 204 })));

@@ -21,7 +21,7 @@ interface Calls {
   posts: unknown[];
   patches: { id: string; body: unknown }[];
   deletes: string[];
-  puts: { id: string; type: string | null; text: string }[];
+  puts: { id: string; type: string | null; name: string | null; text: string }[];
 }
 
 function stubApi(overrides: { list?: unknown } = {}): Calls {
@@ -52,6 +52,7 @@ function stubApi(overrides: { list?: unknown } = {}): Calls {
       calls.puts.push({
         id: String(params['id']),
         type: request.headers.get('Content-Type'),
+        name: request.headers.get('X-File-Name'),
         text: await request.text(),
       });
       return HttpResponse.json(expenses.items[1]);
@@ -203,6 +204,7 @@ describe('Expense form (GES-11, GES-16)', () => {
     expect(calls.puts[0]).toMatchObject({
       id: 'e9999999-9999-4999-8999-999999999999',
       type: 'application/pdf',
+      name: 'nota.pdf',
     });
     expect(await screen.findByText('Despesa criada.')).toBeInTheDocument();
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();

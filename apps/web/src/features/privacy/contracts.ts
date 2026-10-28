@@ -7,7 +7,8 @@ export const consentSchema = z.object({
   id: z.string().min(1),
   /** `booking_policy`, `recurring_charge`, `subscription_terms`, ... */
   kind: z.string().min(1),
-  version: z.number().int().min(1),
+  /** Stored text such as `policy-v1` or `recurring-2026-10` (gestao Lane A notes, T25). */
+  version: z.string().min(1),
   acceptedAt: z.string().min(1),
 });
 export type Consent = z.infer<typeof consentSchema>;

@@ -21,12 +21,16 @@ import type { AppDeps, AppEnv } from './types';
 /** Builds the API. Dependencies are injectable so tests can replace db, time, fetch and env. */
 export function createApp(overrides: Partial<AppDeps> = {}): Hono<AppEnv> {
   const env = overrides.env ?? getEnv();
-  const deps: AppDeps = {
+  const base = {
     now: overrides.now ?? (() => new Date()),
     fetch: overrides.fetch ?? globalThis.fetch,
     env,
     db: overrides.db ?? getDb(),
-    registry: overrides.registry ?? buildRegistry(),
+    ...(overrides.webPush !== undefined && { webPush: overrides.webPush }),
+  };
+  const deps: AppDeps = {
+    ...base,
+    registry: overrides.registry ?? buildRegistry(base),
     storage: overrides.storage ?? createS3Storage(env),
     ...(overrides.googleJwks !== undefined && { googleJwks: overrides.googleJwks }),
     ...(overrides.verifyTrigger !== undefined && { verifyTrigger: overrides.verifyTrigger }),

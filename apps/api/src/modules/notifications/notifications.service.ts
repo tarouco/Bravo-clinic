@@ -4,9 +4,9 @@ import {
   settingDefaults,
   type NotificationEvent,
 } from '@bravo/core';
-import { eq } from 'drizzle-orm';
+import { and, eq, inArray } from 'drizzle-orm';
 import { withTransaction, type Db, type Tx } from '../../db/client';
-import { notificationRecipients, settings, users } from '../../db/schema';
+import { emailOutbox, notificationRecipients, settings, users } from '../../db/schema';
 import {
   renderStaffEmail,
   systemTestTemplate,
@@ -116,7 +116,11 @@ async function emitTenant(tx: Tx, event: EmitEvent): Promise<EmitResult> {
   return { outboxIds, pushIntents };
 }
 
-async function emitStaff(tx: Tx, event: EmitEvent, env: Env): Promise<EmitResult> {
+async function emitStaff(
+  tx: Tx,
+  event: EmitEvent,
+  env: Pick<Env, 'APP_BASE_URL'>,
+): Promise<EmitResult> {
   const def = notificationCatalog[event.name];
   if (def.staffToggle !== undefined && !(await staffToggleOn(tx, def.staffToggle))) return empty();
   const recipients =
@@ -154,15 +158,60 @@ async function emitStaff(tx: Tx, event: EmitEvent, env: Env): Promise<EmitResult
  * e-mail to the user (or `to`) and collect a push intent when the catalog defines one. Staff
  * events check their `notifications.events` toggle, then queue `staff.<event>` once per active
  * recipient with dedupe key `staff:<event>:<entityId>:<recipientId>`, so a repeat queues nothing.
+ * Staff templates build links on `APP_BASE_URL`, so staff events need `deps.env`.
  */
 export async function emit(
   tx: Tx,
   _ctx: RequestContext,
   event: EmitEvent,
-  deps: { env: Env },
+  deps?: { env: Pick<Env, 'APP_BASE_URL'> },
 ): Promise<EmitResult> {
   const def = notificationCatalog[event.name];
-  return def.audience === 'staff' ? emitStaff(tx, event, deps.env) : emitTenant(tx, event);
+  if (def.audience === 'tenant') return emitTenant(tx, event);
+  if (deps === undefined) throw new Error(`emit: staff event ${event.name} needs the env`);
+  return emitStaff(tx, event, deps.env);
+}
+
+/** Context of notices raised without a request of their own (feature mailers, staff port). */
+export const SYSTEM_CONTEXT: RequestContext = {
+  actorUserId: null,
+  actorRole: null,
+  origin: 'system',
+  ip: null,
+  requestId: null,
+};
+
+// Pushes of the e-mails queued by the feature mailers (gestao T43, R7), held by outbox id until
+// the caller dispatches those e-mails after commit (`dispatchNotifications`). The mailers return
+// only the outbox id, so this is how their push reaches the after-commit step. Bounded, so the
+// entries of rolled-back transactions cannot pile up.
+const heldPushes = new Map<string, PushIntent[]>();
+const MAX_HELD_PUSHES = 1_000;
+
+function holdPushes(outboxId: string, intents: PushIntent[]): void {
+  if (intents.length === 0) return;
+  // A repeat (same dedupe key, same row) replaces the held push instead of adding a second one.
+  heldPushes.delete(outboxId);
+  heldPushes.set(outboxId, intents);
+  for (const oldest of heldPushes.keys()) {
+    if (heldPushes.size <= MAX_HELD_PUSHES) break;
+    heldPushes.delete(oldest);
+  }
+}
+
+/**
+ * The tenant e-mail of a feature mailer (`bookingMailer`, `revenueMailer`): emits the event in the
+ * caller's transaction, holds its push for `dispatchNotifications` and returns the outbox id.
+ */
+export async function emitTenantMail(
+  tx: Tx,
+  event: EmitEvent & { to: string; email: NotificationEmail },
+): Promise<string> {
+  const result = await emit(tx, SYSTEM_CONTEXT, event);
+  const [outboxId] = result.outboxIds;
+  if (outboxId === undefined) throw new Error(`emit queued no e-mail for ${event.name}`);
+  holdPushes(outboxId, result.pushIntents);
+  return outboxId;
 }
 
 /** Sends what `emit` queued, after the transaction committed. Never throws. */
@@ -175,6 +224,38 @@ export async function afterCommit(result: EmitResult, deps: NotificationDeps): P
       error: { name: (error as Error).name, message: (error as Error).message },
     });
   }
+}
+
+/**
+ * After-commit dispatch of outbox ids collected from the feature mailers: sends the e-mails and the
+ * pushes held for them. A push goes out only with an e-mail still `pending`, so a repeated notice
+ * (deduplicated to an e-mail already sent) pushes nothing. Never throws.
+ */
+export async function dispatchNotifications(
+  deps: NotificationDeps,
+  outboxIds: string[],
+): Promise<void> {
+  const ids = [...new Set(outboxIds)];
+  const pushIntents: PushIntent[] = [];
+  try {
+    const held = ids.filter((id) => heldPushes.has(id));
+    if (held.length > 0) {
+      const pending = await deps.db
+        .select({ id: emailOutbox.id })
+        .from(emailOutbox)
+        .where(and(inArray(emailOutbox.id, held), eq(emailOutbox.status, 'pending')));
+      const pendingIds = new Set(pending.map((row) => row.id));
+      for (const id of held) {
+        if (pendingIds.has(id)) pushIntents.push(...(heldPushes.get(id) ?? []));
+        heldPushes.delete(id);
+      }
+    }
+  } catch (error) {
+    logger.error('held push lookup failed', {
+      error: { name: (error as Error).name, message: (error as Error).message },
+    });
+  }
+  await afterCommit({ outboxIds: ids, pushIntents }, deps);
 }
 
 /**
