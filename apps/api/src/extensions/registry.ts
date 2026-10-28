@@ -39,6 +39,11 @@ export interface QuoteContext {
   request: QuoteRequest;
   settings: SettingsValues;
   categories: HourlyCategory[];
+  /**
+   * Set when a reschedule prices its target: the booking being moved, so a step can carry the
+   * add-ons that booking already holds over to the new slot (they are not sent again).
+   */
+  rescheduledBookingId?: string;
 }
 
 export interface QuoteDraft {
