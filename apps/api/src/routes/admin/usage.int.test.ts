@@ -132,6 +132,35 @@ describe('usage warnings (GES-138)', () => {
     // 1 of 1 e-mail today.
     expect(body.emails.warning).toBe(true);
   });
+
+  it.each([
+    [4000, 80, true],
+    [3950, 79, false],
+  ])('storage at %i of 5000 bytes (%i %%) answers warning: %s', async (bytes, percent, warning) => {
+    const admin = await createStaff(db, 'admin', NOW);
+    await withTransaction(db, (tx) =>
+      saveSetting(
+        tx,
+        'usage.limits',
+        {
+          dbBytes: 1_073_741_824,
+          storageBytes: 5000,
+          emailsPerMonth: 3000,
+          emailsPerDay: 100,
+        },
+        null,
+      ),
+    );
+    const storage = memoryStorage();
+    await storage.put('room-photos', 'rooms/a/1-large.webp', new Uint8Array(bytes), {
+      contentType: 'image/webp',
+    });
+
+    const res = await send(buildApp(storage), 'GET', '/admin/usage', { cookie: admin.cookie });
+
+    const body = res.body as { storage: { bytes: number; percent: number; warning: boolean } };
+    expect(body.storage).toMatchObject({ bytes, percent, warning });
+  });
 });
 
 describe('usage with storage down (GES-139)', () => {
