@@ -1,9 +1,10 @@
+import { totpDisableResponseSchema } from '@bravo/core';
 import { QueryClientProvider, type QueryClient } from '@tanstack/react-query';
 import { act, renderHook, waitFor } from '@testing-library/react';
 import type { ReactNode } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { createQueryClient, SESSION_KEY } from '../../lib/query-client';
-import { safeNextPath, useLogin, useLogout, useTotpVerify } from './hooks';
+import { safeNextPath, useLogin, useLogout, useTotpDisable, useTotpVerify } from './hooks';
 import type { Session } from './useSession';
 
 const tenant: Session = {
@@ -110,5 +111,49 @@ describe('useTotpVerify', () => {
     const [url, init] = fetchMock.mock.calls[0] as [string, RequestInit];
     expect(url).toBe('/api/app/auth/totp/verify');
     expect(init.body).toBe(JSON.stringify({ code: '123456' }));
+  });
+});
+
+describe('useTotpDisable (FND-136)', () => {
+  it('posts the code and mirrors the answer in the cached session: TOTP off, not verified', async () => {
+    const fetchMock = stubFetch(
+      200,
+      totpDisableResponseSchema.parse({ mfa: { enrolled: false, verified: false } }),
+    );
+    const { client, wrapper } = setup();
+    client.setQueryData(SESSION_KEY, { ...tenant, mfa: { enrolled: true, verified: true } });
+    const { result } = renderHook(() => useTotpDisable(), { wrapper });
+
+    await act(async () => {
+      await result.current.mutateAsync({ code: 'ABCD-EFGH' });
+    });
+
+    await waitFor(() =>
+      expect(client.getQueryData<Session>(SESSION_KEY)?.mfa).toEqual({
+        enrolled: false,
+        verified: false,
+      }),
+    );
+    expect(client.getQueryData<Session>(SESSION_KEY)?.name).toBe('Ana Souza');
+    const [url, init] = fetchMock.mock.calls[0] as [string, RequestInit];
+    expect(url).toBe('/api/app/auth/totp/disable');
+    expect(init.method).toBe('POST');
+    expect(init.body).toBe(JSON.stringify({ code: 'ABCD-EFGH' }));
+  });
+
+  it('keeps the cached session as it was when the API refuses the code', async () => {
+    stubFetch(401, { error: { code: 'INVALID_CODE', message: 'Código inválido' } });
+    const { client, wrapper } = setup();
+    client.setQueryData(SESSION_KEY, { ...tenant, mfa: { enrolled: true, verified: true } });
+    const { result } = renderHook(() => useTotpDisable(), { wrapper });
+
+    await act(async () => {
+      await result.current.mutateAsync({ code: '000000' }).catch(() => undefined);
+    });
+
+    expect(client.getQueryData<Session>(SESSION_KEY)?.mfa).toEqual({
+      enrolled: true,
+      verified: true,
+    });
   });
 });

@@ -122,13 +122,17 @@ describe('ProfilePage (NUC-193)', () => {
     expect(await screen.findByText(DOCUMENT_MESSAGE)).toBeInTheDocument();
   });
 
-  it('links to the notification settings (GES-83)', async () => {
+  it('links to the notification and security settings (GES-83, FND-135)', async () => {
     server.use(http.get('*/api/app/me', () => HttpResponse.json(me)));
     renderProfile();
 
     expect(await screen.findByRole('link', { name: 'Notificações' })).toHaveAttribute(
       'href',
       '/app/perfil/notificacoes',
+    );
+    expect(screen.getByRole('link', { name: 'Segurança' })).toHaveAttribute(
+      'href',
+      '/app/perfil/seguranca',
     );
     expect(screen.getByRole('link', { name: 'Privacidade e dados' })).toHaveAttribute(
       'href',

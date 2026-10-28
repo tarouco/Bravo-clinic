@@ -1,4 +1,4 @@
-import type { LoginInput, SignupInput } from '@bravo/core';
+import type { LoginInput, SignupInput, TotpDisableRequest, TotpDisableResponse } from '@bravo/core';
 import {
   useMutation,
   useQueryClient,
@@ -116,5 +116,26 @@ export function useTotpVerify(): UseMutationResult<{ ok: true }, Error, { code: 
     mutationFn: (input: { code: string }) =>
       api.post<{ ok: true }>('/api/app/auth/totp/verify', input),
     onSuccess: () => markMfaVerified(queryClient),
+  });
+}
+
+/** Turning TOTP off resets the server session's MFA state; mirror the answer in the cache. */
+function markMfaDisabled(queryClient: QueryClient, mfa: TotpDisableResponse['mfa']): void {
+  queryClient.setQueryData<Session | null>(SESSION_KEY, (session) =>
+    session ? { ...session, mfa } : session,
+  );
+}
+
+/** `POST /api/app/auth/totp/disable` with a current or recovery code (FND-136). */
+export function useTotpDisable(): UseMutationResult<
+  TotpDisableResponse,
+  Error,
+  TotpDisableRequest
+> {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (input: TotpDisableRequest) =>
+      api.post<TotpDisableResponse>('/api/app/auth/totp/disable', input),
+    onSuccess: ({ mfa }) => markMfaDisabled(queryClient, mfa),
   });
 }

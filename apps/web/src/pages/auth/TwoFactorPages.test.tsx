@@ -1,20 +1,21 @@
-import { screen, within } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { StrictMode } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import type { Session } from '../../features/auth/useSession';
 import { renderWithProviders } from '../../test/render-with-providers';
-import { TwoFactorEnrollPage, TwoFactorVerifyPage } from './TwoFactorPages';
+import { TwoFactorVerifyPage } from './TwoFactorPages';
 
-// jsdom has no canvas, which the browser build of qrcode draws on.
-vi.mock('qrcode', () => ({
-  default: { toDataURL: vi.fn().mockResolvedValue('data:image/png;base64,QRCODE') },
-}));
-
-const QR_ALT = 'QR code para o aplicativo autenticador';
-const OTPAUTH_URI =
-  'otpauth://totp/Brav%C3%B4%20Clinic:admin%40example.com?secret=JBSWY3DPEHPK3PXP&issuer=Brav%C3%B4%20Clinic';
-const RECOVERY_CODES = Array.from({ length: 10 }, (_, i) => `ABCD-EF${String(i + 2)}H`);
+const tenant: Session = {
+  id: 'u1',
+  name: 'Ana Souza',
+  email: 'ana@example.com',
+  role: 'tenant',
+  emailVerified: true,
+  docType: 'cpf',
+  mfa: { enrolled: true, verified: false },
+};
+const admin: Session = { ...tenant, role: 'admin', email: 'admin@example.com' };
 
 function json(status: number, body: unknown): Response {
   return new Response(JSON.stringify(body), {
@@ -23,67 +24,97 @@ function json(status: number, body: unknown): Response {
   });
 }
 
-function stubFetch(handler: (url: string) => Response) {
-  const fetchMock = vi.fn().mockImplementation((url: string) => Promise.resolve(handler(url)));
+/** `/api/app/me` answers with the session; every other call goes to `handler`. */
+function stubFetch(session: Session, handler: (url: string) => Response) {
+  const fetchMock = vi
+    .fn()
+    .mockImplementation((url: string) =>
+      Promise.resolve(url === '/api/app/me' ? json(200, session) : handler(url)),
+    );
   vi.stubGlobal('fetch', fetchMock);
   return fetchMock;
 }
+
+const verifyCalls = (fetchMock: ReturnType<typeof stubFetch>) =>
+  fetchMock.mock.calls.filter(([url]) => url === '/api/app/auth/totp/verify') as [
+    string,
+    RequestInit,
+  ][];
 
 function Where() {
   const location = useLocation();
   return <p data-testid="where">{location.pathname + location.search}</p>;
 }
 
-function renderPages(route: string, strict = false) {
-  const routes = (
+function renderPage(route: string) {
+  return renderWithProviders(
     <Routes>
       <Route path="/login/2fa" element={<TwoFactorVerifyPage />} />
-      <Route path="/login/2fa/configurar" element={<TwoFactorEnrollPage />} />
       <Route path="*" element={<Where />} />
-    </Routes>
+    </Routes>,
+    route,
   );
-  return renderWithProviders(strict ? <StrictMode>{routes}</StrictMode> : routes, route);
 }
+
+/** Waits for the session to load (the staff eyebrow) so the role-based destination is known. */
+const staffLoaded = () => screen.findByText('Área restrita');
 
 afterEach(() => {
   vi.unstubAllGlobals();
 });
 
 describe('TwoFactorVerifyPage', () => {
-  it('posts the code and navigates to /admin when it is valid', async () => {
-    const fetchMock = stubFetch(() => json(200, { ok: true }));
+  it('posts the code and navigates staff to /admin when it is valid', async () => {
+    const fetchMock = stubFetch(admin, () => json(200, { ok: true }));
     const user = userEvent.setup();
-    renderPages('/login/2fa');
+    renderPage('/login/2fa');
+    await staffLoaded();
 
     await user.type(screen.getByLabelText('Código de verificação'), '123 456');
     await user.click(screen.getByRole('button', { name: 'Verificar' }));
 
     expect(await screen.findByTestId('where')).toHaveTextContent(/^\/admin$/);
-    const [url, init] = fetchMock.mock.calls[0] as [string, RequestInit];
-    expect(url).toBe('/api/app/auth/totp/verify');
-    expect(init.body).toBe(JSON.stringify({ code: '123456' }));
+    const [call] = verifyCalls(fetchMock);
+    expect(call?.[1].body).toBe(JSON.stringify({ code: '123456' }));
+  });
+
+  it('navigates a tenant to /app and never calls the area "Área restrita" (AD-037)', async () => {
+    const fetchMock = stubFetch(tenant, () => json(200, { ok: true }));
+    const user = userEvent.setup();
+    renderPage('/login/2fa');
+
+    expect(await screen.findByText('Área do cliente')).toBeInTheDocument();
+    await vi.waitFor(() =>
+      expect(fetchMock.mock.calls.some(([url]) => url === '/api/app/me')).toBe(true),
+    );
+    await user.type(screen.getByLabelText('Código de verificação'), '123456');
+    await user.click(screen.getByRole('button', { name: 'Verificar' }));
+
+    expect(await screen.findByTestId('where')).toHaveTextContent(/^\/app$/);
+    expect(screen.queryByText('Área restrita')).not.toBeInTheDocument();
+    expect(verifyCalls(fetchMock)).toHaveLength(1);
   });
 
   it('posts a recovery code normalized to upper case and navigates to /admin (FND-113)', async () => {
-    const fetchMock = stubFetch(() => json(200, { ok: true }));
+    const fetchMock = stubFetch(admin, () => json(200, { ok: true }));
     const user = userEvent.setup();
-    renderPages('/login/2fa');
+    renderPage('/login/2fa');
+    await staffLoaded();
 
     await user.type(screen.getByLabelText('Código de verificação'), 'abcd-efgh');
     await user.click(screen.getByRole('button', { name: 'Verificar' }));
 
     expect(await screen.findByTestId('where')).toHaveTextContent(/^\/admin$/);
-    expect(fetchMock).toHaveBeenCalledTimes(1);
-    const [url, init] = fetchMock.mock.calls[0] as [string, RequestInit];
-    expect(url).toBe('/api/app/auth/totp/verify');
-    expect(init.method).toBe('POST');
-    expect(init.body).toBe(JSON.stringify({ code: 'ABCD-EFGH' }));
+    const calls = verifyCalls(fetchMock);
+    expect(calls).toHaveLength(1);
+    expect(calls[0]?.[1].method).toBe('POST');
+    expect(calls[0]?.[1].body).toBe(JSON.stringify({ code: 'ABCD-EFGH' }));
   });
 
   it('shows "Código inválido" when the API answers 401', async () => {
-    stubFetch(() => json(401, { error: { code: 'INVALID_CODE', message: 'x' } }));
+    stubFetch(admin, () => json(401, { error: { code: 'INVALID_CODE', message: 'x' } }));
     const user = userEvent.setup();
-    renderPages('/login/2fa');
+    renderPage('/login/2fa');
 
     await user.type(screen.getByLabelText('Código de verificação'), '123456');
     await user.click(screen.getByRole('button', { name: 'Verificar' }));
@@ -94,6 +125,7 @@ describe('TwoFactorVerifyPage', () => {
 
   it('shows the wait time when the API answers 429', async () => {
     stubFetch(
+      admin,
       () =>
         new Response(JSON.stringify({ error: { code: 'TOO_MANY_ATTEMPTS', message: 'x' } }), {
           status: 429,
@@ -101,7 +133,7 @@ describe('TwoFactorVerifyPage', () => {
         }),
     );
     const user = userEvent.setup();
-    renderPages('/login/2fa');
+    renderPage('/login/2fa');
 
     await user.type(screen.getByLabelText('Código de verificação'), '123456');
     await user.click(screen.getByRole('button', { name: 'Verificar' }));
@@ -112,74 +144,25 @@ describe('TwoFactorVerifyPage', () => {
   });
 
   it('rejects a malformed code without calling the API', async () => {
-    const fetchMock = stubFetch(() => json(200, { ok: true }));
+    const fetchMock = stubFetch(admin, () => json(200, { ok: true }));
     const user = userEvent.setup();
-    renderPages('/login/2fa');
+    renderPage('/login/2fa');
 
     await user.type(screen.getByLabelText('Código de verificação'), '12');
     await user.click(screen.getByRole('button', { name: 'Verificar' }));
 
     expect(await screen.findByText('Código inválido')).toBeInTheDocument();
-    expect(fetchMock).not.toHaveBeenCalled();
+    expect(verifyCalls(fetchMock)).toHaveLength(0);
   });
 
-  it('navigates to a safe next path instead of /admin', async () => {
-    stubFetch(() => json(200, { ok: true }));
+  it('navigates to a safe next path instead of the default', async () => {
+    stubFetch(tenant, () => json(200, { ok: true }));
     const user = userEvent.setup();
-    renderPages('/login/2fa?next=/admin/cupons');
+    renderPage('/login/2fa?next=/app/agenda');
 
     await user.type(screen.getByLabelText('Código de verificação'), '123456');
     await user.click(screen.getByRole('button', { name: 'Verificar' }));
 
-    expect(await screen.findByTestId('where')).toHaveTextContent(/^\/admin\/cupons$/);
-  });
-});
-
-describe('TwoFactorEnrollPage', () => {
-  it('enrolls once, shows the QR code and secret, then the 10 recovery codes and continues to /admin', async () => {
-    const fetchMock = stubFetch((url) =>
-      url === '/api/app/auth/totp/enroll'
-        ? json(200, { otpauthUri: OTPAUTH_URI })
-        : json(200, { recoveryCodes: RECOVERY_CODES }),
-    );
-    const user = userEvent.setup();
-    renderPages('/login/2fa/configurar', true);
-
-    const qr = await screen.findByRole('img', { name: QR_ALT });
-    expect(qr).toHaveAttribute('src', 'data:image/png;base64,QRCODE');
-    expect(screen.getByText('JBSW Y3DP EHPK 3PXP')).toBeInTheDocument();
-    expect(
-      fetchMock.mock.calls.filter(([url]) => url === '/api/app/auth/totp/enroll'),
-    ).toHaveLength(1);
-
-    await user.type(screen.getByLabelText('Código de 6 dígitos'), '123456');
-    await user.click(screen.getByRole('button', { name: 'Confirmar' }));
-
-    const list = await screen.findByRole('list');
-    const items = within(list).getAllByRole('listitem');
-    expect(items).toHaveLength(10);
-    expect(items.map((item) => item.textContent)).toEqual(RECOVERY_CODES);
-    const confirmCall = fetchMock.mock.calls.find(
-      ([url]) => url === '/api/app/auth/totp/confirm',
-    ) as [string, RequestInit];
-    expect(confirmCall[1].body).toBe(JSON.stringify({ code: '123456' }));
-
-    await user.click(screen.getByRole('button', { name: 'Já guardei os códigos' }));
-    expect(await screen.findByTestId('where')).toHaveTextContent(/^\/admin$/);
-  });
-
-  it('shows "Código inválido" when confirming with a wrong code', async () => {
-    stubFetch((url) =>
-      url === '/api/app/auth/totp/enroll'
-        ? json(200, { otpauthUri: OTPAUTH_URI })
-        : json(401, { error: { code: 'INVALID_CODE', message: 'x' } }),
-    );
-    const user = userEvent.setup();
-    renderPages('/login/2fa/configurar');
-
-    await user.type(await screen.findByLabelText('Código de 6 dígitos'), '000000');
-    await user.click(screen.getByRole('button', { name: 'Confirmar' }));
-
-    expect(await screen.findByRole('alert')).toHaveTextContent('Código inválido');
+    expect(await screen.findByTestId('where')).toHaveTextContent(/^\/app\/agenda$/);
   });
 });

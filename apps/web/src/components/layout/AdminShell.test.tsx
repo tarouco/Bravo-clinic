@@ -153,6 +153,21 @@ describe('AdminShell top bar', () => {
     expect(within(header).queryByText('Administrador geral')).not.toBeInTheDocument();
   });
 
+  it.each([admin, reception])(
+    'links $name to their own Segurança preferences (FND-135)',
+    async (session) => {
+      stubApi(session);
+      renderShell(session.role === 'admin' ? '/admin/calendario' : '/admin/reservas');
+
+      const header = screen.getByRole('banner');
+      expect(await within(header).findByText(session.name)).toBeInTheDocument();
+      expect(within(header).getByRole('link', { name: 'Segurança' })).toHaveAttribute(
+        'href',
+        '/app/perfil/seguranca',
+      );
+    },
+  );
+
   it('calls logout and navigates to / when "Sair" is clicked', async () => {
     const fetchMock = stubApi(admin);
     const user = userEvent.setup();
