@@ -2,9 +2,9 @@ import { adminCategorySchema, type AdminCategory } from '@bravo/core';
 import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 import { registerRevenueSlots } from '../../extensions/receita';
-import { resetSlots } from '../../extensions/slots';
+import { preloadLazySlots, resetSlots } from '../../extensions/slots';
 import { adminCategory, ID } from '../../test/fixtures/nucleo';
 import { parseFixture } from '../../test/fixtures/parse';
 import { server } from '../../test/msw/server';
@@ -12,6 +12,12 @@ import { renderWithProviders } from '../../test/render-with-providers';
 import { plain } from '../../test/session';
 import { CategoriesTable } from '../admin-calendar/CategoriesTable';
 import { PackageCategoryForms } from './PackageCategoryForms';
+
+// Slot bodies load lazily (GES-143): load them once up front, so a busy machine spends the
+// module loading time here rather than inside a test's wait.
+beforeAll(async () => {
+  await preloadLazySlots();
+}, 120_000);
 
 afterEach(() => {
   resetSlots();

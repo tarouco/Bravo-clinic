@@ -2,7 +2,7 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { Route, Routes } from 'react-router-dom';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { BookingFlowPage } from '../features/booking/BookingFlowPage';
 import {
   quoteWithRevenue,
@@ -14,7 +14,13 @@ import { server } from '../test/msw/server';
 import { renderWithProviders } from '../test/render-with-providers';
 import { spaced } from '../test/text';
 import { registerRevenueSlots } from './receita';
-import { resetSlots, slotComponents } from './slots';
+import { preloadLazySlots, resetSlots, slotComponents } from './slots';
+
+// Slot bodies load lazily (GES-143): load them once up front, so a busy machine spends the
+// module loading time here rather than inside a test's wait.
+beforeAll(async () => {
+  await preloadLazySlots();
+}, 120_000);
 
 const RESUMO = '/reservar?sala=principal&data=2026-10-27&inicio=1050&fim=1200&etapa=resumo';
 

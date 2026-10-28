@@ -2,9 +2,9 @@ import { adminCategorySchema, subscriptionQuoteSchema } from '@bravo/core';
 import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { registerRevenueSlots } from '../../extensions/receita';
-import { resetSlots } from '../../extensions/slots';
+import { preloadLazySlots, resetSlots } from '../../extensions/slots';
 import { adminCategory, ID } from '../../test/fixtures/nucleo';
 import { parseFixture } from '../../test/fixtures/parse';
 import { server } from '../../test/msw/server';
@@ -18,6 +18,12 @@ import {
   subscriptionQuote,
 } from '../purchases/fixtures';
 import { SellSubscriptionDialog } from './SellSubscriptionDialog';
+
+// Slot bodies load lazily (GES-143): load them once up front, so a busy machine spends the
+// module loading time here rather than inside a test's wait.
+beforeAll(async () => {
+  await preloadLazySlots();
+}, 120_000);
 
 // Tuesday 27/10/2026, the day the admin sells at the counter.
 beforeEach(() => {

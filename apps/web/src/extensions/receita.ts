@@ -1,21 +1,21 @@
-import { createElement, lazy, Suspense } from 'react';
-import { CouponField } from '../components/revenue/CouponField';
-import { CreditsToggle } from '../components/revenue/CreditsToggle';
-import { PackagePaymentOption } from '../components/revenue/PackagePaymentOption';
-import { PackagesSection } from '../features/purchases/PackagesSection';
-import { registerSlot, slotComponents, type SlotComponent, type SlotName } from './slots';
+import { lazySlot, registerSlot, slotComponents, type SlotComponent, type SlotName } from './slots';
 
 // receita fills núcleo's web slots (design.md "Required from nucleo" table A, AD-031). Each slot
 // registration is idempotent so tests and hot reloads can call `registerRevenueSlots()` again.
+// Every body loads on first render, outside the public entry chunk (GES-143).
 
-/** Admin slot bodies load with the admin pages, outside the public entry chunk (GES-143). */
-function lazySlot(load: () => Promise<SlotComponent>): SlotComponent {
-  const Body = lazy(async () => ({ default: await load() }));
-  return function LazySlot(props: Record<string, unknown>) {
-    return createElement(Suspense, { fallback: null }, createElement(Body, props));
-  };
-}
-
+const CouponField = lazySlot(() =>
+  import('../components/revenue/CouponField').then((m) => m.CouponField),
+);
+const CreditsToggle = lazySlot(() =>
+  import('../components/revenue/CreditsToggle').then((m) => m.CreditsToggle),
+);
+const PackagePaymentOption = lazySlot(() =>
+  import('../components/revenue/PackagePaymentOption').then((m) => m.PackagePaymentOption),
+);
+const PackagesSection = lazySlot(() =>
+  import('../features/purchases/PackagesSection').then((m) => m.PackagesSection),
+);
 const PackageCategoryForms = lazySlot(() =>
   import('../features/admin-categories/PackageCategoryForms').then((m) => m.PackageCategoryForms),
 );
