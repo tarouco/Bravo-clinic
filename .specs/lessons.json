@@ -3,7 +3,7 @@
   "promote_threshold": 2,
   "window_days": 45,
   "quarantine_threshold": 2,
-  "next_id": 9,
+  "next_id": 13,
   "lessons": [
     {
       "id": "L-001",
@@ -148,6 +148,78 @@
       ],
       "created": "2026-10-26T14:02:48Z",
       "last_seen": "2026-10-26T14:02:48Z"
+    },
+    {
+      "id": "L-009",
+      "key": "surviving_mutant::for an allow only transition table test every disallowed from to pair with it each not one sample per kind",
+      "text": "For an allow-only transition table, test every disallowed (from, to) pair with it.each, not one sample per kind.",
+      "signal": "surviving_mutant",
+      "scope": "apps/api state machines",
+      "status": "candidate",
+      "features": [
+        "gestao"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "A7 apps/api/src/modules/extras/quote-requests.service.ts:183 (apps/api state machines)"
+      ],
+      "created": "2026-10-28T12:03:30Z",
+      "last_seen": "2026-10-28T12:03:30Z"
+    },
+    {
+      "id": "L-010",
+      "key": "surviving_mutant::every soft delete filter feeding a report needs a fixture with a deleted row next to a live one",
+      "text": "Every soft-delete filter feeding a report needs a fixture with a deleted row next to a live one.",
+      "signal": "surviving_mutant",
+      "scope": "apps/api reports",
+      "status": "candidate",
+      "features": [
+        "gestao"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "A19 apps/api/src/modules/finance/finance-report.service.ts:226 (apps/api reports)"
+      ],
+      "created": "2026-10-28T12:03:30Z",
+      "last_seen": "2026-10-28T12:03:30Z"
+    },
+    {
+      "id": "L-011",
+      "key": "surviving_mutant::test a percentage threshold at exactly the threshold and one step below not only well above it",
+      "text": "Test a percentage threshold at exactly the threshold and one step below, not only well above it.",
+      "signal": "surviving_mutant",
+      "scope": "thresholds",
+      "status": "candidate",
+      "features": [
+        "gestao"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "A12 apps/api/src/modules/usage/usage.service.ts:12 (thresholds)"
+      ],
+      "created": "2026-10-28T12:03:31Z",
+      "last_seen": "2026-10-28T12:03:31Z"
+    },
+    {
+      "id": "L-012",
+      "key": "spec_precision_gap::when the spec names a timeout value assert the value or abort time not just a simulated timeouterror",
+      "text": "When the spec names a timeout value, assert the value or abort time, not just a simulated TimeoutError.",
+      "signal": "spec_precision_gap",
+      "scope": "external calls",
+      "status": "candidate",
+      "features": [
+        "gestao"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "GES-37 gateway-config.service.ts:36; GES-132 holiday-import.ts:11 (external calls)"
+      ],
+      "created": "2026-10-28T12:03:31Z",
+      "last_seen": "2026-10-28T12:03:31Z"
     }
   ]
 }
