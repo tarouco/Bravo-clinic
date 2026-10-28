@@ -124,6 +124,57 @@ describe('api client', () => {
   });
 });
 
+describe('early response of index.html (GES-143)', () => {
+  afterEach(() => {
+    delete window.__bravoEarly;
+  });
+
+  it('answers the first GET of the same path from the early response, then fetches again', async () => {
+    window.__bravoEarly = {
+      path: '/api/public/rooms',
+      response: Promise.resolve(jsonResponse(200, { items: ['early'] })),
+    };
+    const fetchMock = vi.fn().mockResolvedValue(jsonResponse(200, { items: ['fetched'] }));
+    vi.stubGlobal('fetch', fetchMock);
+
+    expect(await api.get('/api/public/rooms')).toEqual({ items: ['early'] });
+    expect(fetchMock).not.toHaveBeenCalled();
+    expect(await api.get('/api/public/rooms')).toEqual({ items: ['fetched'] });
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('turns an early error response into the same ApiError', async () => {
+    window.__bravoEarly = {
+      path: '/api/public/rooms/nope',
+      response: Promise.resolve(
+        jsonResponse(404, { error: { code: 'NOT_FOUND', message: 'Recurso não encontrado' } }),
+      ),
+    };
+    vi.stubGlobal('fetch', vi.fn());
+
+    const error = (await api.get('/api/public/rooms/nope').catch((e: unknown) => e)) as ApiError;
+
+    expect(error).toBeInstanceOf(ApiError);
+    expect(error.status).toBe(404);
+    expect(error.code).toBe('NOT_FOUND');
+  });
+
+  it('ignores an early response of another path and fetches after a failed early request', async () => {
+    // The inline script also handles its own rejection, so none goes unhandled.
+    const failed = Promise.reject(new TypeError('offline'));
+    failed.catch(() => undefined);
+    window.__bravoEarly = { path: '/api/public/rooms/principal', response: failed };
+    const fetchMock = vi
+      .fn()
+      .mockImplementation(() => Promise.resolve(jsonResponse(200, { ok: true })));
+    vi.stubGlobal('fetch', fetchMock);
+
+    expect(await api.get('/api/public/catalog')).toEqual({ ok: true });
+    expect(await api.get('/api/public/rooms/principal')).toEqual({ ok: true });
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+  });
+});
+
 describe('api.upload', () => {
   it('PUTs the file itself with its own media type and same-origin credentials', async () => {
     const fetchMock = vi.fn().mockResolvedValue(jsonResponse(200, { id: 'e1' }));
