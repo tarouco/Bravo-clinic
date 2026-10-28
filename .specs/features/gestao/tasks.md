@@ -1550,11 +1550,11 @@ T49 → T50
 - Skill: `neon-functions`, `neon-object-storage`
 
 **Done when**:
-- [ ] User approved this phase in chat
-- [ ] Unit test asserts `neon.ts` declares both buckets with the right access and all five gestao triggers with their paths and schedules
-- [ ] Neon `production` has the §5.5 tables, seeds, both buckets; `curl <invocation_url>/health` returns ok; trigger list shows the gestao jobs
-- [ ] No connection string, key or token appears in output or files
-- [ ] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
+- [x] User approved this phase in chat (pre-authorized in the original request: run to the end and deploy to Neon and Netlify)
+- [x] Unit test asserts `neon.ts` declares both buckets with the right access and all five gestao triggers with their paths and schedules
+- [x] Neon `production` has the §5.5 tables, seeds, both buckets; `curl <invocation_url>/health` returns ok; trigger list shows the gestao jobs
+- [x] No connection string, key or token appears in output or files
+- [x] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
 
 **Tests**: unit
 **Gate**: build
@@ -1577,10 +1577,10 @@ T49 → T50
 - Skill: `netlify-deploy`
 
 **Done when**:
-- [ ] User approved this phase in chat
-- [ ] `node scripts/smoke.mjs https://bravo-clinic.netlify.app` exits 0 including extras list, `/servicos-extras`, ICS 404 and MCP 401/404 checks
+- [x] User approved this phase in chat (pre-authorized in the original request)
+- [x] `node scripts/smoke.mjs https://bravo-clinic.netlify.app` exits 0 including extras list, `/servicos-extras`, ICS 404 and MCP 401/404 checks
 - [ ] Admin opens Integrações on production and sees the MCP server URL and the payments tab (manual check by the user)
-- [ ] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
+- [x] Gate check passes: `npm run typecheck && npm run lint && npm test && API_PROXY_ORIGIN=https://example.invalid npm run build`
 
 **Tests**: e2e
 **Gate**: build
