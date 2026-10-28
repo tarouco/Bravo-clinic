@@ -81,7 +81,7 @@ function TariffTable() {
                   row.highlight ? 'bg-champagne-soft/40' : 'bg-surface'
                 }`}
               >
-                <span className={row.highlight ? 'text-walnut font-medium' : 'text-ink'}>
+                <span className={row.highlight ? 'text-bronze font-medium' : 'text-ink'}>
                   {row.label}
                 </span>
                 <span

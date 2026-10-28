@@ -1498,10 +1498,10 @@ T49 → T50
 - Skill: `impeccable`
 
 **Done when**:
-- [ ] Spec reports zero violations tagged `wcag2a`, `wcag2aa`, `wcag21a`, `wcag21aa` on all 13 pages × 2 themes
-- [ ] Fixes listed in the commit body with file paths; no axe rule disabled
-- [ ] Gate check passes: `npm run typecheck && npm run e2e -w apps/web`
-- [ ] Test count: ≥ 26 axe checks pass
+- [x] Spec reports zero violations tagged `wcag2a`, `wcag2aa`, `wcag21a`, `wcag21aa` on all 13 pages × 2 themes
+- [x] Fixes listed in the commit body with file paths; no axe rule disabled
+- [x] Gate check passes: `npm run typecheck && npm run e2e -w apps/web`
+- [x] Test count: ≥ 26 axe checks pass
 
 **Tests**: e2e
 **Gate**: e2e

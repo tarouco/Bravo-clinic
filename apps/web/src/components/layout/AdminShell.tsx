@@ -25,12 +25,9 @@ export function AdminShell() {
     <div className="min-h-screen bg-surface text-ink">
       <header className="sticky top-0 z-40 border-b border-hairline/40 bg-surface/90 backdrop-blur-xl">
         <div className="flex h-16 items-center justify-between gap-space-md px-gutter">
-          <Link
-            to="/admin"
-            aria-label="Bravô Clinic - Painel administrativo"
-            className={cx('rounded', focusRing)}
-          >
+          <Link to="/admin" className={cx('rounded', focusRing)}>
             <BrandLockup variant="header" />
+            <span className="sr-only">, painel administrativo</span>
           </Link>
           <div className="flex items-center gap-space-sm">
             {session ? (
