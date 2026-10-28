@@ -276,27 +276,41 @@ describe('PATCH /admin/quote-requests/:id (GES-95, GES-96)', () => {
     ]);
   });
 
-  it('answers 409 INVALID_TRANSITION to won → contacted, lost → new and a skipped step', async () => {
-    const admin = await createStaff(db, 'admin', NOW);
-    const won = await quoteRow('won');
-    const lost = await quoteRow('lost');
-    const fresh = await quoteRow('new');
+  // GES-95 allows ONLY these moves; every other (from, to) pair of the 5 statuses, the same
+  // status included, is refused. Written from the spec, not from the service's table.
+  const STATUSES = ['new', 'contacted', 'quote_sent', 'won', 'lost'] as const;
+  const ALLOWED = new Set([
+    'new>contacted',
+    'new>lost',
+    'contacted>quote_sent',
+    'contacted>lost',
+    'quote_sent>won',
+    'quote_sent>lost',
+  ]);
+  const DISALLOWED = STATUSES.flatMap((from) =>
+    STATUSES.filter((to) => !ALLOWED.has(`${from}>${to}`)).map((to) => [from, to] as const),
+  );
 
-    const results = [
-      await call(admin.cookie, 'PATCH', `/admin/quote-requests/${won.id}`, { status: 'contacted' }),
-      await call(admin.cookie, 'PATCH', `/admin/quote-requests/${lost.id}`, { status: 'new' }),
-      await call(admin.cookie, 'PATCH', `/admin/quote-requests/${fresh.id}`, { status: 'won' }),
-    ];
-
-    expect(results.map((r) => [r.status, r.error?.code])).toEqual([
-      [409, 'INVALID_TRANSITION'],
-      [409, 'INVALID_TRANSITION'],
-      [409, 'INVALID_TRANSITION'],
-    ]);
-    const statuses = await db.select({ status: quoteRequests.status }).from(quoteRequests);
-    expect(statuses.map((s) => s.status).sort()).toEqual(['lost', 'new', 'won']);
-    expect(await audits('quote_request.status')).toHaveLength(0);
+  it('refuses 19 of the 25 (from, to) pairs', () => {
+    expect(DISALLOWED).toHaveLength(19);
   });
+
+  it.each(DISALLOWED)(
+    'answers 409 INVALID_TRANSITION to %s → %s, leaving the row and the audit log untouched',
+    async (from, to) => {
+      const admin = await createStaff(db, 'admin', NOW);
+      const row = await quoteRow(from);
+
+      const res = await call(admin.cookie, 'PATCH', `/admin/quote-requests/${row.id}`, {
+        status: to,
+      });
+
+      expect([res.status, res.error?.code]).toEqual([409, 'INVALID_TRANSITION']);
+      const [stored] = await db.select().from(quoteRequests).where(eq(quoteRequests.id, row.id));
+      expect(stored).toEqual(row);
+      expect(await audits('quote_request.status')).toHaveLength(0);
+    },
+  );
 
   it('lets only one of two concurrent identical moves apply: one 200, one 409', async () => {
     const admin = await createStaff(db, 'admin', NOW);
