@@ -5,9 +5,9 @@ import { Alert, Spinner } from '../../components/ui/Feedback';
 import { useResendVerification, useVerifyEmail } from '../../features/auth/hooks';
 import { useSession } from '../../features/auth/useSession';
 import { ApiError } from '../../lib/api';
-import { AuthCard } from './AuthCard';
+import { AuthCard, authLinkClasses } from './AuthCard';
 
-const linkClasses = 'text-bronze underline underline-offset-4';
+const linkClasses = authLinkClasses;
 
 export function VerifyEmailPage() {
   const token = useSearchParams()[0].get('token');
@@ -32,7 +32,7 @@ export function VerifyEmailPage() {
       {verify.isSuccess ? (
         <>
           <Alert tone="success">E-mail confirmado</Alert>
-          <Button asChild className="w-full">
+          <Button asChild block>
             <Link to="/app">Ir para minha área</Link>
           </Button>
         </>
@@ -57,7 +57,7 @@ export function VerifyEmailPage() {
                 variant="secondary"
                 loading={resend.isPending}
                 onClick={() => resend.mutate()}
-                className="w-full"
+                block
               >
                 Reenviar e-mail
               </Button>

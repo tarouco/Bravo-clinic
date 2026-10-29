@@ -7,9 +7,9 @@ import { Alert } from '../../../components/ui/Feedback';
 import { PasswordInput } from '../../../components/ui/form';
 import { useConfirmPasswordReset } from '../../../features/auth/hooks';
 import { ApiError } from '../../../lib/api';
-import { AuthCard } from '../AuthCard';
+import { AuthCard, authLinkClasses } from '../AuthCard';
 
-const linkClasses = 'text-bronze underline underline-offset-4';
+const linkClasses = authLinkClasses;
 const INVALID_LINK_MESSAGE = 'Link inválido ou expirado';
 
 interface ResetFormValues {
@@ -50,7 +50,7 @@ export function ResetPasswordPage() {
     return (
       <AuthCard title="Redefinir senha">
         <Alert tone="success">Senha alterada</Alert>
-        <Button asChild className="w-full">
+        <Button asChild block>
           <Link to="/login">Entrar</Link>
         </Button>
       </AuthCard>
@@ -91,7 +91,7 @@ export function ResetPasswordPage() {
             validate: (value) => value === getValues('password') || 'As senhas não conferem',
           })}
         />
-        <Button type="submit" loading={confirm.isPending} className="w-full">
+        <Button type="submit" loading={confirm.isPending} block>
           Redefinir senha
         </Button>
       </form>
