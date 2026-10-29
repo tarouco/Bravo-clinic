@@ -208,7 +208,7 @@ describe('HorasExtrasPage (REC-62, REC-63, REC-69)', () => {
     await userEvent.click(await stepUp());
 
     await userEvent.click(
-      await screen.findByRole('checkbox', {
+      await screen.findByRole('switch', {
         name: (name) => plain(name).startsWith('Usar créditos'),
       }),
     );

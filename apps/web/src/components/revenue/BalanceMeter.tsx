@@ -9,7 +9,10 @@ export interface BalanceMeterProps {
   extraMinutes?: number;
 }
 
-/** Package balance as "12h 30min de 20h" with an accessible meter and the extra-minutes line (REC-143). */
+/**
+ * Package balance "12h 30min de 20h" over a sunken track with the emerald fill (like the Slider),
+ * as an accessible meter, and the extra-minutes line (REC-143).
+ */
 export function BalanceMeter({
   packageMinutes,
   includedMinutes,
@@ -28,9 +31,12 @@ export function BalanceMeter({
         aria-valuemax={includedMinutes}
         aria-valuenow={value}
         aria-valuetext={text}
-        className="h-2 w-full overflow-hidden rounded-control bg-surface-stone"
+        className="h-2 w-full overflow-hidden rounded-pill bg-surface-deboss shadow-deboss"
       >
-        <div className="h-full bg-bronze" style={{ width: `${String(percent)}%` }} />
+        <div
+          className="h-full rounded-pill bg-grad-emerald"
+          style={{ width: `${String(percent)}%` }}
+        />
       </div>
       {extraMinutes > 0 ? (
         <p className="font-small text-small text-ink-muted">

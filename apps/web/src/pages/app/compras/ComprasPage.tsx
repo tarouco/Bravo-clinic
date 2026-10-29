@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Button } from '../../../components/ui/Button';
+import { Card } from '../../../components/ui/Card';
 import { Alert, Spinner } from '../../../components/ui/Feedback';
 import { Tabs, type TabItem } from '../../../components/ui/Tabs';
 import { useExtraHours, usePackages, useSubscriptions } from '../../../features/purchases/api';
@@ -55,8 +56,8 @@ export function ComprasLayout() {
   }));
 
   return (
-    <div className="mx-auto max-w-4xl space-y-space-lg px-gutter py-space-xl md:py-space-3xl">
-      <h1 className="font-display-l-mobile text-display-l-mobile text-ink md:font-display-l md:text-display-l">
+    <div className="mx-auto max-w-3xl space-y-space-lg">
+      <h1 className="font-display-l-mobile text-display-l-mobile text-ink lg:font-display-l lg:text-display-l">
         Compras
       </h1>
       <Tabs
@@ -106,17 +107,17 @@ export function ComprasPage() {
   return (
     <div className="space-y-space-lg">
       {items.length === 0 ? (
-        <div className="flex flex-col items-start gap-space-md rounded-card border border-hairline bg-surface-raised p-space-lg">
-          <h2 className="font-heading-mobile text-heading-mobile text-ink">
-            Você ainda não tem assinaturas
-          </h2>
-          <p className="font-small text-small text-ink-muted">
-            Pacotes de horas e horários fixos têm preço melhor e renovam sozinhos.
-          </p>
-          <Button asChild>
-            <Link to="/precos">Ver pacotes</Link>
-          </Button>
-        </div>
+        <Card variant="emerald">
+          <div className="flex flex-col items-start gap-space-sm">
+            <h2 className="bv-card-title">Você ainda não tem assinaturas</h2>
+            <p className="bv-card-text">
+              Pacotes de horas e horários fixos têm preço melhor e renovam sozinhos.
+            </p>
+            <Button asChild variant="gold" size="sm" className="mt-space-sm">
+              <Link to="/precos">Ver pacotes</Link>
+            </Button>
+          </div>
+        </Card>
       ) : (
         <div className="grid gap-space-md">
           {items.map((subscription) => (

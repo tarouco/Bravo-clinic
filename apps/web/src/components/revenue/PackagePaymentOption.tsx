@@ -37,13 +37,15 @@ export function PackagePaymentOption({ quote, options, onOptionsChange }: Checko
 
   return (
     <fieldset className="space-y-space-sm">
-      <legend className="mb-space-sm font-small text-small text-ink">Forma de pagamento</legend>
+      <legend className="mb-space-sm font-eyebrow text-eyebrow uppercase text-accent">
+        Forma de pagamento
+      </legend>
 
       <label className="flex items-start gap-space-sm font-small text-small text-ink">
         <input
           type="radio"
           name="pay-with"
-          className="mt-0.5 h-5 w-5 shrink-0 accent-bronze"
+          className="mt-0.5 h-5 w-5 shrink-0 accent-emerald"
           checked={usingPackage}
           disabled={!option.sufficient}
           onChange={() => {
@@ -59,7 +61,9 @@ export function PackagePaymentOption({ quote, options, onOptionsChange }: Checko
             {`Esta reserva vai debitar ${formatMinutes(option.debitMinutes)} do seu pacote`}
           </p>
           <details className="font-small text-small text-ink-muted">
-            <summary className="cursor-pointer text-bronze">Ver como calculamos</summary>
+            <summary className="cursor-pointer text-accent underline underline-offset-4">
+              Ver como calculamos
+            </summary>
             <p className="mt-space-xs">{option.detailText}</p>
             <ul className="mt-space-xs space-y-space-xs">
               {option.breakdown.map((part) => (
@@ -73,7 +77,7 @@ export function PackagePaymentOption({ quote, options, onOptionsChange }: Checko
             <input
               type="radio"
               name="pay-with"
-              className="mt-0.5 h-5 w-5 shrink-0 accent-bronze"
+              className="mt-0.5 h-5 w-5 shrink-0 accent-emerald"
               checked={!usingPackage}
               onChange={() => {
                 onOptionsChange({ payWith: 'money' });

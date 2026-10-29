@@ -49,10 +49,10 @@ export function DateStep({ selection, onChange, onContinue }: DateStepProps) {
                 <label
                   key={room.id}
                   className={cx(
-                    'flex cursor-pointer flex-col gap-1 rounded-md p-space-md font-small text-small shadow-card transition-colors focus-within:ring-2 focus-within:ring-accent focus-within:ring-offset-2 focus-within:ring-offset-surface',
+                    'flex cursor-pointer flex-col gap-1 rounded-md p-space-md font-small text-small text-ink transition-shadow focus-within:ring-2 focus-within:ring-accent focus-within:ring-offset-2 focus-within:ring-offset-surface',
                     checked
-                      ? 'bg-grad-emerald text-on-emerald shadow-relief-emerald'
-                      : 'bg-surface-raised text-ink hover:bg-surface-panel',
+                      ? 'bg-surface-deboss shadow-deboss'
+                      : 'bg-surface-raised shadow-card hover:bg-surface-panel',
                   )}
                 >
                   <span className="flex items-center gap-space-sm">
@@ -68,9 +68,7 @@ export function DateStep({ selection, onChange, onContinue }: DateStepProps) {
                     />
                     <span className="font-medium">{room.name}</span>
                   </span>
-                  <span className={checked ? 'text-on-emerald/85' : 'text-ink-muted'}>
-                    {room.idealFor.join(' · ')}
-                  </span>
+                  <span className="text-ink-muted">{room.idealFor.join(' · ')}</span>
                 </label>
               );
             })}
