@@ -288,7 +288,7 @@ describe('PayDialog at /app/compras/assinaturas/:id/pagar (REC-144)', () => {
     stubArea([subscriptionAwaiting], { subscription: subscriptionAwaiting });
     renderArea(route);
 
-    const toggle = await screen.findByRole('checkbox', {
+    const toggle = await screen.findByRole('switch', {
       name: (name) => plain(name).startsWith('Usar créditos'),
     });
     await userEvent.click(toggle);

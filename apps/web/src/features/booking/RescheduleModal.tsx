@@ -7,8 +7,9 @@ import {
   type RescheduleQuoteRequest,
 } from '@bravo/core';
 import { useState } from 'react';
-import { MonthCalendar } from '../../components/calendar/MonthCalendar';
-import { SlotGrid, type SlotSelection } from '../../components/calendar/SlotGrid';
+import { DayStrip } from '../../components/booking/DayStrip';
+import { SlotChips } from '../../components/booking/SlotChips';
+import type { SlotSelection } from '../../components/calendar/SlotGrid';
 import { Button } from '../../components/ui/Button';
 import { Alert, Spinner } from '../../components/ui/Feedback';
 import { Modal } from '../../components/ui/Modal';
@@ -100,11 +101,12 @@ export function RescheduleModal({ booking, open, onClose, onRescheduled }: Resch
         <p className="font-small text-small text-ink-muted">
           {booking.roomName} · escolha o novo dia e horário.
         </p>
-        <MonthCalendar
+        <DayStrip
           month={month}
           days={monthQuery.data?.days ?? []}
           value={date}
           minMonth={monthOf(today)}
+          hideBefore={today}
           onSelect={(next) => {
             setDate(next as LocalDate);
             setSelection(EMPTY);
@@ -115,7 +117,7 @@ export function RescheduleModal({ booking, open, onClose, onRescheduled }: Resch
 
         {date ? (
           <div className="space-y-space-sm">
-            <h3 className="font-heading-mobile text-body text-ink">
+            <h3 className="font-heading-mobile text-heading-mobile text-ink">
               Horários de {formatLocalDateBR(date)}
             </h3>
             {dayQuery.isPending ? (
@@ -123,7 +125,7 @@ export function RescheduleModal({ booking, open, onClose, onRescheduled }: Resch
             ) : !day || day.closed || day.outOfRange ? (
               <Alert>Não há horários neste dia.</Alert>
             ) : (
-              <SlotGrid
+              <SlotChips
                 cells={day.cells}
                 slotMinutes={day.slotMinutes}
                 minBookingMinutes={day.minBookingMinutes}
@@ -146,7 +148,10 @@ export function RescheduleModal({ booking, open, onClose, onRescheduled }: Resch
         ) : null}
 
         {allowed && quote.data?.newQuote && settlement ? (
-          <section aria-label="Novo valor" className="space-y-space-xs font-small text-small">
+          <section
+            aria-label="Novo valor"
+            className="space-y-space-xs rounded-md bg-surface-deboss p-space-md font-small text-small shadow-deboss"
+          >
             <p className="text-ink">
               Novo valor da reserva: <strong>{formatBRL(settlement.newTotalCents)}</strong>
             </p>
@@ -169,7 +174,7 @@ export function RescheduleModal({ booking, open, onClose, onRescheduled }: Resch
         {paying && payNow > 0 ? (
           <PaymentMethodPanel amountCents={payNow} onPay={payDifference} />
         ) : (
-          <div className="flex flex-wrap justify-end gap-space-sm">
+          <div className="bv-modal-actions flex-wrap">
             <Button variant="secondary" onClick={onClose}>
               Fechar
             </Button>

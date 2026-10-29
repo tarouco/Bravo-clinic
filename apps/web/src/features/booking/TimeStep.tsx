@@ -1,7 +1,9 @@
 import { useEffect, useRef } from 'react';
-import { SlotGrid, type BlockOption, type SlotSelection } from '../../components/calendar/SlotGrid';
+import type { BlockOption, SlotSelection } from '../../components/calendar/SlotGrid';
+import { SlotChips } from '../../components/booking/SlotChips';
 import { Badge } from '../../components/ui/Badge';
 import { Button } from '../../components/ui/Button';
+import { Card } from '../../components/ui/Card';
 import { Alert, Spinner } from '../../components/ui/Feedback';
 import { formatDuration, formatLocalDateBR, formatMinuteRange } from '../../lib/format';
 import { track } from '../../lib/analytics';
@@ -42,47 +44,51 @@ export function TimeStep({ selection, onChange, onBack, onContinue }: TimeStepPr
 
   return (
     <div className="space-y-space-lg">
-      <div className="space-y-space-xs">
-        <h2 className="font-heading-mobile text-heading-mobile text-ink">
-          Horários de {data ? formatLocalDateBR(data) : ''}
-        </h2>
-        {day?.isHoliday ? <Badge>Feriado: {day.holidayName}</Badge> : null}
-      </div>
+      <Card>
+        <div className="space-y-space-lg">
+          <div className="space-y-space-xs">
+            <h2 className="font-heading-mobile text-heading-mobile text-ink">
+              Horários de {data ? formatLocalDateBR(data) : ''}
+            </h2>
+            {day?.isHoliday ? <Badge tone="gold">Feriado: {day.holidayName}</Badge> : null}
+          </div>
 
-      {dayQuery.isPending ? (
-        <Spinner label="Carregando horários" />
-      ) : dayQuery.isError || !day ? (
-        <Alert tone="error">Não foi possível carregar os horários deste dia.</Alert>
-      ) : day.closed ? (
-        <Alert>A clínica está fechada neste dia. Escolha outra data.</Alert>
-      ) : day.outOfRange ? (
-        <Alert>Esta data está fora do período de reservas. Escolha outra data.</Alert>
-      ) : (
-        <SlotGrid
-          cells={day.cells}
-          slotMinutes={day.slotMinutes}
-          minBookingMinutes={day.minBookingMinutes}
-          value={value}
-          onChange={onSlotChange}
-          blockOptions={day.blockOptions}
-          selectedBlockId={selection.bloco}
-          onSelectBlock={onSelectBlock}
-        />
-      )}
+          {dayQuery.isPending ? (
+            <Spinner label="Carregando horários" />
+          ) : dayQuery.isError || !day ? (
+            <Alert tone="error">Não foi possível carregar os horários deste dia.</Alert>
+          ) : day.closed ? (
+            <Alert>A clínica está fechada neste dia. Escolha outra data.</Alert>
+          ) : day.outOfRange ? (
+            <Alert>Esta data está fora do período de reservas. Escolha outra data.</Alert>
+          ) : (
+            <SlotChips
+              cells={day.cells}
+              slotMinutes={day.slotMinutes}
+              minBookingMinutes={day.minBookingMinutes}
+              value={value}
+              onChange={onSlotChange}
+              blockOptions={day.blockOptions}
+              selectedBlockId={selection.bloco}
+              onSelectBlock={onSelectBlock}
+            />
+          )}
 
-      <p aria-live="polite" className="min-h-6 font-small text-small text-ink-muted">
-        {block
-          ? `${block.name} · ${formatMinuteRange(block.startMinute, block.endMinute)}`
-          : selection.inicio !== null && selection.fim !== null
-            ? `${formatMinuteRange(selection.inicio, selection.fim)} (${formatDuration(selection.fim - selection.inicio)})`
-            : ''}
-      </p>
+          <p aria-live="polite" className="min-h-6 font-small text-small text-ink-muted">
+            {block
+              ? `${block.name} · ${formatMinuteRange(block.startMinute, block.endMinute)}`
+              : selection.inicio !== null && selection.fim !== null
+                ? `${formatMinuteRange(selection.inicio, selection.fim)} (${formatDuration(selection.fim - selection.inicio)})`
+                : ''}
+          </p>
+        </div>
+      </Card>
 
-      <div className="flex flex-wrap gap-space-sm">
+      <div className="flex flex-col-reverse gap-space-sm sm:flex-row">
         <Button variant="secondary" onClick={onBack}>
           Voltar
         </Button>
-        <Button disabled={!isComplete(selection)} onClick={onContinue}>
+        <Button block disabled={!isComplete(selection)} onClick={onContinue}>
           Continuar
         </Button>
       </div>

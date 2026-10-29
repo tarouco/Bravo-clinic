@@ -22,7 +22,9 @@ export function QuotesPage() {
   return (
     <div className="mx-auto max-w-3xl space-y-space-lg">
       <div className="flex flex-wrap items-center justify-between gap-space-sm">
-        <h1 className="font-heading text-heading-mobile text-ink md:text-heading">Orçamentos</h1>
+        <h1 className="font-display-l-mobile text-display-l-mobile text-ink lg:font-display-l lg:text-display-l">
+          Orçamentos
+        </h1>
         <Button asChild variant="secondary" size="sm">
           <Link to="/servicos-extras">Novo pedido</Link>
         </Button>
@@ -40,11 +42,11 @@ export function QuotesPage() {
         {items.map((quote) => (
           <li
             key={quote.id}
-            className="space-y-space-xs rounded-card border border-hairline bg-surface-raised p-space-md"
+            className="space-y-space-xs rounded-md bg-surface-raised p-space-lg shadow-card"
           >
             <div className="flex flex-wrap items-center justify-between gap-space-sm">
-              <h2 className="font-body text-body font-semibold text-ink">{quote.serviceName}</h2>
-              <Badge>{QUOTE_STATUS_LABELS[quote.status]}</Badge>
+              <h2 className="font-heading-mobile text-body text-ink">{quote.serviceName}</h2>
+              <Badge tone="gold">{QUOTE_STATUS_LABELS[quote.status]}</Badge>
             </div>
             <p className="font-small text-small text-ink-muted">{quote.description}</p>
             <p className="font-caption text-caption text-ink-muted">

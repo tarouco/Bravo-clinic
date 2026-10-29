@@ -99,22 +99,35 @@ function Row({
   cents,
   strong,
   negative,
+  highlight,
 }: {
   label: string;
   note?: string;
   cents: number;
   strong?: boolean;
   negative?: boolean;
+  /** The total: the gold price pill of the summary (DESIGN-v3.md). */
+  highlight?: boolean;
 }) {
   return (
     <div
-      className={cx('flex items-baseline justify-between gap-space-md', strong && 'font-medium')}
+      className={cx(
+        'flex items-baseline justify-between gap-space-md',
+        strong && 'font-medium',
+        highlight &&
+          'items-center rounded-pill bg-grad-gold px-space-md py-space-sm text-on-gold shadow-relief-gold',
+      )}
     >
-      <dt className="text-ink-muted">
+      <dt className={highlight ? 'text-on-gold' : 'text-ink-muted'}>
         {label}
         {note ? <span className="block text-caption">{note}</span> : null}
       </dt>
-      <dd className="shrink-0 text-ink">
+      <dd
+        className={cx(
+          'shrink-0',
+          highlight ? 'font-display text-heading-mobile text-on-gold' : 'text-ink',
+        )}
+      >
         {negative ? '− ' : ''}
         {formatBRL(cents)}
       </dd>
@@ -131,13 +144,10 @@ export function BookingSummary({ quote, booking, className }: BookingSummaryProp
   return (
     <section
       aria-label="Resumo da reserva"
-      className={cx(
-        'space-y-space-md rounded-card border border-hairline bg-surface-raised p-space-lg font-small text-small',
-        className,
-      )}
+      className={cx('bv-card space-y-space-md font-small text-small', className)}
     >
       <div>
-        <p className="font-medium text-ink">{s.roomName}</p>
+        <p className="font-heading-mobile text-heading-mobile text-ink">{s.roomName}</p>
         <p className="text-ink-muted">{s.when}</p>
       </div>
       <ul className="space-y-space-xs text-ink">
@@ -153,7 +163,7 @@ export function BookingSummary({ quote, booking, className }: BookingSummaryProp
           <Row key={extra.label} label={extra.label} cents={extra.cents} />
         ))}
         {s.creditCents > 0 ? <Row label="Crédito aplicado" cents={s.creditCents} negative /> : null}
-        <Row label="Total" cents={s.totalCents} strong />
+        <Row label="Total" cents={s.totalCents} strong highlight />
         {s.packageLabel ? (
           <div className="text-ink-muted">{s.packageLabel}</div>
         ) : s.mode === 'deposit_balance' ? (

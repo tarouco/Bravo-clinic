@@ -13,7 +13,7 @@ function Instructions() {
   return (
     <div className="grid gap-space-md font-small text-small text-ink-muted md:grid-cols-2">
       <div>
-        <h3 className="font-body text-body font-semibold text-ink">Google Agenda</h3>
+        <h3 className="font-heading-mobile text-body text-ink">Google Agenda</h3>
         <ol className="list-decimal space-y-space-xs pl-space-lg">
           <li>No computador, abra o Google Agenda e vá em "Outras agendas" e "+".</li>
           <li>Escolha "Por URL" e cole o link.</li>
@@ -21,7 +21,7 @@ function Instructions() {
         </ol>
       </div>
       <div>
-        <h3 className="font-body text-body font-semibold text-ink">Outlook</h3>
+        <h3 className="font-heading-mobile text-body text-ink">Outlook</h3>
         <ol className="list-decimal space-y-space-xs pl-space-lg">
           <li>Abra o Outlook e vá em "Adicionar agenda".</li>
           <li>Escolha "Assinar da Web" e cole o link.</li>
@@ -60,15 +60,9 @@ export function CalendarSyncCard() {
   const active = feed.data?.active === true;
 
   return (
-    <section
-      aria-labelledby="calendar-sync-title"
-      className="space-y-space-md rounded-card border border-hairline bg-surface-raised p-space-lg"
-    >
+    <section aria-labelledby="calendar-sync-title" className="bv-card space-y-space-md">
       <div className="space-y-space-xs">
-        <h2
-          id="calendar-sync-title"
-          className="font-heading-mobile text-heading-mobile text-ink md:font-heading md:text-heading"
-        >
+        <h2 id="calendar-sync-title" className="font-heading-mobile text-heading-mobile text-ink">
           Agenda no seu calendário
         </h2>
         <p className="font-small text-small text-ink-muted">
@@ -133,7 +127,7 @@ export function CalendarSyncCard() {
             O link atual deixa de funcionar e as agendas que o usam param de atualizar. Você precisa
             adicionar o novo link nelas.
           </p>
-          <div className="flex flex-wrap justify-end gap-space-sm">
+          <div className="bv-modal-actions flex-wrap">
             <Button
               variant="secondary"
               onClick={() => {

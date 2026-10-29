@@ -102,7 +102,7 @@ export function CancelSubscriptionDialog({ subscription, onClose }: Subscription
           </ul>
         )}
         {error ? <Alert tone="error">{error}</Alert> : null}
-        <div className="flex flex-wrap gap-space-sm">
+        <div className="bv-modal-actions flex-wrap">
           <Button variant="secondary" onClick={onClose}>
             Manter assinatura
           </Button>
@@ -265,7 +265,7 @@ export function SwitchPackageDialog({ subscription, onClose }: SubscriptionDialo
               <p className="font-small text-small text-ink-muted">
                 {`Novo período: ${periodText(data)}`}
               </p>
-              <dl className="space-y-space-xs font-small text-small">
+              <dl className="space-y-space-xs rounded-md bg-surface-deboss p-space-md font-small text-small shadow-deboss">
                 <div className="flex justify-between gap-space-md">
                   <dt className="text-ink-muted">Valor do novo período</dt>
                   <dd className="text-ink">{formatBRL(data.priceCents)}</dd>

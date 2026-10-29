@@ -5,7 +5,7 @@ import { Navigate } from 'react-router-dom';
 import { CreditsToggleView } from '../../../components/revenue/CreditsToggle';
 import { Button } from '../../../components/ui/Button';
 import { Alert, Spinner } from '../../../components/ui/Feedback';
-import { Icon } from '../../../components/ui/Icon';
+import { IconButton } from '../../../components/ui/IconButton';
 import { PaymentMethodPanel, type PayChoice } from '../../../features/payments/PaymentMethodPanel';
 import { useCredits, useExtraHours, usePurchaseExtraHours } from '../../../features/purchases/api';
 import { formatDay, formatMinutes } from '../../../features/purchases/format';
@@ -22,9 +22,12 @@ function LotsList({ lots }: { lots: ExtraHoursSummary['lots'] }) {
     );
   }
   return (
-    <ul className="divide-y divide-hairline rounded-card border border-hairline bg-surface-raised">
+    <ul className="space-y-space-sm">
       {open.map((lot) => (
-        <li key={lot.id} className="flex flex-col gap-0.5 px-space-md py-space-sm">
+        <li
+          key={lot.id}
+          className="flex flex-col gap-0.5 rounded-md bg-surface-raised px-space-lg py-space-md shadow-card"
+        >
           <span className="font-small text-small text-ink">
             {`${formatMinutes(lot.minutesRemaining)} · vence em ${formatDay(lot.expiresAt)}`}
           </span>
@@ -104,43 +107,37 @@ function Purchase({
 
   const locked = bought !== null;
   return (
-    <section aria-labelledby="extra-buy" className="space-y-space-md">
+    <section aria-labelledby="extra-buy" className="bv-card space-y-space-md">
       <h2 id="extra-buy" className="font-heading-mobile text-heading-mobile text-ink">
         Comprar horas extras
       </h2>
       <div role="group" aria-label="Quantidade de horas" className="flex items-center gap-space-md">
-        <Button
-          variant="secondary"
+        <IconButton
+          icon={Minus}
+          label="Diminuir uma hora"
           size="sm"
-          aria-label="Diminuir uma hora"
-          className="w-10 px-0"
           disabled={locked || hours <= summary.minHours}
           onClick={() => {
             setHours((current) => Math.max(summary.minHours, current - 1));
           }}
-        >
-          <Icon as={Minus} />
-        </Button>
+        />
         <output
           aria-live="polite"
           className="min-w-16 text-center font-heading-mobile text-heading-mobile text-ink"
         >
           {`${String(hours)} ${hours === 1 ? 'hora' : 'horas'}`}
         </output>
-        <Button
-          variant="secondary"
+        <IconButton
+          icon={Plus}
+          label="Aumentar uma hora"
           size="sm"
-          aria-label="Aumentar uma hora"
-          className="w-10 px-0"
           disabled={locked || hours >= summary.maxHours}
           onClick={() => {
             setHours((current) => Math.min(summary.maxHours, current + 1));
           }}
-        >
-          <Icon as={Plus} />
-        </Button>
+        />
       </div>
-      <p className="font-body text-body text-ink">
+      <p className="inline-flex rounded-pill bg-grad-gold px-space-md py-space-sm font-body text-body text-on-gold shadow-relief-gold">
         {`${String(hours)} × ${formatBRL(unitPriceCents)} = ${formatBRL(totalCents)}`}
       </p>
       <p className="font-small text-small text-ink-muted">
@@ -164,6 +161,7 @@ function Purchase({
         <PaymentMethodPanel amountCents={payNowCents} onPay={onPay} />
       ) : (
         <Button
+          block
           loading={purchase.isPending}
           disabled={locked}
           onClick={() => void payWithCredits()}
@@ -202,7 +200,7 @@ export function HorasExtrasPage() {
   }
 
   return (
-    <div className="space-y-space-xl">
+    <div className="space-y-space-lg">
       <section aria-labelledby="extra-lots" className="space-y-space-sm">
         <h2 id="extra-lots" className="font-heading-mobile text-heading-mobile text-ink">
           Suas horas extras

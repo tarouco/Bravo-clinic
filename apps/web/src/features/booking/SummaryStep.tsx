@@ -241,11 +241,12 @@ export function SummaryStep({ selection, onBack, onChooseAnotherTime }: SummaryS
 
       {formError ? <Alert tone="error">{formError}</Alert> : null}
 
-      <div className="flex flex-wrap gap-space-sm">
+      <div className="flex flex-col-reverse gap-space-sm sm:flex-row">
         <Button variant="secondary" onClick={onBack}>
           Voltar
         </Button>
         <Button
+          block
           disabled={!canContinue || sessionLoading}
           loading={createBooking.isPending}
           onClick={() => void onContinue()}

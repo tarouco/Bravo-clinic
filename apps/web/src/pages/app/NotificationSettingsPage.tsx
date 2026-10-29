@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Button } from '../../components/ui/Button';
+import { Card } from '../../components/ui/Card';
+import { Toggle } from '../../components/ui/Toggle';
 import { Alert, Spinner } from '../../components/ui/Feedback';
 import { usePushSubscription, type PushStatus } from '../../features/push/usePushSubscription';
 import { usePageTitle } from '../../lib/usePageTitle';
@@ -24,7 +26,9 @@ export function NotificationSettingsPage() {
 
   return (
     <div className="mx-auto max-w-xl space-y-space-lg">
-      <h1 className="font-heading text-heading-mobile text-ink md:text-heading">Notificações</h1>
+      <h1 className="font-display-l-mobile text-display-l-mobile text-ink lg:font-display-l lg:text-display-l">
+        Notificações
+      </h1>
       <p className="font-body text-body text-ink-muted">
         Receba no celular ou no computador os avisos das suas reservas, pagamentos e compras.
       </p>
@@ -33,18 +37,23 @@ export function NotificationSettingsPage() {
       {explanation ? <Alert>{explanation}</Alert> : null}
       {error ? <Alert tone="error">{error}</Alert> : null}
 
-      {status === 'off' ? (
-        <Button loading={busy} onClick={() => void enable()}>
-          Ativar notificações
-        </Button>
-      ) : null}
-      {status === 'on' ? (
-        <div className="space-y-space-sm">
-          <Alert tone="success">As notificações estão ativas neste dispositivo.</Alert>
-          <Button variant="secondary" loading={busy} onClick={() => void disable()}>
-            Desativar
-          </Button>
-        </div>
+      {status === 'off' || status === 'on' ? (
+        <Card>
+          <Toggle
+            label="Notificações neste dispositivo"
+            description={
+              status === 'on'
+                ? 'Ativas. Você recebe os avisos aqui.'
+                : 'Desativadas. Os avisos chegam só por e-mail.'
+            }
+            checked={status === 'on'}
+            disabled={busy}
+            aria-busy={busy || undefined}
+            onCheckedChange={(on) => {
+              void (on ? enable() : disable());
+            }}
+          />
+        </Card>
       ) : null}
 
       <Button asChild variant="ghost" size="sm">

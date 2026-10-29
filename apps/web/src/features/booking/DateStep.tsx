@@ -1,6 +1,6 @@
 import { utcToLocal } from '@bravo/core';
 import { useState } from 'react';
-import { MonthCalendar } from '../../components/calendar/MonthCalendar';
+import { DayStrip } from '../../components/booking/DayStrip';
 import { Button } from '../../components/ui/Button';
 import { cx, focusRing } from '../../components/ui/cx';
 import { Alert, Spinner } from '../../components/ui/Feedback';
@@ -34,7 +34,7 @@ export function DateStep({ selection, onChange, onContinue }: DateStepProps) {
   };
 
   return (
-    <div className="space-y-space-xl">
+    <div className="space-y-space-lg">
       <fieldset className="space-y-space-sm">
         <legend className="font-heading-mobile text-heading-mobile text-ink">Sala</legend>
         {rooms.isPending ? (
@@ -49,10 +49,10 @@ export function DateStep({ selection, onChange, onContinue }: DateStepProps) {
                 <label
                   key={room.id}
                   className={cx(
-                    'flex cursor-pointer flex-col gap-1 rounded-card border p-space-md font-small text-small transition-colors focus-within:ring-2 focus-within:ring-bronze',
+                    'flex cursor-pointer flex-col gap-1 rounded-md p-space-md font-small text-small text-ink transition-shadow focus-within:ring-2 focus-within:ring-accent focus-within:ring-offset-2 focus-within:ring-offset-surface',
                     checked
-                      ? 'border-bronze bg-champagne-soft text-on-champagne'
-                      : 'border-hairline bg-surface-raised text-ink hover:border-bronze',
+                      ? 'bg-surface-deboss shadow-deboss'
+                      : 'bg-surface-raised shadow-card hover:bg-surface-panel',
                   )}
                 >
                   <span className="flex items-center gap-space-sm">
@@ -64,7 +64,7 @@ export function DateStep({ selection, onChange, onContinue }: DateStepProps) {
                       onChange={() => {
                         chooseRoom(room.slug);
                       }}
-                      className={cx('h-4 w-4 accent-bronze', focusRing)}
+                      className={cx('h-4 w-4 accent-emerald', focusRing)}
                     />
                     <span className="font-medium">{room.name}</span>
                   </span>
@@ -81,11 +81,12 @@ export function DateStep({ selection, onChange, onContinue }: DateStepProps) {
           Data
         </h2>
         {selection.sala ? (
-          <MonthCalendar
+          <DayStrip
             month={month}
             days={monthQuery.data?.days ?? []}
             value={selection.data}
             minMonth={monthOf(today)}
+            hideBefore={today}
             onSelect={chooseDate}
             onMonthChange={setMonth}
           />
@@ -96,7 +97,7 @@ export function DateStep({ selection, onChange, onContinue }: DateStepProps) {
         )}
       </section>
 
-      <Button disabled={!selection.sala || !selection.data} onClick={onContinue}>
+      <Button block disabled={!selection.sala || !selection.data} onClick={onContinue}>
         Continuar
       </Button>
     </div>

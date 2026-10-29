@@ -10,9 +10,9 @@ import { formatDateTime, formatWeekdayRange, formatWindow } from './format';
 import type { PackageOffer, Subscription } from './types';
 
 const TONES: Record<SubscriptionStatus, BadgeTone> = {
-  awaiting_payment: 'champagne',
-  active: 'bronze',
-  suspended: 'error',
+  awaiting_payment: 'gold',
+  active: 'emerald',
+  suspended: 'danger',
   ended: 'neutral',
   cancelled: 'neutral',
   switched: 'neutral',
@@ -42,9 +42,7 @@ function nextChargeText(charge: NonNullable<Subscription['nextCharge']>): string
 function Detail({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div className="space-y-0.5">
-      <dt className="font-caption text-caption uppercase tracking-[0.08em] text-ink-muted">
-        {label}
-      </dt>
+      <dt className="font-eyebrow text-eyebrow uppercase text-accent">{label}</dt>
       <dd className="font-small text-small text-ink">{children}</dd>
     </div>
   );
@@ -66,7 +64,7 @@ export function SubscriptionCard({
     <Card>
       <div className="space-y-space-md">
         <div className="flex flex-wrap items-start justify-between gap-space-sm">
-          <h2 className="font-h3 text-h3 text-ink">{category.name}</h2>
+          <h2 className="font-heading-mobile text-heading-mobile text-ink">{category.name}</h2>
           <Badge tone={TONES[status]}>{subscriptionStatusLabel[status]}</Badge>
         </div>
 

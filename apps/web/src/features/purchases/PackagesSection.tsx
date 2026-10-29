@@ -2,18 +2,33 @@ import { PackageCard } from '../../components/revenue/PackageCard';
 import { usePackages } from './api';
 import type { PackageOffer } from './types';
 
-function OfferGroup({ title, offers }: { title: string; offers: PackageOffer[] }) {
+function OfferGroup({
+  title,
+  offers,
+  recommendedId,
+}: {
+  title: string;
+  offers: PackageOffer[];
+  recommendedId: string | null;
+}) {
   if (offers.length === 0) return null;
   return (
     <div className="space-y-space-sm">
       <h3 className="font-heading-mobile text-heading-mobile text-ink">{title}</h3>
       <div className="grid gap-space-md sm:grid-cols-2 lg:grid-cols-3">
         {offers.map((offer) => (
-          <PackageCard key={offer.id} offer={offer} />
+          <PackageCard key={offer.id} offer={offer} recommended={offer.id === recommendedId} />
         ))}
       </div>
     </div>
   );
+}
+
+/** The offer with the lowest average hour value, when there is a choice to make. */
+function bestHourValue(items: readonly PackageOffer[]): string | null {
+  if (items.length < 2) return null;
+  const best = items.reduce((low, offer) => (offer.avgHourCents < low.avgHourCents ? offer : low));
+  return best.id;
 }
 
 function PackagesSkeleton() {
@@ -27,7 +42,7 @@ function PackagesSkeleton() {
         <div
           key={index}
           aria-hidden="true"
-          className="h-56 animate-pulse rounded-card border border-hairline bg-surface-stone"
+          className="h-56 animate-pulse rounded-lg bg-surface-deboss shadow-deboss"
         />
       ))}
     </div>
@@ -52,6 +67,7 @@ export function PackagesSection() {
 
   const items = data?.items ?? [];
   if (items.length === 0) return null;
+  const recommendedId = bestHourValue(items);
 
   return (
     <section aria-labelledby="packages-title" className="space-y-space-lg">
@@ -66,8 +82,13 @@ export function PackagesSection() {
       <OfferGroup
         title="Pacotes de horas"
         offers={items.filter((o) => o.type === 'hour_package')}
+        recommendedId={recommendedId}
       />
-      <OfferGroup title="Horário fixo" offers={items.filter((o) => o.type === 'fixed_schedule')} />
+      <OfferGroup
+        title="Horário fixo"
+        offers={items.filter((o) => o.type === 'fixed_schedule')}
+        recommendedId={recommendedId}
+      />
     </section>
   );
 }

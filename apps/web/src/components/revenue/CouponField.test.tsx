@@ -127,7 +127,7 @@ describe('CreditsToggle (REC-107)', () => {
   it('offers "Usar créditos (R$ 50,00 disponíveis)" and emits useCredits', async () => {
     const onOptionsChange = renderCredits(revenueOverridesSufficient);
 
-    const toggle = screen.getByRole('checkbox', {
+    const toggle = screen.getByRole('switch', {
       name: spaced('Usar créditos (R$ 50,00 disponíveis)'),
     });
     expect(toggle).not.toBeChecked();
@@ -143,7 +143,7 @@ describe('CreditsToggle (REC-107)', () => {
     );
 
     expect(screen.getByText(spaced('Créditos aplicados: − R$ 30,00'))).toBeInTheDocument();
-    await userEvent.click(screen.getByRole('checkbox'));
+    await userEvent.click(screen.getByRole('switch'));
 
     expect(onOptionsChange).toHaveBeenCalledExactlyOnceWith({ useCredits: false });
   });
@@ -156,7 +156,7 @@ describe('CreditsToggle (REC-107)', () => {
 
   it('renders nothing without credit or without receita extensions', () => {
     const none = renderCredits({ credit: { availableCents: 0, appliedCents: 0 } });
-    expect(screen.queryByRole('checkbox')).not.toBeInTheDocument();
+    expect(screen.queryByRole('switch')).not.toBeInTheDocument();
     expect(none).not.toHaveBeenCalled();
 
     const { container } = render(

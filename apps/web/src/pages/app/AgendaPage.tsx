@@ -98,7 +98,9 @@ export function AgendaPage() {
 
   return (
     <div className="mx-auto max-w-5xl space-y-space-lg">
-      <h1 className="font-heading text-heading-mobile text-ink md:text-heading">Agenda</h1>
+      <h1 className="font-display-l-mobile text-display-l-mobile text-ink lg:font-display-l lg:text-display-l">
+        Agenda
+      </h1>
       {upcoming.isError ? (
         <Alert tone="error">Não foi possível carregar suas reservas agora.</Alert>
       ) : null}

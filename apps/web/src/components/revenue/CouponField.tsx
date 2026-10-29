@@ -57,7 +57,6 @@ export function CouponFieldView({
             value={draft}
             error={rejectionMessage}
             autoComplete="off"
-            className="uppercase"
             onChange={(event) => {
               setDraft(event.target.value.toUpperCase());
             }}

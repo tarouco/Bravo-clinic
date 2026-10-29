@@ -85,10 +85,10 @@ export function FixedSchedulePicker({
                 <label
                   key={room.id}
                   className={cx(
-                    'flex cursor-pointer items-center gap-space-sm rounded-card border p-space-md font-small text-small transition-colors focus-within:ring-2 focus-within:ring-bronze',
+                    'flex cursor-pointer items-center gap-space-sm rounded-md p-space-md font-small text-small text-ink transition-shadow focus-within:ring-2 focus-within:ring-accent focus-within:ring-offset-2 focus-within:ring-offset-surface',
                     checked
-                      ? 'border-bronze bg-champagne-soft text-on-champagne'
-                      : 'border-hairline bg-surface-raised text-ink hover:border-bronze',
+                      ? 'bg-surface-deboss shadow-deboss'
+                      : 'bg-surface-raised shadow-card hover:bg-surface-panel',
                   )}
                 >
                   <input
@@ -99,7 +99,7 @@ export function FixedSchedulePicker({
                     onChange={() => {
                       choose({ roomId: room.id });
                     }}
-                    className={cx('h-4 w-4 accent-bronze', focusRing)}
+                    className={cx('h-4 w-4 accent-emerald', focusRing)}
                   />
                   <span className="font-medium">{room.name}</span>
                 </label>
