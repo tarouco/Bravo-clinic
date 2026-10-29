@@ -32,7 +32,7 @@ export function ServicesTab() {
       id: 'status',
       header: 'Situação',
       cell: (s) => (
-        <Badge tone={s.status === 'active' ? 'bronze' : 'neutral'}>
+        <Badge tone={s.status === 'active' ? 'emerald' : 'neutral'}>
           {s.status === 'active' ? 'Ativo' : 'Inativo'}
         </Badge>
       ),

@@ -98,14 +98,14 @@ function ProviderCard({ adapter, active }: CardProps) {
   return (
     <section
       aria-labelledby={headingId}
-      className="space-y-space-md rounded-card border border-hairline bg-surface-raised p-space-lg"
+      className="space-y-space-md rounded-lg bg-surface-raised shadow-card p-space-lg"
     >
       <header className="flex flex-wrap items-center gap-space-sm">
         <h2 id={headingId} className="font-heading text-heading-mobile text-ink">
           {adapter.label}
         </h2>
-        {active ? <Badge tone="bronze">Ativo</Badge> : null}
-        <Badge tone={adapter.configured ? 'champagne' : 'neutral'}>
+        {active ? <Badge tone="emerald">Ativo</Badge> : null}
+        <Badge tone={adapter.configured ? 'gold' : 'neutral'}>
           {adapter.configured ? 'Configurado' : 'Não configurado'}
         </Badge>
       </header>

@@ -42,9 +42,7 @@ const jsonOf = (value: unknown): string =>
 function Row({ term, children }: { term: string; children: ReactNode }) {
   return (
     <div className="space-y-0.5">
-      <dt className="font-caption text-caption uppercase tracking-[0.08em] text-ink-muted">
-        {term}
-      </dt>
+      <dt className="font-eyebrow text-eyebrow uppercase text-ink-muted">{term}</dt>
       <dd className="break-words font-small text-small text-ink">{children}</dd>
     </div>
   );
@@ -67,12 +65,12 @@ function DetailDrawer({ row, onClose }: { row: AuditRow; onClose: () => void }) 
           ['Depois', row.after],
         ].map(([label, value]) => (
           <div key={String(label)}>
-            <p className="mb-space-xs font-caption text-caption uppercase tracking-[0.08em] text-ink-muted">
+            <p className="mb-space-xs font-eyebrow text-eyebrow uppercase text-ink-muted">
               {String(label)}
             </p>
             <pre
               aria-label={String(label)}
-              className="max-h-96 overflow-auto rounded-control bg-surface-stone p-space-sm font-mono text-caption text-ink"
+              className="max-h-96 overflow-auto rounded-sm bg-surface-deboss p-space-md shadow-deboss font-mono text-caption text-ink"
             >
               {jsonOf(value)}
             </pre>
@@ -135,14 +133,14 @@ export function AuditPage() {
 
   return (
     <div className="mx-auto max-w-7xl space-y-space-lg">
-      <h1 className="font-heading text-heading-mobile text-ink md:text-heading">
+      <h1 className="font-display-l-mobile text-display-l-mobile text-ink lg:font-display-l lg:text-display-l">
         Log de auditoria
       </h1>
 
       <form
         noValidate
         aria-label="Filtros da auditoria"
-        className="grid gap-space-md rounded-card border border-hairline bg-surface-raised p-space-md sm:grid-cols-2 lg:grid-cols-4"
+        className="grid gap-space-md rounded-lg bg-surface-raised p-space-lg shadow-card sm:grid-cols-2 lg:grid-cols-4"
         onSubmit={(event) => {
           event.preventDefault();
           apply(draft);
@@ -247,6 +245,7 @@ export function AuditPage() {
       ) : null}
       {audit.data ? (
         <Table
+          density="compact"
           caption="Registros de auditoria"
           columns={columns}
           rows={rows}

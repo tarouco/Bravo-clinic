@@ -99,6 +99,7 @@ function FeedControl({ scope, roomId, subject, feed }: FeedControlProps) {
               Gerar novo link
             </Button>
             <Button
+              className="text-danger"
               variant="ghost"
               size="sm"
               onClick={() => {
@@ -160,7 +161,12 @@ function FeedControl({ scope, roomId, subject, feed }: FeedControlProps) {
           >
             Cancelar
           </Button>
-          <Button loading={revoke.isPending} onClick={remove}>
+          <Button
+            className="text-danger"
+            variant="secondary"
+            loading={revoke.isPending}
+            onClick={remove}
+          >
             Revogar link
           </Button>
         </div>
@@ -202,7 +208,7 @@ export function CalendarTab() {
     <div className="space-y-space-lg">
       <section
         aria-labelledby={clinicHeading}
-        className="space-y-space-sm rounded-card border border-hairline bg-surface-raised p-space-lg"
+        className="space-y-space-sm rounded-lg bg-surface-raised shadow-card p-space-lg"
       >
         <h2 id={clinicHeading} className="font-heading text-heading-mobile text-ink">
           Agenda da clínica
@@ -222,7 +228,7 @@ export function CalendarTab() {
             <li
               key={room.id}
               aria-label={room.name}
-              className="space-y-space-xs rounded-card border border-hairline bg-surface-raised p-space-lg"
+              className="space-y-space-xs rounded-lg bg-surface-raised shadow-card p-space-lg"
             >
               <p className="font-medium text-ink">{room.name}</p>
               <FeedControl
@@ -238,7 +244,7 @@ export function CalendarTab() {
 
       <section
         aria-labelledby={helpHeading}
-        className="space-y-space-sm rounded-card border border-hairline bg-surface-stone p-space-lg"
+        className="space-y-space-sm rounded-lg bg-surface-deboss shadow-deboss p-space-lg"
       >
         <h2 id={helpHeading} className="font-heading text-heading-mobile text-ink">
           Como assinar no Google Agenda e no Outlook

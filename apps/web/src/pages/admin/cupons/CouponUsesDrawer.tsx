@@ -8,8 +8,8 @@ import type { Coupon, CouponUse } from '../../../features/purchases/types';
 import { messageOf } from '../../../lib/api-errors';
 
 const STATUS_TONES: Record<CouponUse['status'], BadgeTone> = {
-  reserved: 'champagne',
-  consumed: 'bronze',
+  reserved: 'gold',
+  consumed: 'emerald',
   released: 'neutral',
 };
 

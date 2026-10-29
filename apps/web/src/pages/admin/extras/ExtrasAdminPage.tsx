@@ -21,7 +21,9 @@ export function ExtrasAdminPage() {
 
   return (
     <div className="mx-auto max-w-7xl space-y-space-lg">
-      <h1 className="font-heading text-heading-mobile text-ink md:text-heading">Serviços Extras</h1>
+      <h1 className="font-display-l-mobile text-display-l-mobile text-ink lg:font-display-l lg:text-display-l">
+        Serviços Extras
+      </h1>
       <Tabs
         label="Seções dos serviços extras"
         value={tab}

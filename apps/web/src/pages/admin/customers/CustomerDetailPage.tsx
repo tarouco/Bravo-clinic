@@ -45,7 +45,7 @@ function Section({
   return (
     <section
       aria-labelledby={headingId}
-      className="space-y-space-md rounded-card border border-hairline bg-surface-raised p-space-lg"
+      className="space-y-space-md rounded-lg bg-surface-raised shadow-card p-space-lg"
     >
       <div className="flex flex-wrap items-center justify-between gap-space-sm">
         <h2 id={headingId} className="font-heading text-heading-mobile text-ink">
@@ -195,9 +195,7 @@ function ProfileSection({ detail, isAdmin }: { detail: CustomerDetail; isAdmin: 
       <dl className="grid gap-space-sm sm:grid-cols-2">
         {rows.map(([term, value]) => (
           <div key={term}>
-            <dt className="font-caption text-caption uppercase tracking-[0.08em] text-ink-muted">
-              {term}
-            </dt>
+            <dt className="font-eyebrow text-eyebrow uppercase text-ink-muted">{term}</dt>
             <dd className="font-small text-small text-ink">{value}</dd>
           </div>
         ))}
@@ -281,7 +279,7 @@ export function CustomerDetailPage() {
   if (customer.isError) {
     return (
       <div className="mx-auto max-w-5xl space-y-space-md">
-        <Link to="/admin/clientes" className="text-bronze underline underline-offset-4">
+        <Link to="/admin/clientes" className="text-accent underline underline-offset-4">
           Voltar para clientes
         </Link>
         <Alert tone="error">
@@ -309,11 +307,11 @@ export function CustomerDetailPage() {
       <div>
         <Link
           to="/admin/clientes"
-          className="font-small text-small text-bronze underline underline-offset-4"
+          className="font-small text-small text-accent underline underline-offset-4"
         >
           Voltar para clientes
         </Link>
-        <h1 className="mt-space-sm font-heading text-heading-mobile text-ink md:text-heading">
+        <h1 className="mt-space-sm font-display-l-mobile text-display-l-mobile text-ink lg:font-display-l lg:text-display-l">
           {detail.profile.name}
         </h1>
       </div>

@@ -29,9 +29,9 @@ function Bar({ label, percent, warning }: BarProps) {
         value={percent}
         max={100}
         aria-label={label}
-        className={cx('h-2 w-full max-w-sm', warning ? 'accent-error' : 'accent-bronze')}
+        className={cx('h-2 w-full max-w-sm', warning ? 'accent-danger' : 'accent-emerald')}
       />
-      <span className={cx('font-small text-small', warning ? 'text-error' : 'text-ink-muted')}>
+      <span className={cx('font-small text-small', warning ? 'text-danger' : 'text-ink-muted')}>
         {percentFormat.format(percent)}%
       </span>
     </div>
@@ -52,15 +52,15 @@ function Meter({ title, warning, children }: MeterProps) {
       aria-labelledby={headingId}
       data-warning={warning}
       className={cx(
-        'space-y-space-sm rounded-card border p-space-lg',
-        warning ? 'border-error bg-error-container/40' : 'border-hairline bg-surface-raised',
+        'space-y-space-sm rounded-lg p-space-lg shadow-card',
+        warning ? 'bg-danger-soft' : 'bg-surface-raised',
       )}
     >
       <header className="flex flex-wrap items-center gap-space-sm">
         <h2 id={headingId} className="font-heading text-heading-mobile text-ink">
           {title}
         </h2>
-        {warning ? <Badge tone="error">Perto do limite</Badge> : null}
+        {warning ? <Badge tone="danger">Perto do limite</Badge> : null}
       </header>
       {children}
     </section>

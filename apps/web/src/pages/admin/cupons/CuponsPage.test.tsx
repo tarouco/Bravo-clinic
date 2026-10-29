@@ -103,7 +103,8 @@ describe('CuponsPage list (REC-128)', () => {
       '10%',
       '3/∞',
       '—',
-      '',
+      // The v3 Toggle keeps its name as a visually hidden label inside the cell.
+      'Cupom BRAVO10 ativo',
       expect.stringContaining('Editar'),
     ]);
   });
