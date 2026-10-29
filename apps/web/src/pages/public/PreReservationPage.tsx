@@ -7,7 +7,11 @@ import { ApiError } from '../../lib/api';
 import { usePageTitle } from '../../lib/usePageTitle';
 
 function Centered({ children }: { children: React.ReactNode }) {
-  return <div className="mx-auto max-w-xl space-y-space-md px-gutter py-space-3xl">{children}</div>;
+  return (
+    <div className="mx-auto max-w-xl px-gutter py-space-3xl">
+      <div className="bv-card space-y-space-md rounded-xl sm:p-space-xl">{children}</div>
+    </div>
+  );
 }
 
 /**
