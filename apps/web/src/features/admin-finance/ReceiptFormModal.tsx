@@ -166,7 +166,7 @@ export function ReceiptFormModal({ today, onClose }: ReceiptFormModalProps) {
           <p className="font-small text-small text-ink">Cliente (opcional)</p>
           <CustomerPicker value={customer} onChange={setCustomer} />
           {errors['userId'] ? (
-            <p className="font-caption text-caption text-error">{errors['userId']}</p>
+            <p className="font-caption text-caption text-danger">{errors['userId']}</p>
           ) : null}
         </div>
         {formError ? <Alert tone="error">{formError}</Alert> : null}
