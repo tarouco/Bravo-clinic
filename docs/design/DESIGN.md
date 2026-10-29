@@ -159,6 +159,9 @@ spacing:
   space-hero: 6rem
 ---
 
+> **HISTÓRICO.** Este é o design v2 (Serene Architecture), substituído pelo Design System v3 em 28/10/2026. A fonte de verdade é [`DESIGN-v3.md`](DESIGN-v3.md) (AD-038).
+
+
 ## Brand & Style
 
 This design system translates the physical luxury and architectural serenity of high-end wellness into digital space. Drawing directly from the boutique aesthetic of the physical environment—warm limestone facades, indirect amber lighting, dark bronze window profiles, fluted walnut paneling, and brushed champagne metallic letterforms—it eschews the cold, clinical whites and overly saturated blues typical of medical software.

@@ -1,6 +1,6 @@
 # Plano de atualização — Bravô Clinic Design System v3
 
-Status: **aguardando aprovação** · 28/10/2026
+Status: **executado** em 28/10/2026 no branch `feat/rebrand-v3` (aprovado com as recomendações do §5: faixas em esmeralda profundo, tokens derivados como propostos, copy fora do escopo, TabBar a partir do `appNav`, um deploy após o merge). Pendências no fim deste arquivo.
 Fonte da marca: `Bravo-Clinic-Design-System-v3.pdf` + kit extraído em `docs/design/v3/bravo-clinic-design-system/` (tokens, `bundle.css`, `bundle.js`, guias, exemplos, logos, imagens).
 Mapa de tokens detalhado: [`v3-mapa-de-tokens.md`](v3-mapa-de-tokens.md).
 
@@ -105,7 +105,7 @@ Testes: Vitest/Testing Library para `useLightUp` (clique acende 1,6s, selecionad
 1. **Faixas escuras** (hoje `walnut`): esmeralda profundo (recomendado — mantém o marrom só para texto) ou Marrom Luxo?
 2. **Tokens derivados** de erro/aviso/campos/tabelas (mapa §4): aprovar como propostos?
 3. **Revisão de copy** ("menos texto") entra neste projeto ou fica só o visual?
-4. **TabBar do app**: abas Início · Agenda · [FAB] · Compras · Perfil — ok?
+4. **TabBar do app**: o PDF (p. 9 e 11) mostra Início · Agenda · [FAB] · Favoritos (coração) · Perfil. O app não tem "Favoritos" hoje — seguir o PDF e criar salas favoritas, ou usar Compras no 4º slot?
 5. **Deploy**: produção ao fim das fases 2, 4 e 6 (padrão do projeto) ou só no final?
 
 ## 6. Artefatos salvos nesta etapa
@@ -113,3 +113,19 @@ Testes: Vitest/Testing Library para `useLightUp` (clique acende 1,6s, selecionad
 - `docs/design/v3/bravo-clinic-design-system/` — kit v3 extraído (sem duplicar o PDF).
 - `docs/design/v3-mapa-de-tokens.md` — mapeamento token a token e lacunas.
 - `docs/design/PLANO-ATUALIZACAO-V3.md` — este plano.
+
+## 7. Conferência contra o PDF (28/10/2026, 13 páginas)
+
+Tokens de cor Dia/Noite (p. 4), relevos e raios (p. 5), neon (p. 6), tipografia e espaçamento (p. 7), controles (p. 8), superfícies e navegação (p. 9), site (p. 10), app (p. 11), logo e ícones (p. 12) e implementação (p. 13) conferem com o kit e com este plano. A p. 13 lista como pendências da marca "componentes de calendário mensal e formulários", o que confirma os tokens derivados da AD-034. Divergência única: a 4ª aba da TabBar (ver §5.4).
+
+## 7. Resultado da execução (28/10/2026)
+
+- Fases 0–3 no branch principal do rebrand; Fases 4 (site e auth), 5 (app) e 6 (Admin e calendários) em paralelo, integradas sem conflito; Fase 7 com e-mails, ícones PWA, og-image, remoção dos apelidos v2 e auditoria.
+- Primitivos novos: `IconButton`, `Chip`/`ChipGroup`, `Toggle`, `Slider`, `useLightUp`, `DayStrip` e `SlotChips` (reserva), `Button` `gold`/`brown`/`danger`, `StatTile tone="gold"`, `Card` `gold`/`emerald` + `overhang`.
+- Gates: typecheck, eslint, prettier, Vitest web 1296/1296, e2e Playwright com axe WCAG A/AA em Dia e Noite.
+
+### Pendências
+- **Revisão de copy** (fora do escopo aprovado): "Reservar Sala", "Gestão de Reservas", "Serviços Extras" e legendas do simulador ("2 Horas", "Tarifa Desconto") ainda com maiúsculas no meio; eyebrow novo "Melhor valor por hora" em Compras e "Olá, quero…" no WhatsApp precisam de aceite.
+- **Agenda do app** ainda usa as visões Mês/Semana/Dia do calendário (estilo v3), não a faixa de dias + lista da referência AppScreens.
+- **Marca:** logo vetorial, fontes oficiais, fotos reais e ícones próprios; ícones do PWA e og-image são provisórios (monograma Ô em tipo).
+- **Tokens derivados (AD-042)** aguardam validação da marca.

@@ -43,6 +43,10 @@ foi decidido onde a v3 não fala. Decisões: `.specs/STATE.md` AD-038 a AD-042.
 
 Os tamanhos v3 são de tela de app (390px); os sem sufixo são variantes web (derivado, AD-042).
 
+## Componentes do app
+
+`components/ui`: `Button` (`primary` esmeralda, `secondary` pérola, `gold`, `brown`, `danger`, `ghost`, `link`; `block`, `sm`), `IconButton` (rótulo obrigatório), `Chip`/`ChipGroup`, `Toggle`, `Slider`, `Card` (`raised`, `stone`, `gold`, `emerald`, `overhang`), `Badge`, `Alert`, `Toast`, `Table` (`density`), `Modal` (sheet no celular), `Drawer`, `Popover` (vidro), `StatTile` (`tone="gold"`), campos `bv-field`. Reserva: `components/booking/DayStrip` (faixa `bv-week`/`bv-day`) e `SlotChips`. Neon do clique: `useLightUp` (1,6s).
+
 ## Lacunas da v3 e decisões derivadas (AD-042, aguardam validação da marca)
 
 - **Status:** `danger` #A12A1E / Noite #FFB4A6, `danger-soft` para fundos; aviso = fundo ouro + `on-gold`; sucesso = esmeralda.
