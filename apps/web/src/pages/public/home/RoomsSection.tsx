@@ -34,7 +34,7 @@ export function RoomsSection({ onReserve }: RoomsSectionProps) {
       <div className="max-w-7xl mx-auto px-gutter">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-2xl">
           <div className="space-y-space-xs max-w-2xl">
-                        <h2 className="font-display-l-mobile text-display-l-mobile md:font-display-l md:text-display-l text-ink">
+            <h2 className="font-display-l-mobile text-display-l-mobile md:font-display-l md:text-display-l text-ink">
               As três salas inteligentes da clínica.
             </h2>
           </div>
