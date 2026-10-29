@@ -7,3 +7,4 @@ export * from './subscriptions';
 export * from './ledgers';
 export * from './coupons';
 export * from './gestao';
+export * from './vsl';

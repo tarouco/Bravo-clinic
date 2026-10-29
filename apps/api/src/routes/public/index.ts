@@ -11,6 +11,7 @@ import { preReservationRoutes } from './pre-reservations';
 import { quoteRoutes } from './quote';
 import { publicQuoteRequestRoutes } from './quote-requests';
 import { sandboxRoutes } from './sandbox';
+import { vslRoutes } from './vsl';
 
 /** Everything under `/public/*`: no session required. */
 export function publicRoutes(): Hono<AppEnv> {
@@ -26,5 +27,6 @@ export function publicRoutes(): Hono<AppEnv> {
   app.route('/', sandboxRoutes());
   app.route('/', publicExtraServiceRoutes());
   app.route('/', publicQuoteRequestRoutes());
+  app.route('/', vslRoutes());
   return app;
 }

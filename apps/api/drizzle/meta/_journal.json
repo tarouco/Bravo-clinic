@@ -57,6 +57,13 @@
       "when": 1793110434513,
       "tag": "0007_gestao",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1793313229250,
+      "tag": "0008_vsl",
+      "breakpoints": true
     }
   ]
 }
