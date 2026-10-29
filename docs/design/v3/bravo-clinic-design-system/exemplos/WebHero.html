@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light"><head><link rel="stylesheet" href="../tokens/tokens.css"><link rel="stylesheet" href="../components/bundle.css"><script src="../components/bundle.js"></script><meta charset="utf-8"><title>WebHero</title>
+<style>
+html,body{margin:0}
+body{background:var(--surface);font-family:var(--font-sans);color:var(--ink)}
+.stage{position:relative;padding:76px 70px 90px;overflow:hidden}
+.orb{position:absolute;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f2f1ee,#cfccc7 70%);box-shadow:0 30px 60px rgba(60,45,30,.18)}
+.sun{position:absolute;right:90px;top:-110px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,#fff6cf 0%,var(--gold) 45%,rgba(255,235,151,0) 70%)}
+.bv-navbar{margin:-52px 18px 26px}
+.grid{display:grid;grid-template-columns:1.05fr 1fr .9fr;gap:22px}
+.hero{grid-row:span 2;display:flex;flex-direction:column;justify-content:flex-end;min-height:400px}
+.hero h1{font-family:var(--font-display);font-weight:300;font-size:30px;line-height:34px;letter-spacing:.02em;margin:0 0 12px}
+.btns{display:flex;gap:12px;margin-top:20px}
+.knob{position:absolute;left:50%;top:52%;width:44px;height:74px;margin-left:-22px;border-radius:999px;background:linear-gradient(180deg,#fff,#ecebe8);box-shadow:inset 0 1px 0 #fff,inset 0 -4px 8px rgba(60,45,30,.12),0 14px 26px rgba(5,30,22,.5)}
+.mini{align-self:end;display:flex;align-items:center;justify-content:space-between}
+.ped{position:absolute;left:8%;right:8%;bottom:-40px;height:80px;border-radius:50%;background:linear-gradient(180deg,#f7f6f3,#dedcd8);box-shadow:0 20px 40px rgba(60,45,30,.15)}
+[data-theme="dark"] .orb,[data-theme="dark"] .ped{opacity:.15}
+</style></head><body><div style="position:fixed;right:14px;top:14px;z-index:99;display:flex;gap:6px;font:500 12px Jost,sans-serif"><button onclick="document.documentElement.dataset.theme='light'" style="border:0;border-radius:99px;padding:6px 12px;cursor:pointer">Dia</button><button onclick="document.documentElement.dataset.theme='dark'" style="border:0;border-radius:99px;padding:6px 12px;cursor:pointer;background:#583714;color:#ffeb97">Noite</button></div>
+<div class="stage">
+<div class="sun"></div><div class="orb" style="width:150px;height:150px;left:-40px;top:20px"></div><div class="orb" style="width:190px;height:190px;right:-70px;top:44%"></div>
+<div class="bv-panel">
+<nav class="bv-navbar" data-bv-nav aria-label="Principal"><span class="bv-navbar-brand">Bravô</span><a class="bv-navbar-link" href="#" aria-current="page">Salas</a><a class="bv-navbar-link" href="#">Como funciona</a><a class="bv-navbar-link" href="#">Planos</a><span class="bv-navbar-spacer"></span><a class="bv-navbar-link" href="#">Entrar</a><button class="bv-btn bv-btn--emerald bv-btn--sm">Reservar</button></nav>
+<div class="grid">
+<div class="bv-card hero"><p class="bv-card-eyebrow">Salas inteligentes</p><h1>Seu consultório pronto, quando você precisar</h1><p class="bv-card-text">Saúde, beleza e bem-estar em um só lugar.</p><div class="btns"><button class="bv-btn bv-btn--gold">Ver salas</button><button class="bv-btn bv-btn--emerald">Reservar</button></div></div>
+<div class="bv-card bv-card--gold"><h3 class="bv-card-title">Reserve em segundos</h3><p class="bv-card-text">Escolha a sala, o horário e pronto.</p><div class="btns"><button class="bv-btn bv-btn--pearl bv-btn--sm">Começar</button></div></div>
+<div class="bv-card bv-overhang-end"><h3 class="bv-card-title">Sala 04</h3><p class="bv-card-text">Livre hoje às 14h</p><div class="btns"><button class="bv-btn bv-btn--emerald bv-btn--sm">Reservar</button></div></div>
+<div class="bv-card bv-card--emerald" style="min-height:220px"><h3 class="bv-card-title">Tudo incluso</h3><p class="bv-card-text">Limpeza, internet e recepção.</p><svg class="bv-silk" viewBox="0 0 400 200" preserveAspectRatio="none"><path d="M0 150 C 120 40, 240 220, 400 70 L400 200 L0 200Z" fill="rgba(5,30,22,.45)"/><path d="M0 120 C 140 30, 230 190, 400 40" fill="none" stroke="rgba(47,165,133,.75)" stroke-width="2"/><path d="M0 132 C 140 46, 236 200, 400 54" fill="none" stroke="rgba(255,235,151,.45)" stroke-width="1"/></svg><span class="knob"></span></div>
+<div class="bv-card mini bv-overhang-end"><div><h3 class="bv-card-title" style="margin:0">Avaliação 4,9</h3><p class="bv-card-text" style="font-size:12px">320 profissionais</p></div><button class="bv-icon-btn bv-icon-btn--sm bv-btn--emerald" aria-label="Confirmado"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></button></div>
+</div></div><div class="ped"></div></div>
+<script>BravoClinic.init();</script>
+</body></html>

@@ -1,4 +1,4 @@
-import { X } from 'lucide-react';
+import { CircleAlert, CircleCheck, Info, X, type LucideIcon } from 'lucide-react';
 import {
   createContext,
   useCallback,
@@ -10,13 +10,18 @@ import {
   type ReactNode,
 } from 'react';
 import { Button } from './Button';
+import { cx } from './cx';
 import { Icon } from './Icon';
 
 /** Toasts without an action dismiss themselves after this long. */
 export const TOAST_DURATION_MS = 6000;
 
+export type ToastTone = 'info' | 'success' | 'error';
+
 export interface ToastInput {
   message: string;
+  /** Icon and its color; defaults to `info`. */
+  tone?: ToastTone;
   /** A toast with an action stays until the user acts on it or dismisses it. */
   action?: { label: string; onAction: () => void };
 }
@@ -37,8 +42,15 @@ export function useToast(): ToastContextValue {
   return context;
 }
 
+const TONE_ICONS: Record<ToastTone, { icon: LucideIcon; className: string }> = {
+  info: { icon: Info, className: 'text-accent' },
+  success: { icon: CircleCheck, className: 'text-emerald dark:text-neon' },
+  error: { icon: CircleAlert, className: 'text-danger' },
+};
+
 function ToastItem({ entry, onDismiss }: { entry: ToastEntry; onDismiss: (id: number) => void }) {
   const hasAction = Boolean(entry.action);
+  const tone = TONE_ICONS[entry.tone ?? 'info'];
 
   useEffect(() => {
     if (hasAction) return;
@@ -50,8 +62,9 @@ function ToastItem({ entry, onDismiss }: { entry: ToastEntry; onDismiss: (id: nu
     <div
       role="status"
       aria-live="polite"
-      className="pointer-events-auto flex items-center gap-space-md rounded-card border border-hairline bg-surface-raised px-space-md py-space-sm font-small text-small text-ink shadow-raised"
+      className="pointer-events-auto flex items-center gap-space-sm rounded-md bg-surface-raised py-space-sm pl-5 pr-2 font-small text-small text-ink shadow-panel"
     >
+      <Icon as={tone.icon} size={18} className={cx('shrink-0', tone.className)} />
       <span className="flex-1">{entry.message}</span>
       {entry.action ? (
         <Button
@@ -96,7 +109,9 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   return (
     <ToastContext.Provider value={value}>
       {children}
-      <div className="pointer-events-none fixed bottom-space-lg left-1/2 z-[70] flex w-[calc(100%-2rem)] max-w-md -translate-x-1/2 flex-col gap-space-sm">
+      {/* Above the app's floating tab bar on phones (AppShell); 24px from the edge from lg. Inset, not
+          left-1/2 + translate: an untranslated box past the edge widens the mobile layout viewport. */}
+      <div className="pointer-events-none fixed inset-x-4 bottom-[calc(6rem+env(safe-area-inset-bottom))] z-[70] mx-auto flex max-w-md flex-col gap-space-sm lg:bottom-space-lg">
         {entries.map((entry) => (
           <ToastItem key={entry.id} entry={entry} onDismiss={dismiss} />
         ))}

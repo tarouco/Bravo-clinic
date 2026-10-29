@@ -36,7 +36,7 @@ function Gallery({
   return (
     <div className="space-y-space-sm">
       <img
-        className="h-72 w-full rounded-card object-cover md:h-96"
+        className="h-72 w-full rounded-lg object-cover shadow-lift-2 md:h-96"
         src={src}
         srcSet={photoSrcSet(src)}
         sizes="(min-width: 1024px) 60vw, 100vw"
@@ -54,7 +54,7 @@ function Gallery({
                 onClick={() => {
                   setActive(index);
                 }}
-                className="overflow-hidden rounded-control border border-hairline aria-[current=true]:border-bronze"
+                className="overflow-hidden rounded-sm shadow-lift-1 outline-none ring-offset-2 ring-offset-surface focus-visible:ring-2 focus-visible:ring-accent aria-[current=true]:ring-2 aria-[current=true]:ring-accent"
               >
                 <img
                   className="h-16 w-24 object-cover"
@@ -76,12 +76,15 @@ function Categories() {
   if (!data) return null;
   return (
     <section aria-labelledby="room-categories" className="space-y-space-sm">
-      <h2 id="room-categories" className="font-heading-mobile text-heading-mobile text-ink">
+      <h2
+        id="room-categories"
+        className="font-heading text-heading-mobile text-ink md:text-heading"
+      >
         Categorias e valores
       </h2>
-      <ul className="divide-y divide-hairline rounded-card border border-hairline bg-surface-raised">
+      <ul className="bv-card divide-y divide-hairline p-0">
         {data.hourly.map((category) => (
-          <li key={category.id} className="space-y-1 p-space-md font-small text-small">
+          <li key={category.id} className="space-y-1 px-space-lg py-space-md font-small text-small">
             <p className="font-medium text-ink">{category.name}</p>
             <p className="text-ink-muted">
               Dias úteis <PriceTag cents={category.weekdayRateCents} unit="/h" /> · Fins de semana e
@@ -90,7 +93,7 @@ function Categories() {
           </li>
         ))}
         {data.blocks.map((block) => (
-          <li key={block.id} className="space-y-1 p-space-md font-small text-small">
+          <li key={block.id} className="space-y-1 px-space-lg py-space-md font-small text-small">
             <p className="font-medium text-ink">{block.name}</p>
             <p className="text-ink-muted">
               {formatBRL(block.fixedPriceCents)} · valor médio{' '}
@@ -126,8 +129,11 @@ function Availability({ slug }: { slug: string }) {
   const block = day?.blockOptions.find((option) => option.categoryId === blockId);
 
   return (
-    <section aria-labelledby="room-availability" className="space-y-space-md">
-      <h2 id="room-availability" className="font-heading-mobile text-heading-mobile text-ink">
+    <section aria-labelledby="room-availability" className="bv-card space-y-space-md self-start">
+      <h2
+        id="room-availability"
+        className="font-heading text-heading-mobile text-ink md:text-heading"
+      >
         Disponibilidade
       </h2>
       <MonthCalendar
@@ -145,9 +151,7 @@ function Availability({ slug }: { slug: string }) {
 
       {date ? (
         <div className="space-y-space-sm">
-          <h3 className="font-heading-mobile text-body text-ink">
-            Horários de {formatLocalDateBR(date)}
-          </h3>
+          <h3 className="bv-card-title">Horários de {formatLocalDateBR(date)}</h3>
           {dayQuery.isPending ? (
             <Spinner label="Carregando horários" />
           ) : dayQuery.isError || !day ? (
@@ -227,13 +231,15 @@ export function RoomPage() {
   return (
     <div className="mx-auto max-w-7xl space-y-space-2xl px-gutter py-space-3xl">
       <header className="space-y-space-xs">
-        <Eyebrow>SALAS INTELIGENTES</Eyebrow>
-        <h1 className="font-display-l-mobile text-display-l-mobile text-ink md:font-display-l md:text-display-l">
+        <Eyebrow>Salas inteligentes</Eyebrow>
+        <h1 className="font-display text-display-l-mobile text-ink md:text-display-l">
           {room.name}
         </h1>
         <div className="flex flex-wrap gap-1.5">
           {room.idealFor.map((tag) => (
-            <Badge key={tag}>{tag}</Badge>
+            <Badge key={tag} tone="neutral">
+              {tag}
+            </Badge>
           ))}
         </div>
       </header>
@@ -243,13 +249,16 @@ export function RoomPage() {
           <Gallery photos={photos} roomName={room.name} />
           <p className="font-body text-body text-ink-muted">{room.description}</p>
           <section aria-labelledby="room-equipment" className="space-y-space-sm">
-            <h2 id="room-equipment" className="font-heading-mobile text-heading-mobile text-ink">
+            <h2
+              id="room-equipment"
+              className="font-heading text-heading-mobile text-ink md:text-heading"
+            >
               Equipamentos
             </h2>
-            <ul className="space-y-space-xs font-small text-small text-ink-muted">
+            <ul className="bv-card space-y-space-xs font-small text-small text-ink-muted">
               {room.equipment.map((item) => (
                 <li key={item} className="flex items-center gap-space-xs">
-                  <Icon as={CircleCheck} size={16} className="shrink-0 text-bronze" />
+                  <Icon as={CircleCheck} size={16} className="shrink-0 text-accent" />
                   <span>{item}</span>
                 </li>
               ))}
@@ -261,8 +270,14 @@ export function RoomPage() {
         {hydrated ? (
           <Availability slug={room.slug} />
         ) : (
-          <section aria-labelledby="room-availability" className="min-h-96 space-y-space-md">
-            <h2 id="room-availability" className="font-heading-mobile text-heading-mobile text-ink">
+          <section
+            aria-labelledby="room-availability"
+            className="bv-card min-h-96 space-y-space-md self-start"
+          >
+            <h2
+              id="room-availability"
+              className="font-heading text-heading-mobile text-ink md:text-heading"
+            >
               Disponibilidade
             </h2>
           </section>

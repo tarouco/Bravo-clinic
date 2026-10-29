@@ -134,8 +134,8 @@ function PayStep({ booking }: { booking: BookingDetail }) {
           onChange={setAccepted}
         />
       ) : null}
-      <section aria-labelledby="checkout-pay" className="space-y-space-md">
-        <h2 id="checkout-pay" className="font-heading-mobile text-heading-mobile text-ink">
+      <section aria-labelledby="checkout-pay" className="bv-card space-y-space-md">
+        <h2 id="checkout-pay" className="font-heading text-heading-mobile text-ink md:text-heading">
           Pagamento de {formatBRL(payNowCents)}
         </h2>
         <PaymentMethodPanel
@@ -200,9 +200,7 @@ export function CheckoutPage() {
   return (
     <div className="mx-auto max-w-2xl space-y-space-xl px-gutter py-space-xl md:py-space-3xl">
       <header className="space-y-space-xs">
-        <h1 className="font-display-l-mobile text-display-l-mobile text-ink md:font-display-l md:text-display-l">
-          Pagamento
-        </h1>
+        <h1 className="font-display text-display-l-mobile text-ink md:text-display-l">Pagamento</h1>
         <p className="font-small text-small text-ink-muted">Reserva {booking.code}</p>
       </header>
       {body}

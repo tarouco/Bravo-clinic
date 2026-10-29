@@ -172,7 +172,7 @@ function PoliciesForm({ version, initial }: { version: number; initial: PolicyVa
         {GROUPS.map((group) => (
           <fieldset
             key={group.title}
-            className="space-y-space-md rounded-card border border-hairline p-space-md"
+            className="space-y-space-md rounded-md border border-hairline p-space-md"
           >
             <legend className="px-space-xs font-heading text-heading-mobile text-ink">
               {group.title}
@@ -257,14 +257,12 @@ function PoliciesForm({ version, initial }: { version: number; initial: PolicyVa
 
       <section
         aria-label="Prévia do texto da política"
-        className="space-y-space-md self-start rounded-card border border-hairline bg-surface-raised p-space-lg lg:sticky lg:top-24"
+        className="space-y-space-md self-start rounded-lg bg-surface-raised shadow-card p-space-lg lg:sticky lg:top-24"
       >
         <h3 className="font-heading text-heading-mobile text-ink">Prévia para o cliente</h3>
         {preview.map((section) => (
           <div key={section.title} className="space-y-space-xs">
-            <h4 className="font-small text-small font-medium uppercase tracking-[0.08em] text-bronze">
-              {section.title}
-            </h4>
+            <h4 className="font-eyebrow text-eyebrow uppercase text-accent">{section.title}</h4>
             {section.paragraphs.map((paragraph) => (
               <p key={paragraph} className="font-small text-small text-ink">
                 {paragraph}

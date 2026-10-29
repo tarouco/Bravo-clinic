@@ -21,7 +21,7 @@ const DAY_LABEL = {
   holiday: 'Feriados',
 } as const;
 
-const linkClasses = 'text-bronze underline underline-offset-4 hover:text-walnut';
+const linkClasses = 'text-accent underline underline-offset-4 hover:text-accent-deep';
 
 /** `/contato`: address, WhatsApp, e-mail when set, opening hours per day and the Maps link. */
 export function ContactPage() {
@@ -31,10 +31,8 @@ export function ContactPage() {
   return (
     <section className="mx-auto max-w-3xl space-y-space-xl px-gutter py-space-3xl">
       <div className="space-y-space-xs">
-        <Eyebrow>FALE COM A CLÍNICA</Eyebrow>
-        <h1 className="font-display-l-mobile text-display-l-mobile text-ink md:font-display-l md:text-display-l">
-          Contato
-        </h1>
+        <Eyebrow>Fale com a clínica</Eyebrow>
+        <h1 className="font-display text-display-l-mobile text-ink md:text-display-l">Contato</h1>
       </div>
 
       {isPending ? (
@@ -42,9 +40,9 @@ export function ContactPage() {
       ) : isError ? (
         <Alert tone="error">Não foi possível carregar os dados de contato agora.</Alert>
       ) : (
-        <div className="space-y-space-lg font-body text-body text-ink-muted">
+        <div className="bv-card space-y-space-lg font-body text-body text-ink-muted sm:p-space-xl">
           <p className="flex items-start gap-space-sm">
-            <Icon as={MapPin} className="mt-1 shrink-0 text-bronze" />
+            <Icon as={MapPin} className="mt-1 shrink-0 text-accent" />
             <span>
               {data.addressLine}
               <br />
@@ -54,7 +52,7 @@ export function ContactPage() {
             </span>
           </p>
           <p className="flex items-start gap-space-sm">
-            <Icon as={MessageCircle} className="mt-1 shrink-0 text-bronze" />
+            <Icon as={MessageCircle} className="mt-1 shrink-0 text-accent" />
             <a
               href={whatsappHref(data.whatsappE164)}
               target="_blank"
@@ -66,23 +64,21 @@ export function ContactPage() {
           </p>
           {data.contactEmail ? (
             <p className="flex items-start gap-space-sm">
-              <Icon as={Mail} className="mt-1 shrink-0 text-bronze" />
+              <Icon as={Mail} className="mt-1 shrink-0 text-accent" />
               <a href={`mailto:${data.contactEmail}`} className={linkClasses}>
                 {data.contactEmail}
               </a>
             </p>
           ) : null}
           <div className="flex items-start gap-space-sm">
-            <Icon as={Clock} className="mt-1 shrink-0 text-bronze" />
+            <Icon as={Clock} className="mt-1 shrink-0 text-accent" />
             <div className="w-full">
-              <h2 className="mb-space-xs font-heading-mobile text-body text-ink">
-                Horário de funcionamento
-              </h2>
-              <dl className="divide-y divide-hairline rounded-card border border-hairline bg-surface-raised">
+              <h2 className="bv-card-title">Horário de funcionamento</h2>
+              <dl className="divide-y divide-hairline overflow-hidden rounded-md bg-surface-deboss shadow-deboss">
                 {data.businessHours.map((row) => (
                   <div
                     key={row.dayType}
-                    className="flex justify-between gap-space-md px-space-md py-space-xs"
+                    className="flex justify-between gap-space-md px-5 py-space-sm"
                   >
                     <dt>{DAY_LABEL[row.dayType]}</dt>
                     <dd className="text-ink">

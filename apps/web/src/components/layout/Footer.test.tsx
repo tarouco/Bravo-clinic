@@ -42,6 +42,13 @@ describe('Footer', () => {
     expect(screen.queryByText(/Jardins/)).not.toBeInTheDocument();
   });
 
+  it('is the emerald-deep band with on-emerald text and gold headings', () => {
+    renderFooter();
+    expect(screen.getByRole('contentinfo')).toHaveClass('bg-emerald-deep', 'text-on-emerald');
+    expect(screen.getByRole('heading', { name: 'Navegação' })).toHaveClass('text-gold');
+    expect(screen.getByRole('link', { name: 'Termos de Uso' })).toHaveClass('hover:text-gold');
+  });
+
   it('shows the copyright text', () => {
     renderFooter();
     expect(

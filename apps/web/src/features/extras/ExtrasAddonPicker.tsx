@@ -1,9 +1,8 @@
 import { ceilDiv, formatBRL, type Quote } from '@bravo/core';
 import { Minus, Plus } from 'lucide-react';
 import { useState } from 'react';
-import { Button } from '../../components/ui/Button';
+import { IconButton } from '../../components/ui/IconButton';
 import { Checkbox } from '../../components/ui/form';
-import { Icon } from '../../components/ui/Icon';
 import { formatServicePrice } from '../admin-extras/labels';
 import { usePublicExtraServices } from './api';
 import type { PublicExtraService } from './contracts';
@@ -62,7 +61,7 @@ export function ExtrasAddonPicker({ draft, onChange }: ExtrasAddonPickerProps) {
           return (
             <li
               key={service.id}
-              className="flex flex-wrap items-center justify-between gap-space-sm rounded-card border border-hairline bg-surface-raised p-space-md"
+              className="flex flex-wrap items-center justify-between gap-space-sm rounded-md bg-surface-raised p-space-md shadow-card"
             >
               <div>
                 <p className="font-body text-body text-ink">{service.name}</p>
@@ -72,17 +71,15 @@ export function ExtrasAddonPicker({ draft, onChange }: ExtrasAddonPickerProps) {
               </div>
               {service.unit === 'hour' ? (
                 <div className="flex items-center gap-space-sm">
-                  <Button
-                    variant="secondary"
+                  <IconButton
+                    icon={Minus}
                     size="sm"
-                    aria-label={`Diminuir horas de ${service.name}`}
+                    label={`Diminuir horas de ${service.name}`}
                     disabled={quantity <= 0}
                     onClick={() => {
                       setQuantity(service, quantity - 1);
                     }}
-                  >
-                    <Icon as={Minus} size={16} />
-                  </Button>
+                  />
                   <span
                     role="status"
                     aria-label={`Horas de ${service.name}`}
@@ -90,17 +87,15 @@ export function ExtrasAddonPicker({ draft, onChange }: ExtrasAddonPickerProps) {
                   >
                     {quantity}
                   </span>
-                  <Button
-                    variant="secondary"
+                  <IconButton
+                    icon={Plus}
                     size="sm"
-                    aria-label={`Aumentar horas de ${service.name}`}
+                    label={`Aumentar horas de ${service.name}`}
                     disabled={quantity >= max}
                     onClick={() => {
                       setQuantity(service, quantity + 1);
                     }}
-                  >
-                    <Icon as={Plus} size={16} />
-                  </Button>
+                  />
                 </div>
               ) : (
                 <Checkbox

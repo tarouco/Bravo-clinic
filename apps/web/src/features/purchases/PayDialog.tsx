@@ -99,7 +99,7 @@ export function PayDialog({ subscriptionId, onClose }: PayDialogProps) {
   } else {
     body = (
       <div className="space-y-space-md">
-        <dl className="space-y-space-xs font-small text-small">
+        <dl className="space-y-space-xs rounded-md bg-surface-deboss p-space-md font-small text-small shadow-deboss">
           <div className="flex justify-between gap-space-md">
             <dt className="text-ink-muted">{data.category.name}</dt>
             <dd className="text-ink">{periodText(period)}</dd>

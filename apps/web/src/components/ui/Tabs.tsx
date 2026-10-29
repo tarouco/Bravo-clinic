@@ -19,7 +19,10 @@ interface TabsProps {
   className?: string;
 }
 
-/** WAI-ARIA tabs with automatic activation: arrows wrap, Home/End jump, bronze underline. */
+/**
+ * WAI-ARIA tabs with automatic activation: arrows wrap, Home/End jump. The list is a sunken pill
+ * track and the selected tab a raised pearl pill in weight 600 (the v3 NavBar rule, inverted).
+ */
 export function Tabs({ items, label, value, defaultValue, onValueChange, className }: TabsProps) {
   const baseId = useId();
   const [internal, setInternal] = useState(defaultValue ?? items[0]?.id);
@@ -63,7 +66,7 @@ export function Tabs({ items, label, value, defaultValue, onValueChange, classNa
         role="tablist"
         aria-label={label}
         onKeyDown={onKeyDown}
-        className="flex gap-space-lg border-b border-hairline"
+        className="inline-flex max-w-full gap-1 overflow-x-auto rounded-pill bg-surface-deboss p-1 shadow-deboss"
       >
         {items.map((item) => {
           const isSelected = item.id === selected;
@@ -81,10 +84,10 @@ export function Tabs({ items, label, value, defaultValue, onValueChange, classNa
               tabIndex={isSelected ? 0 : -1}
               onClick={() => select(item.id)}
               className={cx(
-                '-mb-px border-b-2 px-space-xs py-space-sm font-small text-small transition-colors',
+                'shrink-0 whitespace-nowrap rounded-pill px-4 py-2 font-small text-small transition-colors',
                 isSelected
-                  ? 'border-bronze text-bronze'
-                  : 'border-transparent text-ink-muted hover:text-ink',
+                  ? 'bg-surface-raised font-semibold text-ink shadow-[var(--lift-1),var(--rim)]'
+                  : 'text-ink-muted hover:bg-glass-hover hover:text-ink',
                 focusRing,
               )}
             >

@@ -16,9 +16,11 @@ export function LegalPage({ kind }: { kind: keyof typeof PAGES }) {
   const { source, title } = PAGES[kind];
   usePageTitle(title);
   return (
-    <article className="mx-auto max-w-3xl space-y-space-lg px-gutter py-space-3xl">
-      <Markdown source={source} />
-      <p className="font-caption text-caption text-ink-muted">Versão {LEGAL_VERSIONS[kind]}</p>
+    <article className="mx-auto max-w-3xl px-gutter py-space-3xl">
+      <div className="bv-card space-y-space-lg sm:p-space-xl">
+        <Markdown source={source} />
+        <p className="font-caption text-caption text-ink-muted">Versão {LEGAL_VERSIONS[kind]}</p>
+      </div>
     </article>
   );
 }

@@ -13,7 +13,7 @@ describe('ArchitectureSection', () => {
         name: 'A extensão natural da sua autoridade clínica.',
       }),
     ).toBeInTheDocument();
-    expect(screen.getByText('ARQUITETURA HOSPITALAR SENSORIAL')).toBeInTheDocument();
+    expect(screen.getByText('Arquitetura hospitalar sensorial')).toBeInTheDocument();
   });
 
   it('shows the two stats with the corrected opening-hours caption', () => {
@@ -43,7 +43,7 @@ describe('ArchitectureSection', () => {
   it('renders the two feature cards', () => {
     render(<ArchitectureSection />);
 
-    expect(screen.getByText('Hospitalidade Real')).toBeInTheDocument();
-    expect(screen.getByText('Acústica de Estúdio')).toBeInTheDocument();
+    expect(screen.getByText('Hospitalidade real')).toBeInTheDocument();
+    expect(screen.getByText('Acústica de estúdio')).toBeInTheDocument();
   });
 });

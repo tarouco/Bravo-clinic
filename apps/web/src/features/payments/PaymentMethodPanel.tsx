@@ -28,10 +28,10 @@ export interface PaymentMethodPanelProps {
 
 const optionClasses = (checked: boolean) =>
   cx(
-    'flex cursor-pointer items-center gap-space-sm rounded-card border p-space-md font-small text-small transition-colors focus-within:ring-2 focus-within:ring-bronze',
+    'flex cursor-pointer items-center gap-space-sm rounded-md p-space-md font-small text-small text-ink transition-shadow focus-within:ring-2 focus-within:ring-accent focus-within:ring-offset-2 focus-within:ring-offset-surface',
     checked
-      ? 'border-bronze bg-champagne-soft text-on-champagne'
-      : 'border-hairline bg-surface-raised text-ink hover:border-bronze',
+      ? 'bg-surface-deboss shadow-deboss'
+      : 'bg-surface-raised shadow-card hover:bg-surface-panel',
   );
 
 const brandName = (brand: string): string => brand.charAt(0).toUpperCase() + brand.slice(1);
@@ -50,11 +50,13 @@ function IntentView({
           Pague {formatBRL(intent.amountCents)} com Pix. O pagamento é confirmado em instantes.
         </p>
         {intent.pixQrCodeBase64 ? (
-          <img
-            alt="QR Code do Pix"
-            src={`data:image/png;base64,${intent.pixQrCodeBase64}`}
-            className="mx-auto h-48 w-48 rounded-card border border-hairline bg-white p-space-xs"
-          />
+          <div className="bv-card mx-auto w-fit p-space-md">
+            <img
+              alt="QR Code do Pix"
+              src={`data:image/png;base64,${intent.pixQrCodeBase64}`}
+              className="h-48 w-48 rounded-sm bg-white p-space-xs"
+            />
+          </div>
         ) : null}
         {intent.pixCopyPaste ? (
           <CopyField
@@ -179,7 +181,9 @@ export function PaymentMethodPanel({
       ) : null}
       {error ? <Alert tone="error">{error}</Alert> : null}
       <fieldset className="space-y-space-sm">
-        <legend className="font-heading-mobile text-body text-ink">Forma de pagamento</legend>
+        <legend className="mb-space-sm font-eyebrow text-eyebrow uppercase text-accent">
+          Forma de pagamento
+        </legend>
         <label className={optionClasses(choice === 'pix')}>
           <input
             type="radio"
@@ -189,7 +193,7 @@ export function PaymentMethodPanel({
             onChange={() => {
               setChoice('pix');
             }}
-            className="h-4 w-4 accent-bronze"
+            className="h-4 w-4 accent-emerald"
           />
           Pix
         </label>
@@ -202,7 +206,7 @@ export function PaymentMethodPanel({
             onChange={() => {
               setChoice('card');
             }}
-            className="h-4 w-4 accent-bronze"
+            className="h-4 w-4 accent-emerald"
           />
           Cartão de crédito ou débito
         </label>
@@ -218,14 +222,14 @@ export function PaymentMethodPanel({
                 onChange={() => {
                   setChoice(value);
                 }}
-                className="h-4 w-4 accent-bronze"
+                className="h-4 w-4 accent-emerald"
               />
               {brandName(card.brand)} final {card.last4}
             </label>
           );
         })}
       </fieldset>
-      <Button disabled={disabled} loading={pending} onClick={() => void pay()}>
+      <Button block disabled={disabled} loading={pending} onClick={() => void pay()}>
         Pagar {formatBRL(amountCents)}
       </Button>
     </div>

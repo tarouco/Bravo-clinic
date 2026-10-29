@@ -5,11 +5,11 @@ import { BrandLockup, Eyebrow, EyebrowLockup } from './Brand';
 import { Icon } from './Icon';
 
 describe('Icon', () => {
-  it('renders a decorative svg with stroke-width 1.5 and aria-hidden when no label is given', () => {
+  it('renders a decorative svg with stroke-width 1.7 and aria-hidden when no label is given', () => {
     const { container } = render(<Icon as={MapPin} />);
     const svg = container.querySelector('svg');
     expect(svg).not.toBeNull();
-    expect(svg).toHaveAttribute('stroke-width', '1.5');
+    expect(svg).toHaveAttribute('stroke-width', '1.7');
     expect(svg).toHaveAttribute('aria-hidden', 'true');
     expect(svg).not.toHaveAttribute('role');
     expect(screen.queryByRole('img')).toBeNull();
@@ -20,7 +20,7 @@ describe('Icon', () => {
     const icon = screen.getByRole('img', { name: 'Local' });
     expect(icon.tagName.toLowerCase()).toBe('svg');
     expect(icon).toHaveAttribute('aria-label', 'Local');
-    expect(icon).toHaveAttribute('stroke-width', '1.5');
+    expect(icon).toHaveAttribute('stroke-width', '1.7');
     expect(icon).not.toHaveAttribute('aria-hidden');
   });
 
@@ -34,10 +34,26 @@ describe('Icon', () => {
 });
 
 describe('BrandLockup', () => {
-  it.each(['header', 'footer'] as const)('renders both lines of the %s lockup', (variant) => {
-    render(<BrandLockup variant={variant} />);
-    expect(screen.getByText('BRAVÔ CLINIC')).toBeInTheDocument();
-    expect(screen.getByText('SALAS INTELIGENTES')).toBeInTheDocument();
+  it('sets the name in type: Bravô in display 300 with wide tracking, then Clinic', () => {
+    render(<BrandLockup variant="header" />);
+    expect(screen.getByText('Bravô')).toHaveClass(
+      'font-display',
+      'font-light',
+      'uppercase',
+      'tracking-[0.16em]',
+    );
+    expect(screen.getByText('Clinic')).toHaveClass('uppercase');
+    expect(screen.queryByText('Salas inteligentes')).not.toBeInTheDocument();
+  });
+
+  it('adds the "Salas inteligentes" tagline between rules in the footer and on request', () => {
+    const { unmount } = render(<BrandLockup variant="footer" />);
+    expect(screen.getByText('Bravô')).toHaveClass('text-on-emerald');
+    expect(screen.getByText('Salas inteligentes')).toHaveClass('text-gold');
+    unmount();
+
+    render(<BrandLockup tagline />);
+    expect(screen.getByText('Salas inteligentes')).toHaveClass('uppercase', 'text-ink-muted');
   });
 });
 
@@ -47,7 +63,8 @@ describe('EyebrowLockup', () => {
     const root = container.firstElementChild;
     expect(root?.children).toHaveLength(3);
     const [before, text, after] = Array.from(root?.children ?? []);
-    expect(text).toHaveTextContent('SALAS INTELIGENTES');
+    expect(text).toHaveTextContent('Salas inteligentes');
+    expect(text).toHaveClass('uppercase', 'text-eyebrow');
     expect(text).not.toHaveAttribute('aria-hidden');
     for (const rule of [before, after]) {
       expect(rule).toHaveAttribute('aria-hidden', 'true');
@@ -63,9 +80,9 @@ describe('EyebrowLockup', () => {
 });
 
 describe('Eyebrow', () => {
-  it('renders uppercase bronze eyebrow text with .28em tracking', () => {
+  it('renders uppercase eyebrow text in the accent color (.32em tracking from text-eyebrow)', () => {
     render(<Eyebrow>Arquitetura sensorial</Eyebrow>);
     const eyebrow = screen.getByText('Arquitetura sensorial');
-    expect(eyebrow).toHaveClass('uppercase', 'text-bronze', 'tracking-[0.28em]', 'font-eyebrow');
+    expect(eyebrow).toHaveClass('uppercase', 'text-accent', 'text-eyebrow', 'font-eyebrow');
   });
 });

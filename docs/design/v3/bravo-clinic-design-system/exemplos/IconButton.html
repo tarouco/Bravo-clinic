@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+<head><link rel="stylesheet" href="../tokens/tokens.css"><link rel="stylesheet" href="../components/bundle.css"><script src="../components/bundle.js"></script><meta charset="utf-8"><title>preview</title>
+<style>
+html,body{margin:0}
+body{background:var(--surface);color:var(--ink);font-family:var(--font-sans)}
+.wrap{padding:28px 32px;display:flex;flex-wrap:wrap;gap:22px;align-items:center}
+.st{display:flex;flex-direction:column;align-items:center;gap:10px}
+.st small{font-size:11px;color:var(--ink-muted);letter-spacing:.04em}
+
+</style></head>
+<body><div style="position:fixed;right:14px;top:14px;z-index:99;display:flex;gap:6px;font:500 12px Jost,sans-serif"><button onclick="document.documentElement.dataset.theme='light'" style="border:0;border-radius:99px;padding:6px 12px;cursor:pointer">Dia</button><button onclick="document.documentElement.dataset.theme='dark'" style="border:0;border-radius:99px;padding:6px 12px;cursor:pointer;background:#583714;color:#ffeb97">Noite</button></div>
+<div class="wrap">
+<div class="st"><button class="bv-icon-btn bv-btn--emerald" aria-label="Adicionar"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><small>Esmeralda</small></div>
+<div class="st"><button class="bv-icon-btn bv-btn--pearl" aria-label="Favoritar"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></button><small>Pérola</small></div>
+<div class="st"><button class="bv-icon-btn bv-btn--gold" aria-label="Notificações"><svg viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4zM10 21h4"/></svg></button><small>Ouro</small></div>
+<div class="st"><button class="bv-icon-btn bv-icon-btn--sm bv-btn--pearl" aria-label="Buscar"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg></button><small>Pequeno</small></div>
+</div>
+<script>BravoClinic.init();</script>
+</body></html>

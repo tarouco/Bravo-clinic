@@ -85,6 +85,22 @@ describe('Table', () => {
     expect(screen.getByRole('columnheader', { name: 'Código' })).toHaveClass('sticky', 'top-0');
   });
 
+  it('draws pearl rows in a 24px rounded card with an eyebrow header', () => {
+    renderTable();
+
+    expect(screen.getByRole('region', { name: 'Reservas' })).toHaveClass(
+      'rounded-md',
+      'bg-surface-raised',
+      'shadow-card',
+    );
+    expect(screen.getByRole('columnheader', { name: 'Código' })).toHaveClass(
+      'text-eyebrow',
+      'uppercase',
+      'tracking-[0.32em]',
+      'text-ink-muted',
+    );
+  });
+
   it('shows the empty message when there are no rows', () => {
     render(
       <Table

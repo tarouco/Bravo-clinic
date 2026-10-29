@@ -32,6 +32,22 @@ describe('StatTile', () => {
     expect(screen.getByText('—')).toBeInTheDocument();
   });
 
+  it('renders the gold tone with every line in on-gold, even a bad delta', () => {
+    const { container } = render(
+      <StatTile
+        tone="gold"
+        label="Resultado"
+        valueCents={1000}
+        delta={{ cents: 500, percent: 5 }}
+        higherIsBetter={false}
+      />,
+    );
+    expect(container.firstChild).toHaveClass('bg-grad-gold', 'text-on-gold');
+    expect(screen.getByText('Resultado')).toHaveClass('text-on-gold');
+    expect(screen.getByText('+5,0%').parentElement).toHaveClass('text-on-gold');
+    expect(screen.getByText('+5,0%').parentElement).not.toHaveClass('text-danger');
+  });
+
   it('omits the delta line when there is no comparison', () => {
     render(<StatTile label="Despesas" valueCents={0} />);
 
@@ -48,9 +64,9 @@ describe('StatTile', () => {
         higherIsBetter={false}
       />,
     );
-    expect(screen.getByText('+50,0%').closest('p')).toHaveClass('text-error');
+    expect(screen.getByText('+50,0%').closest('p')).toHaveClass('text-danger');
 
     rerender(<StatTile label="Receita" valueCents={1000} delta={{ cents: 500, percent: 50 }} />);
-    expect(screen.getByText('+50,0%').closest('p')).not.toHaveClass('text-error');
+    expect(screen.getByText('+50,0%').closest('p')).not.toHaveClass('text-danger');
   });
 });

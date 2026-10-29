@@ -1,6 +1,6 @@
 import { formatBRL, revenueQuoteSchema } from '@bravo/core';
 import type { CheckoutSlotProps } from '../../features/booking/checkout-options';
-import { Checkbox } from '../ui/form';
+import { Toggle } from '../ui/Toggle';
 
 export interface CreditsToggleViewProps {
   availableCents: number;
@@ -19,15 +19,13 @@ export function CreditsToggleView({
   if (availableCents <= 0) return null;
   return (
     <section aria-label="Créditos" className="space-y-space-xs">
-      <Checkbox
+      <Toggle
         label={`Usar créditos (${formatBRL(availableCents)} disponíveis)`}
         checked={checked}
-        onChange={(event) => {
-          onChange(event.target.checked);
-        }}
+        onCheckedChange={onChange}
       />
       {checked && appliedCents > 0 ? (
-        <p className="font-small text-small text-ink-muted">
+        <p className="pl-[86px] font-small text-small text-ink-muted">
           {`Créditos aplicados: − ${formatBRL(appliedCents)}`}
         </p>
       ) : null}

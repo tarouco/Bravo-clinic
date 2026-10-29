@@ -26,7 +26,7 @@ describe('StatusBadge', () => {
     expect(screen.getByText(label)).toBeInTheDocument();
   });
 
-  it('uses the bronze fill for confirmed and the error fill for cancelled by the clinic', () => {
+  it('uses the emerald fill for confirmed and the danger fill for cancelled by the clinic', () => {
     render(
       <>
         <StatusBadge status="confirmed" />
@@ -34,8 +34,8 @@ describe('StatusBadge', () => {
       </>,
     );
 
-    expect(screen.getByText('Confirmada')).toHaveClass('bg-bronze');
-    expect(screen.getByText('Cancelada pela clínica')).toHaveClass('bg-error-container');
+    expect(screen.getByText('Confirmada')).toHaveClass('bg-emerald');
+    expect(screen.getByText('Cancelada pela clínica')).toHaveClass('bg-danger-soft');
   });
 
   it('shows the payment status beside the status, except for "none"', () => {

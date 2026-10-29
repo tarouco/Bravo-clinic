@@ -48,7 +48,7 @@ function BookingTabList({ tab }: { tab: BookingTab }) {
       <div className="space-y-space-md">
         <p className="font-body text-body text-ink-muted">{EMPTY_TEXT[tab]}</p>
         {tab === 'upcoming' ? (
-          <Button asChild>
+          <Button asChild block>
             <Link to="/app/reservar">Reservar uma sala</Link>
           </Button>
         ) : null}
@@ -61,9 +61,9 @@ function BookingTabList({ tab }: { tab: BookingTab }) {
       {groupBookings(items).map((group, index) => (
         <section key={`${group.key}-${String(index)}`} className="space-y-space-sm">
           {group.label ? (
-            <h3 className="font-heading-mobile text-body text-ink">{group.label}</h3>
+            <h3 className="font-eyebrow text-eyebrow uppercase text-accent">{group.label}</h3>
           ) : null}
-          <ul className="space-y-space-sm">
+          <ul className="space-y-space-md">
             {group.items.map((booking) => (
               <BookingRow key={booking.id} booking={booking} />
             ))}
@@ -98,7 +98,7 @@ export function MyBookingsPage() {
   return (
     <div className="mx-auto max-w-3xl space-y-space-lg">
       <div className="flex flex-wrap items-center justify-between gap-space-sm">
-        <h1 className="font-heading text-heading-mobile text-ink md:text-heading">
+        <h1 className="font-display-l-mobile text-display-l-mobile text-ink lg:font-display-l lg:text-display-l">
           Minhas reservas
         </h1>
         <Button asChild size="sm">

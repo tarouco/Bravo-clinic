@@ -2,17 +2,17 @@ import { bookingStatusLabel, type BookingStatus, type PaymentStatusCode } from '
 import { Badge, type BadgeTone } from '../ui/Badge';
 
 const TONES: Record<BookingStatus, BadgeTone> = {
-  awaiting_payment: 'champagne',
-  pre_reserved: 'champagne',
-  held_for_renewal: 'champagne',
-  confirmed: 'bronze',
-  paid: 'bronze',
+  awaiting_payment: 'gold',
+  pre_reserved: 'gold',
+  held_for_renewal: 'gold',
+  confirmed: 'emerald',
+  paid: 'emerald',
   completed: 'neutral',
-  no_show: 'error',
+  no_show: 'danger',
   expired: 'neutral',
-  cancelled_by_tenant: 'error',
-  cancelled_nonpayment: 'error',
-  cancelled_by_clinic: 'error',
+  cancelled_by_tenant: 'danger',
+  cancelled_nonpayment: 'danger',
+  cancelled_by_clinic: 'danger',
 };
 
 export interface StatusBadgeProps {

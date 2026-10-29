@@ -85,16 +85,16 @@ export function SecurityPage() {
 
   return (
     <div className="mx-auto max-w-xl space-y-space-lg">
-      <h1 className="font-heading text-heading-mobile text-ink md:text-heading">Segurança</h1>
+      <h1 className="font-display-l-mobile text-display-l-mobile text-ink lg:font-display-l lg:text-display-l">
+        Segurança
+      </h1>
 
-      <section aria-labelledby="two-factor-heading" className="space-y-space-md">
+      <section aria-labelledby="two-factor-heading" className="bv-card space-y-space-md">
         <div className="flex flex-wrap items-center gap-space-sm">
-          <h2 id="two-factor-heading" className="font-body text-body font-semibold text-ink">
+          <h2 id="two-factor-heading" className="font-heading-mobile text-heading-mobile text-ink">
             Verificação em duas etapas
           </h2>
-          <Badge tone={enabled ? 'champagne' : 'neutral'}>
-            {enabled ? 'Ativada' : 'Desativada'}
-          </Badge>
+          <Badge tone={enabled ? 'emerald' : 'neutral'}>{enabled ? 'Ativada' : 'Desativada'}</Badge>
         </div>
         <p className="font-body text-body text-ink-muted">
           Opcional. Com ela ativada, além da senha, pedimos a cada login um código do seu aplicativo

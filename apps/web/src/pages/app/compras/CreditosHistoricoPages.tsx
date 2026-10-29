@@ -58,15 +58,15 @@ export function CreditosPage() {
   const { availableCents, lots, ledger } = credits.data;
 
   return (
-    <div className="space-y-space-xl">
-      <section aria-labelledby="credits-total" className="space-y-space-xs">
-        <h2 id="credits-total" className="font-heading-mobile text-heading-mobile text-ink">
+    <div className="space-y-space-lg">
+      <section aria-labelledby="credits-total" className="bv-card bv-card--gold space-y-space-xs">
+        <h2 id="credits-total" className="font-eyebrow text-eyebrow uppercase text-on-gold">
           Seus créditos
         </h2>
-        <p className="font-h2 text-h2 font-semibold text-bronze">
+        <p className="font-display text-display-l-mobile text-on-gold">
           {`${formatBRL(availableCents)} disponíveis`}
         </p>
-        <p className="font-small text-small text-ink-muted">
+        <p className="bv-card-text">
           Créditos são usados automaticamente se você marcar “Usar créditos” ao pagar uma reserva ou
           assinatura.
         </p>

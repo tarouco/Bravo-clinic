@@ -29,7 +29,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
               aria-label={visible ? 'Ocultar senha' : 'Mostrar senha'}
               onClick={() => setVisible((current) => !current)}
               className={cx(
-                'absolute right-space-xs top-1/2 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-control text-ink-muted hover:text-bronze',
+                'absolute right-1 top-1/2 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-pill text-ink-muted transition-colors hover:bg-glass-hover hover:text-accent',
                 focusRing,
               )}
             >

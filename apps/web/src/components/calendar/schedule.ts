@@ -69,12 +69,20 @@ export function toneOfStatus(status: BookingStatus): ScheduleTone {
   }
 }
 
+/**
+ * Event looks on the pearl grid (DESIGN-v3.md): a pearl block with a left accent bar in the
+ * status color; text stays ink (or danger) so it reads at ≥4.5:1 in Dia and Noite.
+ */
 export const TONE_CLASSES: Record<ScheduleTone, string> = {
-  confirmed: 'border-bronze bg-bronze text-on-bronze',
-  pending: 'border-champagne bg-champagne-soft text-on-champagne',
-  neutral: 'border-hairline bg-surface-stone text-ink',
-  block: 'border-border bg-surface-dim text-ink',
-  attention: 'border-error bg-error-container text-on-error-container',
+  confirmed:
+    'border-transparent bg-surface-raised text-ink shadow-[inset_4px_0_0_rgb(var(--c-emerald)),var(--lift-1)]',
+  pending:
+    'border-transparent bg-gold-soft text-ink shadow-[inset_4px_0_0_rgb(var(--c-gold-deep)),var(--lift-1)]',
+  neutral:
+    'border-transparent bg-surface-panel text-ink-muted shadow-[inset_4px_0_0_rgb(var(--c-border)),var(--lift-1)]',
+  block: 'border-dashed border-border bg-surface-deboss text-ink-muted',
+  attention:
+    'border-transparent bg-danger-soft text-danger shadow-[inset_4px_0_0_rgb(var(--c-danger)),var(--lift-1)]',
 };
 
 /** An event clipped to one date, in minutes of that day, with its side-by-side lane. */

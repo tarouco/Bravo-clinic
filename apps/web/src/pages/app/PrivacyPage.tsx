@@ -29,13 +29,13 @@ export function PrivacyPage() {
   };
 
   return (
-    <div className="mx-auto max-w-2xl space-y-space-xl">
-      <h1 className="font-heading text-heading-mobile text-ink md:text-heading">
+    <div className="mx-auto max-w-2xl space-y-space-md">
+      <h1 className="pb-space-xs font-display-l-mobile text-display-l-mobile text-ink lg:font-display-l lg:text-display-l">
         Privacidade e dados
       </h1>
 
-      <section aria-labelledby="consents-title" className="space-y-space-sm">
-        <h2 id="consents-title" className="font-body text-body font-semibold text-ink">
+      <section aria-labelledby="consents-title" className="bv-card space-y-space-sm">
+        <h2 id="consents-title" className="font-heading-mobile text-heading-mobile text-ink">
           Seus aceites
         </h2>
         {consents.isPending ? <Spinner label="Carregando aceites" /> : null}
@@ -45,11 +45,11 @@ export function PrivacyPage() {
         {consents.isSuccess && consents.data.items.length === 0 ? (
           <p className="font-small text-small text-ink-muted">Nenhum aceite registrado.</p>
         ) : null}
-        <ul className="space-y-space-xs">
+        <ul className="space-y-space-sm">
           {consents.data?.items.map((consent) => (
             <li
               key={consent.id}
-              className="flex flex-wrap items-baseline justify-between gap-space-sm rounded-card border border-hairline bg-surface-raised px-space-md py-space-sm"
+              className="flex flex-wrap items-baseline justify-between gap-space-sm rounded-md bg-surface-deboss px-space-md py-space-sm shadow-deboss"
             >
               <span className="font-body text-body text-ink">{consentLabel(consent.kind)}</span>
               <span className="font-small text-small text-ink-muted">
@@ -60,8 +60,8 @@ export function PrivacyPage() {
         </ul>
       </section>
 
-      <section aria-labelledby="export-title" className="space-y-space-sm">
-        <h2 id="export-title" className="font-body text-body font-semibold text-ink">
+      <section aria-labelledby="export-title" className="bv-card space-y-space-sm">
+        <h2 id="export-title" className="font-heading-mobile text-heading-mobile text-ink">
           Seus dados
         </h2>
         <p className="font-small text-small text-ink-muted">
@@ -77,8 +77,8 @@ export function PrivacyPage() {
         </Button>
       </section>
 
-      <section aria-labelledby="delete-title" className="space-y-space-sm">
-        <h2 id="delete-title" className="font-body text-body font-semibold text-ink">
+      <section aria-labelledby="delete-title" className="bv-card space-y-space-sm">
+        <h2 id="delete-title" className="font-heading-mobile text-heading-mobile text-ink">
           Excluir conta
         </h2>
         <p className="font-small text-small text-ink-muted">

@@ -1,5 +1,6 @@
 import { coverageBands, formatBRL, type HourlyCategory } from '@bravo/core';
 import { Checkbox } from '../../components/ui/form';
+import { categoryTone } from './category-utils';
 import { formatHHMM } from './time';
 
 export interface CategoryBandOverlayProps {
@@ -16,13 +17,6 @@ export interface CategoryBandOverlayProps {
   durationMinutes: number;
   pxPerMinute: number;
 }
-
-const BAND_TONES = [
-  'border-bronze bg-bronze/20',
-  'border-champagne bg-champagne/40',
-  'border-walnut bg-walnut/20',
-  'border-secondary bg-secondary-container/60',
-] as const;
 
 interface Placed {
   categoryId: string;
@@ -98,7 +92,7 @@ export function CategoryBandOverlay({
   const order = categories.map((c) => c.id);
   const placed = placeBands(
     bands.filter((b) => selectedIds.has(b.categoryId)),
-    (id) => BAND_TONES[order.indexOf(id) % BAND_TONES.length] ?? BAND_TONES[0],
+    (id) => categoryTone(order.indexOf(id)).band,
   );
 
   return (
@@ -108,7 +102,7 @@ export function CategoryBandOverlay({
           key={`${band.categoryId}-${String(band.startMinute)}`}
           data-kind="band"
           title={`${band.name} · ${formatBRL(band.rateCents)}/h`}
-          className={`absolute overflow-hidden border-l-2 px-space-xs font-caption text-caption text-ink ${band.tone}`}
+          className={`absolute overflow-hidden rounded-r-sm border-l-4 px-space-xs font-caption text-caption text-ink ${band.tone}`}
           style={{
             top: band.startMinute * pxPerMinute,
             height: (band.endMinute - band.startMinute) * pxPerMinute,
@@ -127,15 +121,16 @@ export function CategoryBandOverlay({
           data-start={range.startMinute}
           data-end={range.endMinute}
           title={`Horário sem categoria ${formatHHMM(range.startMinute)}–${formatHHMM(range.endMinute)}`}
-          className="absolute inset-x-0 border-y border-error/70 px-space-xs font-caption text-caption text-error"
+          className="absolute inset-x-0 border-y border-danger/70 px-space-xs font-caption text-caption"
           style={{
             top: range.startMinute * pxPerMinute,
             height: (range.endMinute - range.startMinute) * pxPerMinute,
             backgroundImage:
-              'repeating-linear-gradient(45deg, rgb(var(--c-error) / 0.25) 0, rgb(var(--c-error) / 0.25) 4px, transparent 4px, transparent 8px)',
+              'repeating-linear-gradient(45deg, rgb(var(--c-danger) / 0.22) 0, rgb(var(--c-danger) / 0.22) 4px, transparent 4px, transparent 8px)',
           }}
         >
-          Horário sem categoria
+          {/* On danger-soft the label keeps >=4.5:1 over the hatch in both themes. */}
+          <span className="rounded-sm bg-danger-soft px-1 text-danger">Horário sem categoria</span>
         </div>
       ))}
     </div>
@@ -159,18 +154,23 @@ export function CategoryOverlayPicker({
     <fieldset className="space-y-space-xs">
       <legend className="font-small text-small font-medium text-ink">Categorias na semana</legend>
       <div className="flex flex-wrap gap-x-space-lg gap-y-space-xs">
-        {categories.map((category) => (
-          <Checkbox
-            key={category.id}
-            label={`${category.name}${category.status === 'inactive' ? ' (inativa)' : ''}`}
-            checked={selectedIds.has(category.id)}
-            onChange={(event) => {
-              const next = new Set(selectedIds);
-              if (event.target.checked) next.add(category.id);
-              else next.delete(category.id);
-              onChange(next);
-            }}
-          />
+        {categories.map((category, index) => (
+          <div key={category.id} className="flex items-center gap-space-xs">
+            <span
+              aria-hidden="true"
+              className={`h-3 w-3 shrink-0 rounded-pill ${categoryTone(index).swatch}`}
+            />
+            <Checkbox
+              label={`${category.name}${category.status === 'inactive' ? ' (inativa)' : ''}`}
+              checked={selectedIds.has(category.id)}
+              onChange={(event) => {
+                const next = new Set(selectedIds);
+                if (event.target.checked) next.add(category.id);
+                else next.delete(category.id);
+                onChange(next);
+              }}
+            />
+          </div>
         ))}
       </div>
     </fieldset>

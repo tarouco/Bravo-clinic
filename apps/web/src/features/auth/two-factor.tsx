@@ -55,7 +55,7 @@ export function RecoveryCodes({ codes, onDone }: { codes: string[]; onDone: () =
         className="grid grid-cols-2 gap-space-sm font-mono text-small text-ink"
       >
         {codes.map((code) => (
-          <li key={code} className="rounded-control border border-hairline px-space-sm py-space-xs">
+          <li key={code} className="rounded-sm border border-hairline px-space-sm py-space-xs">
             {code}
           </li>
         ))}
@@ -146,7 +146,7 @@ export function TotpEnrollment({ onDone }: { onDone: () => void }) {
             alt="QR code para o aplicativo autenticador"
             width={224}
             height={224}
-            className="rounded-control border border-hairline bg-white"
+            className="rounded-sm border border-hairline bg-white"
           />
         ) : (
           <Spinner label="Gerando QR code" />

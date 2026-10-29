@@ -2,7 +2,11 @@ import { formatDocument, parseDocument, updateMeSchema, type Me } from '@bravo/c
 import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { ChevronRight } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
+import { Card } from '../../components/ui/Card';
+import { cx, focusRing } from '../../components/ui/cx';
+import { Icon } from '../../components/ui/Icon';
 import { Alert, Spinner } from '../../components/ui/Feedback';
 import { DocumentInput, Input, PhoneInput } from '../../components/ui/form';
 import { maskPhone } from '../../components/ui/form/masked';
@@ -117,58 +121,71 @@ function ProfileForm({ me }: { me: Me }) {
       {saved ? <Alert tone="success">Perfil atualizado.</Alert> : null}
       {formError ? <Alert tone="error">{formError}</Alert> : null}
 
-      <Input label="E-mail" value={me.email} readOnly disabled />
-      <Input
-        label="Nome completo"
-        autoComplete="name"
-        error={errors.name?.message}
-        {...register('name')}
-      />
-      <PhoneInput label="Telefone" error={errors.phone?.message} {...register('phone')} />
-      <Input label="Profissão" error={errors.profession?.message} {...register('profession')} />
-      <Input
-        label="Registro profissional"
-        help="Opcional. Ex.: CRM, CRO, CRP."
-        error={errors.professionalRegistry?.message}
-        {...register('professionalRegistry')}
-      />
-      {hasDocument ? (
-        <Input
-          label="CPF ou CNPJ"
-          value={documentDisplay}
-          readOnly
-          help="O documento não pode ser alterado. Fale com a recepção se precisar corrigir."
-        />
-      ) : (
-        <DocumentInput
-          label="CPF ou CNPJ"
-          error={errors.document?.message}
-          help="Necessário para reservar. Não poderá ser alterado depois."
-          className={highlight ? 'border-bronze ring-2 ring-bronze' : undefined}
-          {...register('document')}
-        />
-      )}
+      <Card>
+        <div className="space-y-space-md">
+          <Input label="E-mail" value={me.email} readOnly disabled />
+          <Input
+            label="Nome completo"
+            autoComplete="name"
+            error={errors.name?.message}
+            {...register('name')}
+          />
+          <PhoneInput label="Telefone" error={errors.phone?.message} {...register('phone')} />
+          <Input label="Profissão" error={errors.profession?.message} {...register('profession')} />
+          <Input
+            label="Registro profissional"
+            help="Opcional. Ex.: CRM, CRO, CRP."
+            error={errors.professionalRegistry?.message}
+            {...register('professionalRegistry')}
+          />
+          {hasDocument ? (
+            <Input
+              label="CPF ou CNPJ"
+              value={documentDisplay}
+              readOnly
+              help="O documento não pode ser alterado. Fale com a recepção se precisar corrigir."
+            />
+          ) : (
+            <DocumentInput
+              label="CPF ou CNPJ"
+              error={errors.document?.message}
+              help="Necessário para reservar. Não poderá ser alterado depois."
+              className={highlight ? 'border-accent ring-2 ring-accent' : undefined}
+              {...register('document')}
+            />
+          )}
+        </div>
+      </Card>
 
-      <div className="flex flex-wrap gap-space-sm">
-        <Button type="submit" loading={update.isPending}>
-          Salvar
-        </Button>
-        <Button asChild variant="secondary">
-          <Link to="/app/perfil/cartoes">Meus cartões</Link>
-        </Button>
-        <Button asChild variant="secondary">
-          <Link to="/app/perfil/notificacoes">Notificações</Link>
-        </Button>
-        <Button asChild variant="secondary">
-          <Link to="/app/perfil/seguranca">Segurança</Link>
-        </Button>
-        <Button asChild variant="secondary">
-          <Link to="/app/perfil/privacidade">Privacidade e dados</Link>
-        </Button>
-      </div>
+      <Button type="submit" block loading={update.isPending}>
+        Salvar
+      </Button>
+
+      <nav aria-label="Configurações da conta" className="space-y-space-sm pt-space-md">
+        {SETTINGS_LINKS.map((item) => (
+          <Link
+            key={item.to}
+            to={item.to}
+            className={cx(
+              'flex items-center justify-between gap-space-md rounded-md bg-surface-raised px-space-lg py-space-md font-body text-body text-ink shadow-card transition-transform duration-200 hover:-translate-y-0.5',
+              focusRing,
+            )}
+          >
+            {item.label}
+            <Icon as={ChevronRight} size={18} className="text-ink-muted" />
+          </Link>
+        ))}
+      </nav>
     </form>
   );
 }
+
+const SETTINGS_LINKS = [
+  { to: '/app/perfil/cartoes', label: 'Meus cartões' },
+  { to: '/app/perfil/notificacoes', label: 'Notificações' },
+  { to: '/app/perfil/seguranca', label: 'Segurança' },
+  { to: '/app/perfil/privacidade', label: 'Privacidade e dados' },
+] as const;
 
 /** `/app/perfil`: edit the profile; `?completar=1` highlights the document and `next` returns. */
 export function ProfilePage() {
@@ -177,7 +194,7 @@ export function ProfilePage() {
 
   return (
     <div className="space-y-space-lg">
-      <h1 className="mx-auto max-w-xl font-heading text-heading-mobile text-ink md:text-heading">
+      <h1 className="mx-auto max-w-xl font-display-l-mobile text-display-l-mobile text-ink lg:font-display-l lg:text-display-l">
         Perfil
       </h1>
       {profile.isPending ? (

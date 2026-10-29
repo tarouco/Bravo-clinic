@@ -1,8 +1,10 @@
 import { ArrowRight, Play } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { focusRing } from '../../components/ui/cx';
+import { buttonClasses } from '../../components/ui/Button';
+import { cx, focusRing } from '../../components/ui/cx';
 import { Icon } from '../../components/ui/Icon';
+import { iconButtonClasses } from '../../components/ui/IconButton';
 import { Modal } from '../../components/ui/Modal';
 import { usePageTitle } from '../../lib/usePageTitle';
 
@@ -96,7 +98,10 @@ function VideoCard({ video, onOpen }: { video: StructureVideo; onOpen: () => voi
     <button
       type="button"
       onClick={onOpen}
-      className={`group relative block aspect-[9/16] w-full overflow-hidden rounded-xl bg-surface-night text-left shadow-lg ${focusRing}`}
+      className={cx(
+        'group relative block aspect-[9/16] w-full overflow-hidden rounded-lg bg-emerald-deep text-left shadow-lift-2',
+        focusRing,
+      )}
     >
       <img
         className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
@@ -104,13 +109,13 @@ function VideoCard({ video, onOpen }: { video: StructureVideo; onOpen: () => voi
         alt=""
         loading="lazy"
       />
-      <span className="absolute inset-0 bg-gradient-to-t from-surface-night/85 via-surface-night/10 to-transparent" />
-      <span className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-space-sm p-space-md text-ink-night">
+      <span className="absolute inset-0 bg-gradient-to-t from-emerald-deep/90 via-emerald-deep/10 to-transparent" />
+      <span className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-space-sm p-space-md text-on-emerald">
         <span>
           <span className="block font-body text-body font-medium leading-snug">{video.title}</span>
-          <span className="font-caption text-caption text-ink-night/80">{video.duration}</span>
+          <span className="font-caption text-caption text-on-emerald/80">{video.duration}</span>
         </span>
-        <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-bronze text-on-bronze shadow-md transition-colors group-hover:bg-walnut">
+        <span className={cx(iconButtonClasses({ tone: 'emerald' }), 'shrink-0')}>
           <Icon as={Play} size={20} />
           <span className="sr-only">Assistir</span>
         </span>
@@ -128,7 +133,7 @@ export function StructurePage() {
     <div className="mx-auto max-w-7xl space-y-space-3xl px-gutter py-space-3xl">
       <div className="grid items-end gap-space-xl md:grid-cols-[1fr_auto]">
         <div className="max-w-xl space-y-space-sm">
-          <h1 className="font-display-l-mobile text-display-l-mobile text-ink md:font-display-l md:text-display-l [text-wrap:balance]">
+          <h1 className="font-display text-display-l-mobile text-ink [text-wrap:balance] md:text-display-l">
             A estrutura da Bravô Clinic.
           </h1>
           <p className="font-lead text-lead text-ink-muted">
@@ -151,13 +156,15 @@ export function StructurePage() {
 
       {GALLERY.map((group) => (
         <section key={group.title} className="space-y-space-lg">
-          <h2 className="font-heading text-heading text-ink">{group.title}</h2>
+          <h2 className="font-heading text-heading-mobile text-ink md:text-heading">
+            {group.title}
+          </h2>
           <ul className="columns-1 gap-space-md sm:columns-2 lg:columns-3">
             {group.photos.map((photo) => (
               <li key={photo.src} className="mb-space-md break-inside-avoid">
                 <figure>
                   <img
-                    className="w-full rounded-xl object-cover shadow-md"
+                    className="w-full rounded-lg object-cover shadow-lift-2"
                     src={photo.src}
                     alt={photo.alt}
                     loading="lazy"
@@ -173,17 +180,11 @@ export function StructurePage() {
       ))}
 
       <div className="flex flex-wrap items-center gap-space-lg border-t border-hairline pt-space-xl">
-        <Link
-          to="/salas"
-          className={`inline-flex items-center gap-space-xs rounded bg-bronze px-space-xl py-space-md font-small text-small uppercase tracking-[0.08em] text-on-bronze shadow-md transition-colors hover:bg-walnut ${focusRing}`}
-        >
+        <Link to="/salas" className={buttonClasses({ variant: 'primary' })}>
           <span>Ver as salas</span>
-          <Icon as={ArrowRight} size={16} />
+          <Icon as={ArrowRight} size={18} />
         </Link>
-        <Link
-          to="/#simulador"
-          className={`font-small text-small text-ink underline decoration-ink/30 underline-offset-4 hover:decoration-ink ${focusRing}`}
-        >
+        <Link to="/#simulador" className={buttonClasses({ variant: 'link' })}>
           Simular o valor da reserva
         </Link>
       </div>
@@ -197,7 +198,7 @@ export function StructurePage() {
       >
         {playing ? (
           <video
-            className="mx-auto max-h-[70vh] w-auto rounded-lg bg-surface-night"
+            className="mx-auto max-h-[70vh] w-auto rounded-md bg-emerald-deep"
             src={playing.src}
             poster={playing.poster}
             controls

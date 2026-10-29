@@ -41,7 +41,7 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
     <section
       aria-labelledby={headingId}
-      className="space-y-space-md rounded-card border border-hairline bg-surface-raised p-space-lg"
+      className="space-y-space-md rounded-lg bg-surface-raised shadow-card p-space-lg"
     >
       <h2 id={headingId} className="font-heading text-heading-mobile text-ink">
         {title}
@@ -80,6 +80,7 @@ function RecipientRow({ recipient }: { recipient: EmailRecipient }) {
             {recipient.active ? 'Pausar' : 'Reativar'}
           </Button>
           <Button
+            className="text-danger"
             variant="ghost"
             size="sm"
             aria-label={`Remover ${recipient.email}`}
@@ -258,9 +259,9 @@ function TestEmailSection() {
 }
 
 const STATUS_TONE = {
-  sent: 'bronze',
-  pending: 'champagne',
-  failed: 'error',
+  sent: 'emerald',
+  pending: 'gold',
+  failed: 'danger',
   not_sent: 'neutral',
 } as const;
 
@@ -318,6 +319,7 @@ function OutboxSection() {
       ) : null}
       {outbox.data ? (
         <Table
+          density="compact"
           caption="E-mails dos últimos 30 dias"
           columns={outboxColumns}
           rows={rows}

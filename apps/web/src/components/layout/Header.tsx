@@ -1,12 +1,12 @@
 import { MapPin, Menu, User, X } from 'lucide-react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useSession } from '../../features/auth/useSession';
 import { ThemeToggle } from '../../theme/ThemeToggle';
 import { BrandLockup } from '../ui/Brand';
 import { Button } from '../ui/Button';
-import { cx, focusRing } from '../ui/cx';
 import { Icon } from '../ui/Icon';
+import { IconButton } from '../ui/IconButton';
 
 export const NAV_LINKS = [
   { to: '/salas', label: 'Salas' },
@@ -16,76 +16,75 @@ export const NAV_LINKS = [
   { to: '/contato', label: 'Contato' },
 ] as const;
 
-const navLinkClasses =
-  'font-small text-small text-on-surface-variant hover:text-bronze hover:bg-champagne/15 active:scale-95 active:bg-champagne/30 active:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bronze transition-all duration-200 ease-out py-space-xs px-space-sm rounded cursor-pointer';
+/** Glass menu rows; the current page is bold in a debossed pill, like the NavBar link. */
+const menuItemClasses =
+  'bv-menu-item no-underline aria-[current=page]:bg-surface-deboss aria-[current=page]:font-semibold aria-[current=page]:shadow-deboss';
 
+/**
+ * The site's floating NavBar (guias/NavBar.md): a pearl pill 16px below the top edge with the
+ * name in type, section links whose current one sinks (`aria-current` from the router), the
+ * theme switch and one emerald action. Below `lg` the links move to a glass menu under the bar.
+ */
 export function Header() {
   const { session } = useSession();
   const [menuOpen, setMenuOpen] = useState(false);
   const closeMenu = () => setMenuOpen(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(46,26,12,0.04)]">
-      <div className="max-w-7xl mx-auto px-gutter">
-        <div className="flex items-center justify-between h-20">
-          <div className="flex items-center gap-space-lg">
-            <Link to="/" className="rounded">
-              <BrandLockup variant="header" />
-            </Link>
-            <div className="hidden xl:flex items-center gap-space-xs text-ink-muted pl-space-md border-l border-hairline/40">
-              <Icon as={MapPin} size={16} className="text-bronze" />
-              <span className="font-small text-small text-ink-muted">Praia Brava - Itajaí</span>
-            </div>
-          </div>
-
-          <nav aria-label="Principal" className="hidden lg:flex items-center gap-space-md">
-            {NAV_LINKS.map((link) => (
-              <Link key={link.to} to={link.to} className={navLinkClasses}>
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-
-          <div className="flex items-center gap-space-sm">
-            <ThemeToggle />
-            <Button
-              asChild
-              size="sm"
-              leadingIcon={User}
-              className="shadow-[0_2px_10px_rgba(122,70,29,0.2)]"
-            >
-              <Link to={session ? '/app' : '/login'}>{session ? 'Minha conta' : 'Login'}</Link>
-            </Button>
-            <button
-              type="button"
-              aria-label="Menu"
-              aria-expanded={menuOpen}
-              aria-controls="mobile-menu"
-              onClick={() => setMenuOpen((open) => !open)}
-              className={cx(
-                'lg:hidden inline-flex h-10 w-10 items-center justify-center rounded text-ink-muted transition-colors hover:bg-champagne/15 hover:text-bronze',
-                focusRing,
-              )}
-            >
-              <Icon as={menuOpen ? X : Menu} />
-            </button>
-          </div>
+    <header className="pointer-events-none fixed inset-x-0 top-4 z-50 px-4">
+      <div className="bv-navbar pointer-events-auto mx-auto max-w-[1180px] gap-space-sm pl-5 sm:pl-6">
+        <Link
+          to="/"
+          className="rounded-pill focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+        >
+          <BrandLockup variant="header" />
+        </Link>
+        <div className="hidden xl:flex items-center gap-space-xs border-l border-hairline pl-space-md">
+          <Icon as={MapPin} size={16} className="text-accent" />
+          <span className="font-small text-small text-ink-muted">Praia Brava - Itajaí</span>
         </div>
+
+        <span className="bv-navbar-spacer" />
+
+        <nav aria-label="Principal" className="hidden lg:flex items-center gap-1">
+          {NAV_LINKS.map((link) => (
+            <NavLink key={link.to} to={link.to} className="bv-navbar-link">
+              {link.label}
+            </NavLink>
+          ))}
+        </nav>
+
+        <span className="bv-navbar-spacer hidden lg:block" />
+
+        <ThemeToggle />
+        {/* Icon-only on phones so the bar fits 375px; the text stays as the accessible name. */}
+        <Button asChild size="sm" leadingIcon={User} className="max-sm:w-10 max-sm:px-0">
+          <Link to={session ? '/app' : '/login'}>
+            <span className="max-sm:sr-only">{session ? 'Minha conta' : 'Login'}</span>
+          </Link>
+        </Button>
+        <IconButton
+          icon={menuOpen ? X : Menu}
+          label="Menu"
+          size="sm"
+          aria-expanded={menuOpen}
+          aria-controls="mobile-menu"
+          onClick={() => setMenuOpen((open) => !open)}
+          className="lg:hidden"
+        />
       </div>
 
       {menuOpen ? (
         <nav
           id="mobile-menu"
           aria-label="Menu móvel"
-          className="lg:hidden border-t border-hairline/40 bg-surface"
+          className="bv-menu pointer-events-auto mx-auto mt-space-sm max-w-[1180px] lg:hidden"
         >
-          <div className="max-w-7xl mx-auto px-gutter py-space-md flex flex-col gap-space-xs">
-            {NAV_LINKS.map((link) => (
-              <Link key={link.to} to={link.to} onClick={closeMenu} className={navLinkClasses}>
-                {link.label}
-              </Link>
-            ))}
-          </div>
+          {NAV_LINKS.map((link) => (
+            <NavLink key={link.to} to={link.to} onClick={closeMenu} className={menuItemClasses}>
+              {link.label}
+            </NavLink>
+          ))}
         </nav>
       ) : null}
     </header>

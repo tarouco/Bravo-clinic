@@ -1,6 +1,6 @@
 import type { PolicySection } from '@bravo/core';
 import { Checkbox } from '../ui/form';
-import { cx } from '../ui/cx';
+import { cx, focusRing } from '../ui/cx';
 
 export interface PolicyAcceptanceProps {
   sections: readonly PolicySection[];
@@ -26,7 +26,10 @@ export function PolicyAcceptance({
         role="region"
         aria-label="Política de reserva"
         tabIndex={0}
-        className="max-h-64 space-y-space-md overflow-y-auto rounded-card border border-hairline bg-surface-raised p-space-md font-small text-small text-ink-muted"
+        className={cx(
+          'max-h-64 space-y-space-md overflow-y-auto rounded-md bg-surface-deboss p-space-lg font-small text-small text-ink-muted shadow-deboss',
+          focusRing,
+        )}
       >
         {sections.map((section) => (
           <section key={section.title}>

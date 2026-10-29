@@ -323,7 +323,7 @@ function PackageCategoryFormModal({ kind, category, onClose }: FormModalProps) {
                 ))}
               </div>
               {errors['weekdays'] ? (
-                <p className="font-caption text-caption text-error">{errors['weekdays']}</p>
+                <p className="font-caption text-caption text-danger">{errors['weekdays']}</p>
               ) : null}
             </fieldset>
             <div className="grid gap-space-md sm:grid-cols-2">
@@ -384,7 +384,7 @@ function PackageCategoryFormModal({ kind, category, onClose }: FormModalProps) {
         </div>
         <div
           aria-live="polite"
-          className="space-y-space-xs rounded-control border border-hairline bg-surface-stone p-space-sm font-small text-small text-ink"
+          className="space-y-space-xs rounded-md bg-surface-deboss px-space-md py-space-sm shadow-deboss font-small text-small text-ink"
         >
           <p>
             Valor médio da hora:{' '}

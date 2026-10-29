@@ -11,10 +11,8 @@ export function PoliciesPage() {
   return (
     <section className="mx-auto max-w-3xl space-y-space-xl px-gutter py-space-3xl">
       <div className="space-y-space-xs">
-        <Eyebrow>REGRAS DE RESERVA</Eyebrow>
-        <h1 className="font-display-l-mobile text-display-l-mobile text-ink md:font-display-l md:text-display-l">
-          Políticas
-        </h1>
+        <Eyebrow>Regras de reserva</Eyebrow>
+        <h1 className="font-display text-display-l-mobile text-ink md:text-display-l">Políticas</h1>
       </div>
 
       {isPending ? (
@@ -22,10 +20,10 @@ export function PoliciesPage() {
       ) : isError ? (
         <Alert tone="error">Não foi possível carregar as políticas agora.</Alert>
       ) : (
-        <>
+        <div className="bv-card space-y-space-lg sm:p-space-xl">
           {data.sections.map((section) => (
             <section key={section.title} className="space-y-space-xs">
-              <h2 className="font-heading-mobile text-heading-mobile text-ink">{section.title}</h2>
+              <h2 className="font-heading text-heading-mobile text-ink">{section.title}</h2>
               {section.paragraphs.map((paragraph) => (
                 <p key={paragraph} className="font-body text-body text-ink-muted">
                   {paragraph}
@@ -36,7 +34,7 @@ export function PoliciesPage() {
           <p className="font-caption text-caption text-ink-muted">
             Versão da política: {data.version}
           </p>
-        </>
+        </div>
       )}
     </section>
   );

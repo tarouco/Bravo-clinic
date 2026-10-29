@@ -9,7 +9,7 @@ import { Input, PasswordInput } from '../../components/ui/form';
 import { safeNextPath, useLogin } from '../../features/auth/hooks';
 import { useClinicConfig } from '../../features/config/useClinicConfig';
 import { ApiError } from '../../lib/api';
-import { AuthCard } from './AuthCard';
+import { AuthCard, authLinkClasses } from './AuthCard';
 import { tooManyAttemptsMessage } from './error-messages';
 
 const GOOGLE_START_URL = '/api/public/auth/google/start';
@@ -68,24 +68,24 @@ export function LoginPage() {
           error={errors.password?.message}
           {...register('password')}
         />
-        <Button type="submit" loading={login.isPending} className="w-full">
+        <Button type="submit" loading={login.isPending} block>
           Entrar
         </Button>
       </form>
 
       {googleEnabled ? (
-        <Button asChild variant="secondary" className="w-full">
+        <Button asChild variant="secondary" block>
           <a href={GOOGLE_START_URL}>Entrar com o Google</a>
         </Button>
       ) : null}
 
       <div className="flex flex-col items-center gap-space-xs font-small text-small">
-        <Link to="/esqueci-senha" className="text-bronze underline underline-offset-4">
+        <Link to="/esqueci-senha" className={authLinkClasses}>
           Esqueci minha senha
         </Link>
         <Link
           to={next ? `/cadastro?next=${encodeURIComponent(next)}` : '/cadastro'}
-          className="text-bronze underline underline-offset-4"
+          className={authLinkClasses}
         >
           Criar conta
         </Link>

@@ -9,6 +9,7 @@ import {
   User,
   type LucideIcon,
 } from 'lucide-react';
+import { Fragment } from 'react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import { useResendVerification } from '../../features/auth/hooks';
 import { useSession } from '../../features/auth/useSession';
@@ -17,7 +18,6 @@ import { usePageViews } from '../../lib/analytics';
 import { ThemeToggle } from '../../theme/ThemeToggle';
 import { BrandLockup } from '../ui/Brand';
 import { Button } from '../ui/Button';
-import { cx, focusRing } from '../ui/cx';
 import { Alert } from '../ui/Feedback';
 import { Icon } from '../ui/Icon';
 
@@ -60,100 +60,87 @@ function EmailVerificationBanner() {
   );
 }
 
-/** Tenant area shell: sidebar from `lg`, bottom tab bar below it, header with the account actions. */
+/** The booking entry of `appNav` becomes the tab bar's FAB ("nova reserva", guias/TabBar.md). */
+const isBooking = (item: AppNavItem): boolean => item.icon === 'CalendarPlus';
+
+/**
+ * Tenant area shell (PWA): a floating pearl NavBar on top (links from `lg`), content in a 768px
+ * column on the névoa stage, and below `lg` a glass TabBar 14px above the bottom edge with four
+ * icon tabs and the emerald FAB for a new booking.
+ */
 export function AppShell() {
   usePageViews();
   const { session } = useSession();
   const { signOut, isPending, failed } = useSignOut();
   const firstName = session?.name.trim().split(/\s+/)[0];
+  const tabs = appNav.filter((item) => !isBooking(item));
+  const booking = appNav.find(isBooking);
+  const middle = Math.floor(tabs.length / 2);
 
   return (
     <div className="min-h-screen bg-surface text-ink">
-      <header className="sticky top-0 z-40 border-b border-hairline/40 bg-surface/90 backdrop-blur-xl">
-        <div className="flex h-16 items-center justify-between px-gutter">
-          <Link to="/app" className={cx('rounded', focusRing)}>
+      <header className="pointer-events-none sticky top-0 z-40 px-4 pt-3 lg:pt-4">
+        <div className="bv-navbar pointer-events-auto mx-auto max-w-[1180px] gap-space-sm pl-5 sm:pl-6">
+          <Link
+            to="/app"
+            className="rounded-pill focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+          >
             <BrandLockup variant="header" />
             <span className="sr-only">, início da minha área</span>
           </Link>
-          <div className="flex items-center gap-space-sm">
-            {firstName ? (
-              <span className="hidden font-small text-small text-ink-muted sm:inline">
-                Olá, {firstName}
-              </span>
-            ) : null}
-            <ThemeToggle />
-            <Button
-              variant="ghost"
-              size="sm"
-              leadingIcon={LogOut}
-              loading={isPending}
-              onClick={signOut}
-            >
-              Sair
-            </Button>
-          </div>
+          <span className="bv-navbar-spacer" />
+          <nav aria-label="Menu lateral" className="hidden items-center gap-1 lg:flex">
+            {appNav.map((item) => (
+              <NavLink key={item.path} to={item.path} className="bv-navbar-link">
+                {item.label}
+              </NavLink>
+            ))}
+          </nav>
+          <span className="bv-navbar-spacer hidden lg:block" />
+          {firstName ? (
+            <span className="hidden font-small text-small text-ink-muted sm:inline">
+              Olá, {firstName}
+            </span>
+          ) : null}
+          <ThemeToggle />
+          <Button
+            variant="ghost"
+            size="sm"
+            leadingIcon={LogOut}
+            loading={isPending}
+            onClick={signOut}
+          >
+            Sair
+          </Button>
         </div>
       </header>
 
-      <div className="lg:flex">
-        <nav
-          aria-label="Menu lateral"
-          className="sticky top-16 hidden h-[calc(100vh-4rem)] w-64 shrink-0 flex-col gap-space-xs border-r border-hairline/40 bg-surface-container-low p-space-md lg:flex"
-        >
-          {appNav.map((item) => (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              className={({ isActive }) =>
-                cx(
-                  'flex items-center gap-space-sm rounded-control px-space-md py-space-sm font-small text-small transition-colors',
-                  focusRing,
-                  isActive
-                    ? 'bg-champagne-soft text-on-champagne'
-                    : 'text-ink-muted hover:bg-champagne/15 hover:text-bronze',
-                )
-              }
-            >
-              <NavIcon item={item} />
-              {item.label}
-            </NavLink>
-          ))}
-        </nav>
-
-        <main className="min-w-0 flex-1 px-gutter pb-28 pt-space-lg lg:pb-space-xl">
-          {session && !session.emailVerified ? <EmailVerificationBanner /> : null}
-          {failed ? (
-            <Alert tone="error" className="mx-auto mb-space-md max-w-3xl">
-              Não foi possível sair. Tente novamente.
-            </Alert>
-          ) : null}
-          <Outlet />
-        </main>
-      </div>
+      <main className="mx-auto w-full min-w-0 max-w-3xl px-5 pb-[calc(6rem+env(safe-area-inset-bottom))] pt-space-lg lg:pb-space-xl">
+        {session && !session.emailVerified ? <EmailVerificationBanner /> : null}
+        {failed ? (
+          <Alert tone="error" className="mx-auto mb-space-md max-w-3xl">
+            Não foi possível sair. Tente novamente.
+          </Alert>
+        ) : null}
+        <Outlet />
+      </main>
 
       <nav
         aria-label="Menu inferior"
-        className="fixed inset-x-0 bottom-0 z-40 border-t border-hairline/40 bg-surface/95 backdrop-blur-xl lg:hidden"
+        className="bv-tabbar fixed bottom-[calc(14px+env(safe-area-inset-bottom))] z-40 lg:hidden"
       >
-        <ul className="grid grid-cols-5">
-          {appNav.map((item) => (
-            <li key={item.path} className="list-none">
-              <NavLink
-                to={item.path}
-                className={({ isActive }) =>
-                  cx(
-                    'flex h-16 flex-col items-center justify-start gap-space-xs px-1 pt-space-sm text-center font-caption text-caption leading-tight transition-colors',
-                    focusRing,
-                    isActive ? 'text-bronze' : 'text-ink-muted hover:text-bronze',
-                  )
-                }
-              >
-                <NavIcon item={item} />
-                {item.label}
+        {tabs.map((item, index) => (
+          <Fragment key={item.path}>
+            {index === middle && booking ? (
+              <NavLink to={booking.path} aria-label="Nova reserva" className="bv-fab">
+                <NavIcon item={booking} />
               </NavLink>
-            </li>
-          ))}
-        </ul>
+            ) : null}
+            <NavLink to={item.path} aria-label={item.label} className="bv-tab">
+              <NavIcon item={item} />
+            </NavLink>
+          </Fragment>
+        ))}
       </nav>
     </div>
   );

@@ -43,6 +43,7 @@ function DeleteExpenseModal({ expense, onClose }: { expense: Expense; onClose: (
           Cancelar
         </Button>
         <Button
+          variant="danger"
           loading={remove.isPending}
           onClick={() => {
             setError(null);
@@ -120,7 +121,7 @@ export function ExpensesTab({ today }: ExpensesTabProps) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Ver anexo de ${e.description}`}
-            className="text-bronze underline underline-offset-4"
+            className="text-accent underline underline-offset-4"
           >
             {e.attachmentName}
           </a>
@@ -144,6 +145,7 @@ export function ExpensesTab({ today }: ExpensesTabProps) {
             Editar
           </Button>
           <Button
+            className="text-danger"
             variant="ghost"
             size="sm"
             aria-label={`Excluir ${e.description}`}
@@ -228,6 +230,7 @@ export function ExpensesTab({ today }: ExpensesTabProps) {
       ) : null}
       {expenses.data ? (
         <Table
+          density="compact"
           caption="Despesas do período"
           columns={columns}
           rows={rows}

@@ -12,42 +12,7 @@ const toChannels = (hex: string): string => {
   return [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16)).join(' ');
 };
 
-/** Reads the Day/Night table of docs/architecture.md section 9.3 (the spec for FND-82). */
-function parseThemeTable(): { day: Map<string, string>; night: Map<string, string> } {
-  const architecture = read('../../docs/architecture.md');
-  const start = architecture.indexOf('### 9.3');
-  const end = architecture.indexOf('Other tokens:', start);
-  expect(start).toBeGreaterThan(-1);
-  expect(end).toBeGreaterThan(start);
-
-  const day = new Map<string, string>();
-  const night = new Map<string, string>();
-  for (const line of architecture.slice(start, end).split('\n')) {
-    if (!line.startsWith('| `')) continue;
-    const [tokenCell = '', dayCell = '', nightCell = ''] = line
-      .trim()
-      .slice(1, -1)
-      .split('|')
-      .map((cell) => cell.trim());
-    const tokens = [...tokenCell.matchAll(/`([a-z0-9-]+)`/g)].map((m) => m[1] ?? '');
-    // A row may list several tokens that share one value (`on-background` / `on-surface`).
-    const spread = (hex: string[]): string[] =>
-      hex.length === 1 ? tokens.map(() => hex[0] ?? '') : hex;
-    const dayHex = spread(dayCell.match(/#[0-9a-fA-F]{6}/g) ?? []);
-    const nightHex = nightCell.startsWith('same')
-      ? dayHex
-      : spread(nightCell.match(/#[0-9a-fA-F]{6}/g) ?? []);
-    expect(dayHex.length, tokenCell).toBe(tokens.length);
-    expect(nightHex.length, tokenCell).toBe(tokens.length);
-    tokens.forEach((token, i) => {
-      day.set(token, toChannels(dayHex[i] ?? ''));
-      night.set(token, toChannels(nightHex[i] ?? ''));
-    });
-  }
-  return { day, night };
-}
-
-/** Extracts `--name: value;` declarations of the rule whose selector starts with `selector`. */
+/** Extracts `--name: value;` declarations of the first rule whose selector starts with `selector`. */
 function declarations(css: string, selector: string): Map<string, string> {
   const open = css.indexOf(selector);
   expect(open, `selector ${selector}`).toBeGreaterThan(-1);
@@ -61,66 +26,97 @@ function declarations(css: string, selector: string): Map<string, string> {
 
 // Prettier rewrites attribute selector quotes to single quotes; compare quote-agnostically.
 const css = read('src/styles/tokens.css').replace(/'/g, '"');
-const dayBlock = declarations(css, ':root');
-const nightBlock = declarations(css, '[data-theme="night"]');
-const table = parseThemeTable();
+const dayBlock = declarations(css, ':root,');
+const nightBlock = declarations(css, '\n[data-theme="night"] {');
+const sharedBlock = declarations(css, ':root {');
+
+// The brand kit (docs/design/v3) is the source of truth (AD-038).
+const kit = read('../../docs/design/v3/bravo-clinic-design-system/tokens/tokens.css');
+const kitDay = declarations(kit, ':root, [data-theme="light"]');
+const kitNight = declarations(kit, '[data-theme="dark"]');
+
+const flat = (value: string | undefined) => value?.replace(/\s+/g, ' ');
+
+/** v3 colors given as #hex in the kit (hairline is rgba and is stored flattened). */
+const hexColors = (block: Map<string, string>) =>
+  [...block].filter(([name, value]) => /^#[0-9a-f]{6}$/i.test(value) && name !== '--focus-ring');
 
 describe('tokens.css', () => {
-  it('holds the Day and Night value of every architecture 9.3 token as RGB channels', () => {
-    expect(table.day.size).toBeGreaterThanOrEqual(70);
-    for (const [token, value] of table.day) {
-      expect(dayBlock.get(`--c-${token}`), `day --c-${token}`).toBe(value);
-    }
-    for (const [token, value] of table.night) {
-      expect(nightBlock.get(`--c-${token}`), `night --c-${token}`).toBe(value);
+  it('holds every v3 Dia color of the brand kit as RGB channels', () => {
+    const colors = hexColors(kitDay);
+    expect(colors.length).toBeGreaterThanOrEqual(15);
+    for (const [name, hex] of colors) {
+      expect(dayBlock.get(`--c-${name.slice(2)}`), `day ${name}`).toBe(toChannels(hex));
     }
   });
 
-  it('resolves the documented sample tokens to the documented channels', () => {
-    expect(dayBlock.get('--c-surface')).toBe('245 238 230');
-    expect(nightBlock.get('--c-surface')).toBe('29 20 14');
-    expect(dayBlock.get('--c-bronze')).toBe('122 70 29');
-    expect(nightBlock.get('--c-bronze')).toBe('220 170 130');
-    expect(dayBlock.get('--c-champagne-soft')).toBe('239 220 205');
-    expect(nightBlock.get('--c-champagne-soft')).toBe('74 53 38');
+  it('holds every v3 Noite color of the brand kit, inheriting the ones Noite keeps', () => {
+    for (const [name, hex] of hexColors(kitNight)) {
+      const channel = `--c-${name.slice(2)}`;
+      expect(nightBlock.get(channel) ?? dayBlock.get(channel), `night ${name}`).toBe(
+        toChannels(hex),
+      );
+    }
+  });
+
+  it('copies the kit shadows, relief, glass and scrim per theme', () => {
+    for (const name of ['--lift-1', '--lift-2', '--lift-3', '--rim', '--deboss', '--neon-glow']) {
+      expect(flat(dayBlock.get(name)), `day ${name}`).toBe(flat(kitDay.get(name)));
+      expect(flat(nightBlock.get(name)), `night ${name}`).toBe(flat(kitNight.get(name)));
+    }
+    for (const name of ['--glass', '--glass-bar', '--glass-hover', '--scrim']) {
+      expect(dayBlock.get(name), `day ${name}`).toBe(kitDay.get(name));
+      expect(nightBlock.get(name), `night ${name}`).toBe(kitNight.get(name));
+    }
+  });
+
+  it('makes accent emerald by day and gold by night', () => {
+    expect(dayBlock.get('--c-accent')).toBe(toChannels('#0f6b52'));
+    expect(nightBlock.get('--c-accent')).toBe(toChannels('#ffeb97'));
   });
 
   it('applies the Day block to :root and to data-theme="day"', () => {
     expect(css).toMatch(/:root,\s*\[data-theme="day"\]\s*\{/);
   });
 
-  it('defines every color referenced by tailwind.config.ts in both blocks', () => {
+  it('defines every color referenced by tailwind.config.ts', () => {
     const colors = Object.values(config.theme.extend.colors);
-    expect(colors.length).toBeGreaterThanOrEqual(70);
+    expect(colors.length).toBeGreaterThanOrEqual(25);
     for (const value of colors) {
       const variable = /var\((--c-[a-z0-9-]+)\)/.exec(value)?.[1] ?? '';
-      expect(dayBlock.has(variable), `day ${variable}`).toBe(true);
-      expect(nightBlock.has(variable), `night ${variable}`).toBe(true);
+      expect(dayBlock.has(variable) || sharedBlock.has(variable), variable).toBe(true);
     }
   });
 
-  it('defines the glow and raised shadows and color-scheme per theme', () => {
-    expect(dayBlock.get('--shadow-glow')).toBe('0 0 24px rgba(218, 175, 147, 0.45)');
-    expect(nightBlock.get('--shadow-glow')).toBe('0 0 28px rgba(229, 188, 161, 0.35)');
-    expect(dayBlock.get('--shadow-raised')).toBe(
-      '0 1px 2px rgba(46, 26, 12, 0.06), 0 8px 24px rgba(46, 26, 12, 0.08)',
-    );
-    expect(nightBlock.get('--shadow-raised')).toBe(
-      '0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.35)',
-    );
+  it('no longer defines the v2 names (AD-039 step 2)', () => {
+    for (const name of [
+      '--c-bronze',
+      '--c-champagne',
+      '--c-walnut',
+      '--c-on-surface',
+      '--c-error',
+    ]) {
+      expect(css.includes(`${name}:`), name).toBe(false);
+    }
+  });
+
+  it('sets color-scheme per theme', () => {
     expect(css).toMatch(/color-scheme:\s*light;/);
     expect(css).toMatch(/color-scheme:\s*dark;/);
   });
 
-  it('styles body with bg-surface, text-on-surface and font-body', () => {
+  it('styles body with bg-surface, text-ink and font-body', () => {
     expect(css).toMatch(/body\s*\{[^}]*@apply[^;]*bg-surface[^;]*;/);
-    expect(css).toMatch(/body\s*\{[^}]*@apply[^;]*text-on-surface[^;]*;/);
+    expect(css).toMatch(/body\s*\{[^}]*@apply[^;]*text-ink[^;]*;/);
     expect(css).toMatch(/body\s*\{[^}]*@apply[^;]*font-body[^;]*;/);
   });
 
-  it('is imported by index.css before the Tailwind layers', () => {
+  it('is imported by index.css with bv.css, both before the Tailwind layers', () => {
     const index = read('src/styles/index.css');
     expect(index.indexOf("@import './tokens.css'")).toBeGreaterThan(-1);
-    expect(index.indexOf("@import './tokens.css'")).toBeLessThan(index.indexOf('@tailwind base'));
+    expect(index.indexOf("@import './tokens.css'")).toBeLessThan(
+      index.indexOf("@import './bv.css'"),
+    );
+    expect(index.indexOf("@import './bv.css'")).toBeLessThan(index.indexOf('@tailwind base'));
   });
 });

@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+<head><link rel="stylesheet" href="../tokens/tokens.css"><link rel="stylesheet" href="../components/bundle.css"><script src="../components/bundle.js"></script><meta charset="utf-8"><title>preview</title>
+<style>
+html,body{margin:0}
+body{background:var(--surface);color:var(--ink);font-family:var(--font-sans)}
+.wrap{padding:28px 32px;display:flex;flex-wrap:wrap;gap:22px;align-items:center}
+.st{display:flex;flex-direction:column;align-items:center;gap:10px}
+.st small{font-size:11px;color:var(--ink-muted);letter-spacing:.04em}
+.ph{position:relative;height:150px;max-width:380px;margin:0 auto;background:url(../imagens/reception.jpg) center/cover}
+</style></head>
+<body><div style="position:fixed;right:14px;top:14px;z-index:99;display:flex;gap:6px;font:500 12px Jost,sans-serif"><button onclick="document.documentElement.dataset.theme='light'" style="border:0;border-radius:99px;padding:6px 12px;cursor:pointer">Dia</button><button onclick="document.documentElement.dataset.theme='dark'" style="border:0;border-radius:99px;padding:6px 12px;cursor:pointer;background:#583714;color:#ffeb97">Noite</button></div>
+<div class="ph"><div class="bv-tabbar" data-bv-group>
+<button class="bv-tab" aria-current="page" aria-label="Início"><svg viewBox="0 0 24 24"><path d="M4 20V9l8-5 8 5v11z"/></svg></button><button class="bv-tab" aria-label="Agenda"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></button>
+<button class="bv-fab" aria-label="Nova reserva"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+<button class="bv-tab" aria-label="Favoritas"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></button><button class="bv-tab" aria-label="Perfil"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg></button></div></div>
+<script>BravoClinic.init();</script>
+</body></html>

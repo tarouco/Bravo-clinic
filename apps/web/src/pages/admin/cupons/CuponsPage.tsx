@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Button } from '../../../components/ui/Button';
-import { cx, focusRing } from '../../../components/ui/cx';
 import { Alert, Spinner } from '../../../components/ui/Feedback';
 import { Table, type TableColumn } from '../../../components/ui/Table';
 import { useToast } from '../../../components/ui/Toast';
+import { Toggle } from '../../../components/ui/Toggle';
 import { useCoupons, useToggleCoupon } from '../../../features/purchases/api';
 import type { Coupon } from '../../../features/purchases/types';
 import { messageOf } from '../../../lib/api-errors';
@@ -44,26 +44,7 @@ function EnabledSwitch({ coupon }: { coupon: Coupon }) {
   };
 
   return (
-    <button
-      type="button"
-      role="switch"
-      aria-checked={shown}
-      aria-label={`Cupom ${coupon.code} ativo`}
-      onClick={flip}
-      className={cx(
-        'relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors',
-        shown ? 'bg-bronze' : 'bg-border',
-        focusRing,
-      )}
-    >
-      <span
-        aria-hidden="true"
-        className={cx(
-          'inline-block h-5 w-5 rounded-full bg-surface-raised shadow transition-transform',
-          shown ? 'translate-x-5' : 'translate-x-0.5',
-        )}
-      />
-    </button>
+    <Toggle checked={shown} onCheckedChange={flip} label={`Cupom ${coupon.code} ativo`} hideLabel />
   );
 }
 
@@ -119,7 +100,9 @@ export function CuponsPage() {
   return (
     <div className="mx-auto max-w-7xl space-y-space-lg">
       <div className="flex flex-wrap items-center justify-between gap-space-sm">
-        <h1 className="font-heading text-heading-mobile text-ink md:text-heading">Cupons</h1>
+        <h1 className="font-display-l-mobile text-display-l-mobile text-ink lg:font-display-l lg:text-display-l">
+          Cupons
+        </h1>
         <Button
           onClick={() => {
             setFormTarget('new');
@@ -140,6 +123,7 @@ export function CuponsPage() {
           columns={columns}
           rows={coupons.data.items}
           rowKey={(c) => c.id}
+          density="compact"
           emptyMessage="Nenhum cupom cadastrado."
         />
       ) : null}

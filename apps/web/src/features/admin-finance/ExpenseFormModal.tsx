@@ -228,11 +228,12 @@ export function ExpenseFormModal({ expense, categories, today, onClose }: Expens
                 href={expenseAttachmentUrl(expense.id)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-bronze underline underline-offset-4"
+                className="text-accent underline underline-offset-4"
               >
                 Ver anexo
               </a>
               <Button
+                className="text-danger"
                 variant="ghost"
                 size="sm"
                 loading={removeAttachment.isPending}
@@ -263,6 +264,7 @@ export function ExpenseFormModal({ expense, categories, today, onClose }: Expens
             <p className="flex flex-wrap items-center gap-space-sm font-small text-small text-ink">
               Será enviado: {file.name}
               <Button
+                className="text-danger"
                 variant="ghost"
                 size="sm"
                 onClick={() => {

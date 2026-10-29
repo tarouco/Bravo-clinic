@@ -1,6 +1,6 @@
 import { addDays, utcToLocal, type AvailabilityMonth, type LocalDate } from '@bravo/core';
 import { useEffect, useState } from 'react';
-import { MonthCalendar } from '../../components/calendar/MonthCalendar';
+import { DayStrip } from '../../components/booking/DayStrip';
 import { datesOfMonth, monthOf } from '../../lib/calendar-dates';
 
 /** Furthest start date offered; the API enforces `calendar.max_advance_days` (REC-11). */
@@ -27,7 +27,7 @@ export interface StartDateCalendarProps {
   className?: string;
 }
 
-/** Month calendar for a package start date ("data base"): today up to the advance limit. */
+/** Day strip for a package start date ("data base"): today up to the advance limit. */
 export function StartDateCalendar({ value, onSelect, className }: StartDateCalendarProps) {
   const today = utcToLocal(new Date()).date;
   const [month, setMonth] = useState(monthOf(value ?? today));
@@ -36,11 +36,13 @@ export function StartDateCalendar({ value, onSelect, className }: StartDateCalen
     if (value) setMonth(monthOf(value));
   }, [value]);
   return (
-    <MonthCalendar
+    <DayStrip
       month={month}
       days={startDateDays(month, today)}
       value={value}
       minMonth={monthOf(today)}
+      maxMonth={monthOf(addDays(today, MAX_ADVANCE_DAYS))}
+      hideBefore={today}
       onSelect={onSelect}
       onMonthChange={setMonth}
       {...(className ? { className } : {})}

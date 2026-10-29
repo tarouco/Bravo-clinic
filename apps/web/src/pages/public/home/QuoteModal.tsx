@@ -15,7 +15,7 @@ const QuoteRequestForm = lazy(() =>
 /** WhatsApp deep link that opens a chat with the quote request as a pre-filled message. */
 export function whatsappQuoteUrl(whatsappE164: string, service: string): string {
   return `${whatsappHref(whatsappE164)}?text=${encodeURIComponent(
-    `Olá! Quero um orçamento de ${service}.`,
+    `Olá, quero um orçamento de ${service}.`,
   )}`;
 }
 
@@ -45,7 +45,7 @@ export function QuoteModal({ service, onClose }: QuoteModalProps) {
               <p className="font-small text-small text-ink-muted">
                 Prefere conversar?{' '}
                 <a
-                  className="text-bronze underline underline-offset-4 hover:text-walnut"
+                  className="text-accent underline underline-offset-4 hover:text-accent-deep"
                   href={whatsappQuoteUrl(whatsappE164, service.title)}
                   target="_blank"
                   rel="noopener noreferrer"

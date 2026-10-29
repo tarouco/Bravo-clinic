@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light"><head><link rel="stylesheet" href="../tokens/tokens.css"><link rel="stylesheet" href="../components/bundle.css"><script src="../components/bundle.js"></script><meta charset="utf-8"><title>AppScreens</title>
+<style>
+html,body{margin:0}
+body{background:var(--surface);font-family:var(--font-sans);color:var(--ink)}
+.phones{display:flex;gap:40px;justify-content:center;padding:40px 20px}
+.phone{width:300px;height:630px;border-radius:46px;padding:9px;background:linear-gradient(180deg,#fdfdfc,#e4e2de);box-shadow:var(--lift-3)}
+[data-theme="dark"] .phone{background:linear-gradient(180deg,#6d4c24,#3a240c)}
+.scr{position:relative;width:100%;height:100%;border-radius:38px;overflow:hidden;background:var(--surface)}
+.status{display:flex;justify-content:space-between;padding:14px 26px 0;font-size:11px;font-weight:500}
+.pad{padding:16px 20px}
+.top{display:flex;align-items:center;justify-content:space-between}
+.av{width:42px;height:42px;border-radius:50%;background:var(--grad-gold);color:var(--on-gold);box-shadow:var(--relief-gold);display:grid;place-items:center;font-family:var(--font-display);font-size:16px}
+.t1{font-family:var(--font-display);font-weight:300;font-size:30px;letter-spacing:.03em;margin:18px 0 16px}
+.feat{height:170px}
+.feat .bv-card-title{font-weight:300;font-size:24px;margin:0}
+.feat .cap{font-size:12px;color:var(--gold)}
+.feat .bv-btn{position:absolute;left:20px;bottom:18px}
+.feat .ph{position:absolute;right:-18px;bottom:-18px;width:150px;height:150px;border-radius:var(--radius-lg);background:url(../imagens/reception.jpg) center/cover;transform:rotate(-8deg);box-shadow:0 18px 30px rgba(5,30,22,.45)}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+.tile{padding:16px;border-radius:var(--radius-md)}
+.tile .bv-icon-btn{margin-bottom:12px}
+.tile b{font-family:var(--font-display);font-weight:400;font-size:15px;display:block}
+.tile span{font-size:11px;color:var(--ink-muted)}
+.tile.bv-card--gold span{color:var(--on-gold)}
+.photo{position:absolute;inset:0 0 auto 0;height:330px;background:url(../imagens/facade-dusk.jpg) 52% 50%/cover}
+.ptop{position:relative;display:flex;justify-content:space-between;padding:18px}
+.price{position:absolute;right:22px;top:262px;z-index:2;padding:10px 16px;border-radius:18px;background:var(--grad-gold);color:var(--on-gold);box-shadow:var(--relief-gold);font-family:var(--font-display);font-size:16px}
+.price small{display:block;font-family:var(--font-sans);font-size:10px}
+.sheet{position:absolute;left:0;right:0;bottom:0;top:290px;padding:26px 22px;border-radius:var(--radius-xl) var(--radius-xl) 38px 38px;background:var(--surface);box-shadow:0 -20px 40px rgba(60,45,30,.18)}
+.sheet h2{font-family:var(--font-display);font-weight:300;font-size:28px;letter-spacing:.08em;text-transform:uppercase;margin:0 0 4px}
+.sub{font-size:12px;color:var(--ink-muted);margin-bottom:18px}
+.am{display:flex;gap:10px;margin-bottom:20px}
+.am span{width:46px;height:46px;border-radius:var(--radius-sm);display:grid;place-items:center;background:var(--grad-pearl);box-shadow:var(--relief-pearl)}
+.am svg{width:20px;height:20px;stroke:var(--emerald);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+[data-theme="dark"] .am svg{stroke:var(--gold)}
+.slots{display:flex;gap:8px;margin-bottom:22px}
+.slots .bv-chip{flex:1;min-width:0;padding:0;height:38px;font-size:13px}
+.bk{display:flex;align-items:center;gap:14px;padding:12px;border-radius:var(--radius-md);margin:12px 0}
+.bk .p{width:54px;height:54px;border-radius:18px;background-size:cover;background-position:center;flex:none}
+.bk b{display:block;font-family:var(--font-display);font-weight:400;font-size:15px}
+.bk span{font-size:11px;color:var(--ink-muted)}
+.bk .t{margin-left:auto;padding:8px 12px;border-radius:999px;background:var(--grad-gold);color:var(--on-gold);box-shadow:var(--relief-gold);font-family:var(--font-display);font-size:14px}
+.ring{display:flex;align-items:center;gap:16px;padding:16px;border-radius:var(--radius-md)}
+.ring .r{width:56px;height:56px;border-radius:50%;background:conic-gradient(var(--emerald) 0 75%,rgba(88,55,20,.18) 75% 100%);display:grid;place-items:center}
+.ring .r i{width:42px;height:42px;border-radius:50%;background:#fff3c2;display:grid;place-items:center;font-style:normal;font-family:var(--font-display);font-size:13px}
+.ring b{font-family:var(--font-display);font-weight:400;font-size:15px;display:block}
+.ring span{font-size:11px}
+</style></head><body><div style="position:fixed;right:14px;top:14px;z-index:99;display:flex;gap:6px;font:500 12px Jost,sans-serif"><button onclick="document.documentElement.dataset.theme='light'" style="border:0;border-radius:99px;padding:6px 12px;cursor:pointer">Dia</button><button onclick="document.documentElement.dataset.theme='dark'" style="border:0;border-radius:99px;padding:6px 12px;cursor:pointer;background:#583714;color:#ffeb97">Noite</button></div>
+<div class="phones">
+<div class="phone"><div class="scr"><div class="status"><span>9:41</span><span>●●● ▮</span></div><div class="pad">
+<div class="top"><div class="av">H</div><button class="bv-icon-btn bv-icon-btn--sm bv-btn--pearl" aria-label="Buscar"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg></button></div>
+<div class="t1">Olá, Helena</div>
+<div class="bv-card bv-card--emerald feat"><h3 class="bv-card-title">Sala 04</h3><span class="cap">Livre hoje · 14h</span><div class="ph"></div><button class="bv-btn bv-btn--gold bv-btn--sm">Reservar</button></div>
+<div class="tiles"><div class="bv-card tile"><button class="bv-icon-btn bv-icon-btn--sm bv-btn--emerald" aria-label="Consultório"><svg viewBox="0 0 24 24"><path d="M4 20V9l8-5 8 5v11zM10 20v-6h4v6"/></svg></button><b>Consultório</b><span>12 salas</span></div>
+<div class="bv-card bv-card--gold tile"><button class="bv-icon-btn bv-icon-btn--sm bv-btn--pearl" aria-label="Estética"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg></button><b>Estética</b><span>6 salas</span></div></div>
+</div><div class="bv-tabbar" data-bv-group><button class="bv-tab" aria-label="Início" aria-current="page"><svg viewBox="0 0 24 24"><path d="M4 20V9l8-5 8 5v11z"/></svg></button><button class="bv-tab" aria-label="Agenda"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16"/></svg></button><button class="bv-fab" aria-label="Nova reserva"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><button class="bv-tab" aria-label="Favoritas"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></button><button class="bv-tab" aria-label="Perfil"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg></button></div></div></div>
+<div class="phone"><div class="scr"><div class="photo"></div>
+<div class="ptop"><button class="bv-icon-btn bv-icon-btn--sm bv-btn--pearl" aria-label="Voltar"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button><button class="bv-icon-btn bv-icon-btn--sm bv-btn--pearl" aria-label="Favoritar"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></button></div>
+<div class="price">R$ 60<small>por hora</small></div>
+<div class="sheet"><h2>Sala 04</h2><div class="sub">Consultório · 2º andar</div>
+<div class="am"><span><svg viewBox="0 0 24 24"><path d="M3 14h18v4H3zM5 14V9h14v5"/></svg></span><span><svg viewBox="0 0 24 24"><path d="M12 3v18M5 7l14 10M19 7L5 17"/></svg></span><span><svg viewBox="0 0 24 24"><path d="M5 12a7 7 0 0 1 14 0M8.5 15.5a3.5 3.5 0 0 1 7 0"/><circle cx="12" cy="19" r="1"/></svg></span><span><svg viewBox="0 0 24 24"><path d="M12 4c3 4 5 6.5 5 9a5 5 0 0 1-10 0c0-2.5 2-5 5-9z"/></svg></span></div>
+<div class="slots" data-bv-group><button class="bv-chip" aria-pressed="false">09h</button><button class="bv-chip" aria-pressed="true">11h</button><button class="bv-chip" aria-pressed="false">14h</button><button class="bv-chip" aria-pressed="false">16h</button></div>
+<button class="bv-btn bv-btn--emerald bv-btn--block">Reservar</button></div></div></div>
+<div class="phone"><div class="scr"><div class="status"><span>9:41</span><span>●●● ▮</span></div><div class="pad">
+<div class="top"><div class="t1" style="margin:6px 0 0">Agenda</div><div class="av">H</div></div><div style="height:18px"></div>
+<div class="bv-week" data-bv-group><button class="bv-day" aria-pressed="false">S<b>3</b></button><button class="bv-day" aria-pressed="false">T<b>4</b></button><button class="bv-day" aria-pressed="true">Q<b>5</b></button><button class="bv-day" aria-pressed="false">Q<b>6</b></button><button class="bv-day" aria-pressed="false">S<b>7</b></button><button class="bv-day" aria-pressed="false">S<b>8</b></button></div>
+<div class="bv-card bk"><div class="p" style="background-image:url(../imagens/reception.jpg)"></div><div><b>Sala 04</b><span>Fisioterapia</span></div><span class="t">11h</span></div>
+<div class="bv-card bk"><div class="p" style="background-image:url(../imagens/facade-dusk.jpg);background-position:40% 60%"></div><div><b>Sala 07</b><span>Estética</span></div><span class="t">15h</span></div>
+<div class="bv-card bv-card--gold ring"><div class="r"><i>75%</i></div><div><b>Horas do mês</b><span>18 de 24 usadas</span></div></div>
+</div><div class="bv-tabbar" data-bv-group><button class="bv-tab" aria-label="Início"><svg viewBox="0 0 24 24"><path d="M4 20V9l8-5 8 5v11z"/></svg></button><button class="bv-tab" aria-label="Agenda" aria-current="page"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16"/></svg></button><button class="bv-fab" aria-label="Nova reserva"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><button class="bv-tab" aria-label="Favoritas"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></button><button class="bv-tab" aria-label="Perfil"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg></button></div></div></div>
+</div>
+<script>BravoClinic.init();</script>
+</body></html>

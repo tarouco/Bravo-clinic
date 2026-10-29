@@ -183,7 +183,7 @@ export function SellSubscriptionDialog({ open, onClose }: SellSubscriptionDialog
         }}
       >
         <section aria-labelledby="sell-customer" className="space-y-space-sm">
-          <h3 id="sell-customer" className="font-h3 text-h3 text-ink">
+          <h3 id="sell-customer" className="font-heading-mobile text-heading-mobile text-ink">
             Cliente
           </h3>
           <CustomerPicker
@@ -197,7 +197,7 @@ export function SellSubscriptionDialog({ open, onClose }: SellSubscriptionDialog
         </section>
 
         <section aria-labelledby="sell-category" className="space-y-space-sm">
-          <h3 id="sell-category" className="font-h3 text-h3 text-ink">
+          <h3 id="sell-category" className="font-heading-mobile text-heading-mobile text-ink">
             Pacote
           </h3>
           {categories.isError ? (
@@ -228,7 +228,7 @@ export function SellSubscriptionDialog({ open, onClose }: SellSubscriptionDialog
 
         {category && !fixed ? (
           <section aria-labelledby="sell-base" className="space-y-space-sm">
-            <h3 id="sell-base" className="font-h3 text-h3 text-ink">
+            <h3 id="sell-base" className="font-heading-mobile text-heading-mobile text-ink">
               Data de início
             </h3>
             <StartDateCalendar
@@ -242,7 +242,7 @@ export function SellSubscriptionDialog({ open, onClose }: SellSubscriptionDialog
         ) : null}
         {category && fixed ? (
           <section aria-labelledby="sell-fixed" className="space-y-space-sm">
-            <h3 id="sell-fixed" className="font-h3 text-h3 text-ink">
+            <h3 id="sell-fixed" className="font-heading-mobile text-heading-mobile text-ink">
               Sala e início
             </h3>
             <FixedSchedulePicker
@@ -277,7 +277,7 @@ export function SellSubscriptionDialog({ open, onClose }: SellSubscriptionDialog
         ) : null}
 
         <section aria-labelledby="sell-pay" className="space-y-space-sm">
-          <h3 id="sell-pay" className="font-h3 text-h3 text-ink">
+          <h3 id="sell-pay" className="font-heading-mobile text-heading-mobile text-ink">
             Pagamento
           </h3>
           <Select
@@ -321,7 +321,7 @@ export function SellSubscriptionDialog({ open, onClose }: SellSubscriptionDialog
 
         {sale ? (
           <section aria-labelledby="sell-summary" className="space-y-space-sm">
-            <h3 id="sell-summary" className="font-h3 text-h3 text-ink">
+            <h3 id="sell-summary" className="font-heading-mobile text-heading-mobile text-ink">
               Resumo
             </h3>
             {quoteQuery.isError ? (
@@ -331,7 +331,7 @@ export function SellSubscriptionDialog({ open, onClose }: SellSubscriptionDialog
             ) : !quote ? (
               <Spinner label="Calculando o valor" />
             ) : (
-              <dl className="divide-y divide-hairline rounded-card border border-hairline bg-surface-raised px-space-md">
+              <dl className="divide-y divide-hairline rounded-md bg-surface-panel px-space-md">
                 <SummaryRow label="Pacote" value={category?.name ?? ''} />
                 <SummaryRow label="Período" value={periodText(quote)} />
                 {fixed && quote.occurrenceCount ? (

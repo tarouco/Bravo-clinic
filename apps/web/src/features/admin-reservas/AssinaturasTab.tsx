@@ -36,9 +36,9 @@ import {
 export { GrantCreditDialog } from './AdminSubscriptionDialogs';
 
 const STATUS_TONES: Record<SubscriptionStatus, BadgeTone> = {
-  awaiting_payment: 'champagne',
-  active: 'bronze',
-  suspended: 'error',
+  awaiting_payment: 'gold',
+  active: 'emerald',
+  suspended: 'danger',
   ended: 'neutral',
   cancelled: 'neutral',
   switched: 'neutral',
@@ -69,9 +69,7 @@ function useDebounced<T>(value: T, delayMs: number): T {
 function Detail({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div className="space-y-0.5">
-      <dt className="font-caption text-caption uppercase tracking-[0.08em] text-ink-muted">
-        {label}
-      </dt>
+      <dt className="font-eyebrow text-eyebrow uppercase text-ink-muted">{label}</dt>
       <dd className="font-small text-small text-ink">{children}</dd>
     </div>
   );
@@ -182,7 +180,7 @@ function SubscriptionDrawer({ row, canManage, onClose }: DrawerProps) {
             ) : null}
 
             <section aria-labelledby="sub-periods" className="space-y-space-xs">
-              <h3 id="sub-periods" className="font-h3 text-h3 text-ink">
+              <h3 id="sub-periods" className="font-heading-mobile text-heading-mobile text-ink">
                 Períodos
               </h3>
               {subscription.currentPeriod || subscription.nextPeriod ? (
@@ -240,7 +238,7 @@ function SubscriptionDrawer({ row, canManage, onClose }: DrawerProps) {
                 ) : null}
                 {CANCELLABLE.includes(subscription.status) ? (
                   <Button
-                    variant="secondary"
+                    variant="danger"
                     size="sm"
                     onClick={() => {
                       setDialog('cancel');
@@ -254,7 +252,7 @@ function SubscriptionDrawer({ row, canManage, onClose }: DrawerProps) {
 
             {subscription.type === 'hour_package' ? (
               <section aria-labelledby="sub-ledger" className="space-y-space-sm">
-                <h3 id="sub-ledger" className="font-h3 text-h3 text-ink">
+                <h3 id="sub-ledger" className="font-heading-mobile text-heading-mobile text-ink">
                   Extrato
                 </h3>
                 {ledger.isPending ? (

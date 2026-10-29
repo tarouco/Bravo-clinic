@@ -120,7 +120,7 @@ describe('checkout slots wired into the Resumo step (REC-117, REC-24, REC-28)', 
     renderResumo();
 
     await userEvent.click(
-      await screen.findByRole('checkbox', {
+      await screen.findByRole('switch', {
         name: spaced('Usar créditos (R$ 50,00 disponíveis)'),
       }),
     );

@@ -3,9 +3,12 @@ import { ArrowRight, Calculator, Check, CreditCard, SprayCan, Table2 } from 'luc
 import { useMemo, useState, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { Eyebrow } from '../../../components/ui/Brand';
+import { buttonClasses } from '../../../components/ui/Button';
+import { ChipGroup } from '../../../components/ui/Chip';
+import { cx } from '../../../components/ui/cx';
 import { Alert } from '../../../components/ui/Feedback';
-import { focusRing } from '../../../components/ui/cx';
 import { Icon } from '../../../components/ui/Icon';
+import { Slider } from '../../../components/ui/Slider';
 import { useCatalog } from '../../../features/catalog/api';
 import { FACTORY_HOURLY_CATEGORIES } from '../../../features/home/factory-categories';
 import { hoursLabel, simulateWith, type SimulatorPeriod } from '../../../features/home/simulator';
@@ -55,40 +58,36 @@ const TARIFF_GROUPS: TariffGroup[] = [
 ];
 
 const PERIOD_OPTIONS: { value: SimulatorPeriod; label: string }[] = [
-  { value: 'util', label: 'Dia Útil Comercial' },
-  { value: 'especial', label: 'Noite / Fim de Semana' },
+  { value: 'util', label: 'Dia útil comercial' },
+  { value: 'especial', label: 'Noite / fim de semana' },
 ];
 
-const smallLabel = 'block font-eyebrow text-caption uppercase text-ink-muted tracking-[0.16em]';
+const smallLabel = 'block font-eyebrow text-eyebrow uppercase text-ink-muted';
 
 function TariffTable() {
   return (
-    <div className="bg-surface-raised rounded-xl p-space-lg shadow-sm">
-      <h3 className="font-heading-mobile text-heading-mobile md:font-heading md:text-heading text-ink flex items-center gap-space-xs mb-space-sm">
-        <Icon as={Table2} size={24} className="text-bronze shrink-0" />
-        Tabela de Tarifas Bravô Clinic
+    <div className="bv-card">
+      <h3 className="mb-space-sm flex items-center gap-space-xs font-heading text-heading-mobile text-ink md:text-heading">
+        <Icon as={Table2} size={24} className="shrink-0 text-accent" />
+        Tabela de tarifas Bravô Clinic
       </h3>
       {TARIFF_GROUPS.map((group, index) => (
         <div key={group.title} className={index < TARIFF_GROUPS.length - 1 ? 'mb-space-md' : ''}>
-          <div className="font-eyebrow text-caption uppercase tracking-wider text-bronze font-semibold mb-space-xs">
+          <div className="mb-space-xs font-small text-small font-medium text-accent">
             {group.title}
           </div>
           <div className="space-y-space-xs font-small text-small">
             {group.rows.map((row) => (
               <div
                 key={row.label}
-                className={`flex justify-between gap-space-md py-1 px-space-sm rounded ${
-                  row.highlight ? 'bg-champagne-soft/40' : 'bg-surface'
-                }`}
+                className={cx(
+                  'flex justify-between gap-space-md rounded-sm px-space-sm py-1',
+                  // The discounted tariff is the gold price pill of the table.
+                  row.highlight ? 'bg-gold text-on-gold' : 'bg-surface-deboss text-ink',
+                )}
               >
-                <span className={row.highlight ? 'text-bronze font-medium' : 'text-ink'}>
-                  {row.label}
-                </span>
-                <span
-                  className={`shrink-0 ${
-                    row.highlight ? 'font-semibold text-bronze' : 'font-medium text-ink'
-                  }`}
-                >
+                <span className={row.highlight ? 'font-medium' : undefined}>{row.label}</span>
+                <span className={cx('shrink-0', row.highlight ? 'font-semibold' : 'font-medium')}>
                   {row.price}
                 </span>
               </div>
@@ -102,11 +101,11 @@ function TariffTable() {
 
 function CleanupGuarantee() {
   return (
-    <div className="p-space-lg bg-surface-raised rounded-xl shadow-sm space-y-space-xs">
-      <div className="flex items-center gap-space-xs text-bronze">
-        <Icon as={SprayCan} size={22} className="shrink-0" />
-        <h4 className="font-eyebrow text-caption uppercase font-semibold tracking-wider">
-          Garantia de Biossegurança: Bloqueio de Limpeza de 30 min
+    <div className="bv-card space-y-space-xs">
+      <div className="flex items-center gap-space-xs text-ink">
+        <Icon as={SprayCan} size={22} className="shrink-0 text-accent" />
+        <h4 className="bv-card-title m-0">
+          Garantia de biossegurança: bloqueio de limpeza de 30 min
         </h4>
       </div>
       <p className="font-small text-small text-ink-muted">
@@ -121,7 +120,7 @@ function CleanupGuarantee() {
 
 function SummaryRow({ label, children }: { label: ReactNode; children: ReactNode }) {
   return (
-    <div className="flex justify-between items-center gap-space-md">
+    <div className="flex items-center justify-between gap-space-md">
       {label}
       {children}
     </div>
@@ -142,126 +141,95 @@ function Simulator() {
   const result = simulateWith(categories, period, hours);
 
   return (
-    <div className="lg:col-span-6 bg-surface-raised rounded-xl p-space-xl shadow-xl space-y-space-lg">
-      <div className="flex items-center justify-between pb-space-sm border-b border-hairline/40">
+    <div className="bv-card space-y-space-lg sm:p-space-xl lg:col-span-6">
+      <div className="flex items-center justify-between border-b border-hairline pb-space-sm">
         <div>
-          <span className="font-eyebrow text-caption uppercase tracking-[0.2em] text-bronze font-semibold">
-            CALCULADORA OFICIAL
-          </span>
-          <h3 className="font-heading-mobile text-heading-mobile md:font-heading md:text-heading text-ink">
-            Simule sua Reserva
+          <Eyebrow>Calculadora oficial</Eyebrow>
+          <h3 className="font-heading text-heading-mobile text-ink md:text-heading">
+            Simule sua reserva
           </h3>
         </div>
-        <Icon as={Calculator} size={30} className="text-bronze shrink-0" />
+        <Icon as={Calculator} size={30} className="shrink-0 text-accent" />
       </div>
       <div className="space-y-space-md">
         <div>
-          <span className={`${smallLabel} mb-space-xs`} id="simulatorPeriodLabel">
-            Tipo de Dia / Horário
+          <span aria-hidden="true" className={cx(smallLabel, 'mb-space-xs')}>
+            Tipo de dia / horário
           </span>
-          <div
-            className="grid grid-cols-2 gap-space-xs"
-            role="group"
-            aria-labelledby="simulatorPeriodLabel"
-          >
-            {PERIOD_OPTIONS.map((option) => {
-              const active = period === option.value;
-              return (
-                <button
-                  key={option.value}
-                  type="button"
-                  aria-pressed={active}
-                  className={`py-space-xs px-space-sm text-center rounded font-small text-small uppercase tracking-wider transition-colors ${focusRing} ${
-                    active ? 'bg-bronze text-on-bronze' : 'bg-surface text-ink'
-                  }`}
-                  onClick={() => {
-                    setPeriod(option.value);
-                  }}
-                >
-                  {option.label}
-                </button>
-              );
-            })}
-          </div>
+          <ChipGroup
+            label="Tipo de dia / horário"
+            options={PERIOD_OPTIONS}
+            value={period}
+            onChange={setPeriod}
+          />
         </div>
         <div>
-          <div className="flex justify-between items-center mb-space-xs">
-            <label
-              className="font-eyebrow text-caption uppercase text-ink-muted tracking-[0.16em]"
-              htmlFor="durationRange"
-            >
-              Duração da Sessão
-            </label>
-            <span className="font-small text-small font-semibold text-bronze">
+          <div className="mb-space-xs flex items-center justify-between">
+            <span aria-hidden="true" className={smallLabel}>
+              Duração da sessão
+            </span>
+            <span className="font-small text-small font-semibold text-accent">
               {hoursLabel(hours)}
             </span>
           </div>
-          <input
-            className="w-full accent-bronze cursor-pointer bg-surface h-2 rounded"
-            id="durationRange"
-            type="range"
+          {/* The hours caption above stands in for the slider's own value text. */}
+          <Slider
+            label="Duração da sessão"
             min={1}
             max={6}
             step={0.5}
             value={hours}
-            onChange={(event) => {
-              setHours(Number(event.target.value));
-            }}
-          />
-          <div className="flex justify-between text-caption text-ink-muted mt-1">
-            <span>1h (Mínimo)</span>
-            <span>2h (Faixa Desconto)</span>
+            onValueChange={setHours}
+            formatValue={hoursLabel}
+            className="w-full"
+            trackClassName="w-full flex-1"
+          >
+            {() => null}
+          </Slider>
+          <div className="mt-1 flex justify-between text-caption text-ink-muted">
+            <span>1h (mínimo)</span>
+            <span>2h (faixa desconto)</span>
             <span>4h</span>
             <span>6h</span>
           </div>
         </div>
         {result ? (
-          <div className="p-space-md bg-surface rounded-xl space-y-space-sm">
-            <SummaryRow
-              label={
-                <span className="font-small text-small text-ink-muted">Memória de cálculo:</span>
-              }
-            >
-              <span className="font-mono text-small text-ink font-medium text-right">
-                {result.formula}
-              </span>
+          <div className="bv-card bv-card--gold space-y-space-sm p-space-md">
+            <SummaryRow label={<span className="font-small text-small">Memória de cálculo:</span>}>
+              <span className="text-right font-mono text-small font-medium">{result.formula}</span>
             </SummaryRow>
             <SummaryRow
               label={
-                <span className="font-body text-body text-ink font-medium">
-                  Valor Total da Reserva:
-                </span>
+                <span className="font-body text-body font-medium">Valor total da reserva:</span>
               }
             >
-              <span className="font-display-l text-heading text-ink font-semibold">
+              <span className="font-display text-heading font-semibold">
                 {formatBRL(result.totalCents)}
               </span>
             </SummaryRow>
-            <div className="pt-space-xs border-t border-hairline/30 space-y-1">
+            <div className="space-y-1 border-t border-on-gold/20 pt-space-xs">
               <SummaryRow
                 label={
-                  <span className="flex items-center gap-1 text-small text-bronze font-medium">
+                  <span className="flex items-center gap-1 text-small font-medium">
                     <Icon as={CreditCard} size={14} className="shrink-0" />
                     Sinal 50% no checkout (Mercado Pago):
                   </span>
                 }
               >
-                <span className="text-small text-bronze font-semibold">
-                  {formatBRL(result.sinalCents)}
-                </span>
+                <span className="text-small font-semibold">{formatBRL(result.sinalCents)}</span>
               </SummaryRow>
               <SummaryRow
                 label={
-                  <span className="text-caption text-ink-muted">
+                  <span className="text-caption">
                     Saldo 50% restante (cobrado 48h antes da data):
                   </span>
                 }
               >
-                <span className="text-caption text-ink-muted">{formatBRL(result.saldoCents)}</span>
+                <span className="text-caption">{formatBRL(result.saldoCents)}</span>
               </SummaryRow>
             </div>
-            <div className="flex items-center gap-space-xs text-ink-muted font-caption text-caption pt-space-xs">
-              <Icon as={Check} size={12} className="text-bronze shrink-0" />
+            <div className="flex items-center gap-space-xs pt-space-xs font-caption text-caption">
+              <Icon as={Check} size={12} className="shrink-0" />
               <span>Inclui +30 min gratuitos de limpeza pós-atendimento</span>
             </div>
           </div>
@@ -270,12 +238,9 @@ function Simulator() {
             Não foi possível simular esta duração com as tarifas atuais. Fale com a recepção.
           </Alert>
         )}
-        <Link
-          to="/reservar"
-          className={`w-full py-space-md bg-bronze hover:bg-walnut text-on-bronze font-small text-small uppercase tracking-[0.08em] rounded shadow-md transition-all flex items-center justify-center gap-space-xs ${focusRing}`}
-        >
-          <span>Continuar para Agendamento da Sala</span>
-          <Icon as={ArrowRight} size={16} />
+        <Link to="/reservar" className={buttonClasses({ variant: 'primary', block: true })}>
+          <span>Continuar para agendamento da sala</span>
+          <Icon as={ArrowRight} size={18} />
         </Link>
       </div>
     </div>
@@ -284,11 +249,11 @@ function Simulator() {
 
 export function PricingSimulatorSection() {
   return (
-    <section className="w-full py-space-3xl bg-surface-container-low scroll-mt-20" id="simulador">
-      <div className="max-w-7xl mx-auto px-gutter">
-        <div className="max-w-3xl mb-space-2xl">
-          <Eyebrow>REGRAS DE Reservas</Eyebrow>
-          <h2 className="font-display-l-mobile text-display-l-mobile md:font-display-l md:text-display-l text-ink">
+    <section className="w-full scroll-mt-20 bg-surface py-space-3xl" id="simulador">
+      <div className="mx-auto max-w-7xl px-gutter">
+        <div className="mb-space-2xl max-w-3xl space-y-space-sm">
+          <Eyebrow>Regras de reservas</Eyebrow>
+          <h2 className="font-display text-display-l-mobile text-ink md:text-display-l">
             Você tem liberdade para escolher seus horários.
           </h2>
           <p className="font-body text-body text-ink-muted">
@@ -297,8 +262,8 @@ export function PricingSimulatorSection() {
             2h ou mais, as tarifas tem desconto.
           </p>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-start">
-          <div className="lg:col-span-6 space-y-space-md">
+        <div className="grid grid-cols-1 items-start gap-space-xl lg:grid-cols-12">
+          <div className="space-y-space-md lg:col-span-6">
             <TariffTable />
             <CleanupGuarantee />
           </div>

@@ -17,8 +17,8 @@ export function RoomsPage() {
   return (
     <section className="mx-auto max-w-7xl space-y-space-2xl px-gutter py-space-3xl">
       <div className="max-w-2xl space-y-space-xs">
-        <Eyebrow>ESPAÇOS SOB DEMANDA</Eyebrow>
-        <h1 className="font-display-l-mobile text-display-l-mobile text-ink md:font-display-l md:text-display-l">
+        <Eyebrow>Espaços sob demanda</Eyebrow>
+        <h1 className="font-display text-display-l-mobile text-ink md:text-display-l">
           As salas inteligentes da clínica.
         </h1>
         <p className="font-body text-body text-ink-muted">

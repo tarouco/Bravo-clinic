@@ -108,6 +108,26 @@ describe('AdminShell navigation', () => {
     ]);
   });
 
+  it('draws the sections as pills, the current one debossed in weight 600', async () => {
+    stubApi(admin);
+    renderShell('/admin/cupons');
+    await screen.findByText('Carla Mendes');
+
+    const nav = screen.getByRole('navigation', { name: 'Seções do painel' });
+    expect(nav).toHaveClass('lg:bg-glass', 'lg:backdrop-blur-glass', 'lg:rounded-xl');
+    const current = within(nav).getByRole('link', { name: 'Cupons' });
+    expect(current).toHaveAttribute('aria-current', 'page');
+    expect(current).toHaveClass(
+      'rounded-pill',
+      'bg-surface-deboss',
+      'shadow-deboss',
+      'font-semibold',
+    );
+    expect(within(nav).getByRole('link', { name: 'Clientes' })).not.toHaveClass(
+      'bg-surface-deboss',
+    );
+  });
+
   it('lists only Gestão de Reservas and Clientes for reception', async () => {
     stubApi(reception);
     renderShell('/admin/reservas');

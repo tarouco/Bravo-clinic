@@ -16,8 +16,10 @@ export interface StatTileProps {
   delta?: StatDelta | undefined;
   /** Name of the period the delta compares with, read after the delta ("vs. 01/05–31/10"). */
   deltaLabel?: string | undefined;
-  /** False for figures where an increase is bad (expenses): the delta then uses the error tone. */
+  /** False for figures where an increase is bad (expenses): the delta then uses the danger tone. */
   higherIsBetter?: boolean;
+  /** `gold` is the screen's one highlighted tile: every line reads in on-gold (Dia and Noite). */
+  tone?: 'pearl' | 'gold';
   className?: string;
 }
 
@@ -39,29 +41,39 @@ export function StatTile({
   delta,
   deltaLabel,
   higherIsBetter = true,
+  tone = 'pearl',
   className,
 }: StatTileProps) {
+  const gold = tone === 'gold';
   const direction = delta ? Math.sign(delta.cents) : 0;
   const bad = direction !== 0 && direction > 0 !== higherIsBetter;
 
   return (
     <div
-      className={cx('rounded-card border border-hairline bg-surface-raised p-space-md', className)}
+      className={cx(
+        'rounded-lg p-5',
+        gold ? 'bg-grad-gold text-on-gold shadow-lift-2' : 'bg-surface-raised text-ink shadow-card',
+        className,
+      )}
     >
-      <p className="font-small text-small text-ink-muted">{label}</p>
-      <p className="mt-space-xs font-heading text-heading-mobile text-ink md:text-heading">
+      <p className={cx('font-small text-small', gold ? 'text-on-gold' : 'text-ink-muted')}>
+        {label}
+      </p>
+      <p className="mt-space-xs font-heading text-heading-mobile md:text-heading">
         {formatBRL(valueCents)}
       </p>
       {delta ? (
         <p
           className={cx(
             'mt-space-xs flex flex-wrap items-center gap-x-space-xs font-caption text-caption',
-            bad ? 'text-error' : 'text-ink-muted',
+            gold ? 'text-on-gold' : bad ? 'text-danger' : 'text-ink-muted',
           )}
         >
           {direction !== 0 ? <Icon as={direction > 0 ? ArrowUp : ArrowDown} size={14} /> : null}
           <span className="font-medium">{formatDeltaPercent(delta.percent)}</span>
-          {deltaLabel ? <span className="text-ink-muted">{deltaLabel}</span> : null}
+          {deltaLabel ? (
+            <span className={gold ? 'text-on-gold' : 'text-ink-muted'}>{deltaLabel}</span>
+          ) : null}
         </p>
       ) : null}
     </div>

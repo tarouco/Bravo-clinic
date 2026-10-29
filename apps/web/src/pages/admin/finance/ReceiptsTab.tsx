@@ -72,7 +72,7 @@ function DeleteReceiptModal({ receipt, onClose }: { receipt: ManualReceipt; onCl
           <Button variant="secondary" onClick={onClose}>
             Cancelar
           </Button>
-          <Button type="submit" disabled={!valid} loading={remove.isPending}>
+          <Button variant="danger" type="submit" disabled={!valid} loading={remove.isPending}>
             Excluir recebimento
           </Button>
         </div>
@@ -126,6 +126,7 @@ export function ReceiptsTab({ today }: ReceiptsTabProps) {
       header: 'Ações',
       cell: (r) => (
         <Button
+          className="text-danger"
           variant="ghost"
           size="sm"
           aria-label={`Excluir recebimento de ${formatBRL(r.amountCents)} em ${formatLocalDateBR(r.date)}`}
@@ -186,6 +187,7 @@ export function ReceiptsTab({ today }: ReceiptsTabProps) {
       ) : null}
       {receipts.data ? (
         <Table
+          density="compact"
           caption="Recebimentos manuais do período"
           columns={columns}
           rows={rows}

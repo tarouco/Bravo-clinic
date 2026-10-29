@@ -1,5 +1,6 @@
 import { Paperclip } from 'lucide-react';
 import { useId, useState, type ChangeEvent } from 'react';
+import { buttonClasses } from './Button';
 import { cx } from './cx';
 import { Icon } from './Icon';
 
@@ -78,7 +79,7 @@ export function FileUpload({
 
   return (
     <div className={cx('space-y-space-xs', className)}>
-      <label htmlFor={id} className="block font-small text-small text-ink">
+      <label htmlFor={id} className="block font-small text-small font-medium text-ink">
         {label}
       </label>
       <div className="flex flex-wrap items-center gap-space-sm">
@@ -95,8 +96,10 @@ export function FileUpload({
         <label
           htmlFor={id}
           className={cx(
-            'inline-flex h-10 cursor-pointer items-center gap-space-xs rounded-control border border-border bg-surface-raised px-space-md font-small text-small uppercase tracking-[0.08em] text-ink hover:bg-surface-stone peer-focus-visible:ring-2 peer-focus-visible:ring-bronze peer-focus-visible:ring-offset-2',
-            (disabled || busy) && 'cursor-not-allowed opacity-60',
+            // The pearl pill of a secondary Button; the outline mirrors bv-btn's keyboard focus.
+            buttonClasses({ variant: 'secondary', size: 'sm' }),
+            'peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-4 peer-focus-visible:outline-accent',
+            (disabled || busy) && 'cursor-not-allowed opacity-[0.42] shadow-none',
           )}
         >
           <Icon as={Paperclip} size={16} />
@@ -112,7 +115,7 @@ export function FileUpload({
             value={progress}
             max={1}
             aria-label={`Progresso do envio de ${label}`}
-            className="h-2 w-40 accent-bronze"
+            className="h-2 w-40 accent-emerald"
           />
         ) : null}
       </div>
@@ -122,7 +125,7 @@ export function FileUpload({
         </p>
       ) : null}
       {shownError ? (
-        <p id={`${id}-error`} role="alert" className="font-caption text-caption text-error">
+        <p id={`${id}-error`} role="alert" className="font-caption text-caption text-danger">
           {shownError}
         </p>
       ) : null}

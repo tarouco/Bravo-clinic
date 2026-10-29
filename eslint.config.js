@@ -18,6 +18,8 @@ export default tseslint.config(
       '.netlify/**',
       '.neon/**',
       '.claude/**',
+      // Vendored brand kit (AD-038): reference files, not app code.
+      'docs/design/v3/**',
     ],
   },
   js.configs.recommended,

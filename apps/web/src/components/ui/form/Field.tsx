@@ -27,7 +27,7 @@ export function Label({
   return (
     <label
       htmlFor={htmlFor}
-      className={cx('mb-space-sm block font-small text-small text-ink', className)}
+      className={cx('mb-space-sm block font-small text-small font-medium text-ink', className)}
     >
       {children}
     </label>
@@ -44,7 +44,7 @@ export function HelpText({ id, children }: { id?: string; children: ReactNode })
 
 export function FieldError({ id, children }: { id?: string; children: ReactNode }) {
   return (
-    <p id={id} className="mt-space-xs font-caption text-caption text-error">
+    <p id={id} className="mt-space-xs font-caption text-caption text-danger">
       {children}
     </p>
   );

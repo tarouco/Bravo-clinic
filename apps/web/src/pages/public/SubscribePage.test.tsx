@@ -260,7 +260,7 @@ describe('SubscribePage coupon and credits (REC-117, REC-107)', () => {
     const bodies = stubQuote();
     renderPage(HOUR_URL);
 
-    const toggle = await screen.findByRole('checkbox', {
+    const toggle = await screen.findByRole('switch', {
       name: (name) => plain(name) === 'Usar créditos (R$ 50,00 disponíveis)',
     });
     await userEvent.click(toggle);

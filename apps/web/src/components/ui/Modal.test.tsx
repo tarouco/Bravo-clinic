@@ -42,13 +42,24 @@ describe('Modal', () => {
     expect(dialog).toContainElement(document.activeElement as HTMLElement);
   });
 
-  it('renders the dialog in a portal under document.body with overlay and panel styles', async () => {
+  it('renders the pearl bv-modal over the blurred bv-scrim, in a portal under document.body', async () => {
     const { container } = render(<Harness />);
     await userEvent.click(screen.getByRole('button', { name: 'Abrir' }));
     const dialog = screen.getByRole('dialog');
     expect(container).not.toContainElement(dialog);
-    expect(dialog).toHaveClass('bg-surface-raised', 'rounded-card', 'shadow-raised');
-    expect(dialog.parentElement).toHaveClass('bg-surface-night/60', 'backdrop-blur-sm');
+    expect(dialog).toHaveClass('bv-modal');
+    expect(dialog.parentElement).toHaveClass('bv-scrim');
+    expect(screen.getByRole('heading', { name: 'Confirmar reserva' })).toHaveClass(
+      'bv-modal-title',
+    );
+  });
+
+  it('becomes a bottom sheet under 640px: anchored to the bottom edge, square bottom corners', async () => {
+    render(<Harness />);
+    await userEvent.click(screen.getByRole('button', { name: 'Abrir' }));
+    const dialog = screen.getByRole('dialog');
+    expect(dialog.parentElement).toHaveClass('max-sm:items-end', 'max-sm:p-0');
+    expect(dialog).toHaveClass('max-sm:max-w-none', 'max-sm:rounded-b-none');
   });
 
   it('closes through the "Fechar" button', async () => {

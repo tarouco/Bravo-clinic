@@ -70,7 +70,7 @@ function AddCardForm() {
   return (
     <form
       onSubmit={(event) => void submit(event)}
-      className="space-y-space-md rounded-card border border-hairline bg-surface-raised p-space-lg"
+      className="bv-card space-y-space-md"
       aria-label="Adicionar cartão"
     >
       <h2 className="font-heading-mobile text-heading-mobile text-ink">Adicionar cartão</h2>
@@ -127,6 +127,7 @@ function AddCardForm() {
       />
       <Button
         type="submit"
+        block
         disabled={!consent || !config.data || card.number.trim() === ''}
         loading={save.isPending}
       >
@@ -160,11 +161,13 @@ export function CardsPage() {
       <div className="space-y-space-xs">
         <Link
           to="/app/perfil"
-          className="font-small text-small text-bronze underline underline-offset-4"
+          className="font-small text-small text-accent underline underline-offset-4"
         >
           Perfil
         </Link>
-        <h1 className="font-heading text-heading-mobile text-ink md:text-heading">Meus cartões</h1>
+        <h1 className="font-display-l-mobile text-display-l-mobile text-ink lg:font-display-l lg:text-display-l">
+          Meus cartões
+        </h1>
       </div>
 
       {cards.isPending ? (
@@ -178,7 +181,7 @@ export function CardsPage() {
           {cards.data.items.map((card) => (
             <li
               key={card.id}
-              className="flex items-center justify-between gap-space-md rounded-card border border-hairline bg-surface-raised p-space-md font-small text-small text-ink"
+              className="flex items-center justify-between gap-space-md rounded-md bg-surface-raised py-space-sm pl-space-lg pr-space-sm font-small text-small text-ink shadow-card"
             >
               <span>{cardLabel(card)}</span>
               <Button
@@ -210,7 +213,7 @@ export function CardsPage() {
             Remover {toRemove ? cardLabel(toRemove) : ''}? Ele não será mais cobrado.
           </p>
           {removeError ? <Alert tone="error">{removeError}</Alert> : null}
-          <div className="flex justify-end gap-space-sm">
+          <div className="bv-modal-actions flex-wrap">
             <Button
               variant="secondary"
               onClick={() => {

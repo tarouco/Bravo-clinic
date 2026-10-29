@@ -76,10 +76,13 @@ function LoadingSkeleton() {
     >
       <div className="grid gap-space-md md:grid-cols-3">
         {[0, 1, 2].map((index) => (
-          <div key={index} className="h-28 animate-pulse rounded-card bg-surface-stone" />
+          <div
+            key={index}
+            className="h-28 animate-pulse rounded-lg bg-surface-deboss shadow-deboss"
+          />
         ))}
       </div>
-      <div className="h-72 animate-pulse rounded-card bg-surface-stone" />
+      <div className="h-72 animate-pulse rounded-lg bg-surface-deboss shadow-deboss" />
     </div>
   );
 }
@@ -204,15 +207,14 @@ export function FinanceOverviewPage({ today }: FinanceOverviewPageProps) {
       <div className="flex flex-wrap items-end gap-space-md">
         <fieldset className="min-w-[14rem]">
           <legend className="mb-space-sm font-small text-small text-ink">Regime</legend>
-          <div className="flex gap-space-sm">
+          {/* Radios styled as v3 chips: the checked one is emerald with the neon lit. */}
+          <div className="bv-chips">
             {(['cash', 'accrual'] as const).map((regime) => (
               <label
                 key={regime}
                 className={cx(
-                  'flex h-12 cursor-pointer items-center gap-space-xs rounded-control border px-space-md font-small text-small has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-bronze',
-                  raw.regime === regime
-                    ? 'border-bronze bg-bronze text-on-bronze'
-                    : 'border-border bg-surface-raised text-ink',
+                  'bv-chip has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-accent has-[:focus-visible]:ring-offset-2 has-[:focus-visible]:ring-offset-surface',
+                  raw.regime === regime && 'is-selected',
                 )}
               >
                 <input
@@ -339,7 +341,9 @@ export function FinanceOverviewPage({ today }: FinanceOverviewPageProps) {
               deltaLabel={`vs. ${formatRange(data.previous.from, data.previous.to)}`}
               higherIsBetter={false}
             />
+            {/* The one gold tile of the screen. */}
             <StatTile
+              tone="gold"
               label="Resultado"
               valueCents={data.totals.resultCents}
               delta={{
@@ -349,7 +353,10 @@ export function FinanceOverviewPage({ today }: FinanceOverviewPageProps) {
               deltaLabel={`vs. ${formatRange(data.previous.from, data.previous.to)}`}
             />
           </div>
-          <section aria-labelledby="finance-evolution" className="space-y-space-sm">
+          <section
+            aria-labelledby="finance-evolution"
+            className="space-y-space-sm rounded-lg bg-surface-raised p-space-lg shadow-card"
+          >
             <h2 id="finance-evolution" className="font-heading text-heading-mobile text-ink">
               Evolução
             </h2>

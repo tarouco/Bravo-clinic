@@ -12,13 +12,18 @@ import {
 } from 'react';
 import { cx, focusRing } from './cx';
 import { Icon } from './Icon';
+import { useLightUp } from './useLightUp';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'link';
+export type ButtonVariant =
+  'primary' | 'secondary' | 'gold' | 'brown' | 'danger' | 'ghost' | 'link';
 export type ButtonSize = 'md' | 'sm';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  /** `primary` is the emerald action (one per view), `secondary` the pearl neutral one. */
   variant?: ButtonVariant;
   size?: ButtonSize;
+  /** Full width, 54px tall (`bv-btn--block`). */
+  block?: boolean;
   /** Disables the button, sets `aria-busy` and shows a spinner. */
   loading?: boolean;
   leadingIcon?: LucideIcon;
@@ -27,28 +32,45 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   asChild?: boolean;
 }
 
-const base =
-  'inline-flex items-center justify-center gap-space-xs font-small text-small uppercase tracking-[0.08em] rounded-control transition-colors disabled:cursor-not-allowed disabled:opacity-60';
-
-const variants: Record<ButtonVariant, string> = {
-  primary: 'bg-bronze text-on-bronze hover:bg-walnut',
-  secondary: 'bg-surface-raised border border-border text-ink hover:bg-surface-stone',
-  ghost:
-    'bg-transparent text-bronze border-b border-transparent hover:border-hairline hover:text-ink',
-  link: 'bg-transparent text-bronze underline underline-offset-4 hover:text-walnut',
+// The relief pills are the kit's `bv-btn` (styles/bv.css): neon on hover/focus, lit for 1.6 s after
+// a click, sunk while pressed, 42% and flat when disabled, accent outline on keyboard focus.
+const pills: Record<Exclude<ButtonVariant, 'link'>, string> = {
+  primary: 'bv-btn bv-btn--emerald',
+  secondary: 'bv-btn bv-btn--pearl',
+  gold: 'bv-btn bv-btn--gold',
+  brown: 'bv-btn bv-btn--brown',
+  // Destructive confirm (derived, AD-042): the pearl pill with its label in danger.
+  danger: 'bv-btn bv-btn--pearl text-danger',
+  // A pill without relief: text in ink, a translucent shade on hover.
+  ghost: 'bv-btn bg-transparent text-ink shadow-none hover:bg-glass-hover',
 };
 
-const sizes: Record<ButtonVariant, Record<ButtonSize, string>> = {
-  primary: { md: 'h-12 px-space-lg', sm: 'h-10 px-space-md' },
-  secondary: { md: 'h-12 px-space-lg', sm: 'h-10 px-space-md' },
-  ghost: { md: 'h-12 px-space-md', sm: 'h-10 px-space-sm' },
-  link: { md: 'h-auto px-0', sm: 'h-auto px-0' },
-};
+const linkClasses = cx(
+  'inline-flex h-auto items-center gap-space-xs bg-transparent px-0 font-label text-label text-accent underline underline-offset-4 hover:text-accent-deep disabled:cursor-not-allowed disabled:opacity-[0.42]',
+  focusRing,
+);
+
+/** Class names of a button look, for elements that cannot be a `Button` (a `label`, a `NavLink`). */
+export function buttonClasses({
+  variant = 'primary',
+  size = 'md',
+  block = false,
+}: { variant?: ButtonVariant; size?: ButtonSize; block?: boolean } = {}): string {
+  if (variant === 'link') return linkClasses;
+  return cx(
+    pills[variant],
+    size === 'sm' && 'bv-btn--sm',
+    block && 'bv-btn--block',
+    // `asChild` links cannot be `:disabled`; they carry `aria-disabled` while loading.
+    'aria-disabled:pointer-events-none aria-disabled:opacity-[0.42] aria-disabled:shadow-none',
+  );
+}
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
   {
     variant = 'primary',
     size = 'md',
+    block = false,
     loading = false,
     leadingIcon,
     trailingIcon,
@@ -62,13 +84,14 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
   },
   ref,
 ) {
-  const classes = cx(base, variants[variant], sizes[variant][size], focusRing, className);
+  const { litClass, lightUp } = useLightUp(Boolean(disabled) || loading);
+  const classes = cx(buttonClasses({ variant, size, block }), litClass, className);
   const iconSize = size === 'sm' ? 16 : 18;
 
   const renderContent = (content: ReactNode) => (
     <>
       {loading ? (
-        <Loader2 aria-hidden="true" strokeWidth={1.5} size={iconSize} className="animate-spin" />
+        <Loader2 aria-hidden="true" strokeWidth={1.7} size={iconSize} className="animate-spin" />
       ) : leadingIcon ? (
         <Icon as={leadingIcon} size={iconSize} />
       ) : null}
@@ -99,6 +122,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
             event.preventDefault();
             return;
           }
+          lightUp();
           childOnClick?.(event);
           onClick?.(event as unknown as MouseEvent<HTMLButtonElement>);
         },
@@ -114,7 +138,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       className={classes}
       disabled={disabled || loading}
       aria-busy={loading || undefined}
-      onClick={onClick}
+      onClick={(event) => {
+        lightUp();
+        onClick?.(event);
+      }}
       {...rest}
     >
       {renderContent(children)}

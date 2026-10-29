@@ -1,17 +1,31 @@
-import { CircleAlert, CircleCheck, Info, Loader2, type LucideIcon } from 'lucide-react';
+import {
+  CircleAlert,
+  CircleCheck,
+  Info,
+  Loader2,
+  TriangleAlert,
+  type LucideIcon,
+} from 'lucide-react';
 import type { ReactNode } from 'react';
 import { cx } from './cx';
 import { Icon } from './Icon';
 
-export type AlertTone = 'info' | 'error' | 'success';
+export type AlertTone = 'info' | 'error' | 'success' | 'neutral' | 'warning';
 
-const tones: Record<AlertTone, { classes: string; icon: LucideIcon }> = {
-  info: { classes: 'border-hairline bg-champagne-soft text-on-champagne', icon: Info },
-  error: { classes: 'border-error bg-error-container text-on-error-container', icon: CircleAlert },
-  success: { classes: 'border-hairline bg-surface-stone text-ink', icon: CircleCheck },
+// Derived status colors (AD-042): error on danger-soft, success on emerald, warning on gold.
+const tones: Record<AlertTone, { classes: string; icon: LucideIcon; iconClass: string }> = {
+  info: {
+    classes: 'bg-surface-raised text-ink shadow-[var(--lift-1),var(--rim)]',
+    icon: Info,
+    iconClass: 'text-accent',
+  },
+  error: { classes: 'bg-danger-soft text-danger', icon: CircleAlert, iconClass: 'text-danger' },
+  success: { classes: 'bg-emerald text-on-emerald', icon: CircleCheck, iconClass: '' },
+  neutral: { classes: 'bg-surface-panel text-ink', icon: Info, iconClass: 'text-ink-muted' },
+  warning: { classes: 'bg-gold text-on-gold', icon: TriangleAlert, iconClass: '' },
 };
 
-/** Inline feedback. Errors use `role="alert"`; info and success use `role="status"`. */
+/** Inline feedback. Errors use `role="alert"`; the other tones use `role="status"`. */
 export function Alert({
   tone = 'info',
   children,
@@ -21,17 +35,17 @@ export function Alert({
   children: ReactNode;
   className?: string;
 }) {
-  const { classes, icon } = tones[tone];
+  const { classes, icon, iconClass } = tones[tone];
   return (
     <div
       role={tone === 'error' ? 'alert' : 'status'}
       className={cx(
-        'flex items-start gap-space-sm rounded-control border px-space-md py-space-sm font-small text-small',
+        'flex items-start gap-space-sm rounded-md px-5 py-space-md font-small text-small',
         classes,
         className,
       )}
     >
-      <Icon as={icon} size={18} className="mt-0.5 shrink-0" />
+      <Icon as={icon} size={18} className={cx('mt-0.5 shrink-0', iconClass)} />
       <div className="flex-1">{children}</div>
     </div>
   );
@@ -45,8 +59,8 @@ export function Spinner({
   className?: string;
 }) {
   return (
-    <span role="status" aria-label={label} className={cx('inline-flex text-bronze', className)}>
-      <Loader2 aria-hidden="true" strokeWidth={1.5} size={24} className="animate-spin" />
+    <span role="status" aria-label={label} className={cx('inline-flex text-accent', className)}>
+      <Loader2 aria-hidden="true" strokeWidth={1.7} size={24} className="animate-spin" />
     </span>
   );
 }

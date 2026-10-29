@@ -5,7 +5,7 @@ import { cx } from './cx';
 // Hand-rolled SVG evolution chart (gestao design "Chart": no chart library). One axis in BRL:
 // net revenue and expenses are bars per bucket (3 px of air between them), the result is a line
 // with a marker per bucket. The SVG is decorative; the same numbers are in a table for screen
-// readers (GES-27). Colors are the DESIGN.md tokens: bronze, champagne and ink, told apart by
+// readers (GES-27). Colors are the v3 tokens: emerald, gold and ink-muted, told apart by
 // lightness, texture (expenses are hatched) and form (bar versus line), never by hue alone.
 
 export type EvolutionSeries = 'net' | 'expenses' | 'result';
@@ -94,11 +94,11 @@ function LegendKey({ series, hatchId }: { series: EvolutionSeries; hatchId: stri
     <li className="flex items-center gap-space-xs font-small text-small text-ink">
       {series === 'result' ? (
         <span aria-hidden="true" className="flex w-4 items-center">
-          <span className="h-0.5 w-full bg-ink" />
-          <span className="-ml-2.5 h-2 w-2 rounded-full bg-ink" />
+          <span className="h-0.5 w-full bg-ink-muted" />
+          <span className="-ml-2.5 h-2 w-2 rounded-full bg-ink-muted" />
         </span>
       ) : series === 'net' ? (
-        <span aria-hidden="true" className="h-3 w-3 rounded-[2px] bg-bronze" />
+        <span aria-hidden="true" className="h-3 w-3 rounded-[2px] bg-emerald" />
       ) : (
         <svg aria-hidden="true" focusable="false" width={12} height={12}>
           <rect width={12} height={12} rx={2} fill={`url(#${hatchId})`} />
@@ -175,7 +175,7 @@ export function EvolutionChart({
               patternUnits="userSpaceOnUse"
               patternTransform="rotate(45)"
             >
-              <rect width={6} height={6} className="fill-champagne" />
+              <rect width={6} height={6} className="fill-gold-deep" />
               <line
                 x1={0}
                 y1={0}
@@ -232,7 +232,7 @@ export function EvolutionChart({
                     <path
                       key={s}
                       d={barPath(left + barIndex * (barWidth + BAR_GAP), barWidth, y0, y(cents))}
-                      className={s === 'net' ? 'fill-bronze' : undefined}
+                      className={s === 'net' ? 'fill-emerald' : undefined}
                       fill={s === 'net' ? undefined : `url(#${hatchId})`}
                     />
                   );
@@ -259,7 +259,7 @@ export function EvolutionChart({
                 strokeWidth={2}
                 strokeLinejoin="round"
                 strokeLinecap="round"
-                className="stroke-ink"
+                className="stroke-ink-muted"
               />
               {buckets.map((bucket, index) => (
                 <circle
@@ -268,7 +268,7 @@ export function EvolutionChart({
                   cy={y(valueOf(bucket, 'result'))}
                   r={4}
                   strokeWidth={2}
-                  className="fill-ink stroke-surface-raised"
+                  className="fill-ink-muted stroke-surface-raised"
                 />
               ))}
             </g>
@@ -277,7 +277,7 @@ export function EvolutionChart({
         {active && hovered !== null ? (
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute top-0 z-10 -translate-x-1/2 rounded-control border border-hairline bg-surface-raised px-space-sm py-space-xs font-caption text-caption text-ink shadow-raised"
+            className="pointer-events-none absolute top-0 z-10 -translate-x-1/2 rounded-sm bg-surface-raised px-3 py-2 font-caption text-caption text-ink shadow-panel"
             style={{ left: `${String((centerOf(hovered) / WIDTH) * 100)}%` }}
           >
             <p className="font-medium">{active.label}</p>

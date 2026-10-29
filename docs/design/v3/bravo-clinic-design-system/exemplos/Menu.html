@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+<head><link rel="stylesheet" href="../tokens/tokens.css"><link rel="stylesheet" href="../components/bundle.css"><script src="../components/bundle.js"></script><meta charset="utf-8"><title>preview</title>
+<style>
+html,body{margin:0}
+body{background:var(--surface);color:var(--ink);font-family:var(--font-sans)}
+.wrap{padding:28px 32px;display:flex;flex-wrap:wrap;gap:22px;align-items:center}
+.st{display:flex;flex-direction:column;align-items:center;gap:10px}
+.st small{font-size:11px;color:var(--ink-muted);letter-spacing:.04em}
+.stage{position:relative;height:340px;background:url(../imagens/facade-dusk.jpg) center 30%/cover}.bv-menu{position:absolute;top:28px;right:28px}
+</style></head>
+<body><div style="position:fixed;right:14px;top:14px;z-index:99;display:flex;gap:6px;font:500 12px Jost,sans-serif"><button onclick="document.documentElement.dataset.theme='light'" style="border:0;border-radius:99px;padding:6px 12px;cursor:pointer">Dia</button><button onclick="document.documentElement.dataset.theme='dark'" style="border:0;border-radius:99px;padding:6px 12px;cursor:pointer;background:#583714;color:#ffeb97">Noite</button></div>
+<div class="stage"><div class="bv-menu" role="menu" aria-label="Conta">
+<div class="bv-menu-label">Minha conta</div>
+<button class="bv-menu-item" role="menuitem" aria-selected="true"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>Minhas reservas<span class="bv-meta">3</span></button>
+<button class="bv-menu-item" role="menuitem"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>Salas favoritas</button>
+<button class="bv-menu-item" role="menuitem"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>Configurações</button>
+<hr class="bv-menu-sep">
+<button class="bv-menu-item" role="menuitem"><svg viewBox="0 0 24 24"><path d="M14 4h6v16h-6M10 8l-4 4 4 4M6 12h10"/></svg>Sair</button></div></div>
+<script>BravoClinic.init();</script>
+</body></html>

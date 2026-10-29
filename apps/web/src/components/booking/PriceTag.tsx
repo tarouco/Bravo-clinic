@@ -11,7 +11,7 @@ export interface PriceTagProps {
 /** Money in BRL with an optional muted unit: "R$ 80,00/h". */
 export function PriceTag({ cents, unit, className }: PriceTagProps) {
   return (
-    <span className={cx('whitespace-nowrap font-semibold text-bronze', className)}>
+    <span className={cx('whitespace-nowrap font-semibold text-accent', className)}>
       {formatBRL(cents)}
       {unit ? <span className="font-normal text-ink-muted">{unit}</span> : null}
     </span>

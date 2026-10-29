@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+<head><link rel="stylesheet" href="../tokens/tokens.css"><link rel="stylesheet" href="../components/bundle.css"><script src="../components/bundle.js"></script><meta charset="utf-8"><title>preview</title>
+<style>
+html,body{margin:0}
+body{background:var(--surface);color:var(--ink);font-family:var(--font-sans)}
+.wrap{padding:28px 32px;display:flex;flex-wrap:wrap;gap:22px;align-items:center}
+.st{display:flex;flex-direction:column;align-items:center;gap:10px}
+.st small{font-size:11px;color:var(--ink-muted);letter-spacing:.04em}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;padding:30px 32px 40px}
+</style></head>
+<body><div style="position:fixed;right:14px;top:14px;z-index:99;display:flex;gap:6px;font:500 12px Jost,sans-serif"><button onclick="document.documentElement.dataset.theme='light'" style="border:0;border-radius:99px;padding:6px 12px;cursor:pointer">Dia</button><button onclick="document.documentElement.dataset.theme='dark'" style="border:0;border-radius:99px;padding:6px 12px;cursor:pointer;background:#583714;color:#ffeb97">Noite</button></div>
+<div class="grid">
+<div class="bv-card"><p class="bv-card-eyebrow">Sala 04</p><h3 class="bv-card-title">Livre hoje às 14h</h3><p class="bv-card-text">Consultório com maca e pia.</p><div style="margin-top:18px"><button class="bv-btn bv-btn--emerald bv-btn--sm">Reservar</button></div></div>
+<div class="bv-card bv-card--gold"><h3 class="bv-card-title">Reserve em segundos</h3><p class="bv-card-text">Escolha a sala, o horário e pronto.</p><div style="margin-top:18px"><button class="bv-btn bv-btn--pearl bv-btn--sm">Começar</button></div></div>
+<div class="bv-card bv-card--emerald" style="min-height:200px"><h3 class="bv-card-title">Tudo incluso</h3><p class="bv-card-text">Limpeza, internet e recepção.</p><svg class="bv-silk" viewBox="0 0 400 200" preserveAspectRatio="none"><path d="M0 150 C 120 40, 240 220, 400 70 L400 200 L0 200Z" fill="rgba(5,30,22,.45)"/><path d="M0 120 C 140 30, 230 190, 400 40" fill="none" stroke="rgba(47,165,133,.75)" stroke-width="2"/><path d="M0 132 C 140 46, 236 200, 400 54" fill="none" stroke="rgba(255,235,151,.45)" stroke-width="1"/></svg></div>
+</div>
+<script>BravoClinic.init();</script>
+</body></html>

@@ -65,31 +65,84 @@ afterEach(() => {
 });
 
 describe('AppShell navigation', () => {
-  it('lists Reservar, Minhas reservas, Agenda, Compras and Perfil in order in the sidebar and the tab bar', async () => {
+  it('lists Reservar, Minhas reservas, Agenda, Compras and Perfil in order in the top bar', async () => {
     stubApi(tenant);
     renderShell();
     await screen.findByText('Conteúdo da agenda');
 
-    const sidebar = screen.getByRole('navigation', { name: 'Menu lateral' });
-    const tabBar = screen.getByRole('navigation', { name: 'Menu inferior' });
-    for (const nav of [sidebar, tabBar]) {
-      const links = within(nav).getAllByRole('link');
-      expect(links.map((link) => link.textContent)).toEqual(EXPECTED_NAV.map(([label]) => label));
-      expect(links.map((link) => link.getAttribute('href'))).toEqual(
-        EXPECTED_NAV.map(([, path]) => path),
-      );
-    }
+    const links = within(screen.getByRole('navigation', { name: 'Menu lateral' })).getAllByRole(
+      'link',
+    );
+    expect(links.map((link) => link.textContent)).toEqual(EXPECTED_NAV.map(([label]) => label));
+    expect(links.map((link) => link.getAttribute('href'))).toEqual(
+      EXPECTED_NAV.map(([, path]) => path),
+    );
+    links.forEach((link) => expect(link).toHaveClass('bv-navbar-link'));
   });
 
-  it('shows the tab bar only below lg and the sidebar only from lg', async () => {
+  it('builds the tab bar from four icon tabs and the "Nova reserva" FAB in the middle', async () => {
+    stubApi(tenant);
+    renderShell();
+    await screen.findByText('Conteúdo da agenda');
+
+    const tabBar = screen.getByRole('navigation', { name: 'Menu inferior' });
+    expect(tabBar).toHaveClass('bv-tabbar', 'fixed');
+    const links = within(tabBar).getAllByRole('link');
+    expect(links.map((link) => link.getAttribute('aria-label'))).toEqual([
+      'Minhas reservas',
+      'Agenda',
+      'Nova reserva',
+      'Compras',
+      'Perfil',
+    ]);
+    expect(links.map((link) => link.getAttribute('href'))).toEqual([
+      '/app/minhas-reservas',
+      '/app/agenda',
+      '/app/reservar',
+      '/app/compras',
+      '/app/perfil',
+    ]);
+    expect(within(tabBar).getByRole('link', { name: 'Nova reserva' })).toHaveClass('bv-fab');
+    expect(within(tabBar).getByRole('link', { name: 'Agenda' })).toHaveClass('bv-tab');
+  });
+
+  it('marks the current tab and top bar link with aria-current="page"', async () => {
+    stubApi(tenant);
+    renderShell();
+    await screen.findByText('Conteúdo da agenda');
+
+    const tabBar = screen.getByRole('navigation', { name: 'Menu inferior' });
+    expect(within(tabBar).getByRole('link', { name: 'Agenda' })).toHaveAttribute(
+      'aria-current',
+      'page',
+    );
+    expect(within(tabBar).getByRole('link', { name: 'Compras' })).not.toHaveAttribute(
+      'aria-current',
+    );
+    const topBar = screen.getByRole('navigation', { name: 'Menu lateral' });
+    expect(within(topBar).getByRole('link', { name: 'Agenda' })).toHaveAttribute(
+      'aria-current',
+      'page',
+    );
+  });
+
+  it('shows the tab bar only below lg and the top bar links only from lg', async () => {
     stubApi(tenant);
     renderShell();
     await screen.findByText('Conteúdo da agenda');
 
     expect(screen.getByRole('navigation', { name: 'Menu inferior' })).toHaveClass('lg:hidden');
-    const sidebar = screen.getByRole('navigation', { name: 'Menu lateral' });
-    expect(sidebar).toHaveClass('hidden');
-    expect(sidebar).toHaveClass('lg:flex');
+    const links = screen.getByRole('navigation', { name: 'Menu lateral' });
+    expect(links).toHaveClass('hidden');
+    expect(links).toHaveClass('lg:flex');
+  });
+
+  it('keeps the content in a 768px column with room for the tab bar', async () => {
+    stubApi(tenant);
+    renderShell();
+    await screen.findByText('Conteúdo da agenda');
+
+    expect(screen.getByRole('main')).toHaveClass('mx-auto', 'max-w-3xl', 'px-5');
   });
 
   it('renders the matched child route inside the shell', async () => {
@@ -108,7 +161,8 @@ describe('AppShell header', () => {
 
     expect(await screen.findByText('Olá, Ana')).toBeInTheDocument();
     const header = screen.getByRole('banner');
-    expect(within(header).getByText('BRAVÔ CLINIC')).toBeInTheDocument();
+    expect(within(header).getByText('Bravô')).toBeInTheDocument();
+    expect(within(header).getByText('Clinic')).toBeInTheDocument();
     expect(within(header).getByRole('button', { name: 'Alternar tema' })).toBeInTheDocument();
   });
 

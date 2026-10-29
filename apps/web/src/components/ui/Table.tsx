@@ -23,6 +23,8 @@ export interface TableProps<T> {
   caption: string;
   defaultSort?: { columnId: string; direction: SortDirection };
   emptyMessage?: string;
+  /** `compact` tightens the rows; allowed only in the Admin (DESIGN-v3.md, AD-042). */
+  density?: 'comfortable' | 'compact';
   className?: string;
 }
 
@@ -33,7 +35,10 @@ function compare(a: string | number, b: string | number): number {
 
 const ARIA_SORT = { asc: 'ascending', desc: 'descending' } as const;
 
-/** Sortable table with a sticky header inside a scroll container. */
+/**
+ * Sortable table with a sticky header inside a scroll container: pearl rows with hairline
+ * separators in a 24px rounded card, eyebrow header. No neon on rows (DESIGN-v3.md).
+ */
 export function Table<T>({
   columns,
   rows,
@@ -41,6 +46,7 @@ export function Table<T>({
   caption,
   defaultSort,
   emptyMessage = 'Nada para mostrar.',
+  density = 'comfortable',
   className,
 }: TableProps<T>) {
   const [sort, setSort] = useState(defaultSort ?? null);
@@ -68,7 +74,7 @@ export function Table<T>({
       aria-label={caption}
       tabIndex={0}
       className={cx(
-        'max-h-[70vh] overflow-auto rounded-card border border-hairline bg-surface-raised',
+        'max-h-[70vh] overflow-auto rounded-md bg-surface-raised shadow-card',
         focusRing,
         className,
       )}
@@ -85,7 +91,7 @@ export function Table<T>({
                   scope="col"
                   aria-sort={column.sortValue ? (active ? ARIA_SORT[active] : 'none') : undefined}
                   className={cx(
-                    'sticky top-0 z-10 border-b border-hairline bg-surface-stone px-space-md py-space-sm font-caption text-caption uppercase tracking-[0.08em] text-ink-muted',
+                    'sticky top-0 z-10 border-b border-hairline bg-surface-raised px-space-md py-3 font-eyebrow text-eyebrow uppercase tracking-[0.32em] text-ink-muted',
                     column.align === 'right' && 'text-right',
                   )}
                 >
@@ -96,7 +102,7 @@ export function Table<T>({
                         toggle(column);
                       }}
                       className={cx(
-                        'inline-flex items-center gap-space-xs uppercase tracking-[0.08em]',
+                        'inline-flex items-center gap-space-xs rounded-pill uppercase tracking-[0.32em] hover:text-ink',
                         focusRing,
                       )}
                     >
@@ -132,12 +138,13 @@ export function Table<T>({
             </tr>
           ) : (
             sorted.map((row) => (
-              <tr key={rowKey(row)} className="border-b border-hairline/60 last:border-b-0">
+              <tr key={rowKey(row)} className="border-b border-hairline last:border-b-0">
                 {columns.map((column) => (
                   <td
                     key={column.id}
                     className={cx(
-                      'px-space-md py-space-sm',
+                      'px-space-md',
+                      density === 'compact' ? 'py-2' : 'py-3',
                       column.align === 'right' && 'text-right',
                     )}
                   >

@@ -31,7 +31,7 @@ function QuoteCard({ quote, onOpen, onMove, moving }: CardProps) {
   const moveLabel = `Mover pedido de ${quote.name} para`;
 
   return (
-    <li className="space-y-space-xs rounded-control border border-hairline bg-surface-raised p-space-sm">
+    <li className="space-y-space-xs rounded-md bg-surface-raised p-space-md shadow-card">
       <Button variant="link" className="font-medium" onClick={onOpen}>
         {quote.name}
       </Button>
@@ -130,7 +130,7 @@ export function QuotesTab() {
               <section
                 key={status}
                 aria-label={`${QUOTE_STATUS_LABELS[status]} (${String(items.length)})`}
-                className="space-y-space-sm rounded-card bg-surface-stone p-space-sm"
+                className="space-y-space-sm rounded-lg bg-surface-deboss p-space-md shadow-deboss"
               >
                 <h2 className="flex items-center justify-between font-small text-small font-medium text-ink">
                   {QUOTE_STATUS_LABELS[status]}

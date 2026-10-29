@@ -110,10 +110,12 @@ afterEach(() => {
   Reflect.deleteProperty(navigator, 'serviceWorker');
 });
 
-const enableButton = () => screen.findByRole('button', { name: 'Ativar notificações' });
+// The setting is a Toggle (role switch) labelled "Notificações neste dispositivo".
+const SWITCH = 'Notificações neste dispositivo';
+const enableButton = () => screen.findByRole('switch', { name: SWITCH, checked: false });
+const disableButton = () => screen.findByRole('switch', { name: SWITCH, checked: true });
 const noButtons = () => {
-  expect(screen.queryByRole('button', { name: 'Ativar notificações' })).not.toBeInTheDocument();
-  expect(screen.queryByRole('button', { name: 'Desativar' })).not.toBeInTheDocument();
+  expect(screen.queryByRole('switch')).not.toBeInTheDocument();
 };
 
 describe('NotificationSettingsPage enable and disable (GES-83)', () => {
@@ -125,7 +127,7 @@ describe('NotificationSettingsPage enable and disable (GES-83)', () => {
 
     await user.click(await enableButton());
 
-    expect(await screen.findByRole('button', { name: 'Desativar' })).toBeInTheDocument();
+    expect(await disableButton()).toBeInTheDocument();
     expect(browser.requestPermission).toHaveBeenCalledTimes(1);
     expect(browser.subscribe).toHaveBeenCalledWith({
       userVisibleOnly: true,
@@ -145,7 +147,7 @@ describe('NotificationSettingsPage enable and disable (GES-83)', () => {
     const user = userEvent.setup();
     renderWithProviders(<NotificationSettingsPage />, '/app/perfil/notificacoes');
 
-    await user.click(await screen.findByRole('button', { name: 'Desativar' }));
+    await user.click(await disableButton());
 
     expect(await enableButton()).toBeInTheDocument();
     expect(calls.deletes).toEqual([{ endpoint: ENDPOINT }]);
@@ -175,7 +177,7 @@ describe('NotificationSettingsPage enable and disable (GES-83)', () => {
 
     expect(await screen.findByRole('alert')).toHaveTextContent('Erro interno.');
     expect(browser.subscription.unsubscribe).toHaveBeenCalledTimes(1);
-    expect(screen.getByRole('button', { name: 'Ativar notificações' })).toBeInTheDocument();
+    expect(screen.getByRole('switch', { name: SWITCH, checked: false })).toBeInTheDocument();
   });
 });
 

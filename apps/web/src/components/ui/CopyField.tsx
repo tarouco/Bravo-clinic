@@ -29,7 +29,7 @@ export function CopyField({ label, value, buttonLabel = 'Copiar', className }: C
 
   return (
     <div className={cx('space-y-space-xs', className)}>
-      <label className="block font-small text-small text-ink">
+      <label className="block font-small text-small font-medium text-ink">
         {label}
         <input
           readOnly
@@ -37,7 +37,7 @@ export function CopyField({ label, value, buttonLabel = 'Copiar', className }: C
           onFocus={(event) => {
             event.currentTarget.select();
           }}
-          className="mt-space-xs h-12 w-full rounded-control border border-border bg-surface-raised px-space-md font-mono text-small text-ink"
+          className="bv-field mt-space-sm h-12 font-mono text-small font-normal"
         />
       </label>
       <Button

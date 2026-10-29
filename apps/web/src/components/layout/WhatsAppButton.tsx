@@ -1,14 +1,18 @@
 import { MessageCircle } from 'lucide-react';
 import { useClinicConfig } from '../../features/config/useClinicConfig';
+import { cx } from '../ui/cx';
 import { Icon } from '../ui/Icon';
+import { useLightUp } from '../ui/useLightUp';
 
 /** `https://wa.me/<digits>` for an E.164 number, or the bare `https://wa.me/` while it is unknown. */
 export function whatsappHref(e164: string): string {
   return `https://wa.me/${e164.replace(/\D/g, '')}`;
 }
 
+/** Floating emerald relief pill at the bottom-right; a round 54px button below `sm`. */
 export function WhatsAppButton() {
   const { whatsappE164 } = useClinicConfig();
+  const { litClass, lightUp } = useLightUp();
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
@@ -17,12 +21,14 @@ export function WhatsAppButton() {
         target="_blank"
         rel="noopener noreferrer"
         title="Falar no WhatsApp da Bravô Clinic"
-        className="group flex items-center gap-space-sm px-space-md py-space-sm rounded-full bg-bronze text-on-bronze shadow-[0_8px_24px_rgba(46,26,12,0.18)] hover:bg-walnut hover:shadow-[0_12px_28px_rgba(46,26,12,0.25)] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bronze focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+        onClick={lightUp}
+        className={cx(
+          'bv-btn bv-btn--emerald h-[54px] max-sm:w-[54px] max-sm:px-0 sm:pl-5',
+          litClass,
+        )}
       >
-        <Icon as={MessageCircle} size={24} />
-        <span className="font-small text-small tracking-wide pr-1 hidden sm:inline-block font-medium">
-          Concierge WhatsApp
-        </span>
+        <Icon as={MessageCircle} size={22} />
+        <span className="hidden sm:inline-block">Concierge WhatsApp</span>
       </a>
     </div>
   );
