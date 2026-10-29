@@ -139,7 +139,7 @@ export function ScheduleGrid({
       aria-label="Grade de horários"
       tabIndex={0}
       className={cx(
-        'overflow-x-auto rounded-card border border-hairline bg-surface-raised',
+        'overflow-x-auto rounded-lg bg-surface-raised shadow-card',
         focusRing,
         className,
       )}
@@ -148,7 +148,7 @@ export function ScheduleGrid({
         className="grid min-w-[40rem]"
         style={{ gridTemplateColumns: `3.5rem repeat(${String(dates.length)}, minmax(0, 1fr))` }}
       >
-        <div className="sticky top-0 z-20 border-b border-hairline bg-surface-stone" />
+        <div className="sticky top-0 z-20 border-b border-hairline bg-surface-raised" />
         {dates.map((date) => {
           const holiday = holidays.find((h) => h.date === date);
           const closed = closedDays.find((c) => c.date === date);
@@ -156,21 +156,34 @@ export function ScheduleGrid({
             <div
               key={date}
               className={cx(
-                'sticky top-0 z-20 border-b border-l border-hairline px-space-xs py-space-xs text-center font-small text-small',
-                date === today
-                  ? 'bg-champagne-soft text-on-champagne'
-                  : 'bg-surface-stone text-ink',
+                'sticky top-0 z-20 border-b border-l border-hairline bg-surface-raised px-space-xs py-space-sm text-center font-small text-small',
+                date === today ? 'text-accent' : 'text-ink',
               )}
             >
-              <span className="uppercase tracking-[0.08em]">{weekdayLabel(date)}</span>{' '}
-              <span className="font-medium">{Number(date.slice(8))}</span>
+              <span
+                className={cx(
+                  'font-eyebrow text-eyebrow uppercase',
+                  date === today ? 'text-accent' : 'text-ink-muted',
+                )}
+              >
+                {weekdayLabel(date)}
+              </span>{' '}
+              <span
+                {...(date === today ? { 'aria-current': 'date' as const } : {})}
+                className={cx(
+                  'inline-flex min-w-7 items-center justify-center rounded-pill px-1.5 font-medium',
+                  date === today && 'bg-accent text-on-accent',
+                )}
+              >
+                {Number(date.slice(8))}
+              </span>
               {holiday ? (
-                <span className="block truncate font-caption text-caption text-bronze">
+                <span className="block truncate font-caption text-caption text-accent">
                   {holiday.label}
                 </span>
               ) : null}
               {closed ? (
-                <span className="block truncate font-caption text-caption text-error">
+                <span className="block truncate font-caption text-caption text-danger">
                   {closed.label}
                 </span>
               ) : null}
@@ -199,7 +212,10 @@ export function ScheduleGrid({
               role="group"
               aria-label={`${weekdayLabel(date)}, ${dayMonthLabel(date)}`}
               data-date={date}
-              className="relative border-l border-hairline"
+              className={cx(
+                'relative border-l border-hairline',
+                date === today && 'bg-accent/[0.04]',
+              )}
               style={{ height: rows * SLOT_ROW_PX }}
             >
               {Array.from({ length: rows }, (_, i) => {
@@ -224,9 +240,11 @@ export function ScheduleGrid({
                       'group relative border-t',
                       (start - visible.startMinute) % 60 === 0
                         ? 'border-hairline'
-                        : 'border-hairline/40',
-                      free && 'cursor-pointer hover:bg-champagne-soft/50',
-                      inDrag && 'bg-champagne-soft',
+                        : 'border-hairline/50',
+                      // Free cells are sunken; the pointer lights the neon on them (they are controls).
+                      free &&
+                        'cursor-pointer bg-surface-deboss/70 hover:bg-surface-deboss hover:shadow-[inset_0_0_0_1px_rgb(var(--c-neon))]',
+                      inDrag && 'bg-emerald/20 shadow-[inset_0_0_0_1px_rgb(var(--c-neon))]',
                     )}
                     style={{ height: SLOT_ROW_PX }}
                   >
@@ -247,7 +265,7 @@ export function ScheduleGrid({
                   <div
                     key={`${m.label}-${String(m.startMinute)}`}
                     title={m.label}
-                    className="pointer-events-none absolute inset-x-0 border-y border-champagne/60 bg-champagne/20"
+                    className="pointer-events-none absolute inset-x-0 border-y border-gold-deep/60 bg-gold/25"
                     style={{
                       top: topOf(Math.max(m.startMinute, visible.startMinute)),
                       height:
@@ -256,7 +274,7 @@ export function ScheduleGrid({
                         pxPerMinute,
                     }}
                   >
-                    <span className="px-space-xs font-caption text-caption text-bronze">
+                    <span className="px-space-xs font-caption text-caption text-ink">
                       {m.label}
                     </span>
                   </div>
@@ -265,7 +283,7 @@ export function ScheduleGrid({
               {closed ? (
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 bg-surface-dim/60"
+                  className="pointer-events-none absolute inset-0 bg-surface/60"
                 />
               ) : null}
 
@@ -324,7 +342,8 @@ function EventBlock({
       data-kind={event.kind}
       onClick={event.onClick}
       className={cx(
-        'pointer-events-auto absolute overflow-hidden rounded-control border px-space-xs py-0.5 text-left font-caption text-caption',
+        // The open (hovered/focused) event is the selected one: the neon ring lights it.
+        'pointer-events-auto absolute overflow-hidden rounded-md border py-0.5 pl-space-sm pr-space-xs text-left font-caption text-caption transition-shadow aria-expanded:z-10 aria-expanded:shadow-neon-glow',
         tone,
         focusRing,
       )}
@@ -341,7 +360,7 @@ function EventBlock({
         <div
           title={`Limpeza ${formatMinuteRange(item.endMinute, item.cleanupEndMinute ?? cleanupEnd)}`}
           data-kind="cleanup"
-          className="pointer-events-none absolute border-x border-dashed border-hairline bg-surface-dim/70"
+          className="pointer-events-none absolute border-x border-dashed border-border/60 bg-surface-deboss/80"
           style={{
             top: (end - visible.startMinute) * pxPerMinute,
             height: (cleanupEnd - end) * pxPerMinute,

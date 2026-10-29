@@ -90,15 +90,12 @@ export function MonthCalendarView({
         role="region"
         aria-label="Calendário do mês"
         tabIndex={0}
-        className={cx(
-          'overflow-x-auto rounded-card border border-hairline bg-surface-raised',
-          focusRing,
-        )}
+        className={cx('overflow-x-auto rounded-lg bg-surface-raised shadow-card', focusRing)}
       >
         <div className="min-w-[40rem]">
-          <div className="grid grid-cols-7 border-b border-hairline bg-surface-stone text-center font-caption text-caption uppercase tracking-[0.08em] text-ink-muted">
+          <div className="grid grid-cols-7 border-b border-hairline text-center font-eyebrow text-eyebrow uppercase text-ink-muted">
             {WEEKDAY_SHORT.map((name) => (
-              <span key={name} className="py-space-xs">
+              <span key={name} className="py-space-sm">
                 {name}
               </span>
             ))}
@@ -115,29 +112,32 @@ export function MonthCalendarView({
                   data-date={day}
                   className={cx(
                     'min-h-24 border-b border-l border-hairline p-space-xs',
-                    !inMonth && 'bg-surface-container-low text-ink-muted',
-                    closed && 'bg-surface-dim/60',
+                    !inMonth && 'bg-surface-deboss/60 text-ink-muted',
+                    closed && 'bg-surface-deboss',
                   )}
                 >
                   <button
                     type="button"
                     aria-label={dayMonthLabel(day)}
+                    {...(day === today ? { 'aria-current': 'date' as const } : {})}
                     onClick={() => onSelectDate?.(day)}
                     className={cx(
-                      'mb-1 flex h-7 w-7 items-center justify-center rounded-full font-small text-small',
-                      day === today ? 'bg-bronze text-on-bronze' : 'text-ink',
+                      'mb-1 flex h-7 w-7 items-center justify-center rounded-pill font-small text-small hover:bg-glass-hover',
+                      day === today
+                        ? 'bg-accent font-semibold text-on-accent hover:bg-accent'
+                        : 'text-ink',
                       focusRing,
                     )}
                   >
                     {Number(day.slice(8))}
                   </button>
                   {holiday ? (
-                    <p className="truncate font-caption text-caption text-bronze">
+                    <p className="truncate font-caption text-caption text-accent">
                       {holiday.label}
                     </p>
                   ) : null}
                   {closed ? (
-                    <p className="truncate font-caption text-caption text-error">{closed.label}</p>
+                    <p className="truncate font-caption text-caption text-danger">{closed.label}</p>
                   ) : null}
                   <ul className="space-y-0.5">
                     {dayEvents.slice(0, MAX_CHIPS).map(({ event, startMinute }) => (
@@ -179,7 +179,7 @@ function EventChip({
       type="button"
       onClick={event.onClick}
       className={cx(
-        'block w-full truncate rounded-control border px-1 text-left font-caption text-caption',
+        'block w-full truncate rounded-sm border py-px pl-space-sm pr-1 text-left font-caption text-caption aria-expanded:shadow-neon-glow',
         TONE_CLASSES[event.tone ?? (event.kind === 'block' ? 'block' : 'confirmed')],
         focusRing,
       )}
