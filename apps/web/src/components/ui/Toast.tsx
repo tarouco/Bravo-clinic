@@ -109,8 +109,9 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   return (
     <ToastContext.Provider value={value}>
       {children}
-      {/* Above the app's floating tab bar on phones (AppShell); 24px from the edge from lg. */}
-      <div className="pointer-events-none fixed bottom-[calc(6rem+env(safe-area-inset-bottom))] left-1/2 z-[70] flex w-[calc(100%-2rem)] max-w-md -translate-x-1/2 flex-col gap-space-sm lg:bottom-space-lg">
+      {/* Above the app's floating tab bar on phones (AppShell); 24px from the edge from lg. Inset, not
+          left-1/2 + translate: an untranslated box past the edge widens the mobile layout viewport. */}
+      <div className="pointer-events-none fixed inset-x-4 bottom-[calc(6rem+env(safe-area-inset-bottom))] z-[70] mx-auto flex max-w-md flex-col gap-space-sm lg:bottom-space-lg">
         {entries.map((entry) => (
           <ToastItem key={entry.id} entry={entry} onDismiss={dismiss} />
         ))}
