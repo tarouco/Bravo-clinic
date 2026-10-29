@@ -72,13 +72,7 @@ function DeleteReceiptModal({ receipt, onClose }: { receipt: ManualReceipt; onCl
           <Button variant="secondary" onClick={onClose}>
             Cancelar
           </Button>
-          <Button
-            className="text-danger"
-            variant="secondary"
-            type="submit"
-            disabled={!valid}
-            loading={remove.isPending}
-          >
+          <Button variant="danger" type="submit" disabled={!valid} loading={remove.isPending}>
             Excluir recebimento
           </Button>
         </div>

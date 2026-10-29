@@ -14,7 +14,8 @@ import { cx, focusRing } from './cx';
 import { Icon } from './Icon';
 import { useLightUp } from './useLightUp';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'gold' | 'brown' | 'ghost' | 'link';
+export type ButtonVariant =
+  'primary' | 'secondary' | 'gold' | 'brown' | 'danger' | 'ghost' | 'link';
 export type ButtonSize = 'md' | 'sm';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -38,6 +39,8 @@ const pills: Record<Exclude<ButtonVariant, 'link'>, string> = {
   secondary: 'bv-btn bv-btn--pearl',
   gold: 'bv-btn bv-btn--gold',
   brown: 'bv-btn bv-btn--brown',
+  // Destructive confirm (derived, AD-042): the pearl pill with its label in danger.
+  danger: 'bv-btn bv-btn--pearl text-danger',
   // A pill without relief: text in ink, a translucent shade on hover.
   ghost: 'bv-btn bg-transparent text-ink shadow-none hover:bg-glass-hover',
 };

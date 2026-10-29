@@ -341,9 +341,9 @@ export function FinanceOverviewPage({ today }: FinanceOverviewPageProps) {
               deltaLabel={`vs. ${formatRange(data.previous.from, data.previous.to)}`}
               higherIsBetter={false}
             />
-            {/* The one gold tile of the screen: every line of it reads in on-gold (Dia and Noite). */}
+            {/* The one gold tile of the screen. */}
             <StatTile
-              className="bg-grad-gold [&_*]:!text-on-gold"
+              tone="gold"
               label="Resultado"
               valueCents={data.totals.resultCents}
               delta={{

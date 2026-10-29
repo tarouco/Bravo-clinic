@@ -238,8 +238,7 @@ function SubscriptionDrawer({ row, canManage, onClose }: DrawerProps) {
                 ) : null}
                 {CANCELLABLE.includes(subscription.status) ? (
                   <Button
-                    className="text-danger"
-                    variant="secondary"
+                    variant="danger"
                     size="sm"
                     onClick={() => {
                       setDialog('cancel');

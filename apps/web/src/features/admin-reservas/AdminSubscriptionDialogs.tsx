@@ -191,12 +191,7 @@ export function AdminCancelDialog({ subscription, customerName, onClose }: Admin
           <Button variant="secondary" onClick={onClose}>
             Manter assinatura
           </Button>
-          <Button
-            className="text-danger"
-            variant="secondary"
-            type="submit"
-            loading={cancel.isPending}
-          >
+          <Button variant="danger" type="submit" loading={cancel.isPending}>
             Confirmar cancelamento
           </Button>
         </div>

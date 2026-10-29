@@ -43,8 +43,7 @@ function DeleteExpenseModal({ expense, onClose }: { expense: Expense; onClose: (
           Cancelar
         </Button>
         <Button
-          className="text-danger"
-          variant="secondary"
+          variant="danger"
           loading={remove.isPending}
           onClick={() => {
             setError(null);

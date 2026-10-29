@@ -218,9 +218,8 @@ export function ReservationsCalendar() {
           {roomName(block.roomId)} · {bookingWhen(block.startsAt, block.endsAt)}
         </p>
         <Button
-          className="text-danger"
           size="sm"
-          variant="secondary"
+          variant="danger"
           loading={removeBlock.isPending}
           onClick={() => {
             removeBlock.mutate(block.id, {

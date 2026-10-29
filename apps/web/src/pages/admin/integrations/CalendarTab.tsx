@@ -161,12 +161,7 @@ function FeedControl({ scope, roomId, subject, feed }: FeedControlProps) {
           >
             Cancelar
           </Button>
-          <Button
-            className="text-danger"
-            variant="secondary"
-            loading={revoke.isPending}
-            onClick={remove}
-          >
+          <Button variant="danger" loading={revoke.isPending} onClick={remove}>
             Revogar link
           </Button>
         </div>

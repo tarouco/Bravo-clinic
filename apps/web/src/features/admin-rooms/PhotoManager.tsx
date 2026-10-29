@@ -216,8 +216,7 @@ function PhotoItem({ roomId, photo, index, photos }: PhotoItemProps) {
             Cancelar
           </Button>
           <Button
-            className="text-danger"
-            variant="secondary"
+            variant="danger"
             loading={remove.isPending}
             onClick={() => {
               remove.mutate(photo.id, {

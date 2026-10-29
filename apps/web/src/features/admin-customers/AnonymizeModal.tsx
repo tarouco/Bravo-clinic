@@ -89,8 +89,7 @@ export function AnonymizeModal({ customerId, customerName, onClose, onDone }: An
             Cancelar
           </Button>
           <Button
-            className="text-danger"
-            variant="secondary"
+            variant="danger"
             type="submit"
             disabled={!check.success}
             loading={anonymize.isPending}

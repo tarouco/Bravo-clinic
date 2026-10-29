@@ -22,6 +22,15 @@ describe('Button', () => {
     expect(screen.getByRole('button', { name: 'Cancelar' })).toHaveClass('bv-btn', kitClass);
   });
 
+  it('renders the danger variant as the pearl pill with its label in danger', () => {
+    render(<Button variant="danger">Excluir</Button>);
+    expect(screen.getByRole('button', { name: 'Excluir' })).toHaveClass(
+      'bv-btn',
+      'bv-btn--pearl',
+      'text-danger',
+    );
+  });
+
   it('renders the ghost variant as a pill without relief, ink text and a translucent hover', () => {
     render(<Button variant="ghost">Voltar</Button>);
     const button = screen.getByRole('button', { name: 'Voltar' });
