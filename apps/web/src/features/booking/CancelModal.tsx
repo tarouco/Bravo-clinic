@@ -67,7 +67,10 @@ export function CancelModal({ booking, open, onClose, onCancelled }: CancelModal
               : 'Não foi possível calcular o reembolso agora.'}
           </Alert>
         ) : (
-          <section aria-label="Resultado do cancelamento" className="space-y-space-xs">
+          <section
+            aria-label="Resultado do cancelamento"
+            className="space-y-space-xs rounded-md bg-surface-deboss p-space-md shadow-deboss"
+          >
             <p className="font-small text-small text-ink">
               Fica retido: {formatBRL(data.retainedCents)}
               {data.retainedCents === booking.depositCents ? ' (sinal)' : ''}
@@ -100,7 +103,7 @@ export function CancelModal({ booking, open, onClose, onCancelled }: CancelModal
 
         {error ? <Alert tone="error">{error}</Alert> : null}
 
-        <div className="flex flex-wrap justify-end gap-space-sm">
+        <div className="bv-modal-actions flex-wrap">
           <Button variant="secondary" onClick={onClose}>
             Manter reserva
           </Button>
