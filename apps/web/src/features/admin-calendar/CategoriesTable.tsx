@@ -152,7 +152,7 @@ function CategoryRow({ category: c, index, total, onMove, onReference, busy }: R
           }}
           className={cx(
             controlClasses(cents === null || Boolean(errors[errorKey])),
-            'mt-1 h-9 w-28 px-space-sm text-small',
+            'mt-1 h-9 min-h-0 w-28 px-space-sm text-small',
           )}
         />
       </label>
@@ -162,7 +162,7 @@ function CategoryRow({ category: c, index, total, onMove, onReference, busy }: R
   );
 
   return (
-    <tr className="border-b border-hairline/60 align-top last:border-b-0">
+    <tr className="border-b border-hairline align-top last:border-b-0">
       <td className="px-space-sm py-space-sm">
         <div className="flex flex-col">
           <button
@@ -172,7 +172,10 @@ function CategoryRow({ category: c, index, total, onMove, onReference, busy }: R
             onClick={() => {
               onMove(index, -1);
             }}
-            className={cx('rounded p-1 text-bronze disabled:opacity-30', focusRing)}
+            className={cx(
+              'rounded-pill p-1 text-accent hover:bg-glass-hover disabled:opacity-[0.42]',
+              focusRing,
+            )}
           >
             <Icon as={ArrowUp} size={16} />
           </button>
@@ -183,7 +186,10 @@ function CategoryRow({ category: c, index, total, onMove, onReference, busy }: R
             onClick={() => {
               onMove(index, 1);
             }}
-            className={cx('rounded p-1 text-bronze disabled:opacity-30', focusRing)}
+            className={cx(
+              'rounded-pill p-1 text-accent hover:bg-glass-hover disabled:opacity-[0.42]',
+              focusRing,
+            )}
           >
             <Icon as={ArrowDown} size={16} />
           </button>
@@ -200,7 +206,7 @@ function CategoryRow({ category: c, index, total, onMove, onReference, busy }: R
               }}
               className={cx(
                 controlClasses(Boolean(errors['name'])),
-                'h-9 w-48 px-space-sm text-small',
+                'h-9 min-h-0 w-48 px-space-sm text-small',
               )}
             />
             {errors['name'] ? <FieldError>{errors['name']}</FieldError> : null}
@@ -256,7 +262,7 @@ function CategoryRow({ category: c, index, total, onMove, onReference, busy }: R
           onChange={() => {
             onReference(c);
           }}
-          className={cx('h-5 w-5 accent-bronze', focusRing)}
+          className={cx('h-5 w-5 accent-emerald', focusRing)}
         />
       </td>
       <td className="px-space-sm py-space-sm text-center">
@@ -268,12 +274,13 @@ function CategoryRow({ category: c, index, total, onMove, onReference, busy }: R
           onChange={(event) => {
             toggleStatus(event.target.checked);
           }}
-          className={cx('h-5 w-5 accent-bronze', focusRing)}
+          className={cx('h-5 w-5 accent-emerald', focusRing)}
         />
       </td>
       <td className="px-space-sm py-space-sm">
         {editable ? (
           <Button
+            variant="secondary"
             size="sm"
             aria-label={`Salvar ${c.name}`}
             loading={update.isPending}
@@ -284,7 +291,7 @@ function CategoryRow({ category: c, index, total, onMove, onReference, busy }: R
           </Button>
         ) : null}
         {rowError ? (
-          <p role="alert" className="mt-1 max-w-48 font-caption text-caption text-error">
+          <p role="alert" className="mt-1 max-w-48 font-caption text-caption text-danger">
             {rowError}
           </p>
         ) : null}
@@ -355,11 +362,11 @@ export function CategoriesTable() {
       ) : null}
       {actionError ? <Alert tone="error">{actionError}</Alert> : null}
       {categories.data ? (
-        <div className="overflow-x-auto rounded-card border border-hairline bg-surface-raised">
+        <div className="overflow-x-auto rounded-lg bg-surface-raised shadow-card">
           <table className="w-full min-w-[56rem] border-collapse text-left font-small text-small text-ink">
             <caption className="sr-only">Categorias de reserva e seus valores</caption>
             <thead>
-              <tr className="bg-surface-stone font-caption text-caption uppercase tracking-[0.08em] text-ink-muted">
+              <tr className="border-b border-hairline font-eyebrow text-eyebrow uppercase text-ink-muted">
                 <th scope="col" className="px-space-sm py-space-sm">
                   <span className="sr-only">Ordem</span>
                 </th>

@@ -58,7 +58,7 @@ function HolidayRow({ holiday }: { holiday: Holiday }) {
   };
 
   return (
-    <li className="space-y-1 border-b border-hairline/60 py-space-sm last:border-b-0">
+    <li className="space-y-1 border-b border-hairline py-space-sm last:border-b-0">
       <div className="flex flex-wrap items-center gap-space-sm font-small text-small">
         <span className="w-12 shrink-0 text-ink-muted">
           {formatLocalDateBR(holiday.date).slice(0, 5)}
@@ -70,7 +70,7 @@ function HolidayRow({ holiday }: { holiday: Holiday }) {
             as={TriangleAlert}
             size={18}
             label="Feriado nos próximos 30 dias"
-            className="text-bronze"
+            className="text-accent"
           />
         ) : null}
         <label className="ml-auto flex items-center gap-space-xs text-ink">
@@ -81,7 +81,7 @@ function HolidayRow({ holiday }: { holiday: Holiday }) {
             onChange={(event) => {
               toggle(event.target.checked);
             }}
-            className={cx('h-4 w-4 accent-bronze', focusRing)}
+            className={cx('h-4 w-4 accent-emerald', focusRing)}
           />
           <span>
             <span className="sr-only">{holiday.name}: </span>Fechado
@@ -102,7 +102,7 @@ function HolidayRow({ holiday }: { holiday: Holiday }) {
         ) : null}
       </div>
       {error ? (
-        <p role="alert" className="font-caption text-caption text-error">
+        <p role="alert" className="font-caption text-caption text-danger">
           {error}
         </p>
       ) : null}
@@ -258,7 +258,10 @@ export function ExceptionsMonth({ date, today, onDateChange }: ExceptionsMonthPr
       {holidays.isPending ? <Spinner label="Carregando feriados" /> : null}
 
       <div className="grid gap-space-lg lg:grid-cols-2">
-        <section aria-labelledby="holidays-title" className="space-y-space-xs">
+        <section
+          aria-labelledby="holidays-title"
+          className="space-y-space-xs rounded-lg bg-surface-raised p-space-lg shadow-card"
+        >
           <h3 id="holidays-title" className="font-small text-small font-medium text-ink">
             Feriados de {year}
           </h3>
@@ -274,7 +277,7 @@ export function ExceptionsMonth({ date, today, onDateChange }: ExceptionsMonthPr
           </ul>
         </section>
 
-        <div className="space-y-space-lg">
+        <div className="space-y-space-lg rounded-lg bg-surface-raised p-space-lg shadow-card">
           <section aria-labelledby="closed-title" className="space-y-space-xs">
             <h3 id="closed-title" className="font-small text-small font-medium text-ink">
               Dias fechados
@@ -288,7 +291,7 @@ export function ExceptionsMonth({ date, today, onDateChange }: ExceptionsMonthPr
               {(closedDays.data?.items ?? []).map((closed) => (
                 <li
                   key={closed.id}
-                  className="flex flex-wrap items-center gap-space-sm border-b border-hairline/60 py-space-sm font-small text-small last:border-b-0"
+                  className="flex flex-wrap items-center gap-space-sm border-b border-hairline py-space-sm font-small text-small last:border-b-0"
                 >
                   <span className="text-ink-muted">{formatLocalDateBR(closed.date)}</span>
                   <span className="text-ink">{closed.roomName ?? 'Toda a clínica'}</span>
@@ -323,7 +326,7 @@ export function ExceptionsMonth({ date, today, onDateChange }: ExceptionsMonthPr
                 .map((rule) => (
                   <li
                     key={rule.id}
-                    className="flex flex-wrap items-center gap-space-sm border-b border-hairline/60 py-space-sm font-small text-small last:border-b-0"
+                    className="flex flex-wrap items-center gap-space-sm border-b border-hairline py-space-sm font-small text-small last:border-b-0"
                   >
                     <span className="font-medium text-ink">{rule.tag}</span>
                     <span className="text-ink-muted">
@@ -333,7 +336,7 @@ export function ExceptionsMonth({ date, today, onDateChange }: ExceptionsMonthPr
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="ml-auto"
+                      className="text-danger ml-auto"
                       aria-label={`Remover bloqueio ${rule.tag}`}
                       loading={removeRecurrence.isPending}
                       onClick={() => {

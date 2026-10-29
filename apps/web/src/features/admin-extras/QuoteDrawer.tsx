@@ -14,9 +14,7 @@ import { QUOTE_STATUS_LABELS } from './labels';
 function Row({ term, children }: { term: string; children: ReactNode }) {
   return (
     <div className="space-y-0.5">
-      <dt className="font-caption text-caption uppercase tracking-[0.08em] text-ink-muted">
-        {term}
-      </dt>
+      <dt className="font-eyebrow text-eyebrow uppercase text-ink-muted">{term}</dt>
       <dd className="font-small text-small text-ink">{children}</dd>
     </div>
   );

@@ -117,7 +117,9 @@ export function UsersPage() {
   return (
     <div className="mx-auto max-w-6xl space-y-space-lg">
       <div className="flex flex-wrap items-center justify-between gap-space-sm">
-        <h1 className="font-heading text-heading-mobile text-ink md:text-heading">Usuários</h1>
+        <h1 className="font-display-l-mobile text-display-l-mobile text-ink lg:font-display-l lg:text-display-l">
+          Usuários
+        </h1>
         <Button
           onClick={() => {
             setDialog({ kind: 'invite' });

@@ -25,7 +25,7 @@ export function RoomEditPage() {
   const back = (
     <Link
       to="/admin/salas"
-      className="font-small text-small text-bronze underline underline-offset-4"
+      className="font-small text-small text-accent underline underline-offset-4"
     >
       Voltar para salas
     </Link>
@@ -73,14 +73,14 @@ export function RoomEditPage() {
     <div className="mx-auto max-w-4xl space-y-space-lg">
       <div>
         {back}
-        <h1 className="mt-space-sm font-heading text-heading-mobile text-ink md:text-heading">
+        <h1 className="mt-space-sm font-display-l-mobile text-display-l-mobile text-ink lg:font-display-l lg:text-display-l">
           {room ? room.name : 'Nova sala'}
         </h1>
       </div>
 
       <section
         aria-labelledby="room-data"
-        className="space-y-space-md rounded-card border border-hairline bg-surface-raised p-space-lg"
+        className="space-y-space-md rounded-lg bg-surface-raised shadow-card p-space-lg"
       >
         <h2 id="room-data" className="font-heading text-heading-mobile text-ink">
           Dados da sala
@@ -98,7 +98,7 @@ export function RoomEditPage() {
 
       <section
         aria-labelledby="room-photos"
-        className="space-y-space-md rounded-card border border-hairline bg-surface-raised p-space-lg"
+        className="space-y-space-md rounded-lg bg-surface-raised shadow-card p-space-lg"
       >
         <h2 id="room-photos" className="font-heading text-heading-mobile text-ink">
           Fotos

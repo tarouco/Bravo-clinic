@@ -19,7 +19,7 @@ export interface FreeSlotMenuProps {
 }
 
 const item =
-  'flex w-full items-center gap-space-sm rounded-control px-space-sm py-space-xs text-left font-small text-small text-ink hover:bg-champagne-soft';
+  'flex w-full items-center gap-space-sm rounded-pill px-space-sm py-space-xs text-left font-small text-small text-ink hover:bg-glass-hover';
 
 /** One row of the menu; other features reuse it for the actions they register in the slot. */
 export function FreeSlotMenuItem({

@@ -59,7 +59,7 @@ function NewCustomerForm({
   };
 
   return (
-    <fieldset className="space-y-space-sm rounded-control border border-hairline p-space-sm">
+    <fieldset className="space-y-space-sm rounded-md border border-hairline p-space-md">
       <legend className="px-space-xs font-small text-small text-ink">Novo cliente</legend>
       <Input
         label="Nome completo"
@@ -107,7 +107,7 @@ export function CustomerPicker({ value, onChange }: CustomerPickerProps) {
 
   if (value) {
     return (
-      <div className="flex flex-wrap items-center justify-between gap-space-sm rounded-control border border-hairline bg-surface-stone p-space-sm font-small text-small">
+      <div className="flex flex-wrap items-center justify-between gap-space-sm rounded-md bg-surface-deboss px-space-md py-space-sm shadow-deboss font-small text-small">
         <p className="text-ink">
           <span className="font-medium">{value.name}</span> · {value.email}
         </p>
@@ -159,7 +159,7 @@ export function CustomerPicker({ value, onChange }: CustomerPickerProps) {
       {items.length > 0 ? (
         <ul
           aria-label="Clientes encontrados"
-          className="divide-y divide-hairline/60 rounded-control border border-hairline"
+          className="divide-y divide-hairline overflow-hidden rounded-md bg-surface-raised shadow-card"
         >
           {items.map((customer) => (
             <li key={customer.id}>
@@ -168,7 +168,7 @@ export function CustomerPicker({ value, onChange }: CustomerPickerProps) {
                 onClick={() => {
                   onChange({ id: customer.id, name: customer.name, email: customer.email });
                 }}
-                className="block w-full px-space-sm py-space-xs text-left font-small text-small text-ink hover:bg-champagne-soft"
+                className="block w-full px-space-sm py-space-xs text-left font-small text-small text-ink hover:bg-glass-hover"
               >
                 <span className="font-medium">{customer.name}</span> · {customer.email}
                 {customer.docMasked ? ` · ${customer.docMasked}` : ''}

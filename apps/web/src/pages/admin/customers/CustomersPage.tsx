@@ -21,7 +21,7 @@ const columns: readonly TableColumn<CustomerSummary>[] = [
     cell: (c) => (
       <Link
         to={`/admin/clientes/${c.id}`}
-        className="font-medium text-bronze underline underline-offset-4"
+        className="font-medium text-accent underline underline-offset-4"
       >
         {c.name}
       </Link>
@@ -52,7 +52,9 @@ export function CustomersPage() {
 
   return (
     <div className="mx-auto max-w-5xl space-y-space-lg">
-      <h1 className="font-heading text-heading-mobile text-ink md:text-heading">Clientes</h1>
+      <h1 className="font-display-l-mobile text-display-l-mobile text-ink lg:font-display-l lg:text-display-l">
+        Clientes
+      </h1>
       <Input
         label="Buscar cliente"
         type="search"
@@ -81,6 +83,7 @@ export function CustomersPage() {
       ) : null}
       {customers.data ? (
         <Table
+          density="compact"
           caption="Clientes"
           columns={columns}
           rows={rows}

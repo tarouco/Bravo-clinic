@@ -10,7 +10,7 @@ import {
   WEEKDAY_SHORT,
 } from '../../lib/calendar-dates';
 import { cx, focusRing } from '../ui/cx';
-import { Icon } from '../ui/Icon';
+import { IconButton } from '../ui/IconButton';
 
 type MonthDay = AvailabilityMonth['days'][number];
 
@@ -100,40 +100,33 @@ export function MonthCalendar({
   return (
     <div className={cx('w-full max-w-sm', className)}>
       <div className="mb-space-sm flex items-center justify-between">
-        <button
-          type="button"
-          aria-label="Mês anterior"
+        <IconButton
+          icon={ChevronLeft}
+          label="Mês anterior"
+          size="sm"
           disabled={Boolean(minMonth && shiftMonth(month, -1) < minMonth)}
           onClick={() => {
             onMonthChange(shiftMonth(month, -1));
           }}
-          className={cx(
-            'flex h-10 w-10 items-center justify-center text-bronze disabled:opacity-40',
-            focusRing,
-          )}
+        />
+        <h3
+          aria-live="polite"
+          className="font-heading-mobile text-heading-mobile capitalize text-ink"
         >
-          <Icon as={ChevronLeft} />
-        </button>
-        <h3 aria-live="polite" className="font-heading-mobile text-body capitalize text-ink">
           {monthLabel(month)}
         </h3>
-        <button
-          type="button"
-          aria-label="Próximo mês"
+        <IconButton
+          icon={ChevronRight}
+          label="Próximo mês"
+          size="sm"
           disabled={Boolean(maxMonth && shiftMonth(month, 1) > maxMonth)}
           onClick={() => {
             onMonthChange(shiftMonth(month, 1));
           }}
-          className={cx(
-            'flex h-10 w-10 items-center justify-center text-bronze disabled:opacity-40',
-            focusRing,
-          )}
-        >
-          <Icon as={ChevronRight} />
-        </button>
+        />
       </div>
 
-      <div className="grid grid-cols-7 gap-1 text-center font-caption text-caption uppercase text-ink-muted">
+      <div className="grid grid-cols-7 gap-1 text-center font-caption text-caption text-ink-muted">
         {WEEKDAY_SHORT.map((name) => (
           <span key={name} aria-hidden="true">
             {name}
@@ -180,20 +173,21 @@ export function MonthCalendar({
                 if (enabled) onSelect(date);
               }}
               className={cx(
-                'relative flex h-10 items-center justify-center rounded-control border font-small text-small transition-colors',
-                selected
-                  ? 'border-bronze bg-bronze text-on-bronze'
-                  : enabled
-                    ? 'border-hairline bg-surface-raised text-ink hover:border-bronze'
-                    : 'cursor-not-allowed border-transparent text-ink-muted opacity-50',
-                focusRing,
+                // Open days are pearl chips (selected = emerald with the neon lit, aria-pressed);
+                // closed days stay flat on the surface.
+                selected || enabled
+                  ? 'bv-chip h-10 min-w-0 px-0 font-small text-small'
+                  : cx(
+                      'relative flex h-10 cursor-not-allowed items-center justify-center rounded-pill font-small text-small text-ink-muted opacity-50',
+                      focusRing,
+                    ),
               )}
             >
               {Number(date.slice(8))}
               {holiday ? (
                 <span
                   aria-hidden="true"
-                  className="absolute bottom-1 h-1 w-1 rounded-full bg-champagne"
+                  className="absolute bottom-1 h-1 w-1 rounded-pill bg-gold-deep"
                 />
               ) : null}
             </button>

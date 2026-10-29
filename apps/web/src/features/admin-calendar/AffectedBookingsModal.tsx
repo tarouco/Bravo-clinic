@@ -34,12 +34,12 @@ export function AffectedBookingsModal({
             {bookings.map((booking) => (
               <li
                 key={booking.id}
-                className="rounded-control border border-hairline bg-surface-stone p-space-sm font-small text-small"
+                className="rounded-md bg-surface-deboss px-space-md py-space-sm shadow-deboss font-small text-small"
               >
                 <div className="flex flex-wrap items-center gap-space-sm">
                   <Link
                     to={`/admin/reservas/lista?q=${encodeURIComponent(booking.code)}`}
-                    className="font-medium text-bronze underline underline-offset-4"
+                    className="font-medium text-accent underline underline-offset-4"
                   >
                     {booking.code}
                   </Link>

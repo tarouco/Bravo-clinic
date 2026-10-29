@@ -21,7 +21,7 @@ const columns: readonly TableColumn<AdminRoom>[] = [
           src={toPhotoUrl(cover.storageKey, 'small')}
           alt={cover.alt}
           loading="lazy"
-          className="h-12 w-16 rounded-control object-cover"
+          className="h-12 w-16 rounded-sm object-cover"
         />
       ) : (
         <span className="text-ink-muted">Sem foto</span>
@@ -35,7 +35,7 @@ const columns: readonly TableColumn<AdminRoom>[] = [
     cell: (r) => (
       <Link
         to={`/admin/salas/${r.id}`}
-        className="font-medium text-bronze underline underline-offset-4"
+        className="font-medium text-accent underline underline-offset-4"
       >
         {r.name}
       </Link>
@@ -50,7 +50,7 @@ const columns: readonly TableColumn<AdminRoom>[] = [
     id: 'status',
     header: 'Situação',
     cell: (r) => (
-      <Badge tone={r.status === 'active' ? 'bronze' : 'neutral'}>
+      <Badge tone={r.status === 'active' ? 'emerald' : 'neutral'}>
         {r.status === 'active' ? 'Ativa' : 'Inativa'}
       </Badge>
     ),
@@ -73,7 +73,9 @@ export function RoomsPage() {
   return (
     <div className="mx-auto max-w-5xl space-y-space-lg">
       <div className="flex flex-wrap items-center justify-between gap-space-sm">
-        <h1 className="font-heading text-heading-mobile text-ink md:text-heading">Salas</h1>
+        <h1 className="font-display-l-mobile text-display-l-mobile text-ink lg:font-display-l lg:text-display-l">
+          Salas
+        </h1>
         <Button asChild>
           <Link to={`/admin/salas/${NEW_ROOM_SEGMENT}`}>Nova sala</Link>
         </Button>

@@ -167,20 +167,20 @@ export function WeekHoursEditor({
         </Button>
       </div>
 
-      <div className="overflow-x-auto rounded-card border border-hairline bg-surface-raised">
+      <div className="overflow-x-auto rounded-lg bg-surface-raised shadow-card">
         <div
           className="grid min-w-[56rem]"
           style={{ gridTemplateColumns: '3.5rem repeat(8, minmax(6.5rem, 1fr))' }}
         >
-          <div className="border-b border-hairline bg-surface-stone" />
+          <div className="border-b border-hairline" />
           {ordered.map((row) => {
             const label = DAY_LABELS[row.dayType];
             return (
               <div
                 key={row.dayType}
-                className="space-y-space-xs border-b border-l border-hairline bg-surface-stone p-space-xs"
+                className="space-y-space-xs border-b border-l border-hairline p-space-xs"
               >
-                <p className="text-center font-small text-small font-medium uppercase tracking-[0.08em] text-ink">
+                <p className="text-center font-eyebrow text-eyebrow uppercase text-ink-muted">
                   {label.short}
                 </p>
                 <label className="flex items-center justify-center gap-space-xs font-caption text-caption text-ink">
@@ -191,7 +191,7 @@ export function WeekHoursEditor({
                     onChange={(event) => {
                       update(row.dayType, (r) => ({ ...r, isClosed: event.target.checked }));
                     }}
-                    className={cx('h-4 w-4 accent-bronze', focusRing)}
+                    className={cx('h-4 w-4 accent-emerald', focusRing)}
                   />
                   <span>
                     <span className="sr-only">{label.name}: </span>Fechado
@@ -253,18 +253,18 @@ export function WeekHoursEditor({
               style={{ height: 24 * HOUR_PX, ...hourLines }}
             >
               {row.isClosed ? (
-                <div className="absolute inset-0 flex items-center justify-center bg-surface-dim/60 font-caption text-caption uppercase tracking-[0.08em] text-ink-muted">
+                <div className="absolute inset-0 flex items-center justify-center bg-surface-deboss/80 font-caption text-caption text-ink-muted">
                   Fechado
                 </div>
               ) : (
                 <div
-                  className="absolute inset-x-0 border-y-2 border-bronze bg-champagne-soft/60"
+                  className="absolute inset-x-0 border-y-2 border-accent bg-emerald/[0.08]"
                   style={{
                     top: row.openMinute * PX_PER_MINUTE,
                     height: (row.closeMinute - row.openMinute) * PX_PER_MINUTE,
                   }}
                 >
-                  <span className="px-space-xs font-caption text-caption text-bronze">
+                  <span className="px-space-xs font-caption text-caption text-accent">
                     {formatHHMM(row.openMinute)}–{formatHHMM(row.closeMinute)}
                   </span>
                 </div>
@@ -298,7 +298,7 @@ export function WeekHoursEditor({
                           setDrag({ day: row.dayType, edge, column });
                         }}
                         className={cx(
-                          'absolute inset-x-0 z-10 cursor-ns-resize touch-none bg-bronze/80',
+                          'absolute inset-x-0 z-10 cursor-ns-resize touch-none rounded-pill bg-emerald hover:shadow-neon-glow focus-visible:shadow-neon-glow',
                           focusRing,
                         )}
                         style={{

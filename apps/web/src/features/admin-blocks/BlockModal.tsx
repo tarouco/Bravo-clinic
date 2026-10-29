@@ -224,7 +224,7 @@ function BlockForm({ onClose, defaults = {} }: Omit<BlockModalProps, 'open'>) {
             }}
           />
           {weekly ? (
-            <div className="space-y-space-sm rounded-control border border-hairline p-space-sm">
+            <div className="space-y-space-sm rounded-md bg-surface-deboss p-space-md shadow-deboss">
               <fieldset className="space-y-space-xs">
                 <legend className="font-small text-small text-ink">Dias da semana</legend>
                 <div className="flex flex-wrap gap-x-space-md gap-y-space-xs">

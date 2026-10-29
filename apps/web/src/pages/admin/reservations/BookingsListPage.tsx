@@ -181,6 +181,7 @@ export function BookingsListPage() {
           rows={rows}
           rowKey={(row) => row.id}
           defaultSort={{ columnId: 'start', direction: 'desc' }}
+          density="compact"
           emptyMessage="Nenhuma reserva encontrada com estes filtros."
         />
       ) : null}

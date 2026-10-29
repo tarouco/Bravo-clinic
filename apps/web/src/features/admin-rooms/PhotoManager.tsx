@@ -86,7 +86,7 @@ function PhotoItem({ roomId, photo, index, photos }: PhotoItemProps) {
   return (
     <li
       aria-label={photo.alt}
-      className="space-y-space-sm rounded-card border border-hairline bg-surface-raised p-space-sm"
+      className="space-y-space-sm rounded-lg bg-surface-raised shadow-card p-space-sm"
     >
       <img
         src={toPhotoUrl(photo.storageKey, 'small')}
@@ -94,10 +94,10 @@ function PhotoItem({ roomId, photo, index, photos }: PhotoItemProps) {
         width={photo.width}
         height={photo.height}
         loading="lazy"
-        className="aspect-[4/3] w-full rounded-control object-cover"
+        className="aspect-[4/3] w-full rounded-sm object-cover"
       />
       <div className="flex flex-wrap items-center gap-space-xs">
-        {photo.isCover ? <Badge tone="bronze">Capa</Badge> : null}
+        {photo.isCover ? <Badge tone="emerald">Capa</Badge> : null}
         <span className="font-small text-small text-ink">{photo.alt}</span>
       </div>
 
@@ -181,6 +181,7 @@ function PhotoItem({ roomId, photo, index, photos }: PhotoItemProps) {
           Descrição
         </Button>
         <Button
+          className="text-danger"
           variant="ghost"
           size="sm"
           aria-label={`Excluir foto ${photo.alt}`}
@@ -215,6 +216,8 @@ function PhotoItem({ roomId, photo, index, photos }: PhotoItemProps) {
             Cancelar
           </Button>
           <Button
+            className="text-danger"
+            variant="secondary"
             loading={remove.isPending}
             onClick={() => {
               remove.mutate(photo.id, {
@@ -329,7 +332,7 @@ export function PhotoManager({ roomId, photos, prepare = prepareRoomPhoto }: Pho
       {ready ? (
         <form
           noValidate
-          className="space-y-space-sm rounded-card border border-hairline bg-surface-stone p-space-md"
+          className="space-y-space-sm rounded-lg bg-surface-deboss shadow-deboss p-space-md"
           onSubmit={(event) => {
             event.preventDefault();
             send();

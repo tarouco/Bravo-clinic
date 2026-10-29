@@ -43,7 +43,7 @@ export function durationOptions(
 
 /**
  * Day grid of 40 px slots: pick a start among the startable cells, then a duration. Unavailable
- * cells are `aria-disabled`; selected cells fill with bronze; a cell with a slot discount shows
+ * cells are `aria-disabled`; selected cells fill with emerald; a cell with a slot discount shows
  * "−n%".
  */
 export function SlotGrid({
@@ -85,13 +85,13 @@ export function SlotGrid({
                   onChange({ startMinute: cell.startMinute, endMinute: null });
                 }}
                 className={cx(
-                  'flex h-10 w-full items-center justify-center gap-space-xs rounded-control border font-small text-small transition-colors',
+                  // Open times are pearl chips (selected = emerald with the neon lit); taken ones sink.
                   cell.available
-                    ? selected
-                      ? 'border-bronze bg-bronze text-on-bronze'
-                      : 'border-hairline bg-surface-raised text-ink hover:border-bronze'
-                    : 'cursor-not-allowed border-hairline/60 bg-surface-stone text-ink-muted line-through opacity-60',
-                  focusRing,
+                    ? 'bv-chip w-full min-w-0 gap-space-xs px-space-sm font-small text-small'
+                    : cx(
+                        'flex h-10 w-full cursor-not-allowed items-center justify-center gap-space-xs rounded-pill bg-surface-deboss font-small text-small text-ink-muted line-through shadow-deboss',
+                        focusRing,
+                      ),
                 )}
               >
                 <span>{minuteToHHMM(cell.startMinute)}</span>
@@ -124,13 +124,7 @@ export function SlotGrid({
                   onClick={() => {
                     onChange({ startMinute: startCell.startMinute, endMinute });
                   }}
-                  className={cx(
-                    'h-10 rounded-control border px-space-md font-small text-small transition-colors',
-                    selected
-                      ? 'border-bronze bg-bronze text-on-bronze'
-                      : 'border-border bg-surface-raised text-ink hover:border-bronze',
-                    focusRing,
-                  )}
+                  className={cx('bv-chip font-small text-small')}
                 >
                   {formatDuration(minutes)}
                 </button>
@@ -156,13 +150,13 @@ export function SlotGrid({
                       if (option.available) onSelectBlock?.(option);
                     }}
                     className={cx(
-                      'flex min-h-10 w-full items-center justify-between gap-space-md rounded-control border px-space-md py-space-xs text-left font-small text-small transition-colors',
+                      'min-h-10 w-full justify-between gap-space-md px-space-md py-space-xs text-left font-small text-small',
                       option.available
-                        ? selected
-                          ? 'border-bronze bg-bronze text-on-bronze'
-                          : 'border-hairline bg-surface-raised text-ink hover:border-bronze'
-                        : 'cursor-not-allowed border-hairline/60 bg-surface-stone text-ink-muted opacity-60',
-                      focusRing,
+                        ? 'bv-chip h-auto'
+                        : cx(
+                            'flex cursor-not-allowed items-center rounded-pill bg-surface-deboss text-ink-muted shadow-deboss',
+                            focusRing,
+                          ),
                     )}
                   >
                     <span>

@@ -29,7 +29,7 @@ const toolColumns: readonly TableColumn<McpTool>[] = [
   {
     id: 'destructive',
     header: 'Confirmação',
-    cell: (t) => (t.destructive ? <Badge tone="error">Requer confirmação</Badge> : '—'),
+    cell: (t) => (t.destructive ? <Badge tone="danger">Requer confirmação</Badge> : '—'),
   },
 ];
 
@@ -153,7 +153,7 @@ function Section({
   return (
     <section
       aria-labelledby={headingId}
-      className="space-y-space-md rounded-card border border-hairline bg-surface-raised p-space-lg"
+      className="space-y-space-md rounded-lg bg-surface-raised shadow-card p-space-lg"
     >
       <div className="flex flex-wrap items-center justify-between gap-space-sm">
         <h2 id={headingId} className="font-heading text-heading-mobile text-ink">
