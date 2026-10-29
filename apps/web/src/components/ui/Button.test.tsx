@@ -1,49 +1,70 @@
-import { render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ArrowRight } from 'lucide-react';
 import { describe, expect, it, vi } from 'vitest';
 import { Button } from './Button';
 
 describe('Button', () => {
-  it('renders the primary variant by default with bronze background, on-bronze text, h-12 and a 2px radius', () => {
+  it('renders the primary variant by default as the emerald relief pill, sentence case', () => {
     render(<Button>Reservar</Button>);
     const button = screen.getByRole('button', { name: 'Reservar' });
-    expect(button).toHaveClass('bg-bronze', 'text-on-bronze', 'h-12', 'rounded-control');
+    expect(button).toHaveClass('bv-btn', 'bv-btn--emerald');
+    expect(button).not.toHaveClass('uppercase');
     expect(button).toHaveAttribute('type', 'button');
   });
 
-  it('renders the secondary variant with raised surface, a border and ink text', () => {
-    render(<Button variant="secondary">Cancelar</Button>);
-    expect(screen.getByRole('button', { name: 'Cancelar' })).toHaveClass(
-      'bg-surface-raised',
-      'border',
-      'border-border',
-      'text-ink',
-    );
+  it.each([
+    ['secondary', 'bv-btn--pearl'],
+    ['gold', 'bv-btn--gold'],
+    ['brown', 'bv-btn--brown'],
+  ] as const)('renders the %s variant as %s', (variant, kitClass) => {
+    render(<Button variant={variant}>Cancelar</Button>);
+    expect(screen.getByRole('button', { name: 'Cancelar' })).toHaveClass('bv-btn', kitClass);
   });
 
-  it('renders the ghost variant with a transparent background', () => {
+  it('renders the ghost variant as a pill without relief, ink text and a translucent hover', () => {
     render(<Button variant="ghost">Voltar</Button>);
-    expect(screen.getByRole('button', { name: 'Voltar' })).toHaveClass('bg-transparent');
+    const button = screen.getByRole('button', { name: 'Voltar' });
+    expect(button).toHaveClass('bv-btn', 'bg-transparent', 'shadow-none', 'text-ink');
+    expect(button).toHaveClass('hover:bg-glass-hover');
+    expect(button).not.toHaveClass('bv-btn--emerald');
   });
 
-  it('renders the link variant with a transparent background and underline', () => {
+  it('renders the link variant in accent with an underline and the accent focus ring', () => {
     render(<Button variant="link">Saiba mais</Button>);
-    expect(screen.getByRole('button', { name: 'Saiba mais' })).toHaveClass(
-      'bg-transparent',
-      'underline',
-    );
+    const button = screen.getByRole('button', { name: 'Saiba mais' });
+    expect(button).toHaveClass('bg-transparent', 'underline', 'text-accent');
+    expect(button).toHaveClass('focus-visible:ring-2', 'focus-visible:ring-accent');
+    expect(button).not.toHaveClass('bv-btn');
   });
 
-  it('renders the sm size as h-10 and the md size as h-12', () => {
+  it('renders the sm size as bv-btn--sm and the block button full width', () => {
     render(
       <>
         <Button size="sm">Pequeno</Button>
         <Button size="md">Médio</Button>
+        <Button block>Confirmar</Button>
       </>,
     );
-    expect(screen.getByRole('button', { name: 'Pequeno' })).toHaveClass('h-10');
-    expect(screen.getByRole('button', { name: 'Médio' })).toHaveClass('h-12');
+    expect(screen.getByRole('button', { name: 'Pequeno' })).toHaveClass('bv-btn--sm');
+    expect(screen.getByRole('button', { name: 'Médio' })).not.toHaveClass('bv-btn--sm');
+    expect(screen.getByRole('button', { name: 'Confirmar' })).toHaveClass('bv-btn--block');
+  });
+
+  it('lights up for 1.6 s after a click', () => {
+    vi.useFakeTimers();
+    try {
+      render(<Button>Reservar</Button>);
+      const button = screen.getByRole('button', { name: 'Reservar' });
+      fireEvent.click(button);
+      expect(button).toHaveClass('is-lit');
+      act(() => {
+        vi.advanceTimersByTime(1600);
+      });
+      expect(button).not.toHaveClass('is-lit');
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it('is disabled with aria-busy and does not call onClick while loading', async () => {
@@ -70,13 +91,11 @@ describe('Button', () => {
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
-  it('carries the 2px accent focus-visible ring with a 2px offset', () => {
+  it('leaves the keyboard focus outline to bv-btn (bv.css), without ring utilities', () => {
     render(<Button>Foco</Button>);
-    expect(screen.getByRole('button', { name: 'Foco' })).toHaveClass(
-      'focus-visible:ring-2',
-      'focus-visible:ring-accent',
-      'focus-visible:ring-offset-2',
-    );
+    const button = screen.getByRole('button', { name: 'Foco' });
+    expect(button).toHaveClass('bv-btn');
+    expect(button).not.toHaveClass('focus-visible:ring-2');
   });
 
   it('renders leading and trailing icons as decorative svgs', () => {
@@ -98,7 +117,7 @@ describe('Button', () => {
     );
     const link = screen.getByRole('link', { name: 'Reservar sala' });
     expect(link).toHaveAttribute('href', '/app/reservar');
-    expect(link).toHaveClass('bg-bronze', 'text-on-bronze', 'h-12', 'rounded-control');
+    expect(link).toHaveClass('bv-btn', 'bv-btn--emerald');
     expect(screen.queryByRole('button')).toBeNull();
   });
 });
