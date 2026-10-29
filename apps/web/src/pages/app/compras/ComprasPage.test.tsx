@@ -60,11 +60,7 @@ function renderArea(route = '/app/compras') {
 }
 
 const cardOf = async (name: string) =>
-  within(
-    (await screen.findByRole('heading', { name })).closest(
-      'div[class*="rounded-card"]',
-    ) as HTMLElement,
-  );
+  within((await screen.findByRole('heading', { name })).closest('div.bv-card') as HTMLElement);
 
 // REC-143: card content; REC-144: actions per status; REC-146: tabs; REC-147: empty state.
 describe('ComprasPage subscription cards (REC-143, REC-144, REC-147)', () => {

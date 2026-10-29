@@ -104,7 +104,7 @@ describe('FinanceOverviewPage', () => {
     expect(plain(expenses.textContent)).toContain('R$ 1.100,00');
     // 1.000,00 -> 1.100,00 spent: a rise of 10 % is shown as +10,0 % in the error tone.
     expect(expenses).toHaveTextContent('+10,0%');
-    expect(within(expenses).getByText('+10,0%').closest('p')).toHaveClass('text-error');
+    expect(within(expenses).getByText('+10,0%').closest('p')).toHaveClass('text-danger');
 
     const result = tile('Resultado');
     expect(plain(result.textContent)).toContain('R$ 5.330,00');
