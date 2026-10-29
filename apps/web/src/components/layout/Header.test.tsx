@@ -22,10 +22,10 @@ const tenant: Session = {
   mfa: { enrolled: false, verified: false },
 };
 
-function renderHeader() {
+function renderHeader(path = '/') {
   return render(
     <ThemeProvider>
-      <MemoryRouter>
+      <MemoryRouter initialEntries={[path]}>
         <Header />
       </MemoryRouter>
     </ThemeProvider>,
@@ -72,10 +72,36 @@ describe('Header', () => {
     expect(screen.getByRole('button', { name: 'Menu' })).toHaveClass('lg:hidden');
   });
 
-  it('is fixed at the top with an 80px (h-20) bar', () => {
+  it('floats 16px below the top edge as the pearl NavBar pill, 1180px wide at most', () => {
     renderHeader();
-    expect(screen.getByRole('banner')).toHaveClass('fixed', 'top-0');
-    expect(screen.getByRole('banner').querySelector('.h-20')).not.toBeNull();
+    const banner = screen.getByRole('banner');
+    expect(banner).toHaveClass('fixed', 'top-4');
+    const bar = banner.querySelector('.bv-navbar');
+    expect(bar).not.toBeNull();
+    expect(bar).toHaveClass('max-w-[1180px]', 'mx-auto');
+  });
+
+  it('marks the current section from the route: the link sinks with aria-current="page"', () => {
+    renderHeader('/precos');
+    const nav = screen.getByRole('navigation', { name: 'Principal' });
+    const current = within(nav).getByRole('link', { name: 'Preços & Planos' });
+    expect(current).toHaveAttribute('aria-current', 'page');
+    expect(current).toHaveClass('bv-navbar-link');
+    expect(within(nav).getByRole('link', { name: 'Salas' })).not.toHaveAttribute('aria-current');
+  });
+
+  it('renders the login action as the small emerald pill and the theme switch as a pearl icon button', () => {
+    renderHeader();
+    expect(screen.getByRole('link', { name: 'Login' })).toHaveClass(
+      'bv-btn',
+      'bv-btn--emerald',
+      'bv-btn--sm',
+    );
+    expect(screen.getByRole('button', { name: 'Alternar tema' })).toHaveClass(
+      'bv-icon-btn',
+      'bv-btn--pearl',
+      'bv-icon-btn--sm',
+    );
   });
 
   it('links "Login" to /login when there is no session', () => {
@@ -101,6 +127,7 @@ describe('Header', () => {
 
     expect(button).toHaveAttribute('aria-expanded', 'true');
     const panel = screen.getByRole('navigation', { name: 'Menu móvel' });
+    expect(panel).toHaveClass('bv-menu');
     expect(within(panel).getByRole('link', { name: 'Salas' })).toHaveAttribute('href', '/salas');
     expect(within(panel).getByRole('link', { name: 'Contato' })).toHaveAttribute(
       'href',
