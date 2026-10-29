@@ -1,7 +1,7 @@
 import { Clapperboard, Film, Megaphone, type LucideIcon } from 'lucide-react';
 import { useState, type ReactNode } from 'react';
 import { Eyebrow } from '../../../components/ui/Brand';
-import { focusRing } from '../../../components/ui/cx';
+import { Button } from '../../../components/ui/Button';
 import { Icon } from '../../../components/ui/Icon';
 import { QuoteModal, type QuoteTarget } from './QuoteModal';
 
@@ -29,14 +29,14 @@ const EXTRAS: ExtraService[] = [
       'Cenário ajustado, iluminação profissional estroboscópica e contínua, microfonação lapela sem fio e captação em 4K. Ideal para procedimentos estéticos e podcasts de saúde.',
     priceCaption: 'Valor referencial sugerido',
     price: (
-      <span className="font-heading-mobile text-heading-mobile md:font-heading md:text-heading text-bronze font-semibold">
+      <span className="font-heading text-heading-mobile text-ink md:text-heading">
         R$ 80,00<span className="font-body text-small text-ink-muted font-normal">/hora</span>
       </span>
     ),
   },
   {
     icon: Film,
-    chip: 'Operador Dedicado',
+    chip: 'Operador dedicado',
     title: 'Videomaker Dedicado',
     quoteTitle: 'Videomaker Dedicado',
     quoteMatch: /videomaker/i,
@@ -49,7 +49,7 @@ const EXTRAS: ExtraService[] = [
   },
   {
     icon: Megaphone,
-    chip: 'Captação de Pacientes',
+    chip: 'Captação de pacientes',
     title: 'Marketing para Saúde',
     quoteTitle: 'Marketing Digital para Saúde & Estética',
     quoteMatch: /marketing/i,
@@ -69,8 +69,8 @@ export function ExtrasSection() {
     <section className="w-full py-space-3xl bg-surface">
       <div className="max-w-7xl mx-auto px-gutter">
         <div className="text-center max-w-3xl mx-auto mb-space-2xl space-y-space-xs">
-          <Eyebrow>SERVIÇOS EXTRAS</Eyebrow>
-          <h2 className="font-display-l-mobile text-display-l-mobile md:font-display-l md:text-display-l text-ink">
+          <Eyebrow>Serviços extras</Eyebrow>
+          <h2 className="font-display text-display-l-mobile text-ink md:text-display-l">
             Potencialize sua marca e captação de clientes.
           </h2>
           <p className="font-body text-body text-ink-muted">
@@ -82,37 +82,38 @@ export function ExtrasSection() {
           {EXTRAS.map((extra) => (
             <article
               key={extra.title}
-              className="bg-surface-raised rounded-xl p-space-xl shadow-md flex flex-col justify-between"
+              className="bv-card flex flex-col justify-between sm:p-space-xl"
             >
               <div className="space-y-space-md">
-                <div className="w-12 h-12 rounded-full bg-champagne-soft text-bronze flex items-center justify-center">
+                <div className="flex h-12 w-12 items-center justify-center rounded-pill bg-surface-deboss text-accent shadow-deboss">
                   <Icon as={extra.icon} size={24} />
                 </div>
                 <div>
-                  <span className="font-caption text-caption uppercase tracking-wider text-bronze font-semibold">
+                  <span className="font-caption text-caption font-medium text-accent">
                     {extra.chip}
                   </span>
-                  <h3 className="font-heading-mobile text-heading-mobile md:font-heading md:text-heading text-ink mt-1">
+                  <h3 className="mt-1 font-heading text-heading-mobile text-ink md:text-heading">
                     {extra.title}
                   </h3>
                 </div>
                 <p className="font-small text-small text-ink-muted">{extra.description}</p>
-                <div className="p-space-sm bg-surface rounded">
+                <div className="rounded-md bg-surface-deboss px-space-md py-space-sm">
                   <span className="font-caption text-caption text-ink-muted block">
                     {extra.priceCaption}
                   </span>
                   {extra.price}
                 </div>
               </div>
-              <button
-                type="button"
-                className={`mt-space-lg w-full py-space-sm bg-surface hover:bg-surface-stone text-ink font-small text-small uppercase tracking-wider rounded transition-colors text-center ${focusRing}`}
+              <Button
+                variant="secondary"
+                block
+                className="mt-space-lg"
                 onClick={() => {
                   setQuoteService({ title: extra.quoteTitle, match: extra.quoteMatch });
                 }}
               >
-                Solicitar Orçamento
-              </button>
+                Solicitar orçamento
+              </Button>
             </article>
           ))}
         </div>

@@ -32,12 +32,12 @@ describe('PoliciesSection', () => {
     expect(
       screen.getByRole('heading', {
         level: 2,
-        name: 'Políticas de Reserva, Sinal e Cancelamento',
+        name: 'Políticas de reserva, sinal e cancelamento',
       }),
     ).toBeInTheDocument();
     expect(screen.getByText('Sinal de 50%')).toBeInTheDocument();
-    expect(screen.getByText('Saldo 48h Antes')).toBeInTheDocument();
-    expect(screen.getByText('Reagendamento Cortesia')).toBeInTheDocument();
+    expect(screen.getByText('Saldo 48h antes')).toBeInTheDocument();
+    expect(screen.getByText('Reagendamento cortesia')).toBeInTheDocument();
   });
 
   it('states that the sinal is not refundable and drops the reference refund promise', () => {
@@ -55,7 +55,7 @@ describe('LaunchCtaSection', () => {
     stubClinicConfig('');
     const { container } = renderWithProviders(<LaunchCtaSection />);
 
-    expect(screen.getByText('PRÉ-LANÇAMENTO EXCLUSIVO')).toBeInTheDocument();
+    expect(screen.getByText('Pré-lançamento exclusivo')).toBeInTheDocument();
     expect(
       screen.getByRole('heading', {
         level: 2,
@@ -64,7 +64,7 @@ describe('LaunchCtaSection', () => {
     ).toBeInTheDocument();
     expect(container.textContent).toContain('custos imobiliários na Praia Brava');
     expect(container.textContent).not.toContain('Jardins');
-    expect(screen.getByRole('link', { name: 'Reservar Horário Agora' })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: 'Reservar horário agora' })).toHaveAttribute(
       'href',
       '#simulador',
     );
@@ -74,7 +74,7 @@ describe('LaunchCtaSection', () => {
     stubClinicConfig('+5547999990000');
     renderWithProviders(<LaunchCtaSection />);
 
-    const link = screen.getByRole('link', { name: 'Tirar Dúvidas com Recepção' });
+    const link = screen.getByRole('link', { name: 'Tirar dúvidas com a recepção' });
     await waitFor(() => expect(link).toHaveAttribute('href', 'https://wa.me/5547999990000'));
     expect(link).toHaveAttribute('target', '_blank');
     expect(link).toHaveAttribute('rel', 'noopener noreferrer');
@@ -84,7 +84,7 @@ describe('LaunchCtaSection', () => {
     stubClinicConfig(null);
     renderWithProviders(<LaunchCtaSection />);
 
-    const link = screen.getByRole('link', { name: 'Tirar Dúvidas com Recepção' });
+    const link = screen.getByRole('link', { name: 'Tirar dúvidas com a recepção' });
     await waitFor(() => expect(vi.mocked(fetch)).toHaveBeenCalled());
     expect(link).toHaveAttribute('href', 'https://wa.me/');
   });
