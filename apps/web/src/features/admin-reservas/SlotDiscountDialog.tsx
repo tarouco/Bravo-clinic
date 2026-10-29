@@ -133,7 +133,7 @@ export function SlotDiscountDialog({ prefill, onClose }: SlotDiscountDialogProps
             />
           ))}
           {errors['roomIds'] ? (
-            <p className="font-caption text-caption text-error">{errors['roomIds']}</p>
+            <p className="font-caption text-caption text-danger">{errors['roomIds']}</p>
           ) : null}
         </fieldset>
         <Input

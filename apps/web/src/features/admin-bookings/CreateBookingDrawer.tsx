@@ -134,7 +134,7 @@ function CreateForm({ request, onClose }: { request: CreateRequest; onClose: () 
       <div>
         <CustomerPicker value={customer} onChange={setCustomer} />
         {errors['userId'] ? (
-          <p className="mt-space-xs font-caption text-caption text-error">{errors['userId']}</p>
+          <p className="mt-space-xs font-caption text-caption text-danger">{errors['userId']}</p>
         ) : null}
       </div>
       <Select

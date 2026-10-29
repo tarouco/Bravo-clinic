@@ -19,6 +19,7 @@ import {
 } from '../../../components/calendar/schedule';
 import { WeekCalendar, weekRange } from '../../../components/calendar/WeekCalendar';
 import { Button } from '../../../components/ui/Button';
+import { Chip } from '../../../components/ui/Chip';
 import { cx } from '../../../components/ui/cx';
 import { Alert, Spinner } from '../../../components/ui/Feedback';
 import { Select } from '../../../components/ui/form';
@@ -85,7 +86,7 @@ function FreeSlotTrigger({
           type="button"
           tabIndex={-1}
           aria-label={label}
-          className="absolute inset-0 flex items-center justify-center text-bronze opacity-0 hover:opacity-100 focus:opacity-100"
+          className="absolute inset-0 flex items-center justify-center text-accent opacity-0 hover:opacity-100 focus:opacity-100"
           {...props}
         >
           <Icon as={Plus} size={14} />
@@ -217,6 +218,7 @@ export function ReservationsCalendar() {
           {roomName(block.roomId)} · {bookingWhen(block.startsAt, block.endsAt)}
         </p>
         <Button
+          className="text-danger"
           size="sm"
           variant="secondary"
           loading={removeBlock.isPending}
@@ -282,24 +284,22 @@ export function ReservationsCalendar() {
             </option>
           ))}
         </Select>
-        <div role="group" aria-label="Visualização" className="flex gap-space-xs">
+        <div role="group" aria-label="Visualização" className="bv-chips mb-1">
           {(
             [
               ['week', 'Semana'],
               ['month', 'Mês'],
             ] as const
           ).map(([id, label]) => (
-            <Button
+            <Chip
               key={id}
-              size="sm"
-              variant={view === id ? 'primary' : 'secondary'}
-              aria-pressed={view === id}
+              selected={view === id}
               onClick={() => {
                 setView(id);
               }}
             >
               {label}
-            </Button>
+            </Chip>
           ))}
         </div>
       </div>
@@ -313,10 +313,7 @@ export function ReservationsCalendar() {
             >
               <span
                 aria-hidden="true"
-                className={cx(
-                  'inline-block h-3 w-3 rounded-control border',
-                  TONE_CLASSES[item.tone],
-                )}
+                className={cx('inline-block h-3 w-3 rounded-pill border', TONE_CLASSES[item.tone])}
               />
               {item.label}
             </li>

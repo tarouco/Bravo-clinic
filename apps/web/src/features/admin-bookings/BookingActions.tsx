@@ -236,7 +236,13 @@ function CancelForm({ booking, onClose }: BookingDialogProps) {
         <Button variant="secondary" onClick={onClose}>
           Manter reserva
         </Button>
-        <Button loading={cancel.isPending} disabled={!data} onClick={submit}>
+        <Button
+          className="text-danger"
+          variant="secondary"
+          loading={cancel.isPending}
+          disabled={!data}
+          onClick={submit}
+        >
           Confirmar cancelamento
         </Button>
       </div>

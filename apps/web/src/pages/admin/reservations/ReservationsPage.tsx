@@ -45,7 +45,7 @@ export function ReservationsPage() {
   return (
     <div className="mx-auto max-w-7xl space-y-space-lg">
       <div className="flex flex-wrap items-center justify-between gap-space-sm">
-        <h1 className="font-heading text-heading-mobile text-ink md:text-heading">
+        <h1 className="font-display-l-mobile text-display-l-mobile text-ink lg:font-display-l lg:text-display-l">
           Gestão de Reservas
         </h1>
         <div className="flex flex-wrap gap-space-sm">
@@ -54,7 +54,8 @@ export function ReservationsPage() {
       </div>
       <nav
         aria-label="Seções de Gestão de Reservas"
-        className="flex gap-space-lg border-b border-hairline"
+        // The Tabs look as route links: a sunken pill track, the current section a raised pearl pill.
+        className="inline-flex max-w-full gap-1 overflow-x-auto rounded-pill bg-surface-deboss p-1 shadow-deboss"
       >
         {links.map((link) => (
           <NavLink
@@ -63,10 +64,10 @@ export function ReservationsPage() {
             end={link.end}
             className={({ isActive }) =>
               cx(
-                '-mb-px border-b-2 px-space-xs py-space-sm font-small text-small transition-colors',
+                'shrink-0 whitespace-nowrap rounded-pill px-4 py-2 font-small text-small transition-colors',
                 isActive
-                  ? 'border-bronze text-bronze'
-                  : 'border-transparent text-ink-muted hover:text-ink',
+                  ? 'bg-surface-raised font-semibold text-ink shadow-[var(--lift-1),var(--rim)]'
+                  : 'text-ink-muted hover:bg-glass-hover hover:text-ink',
                 focusRing,
               )
             }
