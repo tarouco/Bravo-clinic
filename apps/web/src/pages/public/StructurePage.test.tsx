@@ -23,7 +23,7 @@ describe('StructurePage', () => {
     expect(
       screen.getByRole('heading', { level: 2, name: 'Recepção e convivência' }),
     ).toBeInTheDocument();
-    expect(screen.getAllByRole('figure')).toHaveLength(8);
+    expect(screen.getAllByRole('figure')).toHaveLength(11);
   });
 
   it('opens a video in a modal that plays on its own, in a loop, with controls', async () => {

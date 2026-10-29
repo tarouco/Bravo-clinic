@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { ArchitectureSection } from './ArchitectureSection';
 import { ExtrasSection } from './ExtrasSection';
 import { HeroSection } from './HeroSection';
+import { IntroVideoModal } from './IntroVideoModal';
 import { AmenitiesSection, LaunchCtaSection, PoliciesSection } from './HomeStaticSections';
 import { PricingSimulatorSection } from './PricingSimulatorSection';
 import { ReceptionBandSection } from './ReceptionBandSection';
@@ -21,6 +22,7 @@ export function HomePage() {
   // Every section below the hero renders only near the viewport (`defer-render`, GES-143).
   return (
     <div className="flex flex-col w-full">
+      <IntroVideoModal />
       <HeroSection />
       <div className="defer-render">
         <ArchitectureSection />

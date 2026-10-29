@@ -44,6 +44,16 @@ const GALLERY: { title: string; photos: GalleryPhoto[] }[] = [
     title: 'Salas',
     photos: [
       {
+        src: '/images/sala-principal-01.webp',
+        alt: 'Sala Principal com papel de parede botânico, pendentes de vidro, poltronas em bouclé, mesa de mármore e maca',
+        caption: 'Sala Principal · 01',
+      },
+      {
+        src: '/images/sala-principal-02.webp',
+        alt: 'Profissional atendendo um paciente na maca da Sala Principal, com a mesa de mármore e as poltronas ao fundo',
+        caption: 'Sala Principal · 02',
+      },
+      {
         src: '/images/sala-principal.webp',
         alt: 'Sala Principal com maca motorizada, mesa de mármore orgânica e poltronas em bouclé',
         caption: 'Sala Principal',
@@ -73,6 +83,11 @@ const GALLERY: { title: string; photos: GalleryPhoto[] }[] = [
   {
     title: 'Recepção e convivência',
     photos: [
+      {
+        src: '/images/recepcao-balcao.webp',
+        alt: 'Recepção com balcão ripado iluminado, cadeiras em bouclé e o letreiro Bravo Clinic em dourado',
+        caption: 'Recepção',
+      },
       {
         src: '/images/recepcao-lounge.webp',
         alt: 'Lounge da recepção com sofá curvo, quadros em tons de areia e ripado curvo iluminado',
