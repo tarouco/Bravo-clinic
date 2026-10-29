@@ -745,6 +745,17 @@
   }
 }
 
+/* ---------- Derived (AD-042): states the kit leaves out ---------- */
+.bv-chip:disabled,
+.bv-day:disabled {
+  opacity: 0.42;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+.bv-card--emerald .bv-card-eyebrow {
+  color: var(--gold);
+}
+
 /* ---------- Derived (AD-042): fields sink, actions rise ---------- */
 .bv-field {
   width: 100%;

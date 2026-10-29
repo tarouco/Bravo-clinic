@@ -88,11 +88,16 @@ describe('tokens.css', () => {
     }
   });
 
-  it('keeps the v2 names only as aliases of v3 values', () => {
-    expect(sharedBlock.get('--c-bronze')).toBe('var(--c-accent)');
-    expect(sharedBlock.get('--c-champagne')).toBe('var(--c-gold)');
-    expect(sharedBlock.get('--c-walnut')).toBe('var(--c-accent-deep)');
-    expect(sharedBlock.get('--c-on-surface')).toBe('var(--c-ink)');
+  it('no longer defines the v2 names (AD-039 step 2)', () => {
+    for (const name of [
+      '--c-bronze',
+      '--c-champagne',
+      '--c-walnut',
+      '--c-on-surface',
+      '--c-error',
+    ]) {
+      expect(css.includes(`${name}:`), name).toBe(false);
+    }
   });
 
   it('sets color-scheme per theme', () => {

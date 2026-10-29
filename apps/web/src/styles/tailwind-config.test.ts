@@ -28,7 +28,7 @@ describe('tailwind.config.ts design tokens', () => {
     for (const key of channelColors) {
       expect(colors[key], `color ${key}`).toBe(`rgb(var(--c-${key}) / <alpha-value>)`);
     }
-    for (const key of ['accent', 'danger', 'bronze', 'champagne']) {
+    for (const key of ['accent', 'accent-deep', 'danger', 'danger-soft']) {
       expect(colors[key], `color ${key}`).toBe(`rgb(var(--c-${key}) / <alpha-value>)`);
     }
   });
@@ -74,7 +74,7 @@ describe('tailwind.config.ts design tokens', () => {
     }
   });
 
-  it('uses the v3 radius scale and maps the v2 aliases onto it', () => {
+  it('uses the v3 radius scale without the v2 aliases', () => {
     const radius: Record<string, string> = extend.borderRadius;
     expect(radius).toMatchObject({
       sm: '16px',
@@ -84,9 +84,7 @@ describe('tailwind.config.ts design tokens', () => {
       pill: '9999px',
     });
     expect(radius['full']).toBe('9999px');
-    expect(radius['control']).toBe('9999px');
-    expect(radius['card']).toBe('28px');
-    expect(radius['feature']).toBe('34px');
+    expect(radius['control']).toBeUndefined();
   });
 
   it('keeps the semantic spacing names and the Tailwind default scale', () => {
