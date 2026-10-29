@@ -129,7 +129,7 @@ export function DeleteAccountModal({ onClose, onDone }: DeleteAccountModalProps)
           </div>
         ) : null}
 
-        <div className="flex flex-wrap justify-end gap-space-sm">
+        <div className="bv-modal-actions flex-wrap">
           <Button variant="secondary" onClick={onClose}>
             Cancelar
           </Button>
