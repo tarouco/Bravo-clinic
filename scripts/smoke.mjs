@@ -55,7 +55,9 @@ const checks = [
       // hero headline next to the <title> and the LocalBusiness JSON-LD.
       const { status, body } = await get('/');
       const title = /<title[^>]*>([^<]*)<\/title>/i.exec(body)?.[1] ?? '';
-      const headline = /<h1[^>]*>Saúde, beleza e bem-estar em um só lugar\.<\/h1>/.test(body);
+      // Compared as text: the hero keeps "bem-estar" in a no-wrap span.
+      const h1Text = (/<h1[^>]*>([\s\S]*?)<\/h1>/i.exec(body)?.[1] ?? '').replace(/<[^>]+>/g, '');
+      const headline = h1Text === 'Saúde, beleza e bem-estar em um só lugar.';
       const jsonLd = [
         ...body.matchAll(/<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/gi),
       ]
