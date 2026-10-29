@@ -21,8 +21,11 @@ export interface PopoverProps {
   className?: string;
 }
 
-export const panelClasses =
-  'w-72 max-w-[calc(100vw-1rem)] rounded-card border border-hairline bg-surface-raised p-space-md text-ink shadow-raised';
+/**
+ * The v3 glass menu (`bv-menu`: glass, blurred backdrop, radius-md, lift-3 with rim). Never over
+ * another glass layer: inside a glass panel, use a pearl `Card` instead.
+ */
+export const panelClasses = 'bv-menu w-72 max-w-[calc(100vw-1rem)] p-space-md text-ink';
 
 /**
  * Click-to-open floating panel anchored to its trigger. Escape or a click outside closes it;

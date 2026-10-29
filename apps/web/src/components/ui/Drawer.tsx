@@ -1,9 +1,8 @@
 import { X } from 'lucide-react';
 import { useId, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
-import { Button } from './Button';
 import { cx } from './cx';
-import { Icon } from './Icon';
+import { IconButton } from './IconButton';
 import { useDialog } from './useDialog';
 
 export interface DrawerProps {
@@ -30,7 +29,7 @@ function DrawerPanel({
   return (
     <div
       className={cx(
-        'fixed inset-0 z-[60] flex bg-surface-night/60 backdrop-blur-sm',
+        'bv-scrim items-stretch p-0',
         side === 'right' ? 'justify-end' : 'justify-start',
       )}
       onMouseDown={(event) => {
@@ -45,23 +44,17 @@ function DrawerPanel({
         tabIndex={-1}
         onKeyDown={trapTab}
         className={cx(
-          'flex h-full w-full flex-col overflow-y-auto bg-surface-raised p-space-lg text-ink shadow-raised focus:outline-none',
+          // Pearl side sheet, 34px on the inner edge only (the outer edge meets the viewport).
+          'flex h-full w-full flex-col overflow-y-auto bg-surface-raised p-space-lg text-ink shadow-panel focus:outline-none',
+          side === 'right' ? 'rounded-l-xl' : 'rounded-r-xl',
           wide ? 'max-w-3xl' : 'max-w-md',
         )}
       >
         <div className="mb-space-md flex items-start justify-between gap-space-md">
-          <h2 id={titleId} className="font-heading text-heading-mobile text-ink">
+          <h2 id={titleId} className="bv-modal-title">
             {title}
           </h2>
-          <Button
-            variant="ghost"
-            size="sm"
-            aria-label="Fechar"
-            className="w-10 shrink-0 px-0"
-            onClick={onClose}
-          >
-            <Icon as={X} />
-          </Button>
+          <IconButton icon={X} label="Fechar" size="sm" className="shrink-0" onClick={onClose} />
         </div>
         {children}
       </div>

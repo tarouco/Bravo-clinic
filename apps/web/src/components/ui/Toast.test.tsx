@@ -63,6 +63,17 @@ describe('Toast', () => {
   });
 });
 
+describe('Toast look', () => {
+  it('is a pearl card with lift-3 and an icon in the tone color', () => {
+    setup({ message: 'Não foi possível salvar', tone: 'error' });
+    fireEvent.click(screen.getByRole('button', { name: 'Disparar' }));
+
+    const toast = screen.getByRole('status');
+    expect(toast).toHaveClass('rounded-md', 'bg-surface-raised', 'shadow-panel');
+    expect(toast.querySelector('svg')).toHaveClass('text-danger');
+  });
+});
+
 describe('Alert, Spinner and ComingSoon', () => {
   it('renders an error Alert with role="alert"', () => {
     render(<Alert tone="error">Falha ao salvar</Alert>);
@@ -78,6 +89,20 @@ describe('Alert, Spinner and ComingSoon', () => {
     );
     expect(screen.queryByRole('alert')).toBeNull();
     expect(screen.getAllByRole('status')).toHaveLength(2);
+  });
+
+  it('paints each tone with the derived status colors', () => {
+    render(
+      <>
+        <Alert tone="error">Erro</Alert>
+        <Alert tone="success">Sucesso</Alert>
+        <Alert tone="warning">Aviso</Alert>
+      </>,
+    );
+    expect(screen.getByRole('alert')).toHaveClass('rounded-md', 'bg-danger-soft', 'text-danger');
+    const [success, warning] = screen.getAllByRole('status');
+    expect(success).toHaveClass('bg-emerald', 'text-on-emerald');
+    expect(warning).toHaveClass('bg-gold', 'text-on-gold');
   });
 
   it('renders a Spinner with an accessible name', () => {

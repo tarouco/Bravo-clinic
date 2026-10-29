@@ -71,7 +71,8 @@ describe('Drawer', () => {
     render(<Harness side="left" />);
     await userEvent.click(screen.getByRole('button', { name: 'Abrir reserva' }));
     const backdrop = screen.getByRole('dialog').parentElement as HTMLElement;
-    expect(backdrop).toHaveClass('justify-start');
+    expect(backdrop).toHaveClass('bv-scrim', 'justify-start');
+    expect(screen.getByRole('dialog')).toHaveClass('bg-surface-raised', 'rounded-r-xl');
 
     await userEvent.click(backdrop);
 
