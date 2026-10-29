@@ -1,0 +1,583 @@
+{
+  "base": {
+    "spacing": {
+      "space-1": {
+        "$type": "dimension",
+        "$value": "4px",
+        "$description": "Icon-to-label gaps."
+      },
+      "space-2": {
+        "$type": "dimension",
+        "$value": "8px",
+        "$description": "Chip gaps, tight stacks."
+      },
+      "space-3": {
+        "$type": "dimension",
+        "$value": "12px",
+        "$description": "Gaps between buttons and list rows."
+      },
+      "space-4": {
+        "$type": "dimension",
+        "$value": "16px",
+        "$description": "Inner gaps in tiles; gap between app cards."
+      },
+      "space-5": {
+        "$type": "dimension",
+        "$value": "20px",
+        "$description": "Side margin of app screens; tile padding."
+      },
+      "space-6": {
+        "$type": "dimension",
+        "$value": "24px",
+        "$description": "Card padding and the gap between web cards."
+      },
+      "space-8": {
+        "$type": "dimension",
+        "$value": "32px",
+        "$description": "Panel padding."
+      },
+      "space-12": {
+        "$type": "dimension",
+        "$value": "48px",
+        "$description": "Between sections on mobile; how far an overlapping element may hang past its panel."
+      },
+      "space-16": {
+        "$type": "dimension",
+        "$value": "64px",
+        "$description": "Between sections on desktop; stage padding."
+      }
+    },
+    "radius": {
+      "radius-sm": {
+        "$type": "dimension",
+        "$value": "16px",
+        "$description": "Amenity icon tiles, thumbnails and small squares."
+      },
+      "radius-md": {
+        "$type": "dimension",
+        "$value": "24px",
+        "$description": "App tiles, list cards and booking rows."
+      },
+      "radius-lg": {
+        "$type": "dimension",
+        "$value": "28px",
+        "$description": "Cards (web and app) and feature cards."
+      },
+      "radius-xl": {
+        "$type": "dimension",
+        "$value": "34px",
+        "$description": "Panels, bottom sheets and the web stage panel."
+      },
+      "radius-pill": {
+        "$type": "dimension",
+        "$value": "9999px",
+        "$description": "Every button, chip, toggle, nav bar, nav item, week strip and tab bar."
+      }
+    },
+    "blur": {
+      "blur-glass": {
+        "$type": "dimension",
+        "$value": "20px",
+        "$description": "`glass` panels, menus and the tab bar."
+      },
+      "blur-hover": {
+        "$type": "dimension",
+        "$value": "8px",
+        "$description": "Nav item hover shading."
+      },
+      "blur-scrim": {
+        "$type": "dimension",
+        "$value": "6px",
+        "$description": "The `scrim` behind modals."
+      }
+    },
+    "fontFamily": {
+      "display": {
+        "$type": "fontFamily",
+        "$value": "\"Josefin Sans\", \"Futura\", \"Century Gothic\", system-ui, sans-serif"
+      },
+      "sans": {
+        "$type": "fontFamily",
+        "$value": "\"Jost\", \"Futura\", system-ui, sans-serif"
+      }
+    },
+    "gradient": {
+      "emerald": {
+        "$type": "gradient",
+        "$value": [
+          {
+            "color": "#127a5e",
+            "position": 0
+          },
+          {
+            "color": "#0f6b52",
+            "position": 0.4
+          },
+          {
+            "color": "#0a3b2c",
+            "position": 1
+          }
+        ]
+      },
+      "gold": {
+        "$type": "gradient",
+        "$value": [
+          {
+            "color": "#fff6cf",
+            "position": 0
+          },
+          {
+            "color": "#ffeb97",
+            "position": 0.45
+          },
+          {
+            "color": "#e9c978",
+            "position": 1
+          }
+        ]
+      },
+      "luxe": {
+        "$type": "gradient",
+        "$value": [
+          {
+            "color": "#ffeb97",
+            "position": 0
+          },
+          {
+            "color": "#583714",
+            "position": 1
+          }
+        ]
+      }
+    },
+    "typography": {
+      "display-xl": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.display}",
+          "fontSize": "54px",
+          "lineHeight": "58px",
+          "fontWeight": 300,
+          "letterSpacing": "0.1em"
+        },
+        "$description": "Hero lines and the name set in type. Uppercase."
+      },
+      "display-l": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.display}",
+          "fontSize": "30px",
+          "lineHeight": "34px",
+          "fontWeight": 300,
+          "letterSpacing": "0.02em"
+        },
+        "$description": "Web hero card titles and app screen titles (Olá, Helena; Agenda). Sentence case."
+      },
+      "heading": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.display}",
+          "fontSize": "19px",
+          "lineHeight": "26px",
+          "fontWeight": 400,
+          "letterSpacing": "0.04em"
+        },
+        "$description": "Card and tile titles, sentence case."
+      },
+      "eyebrow": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.display}",
+          "fontSize": "11px",
+          "lineHeight": "16px",
+          "fontWeight": 400,
+          "letterSpacing": "0.32em"
+        },
+        "$description": "Wide-tracked uppercase labels above titles, in `emerald` or `ink-muted`."
+      },
+      "lead": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.sans}",
+          "fontSize": "15px",
+          "lineHeight": "24px",
+          "fontWeight": 400
+        },
+        "$description": "The one sentence under a hero title."
+      },
+      "body": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.sans}",
+          "fontSize": "14px",
+          "lineHeight": "22px",
+          "fontWeight": 400
+        },
+        "$description": "Default card text; one sentence per card."
+      },
+      "label": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.sans}",
+          "fontSize": "14.5px",
+          "lineHeight": "16px",
+          "fontWeight": 500,
+          "letterSpacing": "0.04em"
+        },
+        "$description": "Button and chip labels: one word whenever possible."
+      },
+      "caption": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.sans}",
+          "fontSize": "12px",
+          "lineHeight": "18px",
+          "fontWeight": 400
+        },
+        "$description": "Metadata, tile counts and tab captions in `ink-muted`."
+      }
+    }
+  },
+  "dia": {
+    "color": {
+      "surface": {
+        "$type": "color",
+        "$value": "#e7e6e3",
+        "$description": "Cinza Névoa: the deepest layer, the page ground of every web and app screen. Night: deep brown."
+      },
+      "surface-panel": {
+        "$type": "color",
+        "$value": "#f3f2ef",
+        "$description": "The middle layer: large panels and sheets that hold cards, one step above `surface`."
+      },
+      "surface-raised": {
+        "$type": "color",
+        "$value": "#fbfaf8",
+        "$description": "Branco Pérola: the top layer. Cards, tiles, nav bar, chips and white pill buttons."
+      },
+      "surface-deboss": {
+        "$type": "color",
+        "$value": "#eeedea",
+        "$description": "The sunken pill behind the active nav item (low relief)."
+      },
+      "ink": {
+        "$type": "color",
+        "$value": "#583714",
+        "$description": "Marrom Luxo as the text color: headings and body on `surface`, `surface-panel` and `surface-raised` (8.5:1 or more in both themes)."
+      },
+      "ink-muted": {
+        "$type": "color",
+        "$value": "#6b5a48",
+        "$description": "Secondary text, captions and metadata on `surface`, `surface-panel`, `surface-raised` and `surface-deboss` (5.2:1 or more in both themes)."
+      },
+      "border": {
+        "$type": "color",
+        "$value": "#8f7a66",
+        "$description": "Input and control outlines; 3:1 or more on every surface in both themes."
+      },
+      "hairline": {
+        "$type": "color",
+        "$value": "rgba(88, 55, 20, 0.1)",
+        "$description": "Decorative dividers inside cards and lists. Not a control border."
+      },
+      "emerald": {
+        "$type": "color",
+        "$value": "#0f6b52",
+        "$description": "Verde Esmeralda: the primary action and the active state (Reservar, selected day, toggle on, FAB). Gradient start; text on it is `on-emerald`. 5.2:1 as text on `surface` in Day."
+      },
+      "emerald-deep": {
+        "$type": "color",
+        "$value": "#0a3b2c",
+        "$description": "The dark end of the emerald gradient and the silk shadows on emerald cards. Never a flat fill on its own."
+      },
+      "on-emerald": {
+        "$type": "color",
+        "$value": "#fbfaf8",
+        "$description": "Text and icons on `emerald` fills (6.2:1); `gold` also reads on emerald (5.4:1) for titles."
+      },
+      "gold": {
+        "$type": "color",
+        "$value": "#ffeb97",
+        "$description": "Ouro: highlights, the one special card per screen, price tags and the secondary pill button. Text on it is `on-gold`. Never text on light surfaces."
+      },
+      "gold-deep": {
+        "$type": "color",
+        "$value": "#e9c978",
+        "$description": "The warm end of the gold gradient and the neon color on brown buttons. Decorative, not text."
+      },
+      "on-gold": {
+        "$type": "color",
+        "$value": "#583714",
+        "$description": "Text and icons on `gold` fills (8.9:1)."
+      },
+      "brown": {
+        "$type": "color",
+        "$value": "#583714",
+        "$description": "Marrom Luxo as a fill: the tertiary pill button and dark accents. Text on it is `on-brown`."
+      },
+      "on-brown": {
+        "$type": "color",
+        "$value": "#ffeb97",
+        "$description": "Text on `brown` fills (8.9:1 Day)."
+      },
+      "neon": {
+        "$type": "color",
+        "$value": "#19b38a",
+        "$description": "The neon stroke that runs around a button's border on hover and lights fully when clicked or selected. Decorative light, never text."
+      },
+      "neon-hot": {
+        "$type": "color",
+        "$value": "#7ff0cf",
+        "$description": "The bright head of the running neon stroke."
+      },
+      "glass": {
+        "$type": "color",
+        "$value": "rgba(243, 242, 239, 0.82)",
+        "$description": "Translucent panel (with `blur-glass`) floating over imagery: the web stage panel, menus, modal panels. `ink` stays legible over any content."
+      },
+      "glass-bar": {
+        "$type": "color",
+        "$value": "rgba(251, 250, 248, 0.86)",
+        "$description": "The app tab bar and floating bars (with `blur-glass`); icons in `ink-muted`, active in `emerald`."
+      },
+      "glass-hover": {
+        "$type": "color",
+        "$value": "rgba(88, 55, 20, 0.07)",
+        "$description": "Translucent shading of a nav item or menu row on hover."
+      },
+      "scrim": {
+        "$type": "color",
+        "$value": "rgba(46, 30, 12, 0.36)",
+        "$description": "The dimmed layer behind a modal or bottom sheet (`blur-scrim`). Never behind menus."
+      },
+      "focus-ring": {
+        "$type": "color",
+        "$value": "{color.emerald}",
+        "$description": "Keyboard focus outline, 2px with a 4px offset; 5:1 or more on every surface in both themes."
+      }
+    },
+    "shadow": {
+      "lift-1": {
+        "$type": "shadow",
+        "$value": "0 1px 2px rgba(60, 45, 30, 0.06), 0 4px 10px rgba(60, 45, 30, 0.06)",
+        "$description": "Level 1: small elements resting on a card (avatars, thumbnails)."
+      },
+      "lift-2": {
+        "$type": "shadow",
+        "$value": "0 2px 4px rgba(60, 45, 30, 0.06), 0 12px 28px rgba(60, 45, 30, 0.1), 0 30px 60px rgba(60, 45, 30, 0.08)",
+        "$description": "Level 2: cards and tiles floating over a panel."
+      },
+      "lift-3": {
+        "$type": "shadow",
+        "$value": "0 4px 8px rgba(60, 45, 30, 0.08), 0 24px 48px rgba(60, 45, 30, 0.16), 0 48px 90px rgba(60, 45, 30, 0.12)",
+        "$description": "Level 3: the panel, the nav bar, the tab bar, emerald feature cards and anything that overlaps another layer."
+      },
+      "rim": {
+        "$type": "shadow",
+        "$value": "inset 0 1px 0 rgba(255, 255, 255, 0.95), inset 0 -1px 0 rgba(60, 45, 30, 0.06)",
+        "$description": "The light-catching top edge every raised surface carries, combined with a `lift-*`."
+      },
+      "relief-pearl": {
+        "$type": "shadow",
+        "$value": "inset 0 1px 0 #ffffff, inset 0 -2px 4px rgba(60, 45, 30, 0.08), 0 2px 4px rgba(60, 45, 30, 0.1), 0 10px 22px rgba(60, 45, 30, 0.14)",
+        "$description": "High relief for white pill buttons, chips, icon buttons and knobs."
+      },
+      "relief-emerald": {
+        "$type": "shadow",
+        "$value": "inset 0 1px 0 rgba(255, 255, 255, 0.28), inset 0 -2px 5px rgba(5, 30, 22, 0.35), 0 2px 4px rgba(10, 59, 44, 0.25), 0 10px 22px rgba(10, 59, 44, 0.28)",
+        "$description": "High relief for emerald pill buttons, the FAB and selected chips."
+      },
+      "relief-gold": {
+        "$type": "shadow",
+        "$value": "inset 0 1px 0 rgba(255, 255, 255, 0.8), inset 0 -2px 5px rgba(88, 55, 20, 0.18), 0 2px 4px rgba(88, 55, 20, 0.15), 0 10px 22px rgba(88, 55, 20, 0.18)",
+        "$description": "High relief for gold pill buttons, price tags and the avatar."
+      },
+      "relief-brown": {
+        "$type": "shadow",
+        "$value": "inset 0 1px 0 rgba(255, 235, 151, 0.3), inset 0 -2px 5px rgba(30, 18, 6, 0.4), 0 10px 22px rgba(88, 55, 20, 0.28)",
+        "$description": "High relief for brown pill buttons."
+      },
+      "deboss": {
+        "$type": "shadow",
+        "$value": "inset 0 2px 5px rgba(60, 45, 30, 0.22), inset 0 -1px 0 rgba(255, 255, 255, 0.95), 0 1px 0 rgba(255, 255, 255, 0.9)",
+        "$description": "Low relief: the pressed state of every button and the sunken pill of the active nav item."
+      },
+      "neon-glow": {
+        "$type": "shadow",
+        "$value": "0 0 0 1px rgba(25, 179, 138, 0.6), 0 0 16px rgba(25, 179, 138, 0.45)",
+        "$description": "Static glow for a selected element where the animated ring cannot be drawn."
+      }
+    }
+  },
+  "noite": {
+    "color": {
+      "surface": {
+        "$type": "color",
+        "$value": "#3d260d",
+        "$description": "Cinza Névoa: the deepest layer, the page ground of every web and app screen. Night: deep brown."
+      },
+      "surface-panel": {
+        "$type": "color",
+        "$value": "#4a2e10",
+        "$description": "The middle layer: large panels and sheets that hold cards, one step above `surface`."
+      },
+      "surface-raised": {
+        "$type": "color",
+        "$value": "#583714",
+        "$description": "Branco Pérola: the top layer. Cards, tiles, nav bar, chips and white pill buttons."
+      },
+      "surface-deboss": {
+        "$type": "color",
+        "$value": "#3a240c",
+        "$description": "The sunken pill behind the active nav item (low relief)."
+      },
+      "ink": {
+        "$type": "color",
+        "$value": "#ffeb97",
+        "$description": "Marrom Luxo as the text color: headings and body on `surface`, `surface-panel` and `surface-raised` (8.5:1 or more in both themes)."
+      },
+      "ink-muted": {
+        "$type": "color",
+        "$value": "#e6d3a3",
+        "$description": "Secondary text, captions and metadata on `surface`, `surface-panel`, `surface-raised` and `surface-deboss` (5.2:1 or more in both themes)."
+      },
+      "border": {
+        "$type": "color",
+        "$value": "#b08f5f",
+        "$description": "Input and control outlines; 3:1 or more on every surface in both themes."
+      },
+      "hairline": {
+        "$type": "color",
+        "$value": "rgba(255, 235, 151, 0.14)",
+        "$description": "Decorative dividers inside cards and lists. Not a control border."
+      },
+      "emerald": {
+        "$type": "color",
+        "$value": "#0f6b52",
+        "$description": "Verde Esmeralda: the primary action and the active state (Reservar, selected day, toggle on, FAB). Gradient start; text on it is `on-emerald`. 5.2:1 as text on `surface` in Day."
+      },
+      "emerald-deep": {
+        "$type": "color",
+        "$value": "#0a3b2c",
+        "$description": "The dark end of the emerald gradient and the silk shadows on emerald cards. Never a flat fill on its own."
+      },
+      "on-emerald": {
+        "$type": "color",
+        "$value": "#fbfaf8",
+        "$description": "Text and icons on `emerald` fills (6.2:1); `gold` also reads on emerald (5.4:1) for titles."
+      },
+      "gold": {
+        "$type": "color",
+        "$value": "#ffeb97",
+        "$description": "Ouro: highlights, the one special card per screen, price tags and the secondary pill button. Text on it is `on-gold`. Never text on light surfaces."
+      },
+      "gold-deep": {
+        "$type": "color",
+        "$value": "#e9c978",
+        "$description": "The warm end of the gold gradient and the neon color on brown buttons. Decorative, not text."
+      },
+      "on-gold": {
+        "$type": "color",
+        "$value": "#583714",
+        "$description": "Text and icons on `gold` fills (8.9:1)."
+      },
+      "brown": {
+        "$type": "color",
+        "$value": "#6d4c24",
+        "$description": "Marrom Luxo as a fill: the tertiary pill button and dark accents. Text on it is `on-brown`."
+      },
+      "on-brown": {
+        "$type": "color",
+        "$value": "#ffeb97",
+        "$description": "Text on `brown` fills (8.9:1 Day)."
+      },
+      "neon": {
+        "$type": "color",
+        "$value": "#3fd1a8",
+        "$description": "The neon stroke that runs around a button's border on hover and lights fully when clicked or selected. Decorative light, never text."
+      },
+      "neon-hot": {
+        "$type": "color",
+        "$value": "#a8f7df",
+        "$description": "The bright head of the running neon stroke."
+      },
+      "glass": {
+        "$type": "color",
+        "$value": "rgba(88, 55, 20, 0.78)",
+        "$description": "Translucent panel (with `blur-glass`) floating over imagery: the web stage panel, menus, modal panels. `ink` stays legible over any content."
+      },
+      "glass-bar": {
+        "$type": "color",
+        "$value": "rgba(88, 55, 20, 0.86)",
+        "$description": "The app tab bar and floating bars (with `blur-glass`); icons in `ink-muted`, active in `emerald`."
+      },
+      "glass-hover": {
+        "$type": "color",
+        "$value": "rgba(255, 235, 151, 0.1)",
+        "$description": "Translucent shading of a nav item or menu row on hover."
+      },
+      "scrim": {
+        "$type": "color",
+        "$value": "rgba(20, 12, 4, 0.6)",
+        "$description": "The dimmed layer behind a modal or bottom sheet (`blur-scrim`). Never behind menus."
+      },
+      "focus-ring": {
+        "$type": "color",
+        "$value": "{color.gold}",
+        "$description": "Keyboard focus outline, 2px with a 4px offset; 5:1 or more on every surface in both themes."
+      }
+    },
+    "shadow": {
+      "lift-1": {
+        "$type": "shadow",
+        "$value": "0 1px 2px rgba(20, 12, 4, 0.4), 0 4px 10px rgba(20, 12, 4, 0.3)",
+        "$description": "Level 1: small elements resting on a card (avatars, thumbnails)."
+      },
+      "lift-2": {
+        "$type": "shadow",
+        "$value": "0 2px 4px rgba(20, 12, 4, 0.4), 0 12px 28px rgba(20, 12, 4, 0.4), 0 30px 60px rgba(20, 12, 4, 0.3)",
+        "$description": "Level 2: cards and tiles floating over a panel."
+      },
+      "lift-3": {
+        "$type": "shadow",
+        "$value": "0 4px 8px rgba(20, 12, 4, 0.45), 0 24px 48px rgba(20, 12, 4, 0.5), 0 48px 90px rgba(20, 12, 4, 0.4)",
+        "$description": "Level 3: the panel, the nav bar, the tab bar, emerald feature cards and anything that overlaps another layer."
+      },
+      "rim": {
+        "$type": "shadow",
+        "$value": "inset 0 1px 0 rgba(255, 235, 151, 0.22), inset 0 -1px 0 rgba(20, 12, 4, 0.3)",
+        "$description": "The light-catching top edge every raised surface carries, combined with a `lift-*`."
+      },
+      "relief-pearl": {
+        "$type": "shadow",
+        "$value": "inset 0 1px 0 rgba(255, 235, 151, 0.3), inset 0 -2px 4px rgba(20, 12, 4, 0.35), 0 2px 4px rgba(20, 12, 4, 0.4), 0 10px 22px rgba(20, 12, 4, 0.45)",
+        "$description": "High relief for white pill buttons, chips, icon buttons and knobs."
+      },
+      "relief-emerald": {
+        "$type": "shadow",
+        "$value": "inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 0 -2px 5px rgba(5, 30, 22, 0.45), 0 2px 4px rgba(5, 20, 14, 0.5), 0 10px 22px rgba(5, 20, 14, 0.5)",
+        "$description": "High relief for emerald pill buttons, the FAB and selected chips."
+      },
+      "relief-gold": {
+        "$type": "shadow",
+        "$value": "inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -2px 5px rgba(88, 55, 20, 0.3), 0 2px 4px rgba(20, 12, 4, 0.4), 0 10px 22px rgba(20, 12, 4, 0.45)",
+        "$description": "High relief for gold pill buttons, price tags and the avatar."
+      },
+      "relief-brown": {
+        "$type": "shadow",
+        "$value": "inset 0 1px 0 rgba(255, 235, 151, 0.3), inset 0 -2px 5px rgba(20, 12, 4, 0.5), 0 10px 22px rgba(20, 12, 4, 0.5)",
+        "$description": "High relief for brown pill buttons."
+      },
+      "deboss": {
+        "$type": "shadow",
+        "$value": "inset 0 2px 5px rgba(20, 12, 4, 0.55), inset 0 -1px 0 rgba(255, 235, 151, 0.12)",
+        "$description": "Low relief: the pressed state of every button and the sunken pill of the active nav item."
+      },
+      "neon-glow": {
+        "$type": "shadow",
+        "$value": "0 0 0 1px rgba(63, 209, 168, 0.6), 0 0 18px rgba(63, 209, 168, 0.45)",
+        "$description": "Static glow for a selected element where the animated ring cannot be drawn."
+      }
+    }
+  }
+}

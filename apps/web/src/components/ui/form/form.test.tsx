@@ -39,11 +39,11 @@ describe('Field and Input', () => {
     expect(input).toHaveAttribute('aria-describedby', `${help.id} ${error.id}`);
   });
 
-  it('shows the 2px bronze focus-visible ring on Input', () => {
+  it('shows the 2px accent focus-visible ring on Input', () => {
     render(<Input label="Nome" />);
     expect(screen.getByLabelText('Nome')).toHaveClass(
       'focus-visible:ring-2',
-      'focus-visible:ring-bronze',
+      'focus-visible:ring-accent',
       'focus-visible:ring-offset-2',
     );
   });
@@ -80,7 +80,7 @@ describe('Select, Textarea and Checkbox', () => {
     const select = screen.getByLabelText('Sala');
     expect(select.tagName.toLowerCase()).toBe('select');
     expect(select).toHaveAttribute('aria-invalid', 'true');
-    expect(select).toHaveClass('focus-visible:ring-2', 'focus-visible:ring-bronze');
+    expect(select).toHaveClass('focus-visible:ring-2', 'focus-visible:ring-accent');
   });
 
   it('wires label, focus ring and error on Textarea', () => {
@@ -88,7 +88,7 @@ describe('Select, Textarea and Checkbox', () => {
     const textarea = screen.getByLabelText('Observações');
     expect(textarea.tagName.toLowerCase()).toBe('textarea');
     expect(textarea).toHaveAttribute('aria-describedby', screen.getByText('Muito longo').id);
-    expect(textarea).toHaveClass('focus-visible:ring-2', 'focus-visible:ring-bronze');
+    expect(textarea).toHaveClass('focus-visible:ring-2', 'focus-visible:ring-accent');
   });
 
   it('toggles a Checkbox through its label and wires the error', async () => {
@@ -98,7 +98,7 @@ describe('Select, Textarea and Checkbox', () => {
     expect(checkbox).toHaveAttribute('type', 'checkbox');
     expect(checkbox).toHaveAttribute('aria-invalid', 'true');
     expect(checkbox).toHaveAttribute('aria-describedby', screen.getByText('Obrigatório').id);
-    expect(checkbox).toHaveClass('focus-visible:ring-2', 'focus-visible:ring-bronze');
+    expect(checkbox).toHaveClass('focus-visible:ring-2', 'focus-visible:ring-accent');
     await userEvent.click(screen.getByText('Aceito os Termos de uso'));
     expect(checkbox).toBeChecked();
     expect(onChange).toHaveBeenCalledTimes(1);

@@ -5,11 +5,11 @@ import { BrandLockup, Eyebrow, EyebrowLockup } from './Brand';
 import { Icon } from './Icon';
 
 describe('Icon', () => {
-  it('renders a decorative svg with stroke-width 1.5 and aria-hidden when no label is given', () => {
+  it('renders a decorative svg with stroke-width 1.7 and aria-hidden when no label is given', () => {
     const { container } = render(<Icon as={MapPin} />);
     const svg = container.querySelector('svg');
     expect(svg).not.toBeNull();
-    expect(svg).toHaveAttribute('stroke-width', '1.5');
+    expect(svg).toHaveAttribute('stroke-width', '1.7');
     expect(svg).toHaveAttribute('aria-hidden', 'true');
     expect(svg).not.toHaveAttribute('role');
     expect(screen.queryByRole('img')).toBeNull();
@@ -20,7 +20,7 @@ describe('Icon', () => {
     const icon = screen.getByRole('img', { name: 'Local' });
     expect(icon.tagName.toLowerCase()).toBe('svg');
     expect(icon).toHaveAttribute('aria-label', 'Local');
-    expect(icon).toHaveAttribute('stroke-width', '1.5');
+    expect(icon).toHaveAttribute('stroke-width', '1.7');
     expect(icon).not.toHaveAttribute('aria-hidden');
   });
 

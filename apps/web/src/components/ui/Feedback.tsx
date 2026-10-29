@@ -46,7 +46,7 @@ export function Spinner({
 }) {
   return (
     <span role="status" aria-label={label} className={cx('inline-flex text-bronze', className)}>
-      <Loader2 aria-hidden="true" strokeWidth={1.5} size={24} className="animate-spin" />
+      <Loader2 aria-hidden="true" strokeWidth={1.7} size={24} className="animate-spin" />
     </span>
   );
 }

@@ -13,8 +13,8 @@ export function ThemeToggle({ className = '' }: { className?: string }) {
     >
       {/* Both glyphs render and `[data-theme]` picks one, so prerendered markup (GES-143) is
           the same for every visitor and hydrates without a mismatch. */}
-      <Moon aria-hidden="true" strokeWidth={1.5} size={20} className="dark:hidden" />
-      <Sun aria-hidden="true" strokeWidth={1.5} size={20} className="hidden dark:block" />
+      <Moon aria-hidden="true" strokeWidth={1.7} size={20} className="dark:hidden" />
+      <Sun aria-hidden="true" strokeWidth={1.7} size={20} className="hidden dark:block" />
     </button>
   );
 }

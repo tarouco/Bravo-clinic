@@ -11,5 +11,5 @@ interface IconProps {
 
 export function Icon({ as: Glyph, label, size = 20, className }: IconProps) {
   const a11y = label ? { role: 'img', 'aria-label': label } : { 'aria-hidden': true as const };
-  return <Glyph strokeWidth={1.5} size={size} {...(className ? { className } : {})} {...a11y} />;
+  return <Glyph strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" size={size} {...(className ? { className } : {})} {...a11y} />;
 }

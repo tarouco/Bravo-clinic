@@ -28,8 +28,8 @@ describe('web manifest (FND-119)', () => {
       start_url: '/app',
       scope: '/',
       display: 'standalone',
-      background_color: '#f5eee6',
-      theme_color: '#63391c',
+      background_color: '#e7e6e3',
+      theme_color: '#0f6b52',
     });
   });
 

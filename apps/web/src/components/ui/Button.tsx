@@ -68,7 +68,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
   const renderContent = (content: ReactNode) => (
     <>
       {loading ? (
-        <Loader2 aria-hidden="true" strokeWidth={1.5} size={iconSize} className="animate-spin" />
+        <Loader2 aria-hidden="true" strokeWidth={1.7} size={iconSize} className="animate-spin" />
       ) : leadingIcon ? (
         <Icon as={leadingIcon} size={iconSize} />
       ) : null}

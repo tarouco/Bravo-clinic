@@ -1,7 +1,7 @@
 # STATE — Bravô Clinic · Salas Inteligentes
 
 Source of truth for product scope: `docs/prd.md` (PRD v1.6, 2026-10-25).
-Design system: `docs/design/DESIGN.md` (Bravô Serene Architecture) + reference home page `docs/design/home-reference.html` / `home-reference.png`.
+Design system: `docs/design/DESIGN-v3.md` + brand kit `docs/design/v3/` (AD-038). The v2 `docs/design/DESIGN.md` (Serene Architecture) and `home-reference.*` are historical.
 
 ## Decisions
 
@@ -159,6 +159,24 @@ Response bodies, not only requests, are zod schemas in `packages/core/src/contra
 ### AD-037 · Optional two-factor authentication (amends AD-034, AD-005 and PRD §8 "Admin com 2FA obrigatório")
 TOTP is opt-in for every role (tenant, reception, admin) and off by default: each user turns it on or off in `/app/perfil/seguranca` ("Verificação em duas etapas"; linked from `/app/perfil` and the admin top bar); nothing redirects to enrollment and `MFA_ENROLLMENT_REQUIRED` is gone (`/login/2fa/configurar` redirects to the page). A user with a confirmed TOTP gets `mfaRequired: true` from password login (Google redirects to `/login/2fa?next=`), and while that session is not MFA-verified `requireMfaIfEnrolled` answers 403 `MFA_REQUIRED` on `/app/*` except `GET /app/me`, `POST /app/auth/totp/verify` and `POST /app/auth/logout`; `requireStaff` keeps the role check and refuses only enrolled, unverified staff sessions, and the production sandbox decision follows the same rule. `POST /app/auth/totp/disable` (current or recovery code, FND-68/69 rules, MFA-verified session) deletes the `user_totp` row and audits `user.totp_disabled` (FND-135..137). MCP tokens and `POST /admin/users/:id/totp-reset` (GES-114) are unchanged.
 - **Why:** user decision 2026-10-28: the admin was stuck at `/login/2fa/configurar` after the first login; mandatory staff enrollment blocked access instead of protecting it, so 2FA becomes a per-user choice.
+
+### AD-038 · Design System v3 is the design source (rebrand-v3, supersedes AD-012 and the DESIGN.md palette)
+The brand kit exported 2026-10-28 lives in `docs/design/v3/bravo-clinic-design-system/` (tokens, `bundle.css`, guides, examples) with the PDF beside it; `docs/design/DESIGN-v3.md` summarises it and lists the derived decisions. `apps/web/src/styles/tokens.css` holds the kit's Dia/Noite colors as RGB channels plus plain-name `rgb()` variables; `tokens.test.ts` and `tailwind-config.test.ts` compare them with the kit files. Plan: `docs/design/PLANO-ATUALIZACAO-V3.md`.
+- **Why:** user decision 2026-10-28: rebrand the whole system to the v3 brand book (névoa, esmeralda, ouro, Marrom Luxo, relief pills, neon interaction).
+
+### AD-039 · Two-step migration through aliases (rebrand-v3)
+Step 1 keeps every v2 class name (`bronze`, `champagne`, `walnut`, Material roles…) as an alias of a v3 value (`bronze`→`accent`, `champagne`→`gold`, `walnut`→`accent-deep`, `surface-stone`→`surface-deboss`, `error`→`danger`; radius `control`→pill, `card`→28px), so the whole app switches palette at once and stays deployable. Step 2 (phase 7) renames the classes by codemod and deletes the aliases. `accent` is emerald by day and gold by night (text/icon highlight, active state, focus ring); filled actions use `emerald` in both themes.
+- **Why:** ~1,300 `ink`, ~225 `bronze` and 160+ styled files; renaming first would be one undeployable change.
+
+### AD-040 · v3 components as CSS + React, not `bundle.js` (rebrand-v3)
+`bundle.css` is ported to `apps/web/src/styles/bv.css` (theme selector `[data-theme='night']`, fonts and gradients moved to tokens), imported before the Tailwind layers so utilities override `bv-*`. The kit's script behaviours (click lights the neon 1.6 s, single-choice groups, slider drag, nav state) are React state and hooks in `components/ui`.
+- **Why:** the kit script writes `aria-*` straight into the DOM, which React would overwrite on the next render.
+
+### AD-041 · Theme attribute stays `day`/`night` (rebrand-v3)
+The kit uses `data-theme="dark"`; the app keeps `day`/`night` (stored preference, prerendered markup, `darkMode` selector) and applies Noite v3 on `[data-theme='night']`.
+
+### AD-042 · Derived tokens where v3 is silent (rebrand-v3)
+`danger` #A12A1E / Noite #FFB4A6 (≥5:1 on every surface), `danger-soft`, warnings as gold fill + `on-gold` text (never yellow text), success = emerald; form fields sink (`bv-field`: `surface-deboss` + `deboss`, `radius-md`, neon focus) while actions rise; admin tables use pearl rows with `eyebrow` headers. Typography: the kit sizes are app sizes (`-mobile`, `body`/`label`/`caption`); unsuffixed `display-*`, `heading` and `lead` are ~1.3–1.4× web variants. Marked "derived" until the brand validates them.
 
 ## Handoff
 

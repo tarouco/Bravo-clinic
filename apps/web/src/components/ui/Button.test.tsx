@@ -70,11 +70,11 @@ describe('Button', () => {
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
-  it('carries the 2px bronze focus-visible ring with a 2px offset', () => {
+  it('carries the 2px accent focus-visible ring with a 2px offset', () => {
     render(<Button>Foco</Button>);
     expect(screen.getByRole('button', { name: 'Foco' })).toHaveClass(
       'focus-visible:ring-2',
-      'focus-visible:ring-bronze',
+      'focus-visible:ring-accent',
       'focus-visible:ring-offset-2',
     );
   });

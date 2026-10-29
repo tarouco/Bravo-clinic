@@ -1,0 +1,103 @@
+/* Bravô Clinic — tokens v3. Dia (claro) é o padrão; Noite com data-theme="dark". */
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600&family=Jost:wght@300;400;500;600&display=swap');
+
+:root, [data-theme="light"] {
+  --surface: #e7e6e3;
+  --surface-panel: #f3f2ef;
+  --surface-raised: #fbfaf8;
+  --surface-deboss: #eeedea;
+  --ink: #583714;
+  --ink-muted: #6b5a48;
+  --border: #8f7a66;
+  --hairline: rgba(88, 55, 20, 0.1);
+  --emerald: #0f6b52;
+  --emerald-deep: #0a3b2c;
+  --on-emerald: #fbfaf8;
+  --gold: #ffeb97;
+  --gold-deep: #e9c978;
+  --on-gold: #583714;
+  --brown: #583714;
+  --on-brown: #ffeb97;
+  --neon: #19b38a;
+  --neon-hot: #7ff0cf;
+  --glass: rgba(243, 242, 239, 0.82);
+  --glass-bar: rgba(251, 250, 248, 0.86);
+  --glass-hover: rgba(88, 55, 20, 0.07);
+  --scrim: rgba(46, 30, 12, 0.36);
+  --focus-ring: var(--emerald);
+  --lift-1: 0 1px 2px rgba(60, 45, 30, 0.06), 0 4px 10px rgba(60, 45, 30, 0.06);
+  --lift-2: 0 2px 4px rgba(60, 45, 30, 0.06), 0 12px 28px rgba(60, 45, 30, 0.1), 0 30px 60px rgba(60, 45, 30, 0.08);
+  --lift-3: 0 4px 8px rgba(60, 45, 30, 0.08), 0 24px 48px rgba(60, 45, 30, 0.16), 0 48px 90px rgba(60, 45, 30, 0.12);
+  --rim: inset 0 1px 0 rgba(255, 255, 255, 0.95), inset 0 -1px 0 rgba(60, 45, 30, 0.06);
+  --relief-pearl: inset 0 1px 0 #ffffff, inset 0 -2px 4px rgba(60, 45, 30, 0.08), 0 2px 4px rgba(60, 45, 30, 0.1), 0 10px 22px rgba(60, 45, 30, 0.14);
+  --relief-emerald: inset 0 1px 0 rgba(255, 255, 255, 0.28), inset 0 -2px 5px rgba(5, 30, 22, 0.35), 0 2px 4px rgba(10, 59, 44, 0.25), 0 10px 22px rgba(10, 59, 44, 0.28);
+  --relief-gold: inset 0 1px 0 rgba(255, 255, 255, 0.8), inset 0 -2px 5px rgba(88, 55, 20, 0.18), 0 2px 4px rgba(88, 55, 20, 0.15), 0 10px 22px rgba(88, 55, 20, 0.18);
+  --relief-brown: inset 0 1px 0 rgba(255, 235, 151, 0.3), inset 0 -2px 5px rgba(30, 18, 6, 0.4), 0 10px 22px rgba(88, 55, 20, 0.28);
+  --deboss: inset 0 2px 5px rgba(60, 45, 30, 0.22), inset 0 -1px 0 rgba(255, 255, 255, 0.95), 0 1px 0 rgba(255, 255, 255, 0.9);
+  --neon-glow: 0 0 0 1px rgba(25, 179, 138, 0.6), 0 0 16px rgba(25, 179, 138, 0.45);
+}
+[data-theme="dark"] {
+  --surface: #3d260d;
+  --surface-panel: #4a2e10;
+  --surface-raised: #583714;
+  --surface-deboss: #3a240c;
+  --ink: #ffeb97;
+  --ink-muted: #e6d3a3;
+  --border: #b08f5f;
+  --hairline: rgba(255, 235, 151, 0.14);
+  --emerald: #0f6b52;
+  --emerald-deep: #0a3b2c;
+  --on-emerald: #fbfaf8;
+  --gold: #ffeb97;
+  --gold-deep: #e9c978;
+  --on-gold: #583714;
+  --brown: #6d4c24;
+  --on-brown: #ffeb97;
+  --neon: #3fd1a8;
+  --neon-hot: #a8f7df;
+  --glass: rgba(88, 55, 20, 0.78);
+  --glass-bar: rgba(88, 55, 20, 0.86);
+  --glass-hover: rgba(255, 235, 151, 0.1);
+  --scrim: rgba(20, 12, 4, 0.6);
+  --focus-ring: var(--gold);
+  --lift-1: 0 1px 2px rgba(20, 12, 4, 0.4), 0 4px 10px rgba(20, 12, 4, 0.3);
+  --lift-2: 0 2px 4px rgba(20, 12, 4, 0.4), 0 12px 28px rgba(20, 12, 4, 0.4), 0 30px 60px rgba(20, 12, 4, 0.3);
+  --lift-3: 0 4px 8px rgba(20, 12, 4, 0.45), 0 24px 48px rgba(20, 12, 4, 0.5), 0 48px 90px rgba(20, 12, 4, 0.4);
+  --rim: inset 0 1px 0 rgba(255, 235, 151, 0.22), inset 0 -1px 0 rgba(20, 12, 4, 0.3);
+  --relief-pearl: inset 0 1px 0 rgba(255, 235, 151, 0.3), inset 0 -2px 4px rgba(20, 12, 4, 0.35), 0 2px 4px rgba(20, 12, 4, 0.4), 0 10px 22px rgba(20, 12, 4, 0.45);
+  --relief-emerald: inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 0 -2px 5px rgba(5, 30, 22, 0.45), 0 2px 4px rgba(5, 20, 14, 0.5), 0 10px 22px rgba(5, 20, 14, 0.5);
+  --relief-gold: inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -2px 5px rgba(88, 55, 20, 0.3), 0 2px 4px rgba(20, 12, 4, 0.4), 0 10px 22px rgba(20, 12, 4, 0.45);
+  --relief-brown: inset 0 1px 0 rgba(255, 235, 151, 0.3), inset 0 -2px 5px rgba(20, 12, 4, 0.5), 0 10px 22px rgba(20, 12, 4, 0.5);
+  --deboss: inset 0 2px 5px rgba(20, 12, 4, 0.55), inset 0 -1px 0 rgba(255, 235, 151, 0.12);
+  --neon-glow: 0 0 0 1px rgba(63, 209, 168, 0.6), 0 0 18px rgba(63, 209, 168, 0.45);
+}
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --radius-sm: 16px;
+  --radius-md: 24px;
+  --radius-lg: 28px;
+  --radius-xl: 34px;
+  --radius-pill: 9999px;
+  --blur-glass: 20px;
+  --blur-hover: 8px;
+  --blur-scrim: 6px;
+  --font-display: "Josefin Sans", "Futura", "Century Gothic", system-ui, sans-serif;
+  --font-sans: "Jost", "Futura", system-ui, sans-serif;
+}
+
+.display-xl { font-family: var(--font-display); font-size: 54px; line-height: 58px; font-weight: 300; letter-spacing: 0.1em; text-transform: uppercase; }
+.display-l { font-family: var(--font-display); font-size: 30px; line-height: 34px; font-weight: 300; letter-spacing: 0.02em; }
+.heading { font-family: var(--font-display); font-size: 19px; line-height: 26px; font-weight: 400; letter-spacing: 0.04em; }
+.eyebrow { font-family: var(--font-display); font-size: 11px; line-height: 16px; font-weight: 400; letter-spacing: 0.32em; text-transform: uppercase; }
+.lead { font-family: var(--font-sans); font-size: 15px; line-height: 24px; font-weight: 400; }
+.body { font-family: var(--font-sans); font-size: 14px; line-height: 22px; font-weight: 400; }
+.label { font-family: var(--font-sans); font-size: 14.5px; line-height: 16px; font-weight: 500; letter-spacing: 0.04em; }
+.caption { font-family: var(--font-sans); font-size: 12px; line-height: 18px; font-weight: 400; }

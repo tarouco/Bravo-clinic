@@ -85,11 +85,11 @@ describe('Tabs', () => {
     expect(screen.getByRole('tabpanel')).toHaveTextContent('Painel segurança');
   });
 
-  it('shows the 2px bronze focus-visible ring on tabs', () => {
+  it('shows the 2px accent focus-visible ring on tabs', () => {
     render(<Tabs label="Perfil" items={items} />);
     expect(screen.getByRole('tab', { name: 'Dados' })).toHaveClass(
       'focus-visible:ring-2',
-      'focus-visible:ring-bronze',
+      'focus-visible:ring-accent',
       'focus-visible:ring-offset-2',
     );
   });
