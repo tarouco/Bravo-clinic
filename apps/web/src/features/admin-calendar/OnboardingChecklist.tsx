@@ -21,10 +21,7 @@ export function OnboardingChecklist() {
   const { toast } = useToast();
 
   return (
-    <section
-      aria-labelledby="onboarding-title"
-      className="space-y-space-md rounded-card border border-champagne bg-champagne-soft p-space-lg text-on-champagne"
-    >
+    <section aria-labelledby="onboarding-title" className="bv-card bv-card--gold space-y-space-md">
       <h2 id="onboarding-title" className="font-heading text-heading-mobile">
         Antes de abrir as reservas online
       </h2>

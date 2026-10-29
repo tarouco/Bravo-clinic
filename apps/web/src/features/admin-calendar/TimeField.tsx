@@ -87,7 +87,7 @@ export function TimeField({
           }}
           className={cx(
             controlClasses(Boolean(own ?? error)),
-            compact ? 'h-9 px-space-sm text-small' : 'h-12',
+            compact ? 'h-9 min-h-0 px-space-sm text-small' : 'h-12',
           )}
         />
       )}
