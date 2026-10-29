@@ -79,7 +79,7 @@ describe('EvolutionChart', () => {
     const pattern = container.querySelector('pattern');
     expect(pattern).not.toBeNull();
     const paths = container.querySelectorAll('[data-bucket="2026-10"] path');
-    expect(paths[0]).toHaveClass('fill-bronze');
+    expect(paths[0]).toHaveClass('fill-emerald');
     expect(paths[1]?.getAttribute('fill')).toBe(`url(#${pattern?.id ?? ''})`);
   });
 

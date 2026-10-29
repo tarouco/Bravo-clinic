@@ -48,9 +48,9 @@ describe('StatTile', () => {
         higherIsBetter={false}
       />,
     );
-    expect(screen.getByText('+50,0%').closest('p')).toHaveClass('text-error');
+    expect(screen.getByText('+50,0%').closest('p')).toHaveClass('text-danger');
 
     rerender(<StatTile label="Receita" valueCents={1000} delta={{ cents: 500, percent: 50 }} />);
-    expect(screen.getByText('+50,0%').closest('p')).not.toHaveClass('text-error');
+    expect(screen.getByText('+50,0%').closest('p')).not.toHaveClass('text-danger');
   });
 });

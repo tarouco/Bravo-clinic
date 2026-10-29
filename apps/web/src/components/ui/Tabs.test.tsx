@@ -25,12 +25,21 @@ describe('Tabs', () => {
     expect(panel).toHaveAttribute('aria-labelledby', tabs[0]?.id);
   });
 
-  it('shows only the selected panel and underlines the selected tab in bronze', () => {
+  it('shows only the selected panel and raises the selected tab as a pearl pill on a sunken track', () => {
     render(<Tabs label="Perfil" items={items} defaultValue="b" />);
     expect(screen.getByRole('tabpanel')).toHaveTextContent('Painel segurança');
     expect(screen.getByText('Painel dados')).not.toBeVisible();
-    expect(screen.getByRole('tab', { name: 'Segurança' })).toHaveClass('border-bronze');
-    expect(screen.getByRole('tab', { name: 'Dados' })).not.toHaveClass('border-bronze');
+    expect(screen.getByRole('tablist')).toHaveClass(
+      'rounded-pill',
+      'bg-surface-deboss',
+      'shadow-deboss',
+    );
+    expect(screen.getByRole('tab', { name: 'Segurança' })).toHaveClass(
+      'rounded-pill',
+      'bg-surface-raised',
+      'font-semibold',
+    );
+    expect(screen.getByRole('tab', { name: 'Dados' })).not.toHaveClass('bg-surface-raised');
   });
 
   it('selects the next tab and shows its panel on ArrowRight', async () => {

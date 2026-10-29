@@ -25,6 +25,7 @@ describe('Stepper', () => {
     const current = screen.getAllByRole('listitem', { current: 'step' });
     expect(current).toHaveLength(1);
     expect(current[0]).toHaveTextContent('Resumo');
+    expect(current[0]).toHaveClass('rounded-pill', 'bg-grad-emerald', 'text-on-emerald');
   });
 
   it('shows completed steps with a check and a screen-reader note instead of a number', () => {

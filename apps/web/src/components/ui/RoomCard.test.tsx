@@ -40,6 +40,16 @@ describe('RoomCard', () => {
     expect(screen.getByText('A partir de')).toBeInTheDocument();
     expect(screen.getByText('R$ 80,00')).toBeInTheDocument();
     expect(screen.getByText('/h')).toBeInTheDocument();
+    // The gold price tag floats over the photo's top-right corner.
+    expect(screen.getByText('A partir de').parentElement).toHaveClass(
+      'absolute',
+      'right-3',
+      'top-3',
+      'rounded-pill',
+      'bg-grad-gold',
+      'text-on-gold',
+      'shadow-lift-1',
+    );
   });
 
   it('uses the given image url as the cover', () => {

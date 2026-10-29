@@ -16,7 +16,7 @@ export interface StatTileProps {
   delta?: StatDelta | undefined;
   /** Name of the period the delta compares with, read after the delta ("vs. 01/05–31/10"). */
   deltaLabel?: string | undefined;
-  /** False for figures where an increase is bad (expenses): the delta then uses the error tone. */
+  /** False for figures where an increase is bad (expenses): the delta then uses the danger tone. */
   higherIsBetter?: boolean;
   className?: string;
 }
@@ -45,9 +45,7 @@ export function StatTile({
   const bad = direction !== 0 && direction > 0 !== higherIsBetter;
 
   return (
-    <div
-      className={cx('rounded-card border border-hairline bg-surface-raised p-space-md', className)}
-    >
+    <div className={cx('rounded-lg bg-surface-raised p-5 shadow-card', className)}>
       <p className="font-small text-small text-ink-muted">{label}</p>
       <p className="mt-space-xs font-heading text-heading-mobile text-ink md:text-heading">
         {formatBRL(valueCents)}
@@ -56,7 +54,7 @@ export function StatTile({
         <p
           className={cx(
             'mt-space-xs flex flex-wrap items-center gap-x-space-xs font-caption text-caption',
-            bad ? 'text-error' : 'text-ink-muted',
+            bad ? 'text-danger' : 'text-ink-muted',
           )}
         >
           {direction !== 0 ? <Icon as={direction > 0 ? ArrowUp : ArrowDown} size={14} /> : null}

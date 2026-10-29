@@ -3,9 +3,14 @@ import { CircleCheck, type LucideIcon } from 'lucide-react';
 import { photoSrcSet } from '../../lib/room-photo';
 import { Badge } from './Badge';
 import { Button } from './Button';
+import { cx } from './cx';
 import { Icon } from './Icon';
 
 export const ROOM_PLACEHOLDER_SRC = '/room-placeholder.webp';
+
+/** Pearl glass pill over the photo (name, feature). */
+const photoChip =
+  'absolute flex items-center rounded-pill bg-surface-raised/90 px-3 py-1 font-caption text-caption text-ink shadow-lift-1 backdrop-blur-glass';
 
 export interface RoomCardProps {
   name: string;
@@ -41,7 +46,7 @@ export function RoomCard({
 }: RoomCardProps) {
   const src = imageUrl ?? ROOM_PLACEHOLDER_SRC;
   return (
-    <article className="flex flex-col overflow-hidden rounded-xl bg-surface-raised shadow-lg transition-transform duration-300 hover:-translate-y-1">
+    <article className="flex flex-col overflow-hidden rounded-lg bg-surface-raised text-ink shadow-card transition-transform duration-300 hover:-translate-y-1">
       <div className={`relative w-full ${compact ? 'aspect-[4/3]' : 'h-64'}`}>
         <img
           className="absolute inset-0 h-full w-full object-cover"
@@ -51,33 +56,45 @@ export function RoomCard({
           alt={imageAlt ?? `Foto da ${name}`}
           {...(priority ? { fetchPriority: 'high' as const } : { loading: 'lazy' as const })}
         />
-        <div className="absolute left-3 top-3 rounded bg-bronze px-space-sm py-1 font-eyebrow text-caption font-semibold uppercase tracking-wider text-on-bronze shadow-sm">
-          {name}
-        </div>
+        <div className={cx('left-3 top-3', photoChip)}>{name}</div>
+        {/* The price tag is the gold accent of the card, floating over the photo (DESIGN-v3.md). */}
+        {fromPriceCents === null ? null : (
+          <div className="absolute right-3 top-3 flex items-baseline gap-1 rounded-pill bg-grad-gold px-3 py-1.5 text-on-gold shadow-lift-1">
+            <span className="font-caption text-caption">A partir de</span>
+            <span className="font-display text-small font-semibold">
+              {formatBRL(fromPriceCents)}
+              <span className="font-body text-caption font-normal">/h</span>
+            </span>
+          </div>
+        )}
         {featureChip ? (
-          <div className="absolute right-3 top-3 flex items-center gap-1 rounded bg-surface-raised/95 px-space-sm py-1 font-caption text-caption text-ink shadow-sm backdrop-blur-md">
+          <div className={cx('bottom-3 left-3 gap-1', photoChip)}>
             {featureChip.icon ? (
-              <Icon as={featureChip.icon} size={14} className="text-bronze" />
+              <Icon as={featureChip.icon} size={14} className="text-accent" />
             ) : null}
             <span>{featureChip.label}</span>
           </div>
         ) : null}
       </div>
-      <div className="flex flex-1 flex-col justify-between space-y-space-md p-space-lg">
+      <div className="flex flex-1 flex-col justify-between gap-space-md p-space-lg">
         <div>
           <div className="mb-space-sm flex flex-wrap gap-1.5">
             {tags.map((tag) => (
-              <Badge key={tag}>{tag}</Badge>
+              <Badge key={tag} tone="neutral">
+                {tag}
+              </Badge>
             ))}
           </div>
-          <h3 className="mb-space-xs font-heading text-heading text-ink">{name}</h3>
+          <h3 className="mb-space-xs font-heading text-heading-mobile text-ink md:text-heading">
+            {name}
+          </h3>
           {compact ? null : (
             <>
               <p className="font-small text-small text-ink-muted">{description}</p>
               <ul className="mt-space-md space-y-space-xs font-small text-small text-ink-muted">
                 {equipment.map((item) => (
                   <li key={item} className="flex items-center gap-space-xs">
-                    <Icon as={CircleCheck} size={16} className="shrink-0 text-bronze" />
+                    <Icon as={CircleCheck} size={16} className="shrink-0 text-accent" />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -85,21 +102,11 @@ export function RoomCard({
             </>
           )}
         </div>
-        <div className="-mx-space-lg -mb-space-lg mt-space-md flex items-center justify-between bg-surface-container-low p-space-lg">
+        <div className="flex items-center justify-between gap-space-md border-t border-hairline pt-space-md">
           {fromPriceCents === null ? (
             <span className="font-small text-small text-ink-muted">Consulte os valores</span>
-          ) : (
-            <div>
-              <span className="block font-caption text-caption uppercase tracking-wider text-ink-muted">
-                A partir de
-              </span>
-              <span className="font-display text-heading font-semibold text-bronze">
-                {formatBRL(fromPriceCents)}
-                <span className="font-body text-small font-normal text-ink-muted">/h</span>
-              </span>
-            </div>
-          )}
-          <Button size="sm" onClick={onReserve}>
+          ) : null}
+          <Button size="sm" className="ml-auto" onClick={onReserve}>
             Reservar Sala
           </Button>
         </div>
