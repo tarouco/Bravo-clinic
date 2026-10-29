@@ -22,10 +22,11 @@ export function AuthCard({
     <section className="mx-auto flex w-full max-w-md flex-col items-center px-gutter py-space-2xl md:py-space-3xl">
       <Link
         to="/"
-        aria-label="Bravô Clinic, página inicial"
         className="mb-space-lg rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
       >
+        {/* The visible lockup is the link's name (WCAG 2.5.3), the destination follows for readers. */}
         <BrandLockup tagline className="items-center" />
+        <span className="sr-only">, página inicial</span>
       </Link>
       <div className="bv-card w-full rounded-xl sm:p-space-xl">
         <header className="mb-space-lg space-y-space-xs text-center">
