@@ -11,13 +11,15 @@ import { cx, focusRing } from '../cx';
 import { Icon } from '../Icon';
 import { Field, FieldError, HelpText, type FieldChromeProps } from './Field';
 
-/** DESIGN.md form base: raised surface, 1px border, 2px radius, bronze border on focus. */
+/**
+ * Sunken v3 field (`bv-field`, AD-042): `surface-deboss` with `deboss`, 24px radius, neon border
+ * and glow on focus, danger border when invalid. "Entry sinks, action rises" (DESIGN-v3.md).
+ */
 export const controlClasses = (invalid: boolean): string =>
   cx(
-    'w-full rounded-control border bg-surface-raised px-space-md font-body text-body text-ink placeholder:text-ink-muted',
-    'transition-colors focus-visible:border-bronze disabled:cursor-not-allowed disabled:opacity-60',
-    invalid ? 'border-error' : 'border-border',
-    focusRing,
+    'bv-field font-body text-body placeholder:text-ink-muted',
+    // `aria-invalid` already paints the border; the class covers callers that do not set it.
+    invalid && 'border-danger',
   );
 
 export type InputProps = InputHTMLAttributes<HTMLInputElement> & FieldChromeProps;
@@ -54,14 +56,18 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
             ref={ref}
             {...rest}
             {...control}
-            className={cx(controlClasses(Boolean(error)), 'h-12 appearance-none pr-10', className)}
+            className={cx(
+              controlClasses(Boolean(error)),
+              'h-12 cursor-pointer appearance-none pr-12',
+              className,
+            )}
           >
             {children}
           </select>
           <Icon
             as={ChevronDown}
             size={18}
-            className="pointer-events-none absolute right-space-md top-1/2 -translate-y-1/2 text-ink-muted"
+            className="pointer-events-none absolute right-5 top-1/2 -translate-y-1/2 text-ink-muted"
           />
         </div>
       )}
@@ -83,7 +89,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
           rows={rows}
           {...rest}
           {...control}
-          className={cx(controlClasses(Boolean(error)), 'py-space-sm', className)}
+          className={cx(controlClasses(Boolean(error)), className)}
         />
       )}
     </Field>
@@ -121,7 +127,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
           {...(error ? { 'aria-invalid': true as const } : {})}
           {...(describedBy ? { 'aria-describedby': describedBy } : {})}
           className={cx(
-            'mt-0.5 h-5 w-5 shrink-0 cursor-pointer rounded-control border border-border accent-bronze',
+            'mt-0.5 h-5 w-5 shrink-0 cursor-pointer rounded-[6px] border border-border accent-emerald',
             focusRing,
           )}
         />

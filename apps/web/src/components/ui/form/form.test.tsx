@@ -39,23 +39,18 @@ describe('Field and Input', () => {
     expect(input).toHaveAttribute('aria-describedby', `${help.id} ${error.id}`);
   });
 
-  it('shows the 2px accent focus-visible ring on Input', () => {
+  it('styles the control as the sunken v3 field, whose focus is the neon border (bv.css)', () => {
     render(<Input label="Nome" />);
-    expect(screen.getByLabelText('Nome')).toHaveClass(
-      'focus-visible:ring-2',
-      'focus-visible:ring-accent',
-      'focus-visible:ring-offset-2',
-    );
+    const input = screen.getByLabelText('Nome');
+    expect(input).toHaveClass('bv-field', 'h-12');
+    expect(input).not.toHaveClass('focus-visible:ring-2');
+    expect(screen.getByText('Nome')).toHaveClass('text-small', 'font-medium', 'text-ink');
   });
 
-  it('styles the control as a raised surface with a 1px border and a 2px radius', () => {
-    render(<Input label="Nome" />);
-    expect(screen.getByLabelText('Nome')).toHaveClass(
-      'bg-surface-raised',
-      'border',
-      'border-border',
-      'rounded-control',
-    );
+  it('paints an invalid field and its message in danger', () => {
+    render(<Input label="Nome" error="Obrigatório" />);
+    expect(screen.getByLabelText('Nome')).toHaveClass('bv-field', 'border-danger');
+    expect(screen.getByText('Obrigatório')).toHaveClass('text-caption', 'text-danger');
   });
 
   it('Field passes the id, aria-invalid and aria-describedby to a custom control', () => {
@@ -80,7 +75,7 @@ describe('Select, Textarea and Checkbox', () => {
     const select = screen.getByLabelText('Sala');
     expect(select.tagName.toLowerCase()).toBe('select');
     expect(select).toHaveAttribute('aria-invalid', 'true');
-    expect(select).toHaveClass('focus-visible:ring-2', 'focus-visible:ring-accent');
+    expect(select).toHaveClass('bv-field', 'appearance-none');
   });
 
   it('wires label, focus ring and error on Textarea', () => {
@@ -88,7 +83,7 @@ describe('Select, Textarea and Checkbox', () => {
     const textarea = screen.getByLabelText('Observações');
     expect(textarea.tagName.toLowerCase()).toBe('textarea');
     expect(textarea).toHaveAttribute('aria-describedby', screen.getByText('Muito longo').id);
-    expect(textarea).toHaveClass('focus-visible:ring-2', 'focus-visible:ring-accent');
+    expect(textarea).toHaveClass('bv-field');
   });
 
   it('toggles a Checkbox through its label and wires the error', async () => {
@@ -98,7 +93,14 @@ describe('Select, Textarea and Checkbox', () => {
     expect(checkbox).toHaveAttribute('type', 'checkbox');
     expect(checkbox).toHaveAttribute('aria-invalid', 'true');
     expect(checkbox).toHaveAttribute('aria-describedby', screen.getByText('Obrigatório').id);
-    expect(checkbox).toHaveClass('focus-visible:ring-2', 'focus-visible:ring-accent');
+    expect(checkbox).toHaveClass(
+      'h-5',
+      'w-5',
+      'rounded-[6px]',
+      'accent-emerald',
+      'focus-visible:ring-2',
+      'focus-visible:ring-accent',
+    );
     await userEvent.click(screen.getByText('Aceito os Termos de uso'));
     expect(checkbox).toBeChecked();
     expect(onChange).toHaveBeenCalledTimes(1);
