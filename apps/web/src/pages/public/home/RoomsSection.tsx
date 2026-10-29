@@ -34,12 +34,12 @@ export function RoomsSection({ onReserve }: RoomsSectionProps) {
       <div className="max-w-7xl mx-auto px-gutter">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-2xl">
           <div className="space-y-space-xs max-w-2xl">
-            <h2 className="font-display-l-mobile text-display-l-mobile md:font-display-l md:text-display-l text-ink">
+            <h2 className="font-display text-display-l-mobile text-ink md:text-display-l">
               As três salas inteligentes da clínica.
             </h2>
           </div>
-          <div className="inline-flex items-center gap-space-xs text-ink-muted font-caption text-caption bg-surface-raised px-space-md py-space-xs rounded-full shadow-sm self-start md:self-auto">
-            <Icon as={SlidersHorizontal} size={16} className="text-bronze shrink-0" />
+          <div className="inline-flex items-center gap-space-xs self-start rounded-pill bg-surface-raised px-space-md py-space-xs font-caption text-caption text-ink-muted shadow-lift-1 md:self-auto">
+            <Icon as={SlidersHorizontal} size={16} className="shrink-0 text-accent" />
             <span>Tarifa unificada: mesmo valor base em todas as salas</span>
           </div>
         </div>

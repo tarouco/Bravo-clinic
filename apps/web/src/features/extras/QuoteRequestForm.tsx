@@ -259,7 +259,7 @@ export function QuoteRequestForm({ serviceId, preselect, footer, onSent }: Quote
         />
       </div>
 
-      <Button type="submit" className="w-full" loading={submit.isPending}>
+      <Button type="submit" block loading={submit.isPending}>
         Enviar pedido
       </Button>
       {footer}

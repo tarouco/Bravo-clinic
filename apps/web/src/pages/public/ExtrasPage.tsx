@@ -28,8 +28,8 @@ export function ExtrasPage() {
   return (
     <section className="mx-auto max-w-7xl space-y-space-2xl px-gutter py-space-3xl">
       <div className="max-w-3xl space-y-space-xs">
-        <Eyebrow>SERVIÇOS EXTRAS</Eyebrow>
-        <h1 className="font-display-l-mobile text-display-l-mobile text-ink md:font-display-l md:text-display-l">
+        <Eyebrow>Serviços extras</Eyebrow>
+        <h1 className="font-display text-display-l-mobile text-ink md:text-display-l">
           Serviços extras
         </h1>
         <p className="font-body text-body text-ink-muted">
@@ -50,23 +50,26 @@ export function ExtrasPage() {
         {services.data?.items.map((service) => (
           <li
             key={service.id}
-            className="flex flex-col justify-between gap-space-md rounded-xl bg-surface-raised p-space-xl shadow-md"
+            className="bv-card flex flex-col justify-between gap-space-md sm:p-space-xl"
           >
             <div className="space-y-space-sm">
               {service.saleMode === 'online' ? <Badge>Contratação online</Badge> : null}
-              <h2 className="font-heading-mobile text-heading-mobile text-ink md:font-heading md:text-heading">
+              <h2 className="font-heading text-heading-mobile text-ink md:text-heading">
                 {service.name}
               </h2>
               {service.description ? (
                 <p className="font-small text-small text-ink-muted">{service.description}</p>
               ) : null}
-              <p className="rounded bg-surface p-space-sm font-body text-body font-semibold text-bronze">
+              <p className="inline-flex rounded-pill bg-grad-gold px-space-md py-space-xs font-body text-body font-semibold text-on-gold shadow-lift-1">
                 {formatServicePrice(service.referencePriceCents, service.unit)}
               </p>
               {service.saleMode === 'online' ? (
                 <p className="font-small text-small text-ink-muted">
                   Adicione ao{' '}
-                  <Link className="underline underline-offset-4" to="/reservar">
+                  <Link
+                    className="text-accent underline underline-offset-4 hover:text-accent-deep"
+                    to="/reservar"
+                  >
                     reservar uma sala
                   </Link>
                   .
@@ -90,11 +93,11 @@ export function ExtrasPage() {
         ref={formRef}
         tabIndex={-1}
         aria-labelledby="pedido-orcamento"
-        className="mx-auto max-w-xl space-y-space-md rounded-card bg-surface-raised p-space-lg focus:outline-none"
+        className="bv-card mx-auto max-w-xl space-y-space-md rounded-xl focus:outline-none sm:p-space-xl"
       >
         <h2
           id="pedido-orcamento"
-          className="font-heading-mobile text-heading-mobile text-ink md:font-heading md:text-heading"
+          className="font-heading text-heading-mobile text-ink md:text-heading"
         >
           Peça seu orçamento
         </h2>
@@ -105,7 +108,7 @@ export function ExtrasPage() {
               <p className="font-small text-small text-ink-muted">
                 Prefere conversar?{' '}
                 <a
-                  className="text-bronze underline underline-offset-4 hover:text-walnut"
+                  className="text-accent underline underline-offset-4 hover:text-accent-deep"
                   href={whatsappHref(whatsappE164)}
                   target="_blank"
                   rel="noopener noreferrer"

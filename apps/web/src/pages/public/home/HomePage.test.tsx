@@ -57,7 +57,7 @@ describe('HomePage', () => {
       container.querySelector('#simulador'),
       screen.getByRole('heading', { name: 'Potencialize sua marca e captação de clientes.' }),
       screen.getByRole('heading', { name: 'Estrutura completa para você focar no atendimento.' }),
-      screen.getByRole('heading', { name: 'Políticas de Reserva, Sinal e Cancelamento' }),
+      screen.getByRole('heading', { name: 'Políticas de reserva, sinal e cancelamento' }),
       screen.getByRole('heading', { name: 'Pronto para elevar o padrão dos seus atendimentos?' }),
     ];
 

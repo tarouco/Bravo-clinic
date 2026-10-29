@@ -15,11 +15,11 @@ describe('HeroSection', () => {
   it('links the primary CTA to #simulador and the secondary link to #salas', () => {
     render(<HeroSection />);
 
-    expect(screen.getByRole('link', { name: /Simular e Reservar/ })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: /Simular e reservar/ })).toHaveAttribute(
       'href',
       '#simulador',
     );
-    expect(screen.getByRole('link', { name: 'Conhecer as Salas' })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: 'Conhecer as salas' })).toHaveAttribute(
       'href',
       '#salas',
     );

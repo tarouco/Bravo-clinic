@@ -15,12 +15,12 @@ import {
 import { safeNextPath, useSignup } from '../../features/auth/hooks';
 import { ApiError } from '../../lib/api';
 import { track } from '../../lib/analytics';
-import { AuthCard } from './AuthCard';
+import { AuthCard, authLinkClasses } from './AuthCard';
 
 const EMAIL_TAKEN_MESSAGE = 'Este e-mail já está cadastrado.';
 const DOCUMENT_TAKEN_MESSAGE = 'Este CPF/CNPJ já está cadastrado.';
 
-const linkClasses = 'text-bronze underline underline-offset-4';
+const linkClasses = authLinkClasses;
 
 export function SignupPage() {
   const navigate = useNavigate();
@@ -137,7 +137,7 @@ export function SignupPage() {
           type="submit"
           loading={signup.isPending}
           disabled={!(acceptTerms && acceptPrivacy)}
-          className="w-full"
+          block
         >
           Criar conta
         </Button>

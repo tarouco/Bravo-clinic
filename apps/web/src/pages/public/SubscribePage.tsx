@@ -195,7 +195,7 @@ function SubscribeFlow({ offer }: FlowProps) {
   return (
     <div className="mx-auto max-w-3xl space-y-space-xl px-gutter py-space-xl md:py-space-3xl">
       <header className="space-y-space-md">
-        <h1 className="font-display-l-mobile text-display-l-mobile text-ink md:font-display-l md:text-display-l">
+        <h1 className="font-display text-display-l-mobile text-ink md:text-display-l">
           {`Assinar ${offer.name}`}
         </h1>
         <p className="font-small text-small text-ink-muted">
@@ -238,7 +238,10 @@ function SubscribeFlow({ offer }: FlowProps) {
         <div className="space-y-space-lg">
           {!fixed ? (
             <section aria-labelledby="sub-base" className="space-y-space-sm">
-              <h2 id="sub-base" className="font-heading-mobile text-heading-mobile text-ink">
+              <h2
+                id="sub-base"
+                className="font-heading text-heading-mobile text-ink md:text-heading"
+              >
                 Data de início
               </h2>
               <StartDateCalendar
@@ -249,7 +252,7 @@ function SubscribeFlow({ offer }: FlowProps) {
               />
             </section>
           ) : (
-            <section className="flex flex-wrap items-center justify-between gap-space-sm rounded-card border border-hairline p-space-md">
+            <section className="bv-card flex flex-wrap items-center justify-between gap-space-sm py-space-md">
               <p className="font-small text-small text-ink">
                 {`${roomName ?? 'Sala escolhida'} · início em ${baseOn ? formatWeekdayDate(baseOn) : ''}`}
               </p>
@@ -266,7 +269,10 @@ function SubscribeFlow({ offer }: FlowProps) {
           )}
 
           <section aria-labelledby="sub-summary" className="space-y-space-md">
-            <h2 id="sub-summary" className="font-heading-mobile text-heading-mobile text-ink">
+            <h2
+              id="sub-summary"
+              className="font-heading text-heading-mobile text-ink md:text-heading"
+            >
               Resumo
             </h2>
             {quoteQuery.isError ? (
@@ -279,7 +285,7 @@ function SubscribeFlow({ offer }: FlowProps) {
               <Spinner label="Calculando o valor" />
             ) : (
               <>
-                <dl className="divide-y divide-hairline rounded-card border border-hairline bg-surface-raised px-space-md">
+                <dl className="divide-y divide-hairline rounded-md bg-surface-raised px-5 shadow-card">
                   <SummaryRow label="Pacote" value={offer.name} />
                   <SummaryRow label="Período" value={periodText(values)} />
                   {fixed && occurrenceCount > 0 ? (
@@ -363,11 +369,17 @@ function SubscribeFlow({ offer }: FlowProps) {
               label={
                 <>
                   Li e aceito os{' '}
-                  <Link to="/termos" className="underline underline-offset-4">
+                  <Link
+                    to="/termos"
+                    className="text-accent underline underline-offset-4 hover:text-accent-deep"
+                  >
                     Termos de uso
                   </Link>{' '}
                   e as{' '}
-                  <Link to="/politicas" className="underline underline-offset-4">
+                  <Link
+                    to="/politicas"
+                    className="text-accent underline underline-offset-4 hover:text-accent-deep"
+                  >
                     políticas de cancelamento
                   </Link>
                   .
@@ -511,8 +523,8 @@ function PayStage({ offer, values, quoteRequest, blocked, onBack, onError }: Pay
 
   const payNow = values.payNowCents;
   return (
-    <section aria-labelledby="sub-pay" className="space-y-space-md">
-      <h2 id="sub-pay" className="font-heading-mobile text-heading-mobile text-ink">
+    <section aria-labelledby="sub-pay" className="bv-card space-y-space-md">
+      <h2 id="sub-pay" className="font-heading text-heading-mobile text-ink md:text-heading">
         {payNow > 0 ? `Pagamento de ${formatBRL(payNow)}` : 'Confirmar assinatura'}
       </h2>
       {status === 'expired' ? (

@@ -58,76 +58,78 @@ describe('PricingSimulatorSection', () => {
     expect(
       screen.getByRole('heading', {
         level: 4,
-        name: 'Garantia de Biossegurança: Bloqueio de Limpeza de 30 min',
+        name: 'Garantia de biossegurança: bloqueio de limpeza de 30 min',
       }),
     ).toBeInTheDocument();
   });
 
-  it('defaults to Dia Útil Comercial, 2 hours: total R$ 160,00, sinal R$ 80,00, saldo R$ 80,00', () => {
+  it('defaults to Dia útil comercial, 2 hours: total R$ 160,00, sinal R$ 80,00, saldo R$ 80,00', () => {
     renderSection();
 
-    expect(valueOf('Valor Total da Reserva:')).toBe('R$ 160,00');
+    expect(valueOf('Valor total da reserva:')).toBe('R$ 160,00');
     expect(valueOf(/Sinal 50% no checkout/)).toBe('R$ 80,00');
     expect(valueOf(/Saldo 50% restante/)).toBe('R$ 80,00');
     expect(screen.getByText('2 Horas')).toBeInTheDocument();
     expect(normalize(screen.getByText(/Tarifa Desconto/).textContent)).toBe(
       '2.0h × R$ 80,00/h (Tarifa Desconto)',
     );
-    expect(screen.getByRole('button', { name: 'Dia Útil Comercial' })).toHaveAttribute(
+    expect(screen.getByRole('button', { name: 'Dia útil comercial' })).toHaveAttribute(
       'aria-pressed',
       'true',
     );
-    expect(screen.getByRole('button', { name: 'Noite / Fim de Semana' })).toHaveAttribute(
+    expect(screen.getByRole('button', { name: 'Noite / fim de semana' })).toHaveAttribute(
       'aria-pressed',
       'false',
     );
   });
 
-  it('switching to Noite / Fim de Semana shows R$ 198,00 and flips aria-pressed', async () => {
+  it('switching to Noite / fim de semana shows R$ 198,00 and flips aria-pressed', async () => {
     renderSection();
 
-    await userEvent.click(screen.getByRole('button', { name: 'Noite / Fim de Semana' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Noite / fim de semana' }));
 
-    expect(valueOf('Valor Total da Reserva:')).toBe('R$ 198,00');
+    expect(valueOf('Valor total da reserva:')).toBe('R$ 198,00');
     expect(valueOf(/Sinal 50% no checkout/)).toBe('R$ 99,00');
-    expect(screen.getByRole('button', { name: 'Noite / Fim de Semana' })).toHaveAttribute(
+    expect(screen.getByRole('button', { name: 'Noite / fim de semana' })).toHaveAttribute(
       'aria-pressed',
       'true',
     );
-    expect(screen.getByRole('button', { name: 'Dia Útil Comercial' })).toHaveAttribute(
+    expect(screen.getByRole('button', { name: 'Dia útil comercial' })).toHaveAttribute(
       'aria-pressed',
       'false',
     );
   });
 
-  it('moving the range to 1 hour on Noite / Fim de Semana shows R$ 120,00', async () => {
+  it('moving the slider to 1 hour on Noite / fim de semana shows R$ 120,00', async () => {
     renderSection();
-    await userEvent.click(screen.getByRole('button', { name: 'Noite / Fim de Semana' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Noite / fim de semana' }));
 
-    fireEvent.change(screen.getByLabelText('Duração da Sessão'), { target: { value: '1' } });
+    fireEvent.keyDown(screen.getByRole('slider', { name: 'Duração da sessão' }), { key: 'Home' });
 
-    expect(valueOf('Valor Total da Reserva:')).toBe('R$ 120,00');
+    expect(valueOf('Valor total da reserva:')).toBe('R$ 120,00');
     expect(screen.getByText('1 Hora')).toBeInTheDocument();
   });
 
-  it('1 hour on Dia Útil Comercial shows R$ 97,00 and the plain formula', () => {
+  it('1 hour on Dia útil comercial shows R$ 97,00 and the plain formula', () => {
     renderSection();
 
-    fireEvent.change(screen.getByLabelText('Duração da Sessão'), { target: { value: '1' } });
+    fireEvent.keyDown(screen.getByRole('slider', { name: 'Duração da sessão' }), { key: 'Home' });
 
-    expect(valueOf('Valor Total da Reserva:')).toBe('R$ 97,00');
+    expect(valueOf('Valor total da reserva:')).toBe('R$ 97,00');
     expect(normalize(screen.getByText(/1\.0h ×/).textContent)).toBe('1.0h × R$ 97,00/h');
   });
 
-  it('exposes the range as 1 to 6 hours in 0.5 steps and the CTA linking to /reservar', () => {
+  it('exposes the slider as 1 to 6 hours in 0.5 steps and the CTA linking to /reservar', () => {
     renderSection();
-    const range = screen.getByLabelText('Duração da Sessão');
+    const slider = screen.getByRole('slider', { name: 'Duração da sessão' });
 
-    expect(range).toHaveAttribute('min', '1');
-    expect(range).toHaveAttribute('max', '6');
-    expect(range).toHaveAttribute('step', '0.5');
+    expect(slider).toHaveAttribute('aria-valuemin', '1');
+    expect(slider).toHaveAttribute('aria-valuemax', '6');
+    fireEvent.keyDown(slider, { key: 'ArrowLeft' });
+    expect(slider).toHaveAttribute('aria-valuenow', '1.5');
+    expect(screen.getByText('1,5 Horas')).toBeInTheDocument();
     expect(
-      screen.getByRole('link', { name: /Continuar para Agendamento da Sala/ }),
+      screen.getByRole('link', { name: /Continuar para agendamento da sala/ }),
     ).toHaveAttribute('href', '/reservar');
     expect(
       screen.getByText('Inclui +30 min gratuitos de limpeza pós-atendimento'),
@@ -138,7 +140,7 @@ describe('PricingSimulatorSection', () => {
     useCatalogWithTwoHourRate(9000);
     renderSection();
 
-    await waitFor(() => expect(valueOf('Valor Total da Reserva:')).toBe('R$ 180,00'));
+    await waitFor(() => expect(valueOf('Valor total da reserva:')).toBe('R$ 180,00'));
     expect(valueOf(/Sinal 50% no checkout/)).toBe('R$ 90,00');
     expect(normalize(screen.getByText(/Tarifa Desconto/).textContent)).toBe(
       '2.0h × R$ 90,00/h (Tarifa Desconto)',
@@ -157,6 +159,6 @@ describe('PricingSimulatorSection', () => {
     renderSection();
 
     expect(await screen.findByText(/Não foi possível simular esta duração/)).toBeInTheDocument();
-    expect(screen.queryByText('Valor Total da Reserva:')).toBeNull();
+    expect(screen.queryByText('Valor total da reserva:')).toBeNull();
   });
 });

@@ -57,8 +57,8 @@ export function PricingPage() {
   return (
     <section className="mx-auto max-w-7xl space-y-space-2xl px-gutter py-space-3xl">
       <div className="max-w-2xl space-y-space-xs">
-        <Eyebrow>TARIFAS TRANSPARENTES</Eyebrow>
-        <h1 className="font-display-l-mobile text-display-l-mobile text-ink md:font-display-l md:text-display-l">
+        <Eyebrow>Tarifas transparentes</Eyebrow>
+        <h1 className="font-display text-display-l-mobile text-ink md:text-display-l">
           Preços e pacotes
         </h1>
         <p className="font-body text-body text-ink-muted">
@@ -76,7 +76,9 @@ export function PricingPage() {
       ) : (
         <>
           <div className="space-y-space-sm">
-            <h2 className="font-heading-mobile text-heading-mobile text-ink">Tarifas por hora</h2>
+            <h2 className="font-heading text-heading-mobile text-ink md:text-heading">
+              Tarifas por hora
+            </h2>
             <Table
               caption="Tarifas por hora"
               columns={hourlyColumns}
@@ -86,7 +88,9 @@ export function PricingPage() {
           </div>
           {data.blocks.length > 0 ? (
             <div className="space-y-space-sm">
-              <h2 className="font-heading-mobile text-heading-mobile text-ink">Blocos fechados</h2>
+              <h2 className="font-heading text-heading-mobile text-ink md:text-heading">
+                Blocos fechados
+              </h2>
               <Table
                 caption="Blocos fechados"
                 columns={blockColumns}

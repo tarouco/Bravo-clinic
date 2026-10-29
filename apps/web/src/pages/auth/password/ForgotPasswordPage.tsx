@@ -8,9 +8,9 @@ import { Alert } from '../../../components/ui/Feedback';
 import { Input } from '../../../components/ui/form';
 import { useRequestPasswordReset } from '../../../features/auth/hooks';
 import { ApiError } from '../../../lib/api';
-import { AuthCard } from '../AuthCard';
+import { AuthCard, authLinkClasses } from '../AuthCard';
 
-const linkClasses = 'text-bronze underline underline-offset-4';
+const linkClasses = authLinkClasses;
 
 export function ForgotPasswordPage() {
   const request = useRequestPasswordReset();
@@ -55,7 +55,7 @@ export function ForgotPasswordPage() {
             error={errors.email?.message}
             {...register('email')}
           />
-          <Button type="submit" loading={request.isPending} className="w-full">
+          <Button type="submit" loading={request.isPending} block>
             Enviar link
           </Button>
         </form>

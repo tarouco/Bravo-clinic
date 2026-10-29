@@ -35,7 +35,7 @@ afterEach(() => {
 async function openVideomakerQuote() {
   const card = screen.getByRole('heading', { name: 'Videomaker Dedicado' }).closest('article');
   if (!card) throw new Error('Videomaker card not found');
-  await userEvent.click(within(card).getByRole('button', { name: 'Solicitar Orçamento' }));
+  await userEvent.click(within(card).getByRole('button', { name: 'Solicitar orçamento' }));
   return screen.getByRole('dialog');
 }
 
@@ -50,10 +50,10 @@ describe('ExtrasSection', () => {
     expect(screen.queryByText(/Exclusivo Salas/)).not.toBeInTheDocument();
     expect(container.textContent).not.toMatch(/Jardins|São Paulo|Sao Paulo/);
     expect(container.textContent).toMatch(/Praia Brava, Itajaí e região/);
-    expect(screen.getAllByRole('button', { name: 'Solicitar Orçamento' })).toHaveLength(3);
+    expect(screen.getAllByRole('button', { name: 'Solicitar orçamento' })).toHaveLength(3);
   });
 
-  it('opens a dialog titled with the service when "Solicitar Orçamento" is clicked', async () => {
+  it('opens a dialog titled with the service when "Solicitar orçamento" is clicked', async () => {
     renderWithProviders(<ExtrasSection />);
 
     const dialog = await openVideomakerQuote();
@@ -108,7 +108,7 @@ describe('ExtrasSection', () => {
       expect(new URL(link.getAttribute('href') ?? '').pathname).toBe('/5547999990000'),
     );
     expect(new URL(link.getAttribute('href') ?? '').searchParams.get('text')).toBe(
-      'Olá! Quero um orçamento de Videomaker Dedicado.',
+      'Olá, quero um orçamento de Videomaker Dedicado.',
     );
     expect(link).toHaveAttribute('target', '_blank');
   });

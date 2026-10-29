@@ -55,7 +55,7 @@ export function TwoFactorVerifyPage() {
           error={errors.code?.message}
           {...register('code', { validate: codeRule })}
         />
-        <Button type="submit" loading={verify.isPending} className="w-full">
+        <Button type="submit" loading={verify.isPending} block>
           Verificar
         </Button>
       </form>
