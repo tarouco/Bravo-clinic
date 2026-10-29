@@ -2,4 +2,4 @@ User-agent: *
 Disallow: /app
 Disallow: /admin
 
-Sitemap: https://bravo-clinic.netlify.app/sitemap.xml
+Sitemap: https://www.bravoclinic.com.br/sitemap.xml

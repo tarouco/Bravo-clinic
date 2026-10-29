@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-// Production smoke check: `node scripts/smoke.mjs https://bravo-clinic.netlify.app`
+// Production smoke check: `node scripts/smoke.mjs https://www.bravoclinic.com.br`
 // Exits 0 only when the API health (through the Netlify proxy), the public config, the Home and the
 // gestao endpoints (extras, ICS, MCP) all answer as expected.
 
-const base = (process.argv[2] ?? 'https://bravo-clinic.netlify.app').replace(/\/+$/, '');
+const base = (process.argv[2] ?? 'https://www.bravoclinic.com.br').replace(/\/+$/, '');
 const TIMEOUT_MS = 60_000; // first request after scale-to-zero pays the Neon cold start
 
 async function get(path, init = {}) {

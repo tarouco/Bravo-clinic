@@ -8,7 +8,7 @@ import { DEFAULT_SITE_URL, resolveSiteUrl } from '../../site-url';
 const readText = (relative: string): string =>
   readFileSync(resolve(process.cwd(), relative), 'utf8').replace(/\r\n/g, '\n');
 
-const SITE_URL = 'https://bravo-clinic.netlify.app';
+const SITE_URL = 'https://www.bravoclinic.com.br';
 const OG_TITLE = 'Bravô Clinic – Salas Inteligentes | Praia Brava, Itajaí';
 const OG_DESCRIPTION =
   'Salas clínicas e estúdios de alto padrão para alugar por hora, meio turno ou turno na Praia Brava, em Itajaí – SC. Reserve online.';
