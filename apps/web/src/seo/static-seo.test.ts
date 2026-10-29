@@ -9,7 +9,9 @@ const readText = (relative: string): string =>
   readFileSync(resolve(process.cwd(), relative), 'utf8').replace(/\r\n/g, '\n');
 
 const SITE_URL = 'https://bravo-clinic.netlify.app';
-const OG_DESCRIPTION = 'Saúde · Beleza · Bem-estar em um só lugar';
+const OG_TITLE = 'Bravô Clinic – Salas Inteligentes | Praia Brava, Itajaí';
+const OG_DESCRIPTION =
+  'Salas clínicas e estúdios de alto padrão para alugar por hora, meio turno ou turno na Praia Brava, em Itajaí – SC. Reserve online.';
 
 const html = readText('index.html');
 let doc: Document;
@@ -42,15 +44,19 @@ describe('index.html head', () => {
     expect(meta('name="description"')?.length ?? 0).toBeGreaterThan(0);
   });
 
-  it('declares the Open Graph tags with an absolute 1200x630 image', () => {
+  it('declares the Open Graph tags with an absolute 1200x630 logo image', () => {
     expect(meta('property="og:type"')).toBe('website');
-    expect(meta('property="og:title"')?.length ?? 0).toBeGreaterThan(0);
+    expect(meta('property="og:title"')).toBe(OG_TITLE);
     expect(meta('property="og:description"')).toBe(OG_DESCRIPTION);
     expect(meta('property="og:locale"')).toBe('pt_BR');
-    expect(meta('property="og:image"')).toBe('%VITE_SITE_URL%/og-image.jpg');
+    expect(meta('property="og:image"')).toBe('%VITE_SITE_URL%/og-logo.jpg');
+    expect(meta('name="twitter:card"')).toBe('summary_large_image');
+    expect(meta('name="twitter:title"')).toBe(OG_TITLE);
+    expect(meta('name="twitter:description"')).toBe(OG_DESCRIPTION);
+    expect(meta('name="twitter:image"')).toBe('%VITE_SITE_URL%/og-logo.jpg');
 
     // The JPEG's start-of-frame segment holds height then width.
-    const jpeg = readFileSync(resolve(process.cwd(), 'public/og-image.jpg'));
+    const jpeg = readFileSync(resolve(process.cwd(), 'public/og-logo.jpg'));
     const sof = jpeg.findIndex(
       (byte, i) => byte === 0xff && [0xc0, 0xc2].includes(jpeg[i + 1] ?? 0),
     );

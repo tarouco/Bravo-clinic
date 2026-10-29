@@ -178,6 +178,9 @@ The kit uses `data-theme="dark"`; the app keeps `day`/`night` (stored preference
 ### AD-042 · Derived tokens where v3 is silent (rebrand-v3)
 `danger` #A12A1E / Noite #FFB4A6 (≥5:1 on every surface), `danger-soft`, warnings as gold fill + `on-gold` text (never yellow text), success = emerald; form fields sink (`bv-field`: `surface-deboss` + `deboss`, `radius-md`, neon focus) while actions rise; admin tables use pearl rows with `eyebrow` headers. Typography: the kit sizes are app sizes (`-mobile`, `body`/`label`/`caption`); unsuffixed `display-*`, `heading` and `lead` are ~1.3–1.4× web variants. Marked "derived" until the brand validates them.
 
+### AD-043 · Link preview shows the logo banner (FND-123)
+`og:image` / `twitter:image` = `public/og-logo.jpg`, a 1200×630 banner of the Ô monogram and the BRAVÔ / CLINIC / SALAS INTELIGENTES lockup in Josefin Sans, `gold` on the emerald gradient (`summary_large_image`, chosen by Eduardo on 2026-10-29). It is set in type because the only logo files are photo crops; regenerate it when the official vectors arrive. A new filename busts the WhatsApp/Facebook preview cache. `og-image.jpg` (room photo) stays as the JSON-LD `image`; `logo` points to the banner.
+
 ## Handoff
 
 - 2026-10-25: Repo cloned, Neon project + branches created, Neon Function spike verified. Next: plan `fundacao` (spec/design/tasks), then the other three features in parallel.
