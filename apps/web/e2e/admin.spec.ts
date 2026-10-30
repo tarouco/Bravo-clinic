@@ -1,18 +1,13 @@
 import { addDays, utcToLocal } from '@bravo/core';
 import { expect, test } from '@playwright/test';
-import {
-  adminTotp,
-  bookingByCode,
-  closeE2eDb,
-  E2E_ADMIN,
-  E2E_CUSTOMERS,
-  type E2eProject,
-} from '../../api/test/e2e-seed';
+import { bookingByCode, closeE2eDb, E2E_CUSTOMERS, type E2eProject } from '../../api/test/e2e-seed';
+import { closeReceitaDb, loginAdmin } from './receita-helpers';
 
 // Spec Success Criteria (T49): the admin creates a pre-reservation, confirms it manually and
 // checks the customer in (check-in opens 1 h before the start, so the booking starts soon).
 
 test.afterAll(async () => {
+  await closeReceitaDb();
   await closeE2eDb();
 });
 
@@ -36,14 +31,8 @@ test('admin creates a pre-reservation, confirms it manually and checks the custo
   const room = project === 'desktop' ? 'Sala Secundária' : 'Sala Terceira';
   const slot = nextSlot();
 
-  await page.goto('/login');
-  await page.getByLabel('E-mail').fill(E2E_ADMIN.email);
-  await page.getByLabel('Senha', { exact: true }).fill(E2E_ADMIN.password);
-  await page.getByRole('button', { name: 'Entrar', exact: true }).click();
-  await expect(page).toHaveURL(/\/login\/2fa/);
-  await page.getByLabel('Código de verificação').fill(adminTotp());
-  await page.getByRole('button', { name: 'Verificar' }).click();
-  await expect(page).toHaveURL(/\/admin/);
+  // The previous spec may have spent the current TOTP step: loginAdmin waits for a fresh one.
+  await loginAdmin(page);
 
   await page.goto('/admin/reservas');
   await expect(page.getByRole('heading', { name: 'Gestão de Reservas' })).toBeVisible();

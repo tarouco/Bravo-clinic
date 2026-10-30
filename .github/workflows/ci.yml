@@ -52,6 +52,13 @@ jobs:
           ENCRYPTION_KEY: AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=
           APP_BASE_URL: http://localhost:5173
           EMAIL_FROM: reservas@bravoclinic.test
+      # Traces and screenshots of failed specs (`trace: retain-on-failure`): download from the run.
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-results
+          path: apps/web/test-results
+          retention-days: 7
       - run: npm run build
         env:
           API_PROXY_ORIGIN: https://example.invalid

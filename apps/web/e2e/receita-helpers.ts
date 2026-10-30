@@ -180,12 +180,20 @@ export async function apiFromPage<T>(
 
 /** Runs a scheduled job through `jobs/cli.ts` with the clock at `now` (design.md "Jobs"). */
 export async function runJob(name: string, now: Date): Promise<Record<string, number>> {
-  const { stdout } = await run(`npm run job -w apps/api -- ${name} --now=${now.toISOString()}`, {
-    cwd: repoRoot,
-    env: process.env,
-    timeout: 600_000,
-    maxBuffer: 4 * 1024 * 1024,
-  });
+  const { stdout, stderr } = await run(
+    `npm run job -w apps/api -- ${name} --now=${now.toISOString()}`,
+    {
+      cwd: repoRoot,
+      env: process.env,
+      timeout: 600_000,
+      maxBuffer: 4 * 1024 * 1024,
+    },
+  );
+  // The job's log lines (gateway calls, caught errors) only exist in this child process: echo them
+  // into the test output so a failing run in CI shows what the job did.
+  for (const l of `${stdout}\n${stderr}`.split(/\r?\n/)) {
+    if (l.trim().startsWith('{"level"')) console.log(`[job ${name}] ${l.trim()}`);
+  }
   const line = stdout
     .split(/\r?\n/)
     .reverse()
