@@ -40,7 +40,8 @@ export const Toggle = forwardRef<HTMLButtonElement, ToggleProps>(function Toggle
   const descriptionId = `${switchId}-description`;
 
   return (
-    <div className={cx('flex items-center gap-space-md', className)}>
+    // `relative` anchors the `sr-only` label (absolute) here, not on a far ancestor.
+    <div className={cx('relative flex items-center gap-space-md', className)}>
       <button
         ref={ref}
         id={switchId}
