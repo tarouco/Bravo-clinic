@@ -21,10 +21,14 @@ const VIEWPORT_MARGIN_PX = 8;
  */
 export function useAnchoredPanel(open: boolean, align: AnchorAlign) {
   const anchor = useRef<HTMLElement | null>(null);
+  const panel = useRef<HTMLElement | null>(null);
   const [style, setStyle] = useState<CSSProperties>({ position: 'fixed' });
 
   const anchorRef = useCallback((node: HTMLElement | null) => {
     anchor.current = node;
+  }, []);
+  const panelRef = useCallback((node: HTMLElement | null) => {
+    panel.current = node;
   }, []);
 
   useLayoutEffect(() => {
@@ -34,6 +38,11 @@ export function useAnchoredPanel(open: boolean, align: AnchorAlign) {
       if (!rect) return;
       const roomBelow = window.innerHeight - rect.bottom;
       const below = roomBelow >= MIN_ROOM_BELOW_PX || rect.top < MIN_ROOM_BELOW_PX;
+      // Keep the panel inside the viewport sideways too: an anchor near the right edge (the last
+      // column of a calendar on a phone) would otherwise push the panel and its actions off screen.
+      const width = panel.current?.offsetWidth ?? 0;
+      const maxOffset = Math.max(VIEWPORT_MARGIN_PX, window.innerWidth - width - VIEWPORT_MARGIN_PX);
+      const clampX = (offset: number) => Math.min(Math.max(offset, VIEWPORT_MARGIN_PX), maxOffset);
       setStyle({
         position: 'fixed',
         zIndex: 50,
@@ -45,7 +54,9 @@ export function useAnchoredPanel(open: boolean, align: AnchorAlign) {
         ),
         overflowY: 'auto',
         ...(below ? { top: rect.bottom } : { bottom: window.innerHeight - rect.top }),
-        ...(align === 'end' ? { right: window.innerWidth - rect.right } : { left: rect.left }),
+        ...(align === 'end'
+          ? { right: clampX(window.innerWidth - rect.right) }
+          : { left: clampX(rect.left) }),
       });
     };
     update();
@@ -57,7 +68,7 @@ export function useAnchoredPanel(open: boolean, align: AnchorAlign) {
     };
   }, [open, align]);
 
-  return { anchor, anchorRef, style };
+  return { anchor, anchorRef, panel, panelRef, style };
 }
 
 /** Calls `onDismiss` on Escape while `open`; `onDismiss` may be an inline function. */

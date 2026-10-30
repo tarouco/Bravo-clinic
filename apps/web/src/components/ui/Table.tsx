@@ -68,13 +68,15 @@ export function Table<T>({
   };
 
   return (
-    // Focusable so a keyboard user can scroll a wide or long table (WCAG 2.1.1).
+    // Focusable so a keyboard user can scroll a wide or long table (WCAG 2.1.1). `relative` keeps
+    // absolutely positioned cells' content (an `sr-only` label) inside the scroll box: without it
+    // they escape to the body and widen the page on phones.
     <div
       role="region"
       aria-label={caption}
       tabIndex={0}
       className={cx(
-        'max-h-[70vh] overflow-auto rounded-md bg-surface-raised shadow-card',
+        'relative max-h-[70vh] overflow-auto rounded-md bg-surface-raised shadow-card',
         focusRing,
         className,
       )}
