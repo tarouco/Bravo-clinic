@@ -34,7 +34,7 @@ export const panelClasses = 'bv-menu w-72 max-w-[calc(100vw-1rem)] p-space-md te
 export function Popover({ trigger, label, children, align = 'start', className }: PopoverProps) {
   const [open, setOpen] = useState(false);
   const panelId = useId();
-  const { anchor, anchorRef, style } = useAnchoredPanel(open, align);
+  const { anchor, anchorRef, panelRef, style } = useAnchoredPanel(open, align);
 
   useEscape(open, () => {
     setOpen(false);
@@ -68,6 +68,7 @@ export function Popover({ trigger, label, children, align = 'start', className }
       })}
       {open ? (
         <div
+          ref={panelRef}
           id={panelId}
           role="dialog"
           aria-label={label}

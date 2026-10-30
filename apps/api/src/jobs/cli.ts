@@ -51,6 +51,11 @@ export async function runCli(
     urls: [env['DATABASE_URL'], env['DATABASE_URL_UNPOOLED']],
     branchId: env['NEON_BRANCH_PRODUCTION'],
   });
+  // Handlers also read the module-level getEnv()/getDb() (a declined renewal builds its link from
+  // APP_BASE_URL): point them at the test database too, as the e2e seed does for the API it serves.
+  // Without this they parse .env's DATABASE_URL, or throw EnvError where there is none (CI).
+  process.env['DATABASE_URL'] = url;
+  delete process.env['DATABASE_URL_UNPOOLED'];
   const { pool, db } = createDb(url);
   try {
     const base = {

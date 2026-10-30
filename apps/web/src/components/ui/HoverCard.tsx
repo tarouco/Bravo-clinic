@@ -1,4 +1,4 @@
-import { useId, useRef, useState, type FocusEvent, type MouseEvent, type ReactNode } from 'react';
+import { useId, useState, type FocusEvent, type MouseEvent, type ReactNode } from 'react';
 import { useAnchoredPanel, useEscape, type AnchorAlign } from './anchored';
 import { cx } from './cx';
 import { panelClasses } from './Popover';
@@ -41,8 +41,7 @@ export function HoverCard({
 }: HoverCardProps) {
   const [open, setOpen] = useState(false);
   const cardId = useId();
-  const cardRef = useRef<HTMLDivElement>(null);
-  const { anchor, anchorRef, style } = useAnchoredPanel(open, align);
+  const { anchor, anchorRef, panel, panelRef, style } = useAnchoredPanel(open, align);
 
   useEscape(open, () => {
     setOpen(false);
@@ -50,7 +49,7 @@ export function HoverCard({
 
   const leaves = (event: { relatedTarget: EventTarget | null }) => {
     // Moving between the trigger and the card keeps it open.
-    if (insideOf(cardRef.current, event.relatedTarget)) return;
+    if (insideOf(panel.current, event.relatedTarget)) return;
     if (insideOf(anchor.current, event.relatedTarget)) return;
     setOpen(false);
   };
@@ -72,7 +71,7 @@ export function HoverCard({
       })}
       {open ? (
         <div
-          ref={cardRef}
+          ref={panelRef}
           id={cardId}
           role="dialog"
           aria-label={label}
