@@ -26,7 +26,7 @@ describe('RoomsSection with the API unavailable (static reference rooms)', () =>
     ).toBeInTheDocument();
   });
 
-  it('renders the three room cards, each from R$ 80,00 with a "Reservar Sala" button', () => {
+  it('renders the three room cards without a price (prices only come from the catalog)', () => {
     render(<RoomsSection onReserve={vi.fn()} />);
 
     const titles = screen
@@ -37,7 +37,8 @@ describe('RoomsSection with the API unavailable (static reference rooms)', () =>
     const cards = screen.getAllByRole('article');
     expect(cards).toHaveLength(3);
     for (const card of cards) {
-      expect(within(card).getByText(/R\$\s80,00/)).toBeInTheDocument();
+      expect(within(card).queryByText(/R\$/)).not.toBeInTheDocument();
+      expect(within(card).getByText('Consulte os valores')).toBeInTheDocument();
       expect(within(card).getByRole('button', { name: 'Reservar Sala' })).toBeInTheDocument();
     }
   });

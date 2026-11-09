@@ -48,7 +48,18 @@ const blockCategory = {
   fixedPriceCents: 28000,
   averageHourlyCents: 5600,
 };
-const catalog = { hourly: [hourly], blocks: [blockCategory], pricesReviewed: false };
+const catalog = {
+  hourly: [hourly],
+  blocks: [blockCategory],
+  pricesReviewed: false,
+  rules: {
+    cleanupMinutes: 30,
+    slotMinutes: 30,
+    defaultBookingMinutes: 60,
+    minAdvanceMinutes: 0,
+    maxAdvanceDays: 90,
+  },
+};
 
 const availabilityDay = {
   date: '2026-10-27',
@@ -109,7 +120,7 @@ describe('public contracts (NUC-04)', () => {
       { ...roomSummary, photos: [{ url: '/media/a.webp', alt: '', width: null, height: null }] },
       roomSummary,
     ],
-    ['catalogSchema', catalogSchema, catalog, without(catalog, 'pricesReviewed')],
+    ['catalogSchema', catalogSchema, catalog, without(catalog, 'rules')],
     [
       'clinicSchema',
       clinicSchema,

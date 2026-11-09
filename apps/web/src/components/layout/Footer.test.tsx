@@ -1,12 +1,19 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import type { Clinic } from '@bravo/core';
 import type { ClinicConfig } from '../../features/config/useClinicConfig';
+import { clinic } from '../../test/fixtures/nucleo';
 import { Footer } from './Footer';
 
-const configState: { config: ClinicConfig } = {
+const configState: { config: ClinicConfig; clinic: Clinic | undefined } = {
   config: { googleEnabled: false, whatsappE164: '' },
+  clinic: undefined,
 };
+
+vi.mock('../../features/catalog/api', () => ({
+  useClinic: () => ({ data: configState.clinic }),
+}));
 
 vi.mock('../../features/config/useClinicConfig', () => ({
   useClinicConfig: () => configState.config,
@@ -22,6 +29,7 @@ function renderFooter() {
 
 beforeEach(() => {
   configState.config = { googleEnabled: false, whatsappE164: '' };
+  configState.clinic = undefined;
 });
 
 describe('Footer', () => {
@@ -32,9 +40,16 @@ describe('Footer', () => {
     expect(screen.getByRole('heading', { name: 'Atendimento' })).toBeInTheDocument();
   });
 
-  it('shows the Praia Brava address and the corrected hours, with no São Paulo or Jardins', () => {
+  it('shows the address and the business hours the admin configured, with no São Paulo or Jardins', () => {
+    configState.clinic = {
+      ...clinic,
+      addressLine: 'Av. Exemplo, 100 – Itajaí',
+      businessHours: clinic.businessHours.map((h) =>
+        h.dayType === 'sun' ? { ...h, isClosed: false } : h,
+      ),
+    };
     renderFooter();
-    expect(screen.getByText('Praia Brava, Itajaí – SC')).toBeInTheDocument();
+    expect(screen.getByText('Av. Exemplo, 100 – Itajaí')).toBeInTheDocument();
     expect(
       screen.getByText('Seg a sex 07:00–00:00 · Sáb, dom e feriados 09:00–00:00'),
     ).toBeInTheDocument();
@@ -47,6 +62,12 @@ describe('Footer', () => {
     expect(screen.getByRole('contentinfo')).toHaveClass('bg-emerald-deep', 'text-on-emerald');
     expect(screen.getByRole('heading', { name: 'Navegação' })).toHaveClass('text-gold');
     expect(screen.getByRole('link', { name: 'Termos de Uso' })).toHaveClass('hover:text-gold');
+  });
+
+  it('hides the hours while the clinic data loads', () => {
+    renderFooter();
+    expect(screen.queryByText(/Horário de funcionamento/)).not.toBeInTheDocument();
+    expect(screen.getByText('Praia Brava, Itajaí – SC')).toBeInTheDocument();
   });
 
   it('shows the copyright text', () => {

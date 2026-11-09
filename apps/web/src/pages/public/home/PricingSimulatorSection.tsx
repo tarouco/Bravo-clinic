@@ -1,4 +1,4 @@
-import { formatBRL } from '@bravo/core';
+import { formatBRL, type Catalog, type Clinic, type PolicySnapshot } from '@bravo/core';
 import { ArrowRight, Calculator, Check, CreditCard, SprayCan, Table2 } from 'lucide-react';
 import { useMemo, useState, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
@@ -6,73 +6,42 @@ import { Eyebrow } from '../../../components/ui/Brand';
 import { buttonClasses } from '../../../components/ui/Button';
 import { ChipGroup } from '../../../components/ui/Chip';
 import { cx } from '../../../components/ui/cx';
-import { Alert } from '../../../components/ui/Feedback';
+import { Alert, Spinner } from '../../../components/ui/Feedback';
 import { Icon } from '../../../components/ui/Icon';
 import { Slider } from '../../../components/ui/Slider';
-import { useCatalog } from '../../../features/catalog/api';
-import { FACTORY_HOURLY_CATEGORIES } from '../../../features/home/factory-categories';
+import { useCatalog, useClinic, usePolicies } from '../../../features/catalog/api';
 import { hoursLabel, simulateWith, type SimulatorPeriod } from '../../../features/home/simulator';
-
-interface TariffRow {
-  label: string;
-  price: string;
-  /** Highlighted row (the discounted tariff). */
-  highlight?: boolean;
-}
-
-interface TariffGroup {
-  title: string;
-  rows: TariffRow[];
-}
-
-const TARIFF_GROUPS: TariffGroup[] = [
-  {
-    title: 'Dia Útil — Comercial (07:00 às 19:00)',
-    rows: [
-      { label: '1 hora avulsa (até 1h59)', price: 'R$ 97,00/h' },
-      {
-        label: '2 horas ou mais (desconto aplicado em todas as horas)',
-        price: 'R$ 80,00/h',
-        highlight: true,
-      },
-      { label: 'Meio Turno comercial (bloco fixo 2h30)', price: 'R$ 280,00' },
-      { label: 'Turno completo comercial (5h)', price: 'R$ 500,00' },
-    ],
-  },
-  {
-    title: 'Período Noturno (19:00 às 00:00)',
-    rows: [
-      { label: '1 hora noturna', price: 'R$ 120,00/h' },
-      { label: '2 horas ou mais noturnas', price: 'R$ 99,00/h' },
-      { label: 'Meio Turno Noturno (19:00 às 00:00 - 5h)', price: 'R$ 400,00' },
-    ],
-  },
-  {
-    title: 'Sábados, Domingos & Feriados (09:00 às 19:00)',
-    rows: [
-      { label: '1 hora avulsa', price: 'R$ 120,00/h' },
-      { label: '2 horas ou mais (em todas as horas)', price: 'R$ 99,00/h' },
-      { label: 'Meio Turno (09:00–13:45 ou 13:45–18:30)', price: 'R$ 400,00' },
-    ],
-  },
-];
+import {
+  buildTariffGroups,
+  discountFromMinutes,
+  hoursPhrase,
+} from '../../../features/catalog/tariffs';
 
 const PERIOD_OPTIONS: { value: SimulatorPeriod; label: string }[] = [
-  { value: 'util', label: 'Dia útil comercial' },
-  { value: 'especial', label: 'Noite / fim de semana' },
+  { value: 'util', label: 'Dia útil' },
+  { value: 'especial', label: 'Fim de semana / feriado' },
 ];
+
+/** The longest session the simulator offers, in hours. */
+const MAX_HOURS = 6;
 
 const smallLabel = 'block font-eyebrow text-eyebrow uppercase text-ink-muted';
 
-function TariffTable() {
+function TariffTable({ catalog, clinic }: { catalog: Catalog; clinic: Clinic | undefined }) {
+  const groups = buildTariffGroups(catalog, clinic?.businessHours);
   return (
     <div className="bv-card">
       <h3 className="mb-space-sm flex items-center gap-space-xs font-heading text-heading-mobile text-ink md:text-heading">
         <Icon as={Table2} size={24} className="shrink-0 text-accent" />
         Tabela de tarifas Bravô Clinic
       </h3>
-      {TARIFF_GROUPS.map((group, index) => (
-        <div key={group.title} className={index < TARIFF_GROUPS.length - 1 ? 'mb-space-md' : ''}>
+      {groups.length === 0 ? (
+        <p className="font-small text-small text-ink-muted">
+          Tarifas em atualização. Fale com a recepção.
+        </p>
+      ) : null}
+      {groups.map((group, index) => (
+        <div key={group.title} className={index < groups.length - 1 ? 'mb-space-md' : ''}>
           <div className="mb-space-xs font-small text-small font-medium text-accent">
             {group.title}
           </div>
@@ -82,7 +51,7 @@ function TariffTable() {
                 key={row.label}
                 className={cx(
                   'flex justify-between gap-space-md rounded-sm px-space-sm py-1',
-                  // The discounted tariff is the gold price pill of the table.
+                  // The lowest hourly rate is the gold price pill of the table.
                   row.highlight ? 'bg-gold text-on-gold' : 'bg-surface-deboss text-ink',
                 )}
               >
@@ -99,20 +68,21 @@ function TariffTable() {
   );
 }
 
-function CleanupGuarantee() {
+function CleanupGuarantee({ minutes }: { minutes: number }) {
+  if (minutes <= 0) return null;
   return (
     <div className="bv-card space-y-space-xs">
       <div className="flex items-center gap-space-xs text-ink">
         <Icon as={SprayCan} size={22} className="shrink-0 text-accent" />
         <h4 className="bv-card-title m-0">
-          Garantia de biossegurança: bloqueio de limpeza de 30 min
+          Garantia de biossegurança: bloqueio de limpeza de {minutes} min
         </h4>
       </div>
       <p className="font-small text-small text-ink-muted">
         Ao concluir cada reserva, automaticamente bloqueamos&nbsp;
-        <strong>30 minutos de higienização rigorosa&nbsp;</strong>antes da locação seguinte. Assim
-        garantimos intervalos entre cada locação para assegurar a higiene total do ambiente para seu
-        paciente.
+        <strong>{minutes} minutos de higienização rigorosa&nbsp;</strong>antes da locação seguinte.
+        Assim garantimos intervalos entre cada locação para assegurar a higiene total do ambiente
+        para seu paciente.
       </p>
     </div>
   );
@@ -127,18 +97,53 @@ function SummaryRow({ label, children }: { label: ReactNode; children: ReactNode
   );
 }
 
-function Simulator() {
+interface SimulatorProps {
+  catalog: Catalog;
+  clinic: Clinic | undefined;
+  policy: PolicySnapshot;
+}
+
+/** Slider step: the booking grid (`calendar.slot_minutes`), at least half an hour. */
+const stepHours = (slotMinutes: number) => Math.max(slotMinutes, 30) / 60;
+
+/** 1.5 -> "1,5". */
+const decimal = (hours: number) => String(hours).replace('.', ',');
+
+function Simulator({ catalog, clinic, policy }: SimulatorProps) {
+  const step = stepHours(catalog.rules.slotMinutes);
+  const shortest = Math.min(MAX_HOURS * 60, ...catalog.hourly.map((c) => c.minDurationMinutes));
+  const minHours = Math.max(step, Math.ceil(shortest / 60 / step) * step);
+  const discountFrom = discountFromMinutes(catalog.hourly);
   const [period, setPeriod] = useState<SimulatorPeriod>('util');
-  const [hours, setHours] = useState(2);
-  const { data: catalog } = useCatalog();
-  // The factory catalog prices the simulator until the live one arrives or if the API fails.
+  const [chosenHours, setHours] = useState<number | null>(null);
+  const hours = Math.min(
+    MAX_HOURS,
+    Math.max(minHours, chosenHours ?? (discountFrom === null ? minHours : discountFrom / 60)),
+  );
   const categories = useMemo(
-    () =>
-      catalog?.hourly.map((c) => ({ ...c, status: 'active' as const })) ??
-      FACTORY_HOURLY_CATEGORIES,
+    () => catalog.hourly.map((c) => ({ ...c, status: 'active' as const })),
     [catalog],
   );
-  const result = simulateWith(categories, period, hours);
+  const depositPercent = policy['payment.deposit_percent'];
+  const balanceHours = policy['payment.balance_charge_hours_before'];
+  const dayType = period === 'util' ? 'tue' : 'sat';
+  const openMinute = clinic?.businessHours.find((h) => h.dayType === dayType)?.openMinute;
+  const result = simulateWith({
+    categories,
+    period,
+    hours,
+    depositPercent,
+    ...(openMinute === undefined ? {} : { openMinute }),
+  });
+  const cleanup = catalog.rules.cleanupMinutes;
+  const discountHours = discountFrom === null ? null : discountFrom / 60;
+  const ticks = [
+    `${decimal(minHours)}h (mínimo)`,
+    ...(discountHours !== null && discountHours > minHours && discountHours < MAX_HOURS
+      ? [`${decimal(discountHours)}h (faixa desconto)`]
+      : []),
+    `${MAX_HOURS}h`,
+  ];
 
   return (
     <div className="bv-card space-y-space-lg sm:p-space-xl lg:col-span-6">
@@ -154,10 +159,10 @@ function Simulator() {
       <div className="space-y-space-md">
         <div>
           <span aria-hidden="true" className={cx(smallLabel, 'mb-space-xs')}>
-            Tipo de dia / horário
+            Tipo de dia
           </span>
           <ChipGroup
-            label="Tipo de dia / horário"
+            label="Tipo de dia"
             options={PERIOD_OPTIONS}
             value={period}
             onChange={setPeriod}
@@ -175,9 +180,9 @@ function Simulator() {
           {/* The hours caption above stands in for the slider's own value text. */}
           <Slider
             label="Duração da sessão"
-            min={1}
-            max={6}
-            step={0.5}
+            min={minHours}
+            max={MAX_HOURS}
+            step={step}
             value={hours}
             onValueChange={setHours}
             formatValue={hoursLabel}
@@ -187,10 +192,9 @@ function Simulator() {
             {() => null}
           </Slider>
           <div className="mt-1 flex justify-between text-caption text-ink-muted">
-            <span>1h (mínimo)</span>
-            <span>2h (faixa desconto)</span>
-            <span>4h</span>
-            <span>6h</span>
+            {ticks.map((tick) => (
+              <span key={tick}>{tick}</span>
+            ))}
           </div>
         </div>
         {result ? (
@@ -207,31 +211,42 @@ function Simulator() {
                 {formatBRL(result.totalCents)}
               </span>
             </SummaryRow>
-            <div className="space-y-1 border-t border-on-gold/20 pt-space-xs">
-              <SummaryRow
-                label={
-                  <span className="flex items-center gap-1 text-small font-medium">
-                    <Icon as={CreditCard} size={14} className="shrink-0" />
-                    Sinal 50% no checkout (Mercado Pago):
-                  </span>
-                }
-              >
-                <span className="text-small font-semibold">{formatBRL(result.sinalCents)}</span>
-              </SummaryRow>
-              <SummaryRow
-                label={
-                  <span className="text-caption">
-                    Saldo 50% restante (cobrado 48h antes da data):
-                  </span>
-                }
-              >
-                <span className="text-caption">{formatBRL(result.saldoCents)}</span>
-              </SummaryRow>
-            </div>
-            <div className="flex items-center gap-space-xs pt-space-xs font-caption text-caption">
-              <Icon as={Check} size={12} className="shrink-0" />
-              <span>Inclui +30 min gratuitos de limpeza pós-atendimento</span>
-            </div>
+            {depositPercent > 0 && depositPercent < 100 ? (
+              <div className="space-y-1 border-t border-on-gold/20 pt-space-xs">
+                <SummaryRow
+                  label={
+                    <span className="flex items-center gap-1 text-small font-medium">
+                      <Icon as={CreditCard} size={14} className="shrink-0" />
+                      Sinal {depositPercent}% no checkout:
+                    </span>
+                  }
+                >
+                  <span className="text-small font-semibold">{formatBRL(result.sinalCents)}</span>
+                </SummaryRow>
+                <SummaryRow
+                  label={
+                    <span className="text-caption">
+                      Saldo {100 - depositPercent}% restante (cobrado {balanceHours}h antes da
+                      data):
+                    </span>
+                  }
+                >
+                  <span className="text-caption">{formatBRL(result.saldoCents)}</span>
+                </SummaryRow>
+              </div>
+            ) : (
+              <div className="border-t border-on-gold/20 pt-space-xs text-small font-medium">
+                {depositPercent >= 100
+                  ? 'Pagamento integral no checkout.'
+                  : `Pagamento cobrado ${balanceHours}h antes da data.`}
+              </div>
+            )}
+            {cleanup > 0 ? (
+              <div className="flex items-center gap-space-xs pt-space-xs font-caption text-caption">
+                <Icon as={Check} size={12} className="shrink-0" />
+                <span>Inclui +{cleanup} min gratuitos de limpeza pós-atendimento</span>
+              </div>
+            ) : null}
           </div>
         ) : (
           <Alert tone="info">
@@ -248,6 +263,11 @@ function Simulator() {
 }
 
 export function PricingSimulatorSection() {
+  const catalog = useCatalog();
+  const policies = usePolicies();
+  const { data: clinic } = useClinic();
+  const discountFrom = catalog.data ? discountFromMinutes(catalog.data.hourly) : null;
+
   return (
     <section className="w-full scroll-mt-20 bg-surface py-space-3xl" id="simulador">
       <div className="mx-auto max-w-7xl px-gutter">
@@ -257,18 +277,30 @@ export function PricingSimulatorSection() {
             Você tem liberdade para escolher seus horários.
           </h2>
           <p className="font-body text-body text-ink-muted">
-            Reserve 1 hora ou mais, seja em horário comercial, noturno ou finais de semana e
-            feriados, estamos sempre abertos para você melhor atender os seus clientes. Reservando
-            2h ou mais, as tarifas tem desconto.
+            Reserve em horário comercial, noturno ou finais de semana e feriados, estamos sempre
+            abertos para você melhor atender os seus clientes.
+            {discountFrom === null
+              ? null
+              : ` Reservando ${hoursPhrase(discountFrom)} ou mais, as tarifas têm desconto.`}
           </p>
         </div>
-        <div className="grid grid-cols-1 items-start gap-space-xl lg:grid-cols-12">
-          <div className="space-y-space-md lg:col-span-6">
-            <TariffTable />
-            <CleanupGuarantee />
+        {catalog.isError || policies.isError ? (
+          <Alert tone="error">
+            Não foi possível carregar as tarifas agora. Tente novamente em instantes.
+          </Alert>
+        ) : !catalog.data || !policies.data ? (
+          <div className="flex justify-center py-space-2xl">
+            <Spinner label="Carregando tarifas" />
           </div>
-          <Simulator />
-        </div>
+        ) : (
+          <div className="grid grid-cols-1 items-start gap-space-xl lg:grid-cols-12">
+            <div className="space-y-space-md lg:col-span-6">
+              <TariffTable catalog={catalog.data} clinic={clinic} />
+              <CleanupGuarantee minutes={catalog.data.rules.cleanupMinutes} />
+            </div>
+            <Simulator catalog={catalog.data} clinic={clinic} policy={policies.data.values} />
+          </div>
+        )}
       </div>
     </section>
   );

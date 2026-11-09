@@ -1,6 +1,7 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient, type QueryClient } from '@tanstack/react-query';
 import type { RoomInput, RoomPhotoInput } from '@bravo/core';
 import { api } from '../../lib/api';
+import { catalogKeys } from '../catalog/api';
 import type { AdminRoom, AdminRoomList, RoomPhoto } from './contracts';
 import type { PreparedPhoto } from './prepare-photo';
 
@@ -9,6 +10,12 @@ import type { PreparedPhoto } from './prepare-photo';
 export const roomKeys = { all: ['admin', 'rooms'] as const };
 
 const ROOMS = '/api/admin/rooms';
+
+/** Room writes change the admin list and what the public site shows (cards, details, photos). */
+function invalidateRooms(queryClient: QueryClient) {
+  void queryClient.invalidateQueries({ queryKey: roomKeys.all });
+  void queryClient.invalidateQueries({ queryKey: catalogKeys.rooms });
+}
 
 /** `GET /api/admin/rooms` (GES-103). */
 export function useAdminRooms() {
@@ -22,7 +29,7 @@ export function useCreateRoom() {
   const queryClient = useQueryClient();
   return useMutation<AdminRoom, Error, RoomInput>({
     mutationFn: (input) => api.post(ROOMS, input),
-    onSuccess: () => void queryClient.invalidateQueries({ queryKey: roomKeys.all }),
+    onSuccess: () => invalidateRooms(queryClient),
   });
 }
 
@@ -31,7 +38,7 @@ export function useUpdateRoom(id: string) {
   const queryClient = useQueryClient();
   return useMutation<AdminRoom, Error, RoomInput>({
     mutationFn: (input) => api.patch(`${ROOMS}/${id}`, input),
-    onSuccess: () => void queryClient.invalidateQueries({ queryKey: roomKeys.all }),
+    onSuccess: () => invalidateRooms(queryClient),
   });
 }
 
@@ -67,7 +74,7 @@ export function useAddRoomPhoto(roomId: string) {
       onProgress?.(1);
       return photo;
     },
-    onSuccess: () => void queryClient.invalidateQueries({ queryKey: roomKeys.all }),
+    onSuccess: () => invalidateRooms(queryClient),
   });
 }
 
@@ -80,7 +87,7 @@ export function useUpdateRoomPhoto(roomId: string) {
   const queryClient = useQueryClient();
   return useMutation<RoomPhoto, Error, UpdatePhotoVariables>({
     mutationFn: ({ photoId, body }) => api.patch(`${ROOMS}/${roomId}/photos/${photoId}`, body),
-    onSuccess: () => void queryClient.invalidateQueries({ queryKey: roomKeys.all }),
+    onSuccess: () => invalidateRooms(queryClient),
   });
 }
 
@@ -89,7 +96,7 @@ export function useReorderRoomPhotos(roomId: string) {
   const queryClient = useQueryClient();
   return useMutation<unknown, Error, string[]>({
     mutationFn: (ids) => api.put(`${ROOMS}/${roomId}/photos/order`, { ids }),
-    onSuccess: () => void queryClient.invalidateQueries({ queryKey: roomKeys.all }),
+    onSuccess: () => invalidateRooms(queryClient),
   });
 }
 
@@ -97,6 +104,6 @@ export function useDeleteRoomPhoto(roomId: string) {
   const queryClient = useQueryClient();
   return useMutation<void, Error, string>({
     mutationFn: (photoId) => api.delete(`${ROOMS}/${roomId}/photos/${photoId}`),
-    onSuccess: () => void queryClient.invalidateQueries({ queryKey: roomKeys.all }),
+    onSuccess: () => invalidateRooms(queryClient),
   });
 }

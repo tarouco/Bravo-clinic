@@ -1,5 +1,7 @@
 import { Clock, Mail, MapPin, ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { businessHoursSummary } from '../../features/catalog/business-hours';
+import { useClinic } from '../../features/catalog/api';
 import { useClinicConfig } from '../../features/config/useClinicConfig';
 import { BrandLockup } from '../ui/Brand';
 import { Icon } from '../ui/Icon';
@@ -49,7 +51,10 @@ function LinkColumn({
 }
 
 export function Footer() {
-  const { contactEmail } = useClinicConfig();
+  const { contactEmail: configEmail } = useClinicConfig();
+  const { data: clinic } = useClinic();
+  const contactEmail = clinic?.contactEmail || configEmail;
+  const hours = clinic ? businessHoursSummary(clinic.businessHours) : null;
 
   return (
     <footer className="w-full bg-emerald-deep pt-space-3xl pb-space-2xl text-on-emerald">
@@ -75,16 +80,16 @@ export function Footer() {
 
           <div className="space-y-space-md">
             <h3 className={headingClasses}>Atendimento</h3>
-            <p className="font-small text-small text-on-emerald/80 flex items-start gap-space-xs">
-              <Icon as={Clock} size={16} className="text-gold mt-0.5" />
-              <span>
-                Horário de funcionamento:
-                <br />
-                <strong className="text-on-emerald font-medium">
-                  Seg a sex 07:00–00:00 · Sáb, dom e feriados 09:00–00:00
-                </strong>
-              </span>
-            </p>
+            {hours ? (
+              <p className="font-small text-small text-on-emerald/80 flex items-start gap-space-xs">
+                <Icon as={Clock} size={16} className="text-gold mt-0.5" />
+                <span>
+                  Horário de funcionamento:
+                  <br />
+                  <strong className="text-on-emerald font-medium">{hours}</strong>
+                </span>
+              </p>
+            ) : null}
             {contactEmail ? (
               <p className="font-small text-small text-on-emerald/80 flex items-start gap-space-xs">
                 <Icon as={Mail} size={16} className="text-gold mt-0.5" />
@@ -93,7 +98,7 @@ export function Footer() {
             ) : null}
             <p className="font-small text-small text-on-emerald/80 flex items-start gap-space-xs">
               <Icon as={MapPin} size={16} className="text-gold mt-0.5" />
-              <span>Praia Brava, Itajaí – SC</span>
+              <span>{clinic?.addressLine ?? 'Praia Brava, Itajaí – SC'}</span>
             </p>
           </div>
         </div>

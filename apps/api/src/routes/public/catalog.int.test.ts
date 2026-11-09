@@ -123,6 +123,24 @@ describe('GET /public/catalog (NUC-76)', () => {
     ]);
     expect(parsed.blocks).toEqual([]);
     expect(parsed.pricesReviewed).toBe(false);
+    expect(parsed.rules).toEqual({
+      cleanupMinutes: 30,
+      slotMinutes: 30,
+      defaultBookingMinutes: 60,
+      minAdvanceMinutes: 0,
+      maxAdvanceDays: 90,
+    });
+  });
+
+  it('reflects the calendar rules the admin saved', async () => {
+    await db
+      .update(settings)
+      .set({ value: 45 })
+      .where(eq(settings.key, 'calendar.cleanup_minutes'));
+
+    const parsed = catalogSchema.parse((await get('catalog')).body);
+
+    expect(parsed.rules.cleanupMinutes).toBe(45);
   });
 
   it('excludes inactive and admin_only categories and reports the average hourly value of blocks', async () => {

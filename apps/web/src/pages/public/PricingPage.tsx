@@ -1,4 +1,4 @@
-import { formatBRL } from '@bravo/core';
+import { formatBRL, type Catalog } from '@bravo/core';
 import { Link } from 'react-router-dom';
 import { PriceTag } from '../../components/booking/PriceTag';
 import { Eyebrow } from '../../components/ui/Brand';
@@ -7,6 +7,7 @@ import { Alert, Spinner } from '../../components/ui/Feedback';
 import { Table, type TableColumn } from '../../components/ui/Table';
 import { useCatalog } from '../../features/catalog/api';
 import { Slot } from '../../extensions/slots';
+import { discountFromMinutes, hoursPhrase } from '../../features/catalog/tariffs';
 import { formatDuration, formatMinuteRange, formatWeekdays } from '../../lib/format';
 import { usePageTitle } from '../../lib/usePageTitle';
 
@@ -49,6 +50,20 @@ const blockColumns: TableColumn<Block>[] = [
   },
 ];
 
+/** Discount threshold and cleanup buffer, as configured in the admin calendar and categories. */
+function PricingIntro({ catalog }: { catalog: Catalog }) {
+  const discountFrom = discountFromMinutes(catalog.hourly);
+  const cleanup = catalog.rules.cleanupMinutes;
+  return (
+    <p className="font-body text-body text-ink-muted">
+      {discountFrom === null
+        ? null
+        : `Reservando ${hoursPhrase(discountFrom)} ou mais, a tarifa com desconto vale para todas as horas. `}
+      {cleanup > 0 ? `Cada reserva inclui ${cleanup} minutos de limpeza após o atendimento.` : null}
+    </p>
+  );
+}
+
 /** `/precos`: hourly and block rates from the catalog, then the `pricing.packages` slot. */
 export function PricingPage() {
   usePageTitle('Preços');
@@ -61,10 +76,7 @@ export function PricingPage() {
         <h1 className="font-display text-display-l-mobile text-ink md:text-display-l">
           Preços e pacotes
         </h1>
-        <p className="font-body text-body text-ink-muted">
-          Reservando 2 horas ou mais, a tarifa com desconto vale para todas as horas. Cada reserva
-          inclui o tempo de limpeza após o atendimento.
-        </p>
+        {data ? <PricingIntro catalog={data} /> : null}
       </div>
 
       {isPending ? (

@@ -6,51 +6,58 @@ import {
   type HourlyCategory,
   type LocalDate,
 } from '@bravo/core';
-import { FACTORY_HOURLY_CATEGORIES } from './factory-categories';
 
-/** "util" = weekday business hours; "especial" = night, weekend and holiday. */
+/** "util" = a weekday; "especial" = weekend and holiday. */
 export type SimulatorPeriod = 'util' | 'especial';
 
 export interface Simulation {
   /** Hourly rate applied to the first segment, in cents. */
   rateCents: Cents;
   totalCents: Cents;
-  /** 50% paid at checkout. */
+  /** Deposit paid at checkout (`payment.deposit_percent` of the total). */
   sinalCents: Cents;
-  /** The remaining 50%, charged 48h before the date. */
+  /** The rest, charged before the date. */
   saldoCents: Cents;
-  /** Calculation memory, e.g. "2.0h × R$ 80,00/h (Tarifa Desconto)". */
+  /** Calculation memory, e.g. "2.0h × R$ 80,00/h (2 horas ou mais)". */
   formula: string;
 }
 
 /**
- * Reference days and start for the two periods: a Tuesday and a Saturday at 10:00, which sit in the
- * daytime window of the factory categories (weekday rates and weekend/holiday rates).
+ * Reference days for the two periods: a Tuesday and a Saturday. The session starts at 10:00, or
+ * at the opening time when the clinic opens later that day.
  */
-const REFERENCE: Record<SimulatorPeriod, { date: LocalDate; label: string }> = {
-  util: { date: '2026-10-27', label: 'Tarifa Desconto' },
-  especial: { date: '2026-10-31', label: 'Tarifa Noite/Fim de semana' },
+const REFERENCE_DATE: Record<SimulatorPeriod, LocalDate> = {
+  util: '2026-10-27',
+  especial: '2026-10-31',
 };
-const START_MINUTE = 600;
+const DEFAULT_START_MINUTE = 600;
 
-/** From this many hours on, the discounted tariff applies to every hour. */
-const DISCOUNT_FROM_HOURS = 2;
+export interface SimulateOptions {
+  categories: HourlyCategory[];
+  period: SimulatorPeriod;
+  hours: number;
+  /** `payment.deposit_percent` from the public policies. */
+  depositPercent: number;
+  /** Opening minute of the reference day, from the clinic business hours. */
+  openMinute?: number;
+}
 
 /**
- * Price of a booking of `hours` (multiples of 0.5) in the given period, computed by the core
- * pricing engine over `categories` (the live catalog): the category rates apply as they would at
- * checkout; sinal and saldo are 50% each. Null when the categories cannot price the interval.
+ * Price of a booking of `hours` in the given period, computed by the core pricing engine over the
+ * live catalog categories exactly as at checkout. Null when the categories cannot price it.
  */
-export function simulateWith(
-  categories: HourlyCategory[],
-  period: SimulatorPeriod,
-  hours: number,
-): Simulation | null {
-  const { date, label } = REFERENCE[period];
+export function simulateWith({
+  categories,
+  period,
+  hours,
+  depositPercent,
+  openMinute,
+}: SimulateOptions): Simulation | null {
+  const startMinute = Math.max(DEFAULT_START_MINUTE, openMinute ?? 0);
   const priced = priceHourlyBooking({
-    date,
-    startMinute: START_MINUTE,
-    endMinute: START_MINUTE + Math.round(hours * 60),
+    date: REFERENCE_DATE[period],
+    startMinute,
+    endMinute: startMinute + Math.round(hours * 60),
     isHoliday: false,
     categories,
   });
@@ -58,22 +65,14 @@ export function simulateWith(
   if (!priced.ok || !first) return null;
 
   const totalCents = priced.grossCents;
-  const sinalCents = percentOfCents(totalCents, 50);
-  const suffix = hours >= DISCOUNT_FROM_HOURS ? ` (${label})` : '';
+  const sinalCents = percentOfCents(totalCents, depositPercent);
   return {
     rateCents: first.rateCentsPerHour,
     totalCents,
     sinalCents,
     saldoCents: totalCents - sinalCents,
-    formula: `${hours.toFixed(1)}h × ${formatBRL(first.rateCentsPerHour)}/h${suffix}`,
+    formula: `${hours.toFixed(1)}h × ${formatBRL(first.rateCentsPerHour)}/h (${first.categoryName})`,
   };
-}
-
-/** The simulation with the factory categories (PRD 5.3), which always price a 1-6 hour session. */
-export function simulate(period: SimulatorPeriod, hours: number): Simulation {
-  const result = simulateWith(FACTORY_HOURLY_CATEGORIES, period, hours);
-  if (!result) throw new Error('Factory categories must price every simulator session');
-  return result;
 }
 
 /** Slider caption: "1 Hora", "2 Horas", "1,5 Horas". */

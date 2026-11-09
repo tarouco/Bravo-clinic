@@ -11,11 +11,9 @@ export interface StaticRoom {
   tags: string[];
   description: string;
   equipment: string[];
-  /** Lowest hourly rate in integer cents (unified tariff: same in every room). */
-  fromPriceCents: number;
 }
 
-/** Home copy for the three rooms, taken from the reference. Replaced by API data in `nucleo`. */
+/** Home copy for the three rooms while the API loads (no prices: those come from the catalog). */
 export const staticRooms: readonly StaticRoom[] = [
   {
     slug: 'principal',
@@ -33,7 +31,6 @@ export const staticRooms: readonly StaticRoom[] = [
       'Pontos de luz difusa e suporte para smartphones e câmeras',
       'Pia de assepsia cirúrgica integrada na marcenaria',
     ],
-    fromPriceCents: 8000,
   },
   {
     slug: 'secundaria',
@@ -51,7 +48,6 @@ export const staticRooms: readonly StaticRoom[] = [
       'Isolamento acústico com painéis de madeira ripada',
       'Foco de luz articulado com temperatura neutra',
     ],
-    fromPriceCents: 8000,
   },
   {
     slug: 'terceira',
@@ -69,6 +65,5 @@ export const staticRooms: readonly StaticRoom[] = [
       'Luz indireta regulável (zero ofuscamento ocular)',
       'Toalheiro térmico e higienização hospitalar prévia',
     ],
-    fromPriceCents: 8000,
   },
 ];

@@ -141,7 +141,18 @@ export async function getCatalog(db: Db): Promise<Catalog> {
       });
     }
   }
-  return { hourly, blocks, pricesReviewed: settings['onboarding.prices_reviewed'] };
+  return {
+    hourly,
+    blocks,
+    pricesReviewed: settings['onboarding.prices_reviewed'],
+    rules: {
+      cleanupMinutes: settings['calendar.cleanup_minutes'],
+      slotMinutes: settings['calendar.slot_minutes'],
+      defaultBookingMinutes: settings['calendar.default_booking_minutes'],
+      minAdvanceMinutes: settings['calendar.min_advance_minutes'],
+      maxAdvanceDays: settings['calendar.max_advance_days'],
+    },
+  };
 }
 
 /** Contact data and the 8 business-hours rows for the Contato page (NUC-84). */

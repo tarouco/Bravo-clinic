@@ -181,6 +181,9 @@ The kit uses `data-theme="dark"`; the app keeps `day`/`night` (stored preference
 ### AD-043 · Link preview shows the logo banner (FND-123)
 `og:image` / `twitter:image` = `public/og-logo.jpg`, a 1200×630 banner of the Ô monogram and the BRAVÔ / CLINIC / SALAS INTELIGENTES lockup in Josefin Sans, `gold` on the emerald gradient (`summary_large_image`, chosen by Eduardo on 2026-10-29). It is set in type because the only logo files are photo crops; regenerate it when the official vectors arrive. A new filename busts the WhatsApp/Facebook preview cache. `og-image.jpg` (room photo) stays as the JSON-LD `image`; `logo` points to the banner.
 
+### AD-044 · Public prices, hours and rules come only from the admin data
+Every price, time window, category and booking rule on the public site is read from the API: the Home tariff table and simulator, `/precos`, the policy cards and the footer use `GET /public/catalog` (hourly + block categories and, new, `rules`: `calendar.cleanup_minutes`, `slot_minutes`, `default_booking_minutes`, `min_advance_minutes`, `max_advance_days`), `/public/policies` (deposit %, balance and reschedule hours) and `/public/clinic` (business hours, address, e-mail). The factory-category fallback was removed: while loading the site shows a spinner, on failure a message, never an invented price; the static room copy shown before `/public/rooms` answers has no price. Admin writes to categories, calendar config, policies and rooms invalidate the matching public queries. Tariff groups are built per day kind (weekdays / weekends + holidays, merged into "Todos os dias" when equal) and window, clipped to the business hours; the lowest hourly rate is the gold row. The simulator's discount label is the applied category's name.
+
 ## Handoff
 
 - 2026-10-25: Repo cloned, Neon project + branches created, Neon Function spike verified. Next: plan `fundacao` (spec/design/tasks), then the other three features in parallel.

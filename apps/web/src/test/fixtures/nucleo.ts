@@ -229,6 +229,13 @@ export const catalog = parseFixture(
       },
     ],
     pricesReviewed: true,
+    rules: {
+      cleanupMinutes: 30,
+      slotMinutes: 30,
+      defaultBookingMinutes: 60,
+      minAdvanceMinutes: 0,
+      maxAdvanceDays: 90,
+    },
   },
   'catalog',
 );

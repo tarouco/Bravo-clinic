@@ -10,21 +10,25 @@ import {
   Wifi,
   type LucideIcon,
 } from 'lucide-react';
+import type { PolicySnapshot } from '@bravo/core';
 import type { ReactNode } from 'react';
 import { whatsappHref } from '../../../components/layout/WhatsAppButton';
 import { Eyebrow } from '../../../components/ui/Brand';
 import { buttonClasses } from '../../../components/ui/Button';
 import { cx } from '../../../components/ui/cx';
+import { Spinner } from '../../../components/ui/Feedback';
 import { Icon } from '../../../components/ui/Icon';
+import { useClinic, usePolicies } from '../../../features/catalog/api';
 import { useClinicConfig } from '../../../features/config/useClinicConfig';
 import { EmeraldSilk } from '../EmeraldSilk';
 
-const AMENITIES: { icon: LucideIcon; title: string; text: string }[] = [
-  {
-    icon: Building2,
-    title: 'Endereço nobre',
-    text: 'Na Praia Brava, em Itajaí – SC, com fácil estacionamento.',
-  },
+interface Amenity {
+  icon: LucideIcon;
+  title: string;
+  text: string;
+}
+
+const FIXED_AMENITIES: Amenity[] = [
   {
     icon: Wifi,
     title: 'Conectividade & café',
@@ -35,14 +39,39 @@ const AMENITIES: { icon: LucideIcon; title: string; text: string }[] = [
     title: 'Sincronização pessoal',
     text: 'Aplicativo da Bravô sincroniza suas reservas com seu Google Calendar e MS Outlook de forma imediata.',
   },
-  {
-    icon: CalendarClock,
-    title: '1 reagendamento grátis',
-    text: 'Imprevistos acontecem: 1 reagendamento cortesia self-service disponível até 24h antes da locação.',
-  },
 ];
 
+/** "1 reagendamento", "2 reagendamentos". */
+const reschedules = (count: number) => `${count} reagendamento${count === 1 ? '' : 's'}`;
+
+/** The amenity cards; the address and the courtesy reschedule come from the admin settings. */
+function useAmenities(): Amenity[] {
+  const { data: clinic } = useClinic();
+  const { data: policies } = usePolicies();
+  const address = clinic?.addressLine ?? 'Praia Brava, Itajaí – SC';
+  const freeCount = policies?.values['policy.reschedule_free_count'] ?? 0;
+  const minHours = policies?.values['policy.reschedule_min_hours_before'] ?? 0;
+  return [
+    {
+      icon: Building2,
+      title: 'Endereço nobre',
+      text: `${address}, com fácil estacionamento.`,
+    },
+    ...FIXED_AMENITIES,
+    ...(freeCount > 0
+      ? [
+          {
+            icon: CalendarClock,
+            title: `${reschedules(freeCount)} grátis`,
+            text: `Imprevistos acontecem: ${reschedules(freeCount)} cortesia self-service disponível até ${minHours}h antes da locação.`,
+          },
+        ]
+      : []),
+  ];
+}
+
 export function AmenitiesSection() {
+  const amenities = useAmenities();
   return (
     <section className="w-full bg-surface py-space-3xl">
       <div className="max-w-7xl mx-auto px-gutter">
@@ -57,7 +86,7 @@ export function AmenitiesSection() {
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-lg">
-          {AMENITIES.map((amenity) => (
+          {amenities.map((amenity) => (
             <div key={amenity.title} className="bv-card space-y-space-xs">
               <Icon as={amenity.icon} size={30} className="text-accent" />
               <h4 className="bv-card-title">{amenity.title}</h4>
@@ -91,6 +120,7 @@ function PolicyCard({
 }
 
 export function PoliciesSection() {
+  const { data: policies, isError } = usePolicies();
   return (
     <section className="w-full py-space-3xl bg-surface">
       <div className="max-w-7xl mx-auto px-gutter">
@@ -104,25 +134,69 @@ export function PoliciesSection() {
               Resumo das cláusulas do termo de locação conforme o manual operacional da clínica:
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
-            <PolicyCard icon={Banknote} title="Sinal de 50%">
-              Cobrado no ato da reserva para garantir o horário. O sinal{' '}
-              <strong>não é reembolsável</strong> em caso de desistência.
-            </PolicyCard>
-            <PolicyCard icon={History} title="Saldo 48h antes">
-              Os 50% restantes são cobrados automaticamente no cartão tokenizado ou via Pix 48h
-              antes da sessão. O prazo final para quitação é 24h antes, sob pena de cancelamento da
-              reserva.
-            </PolicyCard>
-            <PolicyCard icon={RefreshCw} title="Reagendamento cortesia">
-              Você tem direito a <strong>1 reagendamento cortesia self-service</strong> com
-              antecedência igual ou superior a 24 horas, transferindo a reserva para qualquer janela
-              disponível.
-            </PolicyCard>
-          </div>
+          {policies ? (
+            <PolicyCards values={policies.values} />
+          ) : isError ? (
+            <p className="font-small text-small text-ink-muted">
+              Consulte as regras completas na página de políticas.
+            </p>
+          ) : (
+            <div className="flex justify-center py-space-lg">
+              <Spinner label="Carregando políticas" />
+            </div>
+          )}
         </div>
       </div>
     </section>
+  );
+}
+
+/** The three policy cards with the values the admin set in Políticas (deposit, balance, reschedule). */
+function PolicyCards({ values }: { values: PolicySnapshot }) {
+  const deposit = values['payment.deposit_percent'];
+  const chargeHours = values['payment.balance_charge_hours_before'];
+  const deadlineHours = values['payment.balance_deadline_hours_before'];
+  const freeCount = values['policy.reschedule_free_count'];
+  const rescheduleHours = values['policy.reschedule_min_hours_before'];
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
+      {deposit > 0 ? (
+        <PolicyCard
+          icon={Banknote}
+          title={deposit >= 100 ? 'Pagamento integral' : `Sinal de ${deposit}%`}
+        >
+          {deposit >= 100 ? 'O valor total é pago' : 'Cobrado'} no ato da reserva para garantir o
+          horário.{' '}
+          {values['payment.deposit_refundable'] ? (
+            <>
+              O sinal <strong>é reembolsável</strong> conforme as regras de cancelamento.
+            </>
+          ) : (
+            <>
+              O sinal <strong>não é reembolsável</strong> em caso de desistência.
+            </>
+          )}
+        </PolicyCard>
+      ) : null}
+      {deposit < 100 ? (
+        <PolicyCard icon={History} title={`Saldo ${chargeHours}h antes`}>
+          {deposit > 0 ? `Os ${100 - deposit}% restantes são cobrados` : 'O valor é cobrado'}{' '}
+          automaticamente no cartão tokenizado ou via Pix {chargeHours}h antes da sessão. O prazo
+          final para quitação é {deadlineHours}h antes, sob pena de cancelamento da reserva.
+        </PolicyCard>
+      ) : null}
+      <PolicyCard icon={RefreshCw} title="Reagendamento cortesia">
+        {freeCount > 0 ? (
+          <>
+            Você tem direito a <strong>{reschedules(freeCount)} cortesia self-service</strong> com
+            antecedência igual ou superior a {rescheduleHours} horas, transferindo a reserva para
+            qualquer janela disponível.
+          </>
+        ) : (
+          <>Reagendamentos são feitos com a recepção, conforme a disponibilidade de horários.</>
+        )}
+      </PolicyCard>
+    </div>
   );
 }
 

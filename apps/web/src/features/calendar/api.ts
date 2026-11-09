@@ -28,6 +28,7 @@ import type {
 import { api } from '../../lib/api';
 import { withQuery } from '../../lib/query-string';
 import { availabilityKeys } from '../availability/api';
+import { catalogKeys } from '../catalog/api';
 
 // Admin Calendário hooks (design.md "API Contract / Admin"). All keys start with ['admin', 'calendar'].
 
@@ -47,12 +48,17 @@ export const calendarKeys = {
 
 export type CalendarEventsFilters = z.input<typeof calendarEventsQuerySchema>;
 
-/** Calendar changes alter what the public site offers, so availability is refetched too. */
+/**
+ * Calendar changes alter what the public site offers, so availability is refetched too, and so
+ * are the catalog (cleanup and booking rules) and the clinic (business hours) the site shows.
+ */
 function useInvalidateCalendar() {
   const queryClient = useQueryClient();
   return () => {
     void queryClient.invalidateQueries({ queryKey: calendarKeys.all });
     void queryClient.invalidateQueries({ queryKey: availabilityKeys.all });
+    void queryClient.invalidateQueries({ queryKey: catalogKeys.catalog });
+    void queryClient.invalidateQueries({ queryKey: catalogKeys.clinic });
   };
 }
 

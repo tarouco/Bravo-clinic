@@ -9,10 +9,13 @@ export interface RoomsSectionProps {
   onReserve: (slug: string) => void;
 }
 
-/** Cards of the live rooms; the static reference copy shows while loading or when the API fails. */
+/**
+ * Cards of the live rooms. While loading or when the API fails, the static reference copy shows
+ * without a price: prices only ever come from the admin catalog.
+ */
 function useHomeRooms() {
   const { data } = useRooms();
-  if (!data) return staticRooms.map((room) => ({ ...room, slug: room.slug }));
+  if (!data) return staticRooms.map((room) => ({ ...room, fromPriceCents: null }));
   return data.items.map((room) => {
     const card = roomCardData(room);
     const fallback = staticRooms.find((s) => s.slug === room.slug);
@@ -27,6 +30,21 @@ function useHomeRooms() {
   });
 }
 
+const COUNT_WORDS = [
+  '',
+  'A sala',
+  'As duas salas',
+  'As três salas',
+  'As quatro salas',
+  'As cinco salas',
+];
+
+/** "As três salas inteligentes da clínica." for the number of active rooms. */
+function roomsHeading(count: number): string {
+  const lead = COUNT_WORDS[count] ?? `As ${count} salas`;
+  return `${lead} ${count === 1 ? 'inteligente' : 'inteligentes'} da clínica.`;
+}
+
 export function RoomsSection({ onReserve }: RoomsSectionProps) {
   const rooms = useHomeRooms();
   return (
@@ -35,7 +53,7 @@ export function RoomsSection({ onReserve }: RoomsSectionProps) {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-2xl">
           <div className="space-y-space-xs max-w-2xl">
             <h2 className="font-display text-display-l-mobile text-ink md:text-display-l">
-              As três salas inteligentes da clínica.
+              {roomsHeading(rooms.length)}
             </h2>
           </div>
           <div className="inline-flex items-center gap-space-xs self-start rounded-pill bg-surface-raised px-space-md py-space-xs font-caption text-caption text-ink-muted shadow-lift-1 md:self-auto">

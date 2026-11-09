@@ -59,6 +59,14 @@ export const catalogSchema = z.object({
     }),
   ),
   pricesReviewed: z.boolean(),
+  /** Public calendar rules the site shows next to the prices (cleanup buffer, booking grid). */
+  rules: z.object({
+    cleanupMinutes: z.number().int().min(0),
+    slotMinutes: z.number().int().positive(),
+    defaultBookingMinutes: z.number().int().positive(),
+    minAdvanceMinutes: z.number().int().min(0),
+    maxAdvanceDays: z.number().int().positive(),
+  }),
 });
 export type Catalog = z.infer<typeof catalogSchema>;
 
