@@ -49,7 +49,7 @@ const firstName = (name: string) => name.trim().split(/\s+/)[0] ?? name;
 
 /** LOCATION of every event (gestao design "ICS serializer and feeds"). */
 export const feedLocation = (roomName: string) =>
-  `Bravô Clinic — ${roomName}, Praia Brava, Itajaí – SC`;
+  `Bravô Clinic — ${roomName}, Rua José Gall, 1001, Dom Bosco, Itajaí – SC`;
 
 function feedUrl(env: Pick<Env, 'APP_BASE_URL'>, token: string): string {
   return appUrl(env, `/api/ics/${token}.ics`);

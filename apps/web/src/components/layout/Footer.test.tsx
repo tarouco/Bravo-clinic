@@ -67,7 +67,7 @@ describe('Footer', () => {
   it('hides the hours while the clinic data loads', () => {
     renderFooter();
     expect(screen.queryByText(/Horário de funcionamento/)).not.toBeInTheDocument();
-    expect(screen.getByText('Praia Brava, Itajaí – SC')).toBeInTheDocument();
+    expect(screen.getByText('Rua José Gall, 1001, Dom Bosco, Itajaí – SC')).toBeInTheDocument();
   });
 
   it('shows the copyright text', () => {
@@ -109,5 +109,18 @@ describe('Footer', () => {
     };
     renderFooter();
     expect(screen.getByText('contato@bravoclinic.com.br')).toBeInTheDocument();
+  });
+
+  it('shows the clinic phone as a tel: link only when the WhatsApp number is set', () => {
+    const { unmount } = renderFooter();
+    expect(screen.queryByRole('link', { name: /\(47\)/ })).not.toBeInTheDocument();
+    unmount();
+
+    configState.config = { googleEnabled: false, whatsappE164: '+5547991371524' };
+    renderFooter();
+    expect(screen.getByRole('link', { name: '(47) 99137-1524' })).toHaveAttribute(
+      'href',
+      'tel:+5547991371524',
+    );
   });
 });

@@ -48,7 +48,7 @@ const reschedules = (count: number) => `${count} reagendamento${count === 1 ? ''
 function useAmenities(): Amenity[] {
   const { data: clinic } = useClinic();
   const { data: policies } = usePolicies();
-  const address = clinic?.addressLine ?? 'Praia Brava, Itajaí – SC';
+  const address = clinic?.addressLine ?? 'Rua José Gall, 1001, Dom Bosco, Itajaí – SC';
   const freeCount = policies?.values['policy.reschedule_free_count'] ?? 0;
   const minHours = policies?.values['policy.reschedule_min_hours_before'] ?? 0;
   return [

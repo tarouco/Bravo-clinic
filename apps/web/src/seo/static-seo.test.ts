@@ -34,6 +34,7 @@ interface LocalBusiness {
   name: string;
   url: string;
   address: Record<string, string>;
+  telephone: string;
   openingHoursSpecification: OpeningHours[];
 }
 
@@ -76,11 +77,12 @@ describe('index.html head', () => {
     expect(data.name).toBe('Bravô Clinic – Salas Inteligentes');
     expect(data.url).toBe('%VITE_SITE_URL%');
     expect(data.address).toMatchObject({
-      streetAddress: 'Praia Brava',
+      streetAddress: 'Rua José Gall, 1001 – Dom Bosco',
       addressLocality: 'Itajaí',
       addressRegion: 'SC',
       addressCountry: 'BR',
     });
+    expect(data.telephone).toBe('+55 47 99137-1524');
     expect(data.openingHoursSpecification).toHaveLength(2);
     expect(data.openingHoursSpecification).toMatchObject([
       {

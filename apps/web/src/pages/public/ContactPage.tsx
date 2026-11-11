@@ -1,14 +1,16 @@
 import { minuteToHHMM } from '@bravo/core';
-import { Clock, Mail, MapPin, MessageCircle } from 'lucide-react';
+import { Clock, Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
 import { Eyebrow } from '../../components/ui/Brand';
 import { Alert, Spinner } from '../../components/ui/Feedback';
 import { Icon } from '../../components/ui/Icon';
-import { whatsappHref } from '../../components/layout/WhatsAppButton';
+import {
+  mapsHref,
+  phoneHref,
+  phoneLabel,
+  whatsappHref,
+} from '../../components/layout/WhatsAppButton';
 import { useClinic } from '../../features/catalog/api';
 import { usePageTitle } from '../../lib/usePageTitle';
-
-export const MAPS_URL =
-  'https://www.google.com/maps/search/?api=1&query=Praia%20Brava%2C%20Itaja%C3%AD%20-%20SC';
 
 const DAY_LABEL = {
   mon: 'Segunda-feira',
@@ -46,11 +48,24 @@ export function ContactPage() {
             <span>
               {data.addressLine}
               <br />
-              <a href={MAPS_URL} target="_blank" rel="noopener noreferrer" className={linkClasses}>
+              <a
+                href={mapsHref(data.addressLine)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={linkClasses}
+              >
                 Abrir no Google Maps
               </a>
             </span>
           </p>
+          {data.whatsappE164 ? (
+            <p className="flex items-start gap-space-sm">
+              <Icon as={Phone} className="mt-1 shrink-0 text-accent" />
+              <a href={phoneHref(data.whatsappE164)} className={linkClasses}>
+                {phoneLabel(data.whatsappE164)}
+              </a>
+            </p>
+          ) : null}
           <p className="flex items-start gap-space-sm">
             <Icon as={MessageCircle} className="mt-1 shrink-0 text-accent" />
             <a

@@ -78,9 +78,17 @@ export const settingsCatalog = {
     'public',
   ),
   'policy.version': setting(int(1, Number.MAX_SAFE_INTEGER), 1, 'system'),
-  'clinic.whatsapp_e164': setting(z.string().regex(/^(\+?\d{12,13})?$/), '', 'public'),
+  'clinic.whatsapp_e164': setting(
+    z.string().regex(/^(\+?\d{12,13})?$/),
+    '+5547991371524',
+    'public',
+  ),
   'clinic.contact_email': setting(emailOrEmpty, '', 'public'),
-  'clinic.address_line': setting(z.string().max(200), 'Praia Brava, Itajaí – SC', 'public'),
+  'clinic.address_line': setting(
+    z.string().max(200),
+    'Rua José Gall, 1001, Dom Bosco, Itajaí – SC',
+    'public',
+  ),
   'onboarding.prices_reviewed': setting(z.boolean(), false, 'staff'),
   'notifications.events': setting(
     z.object({

@@ -56,7 +56,7 @@ describe('GET /public/config: whatsappE164 (FND-76)', () => {
     await runSeed(db);
     expect((await getConfig()).body).toEqual({
       googleEnabled: false,
-      whatsappE164: '',
+      whatsappE164: '+5547991371524',
       environment: 'development',
       vapidPublicKey: null,
     });
@@ -72,6 +72,6 @@ describe('GET /public/config: whatsappE164 (FND-76)', () => {
   it('falls back to the factory default when the settings table is not seeded yet', async () => {
     const result = await getConfig();
 
-    expect(result.body).toMatchObject({ whatsappE164: '' });
+    expect(result.body).toMatchObject({ whatsappE164: '+5547991371524' });
   });
 });

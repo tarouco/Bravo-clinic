@@ -5,7 +5,7 @@ import { registerSlot, resetSlots } from '../../extensions/slots';
 import { clinic, policies } from '../../test/fixtures/nucleo';
 import { server } from '../../test/msw/server';
 import { renderWithProviders } from '../../test/render-with-providers';
-import { ContactPage, MAPS_URL } from './ContactPage';
+import { ContactPage } from './ContactPage';
 import { LegalPage } from './LegalPage';
 import { PoliciesPage } from './PoliciesPage';
 import { PricingPage } from './PricingPage';
@@ -77,7 +77,7 @@ describe('PoliciesPage (NUC-184)', () => {
 });
 
 describe('ContactPage (NUC-185)', () => {
-  it('shows the address, the exact Google Maps link and the WhatsApp link', async () => {
+  it('shows the address, the Google Maps link of that address, the phone and the WhatsApp link', async () => {
     renderWithProviders(<ContactPage />);
 
     expect(await screen.findByText(/Praia Brava, Itajaí - SC/)).toBeInTheDocument();
@@ -85,8 +85,9 @@ describe('ContactPage (NUC-185)', () => {
       'href',
       'https://www.google.com/maps/search/?api=1&query=Praia%20Brava%2C%20Itaja%C3%AD%20-%20SC',
     );
-    expect(MAPS_URL).toBe(
-      'https://www.google.com/maps/search/?api=1&query=Praia%20Brava%2C%20Itaja%C3%AD%20-%20SC',
+    expect(screen.getByRole('link', { name: '(47) 99999-0000' })).toHaveAttribute(
+      'href',
+      'tel:+5547999990000',
     );
     expect(screen.getByRole('link', { name: 'Falar no WhatsApp' })).toHaveAttribute(
       'href',

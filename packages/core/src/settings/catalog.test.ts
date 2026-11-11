@@ -40,9 +40,9 @@ const expectedDefaults: Record<string, unknown> = {
   'policy.no_show_after_minutes': 30,
   'policy.clinic_cancel_options': ['refund', 'minutes', 'credit'],
   'policy.version': 1,
-  'clinic.whatsapp_e164': '',
+  'clinic.whatsapp_e164': '+5547991371524',
   'clinic.contact_email': '',
-  'clinic.address_line': 'Praia Brava, Itajaí – SC',
+  'clinic.address_line': 'Rua José Gall, 1001, Dom Bosco, Itajaí – SC',
   'onboarding.prices_reviewed': false,
   'notifications.events': {
     new_booking: true,

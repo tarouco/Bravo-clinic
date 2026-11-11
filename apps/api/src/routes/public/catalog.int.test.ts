@@ -186,7 +186,7 @@ describe('GET /public/clinic and /public/policies (NUC-84, NUC-85)', () => {
 
     const parsed = clinicSchema.parse((await get('clinic')).body);
 
-    expect(parsed.addressLine).toBe('Praia Brava, Itajaí – SC');
+    expect(parsed.addressLine).toBe('Rua José Gall, 1001, Dom Bosco, Itajaí – SC');
     expect(parsed.whatsappE164).toBe('+5547999990000');
     expect(parsed.businessHours.map((h) => [h.dayType, h.openMinute, h.closeMinute])).toEqual([
       ['mon', 420, 1440],

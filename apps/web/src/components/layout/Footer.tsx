@@ -1,10 +1,11 @@
-import { Clock, Mail, MapPin, ShieldCheck } from 'lucide-react';
+import { Clock, Mail, MapPin, Phone, ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { businessHoursSummary } from '../../features/catalog/business-hours';
 import { useClinic } from '../../features/catalog/api';
 import { useClinicConfig } from '../../features/config/useClinicConfig';
 import { BrandLockup } from '../ui/Brand';
 import { Icon } from '../ui/Icon';
+import { phoneHref, phoneLabel } from './WhatsAppButton';
 
 const NAVIGATION_LINKS = [
   { to: '/salas', label: 'Salas Clínicas' },
@@ -51,9 +52,10 @@ function LinkColumn({
 }
 
 export function Footer() {
-  const { contactEmail: configEmail } = useClinicConfig();
+  const { contactEmail: configEmail, whatsappE164: configWhatsapp } = useClinicConfig();
   const { data: clinic } = useClinic();
   const contactEmail = clinic?.contactEmail || configEmail;
+  const phone = clinic?.whatsappE164 || configWhatsapp;
   const hours = clinic ? businessHoursSummary(clinic.businessHours) : null;
 
   return (
@@ -90,6 +92,14 @@ export function Footer() {
                 </span>
               </p>
             ) : null}
+            {phone ? (
+              <p className="font-small text-small text-on-emerald/80 flex items-start gap-space-xs">
+                <Icon as={Phone} size={16} className="text-gold mt-0.5" />
+                <a href={phoneHref(phone)} className={linkClasses}>
+                  {phoneLabel(phone)}
+                </a>
+              </p>
+            ) : null}
             {contactEmail ? (
               <p className="font-small text-small text-on-emerald/80 flex items-start gap-space-xs">
                 <Icon as={Mail} size={16} className="text-gold mt-0.5" />
@@ -98,7 +108,7 @@ export function Footer() {
             ) : null}
             <p className="font-small text-small text-on-emerald/80 flex items-start gap-space-xs">
               <Icon as={MapPin} size={16} className="text-gold mt-0.5" />
-              <span>{clinic?.addressLine ?? 'Praia Brava, Itajaí – SC'}</span>
+              <span>{clinic?.addressLine ?? 'Rua José Gall, 1001, Dom Bosco, Itajaí – SC'}</span>
             </p>
           </div>
         </div>
