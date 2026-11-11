@@ -4,9 +4,10 @@ import { requireTestDatabaseUrl } from '../../test/require-test-db';
 import { createDb, withTransaction } from '../db/client';
 import { emailOutbox } from '../db/schema';
 import { parseEnv } from '../env';
+import { mfaCodeTemplate } from '../emails/templates/mfa-code';
 import { passwordResetTemplate } from '../emails/templates/password-reset';
 import { verifyEmailTemplate } from '../emails/templates/verify-email';
-import { dispatchEmails, queueEmail } from './email';
+import { dispatchEmails, emailProvider, queueEmail } from './email';
 
 const { pool, db } = createDb(requireTestDatabaseUrl(process.env));
 
@@ -14,8 +15,10 @@ afterAll(async () => {
   await pool.end();
 });
 
-const envWithKey = parseEnv({ ...process.env, RESEND_API_KEY: 're_test_key' });
-const envWithoutKey = parseEnv({ ...process.env, RESEND_API_KEY: undefined });
+const noProvider = { SENDKIT_API_KEY: undefined, RESEND_API_KEY: undefined };
+const envWithKey = parseEnv({ ...process.env, ...noProvider, RESEND_API_KEY: 're_test_key' });
+const envWithoutKey = parseEnv({ ...process.env, ...noProvider });
+const envWithSendkit = parseEnv({ ...process.env, ...noProvider, SENDKIT_API_KEY: 'sk_test_key' });
 
 const message = {
   to: 'ana@bravoclinic.test',
@@ -88,7 +91,74 @@ describe('dispatchEmails', () => {
     expect(row.sentAt).not.toBeNull();
   });
 
-  it('marks not_sent and never calls fetch when RESEND_API_KEY is absent (FND-79)', async () => {
+  it('sends through SendKit when SENDKIT_API_KEY is set and records sent + provider id (AD-046)', async () => {
+    const id = await withTransaction(db, (tx) =>
+      queueEmail(tx, {
+        ...message,
+        attachments: [
+          { filename: 'reserva.ics', contentType: 'text/calendar', contentBase64: 'QkVHSU4=' },
+        ],
+      }),
+    );
+    const fetchStub = vi.fn<typeof fetch>(() =>
+      Promise.resolve(Response.json({ id: 'sk_em_1' }, { status: 202 })),
+    );
+
+    await dispatchEmails(db, [id], { env: envWithSendkit, fetch: fetchStub });
+
+    expect(fetchStub).toHaveBeenCalledTimes(1);
+    const [url, init] = fetchStub.mock.calls[0] ?? [];
+    expect(url).toBe('https://api.sendkit.dev/emails');
+    expect((init?.headers as Record<string, string>).Authorization).toBe('Bearer sk_test_key');
+    expect(JSON.parse(init?.body as string)).toEqual({
+      from: `Bravô Clinic <${envWithSendkit.EMAIL_FROM}>`,
+      to: 'ana@bravoclinic.test',
+      subject: 'Confirme seu e-mail na Bravô Clinic',
+      html: '<p>Olá</p>',
+      text: 'Olá',
+      attachments: [
+        { filename: 'reserva.ics', content: 'QkVHSU4=', content_type: 'text/calendar' },
+      ],
+    });
+    const row = await rowOf(id);
+    expect(row.status).toBe('sent');
+    expect(row.providerMessageId).toBe('sk_em_1');
+    expect(row.sentAt).not.toBeNull();
+  });
+
+  it('marks failed with the SendKit error when it refuses the message, e.g. an unverified domain (AD-046)', async () => {
+    const id = await queueOne();
+    const fetchStub = vi.fn<typeof fetch>(() =>
+      Promise.resolve(
+        Response.json(
+          { name: 'validation_error', message: 'The domain is not verified.' },
+          { status: 422 },
+        ),
+      ),
+    );
+
+    await dispatchEmails(db, [id], { env: envWithSendkit, fetch: fetchStub });
+
+    const row = await rowOf(id);
+    expect(row.status).toBe('failed');
+    expect(row.attempts).toBe(1);
+    expect(row.lastError).toContain('SendKit responded 422');
+    expect(row.lastError).toContain('The domain is not verified.');
+  });
+
+  it('prefers SendKit over Resend when both keys are set, and has no provider without keys (AD-046)', () => {
+    const both = parseEnv({
+      ...process.env,
+      SENDKIT_API_KEY: 'sk_test_key',
+      RESEND_API_KEY: 're_test_key',
+    });
+
+    expect(emailProvider(both)).toEqual({ name: 'sendkit', apiKey: 'sk_test_key' });
+    expect(emailProvider(envWithKey)).toEqual({ name: 'resend', apiKey: 're_test_key' });
+    expect(emailProvider(envWithoutKey)).toBeNull();
+  });
+
+  it('marks not_sent and never calls fetch when no provider key is set (FND-79)', async () => {
     const id = await queueOne();
     const fetchStub = vi.fn<typeof fetch>();
 
@@ -183,5 +253,18 @@ describe('auth templates', () => {
 
     expect(rendered.subject).toBe('Redefina sua senha na Bravô Clinic');
     expect(rendered.html).toContain(link);
+  });
+
+  it('two-factor code template shows the code and its lifetime, with no link or button (FND-138)', () => {
+    const rendered = mfaCodeTemplate({ name: 'Ana <b>', code: '042917', minutes: 10 });
+
+    expect(rendered.subject).toBe('Seu código de verificação na Bravô Clinic');
+    expect(rendered.html).toContain('>042917</p>');
+    expect(rendered.html).toContain('Olá, Ana &lt;b&gt;!');
+    expect(rendered.html).toContain('vale por 10 minutos');
+    expect(rendered.html).not.toContain('<a ');
+    expect(rendered.html).not.toContain('copie e cole este link');
+    expect(rendered.text.split('\n')).toContain('042917');
+    expect(rendered.text).not.toContain('undefined');
   });
 });

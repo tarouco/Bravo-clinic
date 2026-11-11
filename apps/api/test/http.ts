@@ -9,6 +9,7 @@ export const APP_ORIGIN = 'http://localhost:5173';
 export function testEnv(extra: Record<string, string | undefined> = {}): Env {
   return parseEnv({
     ...process.env,
+    SENDKIT_API_KEY: undefined,
     RESEND_API_KEY: undefined,
     GOOGLE_CLIENT_ID: undefined,
     GOOGLE_CLIENT_SECRET: undefined,

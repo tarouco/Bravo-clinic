@@ -27,11 +27,14 @@ export interface LayoutInput {
   heading: string;
   /** Plain-text paragraphs; escaped when rendered. */
   paragraphs: string[];
-  cta: { label: string; href: string };
+  /** The button and its "copy this link" fallback; left out of messages that carry no link. */
+  cta?: { label: string; href: string };
+  /** A one-time code shown large between the paragraphs and the footnote. */
+  code?: string;
   footnote: string;
 }
 
-/** Shared pt-BR layout: brand header, paragraphs, one call-to-action button and a footnote. */
+/** Shared pt-BR layout: brand header, paragraphs, a call-to-action button or a code, and a footnote. */
 export function renderLayout(input: LayoutInput): { html: string; text: string } {
   const paragraphs = input.paragraphs
     .map(
@@ -39,7 +42,17 @@ export function renderLayout(input: LayoutInput): { html: string; text: string }
         `<p style="margin:0 0 16px;font-size:16px;line-height:24px;color:${COLORS.ink};">${escapeHtml(p)}</p>`,
     )
     .join('');
-  const href = escapeHtml(input.cta.href);
+  const href = input.cta === undefined ? '' : escapeHtml(input.cta.href);
+  const cta =
+    input.cta === undefined
+      ? ''
+      : `<p style="margin:24px 0;"><a href="${href}" style="display:inline-block;padding:14px 28px;border-radius:9999px;background:${COLORS.emerald};color:${COLORS.onEmerald};text-decoration:none;font-size:15px;">${escapeHtml(input.cta.label)}</a></p>
+<p style="margin:0 0 8px;font-size:14px;line-height:20px;color:${COLORS.inkMuted};">Se o botão não funcionar, copie e cole este link no navegador:</p>
+<p style="margin:0 0 24px;font-size:14px;line-height:20px;word-break:break-all;"><a href="${href}" style="color:${COLORS.emerald};">${href}</a></p>`;
+  const code =
+    input.code === undefined
+      ? ''
+      : `<p style="margin:24px 0;font-family:'Courier New',Courier,monospace;font-size:32px;line-height:40px;letter-spacing:8px;font-weight:700;color:${COLORS.emerald};">${escapeHtml(input.code)}</p>`;
   const html = `<!doctype html>
 <html lang="pt-BR">
 <body style="margin:0;padding:24px;background:${COLORS.background};font-family:Arial,Helvetica,sans-serif;">
@@ -49,9 +62,7 @@ export function renderLayout(input: LayoutInput): { html: string; text: string }
 <tr><td style="padding:32px;">
 <h1 style="margin:0 0 16px;font-size:24px;line-height:32px;font-weight:300;color:${COLORS.ink};">${escapeHtml(input.heading)}</h1>
 ${paragraphs}
-<p style="margin:24px 0;"><a href="${href}" style="display:inline-block;padding:14px 28px;border-radius:9999px;background:${COLORS.emerald};color:${COLORS.onEmerald};text-decoration:none;font-size:15px;">${escapeHtml(input.cta.label)}</a></p>
-<p style="margin:0 0 8px;font-size:14px;line-height:20px;color:${COLORS.inkMuted};">Se o botão não funcionar, copie e cole este link no navegador:</p>
-<p style="margin:0 0 24px;font-size:14px;line-height:20px;word-break:break-all;"><a href="${href}" style="color:${COLORS.emerald};">${href}</a></p>
+${cta}${code}
 <p style="margin:0;font-size:14px;line-height:20px;color:${COLORS.inkMuted};">${escapeHtml(input.footnote)}</p>
 </td></tr>
 </table>
@@ -62,8 +73,8 @@ ${paragraphs}
     input.heading,
     '',
     ...input.paragraphs.flatMap((p) => [p, '']),
-    `${input.cta.label}: ${input.cta.href}`,
-    '',
+    ...(input.cta === undefined ? [] : [`${input.cta.label}: ${input.cta.href}`, '']),
+    ...(input.code === undefined ? [] : [input.code, '']),
     input.footnote,
   ].join('\n');
   return { html, text };

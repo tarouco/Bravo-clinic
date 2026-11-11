@@ -1,4 +1,4 @@
-import type { TotpDisableResponse } from '@bravo/core';
+import type { TotpDisableResponse, TotpEmailCodeResponse } from '@bravo/core';
 import { and, eq, isNull, lt, or, sql } from 'drizzle-orm';
 import { markSessionMfaVerified, type AuthContext } from '../../auth/session';
 import {
@@ -10,17 +10,29 @@ import {
   verifyTotp,
 } from '../../auth/totp';
 import { withTransaction, type Tx } from '../../db/client';
-import { sessions, userTotp, users } from '../../db/schema';
+import { emailOutbox, sessions, userTotp, users } from '../../db/schema';
+import { mfaCodeTemplate } from '../../emails/templates/mfa-code';
 import { audit } from '../../lib/audit';
 import { decryptSecret, encryptSecret } from '../../lib/crypto';
-import { conflict, forbidden, tooManyRequests, unauthorized } from '../../lib/errors';
+import { dispatchEmails, emailProvider, queueEmail } from '../../lib/email';
+import {
+  conflict,
+  emailUnavailable,
+  forbidden,
+  tooManyRequests,
+  unauthorized,
+} from '../../lib/errors';
 import { auditContext, type RequestMeta } from '../../lib/request-meta';
 import { consumeRateLimit, peekRateLimit, rateLimitKey } from '../../middleware/rate-limit';
 import type { AppDeps } from '../../types';
+import { consumeMfaEmailCode, createMfaEmailCode, MFA_EMAIL_CODE_TTL_SECONDS } from './auth-tokens';
 
 /** Invalid codes allowed per user per window before every attempt is refused (FND-69). */
 export const TOTP_FAILURE_LIMIT = { limit: 5, windowSeconds: 900 } as const;
 const failureKey = (userId: string) => rateLimitKey('totp', userId);
+
+/** Codes a user may ask for by e-mail per window (FND-138). */
+export const MFA_EMAIL_SEND_LIMIT = { limit: 3, windowSeconds: 900 } as const;
 
 const INVALID_CODE_MESSAGE = 'Código inválido';
 
@@ -161,8 +173,8 @@ async function consumeTotpStep(tx: Tx, userId: string, step: number, now: Date):
 type TotpRow = typeof userTotp.$inferSelect;
 
 /**
- * Spends a current TOTP code (replay-protected by step) or an unused recovery code inside `tx`;
- * false when the code is not accepted.
+ * Spends a current TOTP code (replay-protected by step), an unused recovery code or the 6-digit
+ * code the user asked for by e-mail (AD-047) inside `tx`; false when the code is not accepted.
  */
 async function spendCode(
   deps: AppDeps,
@@ -178,7 +190,67 @@ async function spendCode(
     row.lastUsedStep,
     now,
   );
-  return verdict.ok && (await consumeTotpStep(tx, row.userId, verdict.step, now));
+  if (verdict.ok && (await consumeTotpStep(tx, row.userId, verdict.step, now))) return true;
+  return consumeMfaEmailCode(tx, { userId: row.userId, code, now });
+}
+
+/** `ana@exemplo.com` as `a***@exemplo.com`: enough to recognise the inbox, not to learn it. */
+function maskEmail(email: string): string {
+  const at = email.lastIndexOf('@');
+  return at < 1 ? '***' : `${email.slice(0, 1)}***${email.slice(at)}`;
+}
+
+/**
+ * E-mails a 6-digit code that the two-factor step accepts in place of the authenticator code
+ * (AD-047, FND-138): for a user with confirmed TOTP, at most 3 per 15 minutes, valid 10 minutes,
+ * single use, and each new code replaces the one before it. The answer is 200 only when the
+ * provider accepted the message; with no provider or a failed send it is 503 `EMAIL_UNAVAILABLE`,
+ * so the page never tells the user to wait for a message that is not coming.
+ */
+export async function sendMfaEmailCode(
+  deps: AppDeps,
+  auth: AuthContext,
+  meta: RequestMeta,
+): Promise<TotpEmailCodeResponse> {
+  const { db, env } = deps;
+  const now = deps.now();
+  if (!auth.totpConfirmed) throw conflict('CONFLICT', NOT_ACTIVE_MESSAGE);
+  await assertNotLocked(deps, auth.userId, now);
+  if (emailProvider(env) === null) throw emailUnavailable();
+
+  const [user] = await db
+    .select({ name: users.name, email: users.email })
+    .from(users)
+    .where(eq(users.id, auth.userId));
+  if (user === undefined) throw unauthorized();
+
+  const limit = await consumeRateLimit(db, rateLimitKey('mfa-email', auth.userId), {
+    ...MFA_EMAIL_SEND_LIMIT,
+    now,
+  });
+  if (!limit.allowed) throw tooManyRequests(limit.retryAfterSeconds);
+
+  const emailId = await withTransaction(db, async (tx) => {
+    const code = await createMfaEmailCode(tx, { userId: auth.userId, now });
+    await audit(tx, auditContext(meta, { id: auth.userId, role: auth.role }), {
+      action: 'auth.mfa_email_code_sent',
+      entityType: 'user',
+      entityId: auth.userId,
+    });
+    return queueEmail(tx, {
+      to: user.email,
+      template: 'auth.mfa_code',
+      ...mfaCodeTemplate({ name: user.name, code, minutes: MFA_EMAIL_CODE_TTL_SECONDS / 60 }),
+    });
+  });
+  await dispatchEmails(db, [emailId], { env, fetch: deps.fetch });
+
+  const [sent] = await db
+    .select({ status: emailOutbox.status })
+    .from(emailOutbox)
+    .where(eq(emailOutbox.id, emailId));
+  if (sent?.status !== 'sent') throw emailUnavailable();
+  return { sentTo: maskEmail(user.email), expiresInSeconds: MFA_EMAIL_CODE_TTL_SECONDS };
 }
 
 /** The caller's confirmed TOTP row; 409 CONFLICT when two-factor authentication is not active. */
@@ -189,8 +261,8 @@ async function confirmedTotpRow(deps: AppDeps, userId: string): Promise<TotpRow>
 }
 
 /**
- * Raises the session to MFA-verified with a current TOTP code or an unused recovery code
- * (FND-67..69).
+ * Raises the session to MFA-verified with a current TOTP code, an unused recovery code or the
+ * code sent by e-mail (FND-67..69, FND-138).
  */
 export async function verifyTotpCode(
   deps: AppDeps,

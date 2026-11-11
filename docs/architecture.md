@@ -1201,7 +1201,7 @@ graph LR
     functions: {
       api: { name: 'bravo api', source: 'apps/api/src/index.ts',
         env: { SESSION_SECRET: process.env.SESSION_SECRET!, ENCRYPTION_KEY: process.env.ENCRYPTION_KEY!, APP_BASE_URL: process.env.APP_BASE_URL!,
-               EMAIL_FROM: process.env.EMAIL_FROM!, ...optional('RESEND_API_KEY'), ...optional('GOOGLE_CLIENT_ID'), ...optional('GOOGLE_CLIENT_SECRET'),
+               EMAIL_FROM: process.env.EMAIL_FROM!, ...optional('SENDKIT_API_KEY'), ...optional('RESEND_API_KEY'), ...optional('GOOGLE_CLIENT_ID'), ...optional('GOOGLE_CLIENT_SECRET'),
                ...optional('VAPID_PUBLIC_KEY'), ...optional('VAPID_PRIVATE_KEY'), ...optional('VAPID_SUBJECT') } },
     },
     // triggers: added by nucleo (every 5 min) and receita/gestao (daily) per AD-007, all `type: 'schedule'`, `function: 'api'`, `functionPath: '/jobs/<name>'`
@@ -1370,7 +1370,8 @@ Other tokens:
 | `APP_BASE_URL` | function, local | yes | canonical site origin; CSRF + e-mail and payment links |
 | `APP_EXTRA_ORIGINS` | function | no | comma-separated origins that also serve the site; CSRF accepts them, links never use them (AD-045) |
 | `EMAIL_FROM` | function, local | yes | sender address |
-| `RESEND_API_KEY` | function | no | e-mails only logged in outbox when absent |
+| `SENDKIT_API_KEY` | function | no | e-mail provider (AD-046); wins over `RESEND_API_KEY` |
+| `RESEND_API_KEY` | function | no | fallback provider; with neither key e-mails are only logged in the outbox |
 | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` | function | no | enable Google login when both set |
 | `ADMIN_BOOTSTRAP_EMAIL`, `ADMIN_BOOTSTRAP_PASSWORD`, `ADMIN_BOOTSTRAP_NAME` | seed run only | no | first admin |
 | `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT` | function | gestao | web push |

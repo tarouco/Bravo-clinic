@@ -23,11 +23,12 @@ export function requireAuth(): MiddlewareHandler<AppEnv> {
 
 /**
  * Endpoints a session still waiting for its second factor may call: the session query the web
- * app reads, the 2FA step itself and logout (AD-037).
+ * app reads, the 2FA step itself, asking for its code by e-mail (AD-047) and logout (AD-037).
  */
 export const MFA_PENDING_ALLOWED = new Set([
   'GET /app/me',
   'POST /app/auth/totp/verify',
+  'POST /app/auth/totp/email-code',
   'POST /app/auth/logout',
 ]);
 

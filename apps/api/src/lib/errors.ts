@@ -70,6 +70,14 @@ export const storageUnavailable = () =>
     'Armazenamento de arquivos indisponível. Tente novamente em instantes.',
   );
 
+/** 503 when a message the caller is waiting for could not be handed to the e-mail provider. */
+export const emailUnavailable = () =>
+  new AppError(
+    503,
+    'EMAIL_UNAVAILABLE',
+    'Não foi possível enviar o e-mail agora. Tente novamente em instantes.',
+  );
+
 /** 422 VALIDATION_FAILED from zod issues; `path` is the issue path joined by ".". */
 export function validationFailed(issues: ReadonlyArray<{ path: PropertyKey[]; message: string }>) {
   return new AppError(

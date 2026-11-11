@@ -10,6 +10,7 @@ import { useTotpDisable } from '../../features/auth/hooks';
 import {
   codeErrorMessage,
   codeRule,
+  EmailCodeRequest,
   normalizeCode,
   TotpEnrollment,
   type CodeFormValues,
@@ -44,7 +45,7 @@ function DisableForm({ onCancel, onDone }: { onCancel: () => void; onDone: () =>
         label="Código de verificação"
         autoComplete="one-time-code"
         inputMode="text"
-        help="Para desativar, digite o código de 6 dígitos do aplicativo autenticador ou um código de recuperação."
+        help="Para desativar, digite o código de 6 dígitos do aplicativo autenticador, o código recebido por e-mail ou um código de recuperação."
         error={errors.code?.message}
         {...register('code', { validate: codeRule })}
       />
@@ -56,6 +57,7 @@ function DisableForm({ onCancel, onDone }: { onCancel: () => void; onDone: () =>
           Cancelar
         </Button>
       </div>
+      <EmailCodeRequest />
     </form>
   );
 }

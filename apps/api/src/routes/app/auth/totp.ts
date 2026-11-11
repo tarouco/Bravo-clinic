@@ -7,13 +7,17 @@ import {
   confirmTotp,
   disableTotp,
   enrollTotp,
+  sendMfaEmailCode,
   verifyTotpCode,
 } from '../../../modules/auth/totp.service';
 import type { AppEnv } from '../../../types';
 
 const codeBody = z.object({ code: totpCodeSchema });
 
-/** Opt-in two-factor endpoints of every role under `/app/auth/totp/*` (FND-64..69, FND-135..136). */
+/**
+ * Opt-in two-factor endpoints of every role under `/app/auth/totp/*` (FND-64..69, FND-135..136,
+ * FND-138).
+ */
 export function totpRoutes(): Hono<AppEnv> {
   const app = new Hono<AppEnv>();
   app.post('/totp/enroll', async (c) => c.json(await enrollTotp(c.var.deps, c.get('auth'))));
@@ -24,6 +28,9 @@ export function totpRoutes(): Hono<AppEnv> {
     await verifyTotpCode(c.var.deps, c.get('auth'), c.req.valid('json').code);
     return c.json({ ok: true });
   });
+  app.post('/totp/email-code', async (c) =>
+    c.json(await sendMfaEmailCode(c.var.deps, c.get('auth'), requestMeta(c))),
+  );
   app.post('/totp/disable', validate('json', totpDisableRequestSchema), async (c) =>
     c.json(await disableTotp(c.var.deps, c.get('auth'), c.req.valid('json').code, requestMeta(c))),
   );

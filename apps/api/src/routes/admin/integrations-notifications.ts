@@ -12,6 +12,7 @@ import { withTransaction } from '../../db/client';
 import { emailOutbox, notificationRecipients } from '../../db/schema';
 import { audit } from '../../lib/audit';
 import { decodeCursor, encodeCursor } from '../../lib/cursor';
+import { emailProvider } from '../../lib/email';
 import { AppError, conflict, notFound, tooManyRequests } from '../../lib/errors';
 import { actorContext } from '../../lib/request-meta';
 import { consumeRateLimit, rateLimitKey } from '../../middleware/rate-limit';
@@ -54,7 +55,7 @@ export function adminIntegrationsNotificationRoutes(): Hono<AppEnv> {
       .from(notificationRecipients)
       .orderBy(asc(notificationRecipients.createdAt), asc(notificationRecipients.email));
     return c.json({
-      providerConfigured: env.RESEND_API_KEY !== undefined,
+      providerConfigured: emailProvider(env) !== null,
       recipients: recipients.map(recipientView),
       events: (await loadSettings(db))['notifications.events'],
     });

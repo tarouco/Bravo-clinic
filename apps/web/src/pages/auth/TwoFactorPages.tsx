@@ -5,10 +5,11 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from '../../components/ui/Button';
 import { Alert } from '../../components/ui/Feedback';
 import { Input } from '../../components/ui/form';
-import { safeNextPath, useTotpVerify } from '../../features/auth/hooks';
+import { safeNextPath, useLogout, useTotpVerify } from '../../features/auth/hooks';
 import {
   codeErrorMessage,
   codeRule,
+  EmailCodeRequest,
   normalizeCode,
   type CodeFormValues,
 } from '../../features/auth/two-factor';
@@ -17,7 +18,9 @@ import { AuthCard } from './AuthCard';
 
 /**
  * `/login/2fa`: the second factor of a user who turned TOTP on (any role, AD-037). Continues to
- * `next`, else to `/admin` for staff and `/app` for tenants.
+ * `next`, else to `/admin` for staff and `/app` for tenants. Nothing is sent on arrival: the code
+ * comes from the authenticator app, and "Enviar código por e-mail" asks for one by e-mail
+ * (AD-047). "Entrar com outra conta" ends the half-open session.
  */
 export function TwoFactorVerifyPage() {
   const navigate = useNavigate();
@@ -25,6 +28,7 @@ export function TwoFactorVerifyPage() {
   const { session } = useSession();
   const staff = session !== null && isStaff(session.role);
   const verify = useTotpVerify();
+  const logout = useLogout();
   const [formError, setFormError] = useState<string | null>(null);
 
   const {
@@ -43,6 +47,14 @@ export function TwoFactorVerifyPage() {
     }
   });
 
+  const switchAccount = async () => {
+    try {
+      await logout.mutateAsync();
+    } finally {
+      void navigate('/login', { replace: true });
+    }
+  };
+
   return (
     <AuthCard title="Verificação em duas etapas" {...(staff ? { eyebrow: 'Área restrita' } : {})}>
       <form onSubmit={(event) => void onSubmit(event)} noValidate className="space-y-space-md">
@@ -51,7 +63,7 @@ export function TwoFactorVerifyPage() {
           label="Código de verificação"
           autoComplete="one-time-code"
           inputMode="text"
-          help="Digite o código de 6 dígitos do aplicativo autenticador ou um código de recuperação."
+          help="Digite o código de 6 dígitos do aplicativo autenticador, o código recebido por e-mail ou um código de recuperação."
           error={errors.code?.message}
           {...register('code', { validate: codeRule })}
         />
@@ -59,6 +71,19 @@ export function TwoFactorVerifyPage() {
           Verificar
         </Button>
       </form>
+      <div className="space-y-space-sm border-t border-hairline pt-space-md">
+        <EmailCodeRequest block />
+        <p className="text-center">
+          <Button
+            type="button"
+            variant="link"
+            loading={logout.isPending}
+            onClick={() => void switchAccount()}
+          >
+            Entrar com outra conta
+          </Button>
+        </p>
+      </div>
     </AuthCard>
   );
 }

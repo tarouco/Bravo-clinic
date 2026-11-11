@@ -23,6 +23,8 @@ const mfaPending = (session: Session) => session.mfa.enrolled && !session.mfa.ve
 /**
  * Anonymous visitors go to `/login?next=<original path>`; a session that owes its second factor
  * goes to `/login/2fa?next=<original path>`, except on the 2FA step itself (`allowPendingMfa`).
+ * The 2FA step is never a destination: without a session it opens plain `/login`, which is also
+ * where "Entrar com outra conta" lands after it logs out (FND-139).
  */
 export function RequireAuth({ allowPendingMfa = false }: { allowPendingMfa?: boolean }) {
   const { session, isLoading } = useSession();
@@ -30,7 +32,10 @@ export function RequireAuth({ allowPendingMfa = false }: { allowPendingMfa?: boo
   const path = `${location.pathname}${location.search}`;
 
   if (isLoading) return <CenteredSpinner />;
-  if (!session) return <Navigate to={`/login?next=${encodeURIComponent(path)}`} replace />;
+  if (!session) {
+    const login = allowPendingMfa ? '/login' : `/login?next=${encodeURIComponent(path)}`;
+    return <Navigate to={login} replace />;
+  }
   if (!allowPendingMfa && mfaPending(session)) return verifyRedirect(path);
   return <Outlet />;
 }

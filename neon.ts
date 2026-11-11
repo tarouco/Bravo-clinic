@@ -26,6 +26,7 @@ export default defineConfig({
         APP_BASE_URL: process.env['APP_BASE_URL']!,
         EMAIL_FROM: process.env['EMAIL_FROM']!,
         ...optional('APP_EXTRA_ORIGINS'),
+        ...optional('SENDKIT_API_KEY'),
         ...optional('RESEND_API_KEY'),
         ...optional('GOOGLE_CLIENT_ID'),
         ...optional('GOOGLE_CLIENT_SECRET'),

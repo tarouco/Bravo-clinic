@@ -81,7 +81,7 @@ export const emailRecipientSchema = z.object({
 export type EmailRecipient = z.infer<typeof emailRecipientSchema>;
 
 export const notificationsOverviewSchema = z.object({
-  /** False while `RESEND_API_KEY` is absent (GES-74). */
+  /** False while neither `SENDKIT_API_KEY` nor `RESEND_API_KEY` is set (GES-74, AD-046). */
   providerConfigured: z.boolean(),
   recipients: z.array(emailRecipientSchema),
   events: notificationEventsSchema,

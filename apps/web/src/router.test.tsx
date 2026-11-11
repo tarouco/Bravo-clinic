@@ -95,6 +95,13 @@ describe('route guards', () => {
     await waitFor(() => expect(locationOf()).toBe('/login?next=%2Fapp%2Fagenda'));
   });
 
+  it('sends an anonymous visitor of the 2FA step to plain /login: the step is never a destination (FND-139)', async () => {
+    stubApi(null);
+    renderRoute('/login/2fa?next=%2Fadmin');
+
+    await waitFor(() => expect(locationOf()).toBe('/login'));
+  });
+
   it('sends an anonymous visitor of /admin/cupons to /login with the encoded next path', async () => {
     stubApi(null);
     renderRoute('/admin/cupons');

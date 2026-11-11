@@ -7,7 +7,7 @@ import { Alert, Spinner } from '../../components/ui/Feedback';
 import { Input } from '../../components/ui/form';
 import { ApiError } from '../../lib/api';
 import { tooManyAttemptsMessage } from '../../pages/auth/error-messages';
-import { useTotpConfirm, useTotpEnroll } from './hooks';
+import { useTotpConfirm, useTotpEmailCode, useTotpEnroll } from './hooks';
 
 // Shared by the 2FA login step (`/login/2fa`) and the opt-in toggle on `/app/perfil/seguranca`.
 
@@ -34,6 +34,59 @@ export function codeErrorMessage(error: unknown): string {
     return error.message;
   }
   return 'Não foi possível verificar o código. Tente novamente.';
+}
+
+/** Why the code could not be e-mailed; a 503 means the provider did not take the message. */
+export function emailCodeErrorMessage(error: unknown): string {
+  if (error instanceof ApiError) {
+    if (error.status === 429) return tooManyAttemptsMessage(error);
+    if (error.status === 503) {
+      return 'Não foi possível enviar o e-mail agora. Use o aplicativo autenticador ou um código de recuperação.';
+    }
+    return error.message;
+  }
+  return 'Não foi possível enviar o e-mail. Tente novamente.';
+}
+
+/**
+ * "Enviar código por e-mail": asks the API to e-mail a 6-digit code and says where it went, or why
+ * it did not go (AD-047). The code is typed into the same field as the authenticator code.
+ */
+export function EmailCodeRequest({ block = false }: { block?: boolean }) {
+  const emailCode = useTotpEmailCode();
+  const [notice, setNotice] = useState<{ tone: 'success' | 'error'; text: string } | null>(null);
+
+  const send = async () => {
+    setNotice(null);
+    try {
+      const { sentTo, expiresInSeconds } = await emailCode.mutateAsync();
+      const minutes = String(Math.round(expiresInSeconds / 60));
+      setNotice({
+        tone: 'success',
+        text: `Enviamos um código para ${sentTo}. Ele vale por ${minutes} minutos. Confira também a caixa de spam.`,
+      });
+    } catch (error) {
+      setNotice({ tone: 'error', text: emailCodeErrorMessage(error) });
+    }
+  };
+
+  return (
+    <div className="space-y-space-sm">
+      <p className="font-small text-small text-ink-muted">
+        Sem acesso ao aplicativo autenticador? Receba um código no e-mail da sua conta.
+      </p>
+      {notice ? <Alert tone={notice.tone}>{notice.text}</Alert> : null}
+      <Button
+        type="button"
+        variant="secondary"
+        block={block}
+        loading={emailCode.isPending}
+        onClick={() => void send()}
+      >
+        Enviar código por e-mail
+      </Button>
+    </div>
+  );
 }
 
 /** The shared secret in the otpauth URI, in groups of four for manual entry. */

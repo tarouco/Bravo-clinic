@@ -1,4 +1,10 @@
-import type { LoginInput, SignupInput, TotpDisableRequest, TotpDisableResponse } from '@bravo/core';
+import type {
+  LoginInput,
+  SignupInput,
+  TotpDisableRequest,
+  TotpDisableResponse,
+  TotpEmailCodeResponse,
+} from '@bravo/core';
 import {
   useMutation,
   useQueryClient,
@@ -116,6 +122,13 @@ export function useTotpVerify(): UseMutationResult<{ ok: true }, Error, { code: 
     mutationFn: (input: { code: string }) =>
       api.post<{ ok: true }>('/api/app/auth/totp/verify', input),
     onSuccess: () => markMfaVerified(queryClient),
+  });
+}
+
+/** `POST /api/app/auth/totp/email-code`: e-mails a code the 2FA step accepts (FND-138). */
+export function useTotpEmailCode(): UseMutationResult<TotpEmailCodeResponse, Error, void> {
+  return useMutation({
+    mutationFn: () => api.post<TotpEmailCodeResponse>('/api/app/auth/totp/email-code'),
   });
 }
 

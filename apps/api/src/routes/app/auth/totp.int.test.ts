@@ -1,4 +1,4 @@
-import { meSchema, totpDisableResponseSchema } from '@bravo/core';
+import { meSchema, totpDisableResponseSchema, totpEmailCodeResponseSchema } from '@bravo/core';
 import { eq } from 'drizzle-orm';
 import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { createUser, currentTotp, loginAs, totpFromUri } from '../../../../test/factories';
@@ -6,7 +6,7 @@ import { forbiddenFetch, send, sessionCookieFrom, testEnv } from '../../../../te
 import { requireTestDatabaseUrl } from '../../../../test/require-test-db';
 import { createApp } from '../../../app';
 import { createDb } from '../../../db/client';
-import { auditLog, userTotp } from '../../../db/schema';
+import { auditLog, authTokens, emailOutbox, userTotp } from '../../../db/schema';
 import { decryptSecret, sha256Hex } from '../../../lib/crypto';
 
 const { pool, db } = createDb(requireTestDatabaseUrl(process.env));
@@ -462,5 +462,190 @@ describe('POST /app/auth/totp/disable (FND-136)', () => {
 
     expect(result.status).toBe(422);
     expect((await totpRowOf(admin.id))?.confirmedAt).toBeInstanceOf(Date);
+  });
+});
+
+describe('POST /app/auth/totp/email-code (FND-138, AD-047)', () => {
+  const sendkitEnv = testEnv({ SENDKIT_API_KEY: 'sk_test_key' });
+  const EMAIL_CODE = '/app/auth/totp/email-code';
+  const accepted = () => Response.json({ id: 'sk_em_1' }, { status: 202 });
+
+  /** An app whose provider is a stub and whose clock the test can move. */
+  function mailApp(respond: () => Response = accepted) {
+    const clock = { now: NOW };
+    const fetchStub = vi.fn<typeof fetch>(() => Promise.resolve(respond()));
+    const instance = createApp({ db, env: sendkitEnv, fetch: fetchStub, now: () => clock.now });
+    const post = (path: string, cookie: string, body?: unknown) =>
+      send(instance, 'POST', path, { cookie, ...(body !== undefined && { body }) });
+    const session = (cookie: string) => send(instance, 'GET', '/admin/session', { cookie });
+    /** The 6-digit code in the text body of the n-th message handed to the provider. */
+    const codeOf = (n: number) => {
+      const sent = JSON.parse(fetchStub.mock.calls[n]?.[1]?.body as string) as { text: string };
+      const code = sent.text.split('\n').find((line) => /^\d{6}$/.test(line));
+      if (code === undefined) throw new Error('no code in the e-mail body');
+      return code;
+    };
+    return { clock, fetchStub, post, session, codeOf, instance };
+  }
+
+  it('e-mails a 6-digit code to a session that owes its second factor, and verify accepts it once', async () => {
+    const admin = await createUser(db, {
+      role: 'admin',
+      name: 'Eduardo',
+      email: 'eduardo@exemplo.com',
+      totp: true,
+    });
+    const cookie = await loginAs(db, admin);
+    const other = await loginAs(db, admin);
+    const { fetchStub, post, session, codeOf } = mailApp();
+    expect((await session(cookie)).error?.code).toBe('MFA_REQUIRED');
+
+    const result = await post(EMAIL_CODE, cookie);
+
+    expect(result.status).toBe(200);
+    expect(totpEmailCodeResponseSchema.parse(result.body)).toEqual({
+      sentTo: 'e***@exemplo.com',
+      expiresInSeconds: 600,
+    });
+    expect(fetchStub).toHaveBeenCalledTimes(1);
+    const [url, init] = fetchStub.mock.calls[0] ?? [];
+    expect(url).toBe('https://api.sendkit.dev/emails');
+    expect(JSON.parse(init?.body as string)).toMatchObject({
+      to: 'eduardo@exemplo.com',
+      subject: 'Seu código de verificação na Bravô Clinic',
+    });
+    const [outbox] = await db.select().from(emailOutbox);
+    expect(outbox).toMatchObject({
+      toAddress: 'eduardo@exemplo.com',
+      template: 'auth.mfa_code',
+      status: 'sent',
+    });
+    // Only a hash that also covers the user id is stored, never the code.
+    const code = codeOf(0);
+    const [token] = await db.select().from(authTokens);
+    expect(token).toMatchObject({ userId: admin.id, purpose: 'mfa_email', usedAt: null });
+    expect(token?.tokenHash).toBe(sha256Hex(`mfa_email:${admin.id}:${code}`));
+    expect(token?.expiresAt.getTime()).toBe(NOW.getTime() + 600_000);
+    const [auditRow] = await db.select().from(auditLog);
+    expect(auditRow).toMatchObject({
+      action: 'auth.mfa_email_code_sent',
+      entityType: 'user',
+      entityId: admin.id,
+      actorUserId: admin.id,
+    });
+
+    const verified = await post('/app/auth/totp/verify', cookie, { code });
+    const reused = await post('/app/auth/totp/verify', other, { code });
+
+    expect(verified.status).toBe(200);
+    expect((await session(cookie)).status).toBe(200);
+    expect(reused.status).toBe(401);
+    expect(reused.error?.code).toBe('INVALID_CODE');
+    expect((await session(other)).error?.code).toBe('MFA_REQUIRED');
+  });
+
+  it('keeps only the newest code valid, for 10 minutes, and never accepts the code of another user', async () => {
+    const ana = await createUser(db, { email: 'ana@exemplo.com', totp: true });
+    const bia = await createUser(db, { email: 'bia@exemplo.com', totp: true });
+    const anaCookie = await loginAs(db, ana);
+    const biaCookie = await loginAs(db, bia);
+    const { clock, post, codeOf } = mailApp();
+
+    await post(EMAIL_CODE, anaCookie);
+    await post(EMAIL_CODE, anaCookie);
+    const [first, second] = [codeOf(0), codeOf(1)];
+
+    // The first code died when the second was sent (skipped in the 1-in-a-million equal draw).
+    if (first !== second) {
+      expect((await post('/app/auth/totp/verify', anaCookie, { code: first })).status).toBe(401);
+    }
+    // Ana's live code does nothing on Bia's session.
+    expect((await post('/app/auth/totp/verify', biaCookie, { code: second })).status).toBe(401);
+
+    clock.now = new Date(NOW.getTime() + 600_000);
+    const expired = await post('/app/auth/totp/verify', anaCookie, { code: second });
+    expect(expired.status).toBe(401);
+    expect(expired.error?.code).toBe('INVALID_CODE');
+
+    clock.now = new Date(NOW.getTime() + 599_000);
+    expect((await post('/app/auth/totp/verify', anaCookie, { code: second })).status).toBe(200);
+  });
+
+  it('answers 503 EMAIL_UNAVAILABLE and stores no code when there is no e-mail provider', async () => {
+    const admin = await createUser(db, { role: 'admin', totp: true });
+
+    const result = await call('POST', EMAIL_CODE, await loginAs(db, admin));
+
+    expect(result.status).toBe(503);
+    expect(result.error?.code).toBe('EMAIL_UNAVAILABLE');
+    expect(await db.select().from(authTokens)).toHaveLength(0);
+    expect(await db.select().from(emailOutbox)).toHaveLength(0);
+  });
+
+  it('answers 503 EMAIL_UNAVAILABLE when the provider refuses the message, keeping the failure in the outbox', async () => {
+    const admin = await createUser(db, { role: 'admin', totp: true });
+    const { post } = mailApp(() =>
+      Response.json({ name: 'validation_error', message: 'domain not verified' }, { status: 422 }),
+    );
+
+    const result = await post(EMAIL_CODE, await loginAs(db, admin));
+
+    expect(result.status).toBe(503);
+    expect(result.error?.code).toBe('EMAIL_UNAVAILABLE');
+    const [outbox] = await db.select().from(emailOutbox);
+    expect(outbox?.status).toBe('failed');
+    expect(outbox?.lastError).toContain('SendKit responded 422');
+  });
+
+  it('refuses the fourth request in 15 minutes with 429 and sends nothing more', async () => {
+    const admin = await createUser(db, { role: 'admin', totp: true });
+    const cookie = await loginAs(db, admin);
+    const { fetchStub, post } = mailApp();
+
+    for (let n = 0; n < 3; n++) expect((await post(EMAIL_CODE, cookie)).status).toBe(200);
+    const fourth = await post(EMAIL_CODE, cookie);
+
+    expect(fourth.status).toBe(429);
+    expect(fourth.error?.code).toBe('TOO_MANY_ATTEMPTS');
+    expect(Number(fourth.headers.get('Retry-After'))).toBeGreaterThan(0);
+    expect(fetchStub).toHaveBeenCalledTimes(3);
+  });
+
+  it('sends nothing while the user is locked out by five invalid codes', async () => {
+    const admin = await createUser(db, { role: 'admin', totp: true });
+    const cookie = await loginAs(db, admin);
+    const { fetchStub, post } = mailApp();
+    const wrong = wrongCode(admin.totpSecret ?? '');
+    for (let n = 0; n < 5; n++) await post('/app/auth/totp/verify', cookie, { code: wrong });
+
+    const result = await post(EMAIL_CODE, cookie);
+
+    expect(result.status).toBe(429);
+    expect(fetchStub).not.toHaveBeenCalled();
+  });
+
+  it('answers 409 CONFLICT without a confirmed TOTP and 401 without a session', async () => {
+    const tenant = await createUser(db, { totp: 'unconfirmed' });
+    const { fetchStub, post, instance } = mailApp();
+
+    const notOn = await post(EMAIL_CODE, await loginAs(db, tenant));
+    const anonymous = await send(instance, 'POST', EMAIL_CODE);
+
+    expect(notOn.status).toBe(409);
+    expect(notOn.error?.code).toBe('CONFLICT');
+    expect(anonymous.status).toBe(401);
+    expect(fetchStub).not.toHaveBeenCalled();
+  });
+
+  it('lets a verified session turn TOTP off with an e-mailed code (lost authenticator)', async () => {
+    const admin = await createUser(db, { role: 'admin', totp: true });
+    const cookie = await loginAs(db, admin, { mfaVerified: true });
+    const { post, codeOf } = mailApp();
+
+    expect((await post(EMAIL_CODE, cookie)).status).toBe(200);
+    const disabled = await post('/app/auth/totp/disable', cookie, { code: codeOf(0) });
+
+    expect(disabled.status).toBe(200);
+    expect(await totpRowOf(admin.id)).toBeUndefined();
   });
 });

@@ -155,6 +155,87 @@ describe('TwoFactorVerifyPage', () => {
     expect(verifyCalls(fetchMock)).toHaveLength(0);
   });
 
+  it('sends nothing on arrival and e-mails a code only when asked, showing the masked address (FND-138)', async () => {
+    const fetchMock = stubFetch(admin, (url) =>
+      url === '/api/app/auth/totp/email-code'
+        ? json(200, { sentTo: 'a***@example.com', expiresInSeconds: 600 })
+        : json(200, { ok: true }),
+    );
+    const user = userEvent.setup();
+    renderPage('/login/2fa');
+    await staffLoaded();
+    const emailCalls = () =>
+      fetchMock.mock.calls.filter(([url]) => url === '/api/app/auth/totp/email-code') as [
+        string,
+        RequestInit,
+      ][];
+    expect(emailCalls()).toHaveLength(0);
+
+    await user.click(screen.getByRole('button', { name: 'Enviar código por e-mail' }));
+
+    expect(await screen.findByRole('status')).toHaveTextContent(
+      'Enviamos um código para a***@example.com. Ele vale por 10 minutos.',
+    );
+    expect(emailCalls()).toHaveLength(1);
+    expect(emailCalls()[0]?.[1].method).toBe('POST');
+
+    // The e-mailed code goes through the same field and endpoint as the authenticator code.
+    await user.type(screen.getByLabelText('Código de verificação'), '042917');
+    await user.click(screen.getByRole('button', { name: 'Verificar' }));
+
+    expect(await screen.findByTestId('where')).toHaveTextContent(/^\/admin$/);
+    expect(verifyCalls(fetchMock)[0]?.[1].body).toBe(JSON.stringify({ code: '042917' }));
+  });
+
+  it('says the e-mail could not be sent when the API answers 503, and points to the other factors', async () => {
+    stubFetch(admin, () =>
+      json(503, { error: { code: 'EMAIL_UNAVAILABLE', message: 'x', requestId: 'r1' } }),
+    );
+    const user = userEvent.setup();
+    renderPage('/login/2fa');
+    await staffLoaded();
+
+    await user.click(screen.getByRole('button', { name: 'Enviar código por e-mail' }));
+
+    expect(await screen.findByRole('alert')).toHaveTextContent(
+      'Não foi possível enviar o e-mail agora. Use o aplicativo autenticador ou um código de recuperação.',
+    );
+    expect(screen.queryByRole('status')).not.toBeInTheDocument();
+  });
+
+  it('shows the wait time when too many codes were requested by e-mail', async () => {
+    stubFetch(
+      admin,
+      () =>
+        new Response(JSON.stringify({ error: { code: 'TOO_MANY_ATTEMPTS', message: 'x' } }), {
+          status: 429,
+          headers: { 'Content-Type': 'application/json', 'Retry-After': '300' },
+        }),
+    );
+    const user = userEvent.setup();
+    renderPage('/login/2fa');
+    await staffLoaded();
+
+    await user.click(screen.getByRole('button', { name: 'Enviar código por e-mail' }));
+
+    expect(await screen.findByRole('alert')).toHaveTextContent(
+      'Muitas tentativas. Tente novamente em 5 minutos.',
+    );
+  });
+
+  it('"Entrar com outra conta" ends the pending session and goes to /login', async () => {
+    const fetchMock = stubFetch(admin, () => new Response(null, { status: 204 }));
+    const user = userEvent.setup();
+    renderPage('/login/2fa');
+    await staffLoaded();
+
+    await user.click(screen.getByRole('button', { name: 'Entrar com outra conta' }));
+
+    expect(await screen.findByTestId('where')).toHaveTextContent(/^\/login$/);
+    const logoutCalls = fetchMock.mock.calls.filter(([url]) => url === '/api/app/auth/logout');
+    expect(logoutCalls).toHaveLength(1);
+  });
+
   it('navigates to a safe next path instead of the default', async () => {
     stubFetch(tenant, () => json(200, { ok: true }));
     const user = userEvent.setup();

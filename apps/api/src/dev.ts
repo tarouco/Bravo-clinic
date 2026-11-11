@@ -7,6 +7,12 @@ import { serve } from '@hono/node-server';
 const envFile = fileURLToPath(new URL('../../../.env', import.meta.url));
 if (existsSync(envFile)) process.loadEnvFile(envFile);
 if (process.env.DATABASE_URL_TEST) process.env.DATABASE_URL = process.env.DATABASE_URL_TEST;
+// The root .env may hold the live e-mail provider key (AD-046). Local messages go to made-up
+// addresses with localhost links, so they stay in the outbox unless EMAIL_SEND_IN_DEV=true.
+if (process.env.EMAIL_SEND_IN_DEV !== 'true') {
+  delete process.env.SENDKIT_API_KEY;
+  delete process.env.RESEND_API_KEY;
+}
 
 const { default: app } = await import('./index');
 const port = 8787;

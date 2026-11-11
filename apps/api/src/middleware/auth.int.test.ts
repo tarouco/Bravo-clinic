@@ -136,7 +136,12 @@ describe('requireMfaIfEnrolled on /app/* (FND-137, AD-037)', () => {
 
   it('lists exactly the session query, the 2FA step and logout as allowed while MFA is pending', () => {
     expect([...MFA_PENDING_ALLOWED].sort()).toEqual(
-      ['GET /app/me', 'POST /app/auth/logout', 'POST /app/auth/totp/verify'].sort(),
+      [
+        'GET /app/me',
+        'POST /app/auth/logout',
+        'POST /app/auth/totp/email-code',
+        'POST /app/auth/totp/verify',
+      ].sort(),
     );
   });
 

@@ -75,7 +75,10 @@ export const sessions = pgTable(
   ],
 );
 
-/** E-mail verification and password reset tokens; only the sha256 of the token is stored. */
+/**
+ * E-mail verification and password reset tokens and e-mailed two-factor codes (AD-047); only a
+ * sha256 is stored.
+ */
 export const authTokens = pgTable(
   'auth_tokens',
   {
@@ -90,7 +93,10 @@ export const authTokens = pgTable(
     createdAt: tstz('created_at').notNull().defaultNow(),
   },
   (t) => [
-    check('auth_tokens_purpose_check', sql`${t.purpose} in ('email_verify','password_reset')`),
+    check(
+      'auth_tokens_purpose_check',
+      sql`${t.purpose} in ('email_verify','password_reset','mfa_email')`,
+    ),
     uniqueIndex('auth_tokens_token_hash_uq').on(t.tokenHash),
     index('auth_tokens_user_purpose_idx').on(t.userId, t.purpose, t.createdAt),
   ],

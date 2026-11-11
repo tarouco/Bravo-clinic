@@ -273,6 +273,8 @@ Bravô Clinic has a PRD, a design system and architecture decisions, but no code
 9. The system SHALL keep TOTP off by default for every role and SHALL let each tenant, reception or admin user turn it on from `/app/perfil/seguranca` ("Verificação em duas etapas", action "Ativar": QR code, manual key, confirmation code, recovery codes shown once, then the page in the "on" state), reachable from "Segurança" on `/app/perfil` and in the admin top bar; `/login/2fa/configurar` SHALL redirect there and no guard SHALL send a user to it (user decision 2026-10-28, AD-037). [FND-135]
 10. WHEN `POST /api/app/auth/totp/disable` receives `{ code }` (a current TOTP code or an unused recovery code, under the FND-68 replay and FND-69 rate-limit rules) from an MFA-verified session of a user with confirmed TOTP THEN the API SHALL delete the `user_totp` row with its recovery codes, clear the MFA mark of the user's sessions and write audit `user.totp_disabled` in one transaction, and return 200 `{ mfa: { enrolled: false, verified: false } }`; IF the code is wrong THEN it SHALL return 401 `INVALID_CODE`; IF TOTP is not on THEN 409 `CONFLICT`; and the "Desativar" action of `/app/perfil/seguranca` SHALL call it and mirror that `mfa` in the cached session (user decision 2026-10-28, AD-037). [FND-136]
 11. WHILE a user of any role has a confirmed TOTP and the session is not MFA-verified the API SHALL return 403 `MFA_REQUIRED` to every `/api/app/*` request except `GET /api/app/me`, `POST /api/app/auth/totp/verify` and `POST /api/app/auth/logout`, the Google callback SHALL redirect such a user to `/login/2fa?next=<destination>`, and the web `RequireAuth` and `RequireStaff` guards SHALL redirect such a session to `/login/2fa?next=<original path>` (user decision 2026-10-28, AD-037). [FND-137]
+12. WHEN `POST /api/app/auth/totp/email-code` is called by a session of a user with confirmed TOTP (MFA-verified or not) THEN the API SHALL store only a hash of a fresh 6-digit code valid for 10 minutes, invalidate the codes sent before it, send it to the user's e-mail (`auth.mfa_code`), write audit `auth.mfa_email_code_sent` and return 200 `{ sentTo: <masked address>, expiresInSeconds: 600 }` only when the provider accepted the message; `totp/verify` and `totp/disable` SHALL accept that code once, for that user only, under the FND-69 failure limit; IF there is no e-mail provider or the send fails THEN it SHALL return 503 `EMAIL_UNAVAILABLE`; IF more than 3 codes are requested in 15 minutes or the user is locked by FND-69 THEN 429; IF TOTP is not on THEN 409 `CONFLICT`; and `/login/2fa` and the "Desativar" form SHALL offer "Enviar código por e-mail", sending nothing until it is clicked (user report 2026-11-11, AD-047). [FND-138]
+13. The `/login/2fa` page SHALL offer "Entrar com outra conta", which logs the pending session out and opens `/login` (AD-047). [FND-139]
 
 **Independent Test**: integration tests computing codes with `otpauth` from the enrollment URI.
 
@@ -306,8 +308,8 @@ Bravô Clinic has a PRD, a design system and architecture decisions, but no code
 **Acceptance Criteria**:
 
 1. WHEN a service queues an e-mail THEN `email_outbox` SHALL get a row with recipient, template, pt-BR subject, HTML and text bodies, status `pending`, in the caller's transaction. [FND-77]
-2. WHERE `RESEND_API_KEY` is set, after the transaction commits the system SHALL send the message through the Resend REST API and set status `sent` with the provider message id. [FND-78]
-3. IF `RESEND_API_KEY` is absent THEN the system SHALL set the row status to `not_sent` and the originating request SHALL still succeed. [FND-79]
+2. WHERE `SENDKIT_API_KEY` or, without it, `RESEND_API_KEY` is set, after the transaction commits the system SHALL send the message through that provider's REST API (SendKit first, AD-046) and set status `sent` with the provider message id. [FND-78]
+3. IF neither provider key is set THEN the system SHALL set the row status to `not_sent` and the originating request SHALL still succeed. [FND-79]
 4. IF the provider call fails or times out after 10 seconds THEN the system SHALL set status `failed`, store `last_error`, increment `attempts`, and the originating request SHALL still succeed. [FND-80]
 
 **Independent Test**: integration test with `fetch` stubbed for the provider.
@@ -627,12 +629,14 @@ Bravô Clinic has a PRD, a design system and architecture decisions, but no code
 | FND-135 | P1: Optional two-factor authentication | Execute | AD-037 change | Implemented |
 | FND-136 | P1: Optional two-factor authentication | Execute | AD-037 change | Implemented |
 | FND-137 | P1: Optional two-factor authentication | Execute | AD-037 change | Implemented |
+| FND-138 | P1: Optional two-factor authentication | Execute | AD-047 change | Implemented |
+| FND-139 | P1: Optional two-factor authentication | Execute | AD-047 change | Implemented |
 
 **ID format:** `FND-NN`.
 
 **Status values:** Pending → In Design → In Tasks → Implementing → Verified
 
-**Coverage:** 137 total, 134 mapped to tasks, 3 added by the AD-037 change (FND-135..137, user decision 2026-10-28), 0 unmapped.
+**Coverage:** 139 total, 134 mapped to tasks, 3 added by the AD-037 change (FND-135..137, user decision 2026-10-28), 2 added by the AD-047 change (FND-138..139, user report 2026-11-11), 0 unmapped.
 
 ### Implicit-requirement dimensions sweep
 
@@ -641,7 +645,7 @@ Bravô Clinic has a PRD, a design system and architecture decisions, but no code
 | Input validation & bounds | FND-14..17, FND-23, FND-24, FND-29, FND-44, FND-47, FND-108, FND-126; settings bounds FND-18/19 |
 | Failure / partial-failure states | FND-22, FND-26, FND-28, FND-79, FND-80 (e-mail failure never fails the request), FND-110 |
 | Idempotency / retry / duplicate handling | FND-31 (migrations), FND-40 (seeds), FND-45/46 (unique e-mail/document), FND-68 (TOTP replay). Money idempotency keys: N/A because fundacao moves no money (nucleo, `docs/architecture.md` §6.8) |
-| Auth boundaries & rate limits | FND-54, FND-50, FND-69, FND-56, FND-59, FND-63, FND-66, FND-136, FND-137, FND-71..74, FND-107, FND-114..116 |
+| Auth boundaries & rate limits | FND-54, FND-50, FND-69, FND-56, FND-59, FND-63, FND-66, FND-136, FND-137, FND-138, FND-71..74, FND-107, FND-114..116 |
 | Concurrency / ordering | FND-32..34 (exclusion constraint), concurrent signup edge case (FND-45), FND-75 (audit in same tx) |
 | Data lifecycle / expiry | FND-49 (24h verify token), FND-60 (60 min reset token), FND-52/58 (session lifetimes), FND-55 (revocation), FND-61 (revoke on reset). Purge of expired rows: N/A because fundacao has no job runner (logged assumption) |
 | Observability | FND-27 (request logs + requestId), FND-75 (audit log), FND-77 (outbox as delivery log), FND-21 (health) |

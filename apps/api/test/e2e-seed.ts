@@ -181,6 +181,8 @@ async function seed(): Promise<void> {
   delete process.env.NEON_BRANCH;
   process.env.APP_BASE_URL = E2E_WEB_URL;
   process.env.NODE_ENV = 'development';
+  // No provider: e2e messages stay in the outbox instead of reaching real inboxes.
+  delete process.env.SENDKIT_API_KEY;
   delete process.env.RESEND_API_KEY;
 
   const { runMigrations } = await import('../src/db/migrate');

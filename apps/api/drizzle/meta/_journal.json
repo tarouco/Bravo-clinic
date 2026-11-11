@@ -64,6 +64,13 @@
       "when": 1793313229250,
       "tag": "0008_vsl",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1794436472032,
+      "tag": "0009_mfa_email_code",
+      "breakpoints": true
     }
   ]
 }

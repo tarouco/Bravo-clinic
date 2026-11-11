@@ -5,6 +5,9 @@ import type { Env } from '../env';
 import { logger } from './logger';
 
 const RESEND_URL = 'https://api.resend.com/emails';
+const SENDKIT_URL = 'https://api.sendkit.dev/emails';
+/** Display name in front of `EMAIL_FROM` on SendKit messages. */
+const SENDER_NAME = 'Bravô Clinic';
 const SEND_TIMEOUT_MS = 10_000;
 const MAX_ERROR_LENGTH = 500;
 
@@ -53,20 +56,41 @@ export async function queueEmail(tx: Tx, msg: QueuedEmail): Promise<string> {
 
 type Row = typeof emailOutbox.$inferSelect;
 
+export interface EmailProvider {
+  name: 'sendkit' | 'resend';
+  apiKey: string;
+}
+
+/**
+ * The provider that delivers the outbox (AD-046): SendKit when `SENDKIT_API_KEY` is set, else
+ * Resend when `RESEND_API_KEY` is set, else none (messages stay in the outbox as `not_sent`).
+ */
+export function emailProvider(
+  env: Pick<Env, 'SENDKIT_API_KEY' | 'RESEND_API_KEY'>,
+): EmailProvider | null {
+  if (env.SENDKIT_API_KEY !== undefined) return { name: 'sendkit', apiKey: env.SENDKIT_API_KEY };
+  if (env.RESEND_API_KEY !== undefined) return { name: 'resend', apiKey: env.RESEND_API_KEY };
+  return null;
+}
+
+const PROVIDER_LABEL = { sendkit: 'SendKit', resend: 'Resend' } as const;
+
+/** Both providers take the same JSON shape; only the URL, `from` and `to` forms differ. */
 async function send(
   row: Row,
-  deps: { env: Env; fetch: typeof fetch; apiKey: string },
+  deps: { env: Env; fetch: typeof fetch; provider: EmailProvider },
 ): Promise<string | null> {
   const attachments = row.attachments as EmailAttachment[];
-  const response = await deps.fetch(RESEND_URL, {
+  const sendkit = deps.provider.name === 'sendkit';
+  const response = await deps.fetch(sendkit ? SENDKIT_URL : RESEND_URL, {
     method: 'POST',
     headers: {
-      Authorization: `Bearer ${deps.apiKey}`,
+      Authorization: `Bearer ${deps.provider.apiKey}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      from: deps.env.EMAIL_FROM,
-      to: [row.toAddress],
+      from: sendkit ? `${SENDER_NAME} <${deps.env.EMAIL_FROM}>` : deps.env.EMAIL_FROM,
+      to: sendkit ? row.toAddress : [row.toAddress],
       subject: row.subject,
       html: row.html,
       text: row.textBody,
@@ -82,7 +106,9 @@ async function send(
   });
   if (!response.ok) {
     const detail = (await response.text().catch(() => '')).slice(0, 200);
-    throw new Error(`Resend responded ${response.status}${detail === '' ? '' : `: ${detail}`}`);
+    throw new Error(
+      `${PROVIDER_LABEL[deps.provider.name]} responded ${response.status}${detail === '' ? '' : `: ${detail}`}`,
+    );
   }
   const body = (await response.json().catch(() => null)) as { id?: unknown } | null;
   return typeof body?.id === 'string' ? body.id : null;
@@ -102,13 +128,13 @@ export async function dispatchEmails(
     const rows = await db.select().from(emailOutbox).where(inArray(emailOutbox.id, ids));
     for (const row of rows) {
       if (row.status !== 'pending') continue;
-      const apiKey = deps.env.RESEND_API_KEY;
-      if (apiKey === undefined) {
+      const provider = emailProvider(deps.env);
+      if (provider === null) {
         await db.update(emailOutbox).set({ status: 'not_sent' }).where(eq(emailOutbox.id, row.id));
         continue;
       }
       try {
-        const providerMessageId = await send(row, { ...deps, apiKey });
+        const providerMessageId = await send(row, { ...deps, provider });
         await db
           .update(emailOutbox)
           .set({ status: 'sent', providerMessageId, sentAt: sql`now()` })

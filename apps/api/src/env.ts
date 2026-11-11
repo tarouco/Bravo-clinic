@@ -26,6 +26,8 @@ export const envSchema = z.object({
   // Other origins that serve the same site and may send mutations (CSRF); links use APP_BASE_URL.
   APP_EXTRA_ORIGINS: urlList.optional(),
   EMAIL_FROM: z.email(),
+  // E-mail provider (AD-046): SendKit when its key is set, else Resend, else the outbox only.
+  SENDKIT_API_KEY: z.string().min(1).optional(),
   RESEND_API_KEY: z.string().min(1).optional(),
   GOOGLE_CLIENT_ID: z.string().min(1).optional(),
   GOOGLE_CLIENT_SECRET: z.string().min(1).optional(),

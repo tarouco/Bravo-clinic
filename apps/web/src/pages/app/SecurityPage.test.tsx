@@ -160,6 +160,35 @@ describe('SecurityPage: turning two-factor authentication off (FND-136)', () => 
     expect(call?.[1].body).toBe(JSON.stringify({ code: 'ABCD-EFGH' }));
   });
 
+  it('offers the code by e-mail for a lost authenticator and disables with it (FND-138)', async () => {
+    const EMAIL_CODE = '/api/app/auth/totp/email-code';
+    const { callsTo } = stubApi(enrolled, {
+      [EMAIL_CODE]: () => json(200, { sentTo: 'a***@example.com', expiresInSeconds: 600 }),
+      [DISABLE]: () => json(200, { mfa: { enrolled: false, verified: false } }),
+    });
+    const user = userEvent.setup();
+    renderPage();
+
+    await user.click(await screen.findByRole('button', { name: 'Desativar' }));
+    expect(callsTo(EMAIL_CODE)).toHaveLength(0);
+    await user.click(screen.getByRole('button', { name: 'Enviar código por e-mail' }));
+
+    expect(
+      await screen.findByText(
+        /Enviamos um código para a\*\*\*@example\.com\. Ele vale por 10 minutos\./,
+      ),
+    ).toBeInTheDocument();
+    // Asking for the e-mail does not submit the form around it.
+    expect(callsTo(DISABLE)).toHaveLength(0);
+    expect(callsTo(EMAIL_CODE)).toHaveLength(1);
+
+    await user.type(screen.getByLabelText('Código de verificação'), '042917');
+    await user.click(screen.getByRole('button', { name: 'Desativar verificação' }));
+
+    expect(await screen.findByRole('button', { name: 'Ativar' })).toBeInTheDocument();
+    expect(callsTo(DISABLE)[0]?.[1].body).toBe(JSON.stringify({ code: '042917' }));
+  });
+
   it('keeps it on with "Código inválido" when the API refuses the code', async () => {
     stubApi(enrolled, {
       [DISABLE]: () => json(401, { error: { code: 'INVALID_CODE', message: 'x' } }),

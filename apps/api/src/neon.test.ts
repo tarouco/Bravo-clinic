@@ -11,6 +11,7 @@ async function loadFunction() {
 
 const OPTIONAL_KEYS = [
   'APP_EXTRA_ORIGINS',
+  'SENDKIT_API_KEY',
   'RESEND_API_KEY',
   'GOOGLE_CLIENT_ID',
   'GOOGLE_CLIENT_SECRET',

@@ -200,3 +200,13 @@ export const totpDisableResponseSchema = z.strictObject({
   mfa: z.strictObject({ enrolled: z.literal(false), verified: z.literal(false) }),
 });
 export type TotpDisableResponse = z.infer<typeof totpDisableResponseSchema>;
+
+/**
+ * `POST /app/auth/totp/email-code` (FND-138): the provider accepted the message with the 6-digit
+ * code. `sentTo` is the masked address (`a***@dominio.com`).
+ */
+export const totpEmailCodeResponseSchema = z.strictObject({
+  sentTo: z.string().min(1),
+  expiresInSeconds: z.number().int().positive(),
+});
+export type TotpEmailCodeResponse = z.infer<typeof totpEmailCodeResponseSchema>;
