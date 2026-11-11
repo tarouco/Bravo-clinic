@@ -931,7 +931,7 @@ Reception may call: Gestão de Reservas routes (create booking/pre-reservation, 
 - `requireStaff` = role ∈ {admin, reception}; confirmed TOTP and `mfaVerified = false` → 403 `MFA_REQUIRED`; staff without TOTP pass with a password session.
 - `requireRole('admin')` → 403 `FORBIDDEN` for reception.
 - `requireVerifiedEmail` (nucleo, booking creation) → 403 `EMAIL_NOT_VERIFIED`.
-- CSRF (`middleware/csrf.ts`): on POST/PUT/PATCH/DELETE under `/app` and `/admin`, the `Origin` header (or `Referer` origin when Origin is absent) must equal the origin of `APP_BASE_URL`; else 403 `CSRF_REJECTED`. Webhooks, jobs and MCP are exempt (no cookies).
+- CSRF (`middleware/csrf.ts`): on POST/PUT/PATCH/DELETE under `/app` and `/admin`, the `Origin` header (or `Referer` origin when Origin is absent) must equal the origin of `APP_BASE_URL` or of an entry of `APP_EXTRA_ORIGINS` (the other hosts that serve the same site, AD-045); else 403 `CSRF_REJECTED`. Webhooks, jobs and MCP are exempt (no cookies).
 - Rate limit (`middleware/rate-limit.ts`): fixed window in `rate_limit_buckets` via `INSERT ... ON CONFLICT (key, window_start) DO UPDATE SET count = count + 1 RETURNING count`. Defaults: login 5 failures/email/15 min and 30/IP/15 min; resend verification 3/user/hour; password reset request 5/email/hour; TOTP 5 failures/user/15 min; MCP `mcp.rate_limit_per_minute`/token.
 
 ### 6.5 Audit helper
@@ -1367,7 +1367,8 @@ Other tokens:
 | `NEON_PROJECT_ID`, `NEON_BRANCH_PRODUCTION`, `NEON_BRANCH_DEV` | local `.env` | ops | CLI targeting |
 | `SESSION_SECRET` | function, local | yes | ≥ 32 chars |
 | `ENCRYPTION_KEY` | function, local | yes | base64 of 32 random bytes (AES-256-GCM) |
-| `APP_BASE_URL` | function, local | yes | e.g. site origin; CSRF + e-mail links |
+| `APP_BASE_URL` | function, local | yes | canonical site origin; CSRF + e-mail and payment links |
+| `APP_EXTRA_ORIGINS` | function | no | comma-separated origins that also serve the site; CSRF accepts them, links never use them (AD-045) |
 | `EMAIL_FROM` | function, local | yes | sender address |
 | `RESEND_API_KEY` | function | no | e-mails only logged in outbox when absent |
 | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` | function | no | enable Google login when both set |

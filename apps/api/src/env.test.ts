@@ -99,6 +99,24 @@ describe('parseEnv', () => {
     expect(env.GOOGLE_CLIENT_SECRET).toBeUndefined();
     expect(env.NEON_BRANCH).toBeUndefined();
     expect(env.DATABASE_URL_UNPOOLED).toBeUndefined();
+    expect(env.APP_EXTRA_ORIGINS).toBeUndefined();
+  });
+
+  it('splits APP_EXTRA_ORIGINS on commas, trimming and dropping blank entries', () => {
+    const env = parseEnv({
+      ...validSource(),
+      APP_EXTRA_ORIGINS: ' https://a.example , http://localhost:5173,, ',
+    });
+
+    expect(env.APP_EXTRA_ORIGINS).toEqual(['https://a.example', 'http://localhost:5173']);
+    expect(parseEnv({ ...validSource(), APP_EXTRA_ORIGINS: '' }).APP_EXTRA_ORIGINS).toEqual([]);
+  });
+
+  it('rejects an APP_EXTRA_ORIGINS entry that is not an http(s) URL', () => {
+    for (const value of ['a.example', 'https://a.example,ftp://b.example', 'https://a.example b']) {
+      const error = catchEnvError({ ...validSource(), APP_EXTRA_ORIGINS: value });
+      expect(error.variables, value).toEqual(['APP_EXTRA_ORIGINS']);
+    }
   });
 
   it('passes optional variables through when present', () => {

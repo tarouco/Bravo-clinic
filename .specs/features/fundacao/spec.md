@@ -232,7 +232,7 @@ Bravô Clinic has a PRD, a design system and architecture decisions, but no code
 5. IF a request carries a session JWT with an invalid signature, an expired `exp`, or a revoked or expired session row THEN the API SHALL return 401 `UNAUTHENTICATED` on `/api/app/*` and `/api/admin/*`. [FND-56]
 6. WHEN `GET /api/app/me` is called with a valid session THEN the API SHALL return 200 `{ id, name, email, role, emailVerified, docType, mfa: { enrolled, verified } }` and SHALL NOT include `password_hash` or TOTP data. [FND-57]
 7. WHILE a session belongs to an admin or reception user its cookie `Max-Age` and session `expires_at` SHALL be 12 hours. [FND-58]
-8. IF a POST/PUT/PATCH/DELETE to `/api/app/*` or `/api/admin/*` carries an `Origin` different from the origin of `APP_BASE_URL` THEN the API SHALL return 403 `CSRF_REJECTED`. [FND-59]
+8. IF a POST/PUT/PATCH/DELETE to `/api/app/*` or `/api/admin/*` carries an `Origin` that is neither the origin of `APP_BASE_URL` nor one of `APP_EXTRA_ORIGINS` (AD-045) THEN the API SHALL return 403 `CSRF_REJECTED`. [FND-59]
 
 **Independent Test**: integration tests for login, lockout, logout, revoked-session reuse and CSRF.
 

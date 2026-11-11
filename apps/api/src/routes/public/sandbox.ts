@@ -68,8 +68,7 @@ export function sandboxRoutes(): Hono<AppEnv> {
   });
 
   // Cookie-authenticated mutations on a public route still need the same-origin check.
-  const sameOrigin: MiddlewareHandler<AppEnv> = (c, next) =>
-    csrf(c.var.deps.env.APP_BASE_URL)(c, next);
+  const sameOrigin: MiddlewareHandler<AppEnv> = (c, next) => csrf(c.var.deps.env)(c, next);
 
   for (const [action, status] of [
     ['approve', 'approved'],
