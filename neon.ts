@@ -25,6 +25,7 @@ export default defineConfig({
         ENCRYPTION_KEY: process.env['ENCRYPTION_KEY']!,
         APP_BASE_URL: process.env['APP_BASE_URL']!,
         EMAIL_FROM: process.env['EMAIL_FROM']!,
+        ...optional('APP_EXTRA_ORIGINS'),
         ...optional('RESEND_API_KEY'),
         ...optional('GOOGLE_CLIENT_ID'),
         ...optional('GOOGLE_CLIENT_SECRET'),

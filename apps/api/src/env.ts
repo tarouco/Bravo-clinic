@@ -5,6 +5,17 @@ const isThirtyTwoByteBase64 = (value: string): boolean => {
   return bytes.length === 32 && bytes.toString('base64') === value;
 };
 
+/** Comma-separated http(s) URLs; blank entries are dropped. */
+const urlList = z
+  .string()
+  .transform((value) =>
+    value
+      .split(',')
+      .map((entry) => entry.trim())
+      .filter((entry) => entry !== ''),
+  )
+  .pipe(z.array(z.url({ protocol: /^https?$/ })));
+
 export const envSchema = z.object({
   DATABASE_URL: z.url({ protocol: /^postgres(ql)?$/ }),
   DATABASE_URL_UNPOOLED: z.url({ protocol: /^postgres(ql)?$/ }).optional(),
@@ -12,6 +23,8 @@ export const envSchema = z.object({
   SESSION_SECRET: z.string().min(32),
   ENCRYPTION_KEY: z.string().refine(isThirtyTwoByteBase64),
   APP_BASE_URL: z.url({ protocol: /^https?$/ }),
+  // Other origins that serve the same site and may send mutations (CSRF); links use APP_BASE_URL.
+  APP_EXTRA_ORIGINS: urlList.optional(),
   EMAIL_FROM: z.email(),
   RESEND_API_KEY: z.string().min(1).optional(),
   GOOGLE_CLIENT_ID: z.string().min(1).optional(),

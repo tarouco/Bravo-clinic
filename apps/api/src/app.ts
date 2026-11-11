@@ -44,8 +44,8 @@ export function createApp(overrides: Partial<AppDeps> = {}): Hono<AppEnv> {
     await next();
   });
   app.use('*', requireJson());
-  app.use('/app/*', csrf(deps.env.APP_BASE_URL), requireAuth(), requireMfaIfEnrolled());
-  app.use('/admin/*', csrf(deps.env.APP_BASE_URL), requireAuth(), requireStaff());
+  app.use('/app/*', csrf(deps.env), requireAuth(), requireMfaIfEnrolled());
+  app.use('/admin/*', csrf(deps.env), requireAuth(), requireStaff());
   app.route('/health', healthRoutes());
   app.route('/public', publicRoutes());
   app.route('/app', appRoutes());
