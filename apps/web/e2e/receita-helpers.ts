@@ -43,6 +43,14 @@ export async function pickDay(scope: Page | Locator, date: string) {
   await day.click();
 }
 
+/** Opens a period ("Manhã", "Tarde", "Noite") of the start times inside `scope`. */
+export async function pickPeriod(scope: Page | Locator, period: 'Manhã' | 'Tarde' | 'Noite') {
+  await scope
+    .getByRole('group', { name: 'Período' })
+    .getByRole('button', { name: new RegExp(`^${period},`) })
+    .click();
+}
+
 /** Weekday (0 = Sunday) of a local date. */
 export const weekdayOf = (date: LocalDate) => new Date(`${date}T12:00:00Z`).getUTCDay();
 

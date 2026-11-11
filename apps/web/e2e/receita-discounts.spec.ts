@@ -9,6 +9,7 @@ import {
   loginAdmin,
   payPixInSandbox,
   pickDay,
+  pickPeriod,
   projectOf,
   runTag,
   signUpTenant,
@@ -101,6 +102,7 @@ test('coupon vs slot discount in checkout, last coupon use and credits', async (
   // deposit on the net 14000 (REC-122).
   const first = await signUpTenant(page, 'Cupom');
   await chooseTuesdayAfternoon(page, /Sala Secundária/, tuesday);
+  await pickPeriod(page, 'Tarde');
   await page
     .getByRole('list', { name: 'Horários de início' })
     .getByRole('button', { name: /^14:00\s*−10%$/ })
@@ -160,6 +162,7 @@ test('coupon vs slot discount in checkout, last coupon use and credits', async (
 
   // The public grid of Principal still marks the discounted slots (REC-136); 16:00 is outside.
   await chooseTuesdayAfternoon(tenant, /Sala Principal/, tuesday);
+  await pickPeriod(tenant, 'Tarde');
   const starts = tenant.getByRole('list', { name: 'Horários de início' });
   await expect(starts.getByRole('button', { name: /^14:00\s*−10%$/ })).toBeVisible();
   await expect(starts.getByRole('button', { name: /^15:30\s*−10%$/ })).toBeVisible();

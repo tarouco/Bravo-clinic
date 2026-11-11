@@ -1,6 +1,7 @@
 import { formatBRL, minuteToHHMM, type AvailabilityDay, type PublicCell } from '@bravo/core';
 import { formatDuration, formatMinuteRange } from '../../lib/format';
 import { cx, focusRing } from '../ui/cx';
+import { PeriodPicker, useDayPeriods } from './DayPeriods';
 
 export interface SlotSelection {
   startMinute: number | null;
@@ -42,9 +43,9 @@ export function durationOptions(
 }
 
 /**
- * Day grid of 40 px slots: pick a start among the startable cells, then a duration. Unavailable
- * cells are `aria-disabled`; selected cells fill with emerald; a cell with a slot discount shows
- * "−n%".
+ * Day grid of 40 px slots, one period (Manhã, Tarde, Noite) at a time: pick a start among the
+ * startable cells, then a duration. Unavailable cells are `aria-disabled`; selected cells fill
+ * with emerald; a cell with a slot discount shows "−n%".
  */
 export function SlotGrid({
   cells,
@@ -57,6 +58,7 @@ export function SlotGrid({
   onSelectBlock,
   className,
 }: SlotGridProps) {
+  const { periods, active, pickPeriod } = useDayPeriods(cells, value.startMinute);
   const startCell = cells.find((cell) => cell.startMinute === value.startMinute);
   const durations = startCell ? durationOptions(startCell, slotMinutes, minBookingMinutes) : [];
 
@@ -71,8 +73,11 @@ export function SlotGrid({
 
   return (
     <div className={cx('space-y-space-md', className)}>
+      {periods.length > 1 ? (
+        <PeriodPicker periods={periods} activeId={active?.id} onChange={pickPeriod} />
+      ) : null}
       <ul aria-label="Horários de início" className="grid grid-cols-3 gap-space-xs sm:grid-cols-4">
-        {cells.map((cell) => {
+        {(active?.cells ?? []).map((cell) => {
           const selected = isSelected(cell.startMinute);
           return (
             <li key={cell.startMinute}>
