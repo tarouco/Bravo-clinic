@@ -55,12 +55,12 @@ describe('Header', () => {
       '/servicos-extras',
     );
     expect(within(nav).getByRole('link', { name: 'Contato' })).toHaveAttribute('href', '/contato');
-    expect(screen.getByText('Praia Brava - Itajaí')).toBeInTheDocument();
+    expect(screen.getByText('Dom Bosco - Itajaí')).toBeInTheDocument();
   });
 
   it('shows the location only from the xl breakpoint and the nav only from lg (FND-95)', () => {
     renderHeader();
-    const location = screen.getByText('Praia Brava - Itajaí').parentElement;
+    const location = screen.getByText('Dom Bosco - Itajaí').parentElement;
     expect(location).toHaveClass('hidden', 'xl:flex');
     expect(location).not.toHaveClass('lg:flex');
 

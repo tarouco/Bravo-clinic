@@ -49,7 +49,7 @@ describe('ExtrasSection', () => {
     expect(screen.getByText('Disponível em qualquer sala')).toBeInTheDocument();
     expect(screen.queryByText(/Exclusivo Salas/)).not.toBeInTheDocument();
     expect(container.textContent).not.toMatch(/Jardins|São Paulo|Sao Paulo/);
-    expect(container.textContent).toMatch(/Praia Brava, Itajaí e região/);
+    expect(container.textContent).toMatch(/Dom Bosco, Itajaí e região/);
     expect(screen.getAllByRole('button', { name: 'Solicitar orçamento' })).toHaveLength(3);
   });
 

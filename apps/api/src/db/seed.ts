@@ -204,7 +204,7 @@ const EXTRA_SERVICES = [
   {
     name: 'Marketing digital',
     description:
-      'Tráfego pago geolocalizado na Praia Brava, Itajaí e região para profissionais de saúde e estética.',
+      'Tráfego pago geolocalizado no Dom Bosco, Itajaí e região para profissionais de saúde e estética.',
     referencePriceCents: null,
     unit: 'project',
   },

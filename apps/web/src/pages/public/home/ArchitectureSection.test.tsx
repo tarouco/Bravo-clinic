@@ -26,7 +26,7 @@ describe('ArchitectureSection', () => {
     expect(screen.queryByText(/Amplitude horária/)).not.toBeInTheDocument();
   });
 
-  it('serves local images whose alt text names Praia Brava and never Jardins or Sao Paulo', () => {
+  it('serves local images whose alt text names Dom Bosco and never Jardins or Sao Paulo', () => {
     render(<ArchitectureSection />);
 
     const images = screen.getAllByRole('img');
@@ -35,7 +35,7 @@ describe('ArchitectureSection', () => {
       '/images/consultorio.webp',
     ]);
     for (const image of images) {
-      expect(image.getAttribute('alt')).toMatch(/Praia Brava, Itajaí/);
+      expect(image.getAttribute('alt')).toMatch(/Dom Bosco, Itajaí/);
       expect(image.getAttribute('alt')).not.toMatch(/Jardins|Sao Paulo|São Paulo/);
     }
   });

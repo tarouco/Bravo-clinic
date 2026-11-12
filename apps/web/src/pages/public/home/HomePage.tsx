@@ -8,7 +8,7 @@ import { PricingSimulatorSection } from './PricingSimulatorSection';
 import { ReceptionBandSection } from './ReceptionBandSection';
 import { RoomsSection } from './RoomsSection';
 
-export const HOME_TITLE = 'Bravô Clinic – Salas Inteligentes | Praia Brava, Itajaí';
+export const HOME_TITLE = 'Bravô Clinic – Salas Inteligentes | Dom Bosco, Itajaí';
 
 function scrollToSimulator(): void {
   document.getElementById('simulador')?.scrollIntoView?.({ behavior: 'smooth' });

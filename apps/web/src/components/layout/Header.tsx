@@ -41,7 +41,7 @@ export function Header() {
         </Link>
         <div className="hidden xl:flex items-center gap-space-xs border-l border-hairline pl-space-md">
           <Icon as={MapPin} size={16} className="text-accent" />
-          <span className="font-small text-small text-ink-muted">Praia Brava - Itajaí</span>
+          <span className="font-small text-small text-ink-muted">Dom Bosco - Itajaí</span>
         </div>
 
         <span className="bv-navbar-spacer" />

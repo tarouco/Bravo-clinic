@@ -44,7 +44,7 @@ describe('HomePage', () => {
     expect(screen.getByRole('banner')).toBeInTheDocument();
     expect(screen.getByRole('contentinfo')).toBeInTheDocument();
     expect(document.title).toBe(HOME_TITLE);
-    expect(HOME_TITLE).toBe('Bravô Clinic – Salas Inteligentes | Praia Brava, Itajaí');
+    expect(HOME_TITLE).toBe('Bravô Clinic – Salas Inteligentes | Dom Bosco, Itajaí');
   });
 
   it('renders the sections in spec order: hero, estrutura, salas, simulador, extras, comodidade, políticas, CTA', () => {

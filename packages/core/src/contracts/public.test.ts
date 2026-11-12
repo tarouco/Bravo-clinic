@@ -125,13 +125,13 @@ describe('public contracts (NUC-04)', () => {
       'clinicSchema',
       clinicSchema,
       {
-        addressLine: 'Praia Brava, Itajaí – SC',
+        addressLine: 'Dom Bosco, Itajaí – SC',
         whatsappE164: '+5547999990000',
         contactEmail: '',
         businessHours,
       },
       {
-        addressLine: 'Praia Brava, Itajaí – SC',
+        addressLine: 'Dom Bosco, Itajaí – SC',
         whatsappE164: '',
         contactEmail: '',
         businessHours: businessHours.slice(0, 7),

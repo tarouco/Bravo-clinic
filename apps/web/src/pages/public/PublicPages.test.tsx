@@ -80,10 +80,10 @@ describe('ContactPage (NUC-185)', () => {
   it('shows the address, the Google Maps link of that address, the phone and the WhatsApp link', async () => {
     renderWithProviders(<ContactPage />);
 
-    expect(await screen.findByText(/Praia Brava, Itajaí - SC/)).toBeInTheDocument();
+    expect(await screen.findByText(/Dom Bosco, Itajaí - SC/)).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Abrir no Google Maps' })).toHaveAttribute(
       'href',
-      'https://www.google.com/maps/search/?api=1&query=Praia%20Brava%2C%20Itaja%C3%AD%20-%20SC',
+      'https://www.google.com/maps/search/?api=1&query=Dom%20Bosco%2C%20Itaja%C3%AD%20-%20SC',
     );
     expect(screen.getByRole('link', { name: '(47) 99999-0000' })).toHaveAttribute(
       'href',
@@ -124,7 +124,7 @@ describe('ContactPage (NUC-185)', () => {
     );
     renderWithProviders(<ContactPage />);
 
-    await screen.findByText(/Praia Brava, Itajaí - SC/);
+    await screen.findByText(/Dom Bosco, Itajaí - SC/);
     expect(screen.queryByRole('link', { name: /@/ })).toBeNull();
   });
 });

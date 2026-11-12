@@ -9,7 +9,7 @@ describe('HeroSection', () => {
     expect(
       screen.getByRole('heading', { level: 1, name: 'Saúde, beleza e bem-estar em um só lugar.' }),
     ).toBeInTheDocument();
-    expect(screen.getByText(/estúdios clínicos na Praia Brava, em Itajaí/)).toBeInTheDocument();
+    expect(screen.getByText(/estúdios clínicos no Dom Bosco, em Itajaí/)).toBeInTheDocument();
   });
 
   it('links the primary CTA to #simulador and the secondary link to #salas', () => {

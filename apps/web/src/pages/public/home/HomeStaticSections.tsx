@@ -217,7 +217,7 @@ export function LaunchCtaSection() {
             </h2>
             <p className="mx-auto max-w-2xl font-lead text-lead text-on-emerald/90">
               Junte-se à seleta comunidade de médicos, esteticistas e profissionais de bem-estar que
-              operam sem o peso de custos imobiliários na Praia Brava.
+              operam sem o peso de custos imobiliários no Dom Bosco.
             </p>
             <div className="flex flex-col items-center justify-center gap-space-md pt-space-md sm:flex-row">
               <a

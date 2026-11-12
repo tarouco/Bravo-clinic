@@ -21,7 +21,7 @@ describe('AmenitiesSection', () => {
       }),
     ).toBeInTheDocument();
     expect(
-      await screen.findByText('Praia Brava, Itajaí - SC, com fácil estacionamento.'),
+      await screen.findByText('Dom Bosco, Itajaí - SC, com fácil estacionamento.'),
     ).toBeInTheDocument();
     expect(await screen.findByText('1 reagendamento grátis')).toBeInTheDocument();
     expect(screen.getAllByRole('heading', { level: 4 })).toHaveLength(4);
@@ -96,7 +96,7 @@ describe('LaunchCtaSection', () => {
         name: 'Pronto para elevar o padrão dos seus atendimentos?',
       }),
     ).toBeInTheDocument();
-    expect(container.textContent).toContain('custos imobiliários na Praia Brava');
+    expect(container.textContent).toContain('custos imobiliários no Dom Bosco');
     expect(container.textContent).not.toContain('Jardins');
     expect(screen.getByRole('link', { name: 'Reservar horário agora' })).toHaveAttribute(
       'href',

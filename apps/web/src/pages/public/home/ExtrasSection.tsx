@@ -54,7 +54,7 @@ const EXTRAS: ExtraService[] = [
     quoteTitle: 'Marketing Digital para Saúde & Estética',
     quoteMatch: /marketing/i,
     description:
-      'Estratégias de tráfego pago geolocalizado na Praia Brava, Itajaí e região para médicos, esteticistas e terapeutas com foco em conversão no WhatsApp.',
+      'Estratégias de tráfego pago geolocalizado no Dom Bosco, Itajaí e região para médicos, esteticistas e terapeutas com foco em conversão no WhatsApp.',
     priceCaption: 'Gestão completa',
     price: (
       <span className="font-body text-body text-ink font-semibold">Planos de Crescimento</span>

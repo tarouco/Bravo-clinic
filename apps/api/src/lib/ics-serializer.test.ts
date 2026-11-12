@@ -81,12 +81,12 @@ describe('icsEvent (GES-47)', () => {
     const lines = icsEvent({
       ...base,
       summary: 'a,b;c\\d',
-      location: 'Bravô Clinic — Sala 1, Praia Brava; Itajaí',
+      location: 'Bravô Clinic — Sala 1, Dom Bosco; Itajaí',
       description: 'linha 1\nlinha 2\r\nlinha 3',
     });
 
     expect(lines).toContain('SUMMARY:a\\,b\\;c\\\\d');
-    expect(lines).toContain('LOCATION:Bravô Clinic — Sala 1\\, Praia Brava\\; Itajaí');
+    expect(lines).toContain('LOCATION:Bravô Clinic — Sala 1\\, Dom Bosco\\; Itajaí');
     expect(lines).toContain('DESCRIPTION:linha 1\\nlinha 2\\nlinha 3');
   });
 
@@ -109,7 +109,7 @@ describe('METHOD:CANCEL (GES-50 on the serializer)', () => {
       start: base.start,
       end: base.end,
       summary: base.summary,
-      location: 'Bravô Clinic — Sala Principal, Praia Brava, Itajaí – SC',
+      location: 'Bravô Clinic — Sala Principal, Dom Bosco, Itajaí – SC',
       description: 'Código BRV-ABC123',
     };
     const lines = physicalLines(

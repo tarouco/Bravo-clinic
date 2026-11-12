@@ -9,7 +9,7 @@ const event: IcsEventInput = {
   start: new Date('2026-10-27T13:00:00.000Z'),
   end: new Date('2026-10-27T15:00:00.000Z'),
   summary: 'Reserva Bravô Clinic — Sala 1',
-  location: 'Praia Brava, Itajaí – SC',
+  location: 'Dom Bosco, Itajaí – SC',
   description: 'Código BRV-ABC123',
 };
 
@@ -89,7 +89,7 @@ describe('buildIcs content (NUC-136, NUC-137)', () => {
     expect(lines).toContain('DTEND:20261027T150000Z');
     expect(lines).toContain('DTSTAMP:20261020T120000Z');
     expect(lines).toContain('STATUS:CONFIRMED');
-    expect(lines).toContain('LOCATION:Praia Brava\\, Itajaí – SC');
+    expect(lines).toContain('LOCATION:Dom Bosco\\, Itajaí – SC');
     expect(lines.at(-2)).toBe('END:VCALENDAR');
   });
 

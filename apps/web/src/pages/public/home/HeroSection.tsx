@@ -90,7 +90,7 @@ export function HeroSection() {
             Saúde, beleza e <span className="whitespace-nowrap">bem-estar</span> em um só lugar.
           </h1>
           <p className="font-lead text-lead text-on-emerald/85">
-            Consultórios inteligentes e estúdios clínicos na Praia Brava, em Itajaí.
+            Consultórios inteligentes e estúdios clínicos no Dom Bosco, em Itajaí.
           </p>
           <ul aria-label="Destaques" className="flex flex-wrap gap-space-sm">
             {HIGHLIGHTS.map(({ icon, label }) => (

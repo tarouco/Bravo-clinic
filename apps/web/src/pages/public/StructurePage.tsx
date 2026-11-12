@@ -152,7 +152,7 @@ export function StructurePage() {
             A estrutura da Bravô Clinic.
           </h1>
           <p className="font-lead text-lead text-ink-muted">
-            Três salas, recepção e copa na Praia Brava, em Itajaí.
+            Três salas, recepção e copa no Dom Bosco, em Itajaí.
           </p>
         </div>
         <ul className="grid grid-cols-2 gap-space-md md:w-[420px]">

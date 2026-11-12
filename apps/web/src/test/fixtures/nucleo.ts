@@ -254,7 +254,7 @@ export const businessHours = [
 export const clinic = parseFixture(
   clinicSchema,
   {
-    addressLine: 'Praia Brava, Itajaí - SC',
+    addressLine: 'Dom Bosco, Itajaí - SC',
     whatsappE164: '+5547999990000',
     contactEmail: 'contato@bravoclinic.com.br',
     businessHours,

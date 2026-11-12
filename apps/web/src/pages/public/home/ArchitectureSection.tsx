@@ -46,9 +46,9 @@ export function ArchitectureSection() {
                   className="h-full w-full object-cover"
                   src="/images/recepcao.webp"
                   loading="lazy"
-                  alt="Recepção boutique com a sinalização em bronze da Bravô Clinic, iluminada em tom champagne, na Praia Brava, Itajaí"
+                  alt="Recepção boutique com a sinalização em bronze da Bravô Clinic, iluminada em tom champagne, no Dom Bosco, Itajaí"
                 />
-                <div className={photoCaption}>Recepção boutique Praia Brava</div>
+                <div className={photoCaption}>Recepção boutique Dom Bosco</div>
               </div>
               <div className={featureCard}>
                 <div className="flex items-center gap-space-xs text-ink">
@@ -77,7 +77,7 @@ export function ArchitectureSection() {
                   className="h-full w-full object-cover"
                   src="/images/consultorio.webp"
                   loading="lazy"
-                  alt="Consultório privativo com maca motorizada e mesa de pedra, em tons terrosos, na Praia Brava, Itajaí"
+                  alt="Consultório privativo com maca motorizada e mesa de pedra, em tons terrosos, no Dom Bosco, Itajaí"
                 />
                 <div className={photoCaption}>Consultório privativo</div>
               </div>

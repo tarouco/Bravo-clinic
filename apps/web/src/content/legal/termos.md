@@ -4,7 +4,7 @@ Texto-base sujeito a revisão jurídica antes da publicação definitiva.
 
 ## 1. Quem somos
 
-A Bravô Clinic disponibiliza salas clínicas, estéticas e de terapias por hora ou por plano mensal, na Praia Brava, em Itajaí - SC. Estes termos regem o uso do site, do aplicativo e das reservas feitas por eles.
+A Bravô Clinic disponibiliza salas clínicas, estéticas e de terapias por hora ou por plano mensal, no Dom Bosco, em Itajaí - SC. Estes termos regem o uso do site, do aplicativo e das reservas feitas por eles.
 
 ## 2. Cadastro
 

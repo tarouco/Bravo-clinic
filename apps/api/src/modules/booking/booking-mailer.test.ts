@@ -8,7 +8,7 @@ const booking = {
   startsAt: new Date('2026-10-27T13:00:00.000Z'),
   endsAt: new Date('2026-10-27T15:00:00.000Z'),
 };
-const ctx = { roomName: 'Sala Bravô', clinicAddress: 'Praia Brava, Itajaí – SC' };
+const ctx = { roomName: 'Sala Bravô', clinicAddress: 'Dom Bosco, Itajaí – SC' };
 
 describe('bookingIcs (NUC-136, NUC-137)', () => {
   it('uses the booking times without the cleanup, the stable UID and the current SEQUENCE', () => {
@@ -25,7 +25,7 @@ describe('bookingIcs (NUC-136, NUC-137)', () => {
     const lines = bookingIcs(booking, ctx, 'REQUEST').split('\r\n');
 
     expect(lines).toContain('SUMMARY:Reserva Bravô Clinic — Sala Bravô');
-    expect(lines).toContain('LOCATION:Praia Brava\\, Itajaí – SC');
+    expect(lines).toContain('LOCATION:Dom Bosco\\, Itajaí – SC');
   });
 
   it('cancels with METHOD:CANCEL and the same UID', () => {
