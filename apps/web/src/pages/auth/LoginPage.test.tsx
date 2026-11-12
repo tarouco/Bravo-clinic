@@ -177,6 +177,19 @@ describe('LoginPage', () => {
     expect(screen.getByRole('link', { name: 'Criar conta' })).toHaveAttribute('href', '/cadastro');
   });
 
+  it('shows "Criar conta" as a gold button and leaves "Entrar" the only emerald one', () => {
+    stubApi(() => json(200, {}));
+    renderLogin();
+
+    expect(screen.getByRole('link', { name: 'Criar conta' })).toHaveClass(
+      'bv-btn',
+      'bv-btn--gold',
+      'bv-btn--block',
+    );
+    expect(screen.getByRole('button', { name: 'Entrar' })).toHaveClass('bv-btn--emerald');
+    expect(screen.getByRole('link', { name: 'Esqueci minha senha' })).not.toHaveClass('bv-btn');
+  });
+
   it('does not render the Google button when googleEnabled is false', async () => {
     const fetchMock = stubApi(() => json(200, {}), false);
     renderLogin();
