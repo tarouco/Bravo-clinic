@@ -118,12 +118,6 @@ export function Footer() {
             © 2026 Bravô Clinic • Salas Inteligentes. Todos os direitos reservados. Saúde • Beleza •
             Bem-estar.
           </p>
-          <div className="flex items-center gap-space-md">
-            <span className="inline-flex items-center gap-1.5 rounded-pill bg-on-emerald/10 px-3 py-0.5 font-caption text-caption text-on-emerald">
-              <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-gold" />
-              Privacidade Assegurada (LGPD)
-            </span>
-          </div>
         </div>
       </div>
     </footer>
