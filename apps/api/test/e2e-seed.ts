@@ -138,6 +138,20 @@ export function tenantBookingDate(project: E2eProject): Promise<LocalDate> {
   return bookableWeekday(WORKDAYS, 4, project === 'desktop' ? 0 : 1);
 }
 
+/**
+ * Base date of the fixed-schedule flow of each project (receita T50): the first Monday at least 3
+ * days ahead. The mobile run starts 9 weeks later so its periods and held renewals never overlap
+ * the desktop run's rooms and dates.
+ */
+export function fixedScheduleBase(project: E2eProject, now = new Date()): LocalDate {
+  let date = addDays(utcToLocal(now).date, 3);
+  while (new Date(`${date}T12:00:00Z`).getUTCDay() !== 1) date = addDays(date, 1);
+  return addDays(date, project === 'desktop' ? 0 : 63);
+}
+
+/** The block that flow puts on Sala Principal: the Wednesday of its first week, 07:00–09:30. */
+export const FIXED_SCHEDULE_BLOCK = { dayOffset: 2, startMinute: 420, endMinute: 570 } as const;
+
 /** First day of the month two months ahead: inside the 90-day horizon, away from the flows. */
 export function loadMonth(now = new Date()): string {
   const local = utcToLocal(now).date;
@@ -324,7 +338,13 @@ async function seed(): Promise<void> {
   }
 }
 
-/** 500 confirmed 60-min bookings in the load month, every 90 min (cleanup 30) from 00:00. */
+const LOAD_CLEANUP_MINUTES = 30;
+
+/**
+ * 500 confirmed 60-min bookings in the load month, every 90 min (cleanup 30) from 00:00. The
+ * mobile fixed-schedule flow starts 9 to 10 weeks ahead, which most days of a month is inside the
+ * load month, so the morning it blocks on Sala Principal is left free.
+ */
 async function seedLoad(
   db: Awaited<ReturnType<(typeof import('../src/db/client'))['createDb']>>['db'],
   schema: typeof import('../src/db/schema'),
@@ -337,10 +357,18 @@ async function seedLoad(
     .returning({ id: schema.users.id });
   const first = `${loadMonth()}-01` as LocalDate;
   const snapshot = policySnapshot(settingDefaults());
+  const blockedDates = (Object.keys(E2E_TENANTS) as E2eProject[]).map((project) =>
+    addDays(fixedScheduleBase(project), FIXED_SCHEDULE_BLOCK.dayOffset),
+  );
   const rows: (typeof schema.bookings.$inferInsert)[] = [];
   for (let day = 0; rows.length < LOAD_BOOKINGS; day++) {
     const date = addDays(first, day);
     for (let minute = 0; minute + 60 <= 1440 && rows.length < LOAD_BOOKINGS; minute += 90) {
+      const overlapsBlock =
+        blockedDates.includes(date) &&
+        minute < FIXED_SCHEDULE_BLOCK.endMinute &&
+        minute + 60 + LOAD_CLEANUP_MINUTES > FIXED_SCHEDULE_BLOCK.startMinute;
+      if (overlapsBlock) continue;
       rows.push({
         code: bookingCode(),
         userId,
@@ -350,7 +378,7 @@ async function seedLoad(
         source: 'admin',
         startsAt: localToUtc(date, minute),
         endsAt: localToUtc(date, minute + 60),
-        cleanupMinutes: 30,
+        cleanupMinutes: LOAD_CLEANUP_MINUTES,
         durationMinutes: 60,
         paymentMode: 'manual',
         grossCents: 9700,

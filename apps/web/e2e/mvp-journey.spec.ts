@@ -9,7 +9,7 @@ import {
   type OutboxEmail,
 } from './helpers/db';
 import { icsUtc, parseIcs } from './helpers/ics';
-import { closeReceitaDb, pickDay, runTag } from './receita-helpers';
+import { closeReceitaDb, pickDay, pickPeriod, runTag } from './receita-helpers';
 
 // GES-140 / GES-49 (gestao T45): on a 390×844 phone a visitor opens /salas, opens Sala Terceira,
 // picks Friday 16:00–17:00, signs up, accepts the policy and pays the sinal in the sandbox; the
@@ -59,6 +59,7 @@ test('visitor books on a phone, pays in the sandbox and keeps one calendar event
 
   // The slot, picked on the room's availability calendar.
   await pickDay(page, firstDate);
+  await pickPeriod(page, 'Tarde');
   await page
     .getByRole('list', { name: 'Horários de início' })
     .getByRole('button', { name: '16:00', exact: true })
@@ -142,6 +143,7 @@ test('visitor books on a phone, pays in the sandbox and keeps one calendar event
   await page.getByRole('button', { name: 'Reagendar' }).click();
   const dialog = page.getByRole('dialog', { name: 'Reagendar reserva' });
   await pickDay(dialog, newDate);
+  await pickPeriod(dialog, 'Tarde');
   await dialog
     .getByRole('list', { name: 'Horários de início' })
     .getByRole('button', { name: '16:00', exact: true })

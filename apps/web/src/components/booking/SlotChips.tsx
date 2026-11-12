@@ -2,9 +2,11 @@ import { formatBRL, minuteToHHMM, type PublicCell } from '@bravo/core';
 import {
   discountLabel,
   durationOptions,
+  MoreHoursLink,
   type BlockOption,
   type SlotSelection,
 } from '../calendar/SlotGrid';
+import { PeriodPicker, useDayPeriods } from '../calendar/DayPeriods';
 import { Chip, ChipGroup } from '../ui/Chip';
 import { cx } from '../ui/cx';
 import { formatDuration, formatMinuteRange } from '../../lib/format';
@@ -20,6 +22,8 @@ export interface SlotChipsProps {
   blockOptions?: readonly BlockOption[];
   selectedBlockId?: string | null;
   onSelectBlock?: (option: BlockOption) => void;
+  /** Shows "Quero mais horas" under the durations, leading to the hour packages. */
+  offerMoreHours?: boolean;
   className?: string;
 }
 
@@ -27,8 +31,9 @@ export interface SlotChipsProps {
 const offChip = 'disabled:cursor-not-allowed disabled:opacity-[0.42] disabled:shadow-none';
 
 /**
- * Time slots of the app as chips (guias/Chip.md): a start time, then a duration, or a closed
- * block. The chosen interval stays emerald and lit; taken times are flat and struck through.
+ * Time slots of the app as chips (guias/Chip.md): a period (Manhã, Tarde, Noite), a start time in
+ * it, then a duration of up to 4 h, or a closed block. The chosen interval stays emerald and lit; taken times
+ * are flat and struck through.
  */
 export function SlotChips({
   cells,
@@ -39,8 +44,10 @@ export function SlotChips({
   blockOptions = [],
   selectedBlockId = null,
   onSelectBlock,
+  offerMoreHours = false,
   className,
 }: SlotChipsProps) {
+  const { periods, active, pickPeriod } = useDayPeriods(cells, value.startMinute);
   const startCell = cells.find((cell) => cell.startMinute === value.startMinute);
   const durations = startCell ? durationOptions(startCell, slotMinutes, minBookingMinutes) : [];
 
@@ -55,8 +62,11 @@ export function SlotChips({
 
   return (
     <div className={cx('space-y-space-lg', className)}>
+      {periods.length > 1 ? (
+        <PeriodPicker periods={periods} activeId={active?.id} onChange={pickPeriod} />
+      ) : null}
       <ul aria-label="Horários de início" className="flex flex-wrap gap-space-sm">
-        {cells.map((cell) => (
+        {(active?.cells ?? []).map((cell) => (
           <li key={cell.startMinute}>
             <Chip
               selected={cell.available && isSelected(cell.startMinute)}
@@ -99,6 +109,7 @@ export function SlotChips({
             }))}
             className="gap-space-sm"
           />
+          {offerMoreHours ? <MoreHoursLink /> : null}
         </div>
       ) : null}
 

@@ -15,6 +15,7 @@ import {
   tenantBookingDate,
   type E2eProject,
 } from '../../api/test/e2e-seed';
+import { pickPeriod } from './receita-helpers';
 
 // Spec Success Criteria (T49): visitor signup → verify → book Tue 17:30–20:00 → sandbox approve
 // → "Reserva confirmada" + booking.confirmed with .ics; tenant cheaper reschedule and cancel with
@@ -67,6 +68,7 @@ test('visitor signs up, verifies, books Tue 17:30–20:00 and pays the sinal in 
   await page.getByRole('button', { name: 'Continuar' }).click();
 
   // Step 2: Horário, 17:30 for 2h30.
+  await pickPeriod(page, 'Tarde');
   await page
     .getByRole('list', { name: 'Horários de início' })
     .getByRole('button', { name: '17:30', exact: true })
@@ -179,6 +181,7 @@ test('tenant reschedules to a cheaper slot inside the current one and cancels wi
   await page.getByRole('button', { name: 'Reagendar' }).click();
   const dialog = page.getByRole('dialog', { name: 'Reagendar reserva' });
   await pickDay(page, date);
+  await pickPeriod(dialog, 'Tarde');
   await dialog
     .getByRole('list', { name: 'Horários de início' })
     .getByRole('button', { name: '14:00', exact: true })

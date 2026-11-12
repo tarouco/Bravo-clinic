@@ -62,6 +62,7 @@ describe('RoomPage (NUC-182)', () => {
     await screen.findByRole('heading', { level: 1, name: 'Sala Principal' });
 
     await userEvent.click(await screen.findByRole('button', { name: /^27 de outubro/ }));
+    await userEvent.click(await screen.findByRole('button', { name: /^Tarde,/ }));
     await userEvent.click(await screen.findByRole('button', { name: /^17:30/ }));
     await userEvent.click(screen.getByRole('button', { name: '2h30' }));
 
@@ -76,6 +77,7 @@ describe('RoomPage (NUC-182)', () => {
   it('keeps "Reservar este horário" disabled until a start and a duration are chosen', async () => {
     renderRoom('principal');
     await userEvent.click(await screen.findByRole('button', { name: /^27 de outubro/ }));
+    await userEvent.click(await screen.findByRole('button', { name: /^Tarde,/ }));
     await screen.findByRole('button', { name: /^17:30/ });
 
     expect(screen.getByRole('button', { name: 'Reservar este horário' })).toBeDisabled();

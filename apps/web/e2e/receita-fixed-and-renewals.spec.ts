@@ -1,11 +1,16 @@
 import { addDays, formatBRL, localToUtc, type LocalDate } from '@bravo/core';
 import { expect, test, type Browser, type Page } from '@playwright/test';
-import { closeE2eDb, E2E_WEB_URL, latestEmail } from '../../api/test/e2e-seed';
+import {
+  closeE2eDb,
+  E2E_WEB_URL,
+  FIXED_SCHEDULE_BLOCK,
+  fixedScheduleBase,
+  latestEmail,
+} from '../../api/test/e2e-seed';
 import {
   apiFromPage,
   closeReceitaDb,
   loginAdmin,
-  nextWeekday,
   occupancyOfPeriod,
   occurrenceStatuses,
   payPixInSandbox,
@@ -73,9 +78,10 @@ test('fixed-schedule purchase with a conflict, admin link sale and renewals unti
   test.setTimeout(1_800_000);
   const project = projectOf(testInfo.project.name);
   // A Monday base (22 weekdays in 30 days, as for 2026-11-02); the mobile run uses a base 9 weeks
-  // later so its periods and held renewals never overlap the desktop run's rooms and dates.
-  const base = addDays(nextWeekday(1, 3), project === 'desktop' ? 0 : 63);
-  const blocked = addDays(base, 2);
+  // later so its periods and held renewals never overlap the desktop run's rooms and dates. The
+  // seed computes the same dates to keep the load bookings off the blocked morning.
+  const base = fixedScheduleBase(project);
+  const blocked = addDays(base, FIXED_SCHEDULE_BLOCK.dayOffset);
   const renewalDay = addDays(base, 28);
   const nextBase = addDays(base, 30);
 
@@ -86,8 +92,8 @@ test('fixed-schedule purchase with a conflict, admin link sale and renewals unti
     roomIds: [await roomIdOf('principal')],
     tag: 'Manutenção e2e',
     date: blocked,
-    startMinute: 420,
-    endMinute: 570,
+    startMinute: FIXED_SCHEDULE_BLOCK.startMinute,
+    endMinute: FIXED_SCHEDULE_BLOCK.endMinute,
   });
   expect(block.status).toBe(201);
 

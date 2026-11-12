@@ -79,15 +79,15 @@ export function LoginPage() {
         </Button>
       ) : null}
 
-      <div className="flex flex-col items-center gap-space-xs font-small text-small">
+      <Button asChild variant="gold" block>
+        <Link to={next ? `/cadastro?next=${encodeURIComponent(next)}` : '/cadastro'}>
+          Criar conta
+        </Link>
+      </Button>
+
+      <div className="text-center font-small text-small">
         <Link to="/esqueci-senha" className={authLinkClasses}>
           Esqueci minha senha
-        </Link>
-        <Link
-          to={next ? `/cadastro?next=${encodeURIComponent(next)}` : '/cadastro'}
-          className={authLinkClasses}
-        >
-          Criar conta
         </Link>
       </div>
     </AuthCard>

@@ -71,6 +71,7 @@ export function TimeStep({ selection, onChange, onBack, onContinue }: TimeStepPr
               blockOptions={day.blockOptions}
               selectedBlockId={selection.bloco}
               onSelectBlock={onSelectBlock}
+              offerMoreHours
             />
           )}
 

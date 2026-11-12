@@ -6,6 +6,7 @@ import {
   closeReceitaDb,
   payPixInSandbox,
   pickDay,
+  pickPeriod,
   projectOf,
   signUpTenant,
   subscriptionOf,
@@ -80,6 +81,7 @@ test('tenant buys Pacote 20h, books Wed 19:00–20:00 with it and buys 5 extra h
   await page.getByRole('radio', { name: /Sala Secundária/ }).check();
   await pickDay(page, wednesday);
   await page.getByRole('button', { name: 'Continuar' }).click();
+  await pickPeriod(page, 'Noite');
   await page
     .getByRole('list', { name: 'Horários de início' })
     .getByRole('button', { name: /^19:00/ })
