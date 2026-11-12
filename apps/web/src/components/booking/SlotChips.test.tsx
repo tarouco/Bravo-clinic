@@ -1,6 +1,7 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useState } from 'react';
+import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it, vi } from 'vitest';
 import { availabilityDay } from '../../test/fixtures/nucleo';
 import type { SlotSelection } from '../calendar/SlotGrid';
@@ -11,17 +12,19 @@ type Props = Partial<React.ComponentProps<typeof SlotChips>>;
 function Harness({ onChange, ...props }: Props) {
   const [value, setValue] = useState<SlotSelection>({ startMinute: null, endMinute: null });
   return (
-    <SlotChips
-      cells={availabilityDay.cells}
-      slotMinutes={availabilityDay.slotMinutes}
-      minBookingMinutes={availabilityDay.minBookingMinutes}
-      value={value}
-      onChange={(next) => {
-        setValue(next);
-        onChange?.(next);
-      }}
-      {...props}
-    />
+    <MemoryRouter>
+      <SlotChips
+        cells={availabilityDay.cells}
+        slotMinutes={availabilityDay.slotMinutes}
+        minBookingMinutes={availabilityDay.minBookingMinutes}
+        value={value}
+        onChange={(next) => {
+          setValue(next);
+          onChange?.(next);
+        }}
+        {...props}
+      />
+    </MemoryRouter>
   );
 }
 
@@ -31,6 +34,36 @@ const starts = () =>
   within(screen.getByRole('list', { name: 'Horários de início' }))
     .getAllByRole('button')
     .map((b) => b.textContent);
+
+describe('SlotChips durations (4 h at most)', () => {
+  const durations = () =>
+    within(screen.getByRole('group', { name: 'Duração' }))
+      .getAllByRole('button')
+      .map((b) => b.textContent);
+
+  it('stops at 4h and offers the packages when asked to', async () => {
+    render(<Harness offerMoreHours />);
+
+    // 17:30 is free until 24:00 (6h30).
+    await userEvent.click(period('Tarde'));
+    await userEvent.click(cell('17:30'));
+
+    expect(durations()).toEqual(['1h', '1h30', '2h', '2h30', '3h', '3h30', '4h']);
+    expect(screen.getByRole('link', { name: 'Quero mais horas' })).toHaveAttribute(
+      'href',
+      '/precos#packages-title',
+    );
+  });
+
+  it('shows no "Quero mais horas" unless asked to (the reschedule dialog)', async () => {
+    render(<Harness />);
+
+    await userEvent.click(cell('11:30'));
+
+    expect(durations()).toEqual(['1h', '1h30', '2h']);
+    expect(screen.queryByRole('link', { name: 'Quero mais horas' })).toBeNull();
+  });
+});
 
 describe('SlotChips periods (07:00–24:00 window, CL-4 occupancy)', () => {
   it('opens on Manhã and shows the times of the period that is picked', async () => {

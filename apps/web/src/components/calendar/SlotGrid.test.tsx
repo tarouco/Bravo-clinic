@@ -1,26 +1,29 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useState } from 'react';
+import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it, vi } from 'vitest';
 import { availabilityDay } from '../../test/fixtures/nucleo';
-import { SlotGrid, type SlotSelection } from './SlotGrid';
+import { durationOptions, SlotGrid, type SlotSelection } from './SlotGrid';
 
 type Props = Partial<React.ComponentProps<typeof SlotGrid>>;
 
 function Harness({ onChange, ...props }: Props) {
   const [value, setValue] = useState<SlotSelection>({ startMinute: null, endMinute: null });
   return (
-    <SlotGrid
-      cells={availabilityDay.cells}
-      slotMinutes={availabilityDay.slotMinutes}
-      minBookingMinutes={availabilityDay.minBookingMinutes}
-      value={value}
-      onChange={(next) => {
-        setValue(next);
-        onChange?.(next);
-      }}
-      {...props}
-    />
+    <MemoryRouter>
+      <SlotGrid
+        cells={availabilityDay.cells}
+        slotMinutes={availabilityDay.slotMinutes}
+        minBookingMinutes={availabilityDay.minBookingMinutes}
+        value={value}
+        onChange={(next) => {
+          setValue(next);
+          onChange?.(next);
+        }}
+        {...props}
+      />
+    </MemoryRouter>
   );
 }
 
@@ -124,6 +127,45 @@ describe('SlotGrid (CL-4: bookings 09:00–11:00 and 14:00–16:00)', () => {
     render(<Harness cells={[]} />);
 
     expect(screen.getByText('Sem horários neste dia.')).toBeInTheDocument();
+  });
+});
+
+describe('SlotGrid durations (4 h at most)', () => {
+  it('stops at 4h for a start with a longer free window', async () => {
+    render(<Harness />);
+
+    // 17:30 is free until 24:00 (6h30).
+    await userEvent.click(period('Tarde'));
+    await userEvent.click(cell('17:30'));
+
+    expect(durations()).toEqual(['1h', '1h30', '2h', '2h30', '3h', '3h30', '4h']);
+  });
+
+  it('links "Quero mais horas" to the packages of /precos once a start is picked', async () => {
+    render(<Harness />);
+    expect(screen.queryByRole('link', { name: 'Quero mais horas' })).toBeNull();
+
+    await userEvent.click(cell('11:30'));
+
+    expect(screen.getByRole('link', { name: 'Quero mais horas' })).toHaveAttribute(
+      'href',
+      '/precos#packages-title',
+    );
+  });
+
+  it('offers exactly 4h and nothing at 4h30 (durationOptions)', () => {
+    const cell = { startMinute: 600, available: true, maxEndMinute: 1440 };
+
+    expect(durationOptions(cell, 30, 60).at(-1)).toBe(240);
+    expect(durationOptions(cell, 30, 60)).toHaveLength(7);
+    // A free window shorter than the cap still ends where the next booking starts.
+    expect(durationOptions({ ...cell, maxEndMinute: 750 }, 30, 60)).toEqual([60, 90, 120, 150]);
+  });
+
+  it('still offers the minimum when it is longer than the cap', () => {
+    const cell = { startMinute: 600, available: true, maxEndMinute: 1440 };
+
+    expect(durationOptions(cell, 30, 300)).toEqual([300]);
   });
 });
 

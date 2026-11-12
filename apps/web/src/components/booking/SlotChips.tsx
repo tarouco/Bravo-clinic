@@ -2,6 +2,7 @@ import { formatBRL, minuteToHHMM, type PublicCell } from '@bravo/core';
 import {
   discountLabel,
   durationOptions,
+  MoreHoursLink,
   type BlockOption,
   type SlotSelection,
 } from '../calendar/SlotGrid';
@@ -21,6 +22,8 @@ export interface SlotChipsProps {
   blockOptions?: readonly BlockOption[];
   selectedBlockId?: string | null;
   onSelectBlock?: (option: BlockOption) => void;
+  /** Shows "Quero mais horas" under the durations, leading to the hour packages. */
+  offerMoreHours?: boolean;
   className?: string;
 }
 
@@ -29,7 +32,7 @@ const offChip = 'disabled:cursor-not-allowed disabled:opacity-[0.42] disabled:sh
 
 /**
  * Time slots of the app as chips (guias/Chip.md): a period (Manhã, Tarde, Noite), a start time in
- * it, then a duration, or a closed block. The chosen interval stays emerald and lit; taken times
+ * it, then a duration of up to 4 h, or a closed block. The chosen interval stays emerald and lit; taken times
  * are flat and struck through.
  */
 export function SlotChips({
@@ -41,6 +44,7 @@ export function SlotChips({
   blockOptions = [],
   selectedBlockId = null,
   onSelectBlock,
+  offerMoreHours = false,
   className,
 }: SlotChipsProps) {
   const { periods, active, pickPeriod } = useDayPeriods(cells, value.startMinute);
@@ -105,6 +109,7 @@ export function SlotChips({
             }))}
             className="gap-space-sm"
           />
+          {offerMoreHours ? <MoreHoursLink /> : null}
         </div>
       ) : null}
 

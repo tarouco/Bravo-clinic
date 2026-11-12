@@ -1,5 +1,7 @@
 import { formatBRL, minuteToHHMM, type AvailabilityDay, type PublicCell } from '@bravo/core';
+import { Link } from 'react-router-dom';
 import { formatDuration, formatMinuteRange } from '../../lib/format';
+import { Button } from '../ui/Button';
 import { cx, focusRing } from '../ui/cx';
 import { PeriodPicker, useDayPeriods } from './DayPeriods';
 
@@ -27,14 +29,27 @@ export interface SlotGridProps {
 /** "−10%" with the typographic minus sign (NUC-202). */
 export const discountLabel = (percent: number): string => `−${String(percent)}%`;
 
-/** Durations from the minimum up to `maxEndMinute` in slot steps (NUC-99). */
+/** Longest continuous booking offered on the site; past it the hour packages are the better deal. */
+export const MAX_BOOKING_MINUTES = 4 * 60;
+
+/** Where "Quero mais horas" leads: the packages of `/precos`. */
+export const MORE_HOURS_PATH = '/precos#packages-title';
+
+/**
+ * Durations from the minimum up to `maxEndMinute` in slot steps (NUC-99), never past
+ * `maxBookingMinutes` (a minimum above that cap is still offered).
+ */
 export function durationOptions(
   cell: PublicCell,
   slotMinutes: number,
   minBookingMinutes: number,
+  maxBookingMinutes: number = MAX_BOOKING_MINUTES,
 ): number[] {
   if (cell.maxEndMinute === null) return [];
-  const longest = cell.maxEndMinute - cell.startMinute;
+  const longest = Math.min(
+    cell.maxEndMinute - cell.startMinute,
+    Math.max(maxBookingMinutes, minBookingMinutes),
+  );
   const options: number[] = [];
   for (let minutes = minBookingMinutes; minutes <= longest; minutes += slotMinutes) {
     options.push(minutes);
@@ -42,10 +57,20 @@ export function durationOptions(
   return options;
 }
 
+/** Under the durations: the way to more hours than one booking offers, the hour packages. */
+export function MoreHoursLink({ to = MORE_HOURS_PATH }: { to?: string }) {
+  return (
+    <Button asChild variant="gold" size="sm">
+      <Link to={to}>Quero mais horas</Link>
+    </Button>
+  );
+}
+
 /**
  * Day grid of 40 px slots, one period (Manhã, Tarde, Noite) at a time: pick a start among the
- * startable cells, then a duration. Unavailable cells are `aria-disabled`; selected cells fill
- * with emerald; a cell with a slot discount shows "−n%".
+ * startable cells, then a duration of up to 4 h ("Quero mais horas" leads to the packages).
+ * Unavailable cells are `aria-disabled`; selected cells fill with emerald; a cell with a slot
+ * discount shows "−n%".
  */
 export function SlotGrid({
   cells,
@@ -136,6 +161,7 @@ export function SlotGrid({
               );
             })}
           </div>
+          <MoreHoursLink />
         </div>
       ) : null}
 
